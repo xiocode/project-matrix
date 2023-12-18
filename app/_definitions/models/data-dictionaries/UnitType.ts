@@ -6,7 +6,7 @@ export default {
   valueType: 'string',
   level: "app",
   entries: [
-    { name: '计量单位', value: 'quantity' },
-    { name: '包装单位', value: 'packaging' },
+    { name: '物理量', value: 'quantity' },
+    { name: '其它', value: 'others' },
   ],
 } as RapidDataDictionary;

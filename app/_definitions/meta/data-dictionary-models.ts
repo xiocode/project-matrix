@@ -5,6 +5,7 @@ import BusinessActivityKind from '../models/data-dictionaries/BusinessActivityKi
 import BusinessActivityState from '../models/data-dictionaries/BusinessActivityState';
 import BusinessApplicationState from '../models/data-dictionaries/BusinessApplicationState';
 import BusinessTaskState from '../models/data-dictionaries/BusinessTaskState';
+import CmContractState from '../models/data-dictionaries/CmContractState';
 import DataDictionaryValueType from '../models/data-dictionaries/DataDictionaryValueType';
 import DocumentType from '../models/data-dictionaries/DocumentType';
 import EmployeeState from '../models/data-dictionaries/EmployeeState';
@@ -29,6 +30,7 @@ export default [
   BusinessActivityState,
   BusinessApplicationState,
   BusinessTaskState,
+  CmContractState,
   DataDictionaryValueType,
   DocumentType,
   EmployeeState,

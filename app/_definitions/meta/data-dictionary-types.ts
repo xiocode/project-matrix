@@ -55,6 +55,17 @@ export type BusinessTaskState =
   ;
 
 /**
+ * 合同状态
+ */
+export type CmContractState =
+  | 'unsigned'
+  | 'fulfilling'
+  | 'fulfilled'
+  | 'suspended'
+  | 'cancelled'
+  ;
+
+/**
  * 字典值类型
  */
 export type DataDictionaryValueType =
@@ -200,7 +211,7 @@ export type UndeletedDeletedState =
  */
 export type UnitType =
   | 'quantity'
-  | 'packaging'
+  | 'others'
   ;
 
 /**

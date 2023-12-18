@@ -5,6 +5,7 @@ const dictionaryCodes = [
   'BusinessActivityState',
   'BusinessApplicationState',
   'BusinessTaskState',
+  'CmContractState',
   'DataDictionaryValueType',
   'DocumentType',
   'EmployeeState',

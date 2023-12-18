@@ -3,6 +3,7 @@ import type {
   BusinessActivityState,
   BusinessApplicationState,
   BusinessTaskState,
+  CmContractState,
   DataDictionaryLevel,
   DataDictionaryValueType,
   EmployeeState,
@@ -274,6 +275,565 @@ export interface BaseFormField {
 export type SaveBaseFormFieldInput = Omit<BaseFormField, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 物料
+ */
+export interface BaseMaterial {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料号
+   */
+  code: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 品牌
+   */
+  brand?: string;
+  /**
+   * 规格
+   */
+  specification?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 分类
+   */
+  category: Partial<BaseMaterialCategory>;
+  /**
+   * 可生产
+   */
+  canProduce?: boolean;
+  /**
+   * 可采购
+   */
+  canPurchase?: boolean;
+  /**
+   * 可销售
+   */
+  canSale?: boolean;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料
+ */
+export type SaveBaseMaterialInput = Omit<BaseMaterial, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * BOM
+ */
+export interface BaseMaterialBreakdown {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 版本
+   */
+  version?: string;
+  /**
+   * 数量
+   */
+  amount?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 下级物料
+   */
+  parts?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * BOM
+ */
+export type SaveBaseMaterialBreakdownInput = Omit<BaseMaterialBreakdown, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 下级物料
+ */
+export interface BaseMaterialBreakdownPart {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * BOM
+   */
+  materialBreakdown?: Partial<BaseMaterialBreakdown>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 下级物料
+   */
+  subMaterial?: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  amount?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 下级物料
+ */
+export type SaveBaseMaterialBreakdownPartInput = Omit<BaseMaterialBreakdownPart, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料分类
+ */
+export interface BaseMaterialCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 上级分类
+   */
+  parent?: Partial<BaseMaterialCategory>;
+  /**
+   * 物料
+   */
+  materials?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料分类
+ */
+export type SaveBaseMaterialCategoryInput = Omit<BaseMaterialCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料文档
+ */
+export interface BaseMaterialDocument {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material: Partial<BaseMaterial>;
+  /**
+   * 文档
+   */
+  document: Partial<EcmDocument>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料文档
+ */
+export type SaveBaseMaterialDocumentInput = Omit<BaseMaterialDocument, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料工艺流程
+ */
+export interface BaseMaterialFlow {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 版本
+   */
+  version: string;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 发布状态
+   */
+  publishState: PublishState;
+  /**
+   * 物料生产工序
+   */
+  processes?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料工艺流程
+ */
+export type SaveBaseMaterialFlowInput = Omit<BaseMaterialFlow, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料生产工序
+ */
+export interface BaseMaterialFlowProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料工艺流程
+   */
+  materialFlow: Partial<BaseMaterialFlow>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 生产工序
+   */
+  process: Partial<BaseProdProcess>;
+  /**
+   * 工序别名
+   */
+  aliasName?: string;
+  /**
+   * 输入物料
+   */
+  inputs?: any;
+  /**
+   * 输出物料
+   */
+  outputs?: any;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料生产工序
+ */
+export type SaveBaseMaterialFlowProcessInput = Omit<BaseMaterialFlowProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料生产工序输入物料
+ */
+export interface BaseMaterialFlowProcessInput {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料生产工序
+   */
+  materialProcess: Partial<BaseMaterialFlowProcess>;
+  /**
+   * 物料
+   */
+  material: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  amount: number;
+  /**
+   * 单位
+   */
+  unit: Partial<BaseUnit>;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料生产工序输入物料
+ */
+export type SaveBaseMaterialFlowProcessInputInput = Omit<BaseMaterialFlowProcessInput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料生产工序输出物料
+ */
+export interface BaseMaterialFlowProcessOutput {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料生产工序
+   */
+  materialProcess?: Partial<BaseMaterialFlowProcess>;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  amount?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料生产工序输出物料
+ */
+export type SaveBaseMaterialFlowProcessOutputInput = Omit<BaseMaterialFlowProcessOutput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 合作伙伴
  */
 export interface BasePartner {
@@ -374,6 +934,324 @@ export interface BasePartnerCategory {
  * 合作伙伴分类
  */
 export type SaveBasePartnerCategoryInput = Omit<BasePartnerCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工艺流程
+ */
+export interface BaseProdFlow {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 版本
+   */
+  version: string;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 工序
+   */
+  processes?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺流程
+ */
+export type SaveBaseProdFlowInput = Omit<BaseProdFlow, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序
+ */
+export interface BaseProdFlowProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工艺流程
+   */
+  flow: Partial<BaseProdFlow>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 生产工序
+   */
+  process: Partial<BaseProdProcess>;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序
+ */
+export type SaveBaseProdFlowProcessInput = Omit<BaseProdFlowProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工艺流程模板
+ */
+export interface BaseProdFlowTemplate {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 工序
+   */
+  processes?: Partial<BaseProdFlowTemplateProcess>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺流程模板
+ */
+export type SaveBaseProdFlowTemplateInput = Omit<BaseProdFlowTemplate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工艺流程模板工序
+ */
+export interface BaseProdFlowTemplateProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工艺流程模板
+   */
+  flowTemplate: Partial<BaseProdFlowTemplate>;
+  /**
+   * 生产工序
+   */
+  process: Partial<BaseProdProcess>;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺流程模板工序
+ */
+export type SaveBaseProdFlowTemplateProcessInput = Omit<BaseProdFlowTemplateProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序
+ */
+export interface BaseProdProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 工序类型
+   */
+  category: Partial<BaseProdProcessCategory>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序
+ */
+export type SaveBaseProdProcessInput = Omit<BaseProdProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序分类
+ */
+export interface BaseProdProcessCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序分类
+ */
+export type SaveBaseProdProcessCategoryInput = Omit<BaseProdProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 单位
@@ -921,6 +1799,73 @@ export interface BpmBusinessTask {
  * 审批任务
  */
 export type SaveBpmBusinessTaskInput = Omit<BpmBusinessTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 合同
+ */
+export interface CmContract {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 所属项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 销售
+   */
+  salesman?: Partial<OcUser>;
+  /**
+   * 合同金额
+   */
+  totalAmount: number;
+  /**
+   * 状态
+   */
+  state: CmContractState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 合同
+ */
+export type SaveCmContractInput = Omit<CmContract, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 文档

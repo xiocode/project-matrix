@@ -4,8 +4,23 @@ import AppClient from '../models/entities/AppClient';
 import AppNavItem from '../models/entities/AppNavItem';
 import BaseEmployee from '../models/entities/BaseEmployee';
 import BaseFormField from '../models/entities/BaseFormField';
+import BaseMaterial from '../models/entities/BaseMaterial';
+import BaseMaterialBreakdown from '../models/entities/BaseMaterialBreakdown';
+import BaseMaterialBreakdownPart from '../models/entities/BaseMaterialBreakdownPart';
+import BaseMaterialCategory from '../models/entities/BaseMaterialCategory';
+import BaseMaterialDocument from '../models/entities/BaseMaterialDocument';
+import BaseMaterialFlow from '../models/entities/BaseMaterialFlow';
+import BaseMaterialFlowProcess from '../models/entities/BaseMaterialFlowProcess';
+import BaseMaterialFlowProcessInput from '../models/entities/BaseMaterialFlowProcessInput';
+import BaseMaterialFlowProcessOutput from '../models/entities/BaseMaterialFlowProcessOutput';
 import BasePartner from '../models/entities/BasePartner';
 import BasePartnerCategory from '../models/entities/BasePartnerCategory';
+import BaseProdFlow from '../models/entities/BaseProdFlow';
+import BaseProdFlowProcess from '../models/entities/BaseProdFlowProcess';
+import BaseProdFlowTemplate from '../models/entities/BaseProdFlowTemplate';
+import BaseProdFlowTemplateProcess from '../models/entities/BaseProdFlowTemplateProcess';
+import BaseProdProcess from '../models/entities/BaseProdProcess';
+import BaseProdProcessCategory from '../models/entities/BaseProdProcessCategory';
 import BaseUnit from '../models/entities/BaseUnit';
 import BaseUnitCategory from '../models/entities/BaseUnitCategory';
 import BaseWarehouse from '../models/entities/BaseWarehouse';
@@ -15,6 +30,7 @@ import BpmBusinessCategory from '../models/entities/BpmBusinessCategory';
 import BpmBusinessProcess from '../models/entities/BpmBusinessProcess';
 import BpmBusinessProcessRevision from '../models/entities/BpmBusinessProcessRevision';
 import BpmBusinessTask from '../models/entities/BpmBusinessTask';
+import CmContract from '../models/entities/CmContract';
 import EcmDocument from '../models/entities/EcmDocument';
 import EcmRevision from '../models/entities/EcmRevision';
 import EcmStorageObject from '../models/entities/EcmStorageObject';
@@ -35,8 +51,23 @@ export default [
   autoConfigureRapidEntity(AppNavItem),
   autoConfigureRapidEntity(BaseEmployee),
   autoConfigureRapidEntity(BaseFormField),
+  autoConfigureRapidEntity(BaseMaterial),
+  autoConfigureRapidEntity(BaseMaterialBreakdown),
+  autoConfigureRapidEntity(BaseMaterialBreakdownPart),
+  autoConfigureRapidEntity(BaseMaterialCategory),
+  autoConfigureRapidEntity(BaseMaterialDocument),
+  autoConfigureRapidEntity(BaseMaterialFlow),
+  autoConfigureRapidEntity(BaseMaterialFlowProcess),
+  autoConfigureRapidEntity(BaseMaterialFlowProcessInput),
+  autoConfigureRapidEntity(BaseMaterialFlowProcessOutput),
   autoConfigureRapidEntity(BasePartner),
   autoConfigureRapidEntity(BasePartnerCategory),
+  autoConfigureRapidEntity(BaseProdFlow),
+  autoConfigureRapidEntity(BaseProdFlowProcess),
+  autoConfigureRapidEntity(BaseProdFlowTemplate),
+  autoConfigureRapidEntity(BaseProdFlowTemplateProcess),
+  autoConfigureRapidEntity(BaseProdProcess),
+  autoConfigureRapidEntity(BaseProdProcessCategory),
   autoConfigureRapidEntity(BaseUnit),
   autoConfigureRapidEntity(BaseUnitCategory),
   autoConfigureRapidEntity(BaseWarehouse),
@@ -46,6 +77,7 @@ export default [
   autoConfigureRapidEntity(BpmBusinessProcess),
   autoConfigureRapidEntity(BpmBusinessProcessRevision),
   autoConfigureRapidEntity(BpmBusinessTask),
+  autoConfigureRapidEntity(CmContract),
   autoConfigureRapidEntity(EcmDocument),
   autoConfigureRapidEntity(EcmRevision),
   autoConfigureRapidEntity(EcmStorageObject),

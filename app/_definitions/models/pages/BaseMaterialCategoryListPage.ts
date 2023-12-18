@@ -1,0 +1,123 @@
+import { cloneDeep } from 'lodash';
+import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+
+const formConfig: Partial<RapidEntityFormConfig> = {
+  items: [
+    {
+      type: 'treeSelect',
+      code: 'parent',
+      formControlProps: {
+        listDataSourceCode: "nodeList",
+        listParentField: "parent.id",
+      }
+    },
+    {
+      type: 'auto',
+      code: 'code',
+    },
+    {
+      type: 'auto',
+      code: 'name',
+    },
+    {
+      type: 'auto',
+      code: 'orderNum',
+    },
+  ],
+}
+
+const page: RapidPage = {
+  code: 'base_material_category_list',
+  name: '货品分类',
+  title: '货品分类',
+  view: [
+    {
+      $type: "sonicEntityList",
+      entityCode: "BaseMaterialCategory",
+      viewMode: "table",
+      listActions: [
+        {
+          $type: "sonicToolbarNewEntityButton",
+          text: "新建",
+          icon: "PlusOutlined",
+          actionStyle: "primary",
+        }
+      ],
+      extraActions: [
+        {
+          $type: "sonicToolbarFormItem",
+          formItemType: "search",
+          placeholder: "Search",
+          actionEventName: "onSearch",
+          filterMode: "contains",
+          filterFields: ["code", "name"],
+        }
+      ],
+      orderBy: [
+        {
+          field: 'id',
+        },
+      ],
+      convertListToTree: true,
+      listParentField: "parent.id",
+      pageSize: -1,
+      extraProperties: ['parent'],
+      columns: [
+        {
+          type: 'auto',
+          code: 'code',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'name',
+        },
+        {
+          type: 'auto',
+          code: 'orderNum',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'createdAt',
+          width: '150px',
+        },
+      ],
+      actions: [
+        {
+          $type: "sonicRecordActionEditEntity",
+          code: 'edit',
+          actionType: "edit",
+          actionText: '修改',
+        },
+        {
+          $type: "sonicRecordActionDeleteEntity",
+          code: 'delete',
+          actionType: 'delete',
+          actionText: '删除',
+          dataSourceCode: "list",
+          entityCode: "BaseMaterialCategory",
+        },
+      ],
+      newForm: cloneDeep(formConfig),
+      editForm: cloneDeep(formConfig),
+      stores: [
+        {
+          type: "entityStore",
+          name: "nodeList",
+          entityCode: "BaseMaterialCategory",
+          properties: ["id", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [
+          ],
+          orderBy: [
+            {
+              field: 'id',
+            }
+          ],
+        }
+      ],
+    },
+  ],
+};
+
+export default page;

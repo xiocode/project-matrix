@@ -18,8 +18,8 @@ dependencies:
     specifier: ^1.19.3
     version: 1.19.3(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/antd-extension':
-    specifier: ^0.0.2
-    version: 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.4
+    version: 0.0.4(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/designer-extension':
     specifier: ^0.0.2
     version: 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -30,14 +30,14 @@ dependencies:
     specifier: ^0.0.2
     version: 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/move-style':
-    specifier: ^0.0.2
-    version: 0.0.2(lodash@4.17.21)
+    specifier: ^0.0.3
+    version: 0.0.3(lodash@4.17.21)
   '@ruiapp/rapid-extension':
-    specifier: ^0.0.8
-    version: 0.0.8(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.10
+    version: 0.0.10(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/react-renderer':
-    specifier: ^0.0.2
-    version: 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.3
+    version: 0.0.3(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/react-rocks':
     specifier: ^0.0.2
     version: 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2257,15 +2257,15 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@ruiapp/antd-extension@0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-RIJslW83c4rEzOPvZWTb+hMqxQ5Z2pHhAGKsu3z1XyLXETeE8fW6+axX2nOGM76tIIXZjINQm/cBor6WRu/TrA==}
+  /@ruiapp/antd-extension@0.0.4(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-ohVcg6/6wZtPTC0adEew4IMBRWBjtIJX4GyTKq5gUGaiXKYHlRNTePNXyNhGMJAqCZfCESO81uphWXcyETmH0g==}
     peerDependencies:
       lodash: ^4.17.21
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@ruiapp/move-style': 0.0.2(lodash@4.17.21)
-      '@ruiapp/react-renderer': 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+      '@ruiapp/move-style': 0.0.3(lodash@4.17.21)
+      '@ruiapp/react-renderer': 0.0.3(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -2335,6 +2335,19 @@ packages:
     transitivePeerDependencies:
       - debug
 
+  /@ruiapp/move-style@0.0.3(lodash@4.17.21):
+    resolution: {integrity: sha512-jm+EC35OyowMIiNIT6gxINGCJh3+M2TDLAQvF2/MqprOJqR6O+kPzUmLqGXbHjoBsjEu0iY70FQg3AKIPH6xFw==}
+    peerDependencies:
+      lodash: ^4.17.21
+    dependencies:
+      axios: 1.6.0
+      events: 3.3.0
+      lodash: 4.17.21
+      qs: 6.11.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@ruiapp/rapid-configure-tools@0.0.3(@ant-design/icons@4.8.1)(antd@4.24.15)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(dayjs@1.11.10)(react-dom@18.2.0)(react@18.2.0)(tough-cookie@4.1.3):
     resolution: {integrity: sha512-kLhmBljAsrImEsy7esXwlB2j4yzZNE6mImsRx7VMfCsB1jc3ubGDSYqZTu81LPNtGMikGEDtwm2W5uVyBO/hMA==}
     peerDependencies:
@@ -2355,6 +2368,31 @@ packages:
       - react
       - react-dom
     dev: true
+
+  /@ruiapp/rapid-extension@0.0.10(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Zwo1Ue50wNOn9WFbB/zcoo5wcSuQ9RuzDosg7t4dZWau63A1RaNaFs/OLmefAsYLvj0OPc+4qDuMNrT23myjZg==}
+    peerDependencies:
+      '@ant-design/icons': ^4.7.0
+      antd: ^4.23.6
+      axios: ^1.1.2
+      dayjs: ^1.11.7
+      lodash: ^4.17.21
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@ant-design/icons': 4.8.1(react-dom@18.2.0)(react@18.2.0)
+      '@ruiapp/move-style': 0.0.2(lodash@4.17.21)
+      '@ruiapp/react-renderer': 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+      antd: 4.24.15(react-dom@18.2.0)(react@18.2.0)
+      axios: 1.6.0
+      dayjs: 1.11.10
+      lodash: 4.17.21
+      pluralize: 8.0.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@ruiapp/rapid-extension@0.0.8(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-FUKEdEGFI7KPzOu35iOQO2ypxxf9y7x3Dqgynyhp2CpBIfqWMpvk84axibzpmItjHVj9jBMD9FklWb0gBc8yCQ==}
@@ -2379,6 +2417,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - debug
+    dev: true
 
   /@ruiapp/react-renderer@0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-f4dyfKp9y99yvUAY7hKD/ZQsZVMAW3ILKF4exbaQjoyw/jEyyo1pQ3W0WVOGnSsVRFLEgOLjbcySxcaOeM6DQw==}
@@ -2392,6 +2431,20 @@ packages:
     transitivePeerDependencies:
       - debug
       - lodash
+
+  /@ruiapp/react-renderer@0.0.3(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-vs5BDLXj0KZbAznILxDriuxCKxdUwG34rfTSuRwj2pptCnjkbUhYn4VUqHX1dYtlOL1bTdK2zcAIIgpV1xOwVA==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@ruiapp/move-style': 0.0.3(lodash@4.17.21)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - debug
+      - lodash
+    dev: false
 
   /@ruiapp/react-rocks@0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1VU9SnOgoN6bccNSHtm+dXQsLiNXUa1J0bwauOzqGe8KKNEGFM2tsfRGWg1S7a1Uhpwu/eC1A+BPVrTNXvkzwg==}
