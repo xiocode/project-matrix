@@ -59,7 +59,6 @@ const page: RapidPage = {
           code: 'name',
           width: '200px',
           fixed: 'left',
-          rendererType: "link",
           rendererProps: {
             url: "/pages/meta_model_details?id={{id}}",
           },

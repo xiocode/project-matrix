@@ -7,6 +7,7 @@ export default {
   level: "app",
   entries: [
     { name: '活跃', value: 'active', color: 'green' },
+    { name: '暂停', value: 'suspended', color: 'orange' },
     { name: '关闭', value: 'closed', color: 'red' },
   ],
 } as RapidDataDictionary;

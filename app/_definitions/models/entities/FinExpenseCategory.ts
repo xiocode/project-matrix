@@ -4,8 +4,8 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'app',
-  code: 'BaseMaterialCategory',
-  name: '物料分类',
+  code: 'FinExpenseCategory',
+  name: '费用类型',
   fields: [
     {
       code: 'code',
@@ -20,13 +20,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
-      code: 'defaultUnit',
-      name: '默认单位',
-      type: 'relation',
-      targetSingularCode: 'base_unit',
-      targetIdColumnName: 'default_unit_id',
-    },
-    {
       code: 'orderNum',
       name: '排序号',
       type: 'integer',
@@ -36,15 +29,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: 'parent',
       name: '上级分类',
       type: 'relation',
-      targetSingularCode: 'base_material_category',
+      targetSingularCode: 'fin_expense_category',
       targetIdColumnName: 'parent_id',
-    },
-    {
-      code: 'materials',
-      name: '物料',
-      type: 'relation[]',
-      targetSingularCode: 'base_material',
-      selfIdColumnName: 'category_id',
     },
   ],
 };

@@ -80,6 +80,29 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_partner",
       targetIdColumnName: "distributor_id",
     },
+    {
+      code: 'phases',
+      name: '阶段',
+      type: 'relation[]',
+      targetSingularCode: "pm_phase",
+      selfIdColumnName: "project_id",
+    },
+    {
+      code: 'milestones',
+      name: '里程碑',
+      type: 'relation[]',
+      targetSingularCode: "pm_milestone",
+      selfIdColumnName: "project_id",
+    },
+    {
+      code: 'orders',
+      name: '相关订单',
+      type: 'relation[]',
+      targetSingularCode: "cbs_order",
+      linkTableName: "cbs_contracts_projects",
+      targetIdColumnName: "order_id",
+      selfIdColumnName: "project_id",
+    },
   ],
 };
 

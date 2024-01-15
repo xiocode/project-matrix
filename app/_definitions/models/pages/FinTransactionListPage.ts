@@ -9,39 +9,39 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'name',
+      code: 'account',
     },
     {
       type: 'auto',
+      code: 'type',
+    },
+    {
+      type: 'textarea',
       code: 'description',
     },
     {
       type: 'auto',
-      code: 'category',
+      code: 'amount',
     },
     {
       type: 'auto',
-      code: 'customer',
+      code: 'transferedAt',
     },
     {
       type: 'auto',
-      code: 'owner',
+      code: 'contract',
+      formControlProps: {
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ['label']
+      }
     },
     {
       type: 'auto',
-      code: 'salesman',
-    },
-    {
-      type: 'auto',
-      code: 'projectManager',
-    },
-    {
-      type: 'auto',
-      code: 'distributor',
-    },
-    {
-      type: 'auto',
-      code: 'stage',
+      code: 'order',
+      formControlProps: {
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ['label']
+      }
     },
     {
       type: 'auto',
@@ -51,13 +51,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 }
 
 const page: RapidPage = {
-  code: 'pm_project_list',
-  name: '项目列表',
-  title: '项目列表',
+  code: 'fin_franstaction_list',
+  name: '收支记录',
+  title: '收支记录',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "PmProject",
+      entityCode: "FinTransaction",
       viewMode: "table",
       listActions: [
         {
@@ -77,82 +77,87 @@ const page: RapidPage = {
           filterFields: ["code", "name"],
         }
       ],
-      pageSize: 20,
       orderBy: [
         {
-          field: 'code',
+          field: "transferedAt",
           desc: true,
-        }
+        },
       ],
+      pageSize: 20,
       columns: [
         {
-          type: 'link',
+          type: 'auto',
           code: 'code',
-          fixed: 'left',
           width: '100px',
+          fixed: 'left',
+        },
+        {
+          type: 'auto',
+          code: 'transferedAt',
+          width: '150px',
+          fixed: 'left',
+        },
+        {
+          type: 'auto',
+          code: 'account',
+          width: '150px',
+          fieldName: 'account.name'
+        },
+        {
+          type: 'auto',
+          code: 'type',
+          width: '80px',
+        },
+        {
+          type: 'auto',
+          code: 'amount',
+          width: '100px',
+          align: 'right',
+          rendererType: 'text',
           rendererProps: {
-            url: "/pages/pm_project_details?id={{id}}",
+            $exps: {
+              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
+            },
           },
         },
         {
-          type: 'link',
-          code: 'name',
-          fixed: 'left',
-          width: '200px',
+          type: 'auto',
+          code: 'balance',
+          width: '100px',
+          align: 'right',
+          rendererType: 'text',
           rendererProps: {
-            url: "/pages/pm_project_details?id={{id}}",
+            $exps: {
+              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
+            },
           },
         },
         {
           type: 'auto',
-          code: 'category',
-          fieldName: 'category.name',
-          width: '100px',
+          code: 'description',
         },
         {
           type: 'auto',
-          code: 'customer',
-          fieldName: 'customer.name',
-          width: '150px',
+          code: 'contract',
+          rendererType: "rapidLinkRenderer",
+          rendererProps: {
+            text: "{{code}} {{name}}",
+            url: "/pages/cbs_contract_details?id={{id}}",
+          },
         },
         {
           type: 'auto',
-          code: 'owner',
-          fieldName: 'owner.name',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'salesman',
-          fieldName: 'salesman.name',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'projectManager',
-          fieldName: 'projectManager.name',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'distributor',
-          fieldName: 'distributor.name',
-          width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'stage',
-          width: '100px',
+          code: 'order',
+          rendererType: "rapidLinkRenderer",
+          rendererProps: {
+            text: "{{code}} {{name}}",
+            url: "/pages/cbs_order_details?id={{id}}",
+          },
         },
         {
           type: 'auto',
           code: 'state',
           width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
         },
       ],
       actions: [
@@ -168,7 +173,7 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "PmProject",
+          entityCode: "FinTransaction",
         },
       ],
       newForm: cloneDeep(formConfig),

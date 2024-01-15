@@ -30,10 +30,20 @@ import BpmBusinessCategory from '../models/entities/BpmBusinessCategory';
 import BpmBusinessProcess from '../models/entities/BpmBusinessProcess';
 import BpmBusinessProcessRevision from '../models/entities/BpmBusinessProcessRevision';
 import BpmBusinessTask from '../models/entities/BpmBusinessTask';
-import CmContract from '../models/entities/CmContract';
+import CbsContract from '../models/entities/CbsContract';
+import CbsContractFile from '../models/entities/CbsContractFile';
+import CbsContractFundingBudget from '../models/entities/CbsContractFundingBudget';
+import CbsContractRelation from '../models/entities/CbsContractRelation';
+import CbsContractRelationKind from '../models/entities/CbsContractRelationKind';
+import CbsOrder from '../models/entities/CbsOrder';
+import CbsOrderItem from '../models/entities/CbsOrderItem';
 import EcmDocument from '../models/entities/EcmDocument';
 import EcmRevision from '../models/entities/EcmRevision';
 import EcmStorageObject from '../models/entities/EcmStorageObject';
+import FinAccount from '../models/entities/FinAccount';
+import FinBussinessCategory from '../models/entities/FinBussinessCategory';
+import FinExpenseCategory from '../models/entities/FinExpenseCategory';
+import FinTransaction from '../models/entities/FinTransaction';
 import MetaDataDictionary from '../models/entities/MetaDataDictionary';
 import MetaDataDictionaryEntry from '../models/entities/MetaDataDictionaryEntry';
 import MetaModel from '../models/entities/MetaModel';
@@ -42,8 +52,14 @@ import MetaRoute from '../models/entities/MetaRoute';
 import OcDepartment from '../models/entities/OcDepartment';
 import OcRole from '../models/entities/OcRole';
 import OcUser from '../models/entities/OcUser';
+import PmMilestone from '../models/entities/PmMilestone';
+import PmPhase from '../models/entities/PmPhase';
 import PmProject from '../models/entities/PmProject';
+import PmProjectBudget from '../models/entities/PmProjectBudget';
 import PmProjectCategory from '../models/entities/PmProjectCategory';
+import PmProjectCost from '../models/entities/PmProjectCost';
+import PmProjectCostCategory from '../models/entities/PmProjectCostCategory';
+import PmProjectLog from '../models/entities/PmProjectLog';
 import SysWebhook from '../models/entities/SysWebhook';
 
 export default [
@@ -77,10 +93,20 @@ export default [
   autoConfigureRapidEntity(BpmBusinessProcess),
   autoConfigureRapidEntity(BpmBusinessProcessRevision),
   autoConfigureRapidEntity(BpmBusinessTask),
-  autoConfigureRapidEntity(CmContract),
+  autoConfigureRapidEntity(CbsContract),
+  autoConfigureRapidEntity(CbsContractFile),
+  autoConfigureRapidEntity(CbsContractFundingBudget),
+  autoConfigureRapidEntity(CbsContractRelation),
+  autoConfigureRapidEntity(CbsContractRelationKind),
+  autoConfigureRapidEntity(CbsOrder),
+  autoConfigureRapidEntity(CbsOrderItem),
   autoConfigureRapidEntity(EcmDocument),
   autoConfigureRapidEntity(EcmRevision),
   autoConfigureRapidEntity(EcmStorageObject),
+  autoConfigureRapidEntity(FinAccount),
+  autoConfigureRapidEntity(FinBussinessCategory),
+  autoConfigureRapidEntity(FinExpenseCategory),
+  autoConfigureRapidEntity(FinTransaction),
   autoConfigureRapidEntity(MetaDataDictionary),
   autoConfigureRapidEntity(MetaDataDictionaryEntry),
   autoConfigureRapidEntity(MetaModel),
@@ -89,7 +115,13 @@ export default [
   autoConfigureRapidEntity(OcDepartment),
   autoConfigureRapidEntity(OcRole),
   autoConfigureRapidEntity(OcUser),
+  autoConfigureRapidEntity(PmMilestone),
+  autoConfigureRapidEntity(PmPhase),
   autoConfigureRapidEntity(PmProject),
+  autoConfigureRapidEntity(PmProjectBudget),
   autoConfigureRapidEntity(PmProjectCategory),
+  autoConfigureRapidEntity(PmProjectCost),
+  autoConfigureRapidEntity(PmProjectCostCategory),
+  autoConfigureRapidEntity(PmProjectLog),
   autoConfigureRapidEntity(SysWebhook),
 ] as TRapidEntity[];

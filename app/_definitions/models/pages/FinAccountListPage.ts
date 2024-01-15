@@ -4,14 +4,6 @@ import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'treeSelect',
-      code: 'parent',
-      formControlProps: {
-        listDataSourceCode: "nodeList",
-        listParentField: "parent.id",
-      }
-    },
-    {
       type: 'auto',
       code: 'code',
     },
@@ -20,24 +12,24 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: 'name',
     },
     {
-      type: 'auto',
-      code: 'defaultUnit',
+      type: 'textarea',
+      code: 'description',
     },
     {
       type: 'auto',
-      code: 'orderNum',
+      code: 'state',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'base_material_category_list',
-  name: '货品分类',
-  title: '货品分类',
+  code: 'fin_account_list',
+  name: '资金账户',
+  title: '资金账户',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "BaseMaterialCategory",
+      entityCode: "FinAccount",
       viewMode: "table",
       listActions: [
         {
@@ -59,34 +51,41 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
-          field: 'orderNum',
+          field: "code",
         },
       ],
-      convertListToTree: true,
-      listParentField: "parent.id",
-      pageSize: -1,
-      extraProperties: ['parent'],
+      pageSize: 20,
       columns: [
         {
           type: 'auto',
           code: 'code',
           width: '100px',
+          fixed: 'left',
         },
         {
           type: 'auto',
           code: 'name',
+          width: '150px',
         },
         {
           type: 'auto',
-          code: 'defaultUnit',
-          width: '100px',
+          code: 'balance',
+          width: '150px',
+          align: 'right',
+          rendererType: 'text',
           rendererProps: {
-            format: '{{name}}',
+            $exps: {
+              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
+            },
           },
         },
         {
           type: 'auto',
-          code: 'orderNum',
+          code: 'description',
+        },
+        {
+          type: 'auto',
+          code: 'state',
           width: '100px',
         },
         {
@@ -108,26 +107,11 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "BaseMaterialCategory",
+          entityCode: "FinAccount",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
-      stores: [
-        {
-          type: "entityStore",
-          name: "nodeList",
-          entityCode: "BaseMaterialCategory",
-          properties: ["id", "code", "name", "parent", "orderNum", "createdAt"],
-          filters: [
-          ],
-          orderBy: [
-            {
-              field: 'id',
-            }
-          ],
-        }
-      ],
     },
   ],
 };

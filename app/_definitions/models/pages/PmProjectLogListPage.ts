@@ -5,43 +5,27 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'code',
-    },
-    {
-      type: 'auto',
-      code: 'name',
-    },
-    {
-      type: 'auto',
-      code: 'description',
-    },
-    {
-      type: 'auto',
       code: 'project',
     },
     {
       type: 'auto',
-      code: 'salesman',
+      code: 'title',
     },
     {
-      type: 'auto',
-      code: 'totalAmount',
-    },
-    {
-      type: 'auto',
-      code: 'state',
+      type: 'textarea',
+      code: 'content',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'cm_contract_list',
-  name: '合同列表',
-  title: '合同列表',
+  code: 'pm_project_log_list',
+  name: '项目日志',
+  title: '项目日志',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "CmContract",
+      entityCode: "PmProjectLog",
       viewMode: "table",
       listActions: [
         {
@@ -62,50 +46,57 @@ const page: RapidPage = {
         }
       ],
       pageSize: 20,
+      orderBy: [
+        {
+          field: 'createdAt',
+          desc: true,
+        }
+      ],
       columns: [
-        {
-          type: 'auto',
-          code: 'code',
-          fixed: 'left',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'name',
-          fixed: 'left',
-        },
-        {
-          type: 'auto',
-          code: 'project',
-          fieldName: 'project.name',
-        },
-        {
-          type: 'auto',
-          code: 'salesman',
-          fieldName: 'salesman.name',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'totalAmount',
-          width: '100px',
-          align: 'right',
-          rendererType: 'text',
-          rendererProps: {
-            $exps: {
-              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-            }
-          }
-        },
-        {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
-        },
         {
           type: 'auto',
           code: 'createdAt',
           width: '150px',
+        },
+        {
+          type: 'auto',
+          code: 'project',
+          width: '250px',
+          rendererType: "rapidLinkRenderer",
+          rendererProps: {
+            text: "{{code}} {{name}}",
+            url: "/pages/pm_project_details?id={{id}}",
+          },
+        },
+        {
+          type: 'auto',
+          code: 'title',
+          width: '150px',
+        },
+        {
+          type: 'auto',
+          code: 'content',
+        },
+        {
+          type: 'auto',
+          code: 'createdBy',
+          width: '100px',
+          rendererProps: {
+            format: '{{name}}',
+          },
+        },
+        {
+          type: 'auto',
+          code: 'updatedAt',
+          width: '150px',
+        },
+        {
+          type: 'auto',
+          code: 'updatedBy',
+          width: '100px',
+          rendererProps: {
+            format: '{{name}}',
+          },
         },
       ],
       actions: [
@@ -121,7 +112,7 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "CmContract",
+          entityCode: "PmProjectLog",
         },
       ],
       newForm: cloneDeep(formConfig),

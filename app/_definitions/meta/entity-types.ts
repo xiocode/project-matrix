@@ -3,12 +3,20 @@ import type {
   BusinessActivityState,
   BusinessApplicationState,
   BusinessTaskState,
-  CmContractState,
+  CbsContractKind,
+  CbsContractState,
+  CbsOrderKind,
+  CbsOrderState,
+  ConfirmationState,
   DataDictionaryLevel,
   DataDictionaryValueType,
   EmployeeState,
   EnabledDisabledState,
+  FinTransactionType,
   FormFieldType,
+  PmBudgetType,
+  PmMilestoneState,
+  PmPhaseState,
   PmProjectStage,
   PmProjectState,
   PropertyType,
@@ -307,6 +315,10 @@ export interface BaseMaterial {
    */
   category: Partial<BaseMaterialCategory>;
   /**
+   * 默认单位
+   */
+  defaultUnit?: Partial<BaseUnit>;
+  /**
    * 可生产
    */
   canProduce?: boolean;
@@ -491,6 +503,10 @@ export interface BaseMaterialCategory {
    * 名称
    */
   name: string;
+  /**
+   * 默认单位
+   */
+  defaultUnit?: Partial<BaseUnit>;
   /**
    * 排序号
    */
@@ -1803,11 +1819,15 @@ export type SaveBpmBusinessTaskInput = Omit<BpmBusinessTask, 'id' | 'createdAt' 
 /**
  * 合同
  */
-export interface CmContract {
+export interface CbsContract {
   /**
    * id
    */
   id: number;
+  /**
+   * 类型
+   */
+  kind?: CbsContractKind;
   /**
    * 编号
    */
@@ -1829,13 +1849,21 @@ export interface CmContract {
    */
   salesman?: Partial<OcUser>;
   /**
+   * 相关订单
+   */
+  orders?: any;
+  /**
    * 合同金额
    */
   totalAmount: number;
   /**
+   * 签订日期
+   */
+  signingDate?: string;
+  /**
    * 状态
    */
-  state: CmContractState;
+  state: CbsContractState;
   /**
    * 创建时间
    */
@@ -1865,7 +1893,405 @@ export interface CmContract {
 /**
  * 合同
  */
-export type SaveCmContractInput = Omit<CmContract, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsContractInput = Omit<CbsContract, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 合同文件
+ */
+export interface CbsContractFile {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 文件编号
+   */
+  code?: string;
+  /**
+   * 文件名
+   */
+  name: string;
+  /**
+   * 文件大小
+   */
+  size: string;
+  /**
+   * 备注
+   */
+  description?: string;
+  /**
+   * 合同
+   */
+  contract?: Partial<CbsContract>;
+  /**
+   * 存储对象
+   */
+  storageObject?: Partial<EcmStorageObject>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 合同文件
+ */
+export type SaveCbsContractFileInput = Omit<CbsContractFile, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 资金预算
+ */
+export interface CbsContractFundingBudget {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 所属项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 销售
+   */
+  salesman?: Partial<OcUser>;
+  /**
+   * 相关订单
+   */
+  orders?: any;
+  /**
+   * 合同金额
+   */
+  totalAmount: number;
+  /**
+   * 状态
+   */
+  state: CbsContractState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 资金预算
+ */
+export type SaveCbsContractFundingBudgetInput = Omit<CbsContractFundingBudget, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 合同关联
+ */
+export interface CbsContractRelation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 主体合同
+   */
+  main?: Partial<CbsContract>;
+  /**
+   * 被关联合同
+   */
+  target?: Partial<CbsContract>;
+  /**
+   * 关系
+   */
+  kind?: Partial<CbsContractRelationKind>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 合同关联
+ */
+export type SaveCbsContractRelationInput = Omit<CbsContractRelation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 合同关联关系
+ */
+export interface CbsContractRelationKind {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 反向关系
+   */
+  opposite?: Partial<CbsContractRelationKind>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 合同关联关系
+ */
+export type SaveCbsContractRelationKindInput = Omit<CbsContractRelationKind, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 订单
+ */
+export interface CbsOrder {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 类型
+   */
+  kind: CbsOrderKind;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 相关项目
+   */
+  projects?: any;
+  /**
+   * 相关合同
+   */
+  contracts?: any;
+  /**
+   * 订单项
+   */
+  items?: any;
+  /**
+   * 订单金额
+   */
+  totalAmount: number;
+  /**
+   * 税费
+   */
+  taxFee: number;
+  /**
+   * 转账记录
+   */
+  transactions?: any;
+  /**
+   * 状态
+   */
+  state: CbsOrderState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 订单
+ */
+export type SaveCbsOrderInput = Omit<CbsOrder, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 订单项
+ */
+export interface CbsOrderItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 订单
+   */
+  order: Partial<CbsOrder>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 产品/服务
+   */
+  subject?: Partial<BaseMaterial>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 单价
+   */
+  price: number;
+  /**
+   * 数量
+   */
+  quantity: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 税率
+   */
+  taxRate: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 订单项
+ */
+export type SaveCbsOrderItemInput = Omit<CbsOrderItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 文档
@@ -2051,6 +2477,258 @@ export interface EcmStorageObject {
  * 存储对象
  */
 export type SaveEcmStorageObjectInput = Omit<EcmStorageObject, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 账户
+ */
+export interface FinAccount {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 初始金额
+   */
+  initialAmount: number;
+  /**
+   * 账户余额
+   */
+  balance: number;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 账户
+ */
+export type SaveFinAccountInput = Omit<FinAccount, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 业务类型
+ */
+export interface FinBusinessCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 上级分类
+   */
+  parent?: Partial<FinBusinessCategory>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 业务类型
+ */
+export type SaveFinBusinessCategoryInput = Omit<FinBusinessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 费用类型
+ */
+export interface FinExpenseCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 上级分类
+   */
+  parent?: Partial<FinExpenseCategory>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 费用类型
+ */
+export type SaveFinExpenseCategoryInput = Omit<FinExpenseCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 转账
+ */
+export interface FinTransaction {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 账户
+   */
+  account: Partial<FinAccount>;
+  /**
+   * 类型
+   */
+  type: FinTransactionType;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 金额
+   */
+  amount: number;
+  /**
+   * 账户余额
+   */
+  balance?: number;
+  /**
+   * 转账时间
+   */
+  transferedAt?: string;
+  /**
+   * 状态
+   */
+  state: ConfirmationState;
+  /**
+   * 合同
+   */
+  contract?: Partial<CbsContract>;
+  /**
+   * 订单
+   */
+  order?: Partial<CbsOrder>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 转账
+ */
+export type SaveFinTransactionInput = Omit<FinTransaction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 数据字典
@@ -2641,6 +3319,144 @@ export interface OcUser {
 export type SaveOcUserInput = Omit<OcUser, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 里程碑
+ */
+export interface PmMilestone {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 阶段
+   */
+  phase?: Partial<PmPhase>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 截止日期
+   */
+  deadline?: string;
+  /**
+   * 状态
+   */
+  state?: PmMilestoneState;
+  /**
+   * 完成日期
+   */
+  completedAt?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 里程碑
+ */
+export type SavePmMilestoneInput = Omit<PmMilestone, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 阶段
+ */
+export interface PmPhase {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 计划开始日期
+   */
+  startDate?: string;
+  /**
+   * 计划结束日期
+   */
+  endDate?: string;
+  /**
+   * 状态
+   */
+  state?: PmPhaseState;
+  /**
+   * 实际开始日期
+   */
+  actualStartedAt?: string;
+  /**
+   * 实际完成日期
+   */
+  actualCompletedAt?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 阶段
+ */
+export type SavePmPhaseInput = Omit<PmPhase, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 项目
  */
 export interface PmProject {
@@ -2693,6 +3509,18 @@ export interface PmProject {
    */
   distributor?: Partial<BasePartner>;
   /**
+   * 阶段
+   */
+  phases?: any;
+  /**
+   * 里程碑
+   */
+  milestones?: any;
+  /**
+   * 相关订单
+   */
+  orders?: any;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -2722,6 +3550,97 @@ export interface PmProject {
  * 项目
  */
 export type SavePmProjectInput = Omit<PmProject, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目预算
+ */
+export interface PmProjectBudget {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 类型
+   */
+  type: PmBudgetType;
+  /**
+   * 标题
+   */
+  title: string;
+  /**
+   * 产品/服务
+   */
+  subject?: Partial<BaseMaterial>;
+  /**
+   * 成本单价
+   */
+  cost: string;
+  /**
+   * 单价
+   */
+  price: string;
+  /**
+   * 数量
+   */
+  quantity: string;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 税率
+   */
+  taxRate: string;
+  /**
+   * 业务类型
+   */
+  businessCategory?: Partial<FinBusinessCategory>;
+  /**
+   * 费用类型
+   */
+  expenseCategory?: Partial<FinExpenseCategory>;
+  /**
+   * 计划付款日期
+   */
+  scheduledPaymentDate?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目预算
+ */
+export type SavePmProjectBudgetInput = Omit<PmProjectBudget, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 项目类型
@@ -2773,6 +3692,171 @@ export interface PmProjectCategory {
  * 项目类型
  */
 export type SavePmProjectCategoryInput = Omit<PmProjectCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目成本
+ */
+export interface PmProjectCostBudget {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 标题
+   */
+  title: string;
+  /**
+   * 金额
+   */
+  amount: string;
+  /**
+   * 成本类型
+   */
+  costCategory?: Partial<PmProjectCostCategory>;
+  /**
+   * 付款时间
+   */
+  paymentTime?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目成本
+ */
+export type SavePmProjectCostBudgetInput = Omit<PmProjectCostBudget, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目成本类型
+ */
+export interface PmProjectCostCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目成本类型
+ */
+export type SavePmProjectCostCategoryInput = Omit<PmProjectCostCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目日志
+ */
+export interface PmProjectLog {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 标题
+   */
+  title: string;
+  /**
+   * 描述
+   */
+  content?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目日志
+ */
+export type SavePmProjectLogInput = Omit<PmProjectLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * Webhook

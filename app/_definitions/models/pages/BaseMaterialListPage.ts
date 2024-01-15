@@ -22,6 +22,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
+      code: 'defaultUnit',
+    },
+    {
+      type: 'auto',
       code: 'brand',
     },
     {
@@ -168,6 +172,14 @@ const page: RapidPage = {
             },
             {
               type: 'auto',
+              code: 'defaultUnit',
+              width: '100px',
+              rendererProps: {
+                format: '{{name}}',
+              },
+            },
+            {
+              type: 'auto',
               code: 'brand',
               width: '100px',
             },
@@ -214,10 +226,10 @@ const page: RapidPage = {
               type: "entityStore",
               name: "categories",
               entityCode: "BaseMaterialCategory",
-              properties: ["id", "code", "name", "parent"],
+              properties: ["id", "code", "name", "parent", "orderNum"],
               orderBy: [
                 {
-                  field: 'id',
+                  field: 'orderNum',
                 }
               ],
             }
@@ -233,10 +245,10 @@ const page: RapidPage = {
           type: "entityStore",
           name: "categories",
           entityCode: "BaseMaterialCategory",
-          properties: ["id", "code", "name", "parent"],
+          properties: ["id", "code", "name", "parent", "orderNum"],
           orderBy: [
             {
-              field: 'id',
+              field: 'orderNum',
             }
           ],
         }

@@ -55,14 +55,50 @@ export type BusinessTaskState =
   ;
 
 /**
+ * 合同类型
+ */
+export type CbsContractKind =
+  | 'sale'
+  | 'purchase'
+  | 'special'
+  ;
+
+/**
  * 合同状态
  */
-export type CmContractState =
+export type CbsContractState =
   | 'unsigned'
   | 'fulfilling'
   | 'fulfilled'
   | 'suspended'
   | 'cancelled'
+  ;
+
+/**
+ * 订单类型
+ */
+export type CbsOrderKind =
+  | 'sale'
+  | 'purchase'
+  ;
+
+/**
+ * 订单状态
+ */
+export type CbsOrderState =
+  | 'unsigned'
+  | 'fulfilling'
+  | 'fulfilled'
+  | 'suspended'
+  | 'cancelled'
+  ;
+
+/**
+ * 确认状态
+ */
+export type ConfirmationState =
+  | 'unconfirmed'
+  | 'confirmed'
   ;
 
 /**
@@ -97,6 +133,14 @@ export type EmployeeState =
 export type EnabledDisabledState =
   | 'enabled'
   | 'disabled'
+  ;
+
+/**
+ * 转账类型
+ */
+export type FinTransactionType =
+  | 'in'
+  | 'out'
   ;
 
 /**
@@ -155,13 +199,44 @@ export type RouteType =
   ;
 
 /**
+ * 预算类型
+ */
+export type PmBudgetType =
+  | 'in'
+  | 'out'
+  ;
+
+/**
+ * 里程碑状态
+ */
+export type PmMilestoneState =
+  | 'unplanned'
+  | 'planned'
+  | 'completed'
+  | 'delayed'
+  | 'cancelled'
+  ;
+
+/**
+ * 项目阶段状态
+ */
+export type PmPhaseState =
+  | 'unplanned'
+  | 'planned'
+  | 'inProgress'
+  | 'completed'
+  | 'delayed'
+  | 'cancelled'
+  ;
+
+/**
  * 项目阶段
  */
 export type PmProjectStage =
-  | 'pre-sale'
-  | 'blueprint'
+  | 'proposal'
+  | 'initialization'
+  | 'planning'
   | 'executing'
-  | 'check'
   | 'closing'
   | 'archived'
   ;
@@ -171,6 +246,7 @@ export type PmProjectStage =
  */
 export type PmProjectState =
   | 'active'
+  | 'suspended'
   | 'closed'
   ;
 

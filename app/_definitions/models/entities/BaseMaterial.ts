@@ -43,6 +43,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'category_id',
     },
     {
+      code: 'defaultUnit',
+      name: '默认单位',
+      type: 'relation',
+      targetSingularCode: 'base_unit',
+      targetIdColumnName: 'default_unit_id',
+    },
+    {
       code: 'canProduce',
       name: '可生产',
       type: 'boolean',

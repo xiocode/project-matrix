@@ -4,14 +4,22 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'app',
-  code: 'CmContract',
-  name: '合同',
+  code: 'PmMilestone',
+  name: '里程碑',
   fields: [
     {
-      code: 'code',
-      name: '编号',
-      type: 'text',
-      required: false,
+      code: 'project',
+      name: '项目',
+      type: 'relation',
+      targetSingularCode: "pm_project",
+      targetIdColumnName: "project_id",
+    },
+    {
+      code: 'phase',
+      name: '阶段',
+      type: 'relation',
+      targetSingularCode: "pm_phase",
+      targetIdColumnName: "phase_id",
     },
     {
       code: 'name',
@@ -25,31 +33,20 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: 'text',
     },
     {
-      code: 'project',
-      name: '所属项目',
-      type: 'relation',
-      targetSingularCode: "pm_project",
-      targetIdColumnName: "project_id",
-    },
-    {
-      code: 'salesman',
-      name: '销售',
-      type: 'relation',
-      targetSingularCode: "oc_user",
-      targetIdColumnName: "salesman_id",
-    },
-    {
-      code: 'totalAmount',
-      name: '合同金额',
-      type: 'integer',
-      required: true,
+      code: 'deadline',
+      name: '截止日期',
+      type: 'date',
     },
     {
       code: 'state',
       name: '状态',
-      required: true,
       type: 'option',
-      dataDictionary: 'CmContractState',
+      dataDictionary: 'PmMilestoneState',
+    },
+    {
+      code: 'completedAt',
+      name: '完成日期',
+      type: 'date',
     },
   ],
 };

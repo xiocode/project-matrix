@@ -4,14 +4,6 @@ import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'treeSelect',
-      code: 'parent',
-      formControlProps: {
-        listDataSourceCode: "nodeList",
-        listParentField: "parent.id",
-      }
-    },
-    {
       type: 'auto',
       code: 'code',
     },
@@ -21,7 +13,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'defaultUnit',
+      code: 'opposite',
+      formControlProps: {
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ['label']
+      }
     },
     {
       type: 'auto',
@@ -31,13 +27,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 }
 
 const page: RapidPage = {
-  code: 'base_material_category_list',
-  name: '货品分类',
-  title: '货品分类',
+  code: 'cbs_contract_relation_kind_list',
+  name: '合同关联类型',
+  title: '合同关联类型',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "BaseMaterialCategory",
+      entityCode: "CbsContractRelationKind",
       viewMode: "table",
       listActions: [
         {
@@ -59,30 +55,21 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
-          field: 'orderNum',
+          field: "orderNum",
         },
       ],
-      convertListToTree: true,
-      listParentField: "parent.id",
-      pageSize: -1,
-      extraProperties: ['parent'],
+      pageSize: 20,
       columns: [
         {
           type: 'auto',
           code: 'code',
+          fixed: 'left',
           width: '100px',
         },
         {
-          type: 'auto',
+          type: 'link',
           code: 'name',
-        },
-        {
-          type: 'auto',
-          code: 'defaultUnit',
-          width: '100px',
-          rendererProps: {
-            format: '{{name}}',
-          },
+          fixed: 'left',
         },
         {
           type: 'auto',
@@ -91,8 +78,9 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'createdAt',
+          code: 'opposite',
           width: '150px',
+          fieldName: 'opposite.name'
         },
       ],
       actions: [
@@ -108,26 +96,11 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "BaseMaterialCategory",
+          entityCode: "CbsContractRelationKind",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
-      stores: [
-        {
-          type: "entityStore",
-          name: "nodeList",
-          entityCode: "BaseMaterialCategory",
-          properties: ["id", "code", "name", "parent", "orderNum", "createdAt"],
-          filters: [
-          ],
-          orderBy: [
-            {
-              field: 'id',
-            }
-          ],
-        }
-      ],
     },
   ],
 };
