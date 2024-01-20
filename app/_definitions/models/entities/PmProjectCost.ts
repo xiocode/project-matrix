@@ -23,7 +23,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'amount',
       name: '金额',
-      type: 'long',
+      type: 'double',
       required: true,
     },
     {

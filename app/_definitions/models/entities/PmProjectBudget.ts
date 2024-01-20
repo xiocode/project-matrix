@@ -44,19 +44,19 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'cost',
       name: '成本单价',
-      type: 'long',
+      type: 'double',
       required: true,
     },
     {
       code: 'price',
       name: '单价',
-      type: 'long',
+      type: 'double',
       required: true,
     },
     {
       code: 'quantity',
       name: '数量',
-      type: 'long',
+      type: 'double',
       required: true,
     },
     {
@@ -69,7 +69,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'taxRate',
       name: '税率',
-      type: 'long',
+      type: 'double',
       required: true,
     },
     {

@@ -36,13 +36,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'amount',
       name: '金额',
-      type: 'integer',
+      type: 'double',
       required: true,
     },
     {
       code: 'balance',
       name: '账户余额',
-      type: 'integer',
+      type: 'double',
     },
     {
       code: 'transferedAt',

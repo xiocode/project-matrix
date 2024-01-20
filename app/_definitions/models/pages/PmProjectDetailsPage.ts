@@ -231,7 +231,7 @@ const page: RapidPage = {
             {
               $id: "projectLogList",
               $type: "sonicEntityList",
-              entityCode: "PmProjectLog",
+              entityCode: "PmProjectEvent",
               viewMode: "table",
               fixedFilters: [
                 {
@@ -303,7 +303,7 @@ const page: RapidPage = {
                   actionType: 'delete',
                   actionText: '删除',
                   dataSourceCode: "list",
-                  entityCode: "PmProjectLog",
+                  entityCode: "PmProjectEvent",
                 },
               ],
               newForm: cloneDeep(projectLogFormConfig),
@@ -551,14 +551,9 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'totalAmount',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    }
-                  }
+                  rendererType: 'rapidCurrencyRenderer',
                 },
                 {
                   type: 'auto',
@@ -685,14 +680,9 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'totalAmount',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    }
-                  }
+                  rendererType: 'rapidCurrencyRenderer',
                 },
                 {
                   type: 'auto',
@@ -775,39 +765,32 @@ const page: RapidPage = {
                 },
                 {
                   type: 'auto',
-                  code: 'cost',
-                  width: '100px',
-                  align: 'right',
-                  rendererType: 'text',
+                  code: 'businessCategory',
+                  width: '150px',
                   rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    }
+                    format: '{{code}} {{name}}',
                   }
                 },
                 {
                   type: 'auto',
-                  code: 'price',
-                  width: '100px',
+                  code: 'cost',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    }
-                  }
+                  rendererType: 'rapidCurrencyRenderer',
+                },
+                {
+                  type: 'auto',
+                  code: 'price',
+                  width: '120px',
+                  align: 'right',
+                  rendererType: 'rapidCurrencyRenderer',
                 },
                 {
                   type: 'auto',
                   code: 'quantity',
                   width: '60px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    }
-                  }
+                  rendererType: 'rapidNumberRenderer',
                 },
                 {
                   type: 'auto',
@@ -822,24 +805,19 @@ const page: RapidPage = {
                   code: 'taxRate',
                   width: '60px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value / 10) + '%'"
-                    }
-                  }
+                  rendererType: 'rapidPercentRenderer',
                 },
                 {
                   type: 'auto',
                   code: 'id',
                   fieldName: 'id',
                   title: '税费',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
+                  rendererType: 'rapidCurrencyRenderer',
                   rendererProps: {
                     $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.record.price * $slot.record.quantity * $slot.record.taxRate / 1000)"
+                      value: "$slot.record.price * $slot.record.quantity * $slot.record.taxRate"
                     }
                   }
                 },
@@ -848,12 +826,12 @@ const page: RapidPage = {
                   code: 'id',
                   fieldName: 'id',
                   title: '金额',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
+                  rendererType: 'rapidCurrencyRenderer',
                   rendererProps: {
                     $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.record.price * $slot.record.quantity)"
+                      value: "$slot.record.price * $slot.record.quantity"
                     }
                   }
                 },

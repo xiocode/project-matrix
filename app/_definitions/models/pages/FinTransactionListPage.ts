@@ -111,26 +111,16 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'amount',
-          width: '100px',
+          width: '120px',
           align: 'right',
-          rendererType: 'text',
-          rendererProps: {
-            $exps: {
-              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-            },
-          },
+          rendererType: 'rapidCurrencyRenderer',
         },
         {
           type: 'auto',
           code: 'balance',
-          width: '100px',
+          width: '120px',
           align: 'right',
-          rendererType: 'text',
-          rendererProps: {
-            $exps: {
-              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-            },
-          },
+          rendererType: 'rapidCurrencyRenderer',
         },
         {
           type: 'auto',

@@ -27,7 +27,7 @@
     "@ruiapp/echarts-extension": "^0.0.2",
     "@ruiapp/monaco-extension": "^0.0.2",
     "@ruiapp/move-style": "^0.0.3",
-    "@ruiapp/rapid-extension": "^0.0.16",
+    "@ruiapp/rapid-extension": "^0.0.19",
     "@ruiapp/react-renderer": "^0.0.3",
     "@ruiapp/react-rocks": "^0.0.3",
     "antd": "4.24.15",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@remix-run/dev": "^1.19.3",
     "@remix-run/eslint-config": "^1.19.3",
-    "@ruiapp/rapid-configure-tools": "^0.0.3",
+    "@ruiapp/rapid-configure-tools": "^0.0.4",
     "@types/lodash": "^4.14.200",
     "@types/node": "^18.18.8",
     "@types/react": "^18.0.15",

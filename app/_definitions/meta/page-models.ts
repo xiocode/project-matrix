@@ -19,6 +19,8 @@ import CbsOrderDetailsPage from '../models/pages/CbsOrderDetailsPage';
 import CbsOrderListPage from '../models/pages/CbsOrderListPage';
 import DataDictionaryListPage from '../models/pages/DataDictionaryListPage';
 import FinAccountListPage from '../models/pages/FinAccountListPage';
+import FinBusinessCategoryListPage from '../models/pages/FinBusinessCategoryListPage';
+import FinExpenseCategoryListPage from '../models/pages/FinExpenseCategoryListPage';
 import FinTransactionListPage from '../models/pages/FinTransactionListPage';
 import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
@@ -29,8 +31,8 @@ import OcRoleListPage from '../models/pages/OcRoleListPage';
 import OcUserListPage from '../models/pages/OcUserListPage';
 import PmProjectCategoryListPage from '../models/pages/PmProjectCategoryListPage';
 import PmProjectDetailsPage from '../models/pages/PmProjectDetailsPage';
+import PmProjectEventListPage from '../models/pages/PmProjectEventListPage';
 import PmProjectListPage from '../models/pages/PmProjectListPage';
-import PmProjectLogListPage from '../models/pages/PmProjectLogListPage';
 import SysWebhookListPage from '../models/pages/SysWebhookListPage';
 
 export default [
@@ -54,6 +56,8 @@ export default [
   CbsOrderListPage,
   DataDictionaryListPage,
   FinAccountListPage,
+  FinBusinessCategoryListPage,
+  FinExpenseCategoryListPage,
   FinTransactionListPage,
   MetaModelDetailsPage,
   MetaModelListPage,
@@ -64,7 +68,7 @@ export default [
   OcUserListPage,
   PmProjectCategoryListPage,
   PmProjectDetailsPage,
+  PmProjectEventListPage,
   PmProjectListPage,
-  PmProjectLogListPage,
   SysWebhookListPage,
 ] as TRapidPage[];

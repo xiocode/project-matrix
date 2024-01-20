@@ -5,51 +5,27 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'kind',
-    },
-    {
-      type: 'auto',
-      code: 'code',
-    },
-    {
-      type: 'auto',
-      code: 'name',
-    },
-    {
-      type: 'auto',
-      code: 'description',
-    },
-    {
-      type: 'auto',
       code: 'project',
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
     },
     {
       type: 'auto',
-      code: 'salesman',
+      code: 'title',
     },
     {
-      type: 'auto',
-      code: 'totalAmount',
-    },
-    {
-      type: 'auto',
-      code: 'state',
+      type: 'textarea',
+      code: 'content',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'cbs_contract_list',
-  name: '合同列表',
-  title: '合同列表',
+  code: 'pm_project_event_list',
+  name: '事件记录',
+  title: '事件记录',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "CbsContract",
+      entityCode: "PmProjectEvent",
       viewMode: "table",
       listActions: [
         {
@@ -69,37 +45,23 @@ const page: RapidPage = {
           filterFields: ["code", "name"],
         }
       ],
+      pageSize: 20,
       orderBy: [
         {
-          field: "createdAt",
+          field: 'createdAt',
           desc: true,
-        },
+        }
       ],
-      pageSize: 20,
       columns: [
         {
           type: 'auto',
-          code: 'kind',
-          fixed: 'left',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'code',
-          fixed: 'left',
-          width: '100px',
-        },
-        {
-          type: 'link',
-          code: 'name',
-          fixed: 'left',
-          rendererProps: {
-            url: "/pages/cbs_contract_details?id={{id}}",
-          },
+          code: 'createdAt',
+          width: '150px',
         },
         {
           type: 'auto',
           code: 'project',
+          width: '250px',
           rendererType: "rapidLinkRenderer",
           rendererProps: {
             text: "{{code}} {{name}}",
@@ -108,26 +70,33 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'salesman',
-          fieldName: 'salesman.name',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'totalAmount',
-          width: '120px',
-          align: 'right',
-          rendererType: 'rapidCurrencyRenderer',
-        },
-        {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'createdAt',
+          code: 'title',
           width: '150px',
+        },
+        {
+          type: 'auto',
+          code: 'content',
+        },
+        {
+          type: 'auto',
+          code: 'createdBy',
+          width: '100px',
+          rendererProps: {
+            format: '{{name}}',
+          },
+        },
+        {
+          type: 'auto',
+          code: 'updatedAt',
+          width: '150px',
+        },
+        {
+          type: 'auto',
+          code: 'updatedBy',
+          width: '100px',
+          rendererProps: {
+            format: '{{name}}',
+          },
         },
       ],
       actions: [
@@ -143,7 +112,7 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "CbsContract",
+          entityCode: "PmProjectEvent",
         },
       ],
       newForm: cloneDeep(formConfig),

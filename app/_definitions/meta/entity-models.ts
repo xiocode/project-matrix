@@ -41,7 +41,7 @@ import EcmDocument from '../models/entities/EcmDocument';
 import EcmRevision from '../models/entities/EcmRevision';
 import EcmStorageObject from '../models/entities/EcmStorageObject';
 import FinAccount from '../models/entities/FinAccount';
-import FinBussinessCategory from '../models/entities/FinBussinessCategory';
+import FinBusinessCategory from '../models/entities/FinBusinessCategory';
 import FinExpenseCategory from '../models/entities/FinExpenseCategory';
 import FinTransaction from '../models/entities/FinTransaction';
 import MetaDataDictionary from '../models/entities/MetaDataDictionary';
@@ -59,7 +59,7 @@ import PmProjectBudget from '../models/entities/PmProjectBudget';
 import PmProjectCategory from '../models/entities/PmProjectCategory';
 import PmProjectCost from '../models/entities/PmProjectCost';
 import PmProjectCostCategory from '../models/entities/PmProjectCostCategory';
-import PmProjectLog from '../models/entities/PmProjectLog';
+import PmProjectEvent from '../models/entities/PmProjectEvent';
 import SysWebhook from '../models/entities/SysWebhook';
 
 export default [
@@ -104,7 +104,7 @@ export default [
   autoConfigureRapidEntity(EcmRevision),
   autoConfigureRapidEntity(EcmStorageObject),
   autoConfigureRapidEntity(FinAccount),
-  autoConfigureRapidEntity(FinBussinessCategory),
+  autoConfigureRapidEntity(FinBusinessCategory),
   autoConfigureRapidEntity(FinExpenseCategory),
   autoConfigureRapidEntity(FinTransaction),
   autoConfigureRapidEntity(MetaDataDictionary),
@@ -122,6 +122,6 @@ export default [
   autoConfigureRapidEntity(PmProjectCategory),
   autoConfigureRapidEntity(PmProjectCost),
   autoConfigureRapidEntity(PmProjectCostCategory),
-  autoConfigureRapidEntity(PmProjectLog),
+  autoConfigureRapidEntity(PmProjectEvent),
   autoConfigureRapidEntity(SysWebhook),
 ] as TRapidEntity[];

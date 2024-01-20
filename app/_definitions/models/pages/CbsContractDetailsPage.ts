@@ -133,6 +133,7 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'totalAmount',
+          rendererType: 'rapidCurrencyRenderer',
         },
         {
           type: 'auto',
@@ -373,13 +374,9 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'totalAmount',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
                   rendererType: 'rapidCurrencyRenderer',
-                  rendererProps: {
-                    usingThousandSeparator: true,
-                    decimalPlaces: 2,
-                  },
                 },
                 {
                   type: 'auto',

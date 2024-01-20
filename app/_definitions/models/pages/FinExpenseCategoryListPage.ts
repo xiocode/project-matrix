@@ -4,28 +4,36 @@ import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'project',
+      type: 'treeSelect',
+      code: 'parent',
+      formControlProps: {
+        listDataSourceCode: "nodeList",
+        listParentField: "parent.id",
+      }
     },
     {
       type: 'auto',
-      code: 'title',
+      code: 'code',
     },
     {
-      type: 'textarea',
-      code: 'content',
+      type: 'auto',
+      code: 'name',
+    },
+    {
+      type: 'auto',
+      code: 'orderNum',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'pm_project_log_list',
-  name: '项目日志',
-  title: '项目日志',
+  code: 'fin_expense_category_list',
+  name: '费用类型',
+  title: '费用类型',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "PmProjectLog",
+      entityCode: "FinExpenseCategory",
       viewMode: "table",
       listActions: [
         {
@@ -45,58 +53,34 @@ const page: RapidPage = {
           filterFields: ["code", "name"],
         }
       ],
-      pageSize: 20,
       orderBy: [
         {
-          field: 'createdAt',
-          desc: true,
-        }
+          field: 'orderNum',
+        },
       ],
+      convertListToTree: true,
+      listParentField: "parent.id",
+      pageSize: -1,
+      extraProperties: ['parent'],
       columns: [
+        {
+          type: 'auto',
+          code: 'code',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'name',
+        },
+        {
+          type: 'auto',
+          code: 'orderNum',
+          width: '100px',
+        },
         {
           type: 'auto',
           code: 'createdAt',
           width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'project',
-          width: '250px',
-          rendererType: "rapidLinkRenderer",
-          rendererProps: {
-            text: "{{code}} {{name}}",
-            url: "/pages/pm_project_details?id={{id}}",
-          },
-        },
-        {
-          type: 'auto',
-          code: 'title',
-          width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'content',
-        },
-        {
-          type: 'auto',
-          code: 'createdBy',
-          width: '100px',
-          rendererProps: {
-            format: '{{name}}',
-          },
-        },
-        {
-          type: 'auto',
-          code: 'updatedAt',
-          width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'updatedBy',
-          width: '100px',
-          rendererProps: {
-            format: '{{name}}',
-          },
         },
       ],
       actions: [
@@ -112,11 +96,26 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "PmProjectLog",
+          entityCode: "FinExpenseCategory",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      stores: [
+        {
+          type: "entityStore",
+          name: "nodeList",
+          entityCode: "FinExpenseCategory",
+          properties: ["id", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [
+          ],
+          orderBy: [
+            {
+              field: 'id',
+            }
+          ],
+        }
+      ],
     },
   ],
 };

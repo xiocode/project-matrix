@@ -5,7 +5,7 @@ import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, L
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
-import RapidExtension, { rapidAppDefinition } from '@ruiapp/rapid-extension';
+import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
 import { useMemo } from "react";
 import _, { find, first } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
@@ -50,6 +50,12 @@ framework.loadExtension(MonacoExtension);
 framework.loadExtension(RapidExtension);
 framework.loadExtension(DesignerExtension);
 framework.loadExtension(AppExtension);
+
+RapidExtensionSetting.setDefaultRendererPropsOfRendererType("rapidCurrencyRenderer", {
+  usingThousandSeparator: true,
+  decimalPlaces: 2,
+  currencyCode: 'CNY',
+});
 
 
 export interface GenerateRuiPageConfigOption<TPage = RapidPage> {

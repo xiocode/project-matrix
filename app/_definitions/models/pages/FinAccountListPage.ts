@@ -70,14 +70,9 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'balance',
-          width: '150px',
+          width: '120px',
           align: 'right',
-          rendererType: 'text',
-          rendererProps: {
-            $exps: {
-              text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-            },
-          },
+          rendererType: 'rapidCurrencyRenderer',
         },
         {
           type: 'auto',

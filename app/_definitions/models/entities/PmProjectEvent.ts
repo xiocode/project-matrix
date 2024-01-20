@@ -4,8 +4,8 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'app',
-  code: 'PmProjectLog',
-  name: '项目日志',
+  code: 'PmProjectEvent',
+  name: '项目事件',
   fields: [
     {
       code: 'project',

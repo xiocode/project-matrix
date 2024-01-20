@@ -1076,7 +1076,7 @@ export interface BaseProdFlowTemplate {
   /**
    * 工序
    */
-  processes?: Partial<BaseProdFlowTemplateProcess>;
+  processes?: any;
   /**
    * 创建时间
    */
@@ -3582,15 +3582,15 @@ export interface PmProjectBudget {
   /**
    * 成本单价
    */
-  cost: string;
+  cost: number;
   /**
    * 单价
    */
-  price: string;
+  price: number;
   /**
    * 数量
    */
-  quantity: string;
+  quantity: number;
   /**
    * 单位
    */
@@ -3598,7 +3598,7 @@ export interface PmProjectBudget {
   /**
    * 税率
    */
-  taxRate: string;
+  taxRate: number;
   /**
    * 业务类型
    */
@@ -3712,7 +3712,7 @@ export interface PmProjectCostBudget {
   /**
    * 金额
    */
-  amount: string;
+  amount: number;
   /**
    * 成本类型
    */
@@ -3808,9 +3808,9 @@ export interface PmProjectCostCategory {
 export type SavePmProjectCostCategoryInput = Omit<PmProjectCostCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
- * 项目日志
+ * 项目事件
  */
-export interface PmProjectLog {
+export interface PmProjectEvent {
   /**
    * id
    */
@@ -3854,9 +3854,9 @@ export interface PmProjectLog {
 }
 
 /**
- * 项目日志
+ * 项目事件
  */
-export type SavePmProjectLogInput = Omit<PmProjectLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectEventInput = Omit<PmProjectEvent, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * Webhook

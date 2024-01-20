@@ -48,8 +48,6 @@ const orderItemFormConfig: Partial<RapidEntityFormConfig> = {
       $action: "script",
       script: `function (event) {
         const changedValues = event.args[0] || {};
-        console.log('event', event)
-        console.log('changedValue', changedValues)
         if(changedValues.hasOwnProperty('subject')) {
           const _ = event.framework.getExpressionVars()._;
           const materials = _.get(event.scope.stores['dataFormItemList-subject'], 'data.list');
@@ -180,12 +178,9 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'price',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererProps: {
-                    usingThousandSeparator: true,
-                    decimalPlaces: 2,
-                  }
+                  rendererType: 'rapidCurrencyRenderer',
                 },
                 {
                   type: 'auto',
@@ -198,14 +193,12 @@ const page: RapidPage = {
                   type: 'auto',
                   code: 'id',
                   title: '税费',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'rapidNumberRenderer',
+                  rendererType: 'rapidCurrencyRenderer',
                   rendererProps: {
-                    usingThousandSeparator: true,
-                    decimalPlaces: 2,
                     $exps: {
-                      value: "$slot.record.price * $slot.record.quantity * $slot.record.taxRate / 1000",
+                      value: "$slot.record.price * $slot.record.quantity * $slot.record.taxRate",
                     }
                   }
                 },
@@ -214,12 +207,10 @@ const page: RapidPage = {
                   code: 'id',
                   fieldName: 'id',
                   title: '金额',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'rapidNumberRenderer',
+                  rendererType: 'rapidCurrencyRenderer',
                   rendererProps: {
-                    usingThousandSeparator: true,
-                    decimalPlaces: 2,
                     $exps: {
                       value: "$slot.record.price * $slot.record.quantity",
                     }
@@ -239,7 +230,7 @@ const page: RapidPage = {
                   actionType: 'delete',
                   actionText: '删除',
                   dataSourceCode: "list",
-                  entityCode: "PmProjectLog",
+                  entityCode: "PmProjectEvent",
                 },
               ],
               newForm: cloneDeep(orderItemFormConfig),
@@ -430,14 +421,9 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'totalAmount',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    }
-                  }
+                  rendererType: 'rapidCurrencyRenderer',
                 },
                 {
                   type: 'auto',
@@ -519,14 +505,9 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'amount',
-                  width: '100px',
+                  width: '120px',
                   align: 'right',
-                  rendererType: 'text',
-                  rendererProps: {
-                    $exps: {
-                      text: "Intl.NumberFormat('Zh-cn').format($slot.value)"
-                    },
-                  },
+                  rendererType: 'rapidCurrencyRenderer',
                 },
                 {
                   type: 'auto',

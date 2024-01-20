@@ -16,7 +16,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'processes',
       name: '工序',
-      type: 'relation',
+      type: 'relation[]',
       targetSingularCode: 'base_prod_flow_template_process',
       selfIdColumnName: 'flow_template_id',
     },

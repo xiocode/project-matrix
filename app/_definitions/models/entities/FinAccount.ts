@@ -27,14 +27,14 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'initialAmount',
       name: '初始金额',
-      type: 'integer',
+      type: 'double',
       required: true,
       defaultValue: '0',
     },
     {
       code: 'balance',
       name: '账户余额',
-      type: 'integer',
+      type: 'double',
       required: true,
       defaultValue: '0',
     },

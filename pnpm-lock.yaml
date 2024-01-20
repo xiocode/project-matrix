@@ -33,8 +33,8 @@ dependencies:
     specifier: ^0.0.3
     version: 0.0.3(lodash@4.17.21)
   '@ruiapp/rapid-extension':
-    specifier: ^0.0.16
-    version: 0.0.16(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.19
+    version: 0.0.19(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/react-renderer':
     specifier: ^0.0.3
     version: 0.0.3(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -98,8 +98,8 @@ devDependencies:
     specifier: ^1.19.3
     version: 1.19.3(eslint@8.53.0)(react@18.2.0)(typescript@4.9.5)
   '@ruiapp/rapid-configure-tools':
-    specifier: ^0.0.3
-    version: 0.0.3(@ant-design/icons@4.8.1)(antd@4.24.15)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(dayjs@1.11.10)(react-dom@18.2.0)(react@18.2.0)(tough-cookie@4.1.3)
+    specifier: ^0.0.4
+    version: 0.0.4(@ruiapp/rapid-extension@0.0.19)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3)
   '@types/lodash':
     specifier: ^4.14.200
     version: 4.14.200
@@ -2348,29 +2348,24 @@ packages:
       - debug
     dev: false
 
-  /@ruiapp/rapid-configure-tools@0.0.3(@ant-design/icons@4.8.1)(antd@4.24.15)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(dayjs@1.11.10)(react-dom@18.2.0)(react@18.2.0)(tough-cookie@4.1.3):
-    resolution: {integrity: sha512-kLhmBljAsrImEsy7esXwlB2j4yzZNE6mImsRx7VMfCsB1jc3ubGDSYqZTu81LPNtGMikGEDtwm2W5uVyBO/hMA==}
+  /@ruiapp/rapid-configure-tools@0.0.4(@ruiapp/rapid-extension@0.0.19)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3):
+    resolution: {integrity: sha512-Rp9SdJ+w6WV0BB2LYELNiAVy5KLx+XPxrHK8gdilYcFV0foanX8zCSbxPg3GWyRCPZU1YSwHPpfiHS8zF7EyqA==}
     peerDependencies:
+      '@ruiapp/rapid-extension': ^0.0.17
       axios: ^1.1.2
       axios-cookiejar-support: ^4.0.7
+      lodash: ^4.17.21
       tough-cookie: ^4.1.3
     dependencies:
-      '@ruiapp/rapid-extension': 0.0.8(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+      '@ruiapp/rapid-extension': 0.0.19(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
       axios: 1.6.0
       axios-cookiejar-support: 4.0.7(axios@1.6.0)(tough-cookie@4.1.3)
       lodash: 4.17.21
       tough-cookie: 4.1.3
-    transitivePeerDependencies:
-      - '@ant-design/icons'
-      - antd
-      - dayjs
-      - debug
-      - react
-      - react-dom
     dev: true
 
-  /@ruiapp/rapid-extension@0.0.16(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-dMOtCbY+FX1CfGamJKENSNF/iD/Kq+V6/vg/JXVCZIeQAIHsjWCbtZG62aU398QfLlFzlGqJJ5H0RfqQQ3J2aQ==}
+  /@ruiapp/rapid-extension@0.0.19(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-2W3PThvK4OvNHvIE2g+Q5kQ3nKwL33fF+bIoxV4YoJ95Vecop43kzJ6NsMFXtFecDQbV9qlYQbkLUWsSJrau5w==}
     peerDependencies:
       '@ant-design/icons': ^4.7.0
       antd: ^4.23.6
@@ -2392,32 +2387,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - debug
-    dev: false
-
-  /@ruiapp/rapid-extension@0.0.8(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-FUKEdEGFI7KPzOu35iOQO2ypxxf9y7x3Dqgynyhp2CpBIfqWMpvk84axibzpmItjHVj9jBMD9FklWb0gBc8yCQ==}
-    peerDependencies:
-      '@ant-design/icons': ^4.7.0
-      antd: ^4.23.6
-      axios: ^1.1.2
-      dayjs: ^1.11.7
-      lodash: ^4.17.21
-      react: ^18.2.0
-      react-dom: ^18.2.0
-    dependencies:
-      '@ant-design/icons': 4.8.1(react-dom@18.2.0)(react@18.2.0)
-      '@ruiapp/move-style': 0.0.2(lodash@4.17.21)
-      '@ruiapp/react-renderer': 0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
-      antd: 4.24.15(react-dom@18.2.0)(react@18.2.0)
-      axios: 1.6.0
-      dayjs: 1.11.10
-      lodash: 4.17.21
-      pluralize: 8.0.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - debug
-    dev: true
 
   /@ruiapp/react-renderer@0.0.2(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-f4dyfKp9y99yvUAY7hKD/ZQsZVMAW3ILKF4exbaQjoyw/jEyyo1pQ3W0WVOGnSsVRFLEgOLjbcySxcaOeM6DQw==}

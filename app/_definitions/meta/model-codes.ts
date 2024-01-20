@@ -58,7 +58,7 @@ export const entitySingularCodes = [
   'pm_project_category',
   'pm_project_cost_budget',
   'pm_project_cost_category',
-  'pm_project_log',
+  'pm_project_event',
   'webhook',
 ] as const;
 export type TEntitySingularCodes = typeof entitySingularCodes[number];
@@ -965,7 +965,7 @@ const entityFieldCodes = {
     'deletedAt',
     'detetedBy',
   ],
-  'PmProjectLog': [
+  'PmProjectEvent': [
     'id',
     'project',
     'title',

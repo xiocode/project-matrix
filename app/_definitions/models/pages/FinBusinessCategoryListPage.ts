@@ -4,8 +4,12 @@ import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'kind',
+      type: 'treeSelect',
+      code: 'parent',
+      formControlProps: {
+        listDataSourceCode: "nodeList",
+        listParentField: "parent.id",
+      }
     },
     {
       type: 'auto',
@@ -17,39 +21,19 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'description',
-    },
-    {
-      type: 'auto',
-      code: 'project',
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
-    },
-    {
-      type: 'auto',
-      code: 'salesman',
-    },
-    {
-      type: 'auto',
-      code: 'totalAmount',
-    },
-    {
-      type: 'auto',
-      code: 'state',
+      code: 'orderNum',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'cbs_contract_list',
-  name: '合同列表',
-  title: '合同列表',
+  code: 'fin_business_category_list',
+  name: '业务类型',
+  title: '业务类型',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "CbsContract",
+      entityCode: "FinBusinessCategory",
       viewMode: "table",
       listActions: [
         {
@@ -71,57 +55,26 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
-          field: "createdAt",
-          desc: true,
+          field: 'orderNum',
         },
       ],
-      pageSize: 20,
+      convertListToTree: true,
+      listParentField: "parent.id",
+      pageSize: -1,
+      extraProperties: ['parent'],
       columns: [
         {
           type: 'auto',
-          code: 'kind',
-          fixed: 'left',
-          width: '100px',
-        },
-        {
-          type: 'auto',
           code: 'code',
-          fixed: 'left',
           width: '100px',
         },
         {
-          type: 'link',
+          type: 'auto',
           code: 'name',
-          fixed: 'left',
-          rendererProps: {
-            url: "/pages/cbs_contract_details?id={{id}}",
-          },
         },
         {
           type: 'auto',
-          code: 'project',
-          rendererType: "rapidLinkRenderer",
-          rendererProps: {
-            text: "{{code}} {{name}}",
-            url: "/pages/pm_project_details?id={{id}}",
-          },
-        },
-        {
-          type: 'auto',
-          code: 'salesman',
-          fieldName: 'salesman.name',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'totalAmount',
-          width: '120px',
-          align: 'right',
-          rendererType: 'rapidCurrencyRenderer',
-        },
-        {
-          type: 'auto',
-          code: 'state',
+          code: 'orderNum',
           width: '100px',
         },
         {
@@ -143,11 +96,26 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "CbsContract",
+          entityCode: "FinBusinessCategory",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      stores: [
+        {
+          type: "entityStore",
+          name: "nodeList",
+          entityCode: "FinBusinessCategory",
+          properties: ["id", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [
+          ],
+          orderBy: [
+            {
+              field: 'id',
+            }
+          ],
+        }
+      ],
     },
   ],
 };

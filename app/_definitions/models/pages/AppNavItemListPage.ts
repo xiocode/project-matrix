@@ -24,7 +24,12 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             operator: "null",
             field: "parent_id",
           }
-        ]
+        ],
+        orderBy: [
+          {
+            field: 'orderNum',
+          },
+        ],
       }
     },
     {
