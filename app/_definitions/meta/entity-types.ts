@@ -3217,6 +3217,10 @@ export interface OcRole {
    */
   users?: any;
   /**
+   * 操作
+   */
+  actions?: any;
+  /**
    * 创建时间
    */
   createdAt?: string;

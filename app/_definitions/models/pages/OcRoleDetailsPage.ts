@@ -32,6 +32,7 @@ const page: RapidPage = {
       entityCode: 'OcRole',
       mode: 'view',
       column: 2,
+      extraProperties: ['actions'],
       items: [
         {
           type: 'auto',
@@ -53,6 +54,39 @@ const page: RapidPage = {
     {
       $type: "antdTabs",
       items: [
+        {
+          key: "actions",
+          label: "权限",
+          children: [
+            {
+              $type: 'rapidEntityForm',
+              dataSourceCode: 'detail',
+              entityCode: 'OcRole',
+              layout: 'vertical',
+              items: [
+                {
+                  type: 'select',
+                  code: 'actions',
+                  label: null,
+                  multipleValues: true,
+                  formControlProps: {
+                    listDataSourceCode: "sysActions",
+                    listTextField: "name",
+                  }
+                },
+              ],
+              actions: [
+                {
+                  actionType: 'submit',
+                  actionText: '保存',
+                },
+              ],
+              $exps: {
+                'entityId': `$rui.parseQuery().id`,
+              },
+            },
+          ],
+        },
         {
           key: "users",
           label: "用户",
@@ -195,8 +229,39 @@ const page: RapidPage = {
           ]
         },
       ]
-    }
+    },
   ],
+  stores: [
+    {
+      type: "entityStore",
+      name: "sysActionGroups",
+      entityCode: "SysActionGroup",
+      properties: ["id", "code", "name", "orderNum"],
+      filters: [
+      ],
+      orderBy: [
+        {
+          field: 'orderNum',
+        },
+      ],
+    },
+    {
+      type: "entityStore",
+      name: "sysActions",
+      entityCode: "SysAction",
+      properties: ["id", "code", "name", "group", "orderNum"],
+      filters: [
+      ],
+      orderBy: [
+        {
+          field: 'group_id',
+        },
+        {
+          field: 'orderNum',
+        },
+      ],
+    },
+  ]
 };
 
 export default page;

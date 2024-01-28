@@ -71,20 +71,14 @@ export function generateRuiPage(option: GenerateRuiPageConfigOption) {
   const ruiPageConfig: PageConfig = {
     $id: sdPage.code,
     stores: sdPage.stores || [],
-    view: [
-      {
-        $id: `${sdPage.code}-scope`,
-        $type: "scope",
-        children: viewRocks.map((child, index) => {
-          return {
-            $type: "box",
-            $id: `page-section-${index + 1}`,
-            className: "rui-page-section",
-            children: child,
-          }
-        })
-      },
-    ],
+    view: viewRocks.map((child, index) => {
+      return {
+        $type: "box",
+        $id: `page-section-${index + 1}`,
+        className: "rui-page-section",
+        children: child,
+      }
+    }),
     eventSubscriptions: sdPage.eventSubscriptions,
   };
 
