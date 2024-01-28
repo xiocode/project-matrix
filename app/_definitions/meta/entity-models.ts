@@ -60,6 +60,8 @@ import PmProjectCategory from '../models/entities/PmProjectCategory';
 import PmProjectCost from '../models/entities/PmProjectCost';
 import PmProjectCostCategory from '../models/entities/PmProjectCostCategory';
 import PmProjectEvent from '../models/entities/PmProjectEvent';
+import SysAction from '../models/entities/SysAction';
+import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
 
 export default [
@@ -123,5 +125,7 @@ export default [
   autoConfigureRapidEntity(PmProjectCost),
   autoConfigureRapidEntity(PmProjectCostCategory),
   autoConfigureRapidEntity(PmProjectEvent),
+  autoConfigureRapidEntity(SysAction),
+  autoConfigureRapidEntity(SysActionGroup),
   autoConfigureRapidEntity(SysWebhook),
 ] as TRapidEntity[];

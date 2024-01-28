@@ -45,6 +45,21 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: 'pageCode',
     },
     {
+      type: 'select',
+      code: 'config',
+      valueFieldName: 'config.permissionCheck.any',
+      label: '权限检查',
+      multipleValues: true,
+      formControlProps: {
+        listDataSourceCode: 'sysActions',
+        listValueFieldName: 'code',
+      },
+    },
+    {
+      type: 'auto',
+      code: 'config',
+    },
+    {
       type: 'auto',
       code: 'state',
     },
@@ -215,6 +230,24 @@ const page: RapidPage = {
           },
         ],
       },
+      stores: [
+        {
+          type: "entityStore",
+          name: "sysActions",
+          entityCode: "SysAction",
+          properties: ["id", "code", "name", "group", "orderNum"],
+          filters: [
+          ],
+          orderBy: [
+            {
+              field: 'group_id',
+            },
+            {
+              field: 'orderNum',
+            }
+          ],
+        }
+      ]
     },
   ],
 };
