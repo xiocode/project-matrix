@@ -3,7 +3,7 @@ import type { TEntitySingularCodes } from '../../meta/model-codes';
 import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
-  namespace: 'app',
+  namespace: 'sys',
   code: 'SysActionGroup',
   name: '系统操作分组',
   fields: [
