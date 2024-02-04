@@ -1,11 +1,11 @@
 ARG BASE_IMAGE_TAG=latest
-FROM qps-web-builder:$BASE_IMAGE_TAG AS builder
+FROM project-matrix-builder:$BASE_IMAGE_TAG AS builder
 
 COPY . .
 RUN pnpm build
 
 
-FROM qps-web-runner:$BASE_IMAGE_TAG
+FROM project-matrix-runner:$BASE_IMAGE_TAG
 
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public

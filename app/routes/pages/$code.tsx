@@ -108,7 +108,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })).data?.user;
 
   if (!myProfile) {
-    return redirect("/signin");
+    // TODO: finish this
+    // return redirect("/signin");
   }
 
 

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -p 3000:3000 -e BACKEND_URL=http://host.docker.internal:8000 -it qps-web:latest
+docker run -p 3000:3000 -e BACKEND_URL=http://host.docker.internal:3000 -it project-matrix:latest
