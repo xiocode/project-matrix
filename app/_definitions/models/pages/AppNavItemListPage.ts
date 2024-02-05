@@ -165,7 +165,7 @@ const page: RapidPage = {
           onAction: [
             {
               $action: "sendHttpRequest",
-              method: "POST",
+              method: "PATCH",
               data: {state: 'disabled'},
               $exps: {
                 url: `"/api/app/app_nav_items/" + $event.sender['data-record-id']`,
@@ -187,7 +187,7 @@ const page: RapidPage = {
           onAction: [
             {
               $action: "sendHttpRequest",
-              method: "POST",
+              method: "PATCH",
               data: {state: 'enabled'},
               $exps: {
                 url: `"/api/app/app_nav_items/" + $event.sender['data-record-id']`,

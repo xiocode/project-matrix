@@ -29,7 +29,7 @@
     "@ruiapp/move-style": "^0.0.3",
     "@ruiapp/rapid-core": "^0.1.2",
     "@ruiapp/rapid-express": "^0.1.2",
-    "@ruiapp/rapid-extension": "^0.0.23",
+    "@ruiapp/rapid-extension": "^0.0.24",
     "@ruiapp/react-renderer": "^0.0.3",
     "@ruiapp/react-rocks": "^0.0.3",
     "antd": "4.24.15",
