@@ -12,7 +12,7 @@ const contractFileNewForm: Partial<RapidEntityFormConfig> = {
       formControlType: "rapidDocumentFormControl",
       formControlProps: {
         uploadProps: {
-          name: "file",
+          name: "files",
           action: "/api/upload",
           headers: {},
           maxCount: 1,

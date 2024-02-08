@@ -9,6 +9,8 @@ const DatabaseAccessor = require("./database-accessor");
 const { RapidServer } = require('@ruiapp/rapid-core');
 const { createRapidRequestHandler } = require('@ruiapp/rapid-express');
 
+require("dotenv/config");
+
 const BUILD_DIR = path.join(process.cwd(), "build");
 
 exports.startServer = async () => {

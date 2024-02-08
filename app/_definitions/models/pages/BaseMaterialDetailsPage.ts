@@ -102,7 +102,7 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
       formControlType: "rapidDocumentFormControl",
       formControlProps: {
         uploadProps: {
-          name: "file",
+          name: "files",
           action: "/api/upload",
           headers: {},
           maxCount: 1,
