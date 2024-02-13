@@ -22,6 +22,7 @@ const page: RapidPage = {
   code: 'base_partner_category_list',
   name: '合作伙伴分类',
   title: '合作伙伴分类',
+  permissionCheck: {any: ["basePartner.manage"]},
   view: [
     {
       $type: "sonicEntityList",

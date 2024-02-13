@@ -4,6 +4,7 @@ import * as antdIcons from "@ant-design/icons";
 import type { ItemType, MenuItemGroupType } from "antd/lib/menu/hooks/useItems";
 import { useMemo } from "react";
 import { arrayToTree } from "~/utils/array-utils";
+import { filter } from "lodash";
 
 export interface AppNavItem {
   code: string;
@@ -25,6 +26,10 @@ function getMenuItemFromNavItem(navItem: AppNavItem): ItemType {
   };
   if (navItem.children && navItem.children.length) {
     (menuItem as MenuItemGroupType).children = navItem.children.map(getMenuItemFromNavItem);
+  }
+
+  if (!navItem.pageCode && !(menuItem as MenuItemGroupType).children) {
+    return null;
   }
 
   return menuItem;

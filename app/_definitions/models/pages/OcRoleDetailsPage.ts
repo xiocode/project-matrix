@@ -26,6 +26,7 @@ const page: RapidPage = {
   code: 'oc_role_details',
   name: '角色详情',
   title: '角色详情',
+  permissionCheck: {any: ["sysRole.manage"]},
   view: [
     {
       $type: 'rapidEntityForm',

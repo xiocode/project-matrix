@@ -34,7 +34,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'handlers',
+      code: 'actions',
     },
   ],
 }
@@ -43,6 +43,7 @@ const page: RapidPage = {
   code: 'meta_route_list',
   name: '路由列表',
   title: '路由管理',
+  permissionCheck: {any: ["dev.manage"]},
   view: [
     {
       $type: "sonicEntityList",

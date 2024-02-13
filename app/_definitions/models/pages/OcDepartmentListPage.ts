@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'oc_department_list',
   name: '部门列表',
   title: '部门管理',
+  permissionCheck: {any: ["sysDepartment.manage"]},
   view: [
     {
       $type: "sonicEntityList",

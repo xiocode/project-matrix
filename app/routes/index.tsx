@@ -5,10 +5,12 @@ import { Layout } from "antd";
 import antdStyles from "antd/dist/antd.css";
 import { Content } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
+import { filter } from "lodash";
 import AppLeftNav from "~/components/AppLeftNav";
 import rapidService from "~/rapidService";
 
 import styles from "~/styles/index.css";
+import { isAccessAllowed } from "~/utils/access-control-utility";
 
 
 export function links() {
@@ -18,16 +20,33 @@ export function links() {
   ];
 }
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
   const findAppNavItemOption = {
-    properties: [ 'id', 'code', 'name', 'icon', 'pageCode', 'parent' ],
+    properties: [ 'id', 'code', 'name', 'icon', 'pageCode', 'parent', 'config' ],
     orderBy: [
       {
         field: 'id',
       }
     ]
   };
-  const navItems = (await rapidService.post("app/app_nav_items/operations/find", findAppNavItemOption)).data.list;
+
+  let navItems = (await rapidService.post("app/app_nav_items/operations/find", findAppNavItemOption)).data.list;
+
+  const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
+    headers: {
+      "Cookie": request.headers.get("Cookie"),
+    }
+  })).data;
+
+  navItems = filter(navItems, (navItem) => {
+    const permissionCheckPolicy = navItem.config?.permissionCheck;
+    if (!permissionCheckPolicy) {
+      return true;
+    }
+
+    return isAccessAllowed(permissionCheckPolicy, myAllowedActions || []);
+  })
+
   return {
     navItems,
   }

@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'cbs_contract_relation_kind_list',
   name: '合同关联类型',
   title: '合同关联类型',
+  permissionCheck: {any: ["cbsContract.manage"]},
   view: [
     {
       $type: "sonicEntityList",

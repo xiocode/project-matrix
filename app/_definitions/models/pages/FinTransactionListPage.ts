@@ -54,6 +54,7 @@ const page: RapidPage = {
   code: 'fin_franstaction_list',
   name: '收支记录',
   title: '收支记录',
+  permissionCheck: {any: ["finTransaction.view", "finTransaction.new", "finTransaction.manage", "finTransaction.delete"]},
   view: [
     {
       $type: "sonicEntityList",

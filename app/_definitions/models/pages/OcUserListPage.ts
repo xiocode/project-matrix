@@ -26,6 +26,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: 'auto',
       code: 'roles',
+      listDataFindOptions: {
+        orderBy: [
+          {
+            field: 'orderNum'
+          }
+        ]
+      }
     },
     {
       type: 'auto',
@@ -38,6 +45,7 @@ const page: RapidPage = {
   code: 'oc_user_list',
   name: '用户列表',
   title: '用户管理',
+  permissionCheck: {any: ["sysUser.manage"]},
   view: [
     {
       $type: "sonicEntityList",

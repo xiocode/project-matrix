@@ -51,6 +51,7 @@ const page: RapidPage = {
   code: 'cbs_order_list',
   name: '订单列表',
   title: '订单列表',
+  permissionCheck: {any: ["cbsOrder.view", "cbsOrder.new", "cbsOrder.manage", "cbsOrder.delete"]},
   view: [
     {
       $type: "sonicEntityList",

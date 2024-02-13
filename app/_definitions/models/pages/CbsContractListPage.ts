@@ -46,6 +46,7 @@ const page: RapidPage = {
   code: 'cbs_contract_list',
   name: '合同列表',
   title: '合同列表',
+  permissionCheck: {any: ["cbsContract.view", "cbsContract.new", "cbsContract.manage", "cbsContract.delete"]},
   view: [
     {
       $type: "sonicEntityList",

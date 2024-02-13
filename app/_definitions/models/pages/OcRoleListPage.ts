@@ -26,6 +26,7 @@ const page: RapidPage = {
   code: 'oc_role_list',
   name: '角色列表',
   title: '角色管理',
+  permissionCheck: {any: ["sysRole.manage"]},
   view: [
     {
       $type: "sonicEntityList",
@@ -47,6 +48,11 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["name", "description"],
+        }
+      ],
+      orderBy: [
+        {
+          field: 'orderNum',
         }
       ],
       pageSize: 20,

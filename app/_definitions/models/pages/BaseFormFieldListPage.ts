@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'base_form_field_list',
   name: '表单字段列表',
   title: '表单字段管理',
+  permissionCheck: {any: ["dev.manage"]},
   view: [
     {
       $type: "sonicEntityList",

@@ -56,7 +56,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: '角色',
       type: 'relation[]',
       targetSingularCode: "oc_role",
-      linkTableName: "oc_role_uer_links",
+      linkTableName: "oc_role_user_links",
       targetIdColumnName: "role_id",
       selfIdColumnName: "user_id",
     },

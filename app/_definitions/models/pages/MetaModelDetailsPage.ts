@@ -25,6 +25,8 @@ const propertyFormConfig: Partial<RapidEntityFormRockConfig> = {
 const page: RapidPage = {
   code: 'meta_model_details',
   name: '实体模型详情',
+  title: '实体模型详情',
+  permissionCheck: {any: ["dev.manage"]},
   view: [
     {
       $type: 'rapidEntityForm',

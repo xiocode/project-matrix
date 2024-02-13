@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'fin_business_category_list',
   name: '业务类型',
   title: '业务类型',
+  permissionCheck: {any: ["finBusinessCategory.manage"]},
   view: [
     {
       $type: "sonicEntityList",

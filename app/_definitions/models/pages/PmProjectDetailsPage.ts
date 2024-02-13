@@ -165,6 +165,7 @@ const page: RapidPage = {
   code: 'pm_project_details',
   name: '项目详情',
   title: '项目详情',
+  permissionCheck: {any: ["pmProject.view", "pmProject.manage"]},
   view: [
     {
       $type: 'rapidEntityForm',

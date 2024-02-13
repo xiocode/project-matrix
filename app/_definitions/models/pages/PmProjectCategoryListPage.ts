@@ -22,6 +22,7 @@ const page: RapidPage = {
   code: 'pm_project_category_list',
   name: '项目类型',
   title: '项目类型',
+  permissionCheck: {any: ["pmProjectCategory.manage"]},
   view: [
     {
       $type: "sonicEntityList",

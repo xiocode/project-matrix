@@ -10,6 +10,8 @@ import rapidService from "~/rapidService";
 
 import indexStyles from "~/styles/index.css";
 import customizeStyles from "~/styles/customize.css";
+import { filter } from "lodash";
+import { isAccessAllowed } from "~/utils/access-control-utility";
 
 
 export function links() {
@@ -22,9 +24,9 @@ export function links() {
   })
 }
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
   const findAppNavItemOption = {
-    properties: [ 'id', 'code', 'name', 'icon', 'pageCode', 'parent' ],
+    properties: [ 'id', 'code', 'name', 'icon', 'pageCode', 'parent', 'config' ],
     filters: [
       {
         field: 'state',
@@ -38,7 +40,22 @@ export const loader: LoaderFunction = async () => {
       }
     ]
   };
-  const navItems = (await rapidService.post("app/app_nav_items/operations/find", findAppNavItemOption)).data.list;
+  let navItems = (await rapidService.post("app/app_nav_items/operations/find", findAppNavItemOption)).data.list;
+
+  const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
+    headers: {
+      "Cookie": request.headers.get("Cookie"),
+    }
+  })).data;
+
+  navItems = filter(navItems, (navItem) => {
+    const permissionCheckPolicy = navItem.config?.permissionCheck;
+    if (!permissionCheckPolicy) {
+      return true;
+    }
+
+    return isAccessAllowed(permissionCheckPolicy, myAllowedActions || []);
+  })
   return {
     navItems,
   }

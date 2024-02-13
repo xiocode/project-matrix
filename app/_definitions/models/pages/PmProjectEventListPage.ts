@@ -22,6 +22,7 @@ const page: RapidPage = {
   code: 'pm_project_event_list',
   name: '事件记录',
   title: '事件记录',
+  permissionCheck: {any: ["pmProject.manage"]},
   view: [
     {
       $type: "sonicEntityList",

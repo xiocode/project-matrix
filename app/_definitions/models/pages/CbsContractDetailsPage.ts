@@ -97,6 +97,7 @@ const page: RapidPage = {
   code: 'cbs_contract_details',
   name: '合同详情',
   title: '合同详情',
+  permissionCheck: {any: ["cbsContract.view", "cbsContract.manage"]},
   view: [
     {
       $type: 'rapidEntityForm',

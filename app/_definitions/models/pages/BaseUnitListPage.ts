@@ -43,6 +43,7 @@ const page: RapidPage = {
   code: 'base_unit_list',
   name: '计量单位列表',
   title: '计量单位',
+  permissionCheck: {any: ["baseUnit.manage"]},
   view: [
     {
       $type: "sonicMainSecondaryLayout",

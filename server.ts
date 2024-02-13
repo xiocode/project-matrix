@@ -1,12 +1,12 @@
-const process = require("process");
-const path = require("path");
-const express = require("express");
-const compression = require("compression");
-const morgan = require("morgan");
-const { createRequestHandler } = require("@remix-run/express");
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const DatabaseAccessor = require("./database-accessor");
-const {
+import process from "process";
+import path from "path";
+import express from "express";
+import compression from "compression";
+import morgan from "morgan";
+import { createRequestHandler } from "@remix-run/express";
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import DatabaseAccessor from "./database-accessor";
+import {
   RapidServer,
   MetaManagePlugin,
   DataManagePlugin,
@@ -14,14 +14,17 @@ const {
   WebhooksPlugin,
   AuthPlugin,
   FileManagePlugin,
-} = require('@ruiapp/rapid-core');
-const { createRapidRequestHandler } = require('@ruiapp/rapid-express');
+} from '@ruiapp/rapid-core';
+import { createRapidRequestHandler } from '@ruiapp/rapid-express';
 
-require("dotenv/config");
+import ServerOperationPlugin from "./rapid-plugins/serverOperationPlugin";
+import listMyAllowedSysActions from "./app/_definitions/models/operations/listMyAllowedSysActions";
+
+import "dotenv/config";
 
 const BUILD_DIR = path.join(process.cwd(), "build");
 
-exports.startServer = async () => {
+export async function startServer() {
   const app = express();
 
   app.use(compression());
@@ -48,7 +51,7 @@ exports.startServer = async () => {
 
   const envFromProcess = process.env;
   const env = {
-    get: (name, defaultValue = "") => {
+    get: (name: string, defaultValue = "") => {
       return envFromProcess[name] || defaultValue;
     }
   };
@@ -98,11 +101,16 @@ exports.startServer = async () => {
       new WebhooksPlugin(),
       new AuthPlugin(),
       new FileManagePlugin(),
+      new ServerOperationPlugin({
+        operations: [
+          listMyAllowedSysActions,
+        ]
+      })
     ],
   });
   await rapidServer.start();
 
-  const rapidRequestHandler = createRapidRequestHandler(rapidServer)
+  const rapidRequestHandler = createRapidRequestHandler(rapidServer as any)
   app.use("/api", (req, res, next) => {
     rapidRequestHandler(req, res, next);
   });

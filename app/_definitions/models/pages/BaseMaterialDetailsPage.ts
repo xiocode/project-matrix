@@ -144,6 +144,7 @@ const page: RapidPage = {
   code: 'base_material_details',
   name: '物料详情',
   title: '物料详情',
+  permissionCheck: {any: ["baseMaterial.manage"]},
   view: [
     {
       $type: 'rapidEntityForm',

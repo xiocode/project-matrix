@@ -70,6 +70,7 @@ const page: RapidPage = {
   code: 'cbs_order_details',
   name: '订单详情',
   title: '订单详情',
+  permissionCheck: {any: ["cbsOrder.view", "cbsOrder.manage"]},
   view: [
     {
       $type: 'rapidEntityForm',

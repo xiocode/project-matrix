@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'base_employee_list',
   name: '员工列表',
   title: '员工管理',
+  permissionCheck: {any: ["baseEmployee.manage"]},
   view: [
     {
       $type: "sonicEntityList",

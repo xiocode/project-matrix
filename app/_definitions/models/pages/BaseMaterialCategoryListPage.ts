@@ -34,6 +34,7 @@ const page: RapidPage = {
   code: 'base_material_category_list',
   name: '货品分类',
   title: '货品分类',
+  permissionCheck: {any: ["baseMaterial.manage"]},
   view: [
     {
       $type: "sonicEntityList",

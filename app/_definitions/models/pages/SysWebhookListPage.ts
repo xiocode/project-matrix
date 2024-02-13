@@ -39,6 +39,7 @@ const page: RapidPage = {
   code: 'sys_webhook_list',
   name: 'Webhook',
   title: 'Webhook管理',
+  permissionCheck: {any: ["dev.manage"]},
   view: [
     {
       $type: "sonicEntityList",

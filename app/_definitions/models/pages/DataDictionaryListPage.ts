@@ -51,6 +51,7 @@ const page: RapidPage = {
   code: 'data_dictionary_list',
   name: '数据字典列表',
   title: '数据字典',
+  permissionCheck: {any: ["baseDataDictionary.manage"]},
   view: [
     {
       $type: "sonicMainSecondaryLayout",

@@ -33,11 +33,11 @@ dependencies:
     specifier: ^0.0.3
     version: 0.0.3(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ^0.1.5
-    version: 0.1.5
+    specifier: ^0.1.12
+    version: 0.1.12
   '@ruiapp/rapid-express':
-    specifier: ^0.1.5
-    version: 0.1.5(express@4.18.2)
+    specifier: ^0.1.12
+    version: 0.1.12(express@4.18.2)
   '@ruiapp/rapid-extension':
     specifier: ^0.0.24
     version: 0.0.24(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -76,7 +76,7 @@ dependencies:
     version: 4.18.2
   http-proxy-middleware:
     specifier: ^2.0.6
-    version: 2.0.6
+    version: 2.0.6(@types/express@4.17.21)
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -112,9 +112,18 @@ devDependencies:
   '@ruiapp/rapid-configure-tools':
     specifier: ^0.0.4
     version: 0.0.4(@ruiapp/rapid-extension@0.0.24)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3)
+  '@types/compression':
+    specifier: ^1.7.5
+    version: 1.7.5
+  '@types/express':
+    specifier: ^4.17.21
+    version: 4.17.21
   '@types/lodash':
     specifier: ^4.14.200
     version: 4.14.200
+  '@types/morgan':
+    specifier: ^1.9.9
+    version: 1.9.9
   '@types/node':
     specifier: ^18.18.8
     version: 18.18.8
@@ -2376,8 +2385,8 @@ packages:
       tough-cookie: 4.1.3
     dev: true
 
-  /@ruiapp/rapid-core@0.1.5:
-    resolution: {integrity: sha512-X5D2xy7UvmH0TaPPM5A6HTa5CC4pnO0979gxgDhjLxfhshaXtC/JDsCp6v18fT2eY7kiz9uotHrVoe4InAkvDw==}
+  /@ruiapp/rapid-core@0.1.12:
+    resolution: {integrity: sha512-CDu/HU5g7eJpd0YZH1ksDQQU93DTMi71URoAfwjSAE+d0OXJ14YWAQdXOB0fDbo0narORu79tkzojZ+GU9iT0w==}
     dependencies:
       jsonwebtoken: 9.0.2
       koa-tree-router: 0.12.1
@@ -2386,12 +2395,12 @@ packages:
       uuid: 9.0.1
     dev: false
 
-  /@ruiapp/rapid-express@0.1.5(express@4.18.2):
-    resolution: {integrity: sha512-pyKjBctq1CU4hRsZduv5Dl8HX9ucQ3gbmNJv2NWJYaNNw/WKq3qJ5ytj7TWBgPwkl64snWn7nUAVSZEi2GIcPg==}
+  /@ruiapp/rapid-express@0.1.12(express@4.18.2):
+    resolution: {integrity: sha512-Qeh7rF2GgRhzAlUsMar1eZPX6ORGL8Ah6RFO9LJ1lUReF9KANgOZnlsaZEWHmIVT1yhuNCRJOaRBahJlc5Nq1w==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.5
+      '@ruiapp/rapid-core': 0.1.12
       express: 4.18.2
     dev: false
 
@@ -2534,7 +2543,6 @@ packages:
     dependencies:
       '@types/connect': 3.4.38
       '@types/node': 18.18.8
-    dev: false
 
   /@types/cacheable-request@6.0.3:
     resolution: {integrity: sha512-IQ3EbTzGxIigb1I3qPZc1rWJnH0BmSKv5QYTalEwweFvyBDLSAe24zP0le/hyi7ecGfZVlIVAg4BZqb8WBwKqw==}
@@ -2545,11 +2553,16 @@ packages:
       '@types/responselike': 1.0.2
     dev: true
 
+  /@types/compression@1.7.5:
+    resolution: {integrity: sha512-AAQvK5pxMpaT+nDvhHrsBhLSYG5yQdtkaJE1WYieSNY2mVFKAgmU4ks65rkZD5oqnGCFLyQpUr1CqI4DmUMyDg==}
+    dependencies:
+      '@types/express': 4.17.21
+    dev: true
+
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
       '@types/node': 18.18.8
-    dev: false
 
   /@types/content-disposition@0.5.8:
     resolution: {integrity: sha512-QVSSvno3dE0MgO76pJhmv4Qyi/j0Yk9pBp0Y7TJ2Tlj+KCgJWY6qX7nnxCOLkZ3VYRSIk1WTxCvwUSdx6CCLdg==}
@@ -2596,7 +2609,6 @@ packages:
       '@types/qs': 6.9.11
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
-    dev: false
 
   /@types/express@4.17.21:
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
@@ -2605,7 +2617,6 @@ packages:
       '@types/express-serve-static-core': 4.17.43
       '@types/qs': 6.9.11
       '@types/serve-static': 1.15.5
-    dev: false
 
   /@types/glob@7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
@@ -2630,7 +2641,6 @@ packages:
 
   /@types/http-errors@2.0.4:
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
-    dev: false
 
   /@types/http-proxy@1.17.13:
     resolution: {integrity: sha512-GkhdWcMNiR5QSQRYnJ+/oXzu0+7JJEPC8vkWXK351BkhjraZF+1W13CUYARUvX9+NqIU2n6YHA4iwywsc/M6Sw==}
@@ -2691,14 +2701,18 @@ packages:
 
   /@types/mime@1.3.5:
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
-    dev: false
 
   /@types/mime@3.0.4:
     resolution: {integrity: sha512-iJt33IQnVRkqeqC7PzBHPTC6fDlRNRW8vjrgqtScAhrmMwe8c4Eo7+fUGTa+XdWrpEgpyKWMYmi2dIwMAYRzPw==}
-    dev: false
 
   /@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
+    dev: true
+
+  /@types/morgan@1.9.9:
+    resolution: {integrity: sha512-iRYSDKVaC6FkGSpEVVIvrRGw0DfJMiQzIn3qr2G5B3C//AWkulhXgaBd7tS9/J79GWSYMTHGs7PfI5b3Y8m+RQ==}
+    dependencies:
+      '@types/node': 18.18.8
     dev: true
 
   /@types/ms@0.7.33:
@@ -2716,11 +2730,9 @@ packages:
 
   /@types/qs@6.9.11:
     resolution: {integrity: sha512-oGk0gmhnEJK4Yyk+oI7EfXsLayXatCWPHary1MtcmbAifkobT9cM9yutG/hZKIseOU0MqbIwQ/u2nn/Gb+ltuQ==}
-    dev: false
 
   /@types/range-parser@1.2.7:
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
-    dev: false
 
   /@types/react-dom@18.2.14:
     resolution: {integrity: sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==}
@@ -2755,7 +2767,6 @@ packages:
     dependencies:
       '@types/mime': 1.3.5
       '@types/node': 18.18.8
-    dev: false
 
   /@types/serve-static@1.15.5:
     resolution: {integrity: sha512-PDRk21MnK70hja/YF8AHfC7yIsiQHn1rcXx7ijCFBX/k+XQJhQT/gw3xekXKJvx+5SXaMMS8oqQy09Mzvz2TuQ==}
@@ -2763,7 +2774,6 @@ packages:
       '@types/http-errors': 2.0.4
       '@types/mime': 3.0.4
       '@types/node': 18.18.8
-    dev: false
 
   /@types/tough-cookie@4.0.4:
     resolution: {integrity: sha512-95Sfz4nvMAb0Nl9DTxN3j64adfwfbBPEYq14VN7zT5J5O2M9V6iZMIIQU1U+pJyl9agHYHNCqhCXgyEtIRRa5A==}
@@ -5321,7 +5331,7 @@ packages:
       - supports-color
     dev: true
 
-  /http-proxy-middleware@2.0.6:
+  /http-proxy-middleware@2.0.6(@types/express@4.17.21):
     resolution: {integrity: sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -5330,6 +5340,7 @@ packages:
       '@types/express':
         optional: true
     dependencies:
+      '@types/express': 4.17.21
       '@types/http-proxy': 1.17.13
       http-proxy: 1.18.1
       is-glob: 4.0.3

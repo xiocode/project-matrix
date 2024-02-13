@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'fin_expense_category_list',
   name: '费用类型',
   title: '费用类型',
+  permissionCheck: {any: ["finExpenseCategory.manage"]},
   view: [
     {
       $type: "sonicEntityList",

@@ -70,6 +70,7 @@ const page: RapidPage = {
   code: 'app_nav_item_list',
   name: '导航列表',
   title: '导航管理',
+  permissionCheck: {any: ["dev.manage"]},
   view: [
     {
       $type: "sonicEntityList",

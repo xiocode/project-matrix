@@ -59,6 +59,7 @@ const page: RapidPage = {
   code: 'base_material_list',
   name: '货品管理',
   title: '货品管理',
+  permissionCheck: {any: ["baseMaterial.manage"]},
   view: [
     {
       $id: "mainLayout",

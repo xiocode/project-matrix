@@ -30,6 +30,7 @@ const page: RapidPage = {
   code: 'meta_model_list',
   name: '实体模型列表',
   title: '模型管理',
+  permissionCheck: {any: ["dev.manage"]},
   view: [
     {
       $type: "sonicEntityList",

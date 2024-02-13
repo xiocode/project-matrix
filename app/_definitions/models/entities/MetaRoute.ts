@@ -53,8 +53,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
-      code: 'handlers',
-      name: 'Handlers',
+      code: 'actions',
+      name: 'Actions',
       type: 'json',
     }
   ],

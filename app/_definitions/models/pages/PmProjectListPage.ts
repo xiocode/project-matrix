@@ -54,6 +54,7 @@ const page: RapidPage = {
   code: 'pm_project_list',
   name: '项目列表',
   title: '项目列表',
+  permissionCheck: {any: ["pmProject.view", "pmProject.new", "pmProject.manage", "pmProject.delete"]},
   view: [
     {
       $type: "sonicEntityList",

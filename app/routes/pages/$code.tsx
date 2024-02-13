@@ -7,7 +7,7 @@ import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
 import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
 import { useMemo } from "react";
-import _, { find, first } from "lodash";
+import _, { find } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
@@ -24,6 +24,7 @@ import rapidService from "~/rapidService";
 import { Avatar, Dropdown,  PageHeader } from "antd";
 import type { MenuProps } from "antd";
 import { ExportOutlined, UserOutlined } from "@ant-design/icons";
+import { isAccessAllowed } from "~/utils/access-control-utility";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -94,7 +95,7 @@ export type Params = {
 type ViewModel = {
   myProfile: any;
   pageCode: string;
-  navItem: any;
+  pageAccessAllowed: boolean;
   sdPage: RapidPage;
   entities: RapidEntity[];
   dataDictionaries: RapidDataDictionary[];
@@ -108,33 +109,27 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })).data?.user;
 
   if (!myProfile) {
-    // TODO: finish this
-    // return redirect("/signin");
+    return redirect("/signin");
   }
 
-
   const pageCode = params.code;
-  const navItems = (await rapidService.post(`app/app_nav_items/operations/find`, {
-    filters: [
-      {
-        field: "page_code",
-        operator: "eq",
-        value: pageCode,
-      }
-    ],
-    properties: ["id", "code", "name", "pageCode"],
-  }, {
-    headers: {
-      "Cookie": request.headers.get("Cookie"),
-    }
-  })).data;
-
   const sdPage: RapidPage | undefined = find(pageModels, item => item.code === pageCode);
+
+  let pageAccessAllowed = true;
+  const permissionCheckPolicy = sdPage?.permissionCheck;
+  if (permissionCheckPolicy) {
+    const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
+      headers: {
+        "Cookie": request.headers.get("Cookie"),
+      }
+    })).data;
+    pageAccessAllowed = isAccessAllowed(permissionCheckPolicy, myAllowedActions || []);
+  }
 
   return {
     myProfile,
     pageCode,
-    navItem: first(navItems.list),
+    pageAccessAllowed,
     sdPage,
     entities: entityModels,
     dataDictionaries: dataDictionaryModels,
@@ -144,8 +139,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function Index() {
   const viewModel = useLoaderData<ViewModel>();
-  console.warn('viewModel', viewModel);
-  const { myProfile, pageCode, sdPage, entities, dataDictionaries } = viewModel;
+  const { myProfile, pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed } = viewModel;
 
   rapidAppDefinition.setAppDefinition({
     entities,
@@ -154,6 +148,15 @@ export default function Index() {
 
   const page = useMemo(() => {
     let ruiPageConfig: PageConfig | undefined;
+    if (!pageAccessAllowed) {
+      ruiPageConfig = {
+        view: [
+          { $type: "text", text: `You are not allowed to visit this page.`}
+        ]
+      }
+      return new Page(framework, ruiPageConfig);
+    }
+
     if (!sdPage) {
       ruiPageConfig = {
         view: [

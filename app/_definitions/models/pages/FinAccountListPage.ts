@@ -26,6 +26,7 @@ const page: RapidPage = {
   code: 'fin_account_list',
   name: '资金账户',
   title: '资金账户',
+  permissionCheck: {any: ["finAccount.manage"]},
   view: [
     {
       $type: "sonicEntityList",
