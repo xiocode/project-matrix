@@ -33,11 +33,11 @@ dependencies:
     specifier: ^0.0.3
     version: 0.0.3(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ^0.1.12
-    version: 0.1.12
+    specifier: ^0.1.18
+    version: 0.1.18
   '@ruiapp/rapid-express':
-    specifier: ^0.1.12
-    version: 0.1.12(express@4.18.2)
+    specifier: ^0.1.18
+    version: 0.1.18(express@4.18.2)
   '@ruiapp/rapid-extension':
     specifier: ^0.0.24
     version: 0.0.24(@ant-design/icons@4.8.1)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2385,8 +2385,8 @@ packages:
       tough-cookie: 4.1.3
     dev: true
 
-  /@ruiapp/rapid-core@0.1.12:
-    resolution: {integrity: sha512-CDu/HU5g7eJpd0YZH1ksDQQU93DTMi71URoAfwjSAE+d0OXJ14YWAQdXOB0fDbo0narORu79tkzojZ+GU9iT0w==}
+  /@ruiapp/rapid-core@0.1.18:
+    resolution: {integrity: sha512-mj9ylsMBU4zImIE0cuI4sqTjTC273REH4Tqd1TMt6WuR/LLJxuUvmpL/IZJrYQ89wlxyKeAhABemN8soSjNwtQ==}
     dependencies:
       jsonwebtoken: 9.0.2
       koa-tree-router: 0.12.1
@@ -2395,12 +2395,12 @@ packages:
       uuid: 9.0.1
     dev: false
 
-  /@ruiapp/rapid-express@0.1.12(express@4.18.2):
-    resolution: {integrity: sha512-Qeh7rF2GgRhzAlUsMar1eZPX6ORGL8Ah6RFO9LJ1lUReF9KANgOZnlsaZEWHmIVT1yhuNCRJOaRBahJlc5Nq1w==}
+  /@ruiapp/rapid-express@0.1.18(express@4.18.2):
+    resolution: {integrity: sha512-vKNvBpFpaT3RWgQpTPHgfj4rRCN4rX5JxVJDwyTnkpxLjX+Z+7WZWhKejmKOXkA1YX45Y48Zp1QET+yIXkmDAA==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.12
+      '@ruiapp/rapid-core': 0.1.18
       express: 4.18.2
     dev: false
 

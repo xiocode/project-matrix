@@ -14,11 +14,13 @@ import {
   WebhooksPlugin,
   AuthPlugin,
   FileManagePlugin,
+  ServerOperationPlugin,
+  EntityWatchPlugin,
 } from '@ruiapp/rapid-core';
 import { createRapidRequestHandler } from '@ruiapp/rapid-express';
 
-import ServerOperationPlugin from "./rapid-plugins/serverOperationPlugin";
-import listMyAllowedSysActions from "./app/_definitions/models/operations/listMyAllowedSysActions";
+import listMyAllowedSysActions from "./app/_definitions/models/server-operations/sys/listMyAllowedSysActions";
+import CbsOrderItemWatchers from "./app/_definitions/models/entity-watchers/cbs/CbsOrderItemWatchers";
 
 import "dotenv/config";
 
@@ -105,7 +107,12 @@ export async function startServer() {
         operations: [
           listMyAllowedSysActions,
         ]
-      })
+      }),
+      new EntityWatchPlugin({
+        watchers: [
+          ...CbsOrderItemWatchers,
+         ] as any,
+      }),
     ],
   });
   await rapidServer.start();

@@ -1,5 +1,4 @@
-import type { ActionHandlerContext } from "@ruiapp/rapid-core";
-import type { ServerOperation } from "rapid-plugins/serverOperationPlugin";
+import type { ActionHandlerContext, ServerOperation } from "@ruiapp/rapid-core";
 
 export default {
   code: 'listMyAllowedSysActions',

@@ -231,7 +231,7 @@ const page: RapidPage = {
                   actionType: 'delete',
                   actionText: '删除',
                   dataSourceCode: "list",
-                  entityCode: "PmProjectEvent",
+                  entityCode: "CbsOrderItem",
                 },
               ],
               newForm: cloneDeep(orderItemFormConfig),
