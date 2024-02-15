@@ -3095,9 +3095,9 @@ export interface Route {
    */
   endpoint: string;
   /**
-   * Handlers
+   * Actions
    */
-  handlers?: object;
+  actions?: object;
   /**
    * 创建时间
    */

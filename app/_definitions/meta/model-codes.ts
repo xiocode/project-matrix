@@ -797,7 +797,7 @@ const entityFieldCodes = {
     'type',
     'method',
     'endpoint',
-    'handlers',
+    'actions',
     'createdAt',
     'createdBy',
     'updatedAt',
