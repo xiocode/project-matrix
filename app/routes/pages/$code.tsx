@@ -94,6 +94,7 @@ export type Params = {
 
 type ViewModel = {
   myProfile: any;
+  myAllowedActions: string[];
   pageCode: string;
   pageAccessAllowed: boolean;
   sdPage: RapidPage;
@@ -115,19 +116,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const pageCode = params.code;
   const sdPage: RapidPage | undefined = find(pageModels, item => item.code === pageCode);
 
+  const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
+    headers: {
+      "Cookie": request.headers.get("Cookie"),
+    }
+  })).data;
   let pageAccessAllowed = true;
   const permissionCheckPolicy = sdPage?.permissionCheck;
   if (permissionCheckPolicy) {
-    const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
-      headers: {
-        "Cookie": request.headers.get("Cookie"),
-      }
-    })).data;
     pageAccessAllowed = isAccessAllowed(permissionCheckPolicy, myAllowedActions || []);
   }
 
   return {
     myProfile,
+    myAllowedActions,
     pageCode,
     pageAccessAllowed,
     sdPage,
@@ -139,7 +141,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function Index() {
   const viewModel = useLoaderData<ViewModel>();
-  const { myProfile, pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed } = viewModel;
+  const { myProfile, myAllowedActions, pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed } = viewModel;
+
+  framework.registerExpressionVar('me', {
+    profile: myProfile,
+    allowedActions: myAllowedActions,
+  });
 
   rapidAppDefinition.setAppDefinition({
     entities,
@@ -174,7 +181,7 @@ export default function Index() {
     });
     console.debug("[RUI][ReactPlayer] Auto generated RUI page config:", ruiPageConfig);
     return new Page(framework, ruiPageConfig);
-  }, [pageCode, sdPage, entities, dataDictionaries]);
+  }, [pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed]);
 
   const profileMenuItems: MenuProps['items'] = [
     {
