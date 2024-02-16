@@ -66,9 +66,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-          $exps: {
-            _hidden: "!$functions.isAccessAllowed({all: ['pmProject.new']}, me?.allowedActions || [])",
-          }
+          $permissionCheck: 'pmProject.new',
         }
       ],
       extraActions: [
@@ -165,9 +163,7 @@ const page: RapidPage = {
           code: 'edit',
           actionType: "edit",
           actionText: '修改',
-          $exps: {
-            _hidden: "!$functions.isAccessAllowed({all: ['pmProject.manage']}, me?.allowedActions || [])",
-          },
+          $permissionCheck: 'pmProject.manage',
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -176,9 +172,7 @@ const page: RapidPage = {
           actionText: '删除',
           dataSourceCode: "list",
           entityCode: "PmProject",
-          $exps: {
-            _hidden: "!$functions.isAccessAllowed({all: ['pmProject.delete']}, me?.allowedActions || [])",
-          },
+          $permissionCheck: 'pmProject.delete',
         },
       ],
       newForm: cloneDeep(formConfig),
