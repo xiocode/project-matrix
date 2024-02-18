@@ -2,9 +2,11 @@ import process from "process";
 import path from "path";
 import express from "express";
 import compression from "compression";
-import morgan from "morgan";
+import { format, transports } from "winston";
+import expressWinston from "express-winston";
 import { createRequestHandler } from "@remix-run/express";
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import { consoleFormat, createAppLogger } from "./logger";
 import DatabaseAccessor from "./database-accessor";
 import {
   RapidServer,
@@ -24,9 +26,14 @@ import entityWatchers from "./app/_definitions/meta/entity-watchers";
 
 import "dotenv/config";
 
+const isDevelopmentEnv = process.env.NODE_ENV === "development";
+
 const BUILD_DIR = path.join(process.cwd(), "build");
 
 export async function startServer() {
+  const logger = createAppLogger({
+    level: isDevelopmentEnv? "debug" : "info",
+  });
   const app = express();
 
   app.use(compression());
@@ -44,7 +51,21 @@ export async function startServer() {
   // more aggressive with this caching.
   app.use(express.static("public", { maxAge: "1h" }));
 
-  app.use(morgan("tiny"));
+  if (isDevelopmentEnv) {
+    app.use(expressWinston.logger({
+      format: format.combine(
+        format.timestamp(),
+        format.splat(),
+      ),
+      transports: [
+        new transports.Console({
+          format: consoleFormat(),
+        })
+      ],
+      meta: false,
+      expressFormat: true,
+    }));
+  }
 
   const customizeAPI = process.env.CUSTOMIZE_SERVICE_URL || 'http://127.0.0.1:3001';
   app.use('/api/customize', createProxyMiddleware({ target: customizeAPI, changeOrigin: true, pathRewrite: {
@@ -72,7 +93,7 @@ export async function startServer() {
     localFileStoragePath: env.get("LOCAL_FILE_STORAGE_PATH", "/data/rapid-data/local-storage"),
   };
 
-  const databaseAccessor  = new DatabaseAccessor({
+  const databaseAccessor  = new DatabaseAccessor(logger, {
     host: rapidConfig.dbHost,
     port: rapidConfig.dbPort,
     database: rapidConfig.dbName,
@@ -82,6 +103,7 @@ export async function startServer() {
   });
 
   const rapidServer = new RapidServer({
+    logger,
     databaseAccessor,
     databaseConfig: {
       dbHost: rapidConfig.dbHost,
@@ -120,7 +142,7 @@ export async function startServer() {
 
   app.all(
     "*",
-    process.env.NODE_ENV === "development"
+    isDevelopmentEnv
       ? (req, res, next) => {
           purgeRequireCache();
 
@@ -137,7 +159,7 @@ export async function startServer() {
   const port = process.env.PORT || 3000;
 
   app.listen(port, () => {
-    console.log(`Express server listening on port ${port}`);
+    logger.info("Express server listening on port %d", port);
   });
 }
 
