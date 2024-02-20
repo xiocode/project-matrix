@@ -1,6 +1,7 @@
 import type { RapidDataDictionary as TRapidDataDictionary } from '@ruiapp/rapid-extension';
 import ActiveInactiveState from '../models/data-dictionaries/ActiveInactiveState';
 import ApprovalState from '../models/data-dictionaries/ApprovalState';
+import BaseLocationType from '../models/data-dictionaries/BaseLocationType';
 import BusinessActivityKind from '../models/data-dictionaries/BusinessActivityKind';
 import BusinessActivityState from '../models/data-dictionaries/BusinessActivityState';
 import BusinessApplicationState from '../models/data-dictionaries/BusinessApplicationState';
@@ -20,6 +21,19 @@ import MetaDataDictionaryLevel from '../models/data-dictionaries/MetaDataDiction
 import MetaPropertyType from '../models/data-dictionaries/MetaPropertyType';
 import MetaRouteHttpMethod from '../models/data-dictionaries/MetaRouteHttpMethod';
 import MetaRouteType from '../models/data-dictionaries/MetaRouteType';
+import MomEquipmentPowerState from '../models/data-dictionaries/MomEquipmentPowerState';
+import MomEquipmentProductionState from '../models/data-dictionaries/MomEquipmentProductionState';
+import MomGoodState from '../models/data-dictionaries/MomGoodState';
+import MomInventoryOperationType from '../models/data-dictionaries/MomInventoryOperationType';
+import MomPackageGoodState from '../models/data-dictionaries/MomPackageGoodState';
+import MomProductionPlanExecutionState from '../models/data-dictionaries/MomProductionPlanExecutionState';
+import MomProductionPlanScheduleState from '../models/data-dictionaries/MomProductionPlanScheduleState';
+import MomWorkOrderAssignmentState from '../models/data-dictionaries/MomWorkOrderAssignmentState';
+import MomWorkOrderExecutionState from '../models/data-dictionaries/MomWorkOrderExecutionState';
+import MomWorkTaskAssignmentState from '../models/data-dictionaries/MomWorkTaskAssignmentState';
+import MomWorkTaskExecutionState from '../models/data-dictionaries/MomWorkTaskExecutionState';
+import MomWorkTrackAssignmentState from '../models/data-dictionaries/MomWorkTrackAssignmentState';
+import MomWorkTrackExecutionState from '../models/data-dictionaries/MomWorkTrackExecutionState';
 import PmBudgetType from '../models/data-dictionaries/PmBudgetType';
 import PmMilestoneState from '../models/data-dictionaries/PmMilestoneState';
 import PmPhaseState from '../models/data-dictionaries/PmPhaseState';
@@ -34,6 +48,7 @@ import UserSecretLevel from '../models/data-dictionaries/UserSecretLevel';
 export default [
   ActiveInactiveState,
   ApprovalState,
+  BaseLocationType,
   BusinessActivityKind,
   BusinessActivityState,
   BusinessApplicationState,
@@ -53,6 +68,19 @@ export default [
   MetaPropertyType,
   MetaRouteHttpMethod,
   MetaRouteType,
+  MomEquipmentPowerState,
+  MomEquipmentProductionState,
+  MomGoodState,
+  MomInventoryOperationType,
+  MomPackageGoodState,
+  MomProductionPlanExecutionState,
+  MomProductionPlanScheduleState,
+  MomWorkOrderAssignmentState,
+  MomWorkOrderExecutionState,
+  MomWorkTaskAssignmentState,
+  MomWorkTaskExecutionState,
+  MomWorkTrackAssignmentState,
+  MomWorkTrackExecutionState,
   PmBudgetType,
   PmMilestoneState,
   PmPhaseState,

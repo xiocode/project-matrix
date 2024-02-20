@@ -92,6 +92,7 @@ export async function startServer() {
     jwtKey: env.get("JWT_KEY", defaultJWTKey),
     localFileStoragePath: env.get("LOCAL_FILE_STORAGE_PATH", "/data/rapid-data/local-storage"),
   };
+  logger.info("Staring rapid with config: ", rapidConfig)
 
   const databaseAccessor  = new DatabaseAccessor(logger, {
     host: rapidConfig.dbHost,

@@ -1,4 +1,5 @@
 import type {
+  BaseLocationType,
   BusinessActivityKind,
   BusinessActivityState,
   BusinessApplicationState,
@@ -14,6 +15,19 @@ import type {
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  MomEquipmentPowerState,
+  MomEquipmentProductionState,
+  MomGoodState,
+  MomInventoryOperationType,
+  MomPackageGoodState,
+  MomProductionPlanExecutionState,
+  MomProductionPlanScheduleState,
+  MomWorkOrderAssignmentState,
+  MomWorkOrderExecutionState,
+  MomWorkTaskAssignmentState,
+  MomWorkTaskExecutionState,
+  MomWorkTrackAssignmentState,
+  MomWorkTrackExecutionState,
   PmBudgetType,
   PmMilestoneState,
   PmPhaseState,
@@ -157,6 +171,61 @@ export interface AppNavItem {
 export type SaveAppNavItemInput = Omit<AppNavItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 建筑物
+ */
+export interface BaseBuilding {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 建筑物
+ */
+export type SaveBaseBuildingInput = Omit<BaseBuilding, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 员工
  */
 export interface BaseEmployee {
@@ -283,6 +352,124 @@ export interface BaseFormField {
 export type SaveBaseFormFieldInput = Omit<BaseFormField, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 大门
+ */
+export interface BaseGate {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 大门
+ */
+export type SaveBaseGateInput = Omit<BaseGate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 位置
+ */
+export interface BaseLocation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 上级位置
+   */
+  parent?: Partial<BaseLocation>;
+  /**
+   * 类型
+   */
+  type: BaseLocationType;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 位置
+ */
+export type SaveBaseLocationInput = Omit<BaseLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 物料
  */
 export interface BaseMaterial {
@@ -319,6 +506,10 @@ export interface BaseMaterial {
    */
   defaultUnit?: Partial<BaseUnit>;
   /**
+   * 类型
+   */
+  types?: any;
+  /**
    * 可生产
    */
   canProduce?: boolean;
@@ -326,6 +517,10 @@ export interface BaseMaterial {
    * 可采购
    */
   canPurchase?: boolean;
+  /**
+   * 可外协
+   */
+  canOutsource?: boolean;
   /**
    * 可销售
    */
@@ -364,128 +559,6 @@ export interface BaseMaterial {
  * 物料
  */
 export type SaveBaseMaterialInput = Omit<BaseMaterial, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * BOM
- */
-export interface BaseMaterialBreakdown {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 物料
-   */
-  material?: Partial<BaseMaterial>;
-  /**
-   * 版本
-   */
-  version?: string;
-  /**
-   * 数量
-   */
-  amount?: number;
-  /**
-   * 单位
-   */
-  unit?: Partial<BaseUnit>;
-  /**
-   * 状态
-   */
-  state: EnabledDisabledState;
-  /**
-   * 下级物料
-   */
-  parts?: any;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * BOM
- */
-export type SaveBaseMaterialBreakdownInput = Omit<BaseMaterialBreakdown, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 下级物料
- */
-export interface BaseMaterialBreakdownPart {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * BOM
-   */
-  materialBreakdown?: Partial<BaseMaterialBreakdown>;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 下级物料
-   */
-  subMaterial?: Partial<BaseMaterial>;
-  /**
-   * 数量
-   */
-  amount?: number;
-  /**
-   * 单位
-   */
-  unit?: Partial<BaseUnit>;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 下级物料
- */
-export type SaveBaseMaterialBreakdownPartInput = Omit<BaseMaterialBreakdownPart, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 物料分类
@@ -602,9 +675,9 @@ export interface BaseMaterialDocument {
 export type SaveBaseMaterialDocumentInput = Omit<BaseMaterialDocument, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
- * 物料工艺流程
+ * 物料类型
  */
-export interface BaseMaterialFlow {
+export interface BaseMaterialType {
   /**
    * id
    */
@@ -612,23 +685,19 @@ export interface BaseMaterialFlow {
   /**
    * 物料
    */
-  material?: Partial<BaseMaterial>;
+  materials?: any;
   /**
-   * 版本
+   * 编号
    */
-  version: string;
+  code?: string;
   /**
-   * 状态
+   * 名称
    */
-  state: EnabledDisabledState;
+  name: string;
   /**
-   * 发布状态
+   * 配置
    */
-  publishState: PublishState;
-  /**
-   * 物料生产工序
-   */
-  processes?: any;
+  config?: object;
   /**
    * 创建时间
    */
@@ -656,51 +725,39 @@ export interface BaseMaterialFlow {
 }
 
 /**
- * 物料工艺流程
+ * 物料类型
  */
-export type SaveBaseMaterialFlowInput = Omit<BaseMaterialFlow, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseMaterialTypeInput = Omit<BaseMaterialType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
- * 物料生产工序
+ * 办公室
  */
-export interface BaseMaterialFlowProcess {
+export interface BaseOffice {
   /**
    * id
    */
   id: number;
   /**
-   * 物料工艺流程
+   * 建筑
    */
-  materialFlow: Partial<BaseMaterialFlow>;
+  building?: Partial<BaseBuilding>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
   /**
    * 排序号
    */
   orderNum: number;
   /**
-   * 生产工序
-   */
-  process: Partial<BaseProdProcess>;
-  /**
-   * 工序别名
-   */
-  aliasName?: string;
-  /**
-   * 输入物料
-   */
-  inputs?: any;
-  /**
-   * 输出物料
-   */
-  outputs?: any;
-  /**
-   * 标准周期时间
-   */
-  standardCycleTime?: number;
-  /**
-   * 配置
-   */
-  config?: object;
-  /**
    * 创建时间
    */
   createdAt?: string;
@@ -727,127 +784,9 @@ export interface BaseMaterialFlowProcess {
 }
 
 /**
- * 物料生产工序
+ * 办公室
  */
-export type SaveBaseMaterialFlowProcessInput = Omit<BaseMaterialFlowProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 物料生产工序输入物料
- */
-export interface BaseMaterialFlowProcessInput {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 物料生产工序
-   */
-  materialProcess: Partial<BaseMaterialFlowProcess>;
-  /**
-   * 物料
-   */
-  material: Partial<BaseMaterial>;
-  /**
-   * 数量
-   */
-  amount: number;
-  /**
-   * 单位
-   */
-  unit: Partial<BaseUnit>;
-  /**
-   * 配置
-   */
-  config?: object;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 物料生产工序输入物料
- */
-export type SaveBaseMaterialFlowProcessInputInput = Omit<BaseMaterialFlowProcessInput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 物料生产工序输出物料
- */
-export interface BaseMaterialFlowProcessOutput {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 物料生产工序
-   */
-  materialProcess?: Partial<BaseMaterialFlowProcess>;
-  /**
-   * 物料
-   */
-  material?: Partial<BaseMaterial>;
-  /**
-   * 数量
-   */
-  amount?: number;
-  /**
-   * 单位
-   */
-  unit?: Partial<BaseUnit>;
-  /**
-   * 配置
-   */
-  config?: object;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 物料生产工序输出物料
- */
-export type SaveBaseMaterialFlowProcessOutputInput = Omit<BaseMaterialFlowProcessOutput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseOfficeInput = Omit<BaseOffice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 合作伙伴
@@ -950,324 +889,6 @@ export interface BasePartnerCategory {
  * 合作伙伴分类
  */
 export type SaveBasePartnerCategoryInput = Omit<BasePartnerCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 工艺流程
- */
-export interface BaseProdFlow {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 版本
-   */
-  version: string;
-  /**
-   * 状态
-   */
-  state: EnabledDisabledState;
-  /**
-   * 工序
-   */
-  processes?: any;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 工艺流程
- */
-export type SaveBaseProdFlowInput = Omit<BaseProdFlow, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 工序
- */
-export interface BaseProdFlowProcess {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 工艺流程
-   */
-  flow: Partial<BaseProdFlow>;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 生产工序
-   */
-  process: Partial<BaseProdProcess>;
-  /**
-   * 标准周期时间
-   */
-  standardCycleTime?: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 工序
- */
-export type SaveBaseProdFlowProcessInput = Omit<BaseProdFlowProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 工艺流程模板
- */
-export interface BaseProdFlowTemplate {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 工序
-   */
-  processes?: any;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 工艺流程模板
- */
-export type SaveBaseProdFlowTemplateInput = Omit<BaseProdFlowTemplate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 工艺流程模板工序
- */
-export interface BaseProdFlowTemplateProcess {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 工艺流程模板
-   */
-  flowTemplate: Partial<BaseProdFlowTemplate>;
-  /**
-   * 生产工序
-   */
-  process: Partial<BaseProdProcess>;
-  /**
-   * 标准周期时间
-   */
-  standardCycleTime?: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 工艺流程模板工序
- */
-export type SaveBaseProdFlowTemplateProcessInput = Omit<BaseProdFlowTemplateProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 工序
- */
-export interface BaseProdProcess {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 工序类型
-   */
-  category: Partial<BaseProdProcessCategory>;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 标准周期时间
-   */
-  standardCycleTime?: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 工序
- */
-export type SaveBaseProdProcessInput = Omit<BaseProdProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 工序分类
- */
-export interface BaseProdProcessCategory {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 工序分类
- */
-export type SaveBaseProdProcessCategoryInput = Omit<BaseProdProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 单位
@@ -1386,53 +1007,6 @@ export interface BaseUnitCategory {
  * 单位分组
  */
 export type SaveBaseUnitCategoryInput = Omit<BaseUnitCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 仓库
- */
-export interface BaseWarehouse {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code?: string;
-  /**
-   * 名称
-   */
-  name?: string;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 仓库
- */
-export type SaveBaseWarehouseInput = Omit<BaseWarehouse, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 审批步骤
@@ -3128,6 +2702,2814 @@ export interface Route {
  * HTTP路由
  */
 export type SaveRouteInput = Omit<Route, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 设备
+ */
+export interface MomEquipment {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 设备号
+   */
+  code: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 分类
+   */
+  category: Partial<MomEquipmentCategory>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 电源状态
+   */
+  powerState?: MomEquipmentPowerState;
+  /**
+   * 生产状态
+   */
+  productionState?: MomEquipmentProductionState;
+  /**
+   * 计划每日工作时间
+   */
+  planedDailyWorkingTime?: number;
+  /**
+   * 所在工位
+   */
+  station?: Partial<MomStation>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 设备
+ */
+export type SaveMomEquipmentInput = Omit<MomEquipment, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 设备分类
+ */
+export interface MomEquipmentCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum?: number;
+  /**
+   * 上级分类
+   */
+  parent?: Partial<MomEquipmentCategory>;
+  /**
+   * 设备
+   */
+  equipments?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 设备分类
+ */
+export type SaveMomEquipmentCategoryInput = Omit<MomEquipmentCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品
+ */
+export interface MomGood {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 物料号
+   */
+  materialCode?: string;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * 放入时间
+   */
+  putInTime?: string;
+  /**
+   * 来源
+   */
+  source?: Partial<MomGood>;
+  /**
+   * 标签
+   */
+  labels?: any;
+  /**
+   * 状态
+   */
+  state: MomGoodState;
+  /**
+   * 扩展信息
+   */
+  extra?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品
+ */
+export type SaveMomGoodInput = Omit<MomGood, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品标签
+ */
+export interface MomGoodLabel {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 标签名
+   */
+  name: string;
+  /**
+   * 值
+   */
+  textValue?: string;
+  /**
+   * 值
+   */
+  numberValue?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品标签
+ */
+export type SaveMomGoodLabelInput = Omit<MomGoodLabel, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品位置
+ */
+export interface MomGoodLocation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * 放入时间
+   */
+  putInTime?: string;
+  /**
+   * 取出时间
+   */
+  takeOutTime?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品位置
+ */
+export type SaveMomGoodLocationInput = Omit<MomGoodLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品转移记录
+ */
+export interface MomGoodTransfer {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 操作记录
+   */
+  operation?: Partial<MomInventoryOperation>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 转出位置
+   */
+  from?: Partial<BaseLocation>;
+  /**
+   * 转入位置
+   */
+  to?: Partial<BaseLocation>;
+  /**
+   * 转移时间
+   */
+  transferTime?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品转移记录
+ */
+export type SaveMomGoodTransferInput = Omit<MomGoodTransfer, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验类型
+ */
+export interface MomInspectionCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验类型
+ */
+export type SaveMomInspectionCategoryInput = Omit<MomInspectionCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验特征
+ */
+export interface MomInspectionCharacteristic {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 检验规则
+   */
+  rule?: Partial<MomInspectionRule>;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 特征类型
+   */
+  category?: Partial<MomInspectionCharacteristicCategory>;
+  /**
+   * 检验方法
+   */
+  method?: Partial<MomInspectionMethod>;
+  /**
+   * 检验仪器类型
+   */
+  instrumentCategory?: Partial<MomInspectionInstrumentCategory>;
+  /**
+   * 检验仪器
+   */
+  instrument?: Partial<MomInspectionInstrument>;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验特征
+ */
+export type SaveMomInspectionCharacteristicInput = Omit<MomInspectionCharacteristic, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验特征类型
+ */
+export interface MomInspectionCharacteristicCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验特征类型
+ */
+export type SaveMomInspectionCharacteristicCategoryInput = Omit<MomInspectionCharacteristicCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验仪器
+ */
+export interface MomInspectionInstrument {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 仪器编号
+   */
+  code?: string;
+  /**
+   * 仪器类型
+   */
+  category?: Partial<MomInspectionInstrumentCategory>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验仪器
+ */
+export type SaveMomInspectionInstrumentInput = Omit<MomInspectionInstrument, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验仪器类型
+ */
+export interface MomInspectionInstrumentCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验仪器类型
+ */
+export type SaveMomInspectionInstrumentCategoryInput = Omit<MomInspectionInstrumentCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验方法
+ */
+export interface MomInspectionMethod {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验方法
+ */
+export type SaveMomInspectionMethodInput = Omit<MomInspectionMethod, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验记录
+ */
+export interface MomInspectionRecord {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 检验单
+   */
+  sheet?: Partial<MomInspectionSheet>;
+  /**
+   * 样本号
+   */
+  sampleCode?: string;
+  /**
+   * 检验特征
+   */
+  characteristic?: Partial<MomInspectionCharacteristic>;
+  /**
+   * 检验仪器类型
+   */
+  instrumentCategory?: Partial<MomInspectionInstrumentCategory>;
+  /**
+   * 检验仪器
+   */
+  instrument?: Partial<MomInspectionInstrument>;
+  /**
+   * 检验员
+   */
+  inspector?: Partial<BaseEmployee>;
+  /**
+   * 检验时间
+   */
+  inspectedAt?: string;
+  /**
+   * 定性检验值
+   */
+  qualitativeValue?: string;
+  /**
+   * 定量检验值
+   */
+  quantitativeValue?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验记录
+ */
+export type SaveMomInspectionRecordInput = Omit<MomInspectionRecord, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验规则
+ */
+export interface MomInspectionRule {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 检验类型
+   */
+  category?: Partial<MomInspectionCategory>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 生产工序
+   */
+  routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验规则
+ */
+export type SaveMomInspectionRuleInput = Omit<MomInspectionRule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验单
+ */
+export interface MomInspectionSheet {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 检验单号
+   */
+  code?: string;
+  /**
+   * 发布状态
+   */
+  state?: PublishState;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 物料号
+   */
+  materialCode?: string;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 生产流转单
+   */
+  workTrack?: Partial<MomWorkTrack>;
+  /**
+   * 生产任务
+   */
+  workTask?: Partial<MomWorkTask>;
+  /**
+   * 检验规则
+   */
+  rule?: Partial<MomInspectionRule>;
+  /**
+   * 生产工序
+   */
+  routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 检验员
+   */
+  inspector?: Partial<BaseEmployee>;
+  /**
+   * 检验记录
+   */
+  records?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验单
+ */
+export type SaveMomInspectionSheetInput = Omit<MomInspectionSheet, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品库存
+ */
+export interface MomInventory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 可分配数量
+   */
+  allocableQuantity?: number;
+  /**
+   * 可用数量
+   */
+  availableQuantity?: number;
+  /**
+   * 已采购数量
+   */
+  purchasedQuantity?: number;
+  /**
+   * 在途数量
+   */
+  intransitQuantity?: number;
+  /**
+   * 在库数量
+   */
+  instockQuantity?: number;
+  /**
+   * 加工中数量
+   */
+  processingQuantity?: number;
+  /**
+   * 已加工数量
+   */
+  processedQuantity?: number;
+  /**
+   * 已产出数量
+   */
+  yieldQuantity?: number;
+  /**
+   * 已预定数量
+   */
+  reservedQuantity?: number;
+  /**
+   * 已分配数量
+   */
+  allocatedQuantity?: number;
+  /**
+   * 已发货数量
+   */
+  shippingQuantity?: number;
+  /**
+   * 已交付数量
+   */
+  deliveredQuantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 标签
+   */
+  labels?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品库存
+ */
+export type SaveMomInventoryInput = Omit<MomInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存业务类型
+ */
+export interface MomInventoryBusinessType {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 库存操作类型
+   */
+  operationType: MomInventoryOperationType;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存业务类型
+ */
+export type SaveMomInventoryBusinessTypeInput = Omit<MomInventoryBusinessType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存标签
+ */
+export interface MomInventoryLabel {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 库存记录
+   */
+  inventory?: Partial<MomInventory>;
+  /**
+   * 标签名
+   */
+  name: string;
+  /**
+   * 值
+   */
+  textValue?: string;
+  /**
+   * 值
+   */
+  numberValue?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存标签
+ */
+export type SaveMomInventoryLabelInput = Omit<MomInventoryLabel, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存操作记录
+ */
+export interface MomInventoryOperation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编号
+   */
+  code?: string;
+  /**
+   * 库存操作类型
+   */
+  operationType: MomInventoryOperationType;
+  /**
+   * 业务类型
+   */
+  businessType?: any;
+  /**
+   * 业务详情
+   */
+  businessDetails?: object;
+  /**
+   * 变更明细
+   */
+  transfers?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存操作记录
+ */
+export type SaveMomInventoryOperationInput = Omit<MomInventoryOperation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 实验室
+ */
+export interface MomLab {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 建筑
+   */
+  building?: Partial<BaseBuilding>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 实验室
+ */
+export type SaveMomLabInput = Omit<MomLab, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产线
+ */
+export interface MomLine {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 车间
+   */
+  shop?: Partial<MomShop>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产线
+ */
+export type SaveMomLineInput = Omit<MomLine, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * BOM
+ */
+export interface MomMaterialBreakdown {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 版本
+   */
+  version?: string;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 下级物料
+   */
+  parts?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * BOM
+ */
+export type SaveMomMaterialBreakdownInput = Omit<MomMaterialBreakdown, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 下级物料
+ */
+export interface MomMaterialBreakdownPart {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * BOM
+   */
+  materialBreakdown?: Partial<MomMaterialBreakdown>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 下级物料
+   */
+  subMaterial?: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 下级物料
+ */
+export type SaveMomMaterialBreakdownPartInput = Omit<MomMaterialBreakdownPart, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品包
+ */
+export interface MomPackage {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 数量
+   */
+  code?: string;
+  /**
+   * 物品
+   */
+  goods?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品包
+ */
+export type SaveMomPackageInput = Omit<MomPackage, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品包内物品
+ */
+export interface MomPackageGood {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 包
+   */
+  package_id?: Partial<MomPackage>;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 状态
+   */
+  state?: MomPackageGoodState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品包内物品
+ */
+export type SaveMomPackageGoodInput = Omit<MomPackageGood, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序
+ */
+export interface MomProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 工序类型
+   */
+  category: Partial<MomProcessCategory>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序
+ */
+export type SaveMomProcessInput = Omit<MomProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序分类
+ */
+export interface MomProcessCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序分类
+ */
+export type SaveMomProcessCategoryInput = Omit<MomProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产计划
+ */
+export interface MomProductionPlan {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产计划号
+   */
+  code?: string;
+  /**
+   * 计划开始日期
+   */
+  scheduledStartDate?: string;
+  /**
+   * 计划完成日期
+   */
+  scheduledFinishDate?: string;
+  /**
+   * 实际开始日期
+   */
+  actualStartDate?: string;
+  /**
+   * 实际完成日期
+   */
+  actualFinishDate?: string;
+  /**
+   * 计划状态
+   */
+  scheduleState?: MomProductionPlanScheduleState;
+  /**
+   * 执行状态
+   */
+  executionState?: MomProductionPlanExecutionState;
+  /**
+   * 计划项
+   */
+  lineItems?: any;
+  /**
+   * 生产工单
+   */
+  productionOrders?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产计划
+ */
+export type SaveMomProductionPlanInput = Omit<MomProductionPlan, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产计划项
+ */
+export interface MomProductionPlanItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产计划
+   */
+  productionPlan?: Partial<MomProductionPlan>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产计划项
+ */
+export type SaveMomProductionPlanItemInput = Omit<MomProductionPlanItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工艺流程
+ */
+export interface MomRoute {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 版本
+   */
+  version: string;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 发布状态
+   */
+  publishState: PublishState;
+  /**
+   * 工序
+   */
+  processes?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺流程
+ */
+export type SaveMomRouteInput = Omit<MomRoute, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序
+ */
+export interface MomRouteProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工艺流程
+   */
+  route: Partial<MomRoute>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 生产工序
+   */
+  process: Partial<MomProcess>;
+  /**
+   * 工序别名
+   */
+  aliasName?: string;
+  /**
+   * 输入物料
+   */
+  inputs?: any;
+  /**
+   * 输出物料
+   */
+  outputs?: any;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序
+ */
+export type SaveMomRouteProcessInput = Omit<MomRouteProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产工序输入物料
+ */
+export interface MomRouteProcessInput {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产工序
+   */
+  routeProcess: Partial<MomRouteProcess>;
+  /**
+   * 物料
+   */
+  material: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  quantity: number;
+  /**
+   * 单位
+   */
+  unit: Partial<BaseUnit>;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产工序输入物料
+ */
+export type SaveMomRouteProcessInputInput = Omit<MomRouteProcessInput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产工序输出物料
+ */
+export interface MomRouteProcessOutput {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产工序
+   */
+  routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 配置
+   */
+  config?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产工序输出物料
+ */
+export type SaveMomRouteProcessOutputInput = Omit<MomRouteProcessOutput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工艺流程模板
+ */
+export interface MomRouteTemplate {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 工序
+   */
+  processes?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺流程模板
+ */
+export type SaveMomRouteTemplateInput = Omit<MomRouteTemplate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工艺流程模板工序
+ */
+export interface MomRouteTemplateProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工艺流程模板
+   */
+  routeTemplate: Partial<MomRouteTemplate>;
+  /**
+   * 工序
+   */
+  process: Partial<MomProcess>;
+  /**
+   * 标准周期时间
+   */
+  standardCycleTime?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺流程模板工序
+ */
+export type SaveMomRouteTemplateProcessInput = Omit<MomRouteTemplateProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 班次
+ */
+export interface MomShift {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 班次
+ */
+export type SaveMomShiftInput = Omit<MomShift, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间
+ */
+export interface MomShop {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 建筑
+   */
+  building?: Partial<BaseBuilding>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间
+ */
+export type SaveMomShopInput = Omit<MomShop, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工站
+ */
+export interface MomStation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 建筑
+   */
+  building?: Partial<BaseBuilding>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * 车间
+   */
+  shop?: Partial<MomShop>;
+  /**
+   * 产线
+   */
+  line?: Partial<MomLine>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工站
+ */
+export type SaveMomStationInput = Omit<MomStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 仓库
+ */
+export interface MomWarehouse {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 建筑
+   */
+  building?: Partial<BaseBuilding>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 仓库
+ */
+export type SaveMomWarehouseInput = Omit<MomWarehouse, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产工单
+ */
+export interface MomWorkOrder {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工单号
+   */
+  code?: string;
+  /**
+   * 生产计划
+   */
+  productionPlan?: Partial<MomProductionPlan>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 工艺路线
+   */
+  route?: Partial<MomRoute>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 分配状态
+   */
+  assignmentState?: MomWorkOrderAssignmentState;
+  /**
+   * 执行状态
+   */
+  executionState?: MomWorkOrderExecutionState;
+  /**
+   * 计划开始日期
+   */
+  scheduledStartDate?: string;
+  /**
+   * 计划完成日期
+   */
+  scheduledFinishDate?: string;
+  /**
+   * 实际开始日期
+   */
+  actualStartDate?: string;
+  /**
+   * 实际完成日期
+   */
+  actualFinishDate?: string;
+  /**
+   * 生产任务
+   */
+  productionTasks?: any;
+  /**
+   * 生产报工单
+   */
+  workReports?: any;
+  /**
+   * 检验单
+   */
+  inspectionSheets?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产工单
+ */
+export type SaveMomWorkOrderInput = Omit<MomWorkOrder, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产报工
+ */
+export interface MomWorkReport {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产报工号
+   */
+  code?: string;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 生产流转单
+   */
+  workTrack?: Partial<MomWorkTrack>;
+  /**
+   * 生产任务
+   */
+  workTask?: Partial<MomWorkTask>;
+  /**
+   * 工艺路线
+   */
+  route?: Partial<MomRoute>;
+  /**
+   * 生产工序
+   */
+  routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 合格数量
+   */
+  qualifiedQuantity?: number;
+  /**
+   * 不合格数量
+   */
+  unqualifiedQuantity?: number;
+  /**
+   * 不合格数量
+   */
+  scrapQuantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
+   * 操作工
+   */
+  operators?: any;
+  /**
+   * 其它信息
+   */
+  extra?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产报工
+ */
+export type SaveMomWorkReportInput = Omit<MomWorkReport, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工序任务
+ */
+export interface MomWorkTask {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 任务号
+   */
+  code?: string;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 生产流转单
+   */
+  workTrack?: Partial<MomWorkTrack>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 工艺路线
+   */
+  route?: Partial<MomRoute>;
+  /**
+   * 生产工序
+   */
+  routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 计划开始日期
+   */
+  scheduledStartDate?: string;
+  /**
+   * 计划完成日期
+   */
+  scheduledFinishDate?: string;
+  /**
+   * 实际开始日期
+   */
+  actualStartDate?: string;
+  /**
+   * 实际完成日期
+   */
+  actualFinishDate?: string;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
+   * 操作工
+   */
+  assignees?: any;
+  /**
+   * 最晚完成日期
+   */
+  deadline?: string;
+  /**
+   * 派工人员
+   */
+  assigner?: Partial<BaseEmployee>;
+  /**
+   * 派工时间
+   */
+  assignedAt?: string;
+  /**
+   * 领工时间
+   */
+  acceptedAt?: string;
+  /**
+   * 分配状态
+   */
+  assignmentState?: MomWorkTaskAssignmentState;
+  /**
+   * 执行状态
+   */
+  executionState?: MomWorkTaskExecutionState;
+  /**
+   * 生产报工单
+   */
+  workReports?: any;
+  /**
+   * 检验单
+   */
+  inspectionSheets?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工序任务
+ */
+export type SaveMomWorkTaskInput = Omit<MomWorkTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 班组
+ */
+export interface MomWorkTeam {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 车间
+   */
+  shop?: Partial<MomShop>;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 组长
+   */
+  leader?: Partial<BaseEmployee>;
+  /**
+   * 组员
+   */
+  members?: Partial<BaseEmployee>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 班组
+ */
+export type SaveMomWorkTeamInput = Omit<MomWorkTeam, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产流转单
+ */
+export interface MomWorkTrack {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 流转单号
+   */
+  code?: string;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 分配状态
+   */
+  assignmentState?: MomWorkTrackAssignmentState;
+  /**
+   * 执行状态
+   */
+  executionState?: MomWorkTrackExecutionState;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 工艺路线
+   */
+  route?: Partial<MomRoute>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 计划开始日期
+   */
+  scheduledStartDate?: string;
+  /**
+   * 计划完成日期
+   */
+  scheduledFinishDate?: string;
+  /**
+   * 实际开始日期
+   */
+  actualStartDate?: string;
+  /**
+   * 实际完成日期
+   */
+  actualFinishDate?: string;
+  /**
+   * 生产任务
+   */
+  productionTasks?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产流转单
+ */
+export type SaveMomWorkTrackInput = Omit<MomWorkTrack, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 部门

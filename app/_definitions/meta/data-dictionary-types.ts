@@ -19,6 +19,21 @@ export type ApprovalState =
   ;
 
 /**
+ * 地点类型
+ */
+export type BaseLocationType =
+  | 'factory'
+  | 'building'
+  | 'shop'
+  | 'warehouse'
+  | 'storageArea'
+  | 'office'
+  | 'lab'
+  | 'gate'
+  | 'other'
+  ;
+
+/**
  * 业务活动类型
  */
 export type BusinessActivityKind =
@@ -199,6 +214,131 @@ export type RouteType =
   ;
 
 /**
+ * 设备电源状态
+ */
+export type MomEquipmentPowerState =
+  | 'on'
+  | 'off'
+  ;
+
+/**
+ * 设备生产状态
+ */
+export type MomEquipmentProductionState =
+  | 'idle'
+  | 'commissioning'
+  | 'processing'
+  | 'fault'
+  ;
+
+/**
+ * 物品状态
+ */
+export type MomGoodState =
+  | 'normal'
+  | 'splitted'
+  | 'merged'
+  | 'transferred'
+  | 'destroied'
+  ;
+
+/**
+ * 库存操作类型
+ */
+export type MomInventoryOperationType =
+  | 'in'
+  | 'out'
+  | 'transfer'
+  | 'organize'
+  | 'adjust'
+  ;
+
+/**
+ * 包内物品状态
+ */
+export type MomPackageGoodState =
+  | 'packed'
+  | 'unpacked'
+  ;
+
+/**
+ * 计划执行状态
+ */
+export type MomProductionPlanExecutionState =
+  | 'pending'
+  | 'processing'
+  | 'finished'
+  | 'canceled'
+  ;
+
+/**
+ * 计划排期状态
+ */
+export type MomProductionPlanScheduleState =
+  | 'unscheduled'
+  | 'scheduling'
+  | 'scheduled'
+  | 'canceled'
+  ;
+
+/**
+ * 工单分配状态
+ */
+export type MomWorkOrderAssignmentState =
+  | 'unassigned'
+  | 'assigned'
+  | 'canceled'
+  ;
+
+/**
+ * 工单执行状态
+ */
+export type MomWorkOrderExecutionState =
+  | 'pending'
+  | 'processing'
+  | 'finished'
+  | 'canceled'
+  ;
+
+/**
+ * 工序任务分配状态
+ */
+export type MomWorkTaskAssignmentState =
+  | 'unassigned'
+  | 'assigned'
+  | 'canceled'
+  ;
+
+/**
+ * 任务执行状态
+ */
+export type MomWorkTaskExecutionState =
+  | 'pending'
+  | 'processing'
+  | 'finished'
+  | 'canceled'
+  ;
+
+/**
+ * 流转单分配状态
+ */
+export type MomWorkTrackAssignmentState =
+  | 'unassigned'
+  | 'assigned'
+  | 'canceled'
+  ;
+
+/**
+ * 流转单执行状态
+ */
+export type MomWorkTrackExecutionState =
+  | 'pending'
+  | 'processing'
+  | 'finished'
+  | 'canceled'
+  ;
+
+/**
  * 预算类型
  */
 export type PmBudgetType =
@@ -212,6 +352,7 @@ export type PmBudgetType =
 export type PmMilestoneState =
   | 'unplanned'
   | 'planned'
+  | 'inProgress'
   | 'completed'
   | 'delayed'
   | 'cancelled'

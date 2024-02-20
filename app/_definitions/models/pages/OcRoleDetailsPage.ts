@@ -1,26 +1,4 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
-
-const formConfig: Partial<RapidEntityFormConfig> = {
-  items: [
-    {
-      type: 'auto',
-      code: 'code',
-    },
-    {
-      type: 'auto',
-      code: 'amount',
-    },
-    {
-      type: 'auto',
-      code: 'unit',
-    },
-    {
-      type: 'auto',
-      code: 'operators',
-    },
-  ],
-}
+import type { RapidPage } from '@ruiapp/rapid-extension';
 
 const page: RapidPage = {
   code: 'oc_role_details',
@@ -220,11 +198,8 @@ const page: RapidPage = {
                   ]
                 },
               ],
-              newForm: cloneDeep(formConfig),
-              editForm: cloneDeep(formConfig),
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.production_task_id": "$rui.parseQuery().id",
               },
             }
           ]

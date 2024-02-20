@@ -2,6 +2,7 @@ import type { RapidPage as TRapidPage } from '@ruiapp/rapid-extension';
 import AppNavItemListPage from '../models/pages/AppNavItemListPage';
 import BaseEmployeeListPage from '../models/pages/BaseEmployeeListPage';
 import BaseFormFieldListPage from '../models/pages/BaseFormFieldListPage';
+import BaseLocationListPage from '../models/pages/BaseLocationListPage';
 import BaseMaterialCategoryListPage from '../models/pages/BaseMaterialCategoryListPage';
 import BaseMaterialDetailsPage from '../models/pages/BaseMaterialDetailsPage';
 import BaseMaterialListPage from '../models/pages/BaseMaterialListPage';
@@ -25,6 +26,17 @@ import FinTransactionListPage from '../models/pages/FinTransactionListPage';
 import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
+import MomGoodListPage from '../models/pages/MomGoodListPage';
+import MomInventoryListPage from '../models/pages/MomInventoryListPage';
+import MomInventoryOperationDetailsPage from '../models/pages/MomInventoryOperationDetailsPage';
+import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
+import MomProcessListPage from '../models/pages/MomProcessListPage';
+import MomProdOrderDetailsPage from '../models/pages/MomProdOrderDetailsPage';
+import MomProdOrderListPage from '../models/pages/MomProdOrderListPage';
+import MomProdPlanDetailsPage from '../models/pages/MomProdPlanDetailsPage';
+import MomProdPlanListPage from '../models/pages/MomProdPlanListPage';
+import MomProdTaskDetailsPage from '../models/pages/MomProdTaskDetailsPage';
+import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
 import OcDepartmentListPage from '../models/pages/OcDepartmentListPage';
 import OcRoleDetailsPage from '../models/pages/OcRoleDetailsPage';
 import OcRoleListPage from '../models/pages/OcRoleListPage';
@@ -40,6 +52,7 @@ export default [
   AppNavItemListPage,
   BaseEmployeeListPage,
   BaseFormFieldListPage,
+  BaseLocationListPage,
   BaseMaterialCategoryListPage,
   BaseMaterialDetailsPage,
   BaseMaterialListPage,
@@ -63,6 +76,17 @@ export default [
   MetaModelDetailsPage,
   MetaModelListPage,
   MetaRouteListPage,
+  MomGoodListPage,
+  MomInventoryListPage,
+  MomInventoryOperationDetailsPage,
+  MomInventoryOperationListPage,
+  MomProcessListPage,
+  MomProdOrderDetailsPage,
+  MomProdOrderListPage,
+  MomProdPlanDetailsPage,
+  MomProdPlanListPage,
+  MomProdTaskDetailsPage,
+  MomProdTaskListPage,
   OcDepartmentListPage,
   OcRoleDetailsPage,
   OcRoleListPage,

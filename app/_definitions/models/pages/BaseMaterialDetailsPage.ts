@@ -28,8 +28,14 @@ const flowProcessFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: 'auto',
       code: 'process',
       formControlProps: {
-        listTextFormat: '{{code}} {{name}}',
-      },
+        listTextFormat: "{{name}}",
+        listFilterFields: ['label'],
+        listOrderBy: [
+          {
+            field: 'code',
+          }
+        ],
+      }
     },
     {
       type: 'auto',
@@ -51,7 +57,7 @@ const breakdownFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: 'auto',
-      code: 'amount',
+      code: 'quantity',
     },
     {
       type: 'auto',
@@ -81,7 +87,7 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: 'auto',
-      code: 'amount',
+      code: 'quantity',
     },
     {
       type: 'auto',
@@ -196,7 +202,7 @@ const page: RapidPage = {
               secondaryColSpan: 16,
               main: {
                 $type: "sonicEntityList",
-                entityCode: "BaseMaterialFlow",
+                entityCode: "MomRoute",
                 viewMode: "table",
                 selectionMode: "single",
                 listActions: [
@@ -248,7 +254,7 @@ const page: RapidPage = {
                     actionType: 'delete',
                     actionText: '删除',
                     dataSourceCode: "list",
-                    entityCode: "BaseMaterialFlow",
+                    entityCode: "MomRoute",
                   },
                 ],
                 actionsColumnWidth: "80px",
@@ -263,13 +269,13 @@ const page: RapidPage = {
                 {
                   $id: "processList",
                   $type: "sonicEntityList",
-                  entityCode: "BaseMaterialFlowProcess",
+                  entityCode: "MomRouteProcess",
                   viewMode: "table",
                   selectionMode: "none",
                   actionsColumnWidth: "80px",
                   fixedFilters: [
                     {
-                      field: "material_flow_id",
+                      field: "route_id",
                       operator: "eq",
                       value: "",
                     }
@@ -339,7 +345,7 @@ const page: RapidPage = {
                       actionType: 'delete',
                       actionText: '删除',
                       dataSourceCode: "list",
-                      entityCode: "BaseMaterialFlowProcess",
+                      entityCode: "MomRouteProcess",
                       $exps: {
                         "_hidden": "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
                       }
@@ -350,7 +356,7 @@ const page: RapidPage = {
                   $exps: {
                     "_hidden": "!$scope.vars.activeId",
                     "fixedFilters[0].value": "$scope.vars.activeId",
-                    "newForm.fixedFields.material_flow_id": "$scope.vars.activeId",
+                    "newForm.fixedFields.route_id": "$scope.vars.activeId",
                     "hideActionsColumn": "$scope.vars.activeRecord?.publishState !== 'draft'",
                   },
                 },
@@ -371,7 +377,7 @@ const page: RapidPage = {
               secondaryColSpan: 16,
               main: {
                 $type: "sonicEntityList",
-                entityCode: "BaseMaterialBreakdown",
+                entityCode: "MomMaterialBreakdown",
                 viewMode: "table",
                 selectionMode: "single",
                 listActions: [
@@ -401,7 +407,7 @@ const page: RapidPage = {
                   },
                   {
                     type: 'auto',
-                    code: 'amount',
+                    code: 'quantity',
                   },
                   {
                     type: 'auto',
@@ -429,7 +435,7 @@ const page: RapidPage = {
                     actionType: 'delete',
                     actionText: '删除',
                     dataSourceCode: "list",
-                    entityCode: "BaseMaterialBreakdown",
+                    entityCode: "MomMaterialBreakdown",
                   },
                 ],
                 actionsColumnWidth: "80px",
@@ -444,7 +450,7 @@ const page: RapidPage = {
                 {
                   $id: "breakdownPartList",
                   $type: "sonicEntityList",
-                  entityCode: "BaseMaterialBreakdownPart",
+                  entityCode: "MomMaterialBreakdownPart",
                   viewMode: "table",
                   selectionMode: "none",
                   actionsColumnWidth: "80px",
@@ -478,15 +484,22 @@ const page: RapidPage = {
                     {
                       type: 'auto',
                       code: 'subMaterial',
-                      rendererType: "rapidLinkRenderer",
+                      rendererType: "anchor",
                       rendererProps: {
-                        text: "{{code}} {{name}} ({{specification}})",
-                        url: "/pages/base_material_details?id={{id}}",
+                        children: {
+                          $type: 'materialLabelRenderer',
+                          $exps: {
+                            value: '$slot.value',
+                          }
+                        },
+                        $exps: {
+                          href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+                        },
                       },
                     },
                     {
                       type: 'auto',
-                      code: 'amount',
+                      code: 'quantity',
                       width: '100px',
                     },
                     {
@@ -511,7 +524,7 @@ const page: RapidPage = {
                       actionType: 'delete',
                       actionText: '删除',
                       dataSourceCode: "list",
-                      entityCode: "BaseMaterialBreakdownPart",
+                      entityCode: "MomMaterialBreakdownPart",
                     },
                   ],
                   newForm: cloneDeep(breakdownPartFormConfig),

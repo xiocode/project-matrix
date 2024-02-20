@@ -50,6 +50,14 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'default_unit_id',
     },
     {
+      code: 'types',
+      name: '类型',
+      type: 'relation[]',
+      targetSingularCode: 'base_material_type',
+      targetIdColumnName: 'type_id',
+      selfIdColumnName: 'material_id',
+    },
+    {
       code: 'canProduce',
       name: '可生产',
       type: 'boolean',
@@ -57,6 +65,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'canPurchase',
       name: '可采购',
+      type: 'boolean',
+    },
+    {
+      code: 'canOutsource',
+      name: '可外协',
       type: 'boolean',
     },
     {

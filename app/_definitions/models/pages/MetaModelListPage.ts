@@ -54,6 +54,15 @@ const page: RapidPage = {
           filterFields: ["plural_code", "name"],
         }
       ],
+      orderBy: [
+        {
+          field: 'namespace',
+        },
+        {
+          field: 'singularCode',
+        },
+      ],
+      pageSize: -1,
       columns: [
         {
           type: 'link',
@@ -73,12 +82,12 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'singularCode',
-          width: '250px',
+          width: '300px',
         },
         {
           type: 'auto',
           code: 'pluralCode',
-          width: '250px',
+          width: '300px',
         },
         {
           type: 'auto',

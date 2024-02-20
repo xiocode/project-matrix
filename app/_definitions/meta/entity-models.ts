@@ -2,28 +2,20 @@ import type { RapidEntity as TRapidEntity } from '@ruiapp/rapid-extension';
 import { autoConfigureRapidEntity } from '@ruiapp/rapid-extension';
 import AppClient from '../models/entities/AppClient';
 import AppNavItem from '../models/entities/AppNavItem';
+import BaseBuilding from '../models/entities/BaseBuilding';
 import BaseEmployee from '../models/entities/BaseEmployee';
 import BaseFormField from '../models/entities/BaseFormField';
+import BaseGate from '../models/entities/BaseGate';
+import BaseLocation from '../models/entities/BaseLocation';
 import BaseMaterial from '../models/entities/BaseMaterial';
-import BaseMaterialBreakdown from '../models/entities/BaseMaterialBreakdown';
-import BaseMaterialBreakdownPart from '../models/entities/BaseMaterialBreakdownPart';
 import BaseMaterialCategory from '../models/entities/BaseMaterialCategory';
 import BaseMaterialDocument from '../models/entities/BaseMaterialDocument';
-import BaseMaterialFlow from '../models/entities/BaseMaterialFlow';
-import BaseMaterialFlowProcess from '../models/entities/BaseMaterialFlowProcess';
-import BaseMaterialFlowProcessInput from '../models/entities/BaseMaterialFlowProcessInput';
-import BaseMaterialFlowProcessOutput from '../models/entities/BaseMaterialFlowProcessOutput';
+import BaseMaterialType from '../models/entities/BaseMaterialType';
+import BaseOffice from '../models/entities/BaseOffice';
 import BasePartner from '../models/entities/BasePartner';
 import BasePartnerCategory from '../models/entities/BasePartnerCategory';
-import BaseProdFlow from '../models/entities/BaseProdFlow';
-import BaseProdFlowProcess from '../models/entities/BaseProdFlowProcess';
-import BaseProdFlowTemplate from '../models/entities/BaseProdFlowTemplate';
-import BaseProdFlowTemplateProcess from '../models/entities/BaseProdFlowTemplateProcess';
-import BaseProdProcess from '../models/entities/BaseProdProcess';
-import BaseProdProcessCategory from '../models/entities/BaseProdProcessCategory';
 import BaseUnit from '../models/entities/BaseUnit';
 import BaseUnitCategory from '../models/entities/BaseUnitCategory';
-import BaseWarehouse from '../models/entities/BaseWarehouse';
 import BpmBusinessActivity from '../models/entities/BpmBusinessActivity';
 import BpmBusinessApplication from '../models/entities/BpmBusinessApplication';
 import BpmBusinessCategory from '../models/entities/BpmBusinessCategory';
@@ -49,6 +41,50 @@ import MetaDataDictionaryEntry from '../models/entities/MetaDataDictionaryEntry'
 import MetaModel from '../models/entities/MetaModel';
 import MetaProperty from '../models/entities/MetaProperty';
 import MetaRoute from '../models/entities/MetaRoute';
+import MomEquipment from '../models/entities/MomEquipment';
+import MomEquipmentCategory from '../models/entities/MomEquipmentCategory';
+import MomGood from '../models/entities/MomGood';
+import MomGoodLabel from '../models/entities/MomGoodLabel';
+import MomGoodLocation from '../models/entities/MomGoodLocation';
+import MomGoodTransfer from '../models/entities/MomGoodTransfer';
+import MomInspectionCategory from '../models/entities/MomInspectionCategory';
+import MomInspectionCharacteristic from '../models/entities/MomInspectionCharacteristic';
+import MomInspectionCharacteristicCategory from '../models/entities/MomInspectionCharacteristicCategory';
+import MomInspectionInstrument from '../models/entities/MomInspectionInstrument';
+import MomInspectionInstrumentCategory from '../models/entities/MomInspectionInstrumentCategory';
+import MomInspectionMethod from '../models/entities/MomInspectionMethod';
+import MomInspectionRecord from '../models/entities/MomInspectionRecord';
+import MomInspectionRule from '../models/entities/MomInspectionRule';
+import MomInspectionSheet from '../models/entities/MomInspectionSheet';
+import MomInventory from '../models/entities/MomInventory';
+import MomInventoryBusinessType from '../models/entities/MomInventoryBusinessType';
+import MomInventoryLabel from '../models/entities/MomInventoryLabel';
+import MomInventoryOperation from '../models/entities/MomInventoryOperation';
+import MomLab from '../models/entities/MomLab';
+import MomLine from '../models/entities/MomLine';
+import MomMaterialBreakdown from '../models/entities/MomMaterialBreakdown';
+import MomMaterialBreakdownPart from '../models/entities/MomMaterialBreakdownPart';
+import MomPackage from '../models/entities/MomPackage';
+import MomPackageGood from '../models/entities/MomPackageGood';
+import MomProcess from '../models/entities/MomProcess';
+import MomProcessCategory from '../models/entities/MomProcessCategory';
+import MomProductionPlan from '../models/entities/MomProductionPlan';
+import MomProductionPlanItem from '../models/entities/MomProductionPlanItem';
+import MomRoute from '../models/entities/MomRoute';
+import MomRouteProcess from '../models/entities/MomRouteProcess';
+import MomRouteProcessInput from '../models/entities/MomRouteProcessInput';
+import MomRouteProcessOutput from '../models/entities/MomRouteProcessOutput';
+import MomRouteTemplate from '../models/entities/MomRouteTemplate';
+import MomRouteTemplateProcess from '../models/entities/MomRouteTemplateProcess';
+import MomShift from '../models/entities/MomShift';
+import MomShop from '../models/entities/MomShop';
+import MomStation from '../models/entities/MomStation';
+import MomWarehouse from '../models/entities/MomWarehouse';
+import MomWorkOrder from '../models/entities/MomWorkOrder';
+import MomWorkReport from '../models/entities/MomWorkReport';
+import MomWorkTask from '../models/entities/MomWorkTask';
+import MomWorkTeam from '../models/entities/MomWorkTeam';
+import MomWorkTrack from '../models/entities/MomWorkTrack';
 import OcDepartment from '../models/entities/OcDepartment';
 import OcRole from '../models/entities/OcRole';
 import OcUser from '../models/entities/OcUser';
@@ -67,28 +103,20 @@ import SysWebhook from '../models/entities/SysWebhook';
 export default [
   autoConfigureRapidEntity(AppClient),
   autoConfigureRapidEntity(AppNavItem),
+  autoConfigureRapidEntity(BaseBuilding),
   autoConfigureRapidEntity(BaseEmployee),
   autoConfigureRapidEntity(BaseFormField),
+  autoConfigureRapidEntity(BaseGate),
+  autoConfigureRapidEntity(BaseLocation),
   autoConfigureRapidEntity(BaseMaterial),
-  autoConfigureRapidEntity(BaseMaterialBreakdown),
-  autoConfigureRapidEntity(BaseMaterialBreakdownPart),
   autoConfigureRapidEntity(BaseMaterialCategory),
   autoConfigureRapidEntity(BaseMaterialDocument),
-  autoConfigureRapidEntity(BaseMaterialFlow),
-  autoConfigureRapidEntity(BaseMaterialFlowProcess),
-  autoConfigureRapidEntity(BaseMaterialFlowProcessInput),
-  autoConfigureRapidEntity(BaseMaterialFlowProcessOutput),
+  autoConfigureRapidEntity(BaseMaterialType),
+  autoConfigureRapidEntity(BaseOffice),
   autoConfigureRapidEntity(BasePartner),
   autoConfigureRapidEntity(BasePartnerCategory),
-  autoConfigureRapidEntity(BaseProdFlow),
-  autoConfigureRapidEntity(BaseProdFlowProcess),
-  autoConfigureRapidEntity(BaseProdFlowTemplate),
-  autoConfigureRapidEntity(BaseProdFlowTemplateProcess),
-  autoConfigureRapidEntity(BaseProdProcess),
-  autoConfigureRapidEntity(BaseProdProcessCategory),
   autoConfigureRapidEntity(BaseUnit),
   autoConfigureRapidEntity(BaseUnitCategory),
-  autoConfigureRapidEntity(BaseWarehouse),
   autoConfigureRapidEntity(BpmBusinessActivity),
   autoConfigureRapidEntity(BpmBusinessApplication),
   autoConfigureRapidEntity(BpmBusinessCategory),
@@ -114,6 +142,50 @@ export default [
   autoConfigureRapidEntity(MetaModel),
   autoConfigureRapidEntity(MetaProperty),
   autoConfigureRapidEntity(MetaRoute),
+  autoConfigureRapidEntity(MomEquipment),
+  autoConfigureRapidEntity(MomEquipmentCategory),
+  autoConfigureRapidEntity(MomGood),
+  autoConfigureRapidEntity(MomGoodLabel),
+  autoConfigureRapidEntity(MomGoodLocation),
+  autoConfigureRapidEntity(MomGoodTransfer),
+  autoConfigureRapidEntity(MomInspectionCategory),
+  autoConfigureRapidEntity(MomInspectionCharacteristic),
+  autoConfigureRapidEntity(MomInspectionCharacteristicCategory),
+  autoConfigureRapidEntity(MomInspectionInstrument),
+  autoConfigureRapidEntity(MomInspectionInstrumentCategory),
+  autoConfigureRapidEntity(MomInspectionMethod),
+  autoConfigureRapidEntity(MomInspectionRecord),
+  autoConfigureRapidEntity(MomInspectionRule),
+  autoConfigureRapidEntity(MomInspectionSheet),
+  autoConfigureRapidEntity(MomInventory),
+  autoConfigureRapidEntity(MomInventoryBusinessType),
+  autoConfigureRapidEntity(MomInventoryLabel),
+  autoConfigureRapidEntity(MomInventoryOperation),
+  autoConfigureRapidEntity(MomLab),
+  autoConfigureRapidEntity(MomLine),
+  autoConfigureRapidEntity(MomMaterialBreakdown),
+  autoConfigureRapidEntity(MomMaterialBreakdownPart),
+  autoConfigureRapidEntity(MomPackage),
+  autoConfigureRapidEntity(MomPackageGood),
+  autoConfigureRapidEntity(MomProcess),
+  autoConfigureRapidEntity(MomProcessCategory),
+  autoConfigureRapidEntity(MomProductionPlan),
+  autoConfigureRapidEntity(MomProductionPlanItem),
+  autoConfigureRapidEntity(MomRoute),
+  autoConfigureRapidEntity(MomRouteProcess),
+  autoConfigureRapidEntity(MomRouteProcessInput),
+  autoConfigureRapidEntity(MomRouteProcessOutput),
+  autoConfigureRapidEntity(MomRouteTemplate),
+  autoConfigureRapidEntity(MomRouteTemplateProcess),
+  autoConfigureRapidEntity(MomShift),
+  autoConfigureRapidEntity(MomShop),
+  autoConfigureRapidEntity(MomStation),
+  autoConfigureRapidEntity(MomWarehouse),
+  autoConfigureRapidEntity(MomWorkOrder),
+  autoConfigureRapidEntity(MomWorkReport),
+  autoConfigureRapidEntity(MomWorkTask),
+  autoConfigureRapidEntity(MomWorkTeam),
+  autoConfigureRapidEntity(MomWorkTrack),
   autoConfigureRapidEntity(OcDepartment),
   autoConfigureRapidEntity(OcRole),
   autoConfigureRapidEntity(OcUser),
