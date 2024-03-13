@@ -18,10 +18,13 @@ import type {
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,
+  MomInventoryOperationState,
   MomInventoryOperationType,
+  MomMpsExecutionState,
+  MomMpsScheduleState,
+  MomMrpExecutionState,
+  MomMrpPlanningState,
   MomPackageGoodState,
-  MomProductionPlanExecutionState,
-  MomProductionPlanScheduleState,
   MomWorkOrderAssignmentState,
   MomWorkOrderExecutionState,
   MomWorkTaskAssignmentState,
@@ -1742,6 +1745,10 @@ export interface CbsOrder {
    */
   contracts?: any;
   /**
+   * 物料需求计划
+   */
+  mrp?: Partial<MomManufacturingResourcePlan>;
+  /**
    * 订单项
    */
   items?: any;
@@ -1805,6 +1812,10 @@ export interface CbsOrderItem {
    */
   order: Partial<CbsOrder>;
   /**
+   * 物料需求计划
+   */
+  mrp?: Partial<MomManufacturingResourcePlan>;
+  /**
    * 排序号
    */
   orderNum: number;
@@ -1816,6 +1827,10 @@ export interface CbsOrderItem {
    * 名称
    */
   name: string;
+  /**
+   * 标签
+   */
+  tags?: string;
   /**
    * 描述
    */
@@ -2880,6 +2895,10 @@ export interface MomGood {
   /**
    * 标签
    */
+  tags?: string;
+  /**
+   * 标签
+   */
   labels?: any;
   /**
    * 状态
@@ -3050,6 +3069,34 @@ export interface MomGoodTransfer {
    * 物品
    */
   good?: Partial<MomGood>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
   /**
    * 转出位置
    */
@@ -3681,6 +3728,22 @@ export interface MomInventory {
    */
   unit?: Partial<BaseUnit>;
   /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
    * 标签
    */
   labels?: any;
@@ -3834,17 +3897,21 @@ export interface MomInventoryOperation {
    */
   code?: string;
   /**
-   * 库存操作类型
+   * 操作类型
    */
   operationType: MomInventoryOperationType;
   /**
    * 业务类型
    */
-  businessType?: any;
+  businessType?: Partial<MomInventoryBusinessType>;
   /**
    * 业务详情
    */
   businessDetails?: object;
+  /**
+   * 状态
+   */
+  state?: MomInventoryOperationState;
   /**
    * 变更明细
    */
@@ -3993,6 +4060,219 @@ export interface MomLine {
  * 生产线
  */
 export type SaveMomLineInput = Omit<MomLine, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物料需求计划
+ */
+export interface MomManufacturingResourcePlan {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 结果
+   */
+  result?: object;
+  /**
+   * 计划状态
+   */
+  planningState?: MomMrpPlanningState;
+  /**
+   * 执行状态
+   */
+  executionState?: MomMrpExecutionState;
+  /**
+   * 主生产计划
+   */
+  productionSchedules?: any;
+  /**
+   * 生产工单
+   */
+  workOrders?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物料需求计划
+ */
+export type SaveMomManufacturingResourcePlanInput = Omit<MomManufacturingResourcePlan, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 主生产计划
+ */
+export interface MomMasterProductionSchedule {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产计划号
+   */
+  code?: string;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 计划开始日期
+   */
+  scheduledStartDate?: string;
+  /**
+   * 计划完成日期
+   */
+  scheduledFinishDate?: string;
+  /**
+   * 实际开始日期
+   */
+  actualStartDate?: string;
+  /**
+   * 实际完成日期
+   */
+  actualFinishDate?: string;
+  /**
+   * 计划状态
+   */
+  scheduleState?: MomMpsScheduleState;
+  /**
+   * 执行状态
+   */
+  executionState?: MomMpsExecutionState;
+  /**
+   * 物料需求计划
+   */
+  mrp?: Partial<MomManufacturingResourcePlan>;
+  /**
+   * 生产工单
+   */
+  productionOrders?: any;
+  /**
+   * 采购订单
+   */
+  purchaseOrders?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 主生产计划
+ */
+export type SaveMomMasterProductionScheduleInput = Omit<MomMasterProductionSchedule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 生产计划项
+ */
+export interface MomMasterProductionScheduleItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产计划
+   */
+  productionPlan?: Partial<MomMasterProductionSchedule>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 数量
+   */
+  quantity?: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 生产计划项
+ */
+export type SaveMomMasterProductionScheduleItemInput = Omit<MomMasterProductionScheduleItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * BOM
@@ -4323,136 +4603,6 @@ export interface MomProcessCategory {
  * 工序分类
  */
 export type SaveMomProcessCategoryInput = Omit<MomProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 生产计划
- */
-export interface MomProductionPlan {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 生产计划号
-   */
-  code?: string;
-  /**
-   * 计划开始日期
-   */
-  scheduledStartDate?: string;
-  /**
-   * 计划完成日期
-   */
-  scheduledFinishDate?: string;
-  /**
-   * 实际开始日期
-   */
-  actualStartDate?: string;
-  /**
-   * 实际完成日期
-   */
-  actualFinishDate?: string;
-  /**
-   * 计划状态
-   */
-  scheduleState?: MomProductionPlanScheduleState;
-  /**
-   * 执行状态
-   */
-  executionState?: MomProductionPlanExecutionState;
-  /**
-   * 计划项
-   */
-  lineItems?: any;
-  /**
-   * 生产工单
-   */
-  productionOrders?: any;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 生产计划
- */
-export type SaveMomProductionPlanInput = Omit<MomProductionPlan, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 生产计划项
- */
-export interface MomProductionPlanItem {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 生产计划
-   */
-  productionPlan?: Partial<MomProductionPlan>;
-  /**
-   * 物品
-   */
-  material?: Partial<BaseMaterial>;
-  /**
-   * 数量
-   */
-  quantity?: number;
-  /**
-   * 单位
-   */
-  unit?: Partial<BaseUnit>;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 生产计划项
- */
-export type SaveMomProductionPlanItemInput = Omit<MomProductionPlanItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 工艺流程
@@ -5049,13 +5199,17 @@ export interface MomWorkOrder {
    */
   code?: string;
   /**
-   * 生产计划
+   * 物料需求计划
    */
-  productionPlan?: Partial<MomProductionPlan>;
+  mrp?: Partial<MomManufacturingResourcePlan>;
   /**
    * 物品
    */
   material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
   /**
    * 工艺路线
    */

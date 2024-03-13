@@ -1,47 +1,26 @@
 import { cloneDeep } from 'lodash';
 import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
 
+
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'code',
-    },
-    {
-      type: 'auto',
-      code: 'scheduledStartDate',
-    },
-    {
-      type: 'auto',
-      code: 'scheduledFinishDate',
-    },
-    {
-      type: 'auto',
-      code: 'scheduleState',
-    },
-    {
-      type: 'auto',
-      code: 'executionState',
+      code: 'name',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'mom_prod_plan_list',
-  name: '生产计划列表',
-  title: '生产计划',
+  code: 'mom_mrp_list',
+  name: '物料需求计划列表',
+  title: '物料需求计划',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomProductionPlan",
+      entityCode: "MomManufacturingResourcePlan",
       viewMode: "table",
       listActions: [
-        {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
-        }
       ],
       extraActions: [
         {
@@ -56,26 +35,15 @@ const page: RapidPage = {
       columns: [
         {
           type: 'link',
-          code: 'code',
-          fixed: 'left',
-          // rendererType: "link",
+          code: 'name',
+          rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_prod_plan_details?id={{id}}",
+            url: "/pages/mom_mrp_details?id={{id}}",
           },
         },
         {
           type: 'auto',
-          code: 'scheduledStartDate',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'scheduledFinishDate',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'scheduleState',
+          code: 'planningState',
           width: '100px',
         },
         {
@@ -102,21 +70,10 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "MomProductionPlan",
+          entityCode: "MomManufacturingResourcePlan",
         },
       ],
-      newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
-      searchForm: {
-        entityCode: 'OcUser',
-        items: [
-          {
-            type: 'auto',
-            code: 'code',
-            filterMode: 'contains',
-          },
-        ],
-      },
     },
   ],
 };

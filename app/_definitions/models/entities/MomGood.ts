@@ -68,6 +68,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'source_id',
     },
     {
+      code: 'tags',
+      name: '标签',
+      type: 'text',
+    },
+    {
       code: 'labels',
       name: '标签',
       type: 'relation[]',

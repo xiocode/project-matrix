@@ -5,13 +5,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'productionPlan',
-      formControlProps: {
-        listTextFieldName: "code",
-      }
-    },
-    {
-      type: 'auto',
       code: 'code',
     },
     {
@@ -32,7 +25,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'materialFlow',
+      code: 'tags',
+    },
+    {
+      type: 'auto',
+      code: 'route',
       formControlProps: {
         listTextFieldName: "version",
       },
@@ -47,7 +44,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'amount',
+      code: 'quantity',
     },
     {
       type: 'auto',
@@ -65,13 +62,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 }
 
 const page: RapidPage = {
-  code: 'mom_prod_order_list',
+  code: 'mom_work_order_list',
   name: '工单列表',
   title: '工单管理',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "ProductionOrder",
+      entityCode: "MomWorkOrder",
       viewMode: "table",
       listActions: [
         {
@@ -99,26 +96,38 @@ const page: RapidPage = {
           fixed: 'left',
           rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_prod_order_details?id={{id}}",
-          },
-        },
-        {
-          type: 'link',
-          code: 'material',
-          fixed: 'left',
-          rendererType: "link",
-          rendererProps: {
-            text: "{{material.code}} {{material.name}}",
-            url: "/pages/base_material_details?id={{material.id}}",
+            url: "/pages/mom_work_order_details?id={{id}}",
           },
         },
         {
           type: 'auto',
-          code: 'materialFlow',
+          code: 'material',
+          fixed: 'left',
+          rendererType: "anchor",
+          rendererProps: {
+            children: {
+              $type: 'materialLabelRenderer',
+              $exps: {
+                value: '$slot.value',
+              }
+            },
+            $exps: {
+              href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+            },
+          },
+        },
+        {
+          type: 'auto',
+          code: 'route',
           width: '100px',
           rendererProps: {
             format: "{{version}}",
           },
+        },
+        {
+          type: 'auto',
+          code: 'tags',
+          width: '200px',
         },
         {
           type: 'auto',
@@ -132,7 +141,7 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'amount',
+          code: 'quantity',
           width: '100px',
         },
         {
@@ -172,7 +181,7 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "ProductionOrder",
+          entityCode: "MomWorkOrder",
         },
       ],
       newForm: cloneDeep(formConfig),

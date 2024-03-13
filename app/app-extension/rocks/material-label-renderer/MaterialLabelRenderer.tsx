@@ -5,17 +5,25 @@ import type { MaterialLabelRendererRockConfig } from "./material-label-renderer-
 export default {
   Renderer(context, props: MaterialLabelRendererRockConfig) {
     const { value } = props;
-    let label = value.name;
-
-    if (value.code) {
-      label = `${value.code} ${label}`;
-    }
-    if (value.specification) {
-      label = `${label} (${value.specification})`;
-    }
-
-    return label;
+    return renderMaterial(value);
   },
 
   ...MaterialLabelRendererMeta,
 } as Rock;
+
+export function renderMaterial(value: MaterialLabelRendererRockConfig["value"]) {
+  if (!value) {
+    return "";
+  }
+
+  let label = value.name;
+
+  if (value.code) {
+    label = `${value.code} ${label}`;
+  }
+  if (value.specification) {
+    label = `${label} (${value.specification})`;
+  }
+
+  return label;
+}

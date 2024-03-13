@@ -15,7 +15,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: 'operationType',
-      name: '库存操作类型',
+      name: '操作类型',
       type: 'option',
       dataDictionary: 'MomInventoryOperationType',
       required: true,
@@ -23,14 +23,20 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'businessType',
       name: '业务类型',
-      type: 'relation[]',
+      type: 'relation',
       targetSingularCode: 'mom_inventory_business_type',
-      selfIdColumnName: 'business_id',
+      targetIdColumnName: 'business_id',
     },
     {
       code: 'businessDetails',
       name: '业务详情',
       type: 'json',
+    },
+    {
+      code: 'state',
+      name: '状态',
+      type: 'option',
+      dataDictionary: 'MomInventoryOperationState',
     },
     {
       code: 'transfers',

@@ -50,6 +50,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       selfIdColumnName: "order_id",
     },
     {
+      code: 'mrp',
+      name: '物料需求计划',
+      type: 'relation',
+      targetSingularCode: 'mom_manufacturing_resource_plan',
+      targetIdColumnName: 'mrp_id',
+    },
+    {
       code: 'items',
       name: '订单项',
       type: 'relation[]',

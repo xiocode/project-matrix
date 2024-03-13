@@ -73,7 +73,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: 'allocatedQuantity',
       name: '已分配数量',
       type: 'double',
-      description: '客户已经下单购买但还没有运达的成品数量；或者已经生产计划已经审核通过但还未领料的数量。已分配数量和在库数量无关，在库数量不一定大于等于已分配数量。一旦订单开始发货，或者做了生产领料，应该扣减掉对应的已分配数量',
+      description: '客户已经下单购买但还没有运达的成品数量；或者已经生产工单已经审核通过但还未领料的数量。已分配数量和在库数量无关，在库数量不一定大于等于已分配数量。一旦订单开始发货，或者做了生产领料，应该扣减掉对应的已分配数量',
     },
     {
       code: 'shippingQuantity',
@@ -93,6 +93,26 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: 'relation',
       targetSingularCode: 'base_unit',
       targetIdColumnName: 'unit_id',
+    },
+    {
+      code: 'lotNum',
+      name: '批号',
+      type: 'text',
+    },
+    {
+      code: 'binNum',
+      name: '箱号',
+      type: 'text',
+    },
+    {
+      code: 'serialNum',
+      name: '序列号',
+      type: 'text',
+    },
+    {
+      code: 'tags',
+      name: '标签',
+      type: 'text',
     },
     {
       code: 'labels',

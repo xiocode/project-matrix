@@ -5,7 +5,23 @@ const goodTransferFormConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'good',
+      code: 'material',
+    },
+    {
+      type: 'auto',
+      code: 'lotNum',
+    },
+    {
+      type: 'auto',
+      code: 'serialNum',
+    },
+    {
+      type: 'auto',
+      code: 'quantity',
+    },
+    {
+      type: 'auto',
+      code: 'unit',
     },
     {
       type: 'treeSelect',
@@ -109,12 +125,41 @@ const page: RapidPage = {
                 }
               ],
               columns: [
+                // {
+                //   type: 'auto',
+                //   code: 'good',
+                //   width: '100px',
+                //   rendererProps: {
+                //     format: "{{lotNum}} / {{serialNum}}",
+                //   },
+                // },
                 {
                   type: 'auto',
-                  code: 'good',
+                  code: 'material',
+                  rendererType: "anchor",
+                  rendererProps: {
+                    children: {
+                      $type: 'materialLabelRenderer',
+                      $exps: {
+                        value: '$slot.value',
+                      }
+                    },
+                    $exps: {
+                      href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+                    },
+                  },
+                },
+                {
+                  type: 'auto',
+                  code: 'quantity',
+                  width: '100px',
+                },
+                {
+                  type: 'auto',
+                  code: 'unit',
                   width: '100px',
                   rendererProps: {
-                    format: "{{lotNum}}/{{serialNum}}",
+                    format: "{{name}}",
                   },
                 },
                 {

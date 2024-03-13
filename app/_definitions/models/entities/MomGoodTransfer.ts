@@ -30,6 +30,46 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'good_id',
     },
     {
+      code: 'material',
+      name: '物品',
+      type: 'relation',
+      targetSingularCode: 'base_material',
+      targetIdColumnName: 'material_id',
+    },
+    {
+      code: 'lotNum',
+      name: '批号',
+      type: 'text',
+    },
+    {
+      code: 'binNum',
+      name: '箱号',
+      type: 'text',
+    },
+    {
+      code: 'serialNum',
+      name: '序列号',
+      type: 'text',
+    },
+    {
+      code: 'tags',
+      name: '标签',
+      type: 'text',
+    },
+    {
+      code: 'quantity',
+      name: '数量',
+      type: 'double',
+      // required: true,
+    },
+    {
+      code: 'unit',
+      name: '单位',
+      type: 'relation',
+      targetSingularCode: 'base_unit',
+      targetIdColumnName: 'unit_id',
+    },
+    {
       code: 'from',
       name: '转出位置',
       type: 'relation',

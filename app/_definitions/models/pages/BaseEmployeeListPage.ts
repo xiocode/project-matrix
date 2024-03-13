@@ -13,10 +13,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'shop',
-    },
-    {
-      type: 'auto',
       code: 'department',
     },
     {
@@ -24,6 +20,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: 'state',
     },
   ],
+  defaultFormFields: {
+    state: 'normal',
+  }
 }
 
 const page: RapidPage = {
@@ -36,6 +35,11 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BaseEmployee",
       viewMode: "table",
+      orderBy: [
+        {
+          field: 'code',
+        },
+      ],
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -65,11 +69,6 @@ const page: RapidPage = {
           type: 'auto',
           code: 'name',
           fixed: 'left',
-        },
-        {
-          type: 'auto',
-          code: 'shop',
-          width: '150px',
         },
         {
           type: 'auto',

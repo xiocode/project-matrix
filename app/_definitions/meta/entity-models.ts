@@ -62,14 +62,15 @@ import MomInventoryLabel from '../models/entities/MomInventoryLabel';
 import MomInventoryOperation from '../models/entities/MomInventoryOperation';
 import MomLab from '../models/entities/MomLab';
 import MomLine from '../models/entities/MomLine';
+import MomManufacturingResourcePlan from '../models/entities/MomManufacturingResourcePlan';
+import MomMasterProductionSchedule from '../models/entities/MomMasterProductionSchedule';
+import MomMasterProductionScheduleItem from '../models/entities/MomMasterProductionScheduleItem';
 import MomMaterialBreakdown from '../models/entities/MomMaterialBreakdown';
 import MomMaterialBreakdownPart from '../models/entities/MomMaterialBreakdownPart';
 import MomPackage from '../models/entities/MomPackage';
 import MomPackageGood from '../models/entities/MomPackageGood';
 import MomProcess from '../models/entities/MomProcess';
 import MomProcessCategory from '../models/entities/MomProcessCategory';
-import MomProductionPlan from '../models/entities/MomProductionPlan';
-import MomProductionPlanItem from '../models/entities/MomProductionPlanItem';
 import MomRoute from '../models/entities/MomRoute';
 import MomRouteProcess from '../models/entities/MomRouteProcess';
 import MomRouteProcessInput from '../models/entities/MomRouteProcessInput';
@@ -163,14 +164,15 @@ export default [
   autoConfigureRapidEntity(MomInventoryOperation),
   autoConfigureRapidEntity(MomLab),
   autoConfigureRapidEntity(MomLine),
+  autoConfigureRapidEntity(MomManufacturingResourcePlan),
+  autoConfigureRapidEntity(MomMasterProductionSchedule),
+  autoConfigureRapidEntity(MomMasterProductionScheduleItem),
   autoConfigureRapidEntity(MomMaterialBreakdown),
   autoConfigureRapidEntity(MomMaterialBreakdownPart),
   autoConfigureRapidEntity(MomPackage),
   autoConfigureRapidEntity(MomPackageGood),
   autoConfigureRapidEntity(MomProcess),
   autoConfigureRapidEntity(MomProcessCategory),
-  autoConfigureRapidEntity(MomProductionPlan),
-  autoConfigureRapidEntity(MomProductionPlanItem),
   autoConfigureRapidEntity(MomRoute),
   autoConfigureRapidEntity(MomRouteProcess),
   autoConfigureRapidEntity(MomRouteProcessInput),

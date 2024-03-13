@@ -27,16 +27,19 @@ import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
+import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
 import MomInventoryListPage from '../models/pages/MomInventoryListPage';
 import MomInventoryOperationDetailsPage from '../models/pages/MomInventoryOperationDetailsPage';
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
+import MomMpsDetailsPage from '../models/pages/MomMpsDetailsPage';
+import MomMpsListPage from '../models/pages/MomMpsListPage';
+import MomMrpDetailsPage from '../models/pages/MomMrpDetailsPage';
+import MomMrpListPage from '../models/pages/MomMrpListPage';
 import MomProcessListPage from '../models/pages/MomProcessListPage';
-import MomProdOrderDetailsPage from '../models/pages/MomProdOrderDetailsPage';
-import MomProdOrderListPage from '../models/pages/MomProdOrderListPage';
-import MomProdPlanDetailsPage from '../models/pages/MomProdPlanDetailsPage';
-import MomProdPlanListPage from '../models/pages/MomProdPlanListPage';
 import MomProdTaskDetailsPage from '../models/pages/MomProdTaskDetailsPage';
 import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
+import MomWorkOrderDetailsPage from '../models/pages/MomWorkOrderDetailsPage';
+import MomWorkOrderListPage from '../models/pages/MomWorkOrderListPage';
 import OcDepartmentListPage from '../models/pages/OcDepartmentListPage';
 import OcRoleDetailsPage from '../models/pages/OcRoleDetailsPage';
 import OcRoleListPage from '../models/pages/OcRoleListPage';
@@ -77,16 +80,19 @@ export default [
   MetaModelListPage,
   MetaRouteListPage,
   MomGoodListPage,
+  MomGoodLocationListPage,
   MomInventoryListPage,
   MomInventoryOperationDetailsPage,
   MomInventoryOperationListPage,
+  MomMpsDetailsPage,
+  MomMpsListPage,
+  MomMrpDetailsPage,
+  MomMrpListPage,
   MomProcessListPage,
-  MomProdOrderDetailsPage,
-  MomProdOrderListPage,
-  MomProdPlanDetailsPage,
-  MomProdPlanListPage,
   MomProdTaskDetailsPage,
   MomProdTaskListPage,
+  MomWorkOrderDetailsPage,
+  MomWorkOrderListPage,
   OcDepartmentListPage,
   OcRoleDetailsPage,
   OcRoleListPage,

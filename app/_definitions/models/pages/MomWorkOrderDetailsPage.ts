@@ -13,14 +13,14 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: 'auto',
-      code: 'materialFlow',
+      code: 'route',
       formControlProps: {
         listTextFieldName: "version",
       }
     },
     {
       type: 'auto',
-      code: 'materialProcess',
+      code: 'routeProcess',
       listDataFindOptions: {
         properties: ["id", "process", "aliasName"],
       },
@@ -30,7 +30,7 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: 'auto',
-      code: 'amount',
+      code: 'quantity',
     },
     {
       type: 'auto',
@@ -46,14 +46,23 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: 'auto',
       code: 'assignees',
+      formControlProps: {
+        listTextFormat: '{{name}} ({{department.name}})',
+      },
       listDataFindOptions: {
+        properties: ["id", "name", "department"],
         fixedFilters: [
           {
             field: "state",
             operator: "eq",
             value: "normal",
           }
-        ]
+        ],
+        orderBy: [
+          {
+            field: 'code',
+          },
+        ],
       }
     },
     {
@@ -63,6 +72,24 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: 'auto',
       code: 'assigner',
+      formControlProps: {
+        listTextFormat: '{{name}} ({{department.name}})',
+      },
+      listDataFindOptions: {
+        properties: ["id", "name", "department"],
+        fixedFilters: [
+          {
+            field: "state",
+            operator: "eq",
+            value: "normal",
+          }
+        ],
+        orderBy: [
+          {
+            field: 'code',
+          },
+        ],
+      }
     },
     {
       type: 'auto',
@@ -76,28 +103,19 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
 };
 
 const page: RapidPage = {
-  code: 'mom_prod_order_details',
+  code: 'mom_work_order_details',
   name: '工单详情',
   title: '工单详情',
   view: [
     {
       $type: 'rapidEntityForm',
-      entityCode: 'ProductionOrder',
+      entityCode: 'MomWorkOrder',
       mode: 'view',
       column: 3,
       items: [
         {
           type: 'auto',
           code: 'code',
-        },
-        {
-          type: 'auto',
-          code: 'productionPlan',
-          rendererType: "rapidLinkRenderer",
-          rendererProps: {
-            text: "{{code}}",
-            url: "/pages/mom_prod_plan_details?id={{id}}",
-          },
         },
         {
           type: 'auto',
@@ -110,7 +128,7 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'amount',
+          code: 'quantity',
         },
         {
           type: 'auto',
@@ -145,7 +163,7 @@ const page: RapidPage = {
           children: [
             {
               $type: "sonicEntityList",
-              entityCode: "ProductionTask",
+              entityCode: "MomWorkTask",
               viewMode: "table",
               fixedFilters: [
                 {
@@ -171,16 +189,16 @@ const page: RapidPage = {
                 {
                   type: 'link',
                   code: 'code',
-                  width: '100px',
+                  width: '200px',
                   fixed: 'left',
                   rendererType: "link",
                   rendererProps: {
-                    url: "/pages/mom_prod_task_details?id={{id}}",
+                    url: "/pages/mom_work_task_details?id={{id}}",
                   },
                 },
                 {
                   type: 'auto',
-                  code: 'materialProcess',
+                  code: 'routeProcess',
                   width: '150px',
                   fixed: 'left',
                   rendererProps: {
@@ -189,13 +207,13 @@ const page: RapidPage = {
                 },
                 {
                   type: 'auto',
-                  code: 'amount',
-                  width: '100px',
+                  code: 'quantity',
+                  width: '80px',
                 },
                 {
                   type: 'auto',
                   code: 'unit',
-                  width: '150px',
+                  width: '50px',
                   rendererProps: {
                     format: "{{name}}",
                   },
@@ -224,7 +242,7 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'assigner',
-                  width: '150px',
+                  width: '100px',
                   rendererProps: {
                     format: "{{name}}",
                   },
@@ -242,12 +260,12 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'assignmentState',
-                  width: '150px',
+                  width: '100px',
                 },
                 {
                   type: 'auto',
                   code: 'executionState',
-                  width: '150px',
+                  width: '100px',
                 },
               ],
               actions: [
@@ -263,7 +281,7 @@ const page: RapidPage = {
                   actionType: 'delete',
                   actionText: '删除',
                   dataSourceCode: "list",
-                  entityCode: "ProductionTask",
+                  entityCode: "MomWorkTask",
                 },
               ],
               newForm: cloneDeep(taskFormConfig),

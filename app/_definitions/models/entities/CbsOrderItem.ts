@@ -16,6 +16,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
+      code: 'mrp',
+      name: '物料需求计划',
+      type: 'relation',
+      targetSingularCode: 'mom_manufacturing_resource_plan',
+      targetIdColumnName: 'mrp_id',
+    },
+    {
       code: 'orderNum',
       name: '排序号',
       type: 'integer',
@@ -34,6 +41,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: '名称',
       type: 'text',
       required: true,
+    },
+    {
+      code: 'tags',
+      name: '标签',
+      type: 'text',
     },
     {
       code: 'description',

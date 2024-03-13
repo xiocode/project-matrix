@@ -13,6 +13,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
+      code: 'tags',
+    },
+    {
+      type: 'auto',
       code: 'allocableQuantity',
     },
     {
@@ -31,18 +35,18 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: 'auto',
       code: 'instockQuantity',
     },
-    {
-      type: 'auto',
-      code: 'processingQuantity',
-    },
-    {
-      type: 'auto',
-      code: 'processedQuantity',
-    },
-    {
-      type: 'auto',
-      code: 'yieldQuantity',
-    },
+    // {
+    //   type: 'auto',
+    //   code: 'processingQuantity',
+    // },
+    // {
+    //   type: 'auto',
+    //   code: 'processedQuantity',
+    // },
+    // {
+    //   type: 'auto',
+    //   code: 'yieldQuantity',
+    // },
     {
       type: 'auto',
       code: 'reservedQuantity',
@@ -51,14 +55,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: 'auto',
       code: 'allocatedQuantity',
     },
-    {
-      type: 'auto',
-      code: 'shippingQuantity',
-    },
-    {
-      type: 'auto',
-      code: 'deliveredQuantity',
-    },
+    // {
+    //   type: 'auto',
+    //   code: 'shippingQuantity',
+    // },
+    // {
+    //   type: 'auto',
+    //   code: 'deliveredQuantity',
+    // },
     {
       type: 'auto',
       code: 'unit',
@@ -114,8 +118,12 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
+          code: 'tags',
+        },
+        {
+          type: 'auto',
           code: 'unit',
-          width: '100px',
+          width: '50px',
           rendererProps: {
             format: '{{name}}',
           },
@@ -145,21 +153,21 @@ const page: RapidPage = {
           code: 'instockQuantity',
           width: '100px',
         },
-        {
-          type: 'auto',
-          code: 'processingQuantity',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'processedQuantity',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'yieldQuantity',
-          width: '100px',
-        },
+        // {
+        //   type: 'auto',
+        //   code: 'processingQuantity',
+        //   width: '100px',
+        // },
+        // {
+        //   type: 'auto',
+        //   code: 'processedQuantity',
+        //   width: '100px',
+        // },
+        // {
+        //   type: 'auto',
+        //   code: 'yieldQuantity',
+        //   width: '100px',
+        // },
         {
           type: 'auto',
           code: 'reservedQuantity',
@@ -170,16 +178,16 @@ const page: RapidPage = {
           code: 'allocatedQuantity',
           width: '100px',
         },
-        {
-          type: 'auto',
-          code: 'shippingQuantity',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'deliveredQuantity',
-          width: '100px',
-        },
+        // {
+        //   type: 'auto',
+        //   code: 'shippingQuantity',
+        //   width: '100px',
+        // },
+        // {
+        //   type: 'auto',
+        //   code: 'deliveredQuantity',
+        //   width: '100px',
+        // },
       ],
       actions: [
         {

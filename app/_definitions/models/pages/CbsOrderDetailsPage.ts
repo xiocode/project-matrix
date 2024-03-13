@@ -23,6 +23,10 @@ const orderItemFormConfig: Partial<RapidEntityFormConfig> = {
       code: 'name',
     },
     {
+      type: 'auto',
+      code: 'tags',
+    },
+    {
       type: 'textarea',
       code: 'description',
     },
@@ -52,11 +56,13 @@ const orderItemFormConfig: Partial<RapidEntityFormConfig> = {
           const _ = event.framework.getExpressionVars()._;
           const materials = _.get(event.scope.stores['dataFormItemList-subject'], 'data.list');
           const subject = _.find(materials, function (item) { return item.id == changedValues.subject });
+          const name = subject.name + (subject.specification ? ' (' + subject.specification + ')' : '');
           const unitId = _.get(subject, 'defaultUnit.id');
           event.page.sendComponentMessage(event.sender.$id, {
             name: "setFieldsValue",
             payload: {
-              unit: unitId
+              name: name,
+              unit: unitId,
             }
           });
         }
@@ -151,12 +157,17 @@ const page: RapidPage = {
                 {
                   type: 'auto',
                   code: 'orderNum',
-                  width: '100px',
+                  width: '60px',
                 },
                 {
                   type: 'auto',
                   code: 'name',
-                  width: '150px',
+                  width: '200px',
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  width: '200px',
                 },
                 {
                   type: 'auto',

@@ -1,40 +1,6 @@
 import { cloneDeep } from 'lodash';
 import type { RapidPage, RapidEntityFormRockConfig } from '@ruiapp/rapid-extension';
 
-const lineItemFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    {
-      type: 'auto',
-      code: 'material',
-      listDataFindOptions: {
-        fixedFilters: [
-          {
-            operator: 'eq',
-            field: 'can_produce',
-            value: true,
-          }
-        ],
-        orderBy: [
-          {
-            field: "code",
-          }
-        ],
-      },
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-      }
-    },
-    {
-      type: 'auto',
-      code: 'quantity',
-    },
-    {
-      type: 'auto',
-      code: 'unit',
-    },
-  ],
-};
-
 
 const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
@@ -45,24 +11,9 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: 'auto',
       code: 'material',
-      // listDataFindOptions: {
-      //   fixedFilters: [
-      //     {
-      //       field: "productionPlanItems",
-      //       operator: "exists",
-      //       filters: [
-      //         {
-      //           field: "production_plan_id",
-      //           operator: "eq",
-      //           value: ""
-      //         }
-      //       ]
-      //     }
-      //   ],
-      //   $exps: {
-      //     "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
-      //   }
-      // },
+      listDataFindOptions: {
+        properties: ['id', 'code', 'name', 'defaultUnit'],
+      },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
       },
@@ -125,11 +76,23 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       $action: "script",
       script: `function (event) {
-        const material = event.args.form.getFieldValue("material");
+        let material = event.args.form.getFieldValue("material");
+        const materialId = material && material.id || material;
         event.scope.setVars({
-          active_material_id: material && material.id || material,
+          active_material_id: materialId,
         }, true);
         event.scope.loadStoreData('dataFormItemList-route');
+
+        const _ = event.framework.getExpressionVars()._;
+        const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
+        material = _.find(materials, function (item) { return item.id == materialId });
+        const unitId = _.get(material, 'defaultUnit.id');
+        event.page.sendComponentMessage(event.sender.$id, {
+          name: "setFieldsValue",
+          payload: {
+            unit: unitId,
+          }
+        });
       }`
     },
   ],
@@ -142,10 +105,15 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
           event.scope.setVars({
             active_material_id: changedValues.material,
           }, true);
+          const _ = event.framework.getExpressionVars()._;
+          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
+          const material = _.find(materials, function (item) { return item.id == changedValues.material });
+          const unitId = _.get(material, 'defaultUnit.id');
           event.page.sendComponentMessage(event.sender.$id, {
             name: "setFieldsValue",
             payload: {
-              route: null
+              unit: unitId,
+              route: null,
             }
           });
           event.scope.loadStoreData('dataFormItemList-route');
@@ -156,19 +124,35 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
 };
 
 const page: RapidPage = {
-  code: 'mom_prod_plan_details',
-  name: '生产计划详情',
-  title: '生产计划详情',
+  code: 'mom_mps_details',
+  name: '主生产计划项详情',
+  title: '主生产计划项详情',
   view: [
     {
       $type: 'rapidEntityForm',
-      entityCode: 'MomProductionPlan',
+      entityCode: 'MomMasterProductionSchedule',
       mode: 'view',
       column: 3,
       items: [
         {
           type: 'auto',
-          code: 'code',
+          code: 'material',
+          rendererType: "rapidLinkRenderer",
+          rendererProps: {
+            text: "{{code}} {{name}}",
+            url: "/pages/base_material_details?id={{id}}",
+          },
+        },
+        {
+          type: 'auto',
+          code: 'quantity',
+        },
+        {
+          type: 'auto',
+          code: 'unit',
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           type: 'auto',
@@ -207,90 +191,6 @@ const page: RapidPage = {
       $type: "antdTabs",
       items: [
         {
-          key: "lineItems",
-          label: "产品清单",
-          children: [
-            {
-              $type: "sonicEntityList",
-              entityCode: "MomProductionPlanItem",
-              viewMode: "table",
-              fixedFilters: [
-                {
-                  field: "production_plan_id",
-                  operator: "eq",
-                  value: "",
-                }
-              ],
-              listActions: [
-                {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                }
-              ],
-              columns: [
-                {
-                  type: 'auto',
-                  code: 'material',
-                  rendererType: "anchor",
-                  rendererProps: {
-                    children: {
-                      $type: 'materialLabelRenderer',
-                      $exps: {
-                        value: '$slot.value',
-                      }
-                    },
-                    $exps: {
-                      href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
-                    },
-                  },
-                },
-                {
-                  type: 'auto',
-                  code: 'quantity',
-                  width: '100px',
-                },
-                {
-                  type: 'auto',
-                  code: 'unit',
-                  width: '100px',
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-              ],
-              actions: [
-                {
-                  $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
-                  actionType: "edit",
-                  actionText: '修改',
-                },
-                {
-                  $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
-                  dataSourceCode: "list",
-                  entityCode: "MomProductionPlanItem",
-                },
-              ],
-              newForm: cloneDeep(lineItemFormConfig),
-              editForm: cloneDeep(lineItemFormConfig),
-              $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.production_plan_id": "$rui.parseQuery().id",
-              },
-            }
-          ]
-        },
-        {
           key: "orders",
           label: "工单",
           children: [
@@ -301,7 +201,7 @@ const page: RapidPage = {
               viewMode: "table",
               fixedFilters: [
                 {
-                  field: "production_plan_id",
+                  field: "mps_id",
                   operator: "eq",
                   value: "",
                 }
@@ -327,7 +227,7 @@ const page: RapidPage = {
                   fixed: 'left',
                   rendererType: "link",
                   rendererProps: {
-                    url: "/pages/mom_prod_order_details?id={{id}}",
+                    url: "/pages/mom_work_order_details?id={{id}}",
                   },
                 },
                 {
@@ -399,7 +299,8 @@ const page: RapidPage = {
               editForm: cloneDeep(orderFormConfig),
               $exps: {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.production_plan_id": "$rui.parseQuery().id",
+                "newForm.defaultFormFields.material": "parseInt($rui.parseQuery().id, 10)",
+                "newForm.fixedFields.mps_id": "$rui.parseQuery().id",
               },
             }
           ]

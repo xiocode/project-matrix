@@ -113,7 +113,7 @@ const page: RapidPage = {
           rendererType: "link",
           rendererProps: {
             text: "{{workOrder.code}}",
-            url: "/pages/mom_prod_order_details?id={{workOrder.id}}",
+            url: "/pages/mom_work_order_details?id={{workOrder.id}}",
           },
         },
         {

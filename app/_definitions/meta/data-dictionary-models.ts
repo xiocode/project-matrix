@@ -24,10 +24,13 @@ import MetaRouteType from '../models/data-dictionaries/MetaRouteType';
 import MomEquipmentPowerState from '../models/data-dictionaries/MomEquipmentPowerState';
 import MomEquipmentProductionState from '../models/data-dictionaries/MomEquipmentProductionState';
 import MomGoodState from '../models/data-dictionaries/MomGoodState';
+import MomInventoryOperationState from '../models/data-dictionaries/MomInventoryOperationState';
 import MomInventoryOperationType from '../models/data-dictionaries/MomInventoryOperationType';
+import MomMpsExecutionState from '../models/data-dictionaries/MomMpsExecutionState';
+import MomMpsScheduleState from '../models/data-dictionaries/MomMpsScheduleState';
+import MomMrpExecutionState from '../models/data-dictionaries/MomMrpExecutionState';
+import MomMrpPlanningState from '../models/data-dictionaries/MomMrpPlanningState';
 import MomPackageGoodState from '../models/data-dictionaries/MomPackageGoodState';
-import MomProductionPlanExecutionState from '../models/data-dictionaries/MomProductionPlanExecutionState';
-import MomProductionPlanScheduleState from '../models/data-dictionaries/MomProductionPlanScheduleState';
 import MomWorkOrderAssignmentState from '../models/data-dictionaries/MomWorkOrderAssignmentState';
 import MomWorkOrderExecutionState from '../models/data-dictionaries/MomWorkOrderExecutionState';
 import MomWorkTaskAssignmentState from '../models/data-dictionaries/MomWorkTaskAssignmentState';
@@ -71,10 +74,13 @@ export default [
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,
+  MomInventoryOperationState,
   MomInventoryOperationType,
+  MomMpsExecutionState,
+  MomMpsScheduleState,
+  MomMrpExecutionState,
+  MomMrpPlanningState,
   MomPackageGoodState,
-  MomProductionPlanExecutionState,
-  MomProductionPlanScheduleState,
   MomWorkOrderAssignmentState,
   MomWorkOrderExecutionState,
   MomWorkTaskAssignmentState,

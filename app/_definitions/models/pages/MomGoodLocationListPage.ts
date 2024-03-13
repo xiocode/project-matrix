@@ -5,32 +5,40 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'code',
+      code: 'good',
+      formControlProps: {
+        listTextFormat: "{{lotNum}} / {{serialNum}}",
+        listFilterFields: ['label']
+      },
+    },
+    {
+      type: 'treeSelect',
+      code: 'location',
+      formControlProps: {
+        listDataSourceCode: "locations",
+        listParentField: "parent.id",
+      },
     },
     {
       type: 'auto',
-      code: 'operationType',
+      code: 'putInTime',
     },
     {
       type: 'auto',
-      code: 'businessType',
-    },
-    {
-      type: 'auto',
-      code: 'state',
+      code: 'takeOutTime',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'mom_inventory_operation_list',
-  name: '库存操作记录',
-  title: '库存操作记录',
+  code: 'mom_good_location_list',
+  name: '物品位置',
+  title: '物品位置',
   // permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomInventoryOperation",
+      entityCode: "MomGoodLocation",
       viewMode: "table",
       listActions: [
         {
@@ -47,43 +55,48 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["material"],
+          filterFields: ["good"],
+        }
+      ],
+      fixedFilters: [
+        {
+          field: 'take_out_time',
+          operator: 'null',
         }
       ],
       orderBy: [
         {
-          field: 'createdAt',
+          field: 'putInTime',
           desc: true,
         }
       ],
       pageSize: 20,
       columns: [
         {
-          type: 'link',
-          code: 'code',
-          // rendererType: 'rapidLinkRenderer',
+          type: 'auto',
+          code: 'good',
           rendererProps: {
-            url: "/pages/mom_inventory_operation_details?id={{id}}",
+            format: '{{lotNum}} / {{serialNum}}',
           },
         },
         {
           type: 'auto',
-          code: 'operationType',
+          title: '数量',
+          code: 'id',
+          fieldName: 'good.quantity',
           width: '100px',
         },
         {
           type: 'auto',
-          code: 'businessType',
+          code: 'location',
           width: '200px',
+          rendererProps: {
+            format: '{{name}}',
+          },
         },
         {
           type: 'auto',
-          code: 'createdAt',
-          width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'state',
+          code: 'putInTime',
           width: '150px',
         },
       ],
@@ -100,11 +113,26 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "MomInventoryOperation",
+          entityCode: "MomGoodLocation",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      stores: [
+        {
+          type: "entityStore",
+          name: "locations",
+          entityCode: "BaseLocation",
+          properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [
+          ],
+          orderBy: [
+            {
+              field: 'orderNum',
+            }
+          ],
+        }
+      ],
     },
   ],
 };

@@ -243,6 +243,15 @@ export type MomGoodState =
   ;
 
 /**
+ * 库存操作状态
+ */
+export type MomInventoryOperationState =
+  | 'pending'
+  | 'processing'
+  | 'done'
+  ;
+
+/**
  * 库存操作类型
  */
 export type MomInventoryOperationType =
@@ -254,17 +263,9 @@ export type MomInventoryOperationType =
   ;
 
 /**
- * 包内物品状态
+ * 主计划执行状态
  */
-export type MomPackageGoodState =
-  | 'packed'
-  | 'unpacked'
-  ;
-
-/**
- * 计划执行状态
- */
-export type MomProductionPlanExecutionState =
+export type MomMpsExecutionState =
   | 'pending'
   | 'processing'
   | 'finished'
@@ -272,13 +273,41 @@ export type MomProductionPlanExecutionState =
   ;
 
 /**
- * 计划排期状态
+ * 主计划规划状态
  */
-export type MomProductionPlanScheduleState =
+export type MomMpsScheduleState =
   | 'unscheduled'
   | 'scheduling'
   | 'scheduled'
   | 'canceled'
+  ;
+
+/**
+ * 生产资源计划执行状态
+ */
+export type MomMrpExecutionState =
+  | 'pending'
+  | 'processing'
+  | 'finished'
+  | 'canceled'
+  ;
+
+/**
+ * 生产资源计划规划状态
+ */
+export type MomMrpPlanningState =
+  | 'unplanned'
+  | 'planning'
+  | 'planned'
+  | 'canceled'
+  ;
+
+/**
+ * 包内物品状态
+ */
+export type MomPackageGoodState =
+  | 'packed'
+  | 'unpacked'
   ;
 
 /**

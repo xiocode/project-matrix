@@ -18,7 +18,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: '生产工单',
       type: 'relation',
       targetSingularCode: 'mom_work_order',
-      targetIdColumnName: 'order_id',
+      targetIdColumnName: 'work_order_id',
     },
     {
       code: 'workTrack',

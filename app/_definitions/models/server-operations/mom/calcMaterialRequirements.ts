@@ -1,22 +1,23 @@
 import type { ActionHandlerContext, ServerOperation } from "@ruiapp/rapid-core";
 import { filter, find, get, map } from "lodash";
 import { performMRP} from "@linkfactory/algorithm-mrp"
-import type { MRPInput, MRPOutput, MaterialBreakdown, MaterialInventory, MaterialItem} from "@linkfactory/algorithm-mrp"
+import type { MRPInput, MaterialBreakdown, MaterialInventory, MaterialItem} from "@linkfactory/algorithm-mrp"
 
 export default {
   code: 'calcMaterialRequirements',
 
-  method: "GET",
+  method: "POST",
 
   async handler(ctx: ActionHandlerContext) {
     const { logger, server, input } = ctx;
-    const orderId = parseInt(ctx.input.orderId, 10);
+    const mrpId = parseInt(ctx.input.mrpId, 10);
+    const decisions = ctx.input.decisions || [];
 
     logger.debug("input", input)
 
-    const orderItems = await server.queryDatabaseObject(
-      `select * from cbs_order_items where order_id = ANY($1::int[]);`,
-      [[orderId]]
+    const scheduleItems = await server.queryDatabaseObject(
+      `select * from mom_master_production_schedules where mrp_id = ANY($1::int[]);`,
+      [[mrpId]]
       );
 
     const units = await server.queryDatabaseObject(
@@ -67,9 +68,9 @@ export default {
     })
 
     const mrpInput: MRPInput = {
-      demands: map(orderItems, (item) => {
+      demands: map(scheduleItems, (item) => {
         return {
-          code: get(find(materials, {id: item.subject_id}), 'code'),
+          code: get(find(materials, {id: item.material_id}), 'code'),
           quantity: item.quantity,
           unit: get(find(units, {id: item.unit_id}), 'name'),
         } satisfies MaterialItem;
@@ -87,11 +88,21 @@ export default {
           unit: get(find(units, {id: item.unit_id}), 'name'),
         } satisfies MaterialInventory;
       }),
-      decisions: [],
+      decisions: decisions,
     };
     const mrpOutput = performMRP(mrpInput);
 
     ctx.output = {
+      materials: map(materials, (item) => {
+        return {
+          code: item.code,
+          name: item.name,
+          specification: item.specification,
+          canProduce: item.can_produce,
+          canPurchase: item.can_purchase,
+          canOutsource: item.can_outsource,
+        }
+      }),
       input: mrpInput,
       output: mrpOutput,
     };

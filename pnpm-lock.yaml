@@ -9,8 +9,8 @@ dependencies:
     specifier: 4.8.1
     version: 4.8.1(react-dom@18.2.0)(react@18.2.0)
   '@linkfactory/algorithm-mrp':
-    specifier: ^0.0.2
-    version: 0.0.2
+    specifier: ^0.0.3
+    version: 0.0.3
   '@remix-run/express':
     specifier: ^1.19.3
     version: 1.19.3(express@4.18.2)
@@ -36,11 +36,11 @@ dependencies:
     specifier: ^0.0.5
     version: 0.0.5(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ^0.1.21
-    version: 0.1.21(winston@3.11.0)
+    specifier: ^0.1.23
+    version: 0.1.23(winston@3.11.0)
   '@ruiapp/rapid-express':
-    specifier: ^0.1.21
-    version: 0.1.21(express@4.18.2)(winston@3.11.0)
+    specifier: ^0.1.23
+    version: 0.1.23(express@4.18.2)(winston@3.11.0)
   '@ruiapp/rapid-extension':
     specifier: ^0.0.26
     version: 0.0.26(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.5)(@ruiapp/react-renderer@0.0.5)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -50,6 +50,9 @@ dependencies:
   '@ruiapp/react-rocks':
     specifier: ^0.0.4
     version: 0.0.4(@ruiapp/move-style@0.0.5)(@ruiapp/react-renderer@0.0.5)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+  ahooks:
+    specifier: ^3.7.10
+    version: 3.7.10(react@18.2.0)
   antd:
     specifier: 4.24.15
     version: 4.24.15(react-dom@18.2.0)(react@18.2.0)
@@ -2030,8 +2033,8 @@ packages:
     resolution: {integrity: sha512-Lg3PnLp0QXpxwLIAuuJboLeRaIhrgJjeuh797QADg3xz8wGLugQOS5DpsE8A6i6Adgzf+bacllkKZG3J0tGfDw==}
     dev: true
 
-  /@linkfactory/algorithm-mrp@0.0.2:
-    resolution: {integrity: sha512-MldUQU2hHWhmyi+6U1j36VYtIkSmUyFsomsVAHvqk8UyMGzDHgw4iVLX+/kZVRDjWfTpYabXMTy9TCM/fXIRcQ==}
+  /@linkfactory/algorithm-mrp@0.0.3:
+    resolution: {integrity: sha512-btnzbn5Gp2zG/V7qsPKBiWjEhsOBVdwUQvV6I0lHSSiJpmo7o8AZBEkPQqBhY+1CSETRnwpeyYPKH59xm0AEgQ==}
     dependencies:
       lodash: 4.17.21
       uuid: 9.0.1
@@ -2410,8 +2413,8 @@ packages:
       tough-cookie: 4.1.3
     dev: true
 
-  /@ruiapp/rapid-core@0.1.21(winston@3.11.0):
-    resolution: {integrity: sha512-Ww2QlB+4fQ+hxZdseDNr23NSuUOV1goVozOuEgLoB/88RCM2/w3AnUWZIzyh7amCCZjI7XPUb45FGnSsj+0DlA==}
+  /@ruiapp/rapid-core@0.1.23(winston@3.11.0):
+    resolution: {integrity: sha512-t0wyY4vJCjbPysPfWYPT1K/6+dwAKVVKeNXdHsP0I7PkIKbWN9SFk0MpHre/RzLGP+ycjXN8bd3UEaQsiNpGVg==}
     peerDependencies:
       winston: ^3.11.0
     dependencies:
@@ -2423,12 +2426,12 @@ packages:
       winston: 3.11.0
     dev: false
 
-  /@ruiapp/rapid-express@0.1.21(express@4.18.2)(winston@3.11.0):
-    resolution: {integrity: sha512-q1/M07gVvtj+cnSGtqPJwd1qy6DJEWQBN1sCjghwYnFJ6T1lMNH6c8QzU+jXDmaoaJtbltKHMhOfsWWl2D/s2A==}
+  /@ruiapp/rapid-express@0.1.23(express@4.18.2)(winston@3.11.0):
+    resolution: {integrity: sha512-e1k9y+F7ubWLo8e/cOgX4Chc7/BrddwiSYdZa7PoQ0Lwzqv2G427BRyCRtaAy1QP6LcwKPaF4hgRP7cZG8+7uA==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.21(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.23(winston@3.11.0)
       express: 4.18.2
     transitivePeerDependencies:
       - winston
@@ -3061,6 +3064,23 @@ packages:
   /ahocorasick@1.0.2:
     resolution: {integrity: sha512-hCOfMzbFx5IDutmWLAt6MZwOUjIfSM9G9FyVxytmE4Rs/5YDPWQrD/+IR1w+FweD9H2oOZEnv36TmkjhNURBVA==}
     dev: true
+
+  /ahooks@3.7.10(react@18.2.0):
+    resolution: {integrity: sha512-/HLYif7sFA/5qSuWKrwvjDbf3bq+sdaMrUWS7XGCDRWdC2FrG/i+u5LZdakMYc6UIgJTMQ7tGiJCV7sdU4kSIw==}
+    engines: {node: '>=8.0.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.23.2
+      dayjs: 1.11.10
+      intersection-observer: 0.12.2
+      js-cookie: 2.2.1
+      lodash: 4.17.21
+      react: 18.2.0
+      resize-observer-polyfill: 1.5.1
+      screenfull: 5.2.0
+      tslib: 2.6.2
+    dev: false
 
   /ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
@@ -5543,6 +5563,10 @@ packages:
       side-channel: 1.0.4
     dev: true
 
+  /intersection-observer@0.12.2:
+    resolution: {integrity: sha512-7m1vEcPCxXYI8HqnL8CKI6siDyD+eIWSwgB3DZA+ZTogxk9I4CDnj4wilt9x/+/QbHI4YG5YZNmC6458/e9Ktg==}
+    dev: false
+
   /ip@1.1.8:
     resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
     dev: true
@@ -5821,6 +5845,10 @@ packages:
   /javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
     dev: true
+
+  /js-cookie@2.2.1:
+    resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -8406,6 +8434,11 @@ packages:
     dependencies:
       loose-envify: 1.4.0
 
+  /screenfull@5.2.0:
+    resolution: {integrity: sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /scroll-into-view-if-needed@2.2.31:
     resolution: {integrity: sha512-dGCXy99wZQivjmjIqihaBQNjryrz5rueJY7eHfTdyWEiR4ttYpsajb14rn9s5d4DY4EcY6+4+U/maARBXJedkA==}
     dependencies:
@@ -8975,7 +9008,6 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: true
 
   /tsutils@3.21.0(typescript@4.9.5):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}

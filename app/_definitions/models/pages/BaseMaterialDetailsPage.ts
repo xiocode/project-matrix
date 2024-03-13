@@ -80,6 +80,9 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: 'auto',
       code: 'subMaterial',
+      listDataFindOptions: {
+        properties: ['id', 'code', 'name', 'defaultUnit'],
+      },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
         listFilterFields: ['label']
@@ -94,6 +97,26 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
       code: 'unit',
     },
   ],
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `function (event) {
+        const changedValues = event.args[0] || {};
+        if(changedValues.hasOwnProperty('subMaterial')) {
+          const _ = event.framework.getExpressionVars()._;
+          const materials = _.get(event.scope.stores['dataFormItemList-subMaterial'], 'data.list');
+          const subMaterial = _.find(materials, function (item) { return item.id == changedValues.subMaterial });
+          const unitId = _.get(subMaterial, 'defaultUnit.id');
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              unit: unitId,
+            }
+          });
+        }
+      }`
+    },
+  ]
 };
 
 

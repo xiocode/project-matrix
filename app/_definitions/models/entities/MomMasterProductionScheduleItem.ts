@@ -4,14 +4,14 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'mom',
-  code: 'MomProductionPlanItem',
+  code: 'MomMasterProductionScheduleItem',
   name: '生产计划项',
   fields: [
     {
       code: 'productionPlan',
       name: '生产计划',
       type: 'relation',
-      targetSingularCode: 'mom_production_plan',
+      targetSingularCode: 'mom_master_production_schedule',
       targetIdColumnName: 'production_plan_id',
     },
     {

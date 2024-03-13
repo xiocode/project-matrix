@@ -1,8 +1,8 @@
 import type { RapidDataDictionary } from "@ruiapp/rapid-extension";
 
 export default {
-  code: 'MomProductionPlanScheduleState',
-  name: '计划排期状态',
+  code: 'MomMpsScheduleState',
+  name: '主计划规划状态',
   valueType: 'string',
   level: "app",
   entries: [
