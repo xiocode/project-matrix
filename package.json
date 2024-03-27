@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "4.8.1",
-    "@linkfactory/algorithm-mrp": "^0.0.3",
+    "@linkfactory/algorithm-mrp": "^0.0.4",
     "@remix-run/express": "^1.19.3",
     "@remix-run/node": "^1.19.3",
     "@remix-run/react": "^1.19.3",

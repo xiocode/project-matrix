@@ -9,8 +9,8 @@ dependencies:
     specifier: 4.8.1
     version: 4.8.1(react-dom@18.2.0)(react@18.2.0)
   '@linkfactory/algorithm-mrp':
-    specifier: ^0.0.3
-    version: 0.0.3
+    specifier: ^0.0.4
+    version: 0.0.4
   '@remix-run/express':
     specifier: ^1.19.3
     version: 1.19.3(express@4.18.2)
@@ -2033,8 +2033,8 @@ packages:
     resolution: {integrity: sha512-Lg3PnLp0QXpxwLIAuuJboLeRaIhrgJjeuh797QADg3xz8wGLugQOS5DpsE8A6i6Adgzf+bacllkKZG3J0tGfDw==}
     dev: true
 
-  /@linkfactory/algorithm-mrp@0.0.3:
-    resolution: {integrity: sha512-btnzbn5Gp2zG/V7qsPKBiWjEhsOBVdwUQvV6I0lHSSiJpmo7o8AZBEkPQqBhY+1CSETRnwpeyYPKH59xm0AEgQ==}
+  /@linkfactory/algorithm-mrp@0.0.4:
+    resolution: {integrity: sha512-xWTVT61Q/VB5KiWuhAdcXP8juhCDvhS9QdgS4lkRINwprEEQZC/E15IQW/nz+wegtIwtPzv9l0cYke+dFO2dkA==}
     dependencies:
       lodash: 4.17.21
       uuid: 9.0.1
