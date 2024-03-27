@@ -6399,6 +6399,258 @@ export interface PmProjectEvent {
 export type SavePmProjectEventInput = Omit<PmProjectEvent, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 车间配置系统-应用
+ */
+export interface ShopFloorApp {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 图标地址
+   */
+  icon?: string;
+  /**
+   * 当前生效版本
+   */
+  version?: string;
+  /**
+   * 是否发布
+   */
+  published?: boolean;
+  /**
+   * 权限
+   */
+  permissions?: object;
+  /**
+   * 内容
+   */
+  content?: object;
+  /**
+   * 发布时间
+   */
+  publishedAt?: any;
+  /**
+   * 发布人
+   */
+  publishedBy?: Partial<OcUser>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用
+ */
+export type SaveShopFloorAppInput = Omit<ShopFloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-应用
+ */
+export interface ShopFloorAppVersion {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 应用
+   */
+  app: Partial<ShopFloorApp>;
+  /**
+   * 版本
+   */
+  version?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 内容
+   */
+  content?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用
+ */
+export type SaveShopFloorAppVersionInput = Omit<ShopFloorAppVersion, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-显示设备
+ */
+export interface ShopFloorDisplayDevice {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 关联工位(多个)
+   */
+  stations?: any;
+  /**
+   * 是否删除
+   */
+  deleted?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-显示设备
+ */
+export type SaveShopFloorDisplayDeviceInput = Omit<ShopFloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-工位
+ */
+export interface ShopFloorStation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 关联应用(多个)
+   */
+  apps?: any;
+  /**
+   * 是否删除
+   */
+  deleted?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-工位
+ */
+export type SaveShopFloorStationInput = Omit<ShopFloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 系统操作
  */
 export interface SysAction {
