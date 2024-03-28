@@ -98,6 +98,8 @@ import PmProjectCost from '../models/entities/PmProjectCost';
 import PmProjectCostCategory from '../models/entities/PmProjectCostCategory';
 import PmProjectEvent from '../models/entities/PmProjectEvent';
 import ShopFloorApp from '../models/entities/ShopFloorApp';
+import ShopFloorAppLayout from '../models/entities/ShopFloorAppLayout';
+import ShopFloorAppStep from '../models/entities/ShopFloorAppStep';
 import ShopFloorAppVersion from '../models/entities/ShopFloorAppVersion';
 import ShopFloorDisplayDevice from '../models/entities/ShopFloorDisplayDevice';
 import ShopFloorStation from '../models/entities/ShopFloorStation';
@@ -204,6 +206,8 @@ export default [
   autoConfigureRapidEntity(PmProjectCostCategory),
   autoConfigureRapidEntity(PmProjectEvent),
   autoConfigureRapidEntity(ShopFloorApp),
+  autoConfigureRapidEntity(ShopFloorAppLayout),
+  autoConfigureRapidEntity(ShopFloorAppStep),
   autoConfigureRapidEntity(ShopFloorAppVersion),
   autoConfigureRapidEntity(ShopFloorDisplayDevice),
   autoConfigureRapidEntity(ShopFloorStation),

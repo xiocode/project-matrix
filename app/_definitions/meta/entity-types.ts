@@ -6478,6 +6478,120 @@ export interface ShopFloorApp {
 export type SaveShopFloorAppInput = Omit<ShopFloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 车间配置系统-应用-布局
+ */
+export interface ShopFloorAppLayout {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 应用
+   */
+  app: Partial<ShopFloorApp>;
+  /**
+   * 编码
+   */
+  code?: string;
+  /**
+   * 触发器
+   */
+  triggers?: object;
+  /**
+   * 结构
+   */
+  schema?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用-布局
+ */
+export type SaveShopFloorAppLayoutInput = Omit<ShopFloorAppLayout, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-应用-步骤
+ */
+export interface ShopFloorAppStep {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 应用
+   */
+  app: Partial<ShopFloorApp>;
+  /**
+   * 编码
+   */
+  code?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 触发器
+   */
+  triggers?: object;
+  /**
+   * 结构
+   */
+  schema?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用-步骤
+ */
+export type SaveShopFloorAppStepInput = Omit<ShopFloorAppStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 车间配置系统-应用
  */
 export interface ShopFloorAppVersion {
