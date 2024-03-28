@@ -11,6 +11,7 @@ import _, { find } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
+import qs from "qs";
 
 import dataDictionaryModels from "~/_definitions/meta/data-dictionary-models";
 import entityModels from "~/_definitions/meta/entity-models";
@@ -33,6 +34,7 @@ export function links() {
 const framework = new Framework();
 
 framework.registerExpressionVar("_", _);
+framework.registerExpressionVar("qs", qs);
 
 framework.registerComponent(RuiRock);
 framework.registerComponent(ErrorBoundary);

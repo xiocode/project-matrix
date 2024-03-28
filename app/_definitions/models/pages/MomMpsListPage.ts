@@ -100,7 +100,7 @@ const page: RapidPage = {
                       $exps: {
                         "fixedFields.planningState": "'unplanned'",
                         "fixedFields.executionState": "'pending'",
-                        "fixedFields.productionSchedules": "_.get($page.getScope('mpsList-scope'), 'vars.selectedIds', [])",
+                        "fixedFields.productionSchedules": "_.get($page.getScope('unscheduledMpsList-scope'), 'vars.selectedIds', [])",
                       },
                       onSaveSuccess: [
                         {
@@ -154,6 +154,11 @@ const page: RapidPage = {
                   value: "unscheduled",
                 }
               ],
+              orderBy: [
+                {
+                  field: "scheduledFinishDate",
+                }
+              ],
               columns: [
                 {
                   type: 'auto',
@@ -171,10 +176,49 @@ const page: RapidPage = {
                     },
                   },
                 },
+                // {
+                //   type: 'auto',
+                //   code: 'tags',
+                //   width: '200px',
+                // },
                 {
                   type: 'auto',
                   code: 'tags',
-                  width: '200px',
+                  title: 'd',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).d",
+                    }
+                  }
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'D',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).D",
+                    }
+                  }
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'b',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).b",
+                    }
+                  }
                 },
                 {
                   type: 'auto',
@@ -215,6 +259,7 @@ const page: RapidPage = {
                   width: '150px',
                 },
               ],
+              actionsColumnWidth: "80px",
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
@@ -306,10 +351,49 @@ const page: RapidPage = {
                     },
                   },
                 },
+                // {
+                //   type: 'auto',
+                //   code: 'tags',
+                //   width: '200px',
+                // },
                 {
                   type: 'auto',
                   code: 'tags',
-                  width: '200px',
+                  title: 'd',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).d",
+                    }
+                  }
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'D',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).D",
+                    }
+                  }
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'b',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).b",
+                    }
+                  }
                 },
                 {
                   type: 'auto',
@@ -350,6 +434,7 @@ const page: RapidPage = {
                   width: '150px',
                 },
               ],
+              actionsColumnWidth: "80px",
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",

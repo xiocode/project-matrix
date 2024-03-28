@@ -127,7 +127,7 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'tags',
-          width: '200px',
+          width: '100px',
         },
         {
           type: 'auto',
@@ -147,7 +147,7 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'unit',
-          width: '100px',
+          width: '50px',
           rendererProps: {
             format: "{{name}}",
           },

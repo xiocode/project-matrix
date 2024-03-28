@@ -93,6 +93,50 @@ const page: RapidPage = {
                     },
                   },
                 },
+                // {
+                //   type: 'auto',
+                //   code: 'tags',
+                //   width: '200px',
+                // },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'd',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).d",
+                    }
+                  }
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'D',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).D",
+                    }
+                  }
+                },
+                {
+                  type: 'auto',
+                  code: 'tags',
+                  title: 'b',
+                  fieldName: 'tags',
+                  width: '50px',
+                  align: 'right',
+                  rendererProps: {
+                    $exps: {
+                      value: "qs.parse($slot.value).b",
+                    }
+                  }
+                },
                 {
                   type: 'auto',
                   code: 'quantity',

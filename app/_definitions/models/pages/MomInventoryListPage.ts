@@ -133,9 +133,48 @@ function genListConfig(warehouseCode: string) {
           },
         },
       },
+      // {
+      //   type: 'auto',
+      //   code: 'tags',
+      // },
       {
         type: 'auto',
         code: 'tags',
+        title: 'd',
+        fieldName: 'tags',
+        width: '50px',
+        align: 'right',
+        rendererProps: {
+          $exps: {
+            value: "qs.parse($slot.value).d",
+          }
+        }
+      },
+      {
+        type: 'auto',
+        code: 'tags',
+        title: 'D',
+        fieldName: 'tags',
+        width: '50px',
+        align: 'right',
+        rendererProps: {
+          $exps: {
+            value: "qs.parse($slot.value).D",
+          }
+        }
+      },
+      {
+        type: 'auto',
+        code: 'tags',
+        title: 'b',
+        fieldName: 'tags',
+        width: '50px',
+        align: 'right',
+        rendererProps: {
+          $exps: {
+            value: "qs.parse($slot.value).b",
+          }
+        }
       },
       {
         type: 'auto',
@@ -206,6 +245,7 @@ function genListConfig(warehouseCode: string) {
       //   width: '100px',
       // },
     ],
+    actionsColumnWidth: "80px",
     actions: [
       {
         $type: "sonicRecordActionEditEntity",

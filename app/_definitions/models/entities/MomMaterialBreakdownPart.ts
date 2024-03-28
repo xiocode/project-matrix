@@ -28,6 +28,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'sub_material_id',
     },
     {
+      code: 'matchTags',
+      name: '匹配参数',
+      type: 'text',
+    },
+    {
       code: 'quantity',
       name: '数量',
       type: 'double',

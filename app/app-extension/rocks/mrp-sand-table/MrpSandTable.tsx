@@ -10,6 +10,7 @@ import { FulfillmentDecision, FulfillmentDecisionQualities, MRPInput, MRPOutput,
 import { cloneDeep, find, forEach, reduce } from "lodash";
 import { BaseMaterial } from "~/_definitions/meta/entity-types";
 import { renderMaterial } from "../material-label-renderer/MaterialLabelRenderer";
+import qs from "qs";
 
 type PerformMrpResult = {
   materials: BaseMaterial[];
@@ -19,6 +20,7 @@ type PerformMrpResult = {
 
 type MrpTableItem = {
   code: string;
+  tags: string;
   quantities: MaterialRequirementQuantities;
   decisionQuantities?: FulfillmentDecisionQualities;
   unit: string;
@@ -26,6 +28,7 @@ type MrpTableItem = {
 
 type UpdateDecisionQuantityOptions = {
   code: string;
+  tags: string;
   quantityField: keyof FulfillmentDecisionQualities;
   quantity: number;
 }
@@ -58,6 +61,7 @@ export default {
         if (!decision) {
           decision = {
             code: item.code,
+            tags: item.tags,
             unit: item.unit,
             quantities: {
               produce: 0,
@@ -69,6 +73,7 @@ export default {
 
         mrpItems.push({
           code: item.code,
+          tags: item.tags,
           unit: item.unit,
           quantities: item.quantities,
           decisionQuantities: decision?.quantities,
@@ -94,6 +99,7 @@ export default {
 
           decisions.push({
             code: item.code,
+            tags: item.tags,
             unit: item.unit,
             quantities: {
               produce: produceQuantity,
@@ -130,6 +136,7 @@ export default {
       } else {
         decisions.push({
           code: options.code,
+          tags: options.tags,
           unit: mrpItem.unit,
           quantities: {
             produce: 0,
@@ -166,6 +173,45 @@ export default {
         render: (value, record, index) => {
           const material = find(materials, { code: record.code })!;
           return renderMaterial(material);
+        }
+      },
+      {
+        title: 'd',
+        dataIndex: 'tags',
+        key: 'd',
+        width: '50px',
+        render: (value, record, index) => {
+          if (!value) {
+            return "";
+          }
+
+          return (qs.parse(value).d || "") as string;
+        }
+      },
+      {
+        title: 'D',
+        dataIndex: 'tags',
+        key: 'D',
+        width: '50px',
+        render: (value, record, index) => {
+          if (!value) {
+            return "";
+          }
+
+          return (qs.parse(value).D || "") as string;
+        }
+      },
+      {
+        title: 'b',
+        dataIndex: 'tags',
+        key: 'b',
+        width: '50px',
+        render: (value, record, index) => {
+          if (!value) {
+            return "";
+          }
+
+          return (qs.parse(value).b || "") as string;
         }
       },
       {
@@ -223,6 +269,7 @@ export default {
           return <InputNumber size="small" min={0} value={value || 0} onChange={(value) => updateDecisionQuantity({
             quantityField: "produce",
             code: record.code,
+            tags: record.tags,
             quantity: value,
           })} />;
         }
@@ -241,6 +288,7 @@ export default {
           return <InputNumber size="small" min={0} value={value || 0} onChange={(value) => updateDecisionQuantity({
             quantityField: "purchase",
             code: record.code,
+            tags: record.tags,
             quantity: value,
           })} />;
         }

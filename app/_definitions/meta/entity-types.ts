@@ -4362,6 +4362,10 @@ export interface MomMaterialBreakdownPart {
    */
   subMaterial?: Partial<BaseMaterial>;
   /**
+   * 匹配参数
+   */
+  matchTags?: string;
+  /**
    * 数量
    */
   quantity?: number;

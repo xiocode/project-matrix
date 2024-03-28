@@ -9,8 +9,8 @@ dependencies:
     specifier: 4.8.1
     version: 4.8.1(react-dom@18.2.0)(react@18.2.0)
   '@linkfactory/algorithm-mrp':
-    specifier: ^0.0.4
-    version: 0.0.4
+    specifier: ^0.0.5
+    version: 0.0.5
   '@remix-run/express':
     specifier: ^1.19.3
     version: 1.19.3(express@4.18.2)
@@ -99,7 +99,7 @@ dependencies:
     specifier: ^8.11.3
     version: 8.11.3
   qs:
-    specifier: ^6.11.0
+    specifier: ^6.11.2
     version: 6.11.2
   react:
     specifier: ^18.2.0
@@ -145,6 +145,9 @@ devDependencies:
   '@types/pg':
     specifier: ^8.11.0
     version: 8.11.0
+  '@types/qs':
+    specifier: ^6.9.14
+    version: 6.9.14
   '@types/react':
     specifier: ^18.0.15
     version: 18.2.34
@@ -2033,8 +2036,8 @@ packages:
     resolution: {integrity: sha512-Lg3PnLp0QXpxwLIAuuJboLeRaIhrgJjeuh797QADg3xz8wGLugQOS5DpsE8A6i6Adgzf+bacllkKZG3J0tGfDw==}
     dev: true
 
-  /@linkfactory/algorithm-mrp@0.0.4:
-    resolution: {integrity: sha512-xWTVT61Q/VB5KiWuhAdcXP8juhCDvhS9QdgS4lkRINwprEEQZC/E15IQW/nz+wegtIwtPzv9l0cYke+dFO2dkA==}
+  /@linkfactory/algorithm-mrp@0.0.5:
+    resolution: {integrity: sha512-sPR8yqdjfl6euk8lsPegH1KVpO4vcBaqFSKa85NbKaN8WLI8PeG09pIAJ1qkmApF1Bw1r+DSzFepetkB5qzhhA==}
     dependencies:
       lodash: 4.17.21
       uuid: 9.0.1
@@ -2622,7 +2625,7 @@ packages:
     resolution: {integrity: sha512-oaYtiBirUOPQGSWNGPWnzyAFJ0BP3cwvN4oWZQY+zUBwpVIGsKUkpBpSztp74drYcjavs7SKFZ4DX1V2QeN8rg==}
     dependencies:
       '@types/node': 18.18.8
-      '@types/qs': 6.9.11
+      '@types/qs': 6.9.14
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
 
@@ -2631,7 +2634,7 @@ packages:
     dependencies:
       '@types/body-parser': 1.19.5
       '@types/express-serve-static-core': 4.17.43
-      '@types/qs': 6.9.11
+      '@types/qs': 6.9.14
       '@types/serve-static': 1.15.5
 
   /@types/glob@7.2.0:
@@ -2752,8 +2755,8 @@ packages:
     resolution: {integrity: sha512-n1yyPsugYNSmHgxDFjicaI2+gCNjsBck8UX9kuofAKlc0h1bL+20oSF72KeNaW2DUlesbEVCFgyV2dPGTiY42g==}
     dev: true
 
-  /@types/qs@6.9.11:
-    resolution: {integrity: sha512-oGk0gmhnEJK4Yyk+oI7EfXsLayXatCWPHary1MtcmbAifkobT9cM9yutG/hZKIseOU0MqbIwQ/u2nn/Gb+ltuQ==}
+  /@types/qs@6.9.14:
+    resolution: {integrity: sha512-5khscbd3SwWMhFqylJBLQ0zIu7c1K6Vz0uBIt915BI3zV0q1nfjRQD3RqSBcPaO6PHEF4ov/t9y89fSiyThlPA==}
 
   /@types/range-parser@1.2.7:
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}

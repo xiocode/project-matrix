@@ -90,6 +90,10 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: 'auto',
+      code: 'matchTags',
+    },
+    {
+      type: 'auto',
       code: 'quantity',
     },
     {
@@ -519,6 +523,11 @@ const page: RapidPage = {
                           href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
                         },
                       },
+                    },
+                    {
+                      type: 'auto',
+                      code: 'matchTags',
+                      width: '100px',
                     },
                     {
                       type: 'auto',

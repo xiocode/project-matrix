@@ -32,6 +32,12 @@ const page: RapidPage = {
           filterFields: ["code"],
         }
       ],
+      orderBy: [
+        {
+          field: "createdAt",
+          desc: true,
+        }
+      ],
       columns: [
         {
           type: 'link',

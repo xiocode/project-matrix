@@ -1133,6 +1133,7 @@ const entityFieldCodes = {
     'materialBreakdown',
     'orderNum',
     'subMaterial',
+    'matchTags',
     'quantity',
     'unit',
     'createdAt',
