@@ -6427,17 +6427,9 @@ export interface ShopFloorApp {
    */
   version?: string;
   /**
-   * 是否发布
-   */
-  published?: boolean;
-  /**
    * 权限
    */
   permissions?: object;
-  /**
-   * 内容
-   */
-  content?: object;
   /**
    * 发布时间
    */

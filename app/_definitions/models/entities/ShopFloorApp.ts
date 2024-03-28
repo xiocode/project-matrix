@@ -34,19 +34,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             type: 'text',
         },
         {
-            code: 'published',
-            name: '是否发布',
-            type: 'boolean',
-            defaultValue: 'false',
-        },
-        {
             code: 'permissions',
             name: '权限',
-            type: 'json',
-        },
-        {
-            code: 'content',
-            name: '内容',
             type: 'json',
         },
         {
