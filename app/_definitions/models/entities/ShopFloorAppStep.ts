@@ -21,6 +21,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             type: 'text',
         },
         {
+            code: 'kind',
+            name: '类型',
+            type: 'text',
+        },
+        {
             code: 'orderNum',
             name: '排序号',
             type: 'integer',
