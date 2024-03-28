@@ -39,6 +39,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             type: 'json',
         },
         {
+            code: 'content',
+            name: '内容',
+            type: 'json',
+        },
+        {
             code: 'publishedAt',
             name: '发布时间',
             type: 'datetimetz',

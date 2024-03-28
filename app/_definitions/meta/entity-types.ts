@@ -6431,6 +6431,10 @@ export interface ShopFloorApp {
    */
   permissions?: object;
   /**
+   * 内容
+   */
+  content?: object;
+  /**
    * 发布时间
    */
   publishedAt?: any;

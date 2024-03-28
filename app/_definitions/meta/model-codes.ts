@@ -1632,6 +1632,7 @@ const entityFieldCodes = {
     'icon',
     'version',
     'permissions',
+    'content',
     'publishedAt',
     'publishedBy',
     'createdAt',
