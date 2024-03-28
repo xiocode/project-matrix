@@ -16,6 +16,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'material_id',
     },
     {
+      code: 'warehouse',
+      name: '仓库',
+      type: 'relation',
+      targetSingularCode: 'mom_warehouse',
+      targetIdColumnName: 'warehouse_id',
+    },
+    {
       code: 'allocableQuantity',
       name: '可分配数量',
       description: '可分配数量，包括已采购、在途和在库但未被预定以及在库但未被分配的数量。',

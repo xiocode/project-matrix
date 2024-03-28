@@ -969,6 +969,7 @@ const entityFieldCodes = {
   'MomInventory': [
     'id',
     'material',
+    'warehouse',
     'allocableQuantity',
     'availableQuantity',
     'purchasedQuantity',

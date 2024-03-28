@@ -3676,6 +3676,10 @@ export interface MomInventory {
    */
   material?: Partial<BaseMaterial>;
   /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
    * 可分配数量
    */
   allocableQuantity?: number;
