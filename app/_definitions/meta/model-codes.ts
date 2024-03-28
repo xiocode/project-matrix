@@ -96,11 +96,11 @@ export const entitySingularCodes = [
   'pm_project_cost_budget',
   'pm_project_cost_category',
   'pm_project_event',
-  'shop_floor_app',
-  'shop_floor_app_step',
-  'shop_floor_app_version',
-  'shop_floor_display_device',
-  'shop_floor_station',
+  'shopfloor_app',
+  'shopfloor_app_step',
+  'shopfloor_app_version',
+  'shopfloor_display_device',
+  'shopfloor_station',
   'sys_action',
   'sys_action_group',
   'webhook',
@@ -1626,7 +1626,7 @@ const entityFieldCodes = {
     'deletedAt',
     'detetedBy',
   ],
-  'ShopFloorApp': [
+  'ShopfloorApp': [
     'id',
     'code',
     'name',
@@ -1644,7 +1644,7 @@ const entityFieldCodes = {
     'deletedAt',
     'detetedBy',
   ],
-  'ShopFloorAppStep': [
+  'ShopfloorAppStep': [
     'id',
     'app',
     'code',
@@ -1659,7 +1659,7 @@ const entityFieldCodes = {
     'deletedAt',
     'detetedBy',
   ],
-  'ShopFloorAppVersion': [
+  'ShopfloorAppVersion': [
     'id',
     'app',
     'version',
@@ -1672,7 +1672,7 @@ const entityFieldCodes = {
     'deletedAt',
     'detetedBy',
   ],
-  'ShopFloorDisplayDevice': [
+  'ShopfloorDisplayDevice': [
     'id',
     'code',
     'name',
@@ -1686,7 +1686,7 @@ const entityFieldCodes = {
     'deletedAt',
     'detetedBy',
   ],
-  'ShopFloorStation': [
+  'ShopfloorStation': [
     'id',
     'code',
     'name',

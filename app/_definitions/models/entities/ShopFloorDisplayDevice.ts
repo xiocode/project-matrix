@@ -4,7 +4,7 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     namespace: 'shopfloor',
-    code: 'ShopFloorDisplayDevice',
+    code: 'ShopfloorDisplayDevice',
     name: '车间配置系统-显示设备',
     fields: [
         {
@@ -27,8 +27,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             code: 'stations',
             name: '关联工位(多个)',
             type: 'relation[]',
-            targetSingularCode: "shop_floor_station",
-            linkTableName: 'shop_floor_station_display_device',
+            targetSingularCode: "shopfloor_station",
+            linkTableName: 'shopfloor_station_display_device',
             targetIdColumnName: 'station_id',
             selfIdColumnName: 'display_device_id',
         },

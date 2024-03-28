@@ -6409,7 +6409,7 @@ export type SavePmProjectEventInput = Omit<PmProjectEvent, 'id' | 'createdAt' | 
 /**
  * 车间配置系统-应用
  */
-export interface ShopFloorApp {
+export interface ShopfloorApp {
   /**
    * id
    */
@@ -6445,7 +6445,7 @@ export interface ShopFloorApp {
   /**
    * 发布时间
    */
-  publishedAt?: any;
+  publishedAt?: string;
   /**
    * 发布人
    */
@@ -6479,12 +6479,12 @@ export interface ShopFloorApp {
 /**
  * 车间配置系统-应用
  */
-export type SaveShopFloorAppInput = Omit<ShopFloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorAppInput = Omit<ShopfloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 车间配置系统-应用-步骤
  */
-export interface ShopFloorAppStep {
+export interface ShopfloorAppStep {
   /**
    * id
    */
@@ -6492,7 +6492,7 @@ export interface ShopFloorAppStep {
   /**
    * 应用
    */
-  app: Partial<ShopFloorApp>;
+  app: Partial<ShopfloorApp>;
   /**
    * 编码
    */
@@ -6542,12 +6542,12 @@ export interface ShopFloorAppStep {
 /**
  * 车间配置系统-应用-步骤
  */
-export type SaveShopFloorAppStepInput = Omit<ShopFloorAppStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorAppStepInput = Omit<ShopfloorAppStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 车间配置系统-应用
  */
-export interface ShopFloorAppVersion {
+export interface ShopfloorAppVersion {
   /**
    * id
    */
@@ -6555,7 +6555,7 @@ export interface ShopFloorAppVersion {
   /**
    * 应用
    */
-  app: Partial<ShopFloorApp>;
+  app: Partial<ShopfloorApp>;
   /**
    * 版本
    */
@@ -6597,12 +6597,12 @@ export interface ShopFloorAppVersion {
 /**
  * 车间配置系统-应用
  */
-export type SaveShopFloorAppVersionInput = Omit<ShopFloorAppVersion, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorAppVersionInput = Omit<ShopfloorAppVersion, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 车间配置系统-显示设备
  */
-export interface ShopFloorDisplayDevice {
+export interface ShopfloorDisplayDevice {
   /**
    * id
    */
@@ -6656,12 +6656,12 @@ export interface ShopFloorDisplayDevice {
 /**
  * 车间配置系统-显示设备
  */
-export type SaveShopFloorDisplayDeviceInput = Omit<ShopFloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorDisplayDeviceInput = Omit<ShopfloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 车间配置系统-工位
  */
-export interface ShopFloorStation {
+export interface ShopfloorStation {
   /**
    * id
    */
@@ -6715,7 +6715,7 @@ export interface ShopFloorStation {
 /**
  * 车间配置系统-工位
  */
-export type SaveShopFloorStationInput = Omit<ShopFloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 系统操作

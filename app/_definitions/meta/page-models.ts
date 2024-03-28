@@ -49,6 +49,7 @@ import PmProjectCategoryListPage from '../models/pages/PmProjectCategoryListPage
 import PmProjectDetailsPage from '../models/pages/PmProjectDetailsPage';
 import PmProjectEventListPage from '../models/pages/PmProjectEventListPage';
 import PmProjectListPage from '../models/pages/PmProjectListPage';
+import ShopfloorAppListPage from '../models/pages/ShopfloorAppListPage';
 import SysActionListPage from '../models/pages/SysActionListPage';
 import SysWebhookListPage from '../models/pages/SysWebhookListPage';
 
@@ -103,6 +104,7 @@ export default [
   PmProjectDetailsPage,
   PmProjectEventListPage,
   PmProjectListPage,
+  ShopfloorAppListPage,
   SysActionListPage,
   SysWebhookListPage,
 ] as TRapidPage[];

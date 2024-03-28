@@ -4,7 +4,7 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     namespace: 'shopfloor',
-    code: 'ShopFloorApp',
+    code: 'ShopfloorApp',
     name: '车间配置系统-应用',
     fields: [
         {
@@ -46,7 +46,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
         {
             code: 'publishedAt',
             name: '发布时间',
-            type: 'datetimetz',
+            type: 'datetime',
         },
         {
             code: 'publishedBy',

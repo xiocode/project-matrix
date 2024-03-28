@@ -97,11 +97,11 @@ import PmProjectCategory from '../models/entities/PmProjectCategory';
 import PmProjectCost from '../models/entities/PmProjectCost';
 import PmProjectCostCategory from '../models/entities/PmProjectCostCategory';
 import PmProjectEvent from '../models/entities/PmProjectEvent';
-import ShopFloorApp from '../models/entities/ShopFloorApp';
-import ShopFloorAppStep from '../models/entities/ShopFloorAppStep';
-import ShopFloorAppVersion from '../models/entities/ShopFloorAppVersion';
-import ShopFloorDisplayDevice from '../models/entities/ShopFloorDisplayDevice';
-import ShopFloorStation from '../models/entities/ShopFloorStation';
+import ShopfloorApp from '../models/entities/ShopfloorApp';
+import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
+import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
+import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
+import ShopfloorStation from '../models/entities/ShopfloorStation';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
@@ -204,11 +204,11 @@ export default [
   autoConfigureRapidEntity(PmProjectCost),
   autoConfigureRapidEntity(PmProjectCostCategory),
   autoConfigureRapidEntity(PmProjectEvent),
-  autoConfigureRapidEntity(ShopFloorApp),
-  autoConfigureRapidEntity(ShopFloorAppStep),
-  autoConfigureRapidEntity(ShopFloorAppVersion),
-  autoConfigureRapidEntity(ShopFloorDisplayDevice),
-  autoConfigureRapidEntity(ShopFloorStation),
+  autoConfigureRapidEntity(ShopfloorApp),
+  autoConfigureRapidEntity(ShopfloorAppStep),
+  autoConfigureRapidEntity(ShopfloorAppVersion),
+  autoConfigureRapidEntity(ShopfloorDisplayDevice),
+  autoConfigureRapidEntity(ShopfloorStation),
   autoConfigureRapidEntity(SysAction),
   autoConfigureRapidEntity(SysActionGroup),
   autoConfigureRapidEntity(SysWebhook),
