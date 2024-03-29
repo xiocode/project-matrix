@@ -55,7 +55,7 @@ export default {
       const parts = filter(breakdownParts, { breakdown_id: breakdown.id });
       mrpBreakdowns.push({
         code: get(material, 'code'),
-        tags: "",
+        // tags: "",
         quantity: breakdown.quantity,
         unit: get(find(units, {id: breakdown.unit_id}), 'name'),
         parts: parts.map(item => {
@@ -73,7 +73,7 @@ export default {
       demands: map(scheduleItems, (item) => {
         return {
           code: get(find(materials, {id: item.material_id}), 'code'),
-          tags: item.tags,
+          // tags: item.tags,
           quantity: item.quantity,
           unit: get(find(units, {id: item.unit_id}), 'name'),
         } satisfies MaterialItem;
@@ -82,7 +82,7 @@ export default {
       inventories: map(inventories, (item) => {
         return {
           code: get(find(materials, {id: item.material_id}), 'code'),
-          tags: item.tags,
+          // tags: item.tags,
           quantities: {
             available: item.allocable_quantity,
             instock: item.instock_quantity,
