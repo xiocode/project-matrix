@@ -50,6 +50,8 @@ import PmProjectDetailsPage from '../models/pages/PmProjectDetailsPage';
 import PmProjectEventListPage from '../models/pages/PmProjectEventListPage';
 import PmProjectListPage from '../models/pages/PmProjectListPage';
 import ShopfloorAppListPage from '../models/pages/ShopfloorAppListPage';
+import ShopfloorDisplayDeviceListPage from '../models/pages/ShopfloorDisplayDeviceListPage';
+import ShopfloorStationListPage from '../models/pages/ShopfloorStationListPage';
 import SysActionListPage from '../models/pages/SysActionListPage';
 import SysWebhookListPage from '../models/pages/SysWebhookListPage';
 
@@ -105,6 +107,8 @@ export default [
   PmProjectEventListPage,
   PmProjectListPage,
   ShopfloorAppListPage,
+  ShopfloorDisplayDeviceListPage,
+  ShopfloorStationListPage,
   SysActionListPage,
   SysWebhookListPage,
 ] as TRapidPage[];
