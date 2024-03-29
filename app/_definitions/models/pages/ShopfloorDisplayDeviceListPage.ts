@@ -62,7 +62,6 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          title: '工位',
           code: 'stations',
           rendererProps: {
             item: {
