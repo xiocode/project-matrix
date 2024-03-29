@@ -74,7 +74,7 @@ const page: RapidPage = {
             },
             $exps: {
               "title.children": "$slot.record.name",
-              "title.href": "'/pages/shopfloor_app_builder?id=' + $slot.record.id",
+              "title.href": "'/shopfloor/builder?appId=' + $slot.record.id",
               description: "$slot.record.description",
             }
           }
