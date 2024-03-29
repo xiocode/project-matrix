@@ -8,6 +8,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: 'name',
     },
     {
+      type: 'auto',
+      code: 'apps',
+    },
+    {
       type: 'textarea',
       code: 'description',
     },
@@ -55,6 +59,17 @@ const page: RapidPage = {
           type: 'auto',
           code: 'name',
           title: '车间',
+        },
+        {
+          type: 'auto',
+          code: 'apps',
+          title: '应用',
+          rendererProps: {
+            item: {
+              $type: "rapidObjectRenderer",
+              format: "{{name}}"
+            }
+          },
         },
         {
           type: 'auto',

@@ -25,7 +25,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
         },
         {
             code: 'apps',
-            name: '关联应用(多个)',
+            name: '关联应用',
             type: 'relation[]',
             targetSingularCode: "shopfloor_app",
             linkTableName: 'shopfloor_station_app',
