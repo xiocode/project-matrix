@@ -63,7 +63,6 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'apps',
-          title: '应用',
           rendererProps: {
             item: {
               $type: "rapidObjectRenderer",

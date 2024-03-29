@@ -6498,6 +6498,10 @@ export interface ShopfloorAppStep {
    */
   code?: string;
   /**
+   * 名称
+   */
+  name?: string;
+  /**
    * 类型
    */
   kind?: string;
@@ -6620,7 +6624,7 @@ export interface ShopfloorDisplayDevice {
    */
   description?: string;
   /**
-   * 关联工位(多个)
+   * 关联工位
    */
   stations?: any;
   /**
@@ -6679,7 +6683,7 @@ export interface ShopfloorStation {
    */
   description?: string;
   /**
-   * 关联应用(多个)
+   * 关联应用
    */
   apps?: any;
   /**

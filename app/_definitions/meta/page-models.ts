@@ -49,6 +49,7 @@ import PmProjectCategoryListPage from '../models/pages/PmProjectCategoryListPage
 import PmProjectDetailsPage from '../models/pages/PmProjectDetailsPage';
 import PmProjectEventListPage from '../models/pages/PmProjectEventListPage';
 import PmProjectListPage from '../models/pages/PmProjectListPage';
+import ShopfloorAppDetailsPage from '../models/pages/ShopfloorAppDetailsPage';
 import ShopfloorAppListPage from '../models/pages/ShopfloorAppListPage';
 import ShopfloorDisplayDeviceListPage from '../models/pages/ShopfloorDisplayDeviceListPage';
 import ShopfloorStationListPage from '../models/pages/ShopfloorStationListPage';
@@ -106,6 +107,7 @@ export default [
   PmProjectDetailsPage,
   PmProjectEventListPage,
   PmProjectListPage,
+  ShopfloorAppDetailsPage,
   ShopfloorAppListPage,
   ShopfloorDisplayDeviceListPage,
   ShopfloorStationListPage,

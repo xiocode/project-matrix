@@ -52,6 +52,16 @@ const page: RapidPage = {
       pageSize: 20,
       columns: [
         {
+          type: 'link',
+          code: 'name',
+          width: '150px',
+          fixed: 'left',
+          rendererType: "link",
+          rendererProps: {
+            url: "/pages/shopfloor_app_details?id={{id}}",
+          },
+        },
+        {
           type: 'auto',
           code: 'name',
           title: '应用',
