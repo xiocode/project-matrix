@@ -6498,6 +6498,10 @@ export interface ShopfloorAppStep {
    */
   code?: string;
   /**
+   * 名称
+   */
+  name?: string;
+  /**
    * 类型
    */
   kind?: string;

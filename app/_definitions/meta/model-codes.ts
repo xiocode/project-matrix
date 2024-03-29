@@ -1648,6 +1648,7 @@ const entityFieldCodes = {
     'id',
     'app',
     'code',
+    'name',
     'kind',
     'orderNum',
     'triggers',
