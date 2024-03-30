@@ -1,0 +1,13 @@
+.lsb-toolbar {
+  display: flex;
+  padding: 5px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.lsb-toolbar-items {
+  flex: 1;
+}
+
+.lsb-toolbar-extras {
+}

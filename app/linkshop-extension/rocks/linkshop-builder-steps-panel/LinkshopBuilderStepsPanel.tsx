@@ -1,8 +1,8 @@
 import type { Rock, RockConfig } from "@ruiapp/move-style";
-import ShopfloorAppBuilderMeta from "./BuilderStepListMeta";
-import type { ShopfloorAppBuilderRockConfig } from "./builder-step-list-types";
+import ShopfloorAppBuilderMeta from "./LinkshopBuilderStepsPanelMeta";
+import type { LinkshopBuilderStepsPanelRockConfig } from "./linkshop-builder-steps-panel-types";
 import { renderRock } from "@ruiapp/react-renderer";
-import { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
+import type { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
 import { useMemo } from "react";
 import { forEach } from "lodash";
 
@@ -35,23 +35,24 @@ export interface SlotNode {
 }
 
 export default {
-  Renderer(context, props: ShopfloorAppBuilderRockConfig) {
+  Renderer(context, props: LinkshopBuilderStepsPanelRockConfig) {
     const { shopfloorApp } = props;
 
-    const componentTree = useMemo(() => {
+    const stepTree = useMemo(() => {
       return getShopfloorAppStepTree(shopfloorApp);
     }, [shopfloorApp]);
 
     if (!shopfloorApp) {
       return null;
     }
+    console.log('stepTree', stepTree)
 
     const rockConfig: RockConfig = {
       $id: `${props.$id}-internal`,
       $type: "antdTree",
       fieldNames: { key: "$id", title: "label" },
       defaultExpandAll: true,
-      treeData: componentTree,
+      treeData: stepTree,
       style: props.style,
     };
 
@@ -62,17 +63,23 @@ export default {
 } as Rock;
 
 function getShopfloorAppStepTree(shopfloorApp: LinkshopAppRockConfig) {
+  if (!shopfloorApp) {
+    return [];
+  }
+
   const componentTree: ComponentTreeNode[] = [];
 
-  forEach(shopfloorApp.children, (child: any) => {
+  forEach(shopfloorApp.steps, (child: any) => {
     const step: LinkshopAppStepRockConfig = child;
     const stepNode: ComponentTreeNode = {
       $nodeType: "step",
       $id: step.$id!,
       $type: step.$type,
-      label: step.name,
+      label: step.widgetName,
     };
 
     componentTree.push(stepNode);
   })
+
+  return componentTree;
 }

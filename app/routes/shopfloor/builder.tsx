@@ -21,6 +21,7 @@ import LinkshopExtension from "~/linkshop-extension/mod";
 import ShopfloorExtension from "~/shopfloor-extension/mod";
 
 import styles from "antd/dist/antd.css";
+import linkshopBuilderStyles from "~/styles/linkshop-builder.css";
 import rapidService from "~/rapidService";
 
 import { Avatar, Dropdown,  PageHeader } from "antd";
@@ -29,7 +30,10 @@ import { ExportOutlined, UserOutlined } from "@ant-design/icons";
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: linkshopBuilderStyles },
+  ];
 }
 
 const framework = new Framework();
@@ -217,6 +221,11 @@ export default function Index() {
       $id: "designerPage",
       stores: [
         {
+          name: "shopfloorApp",
+          type: "constant",
+          data: shopfloorApp?.content || {},
+        },
+        {
           type: "designerStore",
           name: "designerStore",
           pageConfig: canvasPageConfig,
@@ -224,201 +233,166 @@ export default function Index() {
       ],
       view: [
         {
+          $type: "linkshopBuilderToolbar",
+        },
+        {
           $type: "antdLayout",
           children: [
             {
               $type: "antdLayoutSider",
+              width: "300px",
               theme: "light",
+              style: {
+                padding: "5px",
+                borderRight: "1px solid #eee",
+              },
               children: [
                 {
-                  $type: "designerToolbox",
+                  $type: "antdTabs",
+                  size: "small",
+                  type: "card",
                   style: {
-                    height: "100vh",
+                    height: "calc(100vh - 72px - 45px - 10px)",
                     overflow: "auto",
-                  }
+                  },
+                  tabBarStyle: {
+                    marginBottom: "5px",
+                  },
+                  items: [
+                    {
+                      key: "steps",
+                      label: "步骤",
+                      children: [
+                        {
+                          $type: "linkshopBuilderStepsPanel",
+                          $exps: {
+                            shopfloorApp: "$stores.shopfloorApp.data"
+                          }
+                        },
+                      ]
+                    },
+                    {
+                      key: "components",
+                      label: "组件",
+                      children: [
+                        {
+                          $type: "designerComponentTree",
+                          style: {
+                            overflow: "auto",
+                          },
+                          $exps: {
+                            designingPage: "$stores.designerStore.page",
+                          }
+                        },
+                      ]
+                    },
+                    {
+                      key: "stores",
+                      label: "数据",
+                      children: [
+                        {
+                          $type: "linkshopBuilderStoresPanel",
+                        },
+                      ]
+                    },
+                    {
+                      key: "assets",
+                      label: "资源",
+                      children: [
+                        {
+                          $type: "linkshopBuilderAssetsPanel",
+                        },
+                      ]
+                    },
+                  ],
                 },
               ]
             },
             {
-              $type: "antdLayout",
+              $type: "antdLayoutContent",
               children: [
                 {
-                  $type: "antdLayoutSider",
-                  theme: "light",
-                  style: {
-                    backgroundColor: "#eee",
-                  },
+                  $type: "antdLayout",
                   children: [
                     {
-                      $type: "htmlElement",
-                      htmlTag: "div",
+                      $type: "antdLayoutContent",
                       children: [
                         {
-                          $type: "antdButton",
-                          icon: {
-                            $type: "antdIcon",
-                            name: "ScissorOutlined",
-                          },
-                          onClick: [
-                            {
-                              $action: "script",
-                              script: (event: RockEvent) => {
-                                const designerPage = event.page;
-                                const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-                                if (designerStore.selectedSlotName) {
-                                  return;
-                                }
-    
-                                DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
-                                  name: "cutComponents",
-                                  payload: {
-                                    componentIds: [designerStore.selectedComponentId],
-                                  }
-                                });
-                              },
-                            }
-                          ]
-                        },
-                        {
-                          $type: "antdButton",
-                          icon: {
-                            $type: "antdIcon",
-                            name: "CopyOutlined",
-                          },
-                          onClick: [
-                            {
-                              $action: "script",
-                              script: (event: RockEvent) => {
-                                const designerPage = event.page;
-                                const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-                                if (designerStore.selectedSlotName) {
-                                  return;
-                                }
-    
-                                DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
-                                  name: "copyComponents",
-                                  payload: {
-                                    componentIds: [designerStore.selectedComponentId],
-                                  }
-                                });
-                              },
-                            }
-                          ]
-                        },
-                        {
-                          $type: "antdButton",
-                          icon: {
-                            $type: "antdIcon",
-                            name: "SnippetsOutlined",
-                          },
-                          onClick: [
-                            {
-                              $action: "script",
-                              script: (event: RockEvent) => {
-                                const designerPage = event.page;
-                                const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-                                DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
-                                  name: "pasteComponents",
-                                  payload: {
-                                    parentComponentId: designerStore.selectedComponentId,
-                                    slotName: designerStore.selectedSlotName,
-                                  }
-                                });
-                              },
-                            }
-                          ]
-                        },
-                        {
-                          $type: "antdButton",
-                          icon: {
-                            $type: "antdIcon",
-                            name: "DeleteOutlined",
-                          },
-                          onClick: [
-                            {
-                              $action: "script",
-                              script: (event: RockEvent) => {
-                                const designerPage = event.page;
-                                const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-                                if (designerStore.selectedSlotName) {
-                                  return;
-                                }
-    
-                                DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
-                                  name: "removeComponents",
-                                  payload: {
-                                    componentIds: [designerStore.selectedComponentId],
-                                  }
-                                });
-                              },
-                            }
-                          ]
-                        },
-                      ],
-                    },
-                    {
-                      $type: "designerComponentTree",
-                      style: {
-                        height: "calc(100vh - 72px)",
-                        overflow: "auto",
-                      },
-                      $exps: {
-                        designingPage: "$stores.designerStore.page",
-                      }
-                    },
-                  ],
-                },
-                {
-                  $type: "antdLayoutContent",
-                  children: [
-                    {
-                      $type: "antdLayout",
-                      children: [
-                        {
-                          $type: "antdLayoutContent",
-                          children: [
-                            {
-                              $type: "htmlElement",
-                              $id: "previewIFrame",
-                              htmlTag: "iframe",
-                              attributes: {
-                                id: "previewIFrame",
-                                width: "100%",
-                                height: "100%",
-                                frameBorder: "0",
-                                src: "/shopfloor/design-preview",
-                              },
-                              style: {
-                                display: "block",
-                              },
-                            }
-                          ]
-                        },
-                        {
-                          $type: "antdLayoutSider",
-                          width: 300,
-                          style: {
-                            height: "100vh",
-                            overflow: "auto",
-                            background: "white",
-                            padding: "10px",
-                          },
-                          children: [
-                            {
-                              $type: "designerComponentPropertiesPanel",
-                              $exps: {
-                                designingPage: "$stores.designerStore.page",
-                                selectedComponentId: "$stores.designerStore.selectedComponentId",
-                              }
+                          $type: "box",
+                          width: "100%",
+                          height: "100%",
+                          padding: "50px",
+                          backgroundColor: "#F4F5F7",
+                          children: {
+                            $type: "htmlElement",
+                            $id: "previewIFrame",
+                            htmlTag: "iframe",
+                            attributes: {
+                              id: "previewIFrame",
+                              width: "100%",
+                              height: "100%",
+                              frameBorder: "0",
+                              src: "/shopfloor/design-preview",
                             },
-                          ]
-                        }
+                            style: {
+                              display: "block",
+                              margin: "0 auto",
+                            },
+                          },
+                        },
                       ]
                     },
+                    {
+                      $type: "antdLayoutSider",
+                      width: 300,
+                      theme: "light",
+                      style: {
+                        padding: "5px",
+                        borderLeft: "1px solid #eee",
+                      },
+                      children: [
+                        {
+                          $type: "antdTabs",
+                          size: "small",
+                          type: "card",
+                          style: {
+                            height: "calc(100vh - 72px - 45px - 10px)",
+                            overflow: "auto",
+                          },
+                          tabBarStyle: {
+                            marginBottom: "5px",
+                          },
+                          items: [
+                            {
+                              key: "steps",
+                              label: "属性",
+                              children: [
+                                {
+                                  $type: "designerComponentPropertiesPanel",
+                                  $exps: {
+                                    designingPage: "$stores.designerStore.page",
+                                    selectedComponentId: "$stores.designerStore.selectedComponentId",
+                                  },
+                                },
+                              ],
+                            },
+                            {
+                              key: "events",
+                              label: "事件",
+                              children: [
+                                {
+                                  $type: "linkshopBuilderTriggersPanel",
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ]
+                    }
                   ]
-                }
+                },
               ]
-            },
+            }
           ],
         },
       ],

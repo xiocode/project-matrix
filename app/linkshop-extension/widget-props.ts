@@ -1,14 +1,14 @@
-import type { ContainerRockConfig, SimpleRockConfig } from "@ruiapp/move-style";
+import type { SimpleRockConfig } from "@ruiapp/move-style";
 
 export interface LinkshopWidgetConfig extends SimpleRockConfig {
   /**
    * 组件名
    */
-  widgetName: string;
+  name: string;
 
-  /**
-   * 说明
-   */
+   /**
+    * 说明
+    */
   note: string; 
 
   left: number;

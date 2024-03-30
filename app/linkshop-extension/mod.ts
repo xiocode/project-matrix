@@ -8,3 +8,5 @@ export default {
   functions,
   configProcessors,
 } as RuiExtension;
+
+export * from "./linkshop-types";

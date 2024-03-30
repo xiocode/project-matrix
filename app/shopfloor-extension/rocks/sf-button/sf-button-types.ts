@@ -1,5 +1,7 @@
 import type { LinkshopWidgetConfig } from "~/linkshop-extension/mod";
 
-export interface SfTextRockConfig extends LinkshopWidgetConfig {
+export interface SfButtonRockConfig extends LinkshopWidgetConfig {
   text: string;
+
+  icon?: string;
 }
