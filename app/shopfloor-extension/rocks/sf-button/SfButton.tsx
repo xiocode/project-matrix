@@ -9,8 +9,13 @@ export default {
   Renderer(context, props: SfButtonRockConfig) {
     const { text, icon } = props;
 
-    const wrapStyle: React.CSSProperties = pick(props, CommonProps.PositionStylePropNames) as any;
+    const styleNames = [
+      ...CommonProps.PositionStylePropNames,
+      ...CommonProps.SizeStylePropNames,
+    ];
+    const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
     wrapStyle.position = "absolute";
+    wrapStyle.backgroundColor = props.backgroundColor;
     return <Button data-component-id={props.$id} style={wrapStyle}>
       {
         icon && renderRock({

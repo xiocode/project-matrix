@@ -6,13 +6,13 @@ import { renderRock } from "@ruiapp/react-renderer";
 
 export default {
   Renderer(context, props: SfIconRockConfig) {
-    const { icon, color, width, height } = props;
+    const { icon, color, width, height, size } = props;
 
     const iconRockConfig: RockConfig = {
       $type: "antdIcon",
       name: icon,
       color,
-      size: min([width, height]) || 32,
+      size: size || min([width, height]) || 32,
     }
 
     const wrapStyle: React.CSSProperties = pick(props, CommonProps.PositionStylePropNames) as any;

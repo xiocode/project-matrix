@@ -1,16 +1,6 @@
 import type { ContainerRockConfig, SimpleRockConfig } from "@ruiapp/move-style";
 
-export interface LinkshopWidgetConfig extends SimpleRockConfig {
-  /**
-   * 组件名
-   */
-  widgetName: string;
-
-  /**
-   * 说明
-   */
-  note: string; 
-
+export type LinkshopWidgetCommonConfig = {
   left: number;
 
   top: number;
@@ -20,7 +10,7 @@ export interface LinkshopWidgetConfig extends SimpleRockConfig {
   height: number;
 }
 
-export interface LinkshopAppRockConfig extends LinkshopWidgetConfig {
+export type LinkshopAppRockConfig = SimpleRockConfig & LinkshopWidgetCommonConfig & {
   $type: "linkshopApp";
 
   /**
@@ -29,7 +19,8 @@ export interface LinkshopAppRockConfig extends LinkshopWidgetConfig {
   steps: LinkshopAppStepRockConfig[];
 }
 
-export interface LinkshopAppStepRockConfig extends LinkshopWidgetConfig {
+export type LinkshopAppStepRockConfig = ContainerRockConfig & LinkshopWidgetCommonConfig & {
+  $type: "linkshopAppStep";
 
   /**
    * 背景颜色

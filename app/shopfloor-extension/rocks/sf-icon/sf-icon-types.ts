@@ -4,4 +4,6 @@ export interface SfIconRockConfig extends LinkshopWidgetConfig {
   icon: string;
 
   color: string;
+
+  size?: number;
 }

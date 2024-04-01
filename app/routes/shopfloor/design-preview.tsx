@@ -99,24 +99,10 @@ export default function Index() {
     let ruiPageConfig: PageConfig | undefined;
 
     const canvasPageConfig: PageConfig = {
-      "$id": "canvasPage",
+      "$id": "designPreviewPage",
       "stores": [
-        {
-          name: "viewModel",
-          type: "constant",
-          data: {
-            greet: " Hello World!",
-            textTop1: "300px",
-            textTop2: "400px",
-            brandColor: "#c038ff",
-          }
-        },
       ],
       "view": [
-        {
-          $type: "text",
-          text: "Hello",
-        }
       ]
     };
 

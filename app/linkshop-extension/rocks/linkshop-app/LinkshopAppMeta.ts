@@ -7,5 +7,15 @@ export default {
   },
 
   propertyPanels: [
+        {
+      $type: "componentPropPanel",
+      setters: [
+        {
+          $type: "textPropSetter",
+          label: "名称",
+          propName: "$name",
+        },
+      ],
+    }
   ],
 } as RockMeta;

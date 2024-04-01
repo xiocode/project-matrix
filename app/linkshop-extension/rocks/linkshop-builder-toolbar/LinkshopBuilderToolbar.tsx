@@ -1,13 +1,16 @@
-import type { Rock, RockChildrenConfig, RockConfig, RockEvent } from "@ruiapp/move-style";
+import { MoveStyleUtils, PageCommandAddComponent, type Rock, type RockChildrenConfig, type RockConfig, type RockEvent } from "@ruiapp/move-style";
 import ShopfloorAppBuilderMeta from "./LinkshopBuilderToolbarMeta";
 import type { LinkshopBuilderToolbarRockConfig } from "./linkshop-builder-toolbar-types";
 import { Button, Dropdown, MenuProps, Space } from "antd";
 import { ArrowRightOutlined, BarcodeOutlined, CalendarOutlined, CheckCircleOutlined, CheckSquareOutlined, ColumnHeightOutlined, ColumnWidthOutlined, DownSquareOutlined, FileTextOutlined, FontSizeOutlined, FormOutlined, NumberOutlined, PictureOutlined, PlusOutlined, ProfileOutlined, QrcodeOutlined, SaveFilled, SaveOutlined, StarOutlined, TableOutlined, VerticalAlignBottomOutlined, VerticalAlignMiddleOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { DesignerStore, DesignerUtility } from "@ruiapp/designer-extension";
 import { renderRockChildren } from "@ruiapp/react-renderer";
+import { useCallback } from "react";
+import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
 
 export default {
   Renderer(context, props: LinkshopBuilderToolbarRockConfig) {
+    const { page } = context;
     const { shopfloorApp } = props;
 
     const insertComponentItems: MenuProps['items'] = [
@@ -17,22 +20,22 @@ export default {
         children: [
           {
             label: '文本',
-            key: 'text',
+            key: 'sfText',
             icon: <FontSizeOutlined />,
           },
           {
             label: '图标',
-            key: 'icon',
+            key: 'sfIcon',
             icon: <StarOutlined />,
           },
           {
             label: '图片',
-            key: 'picture',
+            key: 'sfPicture',
             icon: <PictureOutlined />,
           },
           {
             label: '按钮',
-            key: 'button',
+            key: 'sfButton',
             icon: <ArrowRightOutlined />,
           },
         ],
@@ -43,42 +46,42 @@ export default {
         children: [
           {
             label: '表单',
-            key: 'form',
+            key: 'sfForm',
             icon: <FormOutlined />,
           },
           {
             label: '文本输入',
-            key: 'textInput',
+            key: 'sfTextInput',
             icon: <FontSizeOutlined />,
           },
           {
             label: '数字输入',
-            key: 'numberInput',
+            key: 'sfNumberInput',
             icon: <NumberOutlined />,
           },
           {
             label: '复选框',
-            key: 'checkboxGroup',
+            key: 'sfCheckboxGroup',
             icon: <CheckSquareOutlined />,
           },
           {
             label: '单选框',
-            key: 'radioGroup',
+            key: 'sfRadioGroup',
             icon: <CheckCircleOutlined />,
           },
           {
             label: '下拉选择',
-            key: 'dropdownSelect',
+            key: 'sfDropdownSelect',
             icon: <DownSquareOutlined />,
           },
           {
             label: '日期选择',
-            key: 'dateSelect',
+            key: 'sfDateSelect',
             icon: <CalendarOutlined />,
           },
           {
             label: '文件上传',
-            key: 'fileUploader',
+            key: 'sfFileUploader',
             icon: <FileTextOutlined />,
           },
         ]
@@ -89,22 +92,22 @@ export default {
         children: [
           {
             label: '记录详情',
-            key: 'entityDetails',
+            key: 'sfEntityDetails',
             icon: <ProfileOutlined />,
           },
           {
             label: '数据表格',
-            key: 'entityTable',
+            key: 'sfEntityTable',
             icon: <TableOutlined />,
           },
           {
             label: '条形码',
-            key: 'barcode',
+            key: 'sfBarcode',
             icon: <BarcodeOutlined />,
           },
           {
             label: '二维码',
-            key: 'qrcode',
+            key: 'sfQrcode',
             icon: <QrcodeOutlined />,
           },
         ],
@@ -115,7 +118,21 @@ export default {
     const insertComponentMenuProps = {
       items: insertComponentItems,
       onClick: (e: any) => {
-        console.log('Menu click', e)
+        const rockType = e.key;
+
+        const { framework, page } = context;
+        const store = page.getStore<DesignerStore>("designerStore");
+        const rockMeta = framework.getComponent(rockType);
+  
+        DesignerUtility.sendDesignerCommand(page, store, {
+          name: "addComponent",
+          payload: {
+            componentType: rockType,
+            parentComponentId: store.selectedComponentId,
+            slotPropName: store.selectedSlotPropName,
+            defaultProps: MoveStyleUtils.getRockDefaultProps(rockMeta),
+          }
+        } as PageCommandAddComponent);
       },
     };
 
@@ -185,7 +202,7 @@ export default {
             script: (event: RockEvent) => {
               const designerPage = event.page;
               const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-              if (designerStore.selectedSlotName) {
+              if (designerStore.selectedSlotPropName) {
                 return;
               }
 
@@ -211,7 +228,7 @@ export default {
             script: (event: RockEvent) => {
               const designerPage = event.page;
               const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-              if (designerStore.selectedSlotName) {
+              if (designerStore.selectedSlotPropName) {
                 return;
               }
 
@@ -241,7 +258,7 @@ export default {
                 name: "pasteComponents",
                 payload: {
                   parentComponentId: designerStore.selectedComponentId,
-                  slotName: designerStore.selectedSlotName,
+                  slotPropName: designerStore.selectedSlotPropName,
                 }
               });
             },
@@ -260,7 +277,7 @@ export default {
             script: (event: RockEvent) => {
               const designerPage = event.page;
               const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-              if (designerStore.selectedSlotName) {
+              if (designerStore.selectedSlotPropName) {
                 return;
               }
 
@@ -304,6 +321,12 @@ export default {
         console.log('Menu click', e)
       },
     };
+
+    const handleSaveButtonClick = useCallback(() => {
+      const linkshopAppDesignerStore = page.getStore<LinkshopAppDesignerStore>("linkshopAppDesignerStore");
+      console.log(linkshopAppDesignerStore.appConfig);
+    }, [page]);
+
     return <div className="lsb-toolbar">
       <div className="lsb-toolbar-items">
         <Space>
@@ -327,7 +350,7 @@ export default {
       </div>
       <div className="lsb-toolbar-extras">
         <Space>
-          <Button icon={<SaveFilled />}>保存</Button>
+          <Button icon={<SaveFilled />} onClick={handleSaveButtonClick}>保存</Button>
         </Space>
       </div>
     </div>

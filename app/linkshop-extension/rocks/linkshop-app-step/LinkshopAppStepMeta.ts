@@ -12,8 +12,8 @@ export default {
       setters: [
         {
           $type: "textPropSetter",
-          label: "name",
-          propName: "name",
+          label: "名称",
+          propName: "$name",
         },
 
         {

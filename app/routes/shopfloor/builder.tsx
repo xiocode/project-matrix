@@ -7,7 +7,7 @@ import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension, { DesignerStore, DesignerUtility } from "@ruiapp/designer-extension";
 import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
 import { useMemo } from "react";
-import _, { first } from "lodash";
+import _, { first, get } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
@@ -27,7 +27,7 @@ import rapidService from "~/rapidService";
 import { Avatar, Dropdown,  PageHeader } from "antd";
 import type { MenuProps } from "antd";
 import { ExportOutlined, UserOutlined } from "@ant-design/icons";
-import { ShopfloorApp } from "~/_definitions/meta/entity-types";
+import type { ShopfloorApp } from "~/_definitions/meta/entity-types";
 
 export function links() {
   return [
@@ -196,23 +196,13 @@ export default function Index() {
     }
 
     const canvasPageConfig: PageConfig = {
-      "$id": "canvasPage",
+      "$id": "designPreviewPage",
       "stores": [
-        {
-          name: "viewModel",
-          type: "constant",
-          data: {
-            greet: " Hello World!",
-            textTop1: "300px",
-            textTop2: "400px",
-            brandColor: "#c038ff",
-          }
-        },
       ],
       "view": [
         {
-          $type: "text",
-          text: "Hello",
+          $type: "linkshopApp",
+          children: get(shopfloorApp?.content || {}, "steps", []),
         }
       ]
     }
@@ -221,9 +211,9 @@ export default function Index() {
       $id: "designerPage",
       stores: [
         {
-          name: "shopfloorApp",
-          type: "constant",
-          data: shopfloorApp?.content || {},
+          name: "linkshopAppDesignerStore",
+          type: "linkshopAppDesignerStore",
+          appConfig: shopfloorApp?.content || {},
         },
         {
           type: "designerStore",
@@ -266,7 +256,7 @@ export default function Index() {
                         {
                           $type: "linkshopBuilderStepsPanel",
                           $exps: {
-                            shopfloorApp: "$stores.shopfloorApp.data"
+                            shopfloorApp: "$stores.linkshopAppDesignerStore.data"
                           }
                         },
                       ]
@@ -321,24 +311,43 @@ export default function Index() {
                           $type: "box",
                           width: "100%",
                           height: "100%",
-                          padding: "50px",
+                          padding: "20px 50px 50px",
                           backgroundColor: "#F4F5F7",
-                          children: {
-                            $type: "htmlElement",
-                            $id: "previewIFrame",
-                            htmlTag: "iframe",
-                            attributes: {
-                              id: "previewIFrame",
-                              width: "100%",
-                              height: "100%",
-                              frameBorder: "0",
-                              src: "/shopfloor/design-preview",
+                          children: [
+                            {
+                              $type: "htmlElement",
+                              $id: "stepTitle",
+                              htmlTag: "div",
+                              style: {
+                                height: "30px",
+                                lineHeight: "30px",
+                              },
+                              children: [
+                                {
+                                  $type: "text",
+                                  $exps: {
+                                    text: "$stores.linkshopAppDesignerStore.currentStep?.$name || 'N/A'",
+                                  },
+                                },
+                              ],
                             },
-                            style: {
-                              display: "block",
-                              margin: "0 auto",
+                            {
+                              $type: "htmlElement",
+                              $id: "previewIFrame",
+                              htmlTag: "iframe",
+                              attributes: {
+                                id: "previewIFrame",
+                                frameBorder: "0",
+                                src: "/shopfloor/design-preview",
+                              },
+                              style: {
+                                display: "block",
+                                margin: "0 auto",
+                                width: "100%",
+                                height: "calc(100% - 30px)",
+                              },
                             },
-                          },
+                          ],
                         },
                       ]
                     },
