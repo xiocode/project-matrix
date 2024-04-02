@@ -1,12 +1,12 @@
-import type { Rock, RockConfig, RockEvent, RockEventHandlerScript } from "@ruiapp/move-style";
-import ShopfloorAppBuilderMeta from "./LinkshopBuilderStepsPanelMeta";
+import type { Rock, RockConfig, RockEvent, RockEventHandlerScript, RockInstanceContext } from "@ruiapp/move-style";
+import LinkshopBuilderStepsPanelMeta from "./LinkshopBuilderStepsPanelMeta";
 import type { LinkshopBuilderStepsPanelRockConfig } from "./linkshop-builder-steps-panel-types";
 import { renderRock } from "@ruiapp/react-renderer";
 import type { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
 import { useCallback, useMemo } from "react";
 import { find, forEach } from "lodash";
 import type { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
-import { DesignerStore, DesignerUtility } from "@ruiapp/designer-extension";
+import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
 
 
 export type StepTreeNode = StepNode | ComponentNode | SlotNode;
@@ -37,13 +37,14 @@ export interface SlotNode {
 }
 
 export default {
-  Renderer(context, props: LinkshopBuilderStepsPanelRockConfig) {
-    const { shopfloorApp } = props;
+  Renderer(context: RockInstanceContext, props: LinkshopBuilderStepsPanelRockConfig) {
+    const { designerStoreName } = props;
+    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || "designerStore");
+    const shopfloorApp = designerStore.appConfig;
 
     const stepTree = useMemo(() => {
       return getShopfloorAppStepTree(shopfloorApp);
     }, [shopfloorApp]);
-
 
     const onStepTreeNodeSelect = useCallback((event: RockEvent) => {
       const page = event.page;
@@ -53,13 +54,11 @@ export default {
       if (isNodeSelected) {
         selectedSetpId = node.$id;
 
-        const designerStore = page.getStore<DesignerStore>("designerStore");
-        const linkshopAppDesignerStore = page.getStore<LinkshopAppDesignerStore>("linkshopAppDesignerStore");
-        linkshopAppDesignerStore.setCurrentStepId(selectedKeys[0], selectedSetpId);
+        designerStore.setCurrentStepId(selectedKeys[0], selectedSetpId);
 
-        const currentStep = linkshopAppDesignerStore.currentStep;
+        const currentStep = designerStore.currentStep;
         if (currentStep) {
-          DesignerUtility.sendDesignerCommand(page, designerStore, {
+          sendDesignerCommand(page, designerStore, {
             name: "setPageConfig",
             payload: {
               pageConfig: {
@@ -71,7 +70,7 @@ export default {
         }
       }
 
-    }, []);
+    }, [designerStore]);
 
     if (!shopfloorApp) {
       return null;
@@ -93,10 +92,10 @@ export default {
     return renderRock({context, rockConfig});
   },
 
-  ...ShopfloorAppBuilderMeta,
+  ...LinkshopBuilderStepsPanelMeta,
 } as Rock;
 
-function getShopfloorAppStepTree(shopfloorApp: LinkshopAppRockConfig) {
+function getShopfloorAppStepTree(shopfloorApp?: LinkshopAppRockConfig) {
   if (!shopfloorApp) {
     return [];
   }

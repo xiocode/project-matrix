@@ -91,28 +91,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 
 export default function Index() {
-  const viewModel = useLoaderData<ViewModel>();
-  const { } = viewModel;
-
-
   const page = useMemo(() => {
     let ruiPageConfig: PageConfig | undefined;
-
-    const canvasPageConfig: PageConfig = {
-      "$id": "designPreviewPage",
-      "stores": [
-      ],
-      "view": [
-      ]
-    };
 
     ruiPageConfig = {
       $id: "previewPage",
       stores: [
         {
-          type: "designerStore",
+          type: "linkshopAppDesignerStore",
           name: "designerStore",
-          pageConfig: canvasPageConfig,
         }
       ],
       view: [

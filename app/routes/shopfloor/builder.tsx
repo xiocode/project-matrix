@@ -195,31 +195,14 @@ export default function Index() {
       return new Page(framework, ruiPageConfig);
     }
 
-    const canvasPageConfig: PageConfig = {
-      "$id": "designPreviewPage",
-      "stores": [
-      ],
-      "view": [
-        {
-          $type: "linkshopApp",
-          children: get(shopfloorApp?.content || {}, "steps", []),
-        }
-      ]
-    }
-
     ruiPageConfig = {
       $id: "designerPage",
       stores: [
         {
-          name: "linkshopAppDesignerStore",
           type: "linkshopAppDesignerStore",
+          name: "designerStore",
           appConfig: shopfloorApp?.content || {},
         },
-        {
-          type: "designerStore",
-          name: "designerStore",
-          pageConfig: canvasPageConfig,
-        }
       ],
       view: [
         {
@@ -255,9 +238,6 @@ export default function Index() {
                       children: [
                         {
                           $type: "linkshopBuilderStepsPanel",
-                          $exps: {
-                            shopfloorApp: "$stores.linkshopAppDesignerStore.data"
-                          }
                         },
                       ]
                     },
@@ -266,12 +246,12 @@ export default function Index() {
                       label: "组件",
                       children: [
                         {
-                          $type: "designerComponentTree",
+                          $type: "linkshopBuilderComponentsPanel",
                           style: {
                             overflow: "auto",
                           },
                           $exps: {
-                            designingPage: "$stores.designerStore.page",
+                            designerStore: "$stores.designerStore",
                           }
                         },
                       ]
@@ -326,7 +306,7 @@ export default function Index() {
                                 {
                                   $type: "text",
                                   $exps: {
-                                    text: "$stores.linkshopAppDesignerStore.currentStep?.$name || 'N/A'",
+                                    text: "$stores.designerStore.currentStep?.$name || 'N/A'",
                                   },
                                 },
                               ],

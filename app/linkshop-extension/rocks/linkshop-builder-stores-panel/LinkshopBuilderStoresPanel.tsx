@@ -1,5 +1,5 @@
 import type { Rock } from "@ruiapp/move-style";
-import ShopfloorAppBuilderMeta from "./LinkshopBuilderStoresPanelMeta";
+import LinkshopBuilderStoresPanelMeta from "./LinkshopBuilderStoresPanelMeta";
 import type { LinkshopBuilderStoresPanelRockConfig } from "./linkshop-builder-stores-panel-types";
 
 
@@ -10,5 +10,5 @@ export default {
     return "stores"
   },
 
-  ...ShopfloorAppBuilderMeta,
+  ...LinkshopBuilderStoresPanelMeta,
 } as Rock;
