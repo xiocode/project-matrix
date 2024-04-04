@@ -3,7 +3,7 @@ import SfButtonMeta from "./SfButtonMeta";
 import type { SfButtonRockConfig } from "./sf-button-types";
 import { pick } from "lodash";
 import { Button } from "antd";
-import { renderRock } from "@ruiapp/react-renderer";
+import { convertToEventHandlers, renderRock } from "@ruiapp/react-renderer";
 
 export default {
   Renderer(context, props: SfButtonRockConfig) {
@@ -16,7 +16,10 @@ export default {
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
     wrapStyle.position = "absolute";
     wrapStyle.backgroundColor = props.backgroundColor;
-    return <Button data-component-id={props.$id} style={wrapStyle}>
+
+    const eventHandlers = convertToEventHandlers({context, rockConfig: props});
+
+    return <Button data-component-id={props.$id} style={wrapStyle} {...eventHandlers}>
       {
         icon && renderRock({
           context,

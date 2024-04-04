@@ -74,7 +74,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     if (currentStage) {
       if (currentStage.type === "step") {
         const currentStep = this.currentStep!;
-        const stagePageConfig = this.#page.getConfig();
+        const stagePageConfig = this.#page.getSerializableConfig();
         currentStep.children = stagePageConfig.view;
       }
     }
@@ -150,14 +150,14 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     return this.#selectedSlotPropName;
   }
 
-  saveAppConfig() {
+  async saveAppConfig() {
     this.#stashCurrentStageToAppConfig();
 
     const appContent = {
       steps: this.appConfig?.steps,
     }
 
-    rapidApi.patch(`/shopfloor/shopfloor_apps/${this.appId}`, {
+    await rapidApi.patch(`/shopfloor/shopfloor_apps/${this.appId}`, {
       content: appContent,
     })
   }

@@ -372,7 +372,11 @@ export default function Index() {
                               label: "事件",
                               children: [
                                 {
-                                  $type: "linkshopBuilderTriggersPanel",
+                                  $type: "designerComponentEventHandlersPanel",
+                                  $exps: {
+                                    designingPage: "$stores.designerStore.page",
+                                    selectedComponentId: "$stores.designerStore.selectedComponentId",
+                                  },
                                 },
                               ],
                             },

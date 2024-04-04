@@ -1,4 +1,4 @@
-import type { ContainerRockConfig, SimpleRockConfig } from "@ruiapp/move-style";
+import type { ContainerRockConfig, RockConfigBase, SimpleRockConfig } from "@ruiapp/move-style";
 
 export type LinkshopWidgetCommonConfig = {
   left: number;
@@ -9,6 +9,8 @@ export type LinkshopWidgetCommonConfig = {
 
   height: number;
 }
+
+export type LinkshopWidgetRockConfig = RockConfigBase & LinkshopWidgetCommonConfig;
 
 export type LinkshopAppRockConfig = SimpleRockConfig & LinkshopWidgetCommonConfig & {
   $type: "linkshopApp";

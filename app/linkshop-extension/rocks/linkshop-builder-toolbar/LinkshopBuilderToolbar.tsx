@@ -1,7 +1,7 @@
 import { MoveStyleUtils, PageCommandAddComponent, type Rock, type RockChildrenConfig, type RockEvent } from "@ruiapp/move-style";
 import LinkshopBuilderToolbarMeta from "./LinkshopBuilderToolbarMeta";
 import type { LinkshopBuilderToolbarRockConfig } from "./linkshop-builder-toolbar-types";
-import { Button, Dropdown, MenuProps, Space } from "antd";
+import { Button, Dropdown, MenuProps, Space, message } from "antd";
 import { ArrowRightOutlined, BarcodeOutlined, CalendarOutlined, CheckCircleOutlined, CheckSquareOutlined, ColumnHeightOutlined, ColumnWidthOutlined, DownSquareOutlined, FileTextOutlined, FontSizeOutlined, FormOutlined, NumberOutlined, PictureOutlined, PlusOutlined, ProfileOutlined, QrcodeOutlined, SaveFilled, SaveOutlined, StarOutlined, TableOutlined, VerticalAlignBottomOutlined, VerticalAlignMiddleOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { renderRockChildren } from "@ruiapp/react-renderer";
 import { useCallback } from "react";
@@ -333,8 +333,9 @@ export default {
       },
     };
 
-    const handleSaveButtonClick = useCallback(() => {
-      console.log(designerStore.saveAppConfig());
+    const handleSaveButtonClick = useCallback(async () => {
+      await designerStore.saveAppConfig()
+      message.success("保存成功。");
     }, [designerStore]);
 
     return <div className="lsb-toolbar">

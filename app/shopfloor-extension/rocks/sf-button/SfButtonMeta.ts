@@ -5,6 +5,11 @@ export default {
 
   name: "按钮",
 
+  slots: {
+  },
+
+  voidComponent: true,
+
   props: {
     text: {
       valueType: "string",
@@ -12,8 +17,13 @@ export default {
     },
   },
 
-  slots: {
-  },
+  events: [
+    {
+      name: "onClick",
+      label: "onClick",
+      args: {},
+    },
+  ],
 
   propertyPanels: [
     {
