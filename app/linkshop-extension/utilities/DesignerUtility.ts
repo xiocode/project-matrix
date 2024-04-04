@@ -9,3 +9,17 @@ export function sendDesignerCommand(designerPage: IPage, designerStore: Linkshop
   const targetWindow = (document.getElementById("previewIFrame") as HTMLIFrameElement).contentWindow!;
   targetWindow.postMessage(command, "*");
 }
+
+
+export function genRandomComponentId() {
+  return createRandomString(10);
+}
+
+function createRandomString(length: number) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}

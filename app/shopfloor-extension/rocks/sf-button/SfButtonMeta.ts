@@ -5,6 +5,13 @@ export default {
 
   name: "按钮",
 
+  props: {
+    text: {
+      valueType: "string",
+      defaultValue: "按钮",
+    },
+  },
+
   slots: {
   },
 
@@ -29,5 +36,7 @@ export default {
         },
       ]
     },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;

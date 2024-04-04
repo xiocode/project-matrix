@@ -5,6 +5,13 @@ export default {
 
   name: "文本",
 
+  props: {
+    text: {
+      valueType: "string",
+      defaultValue: "文本",
+    },
+  },
+
   slots: {
   },
 

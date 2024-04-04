@@ -54,7 +54,10 @@ export default {
       if (isNodeSelected) {
         selectedSetpId = node.$id;
 
-        designerStore.setCurrentStepId(selectedKeys[0], selectedSetpId);
+        designerStore.setDesignStage({
+          type: "step",
+          stepId: selectedSetpId,
+        });
 
         const currentStep = designerStore.currentStep;
         if (currentStep) {

@@ -3,11 +3,10 @@ import LinkshopBuilderToolbarMeta from "./LinkshopBuilderToolbarMeta";
 import type { LinkshopBuilderToolbarRockConfig } from "./linkshop-builder-toolbar-types";
 import { Button, Dropdown, MenuProps, Space } from "antd";
 import { ArrowRightOutlined, BarcodeOutlined, CalendarOutlined, CheckCircleOutlined, CheckSquareOutlined, ColumnHeightOutlined, ColumnWidthOutlined, DownSquareOutlined, FileTextOutlined, FontSizeOutlined, FormOutlined, NumberOutlined, PictureOutlined, PlusOutlined, ProfileOutlined, QrcodeOutlined, SaveFilled, SaveOutlined, StarOutlined, TableOutlined, VerticalAlignBottomOutlined, VerticalAlignMiddleOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
-import { DesignerStore, DesignerUtility } from "@ruiapp/designer-extension";
 import { renderRockChildren } from "@ruiapp/react-renderer";
 import { useCallback } from "react";
 import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
-import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
+import { genRandomComponentId, sendDesignerCommand, sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
 
 export default {
   Renderer(context, props: LinkshopBuilderToolbarRockConfig) {
@@ -123,16 +122,18 @@ export default {
         const rockType = e.key;
 
         const { framework, page } = context;
-        const store = page.getStore<DesignerStore>("designerStore");
         const rockMeta = framework.getComponent(rockType);
-  
-        DesignerUtility.sendDesignerCommand(page, store, {
+
+        const defaultProps: any = MoveStyleUtils.getRockDefaultProps(rockMeta);
+        defaultProps.$id = genRandomComponentId();
+
+        sendDesignerCommand(page, designerStore, {
           name: "addComponent",
           payload: {
             componentType: rockType,
-            parentComponentId: store.selectedComponentId,
-            slotPropName: store.selectedSlotPropName,
-            defaultProps: MoveStyleUtils.getRockDefaultProps(rockMeta),
+            parentComponentId: designerStore.selectedComponentId,
+            slotPropName: designerStore.selectedSlotPropName,
+            defaultProps,
           }
         } as PageCommandAddComponent);
       },
@@ -232,12 +233,15 @@ export default {
             $action: "script",
             script: (event: RockEvent) => {
               const designerPage = event.page;
-              const designerStore = designerPage.getStore<DesignerStore>("designerStore");
               if (designerStore.selectedSlotPropName) {
                 return;
               }
 
-              DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
+              if (!designerStore.selectedComponentId) {
+                return;
+              }
+
+              sendDesignerCommand(designerPage, designerStore, {
                 name: "copyComponents",
                 payload: {
                   componentIds: [designerStore.selectedComponentId],
@@ -258,8 +262,7 @@ export default {
             $action: "script",
             script: (event: RockEvent) => {
               const designerPage = event.page;
-              const designerStore = designerPage.getStore<DesignerStore>("designerStore");
-              DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
+              sendDesignerCommand(designerPage, designerStore, {
                 name: "pasteComponents",
                 payload: {
                   parentComponentId: designerStore.selectedComponentId,
@@ -281,12 +284,15 @@ export default {
             $action: "script",
             script: (event: RockEvent) => {
               const designerPage = event.page;
-              const designerStore = designerPage.getStore<DesignerStore>("designerStore");
               if (designerStore.selectedSlotPropName) {
                 return;
               }
 
-              DesignerUtility.sendDesignerCommand(designerPage, designerStore, {
+              if (!designerStore.selectedComponentId) {
+                return;
+              }
+
+              sendDesignerCommand(designerPage, designerStore, {
                 name: "removeComponents",
                 payload: {
                   componentIds: [designerStore.selectedComponentId],
@@ -328,7 +334,7 @@ export default {
     };
 
     const handleSaveButtonClick = useCallback(() => {
-      console.log(designerStore.appConfig);
+      console.log(designerStore.saveAppConfig());
     }, [designerStore]);
 
     return <div className="lsb-toolbar">

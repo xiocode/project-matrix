@@ -28,6 +28,7 @@ import { Avatar, Dropdown,  PageHeader } from "antd";
 import type { MenuProps } from "antd";
 import { ExportOutlined, UserOutlined } from "@ant-design/icons";
 import type { ShopfloorApp } from "~/_definitions/meta/entity-types";
+import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
 
 export function links() {
   return [
@@ -201,6 +202,7 @@ export default function Index() {
         {
           type: "linkshopAppDesignerStore",
           name: "designerStore",
+          appId,
           appConfig: shopfloorApp?.content || {},
         },
       ],
@@ -386,7 +388,9 @@ export default function Index() {
         },
       ],
     };
-    return new Page(framework, ruiPageConfig);
+    const page = new Page(framework, ruiPageConfig);
+    return page;
+
   }, [appId, shopfloorApp, pageAccessAllowed]);
 
   const profileMenuItems: MenuProps['items'] = [
