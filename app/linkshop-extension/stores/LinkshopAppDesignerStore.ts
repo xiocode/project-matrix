@@ -183,6 +183,14 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       const { payload } = command;
       this.#page.setComponentProperty(payload.componentId, payload.propName, payload.propValue);
 
+    } else if (command.name === "setComponentProperties") {
+      const { payload } = command;
+      this.#page.setComponentProperties(payload.componentId, payload.props);
+
+    } else if (command.name === "removeComponentProperty") {
+      const { payload } = command;
+      this.#page.removeComponentProperty(payload.componentId, payload.propName);
+
     } else if (command.name === "setComponentPropertyExpression") {
       const { payload } = command;
       this.#page.setComponentPropertyExpression(payload.componentId, payload.propName, payload.propExpression);
