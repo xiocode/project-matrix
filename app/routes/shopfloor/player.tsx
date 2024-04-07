@@ -1,37 +1,37 @@
-import { Framework, Page } from "@ruiapp/move-style";
-import type { PageConfig, RockConfig } from "@ruiapp/move-style";
-import { Rui } from "@ruiapp/react-renderer";
-import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
-import AntdExtension from "@ruiapp/antd-extension";
-import MonacoExtension from "@ruiapp/monaco-extension";
+import { Framework, Page } from '@ruiapp/move-style';
+import type { PageConfig, RockConfig } from '@ruiapp/move-style';
+import { Rui } from '@ruiapp/react-renderer';
+import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from '@ruiapp/react-rocks';
+import AntdExtension from '@ruiapp/antd-extension';
+import MonacoExtension from '@ruiapp/monaco-extension';
 import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
-import { useMemo } from "react";
-import _, { first, get } from "lodash";
-import { redirect, type LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
-import qs from "qs";
+import { useMemo } from 'react';
+import _, { first, get } from 'lodash';
+import { redirect, type LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import type { RapidPage, RapidEntity, RapidDataDictionary } from '@ruiapp/rapid-extension';
+import qs from 'qs';
 
-import dataDictionaryModels from "~/_definitions/meta/data-dictionary-models";
-import entityModels from "~/_definitions/meta/entity-models";
+import dataDictionaryModels from '~/_definitions/meta/data-dictionary-models';
+import entityModels from '~/_definitions/meta/entity-models';
 
-import AppExtension from "~/app-extension/mod";
-import LinkshopExtension from "~/linkshop-extension/mod";
-import ShopfloorExtension from "~/shopfloor-extension/mod";
+import AppExtension from '~/app-extension/mod';
+import LinkshopExtension from '~/linkshop-extension/mod';
+import ShopfloorExtension from '~/shopfloor-extension/mod';
 
-import styles from "antd/dist/antd.css";
-import rapidService from "~/rapidService";
+import styles from 'antd/dist/antd.css';
+import rapidService from '~/rapidService';
 
-import { ShopfloorApp } from "~/_definitions/meta/entity-types";
+import { ShopfloorApp } from '~/_definitions/meta/entity-types';
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [{ rel: 'stylesheet', href: styles }];
 }
 
 const framework = new Framework();
 
-framework.registerExpressionVar("_", _);
-framework.registerExpressionVar("qs", qs);
+framework.registerExpressionVar('_', _);
+framework.registerExpressionVar('qs', qs);
 
 framework.registerComponent(RuiRock);
 framework.registerComponent(ErrorBoundary);
@@ -52,12 +52,11 @@ framework.loadExtension(AppExtension);
 framework.loadExtension(LinkshopExtension);
 framework.loadExtension(ShopfloorExtension);
 
-RapidExtensionSetting.setDefaultRendererPropsOfRendererType("rapidCurrencyRenderer", {
+RapidExtensionSetting.setDefaultRendererPropsOfRendererType('rapidCurrencyRenderer', {
   usingThousandSeparator: true,
   decimalPlaces: 2,
   currencyCode: 'CNY',
 });
-
 
 export interface GenerateRuiPageConfigOption<TPage = RapidPage> {
   sdPage: TPage;
@@ -74,11 +73,11 @@ export function generateRuiPage(option: GenerateRuiPageConfigOption) {
     stores: sdPage.stores || [],
     view: viewRocks.map((child, index) => {
       return {
-        $type: "box",
+        $type: 'box',
         $id: `page-section-${index + 1}`,
-        className: "rui-page-section",
+        className: 'rui-page-section',
         children: child,
-      }
+      };
     }),
     eventSubscriptions: sdPage.eventSubscriptions,
   };
@@ -86,11 +85,9 @@ export function generateRuiPage(option: GenerateRuiPageConfigOption) {
   return ruiPageConfig;
 }
 
-
-
 export type Params = {
   code: string;
-}
+};
 
 type ViewModel = {
   myProfile: any;
@@ -100,45 +97,53 @@ type ViewModel = {
   shopfloorApp: ShopfloorApp;
   entities: RapidEntity[];
   dataDictionaries: RapidDataDictionary[];
-}
+};
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const myProfile = (await rapidService.get(`me`, {
-    headers: {
-      "Cookie": request.headers.get("Cookie"),
-    }
-  })).data?.user;
+  const myProfile = (
+    await rapidService.get(`me`, {
+      headers: {
+        Cookie: request.headers.get('Cookie'),
+      },
+    })
+  ).data?.user;
 
   if (!myProfile) {
-    return redirect("/signin");
+    return redirect('/signin');
   }
 
-  const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
-    headers: {
-      "Cookie": request.headers.get("Cookie"),
-    }
-  })).data;
+  const myAllowedActions = (
+    await rapidService.get(`app/listMyAllowedSysActions`, {
+      headers: {
+        Cookie: request.headers.get('Cookie'),
+      },
+    })
+  ).data;
 
   let { searchParams } = new URL(request.url);
-  let appId = searchParams.get("appId");
-  const shopfloorApps = (await rapidService.post(`shopfloor/shopfloor_apps/operations/find`, {
-      filters: [
-        {
-          field: "id",
-          operator:"eq",
-          value: appId,
-        }
-      ],
-      properties: ["id", "name", "content"],
-    },
-    {
-      headers: {
-        "Cookie": request.headers.get("Cookie"),
+  let appId = searchParams.get('appId');
+  const shopfloorApps = (
+    await rapidService.post(
+      `shopfloor/shopfloor_apps/operations/find`,
+      {
+        filters: [
+          {
+            field: 'id',
+            operator: 'eq',
+            value: appId,
+          },
+        ],
+        properties: ['id', 'name', 'content'],
       },
-    }
-    )).data.list;
+      {
+        headers: {
+          Cookie: request.headers.get('Cookie'),
+        },
+      },
+    )
+  ).data.list;
 
-    const shopfloorApp = first(shopfloorApps);
+  const shopfloorApp = first(shopfloorApps);
 
   return {
     myProfile,
@@ -148,9 +153,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     entities: entityModels,
     dataDictionaries: dataDictionaryModels,
     pageAccessAllowed: true,
-  }
-}
-
+  };
+};
 
 export default function Index() {
   const viewModel = useLoaderData<ViewModel>();
@@ -164,41 +168,40 @@ export default function Index() {
   rapidAppDefinition.setAppDefinition({
     entities,
     dataDictionaries,
-  })
+  });
 
   const page = useMemo(() => {
     let ruiPageConfig: PageConfig | undefined;
     if (!pageAccessAllowed) {
       ruiPageConfig = {
-        view: [
-          { $type: "text", text: `You are not allowed to visit this page.`}
-        ]
-      }
+        view: [{ $type: 'text', text: `You are not allowed to visit this Shopfloor App.` }],
+      };
       return new Page(framework, ruiPageConfig);
     }
 
     if (!shopfloorApp) {
       ruiPageConfig = {
-        view: [
-          { $type: "text", text: `Shopfloor app with id '${appId}' was not found.`}
-        ]
-      }
+        view: [{ $type: 'text', text: `Shopfloor app with id '${appId}' was not found.` }],
+      };
       return new Page(framework, ruiPageConfig);
     }
 
     ruiPageConfig = {
-      $id: "playerPage",
+      $id: 'playerPage',
       view: [
         {
-          $type: "linkshopApp",
-          steps: get(shopfloorApp.content, "steps", []),
-        }
+          $type: 'linkshopApp',
+          steps: get(shopfloorApp.content, 'steps', []),
+        },
       ],
     } as any;
+
     return new Page(framework, ruiPageConfig);
   }, [appId, shopfloorApp, pageAccessAllowed]);
 
-  return <>
-    <Rui framework={framework} page={page} />
-  </>
+  return (
+    <>
+      <Rui framework={framework} page={page} />
+    </>
+  );
 }

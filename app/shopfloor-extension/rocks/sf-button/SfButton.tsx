@@ -1,38 +1,34 @@
-import { CommonProps, type Rock } from "@ruiapp/move-style";
-import SfButtonMeta from "./SfButtonMeta";
-import type { SfButtonRockConfig } from "./sf-button-types";
-import { pick } from "lodash";
-import { Button } from "antd";
-import { convertToEventHandlers, renderRock } from "@ruiapp/react-renderer";
+import { CommonProps, type Rock } from '@ruiapp/move-style';
+import SfButtonMeta from './SfButtonMeta';
+import type { SfButtonRockConfig } from './sf-button-types';
+import { pick } from 'lodash';
+import { Button } from 'antd';
+import { convertToEventHandlers, renderRock } from '@ruiapp/react-renderer';
 
 export default {
   Renderer(context, props: SfButtonRockConfig) {
     const { text, icon } = props;
 
-    const styleNames = [
-      ...CommonProps.PositionStylePropNames,
-      ...CommonProps.SizeStylePropNames,
-    ];
+    const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    wrapStyle.position = "absolute";
+    wrapStyle.position = 'absolute';
     wrapStyle.backgroundColor = props.backgroundColor;
 
-    const eventHandlers = convertToEventHandlers({context, rockConfig: props});
+    const eventHandlers = convertToEventHandlers({ context, rockConfig: props });
 
-    return <Button data-component-id={props.$id} style={wrapStyle} {...eventHandlers}>
-      {
-        icon && renderRock({
-          context,
-          rockConfig: {
-            $type: "antdIcon",
-            name: icon,
-          }
-        })
-      }
-      {
-        text
-      }
-    </Button>;
+    return (
+      <Button data-component-id={props.$id} style={wrapStyle} {...eventHandlers}>
+        {icon &&
+          renderRock({
+            context,
+            rockConfig: {
+              $type: 'antdIcon',
+              name: icon,
+            },
+          })}
+        {text}
+      </Button>
+    );
   },
 
   ...SfButtonMeta,
