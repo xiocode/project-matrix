@@ -1,23 +1,47 @@
-import { MoveStyleUtils, PageCommandAddComponent, type Rock, type RockChildrenConfig, type RockEvent } from "@ruiapp/move-style";
-import LinkshopBuilderToolbarMeta from "./LinkshopBuilderToolbarMeta";
-import type { LinkshopBuilderToolbarRockConfig } from "./linkshop-builder-toolbar-types";
-import { Button, Dropdown, MenuProps, Space, message } from "antd";
-import { ArrowRightOutlined, BarcodeOutlined, CalendarOutlined, CheckCircleOutlined, CheckSquareOutlined, ColumnHeightOutlined, ColumnWidthOutlined, DownSquareOutlined, FileTextOutlined, FontSizeOutlined, FormOutlined, NumberOutlined, PictureOutlined, PlusOutlined, ProfileOutlined, QrcodeOutlined, SaveFilled, SaveOutlined, StarOutlined, TableOutlined, VerticalAlignBottomOutlined, VerticalAlignMiddleOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
-import { renderRockChildren } from "@ruiapp/react-renderer";
-import { useCallback } from "react";
-import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
-import { genRandomComponentId, sendDesignerCommand, sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
+import { MoveStyleUtils, PageCommandAddComponent, type Rock, type RockChildrenConfig, type RockEvent } from '@ruiapp/move-style';
+import LinkshopBuilderToolbarMeta from './LinkshopBuilderToolbarMeta';
+import type { LinkshopBuilderToolbarRockConfig } from './linkshop-builder-toolbar-types';
+import { Button, Dropdown, MenuProps, Space, message } from 'antd';
+import {
+  ArrowRightOutlined,
+  BarcodeOutlined,
+  CalendarOutlined,
+  CheckCircleOutlined,
+  CheckSquareOutlined,
+  ColumnHeightOutlined,
+  ColumnWidthOutlined,
+  DownSquareOutlined,
+  FileTextOutlined,
+  FontSizeOutlined,
+  FormOutlined,
+  NumberOutlined,
+  PictureOutlined,
+  PlusOutlined,
+  ProfileOutlined,
+  QrcodeOutlined,
+  SaveFilled,
+  SaveOutlined,
+  StarOutlined,
+  TableOutlined,
+  VerticalAlignBottomOutlined,
+  VerticalAlignMiddleOutlined,
+  VerticalAlignTopOutlined,
+} from '@ant-design/icons';
+import { renderRockChildren } from '@ruiapp/react-renderer';
+import { useCallback } from 'react';
+import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
+import { genRandomComponentId, sendDesignerCommand } from '~/linkshop-extension/utilities/DesignerUtility';
 
 export default {
   Renderer(context, props: LinkshopBuilderToolbarRockConfig) {
     const { page } = context;
     const { designerStoreName } = props;
-    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || "designerStore");
+    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
 
     const insertComponentItems: MenuProps['items'] = [
       {
-        type: "group",
-        label: "基本",
+        type: 'group',
+        label: '基本',
         children: [
           {
             label: '文本',
@@ -42,8 +66,8 @@ export default {
         ],
       },
       {
-        type: "group",
-        label: "表单",
+        type: 'group',
+        label: '表单',
         children: [
           {
             label: '表单',
@@ -85,11 +109,11 @@ export default {
             key: 'sfFileUploader',
             icon: <FileTextOutlined />,
           },
-        ]
+        ],
       },
       {
-        type: "group",
-        label: "数据",
+        type: 'group',
+        label: '数据',
         children: [
           {
             label: '记录详情',
@@ -113,7 +137,6 @@ export default {
           },
         ],
       },
-      
     ];
 
     const insertComponentMenuProps = {
@@ -128,13 +151,13 @@ export default {
         defaultProps.$id = genRandomComponentId();
 
         sendDesignerCommand(page, designerStore, {
-          name: "addComponent",
+          name: 'addComponent',
           payload: {
             componentType: rockType,
             parentComponentId: designerStore.selectedComponentId,
             slotPropName: designerStore.selectedSlotPropName,
             defaultProps,
-          }
+          },
         } as PageCommandAddComponent);
       },
     };
@@ -175,7 +198,7 @@ export default {
     const componentsAlignMenuProps = {
       items: componentsAlignMenuItems,
       onClick: (e: any) => {
-        console.log('Menu click', e)
+        console.log('Menu click', e);
       },
     };
 
@@ -194,14 +217,14 @@ export default {
 
     const clipboardRocks: RockChildrenConfig = [
       {
-        $type: "antdButton",
+        $type: 'antdButton',
         icon: {
-          $type: "antdIcon",
-          name: "ScissorOutlined",
+          $type: 'antdIcon',
+          name: 'ScissorOutlined',
         },
         onClick: [
           {
-            $action: "script",
+            $action: 'script',
             script: (event: RockEvent) => {
               const designerPage = event.page;
               if (designerStore.selectedSlotPropName) {
@@ -213,24 +236,24 @@ export default {
               }
 
               sendDesignerCommand(designerPage, designerStore, {
-                name: "cutComponents",
+                name: 'cutComponents',
                 payload: {
                   componentIds: [designerStore.selectedComponentId],
-                }
+                },
               });
             },
-          }
-        ]
+          },
+        ],
       },
       {
-        $type: "antdButton",
+        $type: 'antdButton',
         icon: {
-          $type: "antdIcon",
-          name: "CopyOutlined",
+          $type: 'antdIcon',
+          name: 'CopyOutlined',
         },
         onClick: [
           {
-            $action: "script",
+            $action: 'script',
             script: (event: RockEvent) => {
               const designerPage = event.page;
               if (designerStore.selectedSlotPropName) {
@@ -242,46 +265,46 @@ export default {
               }
 
               sendDesignerCommand(designerPage, designerStore, {
-                name: "copyComponents",
+                name: 'copyComponents',
                 payload: {
                   componentIds: [designerStore.selectedComponentId],
-                }
+                },
               });
             },
-          }
-        ]
+          },
+        ],
       },
       {
-        $type: "antdButton",
+        $type: 'antdButton',
         icon: {
-          $type: "antdIcon",
-          name: "SnippetsOutlined",
+          $type: 'antdIcon',
+          name: 'SnippetsOutlined',
         },
         onClick: [
           {
-            $action: "script",
+            $action: 'script',
             script: (event: RockEvent) => {
               const designerPage = event.page;
               sendDesignerCommand(designerPage, designerStore, {
-                name: "pasteComponents",
+                name: 'pasteComponents',
                 payload: {
                   parentComponentId: designerStore.selectedComponentId,
                   slotPropName: designerStore.selectedSlotPropName,
-                }
+                },
               });
             },
-          }
-        ]
+          },
+        ],
       },
       {
-        $type: "antdButton",
+        $type: 'antdButton',
         icon: {
-          $type: "antdIcon",
-          name: "DeleteOutlined",
+          $type: 'antdIcon',
+          name: 'DeleteOutlined',
         },
         onClick: [
           {
-            $action: "script",
+            $action: 'script',
             script: (event: RockEvent) => {
               const designerPage = event.page;
               if (designerStore.selectedSlotPropName) {
@@ -293,34 +316,34 @@ export default {
               }
 
               sendDesignerCommand(designerPage, designerStore, {
-                name: "removeComponents",
+                name: 'removeComponents',
                 payload: {
                   componentIds: [designerStore.selectedComponentId],
-                }
+                },
               });
             },
-          }
-        ]
+          },
+        ],
       },
       {
-        $type: "antdTooltip",
-        title: "撤销",
+        $type: 'antdTooltip',
+        title: '撤销',
         children: {
-          $type: "antdButton",
+          $type: 'antdButton',
           icon: {
-            $type: "antdIcon",
-            name: "UndoOutlined",
+            $type: 'antdIcon',
+            name: 'UndoOutlined',
           },
         },
       },
       {
-        $type: "antdTooltip",
-        title: "重做",
+        $type: 'antdTooltip',
+        title: '重做',
         children: {
-          $type: "antdButton",
+          $type: 'antdButton',
           icon: {
-            $type: "antdIcon",
-            name: "RedoOutlined",
+            $type: 'antdIcon',
+            name: 'RedoOutlined',
           },
         },
       },
@@ -329,42 +352,44 @@ export default {
     const componentsDistributeMenuProps = {
       items: componentsDistributeMenuItems,
       onClick: (e: any) => {
-        console.log('Menu click', e)
+        console.log('Menu click', e);
       },
     };
 
     const handleSaveButtonClick = useCallback(async () => {
-      await designerStore.saveAppConfig()
-      message.success("保存成功。");
+      await designerStore.saveAppConfig();
+      message.success('保存成功。');
     }, [designerStore]);
 
-    return <div className="lsb-toolbar">
-      <div className="lsb-toolbar-items">
-        <Space>
-          <Button icon={<ProfileOutlined />}>添加步骤</Button>
-          <Dropdown menu={insertComponentMenuProps}>
-            <Button icon={<PlusOutlined />}>插入</Button>
-          </Dropdown>
-          <Dropdown menu={componentsAlignMenuProps}>
-            <Button icon={<VerticalAlignMiddleOutlined />}>对齐</Button>
-          </Dropdown>
-          <Dropdown menu={componentsDistributeMenuProps}>
-            <Button icon={<ColumnWidthOutlined />}>排列</Button>
-          </Dropdown>
-          {
-            renderRockChildren({
+    return (
+      <div className="lsb-toolbar">
+        <div className="lsb-toolbar-items">
+          <Space>
+            <Button icon={<ProfileOutlined />}>添加步骤</Button>
+            <Dropdown menu={insertComponentMenuProps}>
+              <Button icon={<PlusOutlined />}>插入</Button>
+            </Dropdown>
+            <Dropdown menu={componentsAlignMenuProps}>
+              <Button icon={<VerticalAlignMiddleOutlined />}>对齐</Button>
+            </Dropdown>
+            <Dropdown menu={componentsDistributeMenuProps}>
+              <Button icon={<ColumnWidthOutlined />}>排列</Button>
+            </Dropdown>
+            {renderRockChildren({
               context,
               rockChildrenConfig: clipboardRocks,
-            })
-          }
-        </Space>
+            })}
+          </Space>
+        </div>
+        <div className="lsb-toolbar-extras">
+          <Space>
+            <Button icon={<SaveFilled />} onClick={handleSaveButtonClick}>
+              保存
+            </Button>
+          </Space>
+        </div>
       </div>
-      <div className="lsb-toolbar-extras">
-        <Space>
-          <Button icon={<SaveFilled />} onClick={handleSaveButtonClick}>保存</Button>
-        </Space>
-      </div>
-    </div>
+    );
   },
 
   ...LinkshopBuilderToolbarMeta,
