@@ -7,6 +7,13 @@ export default {
 
   voidComponent: true,
 
+  props: {
+    icon: {
+      valueType: "string",
+      defaultValue: "SmileOutlined",
+    },
+  },
+
   slots: {
   },
 
@@ -38,5 +45,7 @@ export default {
         },
       ]
     },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;
