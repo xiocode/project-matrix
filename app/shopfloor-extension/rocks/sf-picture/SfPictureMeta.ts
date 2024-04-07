@@ -5,6 +5,8 @@ export default {
 
   name: "图片",
 
+  voidComponent: true,
+
   slots: {
   },
 

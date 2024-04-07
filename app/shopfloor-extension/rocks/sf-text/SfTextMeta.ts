@@ -5,6 +5,8 @@ export default {
 
   name: "文本",
 
+  voidComponent: true,
+
   props: {
     text: {
       valueType: "string",

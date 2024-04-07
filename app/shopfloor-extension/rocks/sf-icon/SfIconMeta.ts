@@ -5,6 +5,8 @@ export default {
 
   name: "图标",
 
+  voidComponent: true,
+
   slots: {
   },
 

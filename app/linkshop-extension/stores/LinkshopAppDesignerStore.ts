@@ -1,4 +1,4 @@
-import { EventEmitter, Framework, HttpRequestOptions, IStore, Page, PageCommand, PageConfig, RockConfig, StoreConfigBase, StoreMeta } from "@ruiapp/move-style";
+import { EventEmitter, Framework, IStore, Page, PageCommand, PageConfig, RockConfig, StoreConfigBase, StoreMeta } from "@ruiapp/move-style";
 import type { LinkshopAppRockConfig } from "../linkshop-types";
 import { cloneDeep, find, map } from "lodash";
 import { DesignStage } from "../designer-types";
@@ -15,6 +15,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
   #name: string;
   appId?: string;
   appConfig?: LinkshopAppRockConfig;
+  #framework: Framework;
   #page: Page;
   #stage?: DesignStage;
   #selectedComponentTreeNodeId?: string;
@@ -28,6 +29,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
 
     this.#snippets = [];
 
+    this.#framework = framework;
     this.#page = new Page(framework);
     this.#page.observe(() => {
       this.#emitter.emit("dataChange", null);
@@ -202,6 +204,15 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     } else if (command.name === "addComponent") {
       const { payload } = command;
       const { componentType, parentComponentId, slotPropName, prevSiblingComponentId, defaultProps} = payload;
+
+      if (parentComponentId) {
+        const parentComponent = this.#page.getComponent(parentComponentId);
+        const parentComponentMeta = this.#framework.getComponent(parentComponent.$type);
+        if (parentComponentMeta.voidComponent) {
+          return;
+        }
+      }
+
       const componentConfig: RockConfig = {
         $type: componentType,
         ...defaultProps,
