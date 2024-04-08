@@ -17,7 +17,7 @@ export default {
     const { children } = props;
 
     return (
-      <div style={{ position: 'relative', width: '400px', height: '300px', border: '1px solid', backgroundColor: props.backgroundColor }}>
+      <div style={{ position: 'relative', width: '1200px', height: '800px', border: '1px solid', backgroundColor: props.backgroundColor }}>
         {renderRockChildren({ context, rockChildrenConfig: children || [] })}
       </div>
     );

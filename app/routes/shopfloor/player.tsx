@@ -19,13 +19,17 @@ import AppExtension from '~/app-extension/mod';
 import LinkshopExtension from '~/linkshop-extension/mod';
 import ShopfloorExtension from '~/shopfloor-extension/mod';
 
-import styles from 'antd/dist/antd.css';
+import antdStyles from "antd/dist/antd.css";
+import indexStyles from '~/styles/index.css';
+import customizeStyles from '~/styles/customize.css';
 import rapidService from '~/rapidService';
 
 import { ShopfloorApp } from '~/_definitions/meta/entity-types';
 
 export function links() {
-  return [{ rel: 'stylesheet', href: styles }];
+  return [antdStyles, indexStyles, customizeStyles].map((styles) => {
+    return { rel: 'stylesheet', href: styles };
+  });
 }
 
 const framework = new Framework();

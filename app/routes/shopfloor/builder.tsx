@@ -11,6 +11,7 @@ import _, { first, get } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
+import DesignerHudExtension, { HudWidgetRectChangeEvent, hudItemsFromRockChildrenConfig } from "@ruiapp/designer-hud";
 import qs from "qs";
 
 import dataDictionaryModels from "~/_definitions/meta/data-dictionary-models";
@@ -41,6 +42,9 @@ const framework = new Framework();
 
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
+framework.registerExpressionVar("hud", {
+  hudItemsFromRockChildrenConfig,
+});
 
 framework.registerComponent(RuiRock);
 framework.registerComponent(ErrorBoundary);
@@ -58,6 +62,7 @@ framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);
 framework.loadExtension(RapidExtension);
 framework.loadExtension(DesignerExtension);
+framework.loadExtension(DesignerHudExtension);
 framework.loadExtension(AppExtension);
 framework.loadExtension(LinkshopExtension);
 framework.loadExtension(ShopfloorExtension);
@@ -295,6 +300,9 @@ export default function Index() {
                           height: "100%",
                           padding: "20px 50px 50px",
                           backgroundColor: "#F4F5F7",
+                          style: {
+                            position: "relative",
+                          },
                           children: [
                             {
                               $type: "htmlElement",
@@ -328,6 +336,49 @@ export default function Index() {
                                 width: "100%",
                                 height: "calc(100% - 30px)",
                               },
+                            },
+                            {
+                              $id: "designerHud",
+                              $type: "designerHud",
+                              style: {
+                                position: "absolute",
+                                top: "50px",
+                                left: "50px",
+                              },
+                              width: 1200,
+                              height: 800,
+                              onWidgetSelected: {
+                                $action: "script",
+                                script: (event: any) => {
+                                  console.log(event);
+                                  const page = event.page;
+                                  // sendDesignerCommand(page, page.getStore("designerStore"))
+                                  page.getStore("designerStore").setSelectedComponentTreeNode("", event.args[0]);
+                                }
+                              },
+                              onWidgetRectChange: {
+                                $action: "script",
+                                script: (event: any) => {
+                                  const page = event.page;
+                                  const widgetMovedPayload: HudWidgetRectChangeEvent = event.args[0];
+                                  console.log(widgetMovedPayload);
+                                  sendDesignerCommand(page, page.getStore("designerStore"), {
+                                    name: "setComponentProperties",
+                                    payload: {
+                                      componentId: widgetMovedPayload.id,
+                                      props: {
+                                        left: widgetMovedPayload.left,
+                                        top: widgetMovedPayload.top,
+                                        width: widgetMovedPayload.width,
+                                        height: widgetMovedPayload.height,
+                                      }
+                                    }
+                                  })
+                                }
+                              },
+                              $exps: {
+                                widgets: "hud.hudItemsFromRockChildrenConfig($stores.designerStore.page.getConfig().view)"
+                              }
                             },
                           ],
                         },

@@ -25,6 +25,7 @@
     "@remix-run/react": "^1.19.3",
     "@ruiapp/antd-extension": "^0.0.14",
     "@ruiapp/designer-extension": "^0.0.14",
+    "@ruiapp/designer-hud": "^0.0.5",
     "@ruiapp/echarts-extension": "^0.0.14",
     "@ruiapp/monaco-extension": "^0.0.14",
     "@ruiapp/move-style": "^0.0.14",

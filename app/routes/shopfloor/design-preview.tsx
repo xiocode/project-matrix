@@ -5,7 +5,7 @@ import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, L
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
-import RapidExtension, { RapidExtensionSetting } from '@ruiapp/rapid-extension';
+import RapidExtension, { RapidExtensionSetting, rapidAppDefinition } from '@ruiapp/rapid-extension';
 import { useMemo } from "react";
 import _ from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
@@ -20,13 +20,17 @@ import AppExtension from "~/app-extension/mod";
 import LinkshopExtension from "~/linkshop-extension/mod";
 import ShopfloorExtension from "~/shopfloor-extension/mod";
 
-import styles from "antd/dist/antd.css";
+import antdStyles from "antd/dist/antd.css";
+import indexStyles from '~/styles/index.css';
+import customizeStyles from '~/styles/customize.css';
 import rapidService from "~/rapidService";
 
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [antdStyles, indexStyles, customizeStyles].map((styles) => {
+    return { rel: 'stylesheet', href: styles };
+  });
 }
 
 const framework = new Framework();
@@ -91,6 +95,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 
 export default function Index() {
+  rapidAppDefinition.setAppDefinition({
+    entities: entityModels,
+    dataDictionaries: dataDictionaryModels,
+  });
+
   const page = useMemo(() => {
     let ruiPageConfig: PageConfig | undefined;
 
