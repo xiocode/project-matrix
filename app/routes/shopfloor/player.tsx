@@ -194,6 +194,7 @@ export default function Index() {
 
     ruiPageConfig = {
       $id: 'playerPage',
+      stores: get(shopfloorApp.content, 'stores', []),
       view: [
         {
           $id: "linkshopApp",

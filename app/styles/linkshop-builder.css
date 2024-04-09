@@ -11,3 +11,17 @@
 
 .lsb-toolbar-extras {
 }
+
+.lsb-stores-panel {
+  height: 100%;
+  padding: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.lsb-stores-panel--addBtn {
+  color: #1890ff;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
