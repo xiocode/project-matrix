@@ -25,6 +25,7 @@ import customizeStyles from '~/styles/customize.css';
 import rapidService from '~/rapidService';
 
 import { ShopfloorApp } from '~/_definitions/meta/entity-types';
+import { RuiLoggerProvider } from 'rui-logger';
 
 export function links() {
   return [antdStyles, indexStyles, customizeStyles].map((styles) => {
@@ -33,6 +34,7 @@ export function links() {
 }
 
 const framework = new Framework();
+framework.setLoggerProvider(new RuiLoggerProvider());
 
 framework.registerExpressionVar('_', _);
 framework.registerExpressionVar('qs', qs);

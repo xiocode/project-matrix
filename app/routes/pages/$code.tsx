@@ -4,7 +4,6 @@ import { Rui } from "@ruiapp/react-renderer";
 import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
-import DesignerExtension from "@ruiapp/designer-extension";
 import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
 import { useMemo } from "react";
 import _, { find } from "lodash";
@@ -26,12 +25,14 @@ import { Avatar, Dropdown,  PageHeader } from "antd";
 import type { MenuProps } from "antd";
 import { ExportOutlined, UserOutlined } from "@ant-design/icons";
 import { isAccessAllowed } from "~/utils/access-control-utility";
+import { RuiLoggerProvider } from "rui-logger";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
 const framework = new Framework();
+framework.setLoggerProvider(new RuiLoggerProvider());
 
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
@@ -174,13 +175,12 @@ export default function Index() {
       return new Page(framework, ruiPageConfig);
     }
 
-    console.log(`[RUI][ReactPlayer] Generating RUI page config...`);
     ruiPageConfig = generateRuiPage({
       sdPage: sdPage as any,
       entities,
       dataDictionaries,
     });
-    console.debug("[RUI][ReactPlayer] Auto generated RUI page config:", ruiPageConfig);
+    console.debug("[RUI][ReactPlayer] RUI page config:", ruiPageConfig);
     return new Page(framework, ruiPageConfig);
   }, [pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed]);
 

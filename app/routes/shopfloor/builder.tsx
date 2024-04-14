@@ -30,6 +30,7 @@ import type { MenuProps } from "antd";
 import { ExportOutlined, UserOutlined } from "@ant-design/icons";
 import type { ShopfloorApp } from "~/_definitions/meta/entity-types";
 import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
+import { RuiLoggerProvider } from "rui-logger";
 
 export function links() {
   return [
@@ -39,6 +40,7 @@ export function links() {
 }
 
 const framework = new Framework();
+framework.setLoggerProvider(new RuiLoggerProvider());
 
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
@@ -352,7 +354,6 @@ export default function Index() {
                                 script: (event: any) => {
                                   console.log(event);
                                   const page = event.page;
-                                  // sendDesignerCommand(page, page.getStore("designerStore"))
                                   page.getStore("designerStore").setSelectedComponentTreeNode("", event.args[0]);
                                 }
                               },
@@ -361,7 +362,6 @@ export default function Index() {
                                 script: (event: any) => {
                                   const page = event.page;
                                   const widgetMovedPayload: HudWidgetRectChangeEvent = event.args[0];
-                                  console.log(widgetMovedPayload);
                                   sendDesignerCommand(page, page.getStore("designerStore"), {
                                     name: "setComponentProperties",
                                     payload: {

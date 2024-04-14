@@ -6,7 +6,7 @@ import { format, transports } from "winston";
 import expressWinston from "express-winston";
 import { createRequestHandler } from "@remix-run/express";
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { consoleFormat, createAppLogger } from "./logger";
+import { consoleFormat, createAppLogger } from "./rapid-logger";
 import DatabaseAccessor from "./database-accessor";
 import {
   RapidServer,

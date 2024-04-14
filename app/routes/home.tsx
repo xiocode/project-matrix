@@ -5,12 +5,14 @@ import AntdExtension from "@ruiapp/antd-extension";
 import { useState } from "react";
 
 import styles from "antd/dist/antd.css";
+import { RuiLoggerProvider } from "rui-logger";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
 const framework = new Framework();
+framework.setLoggerProvider(new RuiLoggerProvider());
 
 framework.registerComponent(HtmlElement);
 framework.registerComponent(Box);
