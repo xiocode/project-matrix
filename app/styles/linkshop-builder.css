@@ -25,3 +25,12 @@
   cursor: pointer;
   margin-bottom: 10px;
 }
+
+.lsb-antd-table .ant-spin-nested-loading,
+.lsb-antd-table .ant-spin-container,
+.lsb-antd-table .ant-table,
+.lsb-antd-table .ant-table-container,
+.lsb-antd-table .ant-table-content,
+.lsb-antd-table table {
+  height: 100%;
+}

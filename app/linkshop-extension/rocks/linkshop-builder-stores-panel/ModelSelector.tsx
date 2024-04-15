@@ -1,5 +1,6 @@
 import { Select } from 'antd';
-import { memo, PropsWithChildren, useEffect, useState } from 'react';
+import { camelCase, upperFirst } from 'lodash';
+import { memo, PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import rapidApi from '~/rapidApi';
 
 type IProps = PropsWithChildren<{
@@ -14,13 +15,9 @@ const ModelSelector = memo<IProps>((props) => {
     loadModels();
   }, []);
 
-  return (
-    <Select placeholder="请选择" loading={loading} value={props.value} onChange={props.onChange}>
-      {models?.map((m) => (
-        <Select.Option key={m.id}>{m.name}</Select.Option>
-      ))}
-    </Select>
-  );
+  const options = useMemo(() => (models || []).map((m) => ({ label: m.name, value: upperFirst(camelCase(m.singularCode)) })), [models]);
+
+  return <Select placeholder="请选择" loading={loading} options={options} value={props.value} onChange={props.onChange} />;
 });
 
 export default ModelSelector;
@@ -36,16 +33,14 @@ function useModels() {
 
     setLoading(true);
     await rapidApi
-      .post(`/shopfloor/models/operations/find`, {
-        data: {
-          pagination: {
-            limit: 10000,
-            offset: 0,
-          },
+      .post(`/meta/models/operations/find`, {
+        pagination: {
+          limit: 10000,
+          offset: 0,
         },
       })
       .then((res) => {
-        // TODO
+        setModels(res.data?.list || []);
       })
       .finally(() => {
         setLoading(false);
