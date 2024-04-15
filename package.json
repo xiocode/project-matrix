@@ -31,7 +31,7 @@
     "@ruiapp/move-style": "^0.0.20",
     "@ruiapp/rapid-core": "^0.1.23",
     "@ruiapp/rapid-express": "^0.1.23",
-    "@ruiapp/rapid-extension": "^0.0.39",
+    "@ruiapp/rapid-extension": "^0.0.41",
     "@ruiapp/react-renderer": "^0.0.20",
     "@ruiapp/react-rocks": "^0.0.20",
     "ahooks": "^3.7.10",
