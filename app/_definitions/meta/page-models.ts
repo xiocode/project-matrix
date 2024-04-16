@@ -35,6 +35,7 @@ import MomMpsDetailsPage from '../models/pages/MomMpsDetailsPage';
 import MomMpsListPage from '../models/pages/MomMpsListPage';
 import MomMrpDetailsPage from '../models/pages/MomMrpDetailsPage';
 import MomMrpListPage from '../models/pages/MomMrpListPage';
+import MomProcessCategoryListPage from '../models/pages/MomProcessCategoryListPage';
 import MomProcessListPage from '../models/pages/MomProcessListPage';
 import MomProdTaskDetailsPage from '../models/pages/MomProdTaskDetailsPage';
 import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
@@ -93,6 +94,7 @@ export default [
   MomMpsListPage,
   MomMrpDetailsPage,
   MomMrpListPage,
+  MomProcessCategoryListPage,
   MomProcessListPage,
   MomProdTaskDetailsPage,
   MomProdTaskListPage,

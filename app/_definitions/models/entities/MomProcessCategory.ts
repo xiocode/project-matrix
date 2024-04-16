@@ -6,13 +6,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'mom',
   code: 'MomProcessCategory',
   name: '工序分类',
-  description: '如：生产、检验、出入库等。',
+  description: '如：生产、检验、包装、出入库等。',
   fields: [
     {
       code: 'code',
       name: 'Code',
       type: 'text',
-      required: true,
     },
     {
       code: 'name',

@@ -12,14 +12,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: 'name',
     },
     {
-      type: 'treeSelect',
-      code: 'location',
-      formControlProps: {
-        listDataSourceCode: "locations",
-        listParentField: "parent.id",
-      },
-    },
-    {
       type: 'auto',
       code: 'orderNum',
     },
@@ -27,14 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 }
 
 const page: RapidPage = {
-  code: 'mom_warehouse_list',
-  name: '仓库列表',
-  title: '仓库管理',
-  // permissionCheck: {any: [""]},
+  code: 'mom_process_category_list',
+  name: '工序类型',
+  title: '工序类型',
+  permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomWarehouse",
+      entityCode: "MomProcessCategory",
       viewMode: "table",
       listActions: [
         {
@@ -70,14 +62,6 @@ const page: RapidPage = {
         {
           type: 'auto',
           code: 'name',
-          width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'location',
-          rendererProps: {
-            format: "{{name}}",
-          },
         },
         {
           type: 'auto',
@@ -98,26 +82,11 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "MomWarehouse",
+          entityCode: "MomProcessCategory",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
-      stores: [
-        {
-          type: "entityStore",
-          name: "locations",
-          entityCode: "BaseLocation",
-          properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-          filters: [
-          ],
-          orderBy: [
-            {
-              field: 'orderNum',
-            }
-          ],
-        }
-      ],
     },
   ],
 };

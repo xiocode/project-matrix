@@ -4521,7 +4521,7 @@ export interface MomProcess {
   /**
    * 工序类型
    */
-  category: Partial<MomProcessCategory>;
+  category?: Partial<MomProcessCategory>;
   /**
    * 排序号
    */
@@ -4572,7 +4572,7 @@ export interface MomProcessCategory {
   /**
    * Code
    */
-  code: string;
+  code?: string;
   /**
    * 名称
    */

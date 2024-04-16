@@ -22,7 +22,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: 'category',
       name: '工序类型',
       type: 'relation',
-      required: true,
       targetSingularCode: 'mom_process_category',
       targetIdColumnName: 'category_id',
     },
