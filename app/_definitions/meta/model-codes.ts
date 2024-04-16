@@ -1328,6 +1328,7 @@ const entityFieldCodes = {
     'code',
     'name',
     'orderNum',
+    'state',
     'createdAt',
     'createdBy',
     'updatedAt',

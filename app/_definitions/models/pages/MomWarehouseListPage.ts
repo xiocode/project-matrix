@@ -24,6 +24,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: 'orderNum',
     },
   ],
+  fixedFields: {
+    state: 'enabled',
+  },
 }
 
 const page: RapidPage = {
@@ -56,7 +59,7 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
-          field: "code",
+          field: "orderNum",
         },
       ],
       pageSize: 20,
@@ -81,6 +84,11 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
+          code: 'state',
+          width: '100px',
+        },
+        {
+          type: 'auto',
           code: 'orderNum',
           width: '100px',
         },
@@ -91,6 +99,50 @@ const page: RapidPage = {
           code: 'edit',
           actionType: "edit",
           actionText: '修改',
+        },
+        {
+          $type: "rapidTableAction",
+          code: "disable",
+          actionText: '禁用',
+          $exps: {
+            _hidden: "$slot.record.state !== 'enabled'"
+          },
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: {state: 'disabled'},
+              $exps: {
+                url: `"/api/mom/mom_warehouses/" + $event.sender['data-record-id']`,
+              }
+            },
+            {
+              $action: "loadStoreData",
+              storeName: "list",
+            }
+          ]
+        },
+        {
+          $type: "rapidTableAction",
+          code: "enable",
+          actionText: '启用',
+          $exps: {
+            _hidden: "$slot.record.state === 'enabled'"
+          },
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: {state: 'enabled'},
+              $exps: {
+                url: `"/api/mom/mom_warehouses/" + $event.sender['data-record-id']`,
+              }
+            },
+            {
+              $action: "loadStoreData",
+              storeName: "list",
+            }
+          ]
         },
         {
           $type: "sonicRecordActionDeleteEntity",

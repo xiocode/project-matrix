@@ -5164,6 +5164,10 @@ export interface MomWarehouse {
    */
   orderNum: number;
   /**
+   * 状态
+   */
+  state?: EnabledDisabledState;
+  /**
    * 创建时间
    */
   createdAt?: string;
