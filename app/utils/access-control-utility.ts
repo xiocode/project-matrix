@@ -9,7 +9,7 @@ export function isAccessAllowed(policy: PermissionCheckPolicy, allowedActions: s
   let isAnyCheckPassed = true;
   let isAllCheckPassed = true;
 
-  if (policy.any) {
+  if (policy.any && policy.any.length) {
     isAnyCheckPassed = false;
     for (const action of policy.any) {
       if (find(allowedActions, item => item === action) != null) {
@@ -17,6 +17,8 @@ export function isAccessAllowed(policy: PermissionCheckPolicy, allowedActions: s
         break;
       }
     }
+  } else {
+    isAnyCheckPassed = true;
   }
 
   if (policy.all) {
