@@ -97,6 +97,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 
 export default function Index() {
+  const viewModel = useLoaderData<ViewModel>();
+  const { myProfile, myAllowedActions } = viewModel;
+
+  framework.registerExpressionVar('me', {
+    profile: myProfile,
+    allowedActions: myAllowedActions,
+  });
+
   rapidAppDefinition.setAppDefinition({
     entities: entityModels,
     dataDictionaries: dataDictionaryModels,
