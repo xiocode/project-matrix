@@ -196,6 +196,7 @@ export default function Index() {
       $id: 'playerPage',
       view: [
         {
+          $id: "linkshopApp",
           $type: 'linkshopApp',
           steps: get(shopfloorApp.content, 'steps', []),
         },
