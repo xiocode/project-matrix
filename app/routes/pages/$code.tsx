@@ -4,6 +4,7 @@ import { Rui } from "@ruiapp/react-renderer";
 import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
+import DesignerExtension from "@ruiapp/designer-extension";
 import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
 import { useMemo } from "react";
 import _, { find } from "lodash";
@@ -51,6 +52,7 @@ framework.registerComponent(List);
 
 framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);
+framework.loadExtension(DesignerExtension);
 framework.loadExtension(RapidExtension);
 framework.loadExtension(AppExtension);
 
