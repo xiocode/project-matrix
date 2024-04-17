@@ -16,12 +16,12 @@ import BasePartner from '../models/entities/BasePartner';
 import BasePartnerCategory from '../models/entities/BasePartnerCategory';
 import BaseUnit from '../models/entities/BaseUnit';
 import BaseUnitCategory from '../models/entities/BaseUnitCategory';
-import BpmBusinessActivity from '../models/entities/BpmBusinessActivity';
-import BpmBusinessApplication from '../models/entities/BpmBusinessApplication';
-import BpmBusinessCategory from '../models/entities/BpmBusinessCategory';
-import BpmBusinessProcess from '../models/entities/BpmBusinessProcess';
-import BpmBusinessProcessRevision from '../models/entities/BpmBusinessProcessRevision';
+import BpmActivity from '../models/entities/BpmActivity';
+import BpmApplication from '../models/entities/BpmApplication';
 import BpmBusinessTask from '../models/entities/BpmBusinessTask';
+import BpmProcess from '../models/entities/BpmProcess';
+import BpmProcessCategory from '../models/entities/BpmProcessCategory';
+import BpmProcessRevision from '../models/entities/BpmProcessRevision';
 import CbsContract from '../models/entities/CbsContract';
 import CbsContractFile from '../models/entities/CbsContractFile';
 import CbsContractFundingBudget from '../models/entities/CbsContractFundingBudget';
@@ -57,6 +57,8 @@ import MomInspectionRecord from '../models/entities/MomInspectionRecord';
 import MomInspectionRule from '../models/entities/MomInspectionRule';
 import MomInspectionSheet from '../models/entities/MomInspectionSheet';
 import MomInventory from '../models/entities/MomInventory';
+import MomInventoryApplication from '../models/entities/MomInventoryApplication';
+import MomInventoryApplicationItem from '../models/entities/MomInventoryApplicationItem';
 import MomInventoryBusinessType from '../models/entities/MomInventoryBusinessType';
 import MomInventoryLabel from '../models/entities/MomInventoryLabel';
 import MomInventoryOperation from '../models/entities/MomInventoryOperation';
@@ -123,12 +125,12 @@ export default [
   autoConfigureRapidEntity(BasePartnerCategory),
   autoConfigureRapidEntity(BaseUnit),
   autoConfigureRapidEntity(BaseUnitCategory),
-  autoConfigureRapidEntity(BpmBusinessActivity),
-  autoConfigureRapidEntity(BpmBusinessApplication),
-  autoConfigureRapidEntity(BpmBusinessCategory),
-  autoConfigureRapidEntity(BpmBusinessProcess),
-  autoConfigureRapidEntity(BpmBusinessProcessRevision),
+  autoConfigureRapidEntity(BpmActivity),
+  autoConfigureRapidEntity(BpmApplication),
   autoConfigureRapidEntity(BpmBusinessTask),
+  autoConfigureRapidEntity(BpmProcess),
+  autoConfigureRapidEntity(BpmProcessCategory),
+  autoConfigureRapidEntity(BpmProcessRevision),
   autoConfigureRapidEntity(CbsContract),
   autoConfigureRapidEntity(CbsContractFile),
   autoConfigureRapidEntity(CbsContractFundingBudget),
@@ -164,6 +166,8 @@ export default [
   autoConfigureRapidEntity(MomInspectionRule),
   autoConfigureRapidEntity(MomInspectionSheet),
   autoConfigureRapidEntity(MomInventory),
+  autoConfigureRapidEntity(MomInventoryApplication),
+  autoConfigureRapidEntity(MomInventoryApplicationItem),
   autoConfigureRapidEntity(MomInventoryBusinessType),
   autoConfigureRapidEntity(MomInventoryLabel),
   autoConfigureRapidEntity(MomInventoryOperation),

@@ -4,7 +4,7 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'app',
-  code: 'BpmBusinessTask',
+  code: 'BpmTask',
   name: '审批任务',
   fields: [
     {
@@ -12,7 +12,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: '审批步骤',
       type: 'relation',
       required: true,
-      targetSingularCode: 'bpm_business_activity',
+      targetSingularCode: 'bpm_activity',
       targetIdColumnName: 'activity_id',
     },
     {

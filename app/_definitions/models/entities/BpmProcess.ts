@@ -4,14 +4,14 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'app',
-  code: 'BpmBusinessProcess',
+  code: 'BpmProcess',
   name: '业务流程',
   fields: [
     {
       code: 'category',
       name: '分组',
       type: 'relation',
-      targetSingularCode: 'bpm_business_category',
+      targetSingularCode: 'bpm_process_category',
       targetIdColumnName: 'category_id',
     },
     {
@@ -68,7 +68,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: 'activeRevision',
       name: '当前版本',
       type: 'relation',
-      targetSingularCode: 'bpm_business_process_revision',
+      targetSingularCode: 'bpm_process_revision',
       targetIdColumnName: 'active_revision_id',
     },
   ],

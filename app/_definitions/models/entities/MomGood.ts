@@ -9,6 +9,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   description: '用来追溯/跟踪一个或者多个物理上存在的物品或者虚拟物品。',
   fields: [
     {
+      code: 'trackingCode',
+      name: '跟踪码',
+      type: 'text',
+    },
+    {
       code: 'material',
       name: '物料',
       type: 'relation',

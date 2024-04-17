@@ -28,6 +28,8 @@ import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
+import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
+import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryListPage from '../models/pages/MomInventoryListPage';
 import MomInventoryOperationDetailsPage from '../models/pages/MomInventoryOperationDetailsPage';
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
@@ -87,6 +89,8 @@ export default [
   MetaRouteListPage,
   MomGoodListPage,
   MomGoodLocationListPage,
+  MomInventoryApplicationDetailsPage,
+  MomInventoryApplicationListPage,
   MomInventoryListPage,
   MomInventoryOperationDetailsPage,
   MomInventoryOperationListPage,

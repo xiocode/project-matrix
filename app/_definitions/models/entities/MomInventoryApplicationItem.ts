@@ -4,15 +4,14 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'mom',
-  code: 'MomGoodTransfer',
-  name: '物品转移记录',
-  description: '物品移动的历史记录',
+  code: 'MomInventoryApplicationItem',
+  name: '库存业务申请货品项',
   fields: [
     {
-      code: 'operation',
-      name: '操作记录',
+      code: 'application',
+      name: '申请信息',
       type: 'relation',
-      targetSingularCode: 'mom_inventory_operation',
+      targetSingularCode: 'mom_inventory_application',
       targetIdColumnName: 'operation_id',
     },
     {
@@ -73,25 +72,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: 'relation',
       targetSingularCode: 'base_unit',
       targetIdColumnName: 'unit_id',
-    },
-    {
-      code: 'from',
-      name: '转出位置',
-      type: 'relation',
-      targetSingularCode: 'base_location',
-      targetIdColumnName: 'from_location_id',
-    },
-    {
-      code: 'to',
-      name: '转入位置',
-      type: 'relation',
-      targetSingularCode: 'base_location',
-      targetIdColumnName: 'to_location_id',
-    },
-    {
-      code: 'transferTime',
-      name: '转移时间',
-      type: 'datetime',
     },
   ],
 };

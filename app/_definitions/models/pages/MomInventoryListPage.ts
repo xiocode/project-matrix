@@ -74,7 +74,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   ],
 }
 
-function genListConfig(warehouseCode: string) {
+function genListConfig(warehouseCode?: string) {
   const listConfig: SonicEntityListRockConfig = {
     $type: "sonicEntityList",
     entityCode: "MomInventory",
@@ -102,7 +102,7 @@ function genListConfig(warehouseCode: string) {
         filterFields: ["material"],
       }
     ],
-    fixedFilters: [
+    fixedFilters: warehouseCode ? [
       {
         field: "warehouse",
         operator: "exists",
@@ -114,7 +114,7 @@ function genListConfig(warehouseCode: string) {
           },
         ],
       }
-    ],
+    ]: [],
     pageSize: 20,
     columns: [
       {
@@ -311,6 +311,13 @@ const page: RapidPage = {
           label: "配件仓",
           children: [
             genListConfig("W5"),
+          ],
+        },
+        {
+          key: "W-ALL",
+          label: "全部",
+          children: [
+            genListConfig(),
           ],
         },
       ],

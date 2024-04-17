@@ -9,10 +9,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'application',
-      formControlProps: {
-        listTextFormat: "{{code}}",
-      }
+      code: 'operationType',
     },
     {
       type: 'auto',
@@ -20,7 +17,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'operationType',
+      code: 'applicant',
     },
     {
       type: 'auto',
@@ -30,14 +27,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 }
 
 const page: RapidPage = {
-  code: 'mom_inventory_operation_list',
-  name: '库存操作记录',
-  title: '库存操作记录',
-  // permissionCheck: {any: []},
+  code: 'mom_inventory_application_list',
+  name: '库存业务申请',
+  title: '库存业务申请',
+  permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomInventoryOperation",
+      entityCode: "MomInventoryApplication",
       viewMode: "table",
       listActions: [
         {
@@ -54,7 +51,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["material"],
+          filterFields: ["code"],
         }
       ],
       orderBy: [
@@ -70,16 +67,6 @@ const page: RapidPage = {
           code: 'code',
           // rendererType: 'rapidLinkRenderer',
           rendererProps: {
-            url: "/pages/mom_inventory_operation_details?id={{id}}",
-          },
-        },
-        {
-          type: 'auto',
-          code: 'application',
-          width: '150px',
-          rendererType: "rapidLinkRenderer",
-          rendererProps: {
-            text: "{{code}}",
             url: "/pages/mom_inventory_application_details?id={{id}}",
           },
         },
@@ -120,7 +107,7 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "MomInventoryOperation",
+          entityCode: "MomInventoryApplication",
         },
       ],
       newForm: cloneDeep(formConfig),

@@ -1014,7 +1014,7 @@ export type SaveBaseUnitCategoryInput = Omit<BaseUnitCategory, 'id' | 'createdAt
 /**
  * 审批步骤
  */
-export interface BpmBusinessActivity {
+export interface BpmActivity {
   /**
    * id
    */
@@ -1022,7 +1022,7 @@ export interface BpmBusinessActivity {
   /**
    * 申请单
    */
-  application: Partial<BpmBusinessApplication>;
+  application: Partial<BpmApplication>;
   /**
    * 步骤名
    */
@@ -1072,12 +1072,12 @@ export interface BpmBusinessActivity {
 /**
  * 审批步骤
  */
-export type SaveBpmBusinessActivityInput = Omit<BpmBusinessActivity, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmActivityInput = Omit<BpmActivity, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 业务申请单
  */
-export interface BpmBusinessApplication {
+export interface BpmApplication {
   /**
    * id
    */
@@ -1085,7 +1085,7 @@ export interface BpmBusinessApplication {
   /**
    * 业务流程
    */
-  process: Partial<BpmBusinessProcess>;
+  process: Partial<BpmProcess>;
   /**
    * 申请单号
    */
@@ -1143,205 +1143,12 @@ export interface BpmBusinessApplication {
 /**
  * 业务申请单
  */
-export type SaveBpmBusinessApplicationInput = Omit<BpmBusinessApplication, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 流程分组
- */
-export interface BpmBusinessCategory {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 流程分组
- */
-export type SaveBpmBusinessCategoryInput = Omit<BpmBusinessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 业务流程
- */
-export interface BpmBusinessProcess {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 分组
-   */
-  category?: Partial<BpmBusinessCategory>;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 描述
-   */
-  description: string;
-  /**
-   * 表单配置
-   */
-  formConfig?: object;
-  /**
-   * 流程配置
-   */
-  flowConfig?: object;
-  /**
-   * 列表配置
-   */
-  listConfig?: object;
-  /**
-   * 高级设置
-   */
-  advancedConfig?: object;
-  /**
-   * 状态
-   */
-  state: EnabledDisabledState;
-  /**
-   * 状态
-   */
-  publishState: PublishState;
-  /**
-   * 当前版本
-   */
-  activeRevision?: Partial<BpmBusinessProcessRevision>;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 业务流程
- */
-export type SaveBpmBusinessProcessInput = Omit<BpmBusinessProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 业务流程版本
- */
-export interface BpmBusinessProcessRevision {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 业务流程
-   */
-  process: Partial<BpmBusinessProcess>;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 描述
-   */
-  description: string;
-  /**
-   * 表单配置
-   */
-  formConfig?: object;
-  /**
-   * 流程配置
-   */
-  flowConfig?: object;
-  /**
-   * 高级设置
-   */
-  advancedConfig?: object;
-  /**
-   * 状态
-   */
-  publishState: PublishState;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 业务流程版本
- */
-export type SaveBpmBusinessProcessRevisionInput = Omit<BpmBusinessProcessRevision, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmApplicationInput = Omit<BpmApplication, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 审批任务
  */
-export interface BpmBusinessTask {
+export interface BpmTask {
   /**
    * id
    */
@@ -1349,7 +1156,7 @@ export interface BpmBusinessTask {
   /**
    * 审批步骤
    */
-  activity: Partial<BpmBusinessActivity>;
+  activity: Partial<BpmActivity>;
   /**
    * 负责人
    */
@@ -1391,7 +1198,200 @@ export interface BpmBusinessTask {
 /**
  * 审批任务
  */
-export type SaveBpmBusinessTaskInput = Omit<BpmBusinessTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmTaskInput = Omit<BpmTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 业务流程
+ */
+export interface BpmProcess {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 分组
+   */
+  category?: Partial<BpmProcessCategory>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description: string;
+  /**
+   * 表单配置
+   */
+  formConfig?: object;
+  /**
+   * 流程配置
+   */
+  flowConfig?: object;
+  /**
+   * 列表配置
+   */
+  listConfig?: object;
+  /**
+   * 高级设置
+   */
+  advancedConfig?: object;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 状态
+   */
+  publishState: PublishState;
+  /**
+   * 当前版本
+   */
+  activeRevision?: Partial<BpmProcessRevision>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 业务流程
+ */
+export type SaveBpmProcessInput = Omit<BpmProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 流程分组
+ */
+export interface BpmProcessCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 流程分组
+ */
+export type SaveBpmProcessCategoryInput = Omit<BpmProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 业务流程版本
+ */
+export interface BpmProcessRevision {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 业务流程
+   */
+  process: Partial<BpmProcess>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description: string;
+  /**
+   * 表单配置
+   */
+  formConfig?: object;
+  /**
+   * 流程配置
+   */
+  flowConfig?: object;
+  /**
+   * 高级设置
+   */
+  advancedConfig?: object;
+  /**
+   * 状态
+   */
+  publishState: PublishState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 业务流程版本
+ */
+export type SaveBpmProcessRevisionInput = Omit<BpmProcessRevision, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 合同
@@ -2853,6 +2853,10 @@ export interface MomGood {
    */
   id: number;
   /**
+   * 跟踪码
+   */
+  trackingCode?: string;
+  /**
    * 物料
    */
   material?: Partial<BaseMaterial>;
@@ -3070,6 +3074,10 @@ export interface MomGoodTransfer {
    */
   good?: Partial<MomGood>;
   /**
+   * 跟踪码
+   */
+  trackingCode?: string;
+  /**
    * 物品
    */
   material?: Partial<BaseMaterial>;
@@ -3092,7 +3100,7 @@ export interface MomGoodTransfer {
   /**
    * 数量
    */
-  quantity?: number;
+  quantity: number;
   /**
    * 单位
    */
@@ -3783,6 +3791,156 @@ export interface MomInventory {
 export type SaveMomInventoryInput = Omit<MomInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 库存业务申请
+ */
+export interface MomInventoryApplication {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 申请单号
+   */
+  code?: string;
+  /**
+   * 库存操作类型
+   */
+  operationType: MomInventoryOperationType;
+  /**
+   * 业务类型
+   */
+  businessType?: Partial<MomInventoryBusinessType>;
+  /**
+   * 申请人
+   */
+  applicant?: Partial<OcUser>;
+  /**
+   * 明细项
+   */
+  items?: any;
+  /**
+   * 申请状态
+   */
+  state: BusinessApplicationState;
+  /**
+   * 其它信息
+   */
+  extra?: object;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存业务申请
+ */
+export type SaveMomInventoryApplicationInput = Omit<MomInventoryApplication, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存业务申请货品项
+ */
+export interface MomInventoryApplicationItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 申请信息
+   */
+  application?: Partial<MomInventoryApplication>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 跟踪码
+   */
+  trackingCode?: string;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 数量
+   */
+  quantity: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存业务申请货品项
+ */
+export type SaveMomInventoryApplicationItemInput = Omit<MomInventoryApplicationItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 库存业务类型
  */
 export interface MomInventoryBusinessType {
@@ -3908,6 +4066,10 @@ export interface MomInventoryOperation {
    * 业务类型
    */
   businessType?: Partial<MomInventoryBusinessType>;
+  /**
+   * 申请信息
+   */
+  application?: Partial<MomInventoryApplication>;
   /**
    * 业务详情
    */

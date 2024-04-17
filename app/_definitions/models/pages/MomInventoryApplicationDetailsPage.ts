@@ -42,26 +42,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: 'auto',
       code: 'unit',
     },
-    {
-      type: 'treeSelect',
-      code: 'from',
-      formControlProps: {
-        listDataSourceCode: "locations",
-        listParentField: "parent.id",
-      },
-    },
-    {
-      type: 'treeSelect',
-      code: 'to',
-      formControlProps: {
-        listDataSourceCode: "locations",
-        listParentField: "parent.id",
-      },
-    },
-    {
-      type: 'auto',
-      code: 'transferTime',
-    },
   ],
   onValuesChange: [
     {
@@ -87,14 +67,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 
 const page: RapidPage = {
-  code: 'mom_inventory_operation_details',
-  name: '库存操作详情',
-  title: '库存操作详情',
+  code: 'mom_inventory_application_details',
+  name: '库存业务申请单详情',
+  title: '库存业务申请单详情',
   // permissionCheck: {any: []},
   view: [
     {
       $type: 'rapidEntityForm',
-      entityCode: 'MomInventoryOperation',
+      entityCode: 'MomInventoryApplication',
       mode: 'view',
       column: 3,
       items: [
@@ -136,11 +116,11 @@ const page: RapidPage = {
             {
               $id: "projectLogList",
               $type: "sonicEntityList",
-              entityCode: "MomGoodTransfer",
+              entityCode: "MomInventoryApplicationItem",
               viewMode: "table",
               fixedFilters: [
                 {
-                  field: "operation",
+                  field: "application",
                   operator: "exists",
                   filters: [
                     {
@@ -233,19 +213,6 @@ const page: RapidPage = {
                     format: "{{name}}",
                   },
                 },
-                {
-                  type: 'auto',
-                  code: 'from',
-                  width: '150px',
-                },
-                {
-                  type: 'auto',
-                  code: 'to',
-                  width: '150px',
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
               ],
               actions: [
                 {
@@ -260,26 +227,11 @@ const page: RapidPage = {
                   actionType: 'delete',
                   actionText: '删除',
                   dataSourceCode: "list",
-                  entityCode: "MomGoodTransfer",
+                  entityCode: "MomInventoryApplicationItem",
                 },
               ],
               newForm: cloneDeep(formConfig),
               editForm: cloneDeep(formConfig),
-              stores: [
-                {
-                  type: "entityStore",
-                  name: "locations",
-                  entityCode: "BaseLocation",
-                  properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-                  filters: [
-                  ],
-                  orderBy: [
-                    {
-                      field: 'orderNum',
-                    }
-                  ],
-                }
-              ],
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
