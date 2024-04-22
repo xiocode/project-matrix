@@ -1,4 +1,4 @@
-import type { ContainerRockConfig, RockConfigBase, SimpleRockConfig } from "@ruiapp/move-style";
+import type { ContainerRockConfig, RockConfigBase, SimpleRockConfig, StoreConfig } from '@ruiapp/move-style';
 
 export type LinkshopWidgetCommonConfig = {
   left: number;
@@ -8,24 +8,27 @@ export type LinkshopWidgetCommonConfig = {
   width: number;
 
   height: number;
-}
+};
 
 export type LinkshopWidgetRockConfig = RockConfigBase & LinkshopWidgetCommonConfig;
 
-export type LinkshopAppRockConfig = SimpleRockConfig & LinkshopWidgetCommonConfig & {
-  $type: "linkshopApp";
+export type LinkshopAppRockConfig = SimpleRockConfig &
+  LinkshopWidgetCommonConfig & {
+    $type: 'linkshopApp';
 
-  /**
-   * 应用步骤
-   */
-  steps: LinkshopAppStepRockConfig[];
-}
+    /**
+     * 应用步骤
+     */
+    steps: LinkshopAppStepRockConfig[];
+    stores: StoreConfig[];
+  };
 
-export type LinkshopAppStepRockConfig = ContainerRockConfig & LinkshopWidgetCommonConfig & {
-  $type: "linkshopAppStep";
+export type LinkshopAppStepRockConfig = ContainerRockConfig &
+  LinkshopWidgetCommonConfig & {
+    $type: 'linkshopAppStep';
 
-  /**
-   * 背景颜色
-   */
-  backgroundColor?: string;
-}
+    /**
+     * 背景颜色
+     */
+    backgroundColor?: string;
+  };

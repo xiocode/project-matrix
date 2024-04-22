@@ -212,7 +212,6 @@ export default function Index() {
           appId,
           appConfig: shopfloorApp?.content || {},
         },
-        ...get(shopfloorApp.content, 'stores', []),
       ],
       view: [
         {

@@ -159,7 +159,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
 
     const appContent = {
       steps: this.appConfig?.steps,
-      stores: this.#page.scope.config?.stores,
+      stores: this.appConfig?.stores,
     };
 
     await rapidApi.patch(`/shopfloor/shopfloor_apps/${this.appId}`, {
@@ -246,6 +246,34 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       const { parentComponentId, slotPropName, prevSiblingComponentId } = payload;
 
       this.#page.addComponents(this.#snippets, parentComponentId, slotPropName, prevSiblingComponentId);
+    }
+
+    this.storeManagerCommand(command);
+  }
+
+  storeManagerCommand(command: PageCommand) {
+    const existedStores = this.appConfig?.stores || [];
+    if (command.name === 'addStore') {
+      const isExistedStore = existedStores.some((s) => s.name === command.payload?.store?.name);
+      if (isExistedStore) {
+        return;
+      }
+
+      this.setAppConfig({
+        ...(this.appConfig || {}),
+        stores: [...existedStores, command.payload?.store],
+      } as LinkshopAppRockConfig);
+    } else if (command.name === 'modifyStore') {
+      this.setAppConfig({
+        ...(this.appConfig || {}),
+        // TODO: store name editable?
+        stores: existedStores?.map((s) => (s.name === command.payload?.store?.name ? command.payload.store : s)),
+      } as LinkshopAppRockConfig);
+    } else if (command.name === 'removeStore') {
+      this.setAppConfig({
+        ...(this.appConfig || {}),
+        stores: existedStores?.filter((s) => s.name === command.payload?.store?.name),
+      } as LinkshopAppRockConfig);
     }
   }
 }

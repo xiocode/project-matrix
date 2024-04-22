@@ -19,7 +19,7 @@ import AppExtension from '~/app-extension/mod';
 import LinkshopExtension from '~/linkshop-extension/mod';
 import ShopfloorExtension from '~/shopfloor-extension/mod';
 
-import antdStyles from "antd/dist/antd.css";
+import antdStyles from 'antd/dist/antd.css';
 import indexStyles from '~/styles/index.css';
 import customizeStyles from '~/styles/customize.css';
 import rapidService from '~/rapidService';
@@ -118,6 +118,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     return redirect('/signin');
   }
 
+  let { searchParams } = new URL(request.url);
+  let appId = searchParams.get('appId');
+
+  if (!appId) {
+    return redirect('/shopfloor/begin');
+  }
+
   const myAllowedActions = (
     await rapidService.get(`app/listMyAllowedSysActions`, {
       headers: {
@@ -126,8 +133,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     })
   ).data;
 
-  let { searchParams } = new URL(request.url);
-  let appId = searchParams.get('appId');
   const shopfloorApps = (
     await rapidService.post(
       `shopfloor/shopfloor_apps/operations/find`,

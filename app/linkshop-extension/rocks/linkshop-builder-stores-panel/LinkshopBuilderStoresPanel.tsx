@@ -4,14 +4,19 @@ import type { LinkshopBuilderStoresPanelRockConfig } from './linkshop-builder-st
 import { PlusOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import ModelSettingsFormModal from './ModelSettingsFormModal';
+import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
 
 export default {
   Renderer(context, props: LinkshopBuilderStoresPanelRockConfig, state) {
     const { page } = context;
+    const { designerStoreName } = props;
 
     const [visible, setVisible] = useState<boolean>(false);
 
-    const stores = (page.scope.config?.stores || []).filter((s) => s.type === 'entityStore');
+    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
+    const shopfloorApp = designerStore.appConfig;
+
+    const stores = shopfloorApp?.stores || [];
 
     return (
       <>
@@ -40,8 +45,12 @@ export default {
             setVisible(v);
           }}
           onFormSubmit={(config) => {
-            page.addStore(config);
-            page.loadStoreData(config.name, {});
+            designerStore.processCommand({
+              name: 'addStore',
+              payload: {
+                store: config,
+              },
+            });
           }}
         />
       </>
