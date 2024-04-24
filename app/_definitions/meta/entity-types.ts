@@ -1,4 +1,5 @@
 import type {
+  ApprovalState,
   BaseLocationType,
   BusinessActivityKind,
   BusinessActivityState,
@@ -15,6 +16,7 @@ import type {
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  MaterialSourceType,
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,
@@ -38,6 +40,7 @@ import type {
   PmProjectState,
   PropertyType,
   PublishState,
+  QualificationState,
   RouteHttpMethod,
   RouteType,
   UndeletedDeletedState,
@@ -62,7 +65,7 @@ export interface AppClient {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 状态
    */
@@ -137,7 +140,7 @@ export interface AppNavItem {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 状态
    */
@@ -310,7 +313,7 @@ export interface BaseFormField {
   /**
    * 外部数据
    */
-  externalData?: object;
+  externalData?: Record<string, any>;
   /**
    * 字段类型
    */
@@ -471,6 +474,69 @@ export interface BaseLocation {
  * 位置
  */
 export type SaveBaseLocationInput = Omit<BaseLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 批次
+ */
+export interface BaseLot {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料
+   */
+  material: Partial<BaseMaterial>;
+  /**
+   * 批次号
+   */
+  lotNum?: string;
+  /**
+   * 来源
+   */
+  sourceType?: MaterialSourceType;
+  /**
+   * 失效时间
+   */
+  expireTime?: string;
+  /**
+   * 合格证状态
+   */
+  qualificationState?: QualificationState;
+  /**
+   * 是否让步接收
+   */
+  isAOD: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 批次
+ */
+export type SaveBaseLotInput = Omit<BaseLot, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 物料
@@ -700,7 +766,7 @@ export interface BaseMaterialType {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -1097,7 +1163,7 @@ export interface BpmApplication {
   /**
    * 表单数据
    */
-  formData?: object;
+  formData?: Record<string, any>;
   /**
    * 发起人
    */
@@ -1223,19 +1289,19 @@ export interface BpmProcess {
   /**
    * 表单配置
    */
-  formConfig?: object;
+  formConfig?: Record<string, any>;
   /**
    * 流程配置
    */
-  flowConfig?: object;
+  flowConfig?: Record<string, any>;
   /**
    * 列表配置
    */
-  listConfig?: object;
+  listConfig?: Record<string, any>;
   /**
    * 高级设置
    */
-  advancedConfig?: object;
+  advancedConfig?: Record<string, any>;
   /**
    * 状态
    */
@@ -1349,15 +1415,15 @@ export interface BpmProcessRevision {
   /**
    * 表单配置
    */
-  formConfig?: object;
+  formConfig?: Record<string, any>;
   /**
    * 流程配置
    */
-  flowConfig?: object;
+  flowConfig?: Record<string, any>;
   /**
    * 高级设置
    */
-  advancedConfig?: object;
+  advancedConfig?: Record<string, any>;
   /**
    * 状态
    */
@@ -2358,7 +2424,7 @@ export interface DataDictionary {
   /**
    * 外部数据
    */
-  externalData?: object;
+  externalData?: Record<string, any>;
   /**
    * 状态
    */
@@ -2575,7 +2641,7 @@ export interface Property {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 自增
    */
@@ -2686,7 +2752,7 @@ export interface Route {
   /**
    * Actions
    */
-  actions?: object;
+  actions?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -2911,7 +2977,7 @@ export interface MomGood {
   /**
    * 扩展信息
    */
-  extra?: object;
+  extra?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -3230,7 +3296,7 @@ export interface MomInspectionCharacteristic {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -3548,7 +3614,7 @@ export interface MomInspectionRule {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -3825,7 +3891,7 @@ export interface MomInventoryApplication {
   /**
    * 其它信息
    */
-  extra?: object;
+  extra?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -3959,7 +4025,7 @@ export interface MomInventoryBusinessType {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -4067,17 +4133,21 @@ export interface MomInventoryOperation {
    */
   businessType?: Partial<MomInventoryBusinessType>;
   /**
-   * 申请信息
+   * 申请单信息
    */
   application?: Partial<MomInventoryApplication>;
   /**
    * 业务详情
    */
-  businessDetails?: object;
+  businessDetails?: Record<string, any>;
   /**
-   * 状态
+   * 操作状态
    */
   state?: MomInventoryOperationState;
+  /**
+   * 审批状态
+   */
+  approvalState?: ApprovalState;
   /**
    * 变更明细
    */
@@ -4242,7 +4312,7 @@ export interface MomManufacturingResourcePlan {
   /**
    * 结果
    */
-  result?: object;
+  result?: Record<string, any>;
   /**
    * 计划状态
    */
@@ -4872,7 +4942,7 @@ export interface MomRouteProcess {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -4931,7 +5001,7 @@ export interface MomRouteProcessInput {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -4990,7 +5060,7 @@ export interface MomRouteProcessOutput {
   /**
    * 配置
    */
-  config?: object;
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -5526,7 +5596,7 @@ export interface MomWorkReport {
   /**
    * 其它信息
    */
-  extra?: object;
+  extra?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -6603,11 +6673,11 @@ export interface ShopfloorApp {
   /**
    * 权限
    */
-  permissions?: object;
+  permissions?: Record<string, any>;
   /**
    * 内容
    */
-  content?: object;
+  content?: Record<string, any>;
   /**
    * 发布时间
    */
@@ -6678,11 +6748,11 @@ export interface ShopfloorAppStep {
   /**
    * 触发器
    */
-  triggers?: object;
+  triggers?: Record<string, any>;
   /**
    * 结构
    */
-  schema?: object;
+  schema?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -6737,7 +6807,7 @@ export interface ShopfloorAppVersion {
   /**
    * 内容
    */
-  content?: object;
+  content?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -7028,7 +7098,7 @@ export interface Webhook {
   /**
    * 事件
    */
-  events?: object;
+  events?: Record<string, any>;
   /**
    * 是否启用
    */

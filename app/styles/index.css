@@ -68,6 +68,14 @@
   margin-top: 16px;
 }
 
+.rui-page-section-separator {
+  padding: 16px 0;
+}
+
+.rui-page-section-separator-line {
+  border-top: 1px solid #eee;
+}
+
 .rui-toolbar {
   display: flex;
   padding-bottom: 12px;

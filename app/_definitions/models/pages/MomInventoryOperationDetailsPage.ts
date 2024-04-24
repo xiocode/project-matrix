@@ -97,6 +97,7 @@ const page: RapidPage = {
       entityCode: 'MomInventoryOperation',
       mode: 'view',
       column: 3,
+      extraProperties: ["application"],
       items: [
         {
           type: 'auto',
@@ -115,11 +116,15 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
+          code: 'createdAt',
+        },
+        {
+          type: 'auto',
           code: 'state',
         },
         {
           type: 'auto',
-          code: 'createdAt',
+          code: 'approvalState',
         },
       ],
       $exps: {
@@ -127,14 +132,125 @@ const page: RapidPage = {
       }
     },
     {
+      $type: "box",
+      children: [
+        {
+          $type: "sectionSeparator",
+          showLine: true,
+        },
+        {
+          $type: "htmlElement",
+          htmlTag: "h2",
+          children: [
+            {
+              $type: "text",
+              text: "申请明细",
+            },
+          ]
+        },
+        {
+          $id: "applicationItemList",
+          $type: "sonicEntityList",
+          entityCode: "MomInventoryApplicationItem",
+          viewMode: "table",
+          selectionMode: "none",
+          fixedFilters: [
+            {
+              field: "application",
+              operator: "exists",
+              filters: [
+                {
+                  field: "id",
+                  operator: "eq",
+                  value: ""
+                }
+              ]
+            }
+          ],
+          pageSize: -1,
+          orderBy: [
+            {
+              field: 'orderNum',
+            }
+          ],
+          columns: [
+            {
+              type: 'auto',
+              code: 'material',
+              rendererType: "anchor",
+              rendererProps: {
+                children: {
+                  $type: 'materialLabelRenderer',
+                  $exps: {
+                    value: '$slot.value',
+                  }
+                },
+                $exps: {
+                  href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+                },
+              },
+            },
+            {
+              type: 'auto',
+              code: 'lotNum',
+              width: '100px',
+            },
+            {
+              type: 'auto',
+              code: 'binNum',
+              width: '100px',
+            },
+            {
+              type: 'auto',
+              code: 'serialNum',
+              width: '100px',
+            },
+            {
+              type: 'auto',
+              code: 'trackingCode',
+              width: '100px',
+            },
+            {
+              type: 'auto',
+              code: 'tags',
+              width: '100px',
+            },
+            {
+              type: 'auto',
+              code: 'quantity',
+              width: '100px',
+            },
+            {
+              type: 'auto',
+              code: 'unit',
+              width: '80px',
+              rendererProps: {
+                format: "{{name}}",
+              },
+            },
+          ],
+          $exps: {
+            "fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
+          },
+        },
+      ],
+      $exps: {
+        _hidden: "!_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
+      }
+    },
+    {
+      $type: "sectionSeparator",
+      showLine: false,
+    },
+    {
       $type: "antdTabs",
       items: [
         {
           key: "items",
-          label: "物品明细",
+          label: "库存操作明细",
           children: [
             {
-              $id: "projectLogList",
+              $id: "goodTransferList",
               $type: "sonicEntityList",
               entityCode: "MomGoodTransfer",
               viewMode: "table",
@@ -157,6 +273,9 @@ const page: RapidPage = {
                   text: "新建",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
+                  $exps: {
+                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+                  },
                 },
                 {
                   $type: "sonicToolbarRefreshButton",
@@ -253,6 +372,9 @@ const page: RapidPage = {
                   code: 'edit',
                   actionType: "edit",
                   actionText: '修改',
+                  $exps: {
+                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+                  },
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
@@ -261,6 +383,9 @@ const page: RapidPage = {
                   actionText: '删除',
                   dataSourceCode: "list",
                   entityCode: "MomGoodTransfer",
+                  $exps: {
+                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+                  },
                 },
               ],
               newForm: cloneDeep(formConfig),
@@ -288,7 +413,73 @@ const page: RapidPage = {
           ]
         },
       ]
-    }
+    },
+    {
+      $type: "sectionSeparator",
+      showLine: false,
+    },
+    {
+      $type: "rapidToolbar",
+      items: [
+        {
+          $type: "rapidToolbarButton",
+          text: "确认提交",
+          actionStyle: "primary",
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: {state: 'done', approvalState: 'approving'},
+              $exps: {
+                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+              }
+            },
+          ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+          }
+        },
+        {
+          $type: "rapidToolbarButton",
+          text: "批准",
+          actionStyle: "primary",
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: {approvalState: 'approved'},
+              $exps: {
+                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+              }
+            },
+          ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+          }
+        },
+        {
+          $type: "rapidToolbarButton",
+          text: "拒绝",
+          danger: true,
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: {approvalState: 'rejected'},
+              $exps: {
+                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+              }
+            },
+          ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+          }
+        },
+      ],
+    },
   ],
 };
 

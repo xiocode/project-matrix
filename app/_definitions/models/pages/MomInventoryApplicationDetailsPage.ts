@@ -114,7 +114,7 @@ const page: RapidPage = {
           label: "物品明细",
           children: [
             {
-              $id: "projectLogList",
+              $id: "applicationItemList",
               $type: "sonicEntityList",
               entityCode: "MomInventoryApplicationItem",
               viewMode: "table",

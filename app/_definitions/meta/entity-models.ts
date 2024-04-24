@@ -7,6 +7,7 @@ import BaseEmployee from '../models/entities/BaseEmployee';
 import BaseFormField from '../models/entities/BaseFormField';
 import BaseGate from '../models/entities/BaseGate';
 import BaseLocation from '../models/entities/BaseLocation';
+import BaseLot from '../models/entities/BaseLot';
 import BaseMaterial from '../models/entities/BaseMaterial';
 import BaseMaterialCategory from '../models/entities/BaseMaterialCategory';
 import BaseMaterialDocument from '../models/entities/BaseMaterialDocument';
@@ -116,6 +117,7 @@ export default [
   autoConfigureRapidEntity(BaseFormField),
   autoConfigureRapidEntity(BaseGate),
   autoConfigureRapidEntity(BaseLocation),
+  autoConfigureRapidEntity(BaseLot),
   autoConfigureRapidEntity(BaseMaterial),
   autoConfigureRapidEntity(BaseMaterialCategory),
   autoConfigureRapidEntity(BaseMaterialDocument),

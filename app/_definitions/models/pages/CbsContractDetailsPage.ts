@@ -21,7 +21,7 @@ const contractFileNewForm: Partial<RapidEntityFormConfig> = {
           {
             $action: "script",
             script: `function (event) {
-              var fileInfo = event.args;
+              var fileInfo = event.args[0];
               event.sender.form.setFieldsValue({
                 name: fileInfo.name,
                 size: fileInfo.size,

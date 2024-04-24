@@ -282,8 +282,8 @@ const page: RapidPage = {
                 {
                   $action: "setVars",
                   $exps: {
-                    "vars.selectedIds": "$event.args.selectedIds",
-                    "vars.selectedRecords": "$event.args.selectedRecords",
+                    "vars.selectedIds": "$event.args[0].selectedIds",
+                    "vars.selectedRecords": "$event.args[0].selectedRecords",
                   }
                 }
               ],
@@ -457,8 +457,8 @@ const page: RapidPage = {
                 {
                   $action: "setVars",
                   $exps: {
-                    "vars.selectedIds": "$event.args.selectedIds",
-                    "vars.selectedRecords": "$event.args.selectedRecords",
+                    "vars.selectedIds": "$event.args[0].selectedIds",
+                    "vars.selectedRecords": "$event.args[0].selectedRecords",
                   }
                 }
               ],

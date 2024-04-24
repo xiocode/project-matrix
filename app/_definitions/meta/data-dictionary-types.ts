@@ -11,7 +11,6 @@ export type ActiveInactiveState =
  */
 export type ApprovalState =
   | 'uninitiated'
-  | 'pending'
   | 'approving'
   | 'approved'
   | 'rejected'
@@ -169,6 +168,15 @@ export type FormFieldType =
   | 'datetime'
   | 'boolean'
   | 'option'
+  ;
+
+/**
+ * 物料来源类型
+ */
+export type MaterialSourceType =
+  | 'selfMade'
+  | 'purchased'
+  | 'outsideProcessed'
   ;
 
 /**
@@ -429,6 +437,15 @@ export type PublishState =
   | 'published'
   | 'archived'
   | 'withdrawed'
+  ;
+
+/**
+ * 质量状态
+ */
+export type QualificationState =
+  | 'uninspected'
+  | 'qualified'
+  | 'unqualified'
   ;
 
 /**

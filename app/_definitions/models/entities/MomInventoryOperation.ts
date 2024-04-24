@@ -41,9 +41,15 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: 'state',
-      name: '状态',
+      name: '操作状态',
       type: 'option',
       dataDictionary: 'MomInventoryOperationState',
+    },
+    {
+      code: 'approvalState',
+      name: '审批状态',
+      type: 'option',
+      dataDictionary: 'ApprovalState',
     },
     {
       code: 'transfers',

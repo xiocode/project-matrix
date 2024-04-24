@@ -5,47 +5,43 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'code',
+      code: 'lotNum',
     },
     {
       type: 'auto',
-      code: 'application',
+      code: 'material',
       formControlProps: {
-        listTextFormat: "{{code}}",
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ['label']
       }
     },
     {
       type: 'auto',
-      code: 'businessType',
+      code: 'sourceType',
     },
     {
       type: 'auto',
-      code: 'operationType',
+      code: 'expireTime',
     },
     {
       type: 'auto',
-      code: 'state',
+      code: 'qualificationState',
     },
     {
       type: 'auto',
-      code: 'approvalState',
+      code: 'isAOD',
     },
   ],
-  defaultFormFields: {
-    state: 'pending',
-    approvalState: 'uninitiated',
-  },
 }
 
 const page: RapidPage = {
-  code: 'mom_inventory_operation_list',
-  name: '库存操作记录',
-  title: '库存操作',
-  // permissionCheck: {any: []},
+  code: 'mom_material_lot_list',
+  name: '货品批次列表',
+  title: '货品批次',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomInventoryOperation",
+      entityCode: "BaseLot",
       viewMode: "table",
       listActions: [
         {
@@ -53,7 +49,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        },
+        }
       ],
       extraActions: [
         {
@@ -62,7 +58,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["material"],
+          filterFields: ["lotNum"],
         }
       ],
       orderBy: [
@@ -71,53 +67,58 @@ const page: RapidPage = {
           desc: true,
         }
       ],
-      pageSize: 20,
       columns: [
         {
           type: 'link',
-          code: 'code',
-          // rendererType: 'rapidLinkRenderer',
+          code: 'lotNum',
+          width: '200px',
+          fixed: 'left',
+          rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_inventory_operation_details?id={{id}}",
+            url: "/pages/mom_material_lot_details?id={{id}}",
           },
         },
         {
           type: 'auto',
-          code: 'application',
-          width: '150px',
-          rendererType: "rapidLinkRenderer",
+          code: 'material',
+          fixed: 'left',
+          rendererType: "anchor",
           rendererProps: {
-            text: "{{code}}",
-            url: "/pages/mom_inventory_application_details?id={{id}}",
+            children: {
+              $type: 'materialLabelRenderer',
+              $exps: {
+                value: '$slot.value',
+              }
+            },
+            $exps: {
+              href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+            },
           },
         },
         {
           type: 'auto',
-          code: 'operationType',
+          code: 'sourceType',
           width: '100px',
         },
         {
           type: 'auto',
-          code: 'businessType',
-          width: '200px',
-          rendererProps: {
-            format: "{{name}}",
-          },
+          code: 'expireTime',
+          width: '150px',
+        },
+        {
+          type: 'auto',
+          code: 'qualificationState',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'isAOD',
+          width: '120px',
         },
         {
           type: 'auto',
           code: 'createdAt',
           width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'approvalState',
-          width: '100px',
         },
       ],
       actions: [
@@ -133,15 +134,11 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "MomInventoryOperation",
+          entityCode: "BaseLot",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
-      $exps: {
-        "newForm.fixedFields.state": "'processing'",
-        "newForm.fixedFields.approveState": "'uninitiated'",
-      }
     },
   ],
 };

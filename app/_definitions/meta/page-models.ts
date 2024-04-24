@@ -30,9 +30,11 @@ import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
+import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
 import MomInventoryListPage from '../models/pages/MomInventoryListPage';
 import MomInventoryOperationDetailsPage from '../models/pages/MomInventoryOperationDetailsPage';
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
+import MomMaterialLotListPage from '../models/pages/MomMaterialLotListPage';
 import MomMpsDetailsPage from '../models/pages/MomMpsDetailsPage';
 import MomMpsListPage from '../models/pages/MomMpsListPage';
 import MomMrpDetailsPage from '../models/pages/MomMrpDetailsPage';
@@ -91,9 +93,11 @@ export default [
   MomGoodLocationListPage,
   MomInventoryApplicationDetailsPage,
   MomInventoryApplicationListPage,
+  MomInventoryBusinessTypeListPage,
   MomInventoryListPage,
   MomInventoryOperationDetailsPage,
   MomInventoryOperationListPage,
+  MomMaterialLotListPage,
   MomMpsDetailsPage,
   MomMpsListPage,
   MomMrpDetailsPage,

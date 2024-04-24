@@ -76,7 +76,7 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       $action: "script",
       script: `function (event) {
-        let material = event.args.form.getFieldValue("material");
+        let material = event.args[0].form.getFieldValue("material");
         const materialId = material && material.id || material;
         event.scope.setVars({
           active_material_id: materialId,

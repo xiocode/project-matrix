@@ -17,6 +17,7 @@ import EmployeeState from '../models/data-dictionaries/EmployeeState';
 import EnabledDisabledState from '../models/data-dictionaries/EnabledDisabledState';
 import FinTransactionType from '../models/data-dictionaries/FinTransactionType';
 import FormFieldType from '../models/data-dictionaries/FormFieldType';
+import MaterialSourceType from '../models/data-dictionaries/MaterialSourceType';
 import MetaDataDictionaryLevel from '../models/data-dictionaries/MetaDataDictionaryLevel';
 import MetaPropertyType from '../models/data-dictionaries/MetaPropertyType';
 import MetaRouteHttpMethod from '../models/data-dictionaries/MetaRouteHttpMethod';
@@ -43,6 +44,7 @@ import PmPhaseState from '../models/data-dictionaries/PmPhaseState';
 import PmProjectStage from '../models/data-dictionaries/PmProjectStage';
 import PmProjectState from '../models/data-dictionaries/PmProjectState';
 import PublishState from '../models/data-dictionaries/PublishState';
+import QualificationState from '../models/data-dictionaries/QualificationState';
 import QuantityType from '../models/data-dictionaries/QuantityType';
 import UndeletedDeletedState from '../models/data-dictionaries/UndeletedDeletedState';
 import UnitType from '../models/data-dictionaries/UnitType';
@@ -67,6 +69,7 @@ export default [
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  MaterialSourceType,
   MetaDataDictionaryLevel,
   MetaPropertyType,
   MetaRouteHttpMethod,
@@ -93,6 +96,7 @@ export default [
   PmProjectStage,
   PmProjectState,
   PublishState,
+  QualificationState,
   QuantityType,
   UndeletedDeletedState,
   UnitType,
