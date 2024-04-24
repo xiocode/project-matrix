@@ -1,0 +1,59 @@
+.rui-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.rui-row-mid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rui-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.rui-row-around {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.rui-col {
+  display: flex;
+  flex-direction: col;
+}
+
+.rui-col-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rui-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rui-col-around {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.rui-flex {
+  flex: 1 0 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+.rui-noshrink {
+  flex-shrink: 0;
+}
