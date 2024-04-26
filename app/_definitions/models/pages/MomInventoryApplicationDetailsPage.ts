@@ -46,7 +46,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   onValuesChange: [
     {
       $action: "script",
-      script: `function (event) {
+      script: `
         const changedValues = event.args[0] || {};
         if(changedValues.hasOwnProperty('material')) {
           const _ = event.framework.getExpressionVars()._;
@@ -60,7 +60,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             }
           });
         }
-      }`
+      `
     },
   ],
 };

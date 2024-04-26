@@ -20,7 +20,7 @@ const contractFileNewForm: Partial<RapidEntityFormConfig> = {
         onUploaded: [
           {
             $action: "script",
-            script: `function (event) {
+            script: `
               var fileInfo = event.args[0];
               event.sender.form.setFieldsValue({
                 name: fileInfo.name,
@@ -30,7 +30,7 @@ const contractFileNewForm: Partial<RapidEntityFormConfig> = {
                   key: fileInfo.key,
                 }
               });
-            }`
+            `
           }
         ],
       },
