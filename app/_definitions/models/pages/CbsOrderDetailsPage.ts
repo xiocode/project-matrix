@@ -50,7 +50,7 @@ const orderItemFormConfig: Partial<RapidEntityFormConfig> = {
   onValuesChange: [
     {
       $action: "script",
-      script: `function (event) {
+      script: `
         const changedValues = event.args[0] || {};
         if(changedValues.hasOwnProperty('subject')) {
           const _ = event.framework.getExpressionVars()._;
@@ -66,7 +66,7 @@ const orderItemFormConfig: Partial<RapidEntityFormConfig> = {
             }
           });
         }
-      }`
+      `
     },
   ]
 };

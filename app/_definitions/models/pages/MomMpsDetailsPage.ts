@@ -75,7 +75,7 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
   onFormRefresh: [
     {
       $action: "script",
-      script: `function (event) {
+      script: `
         let material = event.args[0].form.getFieldValue("material");
         const materialId = material && material.id || material;
         event.scope.setVars({
@@ -93,13 +93,13 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
             unit: unitId,
           }
         });
-      }`
+      `
     },
   ],
   onValuesChange: [
     {
       $action: "script",
-      script: `function (event) {
+      script: `
         const changedValues = event.args[0] || {};
         if(changedValues.hasOwnProperty('material')) {
           event.scope.setVars({
@@ -118,7 +118,7 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
           });
           event.scope.loadStoreData('dataFormItemList-route');
         }
-      }`
+      `
     },
   ]
 };

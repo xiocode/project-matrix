@@ -104,7 +104,7 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
   onValuesChange: [
     {
       $action: "script",
-      script: `function (event) {
+      script: `
         const changedValues = event.args[0] || {};
         if(changedValues.hasOwnProperty('subMaterial')) {
           const _ = event.framework.getExpressionVars()._;
@@ -118,7 +118,7 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
             }
           });
         }
-      }`
+      `
     },
   ]
 };
@@ -144,7 +144,7 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
           {$action: "printToConsole"},
           {
             $action: "script",
-            script: `function (event) {
+            script: `
               var fileInfo = event.args[0];
               event.sender.form.setFieldsValue({
                 name: fileInfo.name,
@@ -160,7 +160,7 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
                   publishState: "published",
                 },
               });
-            }`
+            `
           }
         ],
       }
