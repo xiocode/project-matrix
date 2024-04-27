@@ -48,8 +48,8 @@ dependencies:
     specifier: ^0.1.23
     version: 0.1.23(express@4.18.2)(winston@3.11.0)
   '@ruiapp/rapid-extension':
-    specifier: ^0.0.43
-    version: 0.0.43(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.22)(@ruiapp/react-renderer@0.0.22)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.44
+    version: 0.0.44(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.21)(@ruiapp/react-renderer@0.0.21)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/react-renderer':
     specifier: ^0.0.22
     version: 0.0.22(@ruiapp/move-style@0.0.22)(react-dom@18.2.0)(react@18.2.0)
@@ -132,7 +132,7 @@ devDependencies:
     version: 1.19.3(eslint@8.53.0)(react@18.2.0)(typescript@4.9.5)
   '@ruiapp/rapid-configure-tools':
     specifier: ^0.0.10
-    version: 0.0.10(@ruiapp/rapid-extension@0.0.43)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3)
+    version: 0.0.10(@ruiapp/rapid-extension@0.0.44)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3)
   '@types/compression':
     specifier: ^1.7.5
     version: 1.7.5
@@ -2459,7 +2459,7 @@ packages:
     transitivePeerDependencies:
       - debug
 
-  /@ruiapp/rapid-configure-tools@0.0.10(@ruiapp/rapid-extension@0.0.43)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3):
+  /@ruiapp/rapid-configure-tools@0.0.10(@ruiapp/rapid-extension@0.0.44)(axios-cookiejar-support@4.0.7)(axios@1.6.0)(lodash@4.17.21)(tough-cookie@4.1.3):
     resolution: {integrity: sha512-z435KVQNI40AZPJeDRzd7kAtam3psUNHArAys09+Wx0/VTGiuWZl4zFZkrV8LlG0Eoxpl45SB9yDdXBlONVpMQ==}
     peerDependencies:
       '@ruiapp/rapid-extension': ^0.0.43
@@ -2468,7 +2468,7 @@ packages:
       lodash: ^4.17.21
       tough-cookie: ^4.1.3
     dependencies:
-      '@ruiapp/rapid-extension': 0.0.43(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.22)(@ruiapp/react-renderer@0.0.22)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+      '@ruiapp/rapid-extension': 0.0.44(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.21)(@ruiapp/react-renderer@0.0.21)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
       axios: 1.6.0
       axios-cookiejar-support: 4.0.7(axios@1.6.0)(tough-cookie@4.1.3)
       lodash: 4.17.21
@@ -2499,8 +2499,8 @@ packages:
       - winston
     dev: false
 
-  /@ruiapp/rapid-extension@0.0.43(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.22)(@ruiapp/react-renderer@0.0.22)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-DsTE4CuXd/fVjNTH1C4VX+3EzMKsjUw6JT1sEXVGmkWW8N6aDInIVktyPG6O5lhR0+5kHfQx9K41P48Kif0qRA==}
+  /@ruiapp/rapid-extension@0.0.44(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.21)(@ruiapp/react-renderer@0.0.21)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VMu07KerCrsbsBzCUaj1Xijh15FPB+lYgvcmixUTGTAyvhSKJkk+cHbzCjOZmHBZ7bZ5xhQ8z9APfu9gcAEKYg==}
     peerDependencies:
       '@ant-design/icons': ^4.7.0
       '@ruiapp/move-style': ^0.0.21
@@ -7515,7 +7515,7 @@ packages:
     dev: true
 
   /pluralize@8.0.0:
-    resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==, tarball: https://registry.npmmirror.com/pluralize/-/pluralize-8.0.0.tgz}
+    resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
   /postcss-discard-duplicates@5.1.0(postcss@8.4.31):

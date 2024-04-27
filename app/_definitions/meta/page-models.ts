@@ -28,12 +28,16 @@ import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
+import MomInspectionSheetListPage from '../models/pages/MomInspectionSheetListPage';
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
 import MomInventoryListPage from '../models/pages/MomInventoryListPage';
 import MomInventoryOperationDetailsPage from '../models/pages/MomInventoryOperationDetailsPage';
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
+import MomInventoryStatTableListPage from '../models/pages/MomInventoryStatTableListPage';
+import MomInventoryStatTriggerListPage from '../models/pages/MomInventoryStatTriggerListPage';
+import MomMaterialInventoryListPage from '../models/pages/MomMaterialInventoryListPage';
 import MomMaterialLotListPage from '../models/pages/MomMaterialLotListPage';
 import MomMpsDetailsPage from '../models/pages/MomMpsDetailsPage';
 import MomMpsListPage from '../models/pages/MomMpsListPage';
@@ -91,12 +95,16 @@ export default [
   MetaRouteListPage,
   MomGoodListPage,
   MomGoodLocationListPage,
+  MomInspectionSheetListPage,
   MomInventoryApplicationDetailsPage,
   MomInventoryApplicationListPage,
   MomInventoryBusinessTypeListPage,
   MomInventoryListPage,
   MomInventoryOperationDetailsPage,
   MomInventoryOperationListPage,
+  MomInventoryStatTableListPage,
+  MomInventoryStatTriggerListPage,
+  MomMaterialInventoryListPage,
   MomMaterialLotListPage,
   MomMpsDetailsPage,
   MomMpsListPage,

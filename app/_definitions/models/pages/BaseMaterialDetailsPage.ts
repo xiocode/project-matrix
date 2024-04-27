@@ -232,6 +232,7 @@ const page: RapidPage = {
                 entityCode: "MomRoute",
                 viewMode: "table",
                 selectionMode: "single",
+                selectOnClickRow: true,
                 listActions: [
                   {
                     $type: "sonicToolbarNewEntityButton",
@@ -407,6 +408,7 @@ const page: RapidPage = {
                 entityCode: "MomMaterialBreakdown",
                 viewMode: "table",
                 selectionMode: "single",
+                selectOnClickRow: true,
                 listActions: [
                   {
                     $type: "sonicToolbarNewEntityButton",

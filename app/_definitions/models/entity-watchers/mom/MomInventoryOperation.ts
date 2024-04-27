@@ -1,5 +1,6 @@
 import type { EntityWatchHandlerContext, EntityWatcher, IRpdServer } from "@ruiapp/rapid-core";
-import { MomInventoryBusinessType, type BaseLot, type MomInventory, type MomInventoryOperation, type SaveBaseLotInput } from "~/_definitions/meta/entity-types";
+import { map, uniqBy, uniqWith } from "lodash";
+import type { MomInventoryBusinessType, BaseLot, MomInventory, MomInventoryOperation, SaveBaseLotInput, SaveMomInspectionSheetInput, MomInspectionSheet } from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -27,6 +28,18 @@ export default [
               sourceType: businessType?.config?.defaultSourceType || null,
               qualificationState: businessType?.config?.defaultQualificationState || "qualified",
               isAOD: false,
+            });
+          }
+
+          const materialLotsToInspect = uniqWith(map(transfers, (item) => { return {material_id: item.material_id, lot_num: item.lot_num }}), (item1, item2) => {
+            return item1.material_id === item2.material_id && item1.lot_num === item2.lot_num;
+          });
+
+          for (const materialLot of materialLotsToInspect) {
+            await saveInspectionSheet(server, {
+              lotNum: materialLot.lot_num,
+              material: { id: materialLot.material_id },
+              state: "pending",
             });
           }
         }
@@ -65,8 +78,8 @@ export default [
                   tags: transfer.tags || "",
                   allocableQuantity: transfer.quantity,
                   availableQuantity: transfer.quantity,
-                  instockQuantity: transfer.quantity,
-                  purchasedQuantity: 0,
+                  onHandQuantity: transfer.quantity,
+                  onOrderQuantity: 0,
                   intransitQuantity: 0,
                   processingQuantity: 0,
                   processedQuantity: 0,
@@ -83,7 +96,7 @@ export default [
                 entityToSave: {
                   allocableQuantity: inventory.allocableQuantity + transfer.quantity,
                   availableQuantity: inventory.availableQuantity + transfer.quantity,
-                  instockQuantity: inventory.instockQuantity + transfer.quantity,
+                  onHandQuantity: inventory.onHandQuantity + transfer.quantity,
                 } as Partial<MomInventory>
               });
             }
@@ -128,8 +141,8 @@ export default [
                 tags: transfer.tags || "",
                 allocableQuantity: 0,
                 availableQuantity: 0,
-                instockQuantity: 0,
-                purchasedQuantity: 0,
+                onHandQuantity: 0,
+                onOrderQuantity: 0,
                 intransitQuantity: 0,
                 processingQuantity: 0,
                 processedQuantity: 0,
@@ -146,7 +159,7 @@ export default [
               entityToSave: {
                 allocableQuantity: (inventory.allocableQuantity || 0) - transfer.quantity,
                 availableQuantity: (inventory.availableQuantity || 0) - transfer.quantity,
-                instockQuantity: (inventory.instockQuantity || 0) - transfer.quantity,
+                onHandQuantity: (inventory.onHandQuantity || 0) - transfer.quantity,
               } as Partial<MomInventory>
             });
           }
@@ -180,8 +193,40 @@ async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
   });
 
   if (!lotInDb) {
-    await baseLotManager.createEntity({
+    return await baseLotManager.createEntity({
       entity: lot,
     });
   }
+
+  return lotInDb;
+}
+
+async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionSheetInput) {
+  if (!sheet.lotNum || !sheet.material || !sheet.material.id) {
+    throw new Error('lotNum and material are required when saving lot info.');
+  }
+
+  const inspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
+  const lotInDb = await inspectionSheetManager.findEntity({
+    filters: [
+      {
+        operator: 'eq',
+        field: 'lot_num',
+        value: sheet.lotNum,
+      },
+      {
+        operator: 'eq',
+        field: 'material_id',
+        value: sheet.material.id,
+      },
+    ]
+  });
+
+  if (!lotInDb) {
+    return await inspectionSheetManager.createEntity({
+      entity: sheet,
+    });
+  }
+
+  return lotInDb;
 }

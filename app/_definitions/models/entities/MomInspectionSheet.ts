@@ -15,9 +15,15 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: 'state',
-      name: '发布状态',
+      name: '检验单状态',
       type: 'option',
-      dataDictionary: 'PublishState',
+      dataDictionary: 'MomInspectionSheetState',
+    },
+    {
+      code: 'result',
+      name: '检验结果',
+      type: 'option',
+      dataDictionary: 'InspectionResult',
     },
     {
       code: 'material',
@@ -77,11 +83,25 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'route_process_id',
     },
     {
+      code: 'sender',
+      name: '送检人',
+      type: 'relation',
+      targetSingularCode: 'base_employee',
+      targetIdColumnName: 'sender_id',
+    },
+    {
       code: 'inspector',
       name: '检验员',
       type: 'relation',
       targetSingularCode: 'base_employee',
       targetIdColumnName: 'inspector_id',
+    },
+    {
+      code: 'reviewer',
+      name: '审核人',
+      type: 'relation',
+      targetSingularCode: 'base_employee',
+      targetIdColumnName: 'reviewer_id',
     },
     {
       code: 'records',

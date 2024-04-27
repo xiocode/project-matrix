@@ -29,7 +29,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'purchasedQuantity',
+      code: 'onOrderQuantity',
     },
     {
       type: 'auto',
@@ -37,7 +37,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'instockQuantity',
+      code: 'onHandQuantity',
     },
     // {
     //   type: 'auto',
@@ -196,7 +196,7 @@ function genListConfig(warehouseCode?: string) {
       },
       {
         type: 'auto',
-        code: 'purchasedQuantity',
+        code: 'onOrderQuantity',
         width: '100px',
       },
       {
@@ -206,7 +206,7 @@ function genListConfig(warehouseCode?: string) {
       },
       {
         type: 'auto',
-        code: 'instockQuantity',
+        code: 'onHandQuantity',
         width: '100px',
       },
       // {

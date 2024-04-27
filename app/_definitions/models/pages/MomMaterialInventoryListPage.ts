@@ -5,43 +5,61 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'lotNum',
-    },
-    {
-      type: 'auto',
       code: 'material',
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
         listFilterFields: ['label']
-      }
+      },
     },
     {
       type: 'auto',
-      code: 'sourceType',
+      code: 'tags',
     },
     {
       type: 'auto',
-      code: 'expireTime',
+      code: 'unit',
     },
     {
       type: 'auto',
-      code: 'qualificationState',
+      code: 'allocableQuantity',
     },
     {
       type: 'auto',
-      code: 'isAOD',
+      code: 'availableQuantity',
     },
+    {
+      type: 'auto',
+      code: 'onOrderQuantity',
+    },
+    {
+      type: 'auto',
+      code: 'intransitQuantity',
+    },
+    {
+      type: 'auto',
+      code: 'onHandQuantity',
+    },
+    {
+      type: 'auto',
+      code: 'reservedQuantity',
+    },
+    {
+      type: 'auto',
+      code: 'allocatedQuantity',
+    },
+
   ],
 }
 
 const page: RapidPage = {
-  code: 'mom_material_lot_list',
-  name: '货品批次列表',
-  title: '货品批次',
+  code: 'mom_material_inventory_list',
+  name: '存货数量',
+  title: '存货数量',
+  permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "BaseLot",
+      entityCode: "MomMaterialInventory",
       viewMode: "table",
       listActions: [
         {
@@ -49,7 +67,12 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
+        {
+          $type: "sonicToolbarRefreshButton",
+          text: "刷新",
+          icon: "ReloadOutlined",
+        },
       ],
       extraActions: [
         {
@@ -58,30 +81,14 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["lot_num"],
+          filterFields: ["material"],
         }
       ],
-      orderBy: [
-        {
-          field: 'createdAt',
-          desc: true,
-        }
-      ],
+      pageSize: 20,
       columns: [
-        {
-          type: 'link',
-          code: 'lotNum',
-          width: '200px',
-          fixed: 'left',
-          rendererType: "link",
-          rendererProps: {
-            url: "/pages/mom_material_lot_details?id={{id}}",
-          },
-        },
         {
           type: 'auto',
           code: 'material',
-          fixed: 'left',
           rendererType: "anchor",
           rendererProps: {
             children: {
@@ -97,30 +104,53 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'sourceType',
+          code: 'tags',
+        },
+        {
+          type: 'auto',
+          code: 'unit',
+          width: '50px',
+          rendererProps: {
+            format: '{{name}}',
+          },
+        },
+        {
+          type: 'auto',
+          code: 'allocableQuantity',
           width: '100px',
         },
         {
           type: 'auto',
-          code: 'expireTime',
-          width: '150px',
-        },
-        {
-          type: 'auto',
-          code: 'qualificationState',
+          code: 'availableQuantity',
           width: '100px',
         },
         {
           type: 'auto',
-          code: 'isAOD',
-          width: '120px',
+          code: 'onOrderQuantity',
+          width: '100px',
         },
         {
           type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          code: 'intransitQuantity',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'onHandQuantity',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'reservedQuantity',
+          width: '100px',
+        },
+        {
+          type: 'auto',
+          code: 'allocatedQuantity',
+          width: '100px',
         },
       ],
+      actionsColumnWidth: "80px",
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
@@ -134,11 +164,11 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "BaseLot",
+          entityCode: "MomMaterialInventory",
         },
       ],
-      newForm: cloneDeep(formConfig),
-      editForm: cloneDeep(formConfig),
+      newForm: cloneDeep(formConfig) as RapidEntityFormConfig,
+      editForm: cloneDeep(formConfig) as RapidEntityFormConfig,
     },
   ],
 };

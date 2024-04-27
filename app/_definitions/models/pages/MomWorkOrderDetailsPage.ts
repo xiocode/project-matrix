@@ -10,6 +10,10 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: 'auto',
       code: 'material',
+      formControlProps: {
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ['label']
+      }
     },
     {
       type: 'auto',

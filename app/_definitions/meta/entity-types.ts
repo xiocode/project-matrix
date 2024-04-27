@@ -16,10 +16,12 @@ import type {
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  InspectionResult,
   MaterialSourceType,
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,
+  MomInspectionSheetState,
   MomInventoryOperationState,
   MomInventoryOperationType,
   MomMpsExecutionState,
@@ -3659,9 +3661,13 @@ export interface MomInspectionSheet {
    */
   code?: string;
   /**
-   * 发布状态
+   * 检验单状态
    */
-  state?: PublishState;
+  state?: MomInspectionSheetState;
+  /**
+   * 检验结果
+   */
+  result?: InspectionResult;
   /**
    * 物品
    */
@@ -3699,9 +3705,17 @@ export interface MomInspectionSheet {
    */
   routeProcess?: Partial<MomRouteProcess>;
   /**
+   * 送检人
+   */
+  sender?: Partial<BaseEmployee>;
+  /**
    * 检验员
    */
   inspector?: Partial<BaseEmployee>;
+  /**
+   * 审核人
+   */
+  reviewer?: Partial<BaseEmployee>;
   /**
    * 检验记录
    */
@@ -3754,25 +3768,41 @@ export interface MomInventory {
    */
   warehouse?: Partial<MomWarehouse>;
   /**
-   * 可分配数量
-   */
-  allocableQuantity?: number;
-  /**
    * 可用数量
    */
   availableQuantity?: number;
   /**
-   * 已采购数量
+   * 可分配数量
    */
-  purchasedQuantity?: number;
+  allocableQuantity?: number;
   /**
-   * 在途数量
+   * 在单数量
+   */
+  onOrderQuantity?: number;
+  /**
+   * 采购在途数量
    */
   intransitQuantity?: number;
   /**
    * 在库数量
    */
-  instockQuantity?: number;
+  onHandQuantity?: number;
+  /**
+   * 已预定数量
+   */
+  reservedQuantity?: number;
+  /**
+   * 已分配数量
+   */
+  allocatedQuantity?: number;
+  /**
+   * 销售在途数量
+   */
+  shippingQuantity?: number;
+  /**
+   * 已交付数量
+   */
+  deliveredQuantity?: number;
   /**
    * 加工中数量
    */
@@ -3785,22 +3815,6 @@ export interface MomInventory {
    * 已产出数量
    */
   yieldQuantity?: number;
-  /**
-   * 已预定数量
-   */
-  reservedQuantity?: number;
-  /**
-   * 已分配数量
-   */
-  allocatedQuantity?: number;
-  /**
-   * 已发货数量
-   */
-  shippingQuantity?: number;
-  /**
-   * 已交付数量
-   */
-  deliveredQuantity?: number;
   /**
    * 单位
    */
@@ -4182,6 +4196,104 @@ export interface MomInventoryOperation {
  * 库存操作记录
  */
 export type SaveMomInventoryOperationInput = Omit<MomInventoryOperation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存统计表配置
+ */
+export interface MomInventoryStatTable {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 实体编号
+   */
+  entityCode?: string;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存统计表配置
+ */
+export type SaveMomInventoryStatTableInput = Omit<MomInventoryStatTable, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 物品库存统计触发配置
+ */
+export interface MomInventoryStatTrigger {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品库存统计触发配置
+ */
+export type SaveMomInventoryStatTriggerInput = Omit<MomInventoryStatTrigger, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 实验室
@@ -4635,6 +4747,219 @@ export interface MomMaterialBreakdownPart {
  * 下级物料
  */
 export type SaveMomMaterialBreakdownPartInput = Omit<MomMaterialBreakdownPart, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存量-按物品分组
+ */
+export interface MomMaterialInventory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 可用数量
+   */
+  availableQuantity?: number;
+  /**
+   * 可分配数量
+   */
+  allocableQuantity?: number;
+  /**
+   * 在单数量
+   */
+  onOrderQuantity?: number;
+  /**
+   * 采购在途数量
+   */
+  intransitQuantity?: number;
+  /**
+   * 在库数量
+   */
+  onHandQuantity?: number;
+  /**
+   * 已预定数量
+   */
+  reservedQuantity?: number;
+  /**
+   * 已分配数量
+   */
+  allocatedQuantity?: number;
+  /**
+   * 销售在途数量
+   */
+  shippingQuantity?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存量-按物品分组
+ */
+export type SaveMomMaterialInventoryInput = Omit<MomMaterialInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存量-按物品、批次和仓库分组
+ */
+export interface MomMaterialLotWarehouseInventory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 在库数量
+   */
+  onHandQuantity?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存量-按物品、批次和仓库分组
+ */
+export type SaveMomMaterialLotWarehouseInventoryInput = Omit<MomMaterialLotWarehouseInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存量-按物品和仓库分组
+ */
+export interface MomMaterialWarehouseInventory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 可分配数量
+   */
+  allocableQuantity?: number;
+  /**
+   * 在库数量
+   */
+  onHandQuantity?: number;
+  /**
+   * 已分配数量
+   */
+  allocatedQuantity?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存量-按物品和仓库分组
+ */
+export type SaveMomMaterialWarehouseInventoryInput = Omit<MomMaterialWarehouseInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 物品包

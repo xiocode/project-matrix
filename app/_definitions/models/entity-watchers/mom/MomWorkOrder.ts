@@ -56,8 +56,8 @@ export default [
             tags: workOrder.tags || "",
             allocableQuantity: workOrder.quantity,
             availableQuantity: workOrder.quantity,
-            instockQuantity: workOrder.quantity,
-            purchasedQuantity: 0,
+            onHandQuantity: workOrder.quantity,
+            onOrderQuantity: 0,
             intransitQuantity: 0,
             processingQuantity: 0,
             processedQuantity: 0,
@@ -74,7 +74,7 @@ export default [
           entityToSave: {
             allocableQuantity: inventory.allocableQuantity + workOrder.quantity,
             availableQuantity: inventory.availableQuantity + workOrder.quantity,
-            instockQuantity: inventory.instockQuantity + workOrder.quantity,
+            onHandQuantity: inventory.onHandQuantity + workOrder.quantity,
           } as Partial<MomInventory>
         });
       }

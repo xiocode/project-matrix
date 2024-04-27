@@ -32,7 +32,7 @@
     "@ruiapp/move-style": "^0.0.22",
     "@ruiapp/rapid-core": "^0.1.23",
     "@ruiapp/rapid-express": "^0.1.23",
-    "@ruiapp/rapid-extension": "^0.0.43",
+    "@ruiapp/rapid-extension": "^0.0.44",
     "@ruiapp/react-renderer": "^0.0.22",
     "@ruiapp/react-rocks": "^0.0.22",
     "ahooks": "^3.7.10",

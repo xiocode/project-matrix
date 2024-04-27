@@ -171,6 +171,15 @@ export type FormFieldType =
   ;
 
 /**
+ * 检验结果
+ */
+export type InspectionResult =
+  | 'uninspected'
+  | 'qualified'
+  | 'unqualified'
+  ;
+
+/**
  * 物料来源类型
  */
 export type MaterialSourceType =
@@ -248,6 +257,16 @@ export type MomGoodState =
   | 'merged'
   | 'transferred'
   | 'destroied'
+  ;
+
+/**
+ * 检验单状态
+ */
+export type MomInspectionSheetState =
+  | 'pending'
+  | 'inspecting'
+  | 'inspected'
+  | 'reviewed'
   ;
 
 /**

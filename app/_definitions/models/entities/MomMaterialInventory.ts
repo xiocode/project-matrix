@@ -4,8 +4,8 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'mom',
-  code: 'MomInventory',
-  name: '物品库存',
+  code: 'MomMaterialInventory',
+  name: '库存量-按物品分组',
   description: '记录某一种物品的数量',
   fields: [
     {
@@ -16,11 +16,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: 'material_id',
     },
     {
-      code: 'warehouse',
-      name: '仓库',
+      code: 'tags',
+      name: '标签',
+      type: 'text',
+    },
+    {
+      code: 'unit',
+      name: '单位',
       type: 'relation',
-      targetSingularCode: 'mom_warehouse',
-      targetIdColumnName: 'warehouse_id',
+      targetSingularCode: 'base_unit',
+      targetIdColumnName: 'unit_id',
     },
     {
       code: 'availableQuantity',
@@ -69,64 +74,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: '销售在途数量',
       description: '正在发往客户途中的数量。一旦运达，应该扣减相应的已发货数量，增加相应的已交付数量。',
       type: 'double',
-    },
-    {
-      code: 'deliveredQuantity',
-      name: '已交付数量',
-      description: '已交付客户的数量。',
-      type: 'double',
-    },
-    {
-      code: 'processingQuantity',
-      name: '加工中数量',
-      description: '加工过程中的投入物料数量。物料可能在线边等待加工，也可能已经加工完成但未报工。',
-      type: 'double',
-    },
-    {
-      code: 'processedQuantity',
-      name: '已加工数量',
-      description: '已加工完成，并且进行了报工的投入物料数量。',
-      type: 'double',
-    },
-    {
-      code: 'yieldQuantity',
-      name: '已产出数量',
-      description: '已加工完成，并且进行了报工的产出物料数量。',
-      type: 'double',
-    },
-    {
-      code: 'unit',
-      name: '单位',
-      type: 'relation',
-      targetSingularCode: 'base_unit',
-      targetIdColumnName: 'unit_id',
-    },
-    {
-      code: 'lotNum',
-      name: '批号',
-      type: 'text',
-    },
-    {
-      code: 'binNum',
-      name: '箱号',
-      type: 'text',
-    },
-    {
-      code: 'serialNum',
-      name: '序列号',
-      type: 'text',
-    },
-    {
-      code: 'tags',
-      name: '标签',
-      type: 'text',
-    },
-    {
-      code: 'labels',
-      name: '标签',
-      type: 'relation[]',
-      targetSingularCode: 'mom_inventory_label',
-      selfIdColumnName: 'inventory_id',
     },
   ],
 };

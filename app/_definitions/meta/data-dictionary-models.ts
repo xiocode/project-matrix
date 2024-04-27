@@ -17,6 +17,7 @@ import EmployeeState from '../models/data-dictionaries/EmployeeState';
 import EnabledDisabledState from '../models/data-dictionaries/EnabledDisabledState';
 import FinTransactionType from '../models/data-dictionaries/FinTransactionType';
 import FormFieldType from '../models/data-dictionaries/FormFieldType';
+import InspectionResult from '../models/data-dictionaries/InspectionResult';
 import MaterialSourceType from '../models/data-dictionaries/MaterialSourceType';
 import MetaDataDictionaryLevel from '../models/data-dictionaries/MetaDataDictionaryLevel';
 import MetaPropertyType from '../models/data-dictionaries/MetaPropertyType';
@@ -25,6 +26,7 @@ import MetaRouteType from '../models/data-dictionaries/MetaRouteType';
 import MomEquipmentPowerState from '../models/data-dictionaries/MomEquipmentPowerState';
 import MomEquipmentProductionState from '../models/data-dictionaries/MomEquipmentProductionState';
 import MomGoodState from '../models/data-dictionaries/MomGoodState';
+import MomInspectionSheetState from '../models/data-dictionaries/MomInspectionSheetState';
 import MomInventoryOperationState from '../models/data-dictionaries/MomInventoryOperationState';
 import MomInventoryOperationType from '../models/data-dictionaries/MomInventoryOperationType';
 import MomMpsExecutionState from '../models/data-dictionaries/MomMpsExecutionState';
@@ -69,6 +71,7 @@ export default [
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  InspectionResult,
   MaterialSourceType,
   MetaDataDictionaryLevel,
   MetaPropertyType,
@@ -77,6 +80,7 @@ export default [
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,
+  MomInspectionSheetState,
   MomInventoryOperationState,
   MomInventoryOperationType,
   MomMpsExecutionState,

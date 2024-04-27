@@ -65,6 +65,7 @@ const page: RapidPage = {
         entityCode: "DataDictionary",
         viewMode: "table",
         selectionMode: "single",
+        selectOnClickRow: true,
         listActions: [
           {
             $type: "sonicToolbarNewEntityButton",

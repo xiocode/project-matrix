@@ -5,7 +5,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: 'auto',
-      code: 'lotNum',
+      code: 'code',
     },
     {
       type: 'auto',
@@ -17,31 +17,31 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'sourceType',
+      code: 'lotNum',
     },
     {
       type: 'auto',
-      code: 'expireTime',
+      code: 'serialNum',
     },
     {
       type: 'auto',
-      code: 'qualificationState',
+      code: 'sender',
     },
     {
       type: 'auto',
-      code: 'isAOD',
+      code: 'state',
     },
   ],
 }
 
 const page: RapidPage = {
-  code: 'mom_material_lot_list',
-  name: '货品批次列表',
-  title: '货品批次',
+  code: 'mom_inspection_sheet_list',
+  name: '检验记录列表',
+  title: '检验记录',
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "BaseLot",
+      entityCode: "MomInspectionSheet",
       viewMode: "table",
       listActions: [
         {
@@ -58,24 +58,29 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["lot_num"],
+          filterFields: ["code"],
         }
       ],
       orderBy: [
         {
-          field: 'createdAt',
+          field: "id",
           desc: true,
-        }
+        },
       ],
       columns: [
         {
+          type: 'auto',
+          code: 'state',
+          width: '100px',
+        },
+        {
           type: 'link',
-          code: 'lotNum',
+          code: 'code',
           width: '200px',
           fixed: 'left',
           rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_material_lot_details?id={{id}}",
+            url: "/pages/mom_inspection_sheet_details?id={{id}}",
           },
         },
         {
@@ -97,23 +102,37 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'sourceType',
-          width: '100px',
-        },
-        {
-          type: 'auto',
-          code: 'expireTime',
+          code: 'lotNum',
           width: '150px',
         },
         {
           type: 'auto',
-          code: 'qualificationState',
-          width: '100px',
+          code: 'serialNum',
+          width: '150px',
         },
         {
           type: 'auto',
-          code: 'isAOD',
-          width: '120px',
+          code: 'sender',
+          width: '150px',
+          rendererProps: {
+            format: '{{name}}',
+          },
+        },
+        {
+          type: 'auto',
+          code: 'inspector',
+          width: '150px',
+          rendererProps: {
+            format: '{{name}}',
+          },
+        },
+        {
+          type: 'auto',
+          code: 'reviewer',
+          width: '150px',
+          rendererProps: {
+            format: '{{name}}',
+          },
         },
         {
           type: 'auto',
@@ -134,11 +153,14 @@ const page: RapidPage = {
           actionType: 'delete',
           actionText: '删除',
           dataSourceCode: "list",
-          entityCode: "BaseLot",
+          entityCode: "MomInspectionSheet",
         },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      $exps: {
+        'newForm.fixedFields.state': '"pending"',
+      }
     },
   ],
 };
