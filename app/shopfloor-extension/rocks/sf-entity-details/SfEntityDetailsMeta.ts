@@ -36,34 +36,18 @@ export default {
           propName: '$name',
         },
         {
-          $type: 'textPropSetter',
-          label: '标题',
-          propName: 'title',
+          $type: 'storeEntityPropSetter',
+          label: '数据模型',
+          propName: 'entityConfig',
         },
         {
-          $type: 'numberPropSetter',
-          label: '列数',
-          propName: 'column',
-          defaultValue: 3,
-        },
-        {
-          $type: 'itemControlsPropSetter',
-          label: '信息项',
-          propName: 'items',
-          controls: [
-            {
-              propName: 'label',
-              control: {
-                $type: 'textSetterInput',
-              },
-            },
-            {
-              propName: 'dataIndex',
-              control: {
-                $type: 'textSetterInput',
-              },
-            },
-          ],
+          $type: 'jsonPropsSetter',
+          label: '展示信息',
+          propNames: ['$id', 'items', 'column', '$exps', '$vars'],
+          defaultValue: {
+            column: 3,
+            items: [],
+          },
         },
       ],
     },

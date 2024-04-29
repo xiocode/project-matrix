@@ -4,10 +4,13 @@ import { cloneDeep, find, map } from 'lodash';
 import { DesignStage } from '../designer-types';
 import { UpdateEntityByIdOptions } from '@ruiapp/rapid-core';
 import rapidApi from '~/rapidApi';
+import { EntityStoreConfig } from '@ruiapp/rapid-extension';
+import { genRandomComponentId } from '../utilities/DesignerUtility';
 
 export interface LinkshopAppStoreConfig extends StoreConfigBase {
   appId?: string;
   appConfig?: LinkshopAppRockConfig;
+  stores?: EntityStoreConfig[];
 }
 
 export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> {
@@ -22,12 +25,14 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
   #selectedComponentId?: string;
   #selectedSlotPropName?: string;
   #snippets: RockConfig[];
+  id: string;
 
   constructor(framework: Framework) {
     this.#name = '';
     this.#emitter = new EventEmitter();
 
     this.#snippets = [];
+    this.id = genRandomComponentId();
 
     this.#framework = framework;
     this.#page = new Page(framework);
@@ -48,10 +53,16 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
         storeConfig.appConfig || {
           $type: 'linkshopApp',
           steps: [],
-          stores: [],
         },
       );
     }
+
+    this.processCommand({
+      name: 'addStores',
+      payload: {
+        stores: storeConfig.stores || [],
+      },
+    });
 
     this.appId = storeConfig.appId;
   }
@@ -80,7 +91,9 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       if (currentStage.type === 'step') {
         const currentStep = this.currentStep!;
         const stagePageConfig = this.#page.getSerializableConfig();
-        currentStep.children = stagePageConfig.view;
+        if (currentStep) {
+          currentStep.children = stagePageConfig.view;
+        }
       }
     }
   }
@@ -159,7 +172,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
 
     const appContent = {
       steps: this.appConfig?.steps,
-      stores: this.appConfig?.stores,
+      stores: this.page.scope.config.stores || [],
     };
 
     await rapidApi.patch(`/shopfloor/shopfloor_apps/${this.appId}`, {
@@ -246,33 +259,37 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       const { parentComponentId, slotPropName, prevSiblingComponentId } = payload;
 
       this.#page.addComponents(this.#snippets, parentComponentId, slotPropName, prevSiblingComponentId);
-    }
-
-    this.storeManagerCommand(command);
-  }
-
-  storeManagerCommand(command: PageCommand) {
-    const existedStores = this.appConfig?.stores || [];
-    if (command.name === 'addStore') {
-      const isExistedStore = existedStores.some((s) => s.name === command.payload?.store?.name);
-      if (isExistedStore) {
+    } else if (command.name === 'addStores') {
+      this.#page.scope.addStores(command.payload?.stores);
+    } else if (command.name === 'addStore') {
+      this.#page.addStore(command.payload?.store);
+    } else if (command.name === 'modifyStore') {
+      this.#page.updateStore(command.payload.store);
+    } else if (command.name === 'removeStore') {
+      this.#page.removeStore(command.payload?.store);
+    } else if (command.name === 'addStep') {
+      const existedSteps = this.appConfig?.steps || [];
+      const isExistedStep = existedSteps.some((s) => s.$name === command.payload?.step?.$name);
+      if (isExistedStep) {
         return;
       }
 
       this.setAppConfig({
         ...(this.appConfig || {}),
-        stores: [...existedStores, command.payload?.store],
+        steps: [...existedSteps, command.payload?.step],
       } as LinkshopAppRockConfig);
-    } else if (command.name === 'modifyStore') {
+    } else if (command.name === 'modifyStep') {
+      const existedSteps = this.appConfig?.steps || [];
       this.setAppConfig({
         ...(this.appConfig || {}),
         // TODO: store name editable?
-        stores: existedStores?.map((s) => (s.name === command.payload?.store?.name ? command.payload.store : s)),
+        steps: existedSteps?.map((s) => (s.$id === command.payload?.step?.$id ? { ...s, ...(command.payload.step || {}) } : s)),
       } as LinkshopAppRockConfig);
-    } else if (command.name === 'removeStore') {
+    } else if (command.name === 'removeStep') {
+      const existedSteps = this.appConfig?.steps || [];
       this.setAppConfig({
         ...(this.appConfig || {}),
-        stores: existedStores?.filter((s) => s.name === command.payload?.store?.name),
+        steps: existedSteps?.filter((s) => s.$id !== command.payload?.step?.$id),
       } as LinkshopAppRockConfig);
     }
   }

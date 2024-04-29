@@ -24,6 +24,8 @@ import ShopfloorExtension from '~/shopfloor-extension/mod';
 
 import styles from 'antd/dist/antd.css';
 import linkshopBuilderStyles from '~/styles/linkshop-builder.css';
+import customizeStyles from '~/styles/customize.css';
+import flexStyles from '~/styles/flex.css';
 import rapidService from '~/rapidService';
 
 import { Avatar, Dropdown, PageHeader } from 'antd';
@@ -37,6 +39,8 @@ export function links() {
   return [
     { rel: 'stylesheet', href: styles },
     { rel: 'stylesheet', href: linkshopBuilderStyles },
+    { rel: 'stylesheet', href: customizeStyles },
+    { rel: 'stylesheet', href: flexStyles },
   ];
 }
 
@@ -213,6 +217,7 @@ export default function Index() {
           name: 'designerStore',
           appId,
           appConfig: shopfloorApp?.content || {},
+          stores: get(shopfloorApp?.content, 'stores', []),
         },
       ],
       view: [
@@ -306,6 +311,7 @@ export default function Index() {
                           backgroundColor: '#F4F5F7',
                           style: {
                             position: 'relative',
+                            overflow: 'auto',
                           },
                           children: [
                             {
@@ -354,7 +360,6 @@ export default function Index() {
                               onWidgetSelected: {
                                 $action: 'script',
                                 script: (event: any) => {
-                                  console.log(event);
                                   const page = event.page;
                                   page.getStore('designerStore').setSelectedComponentTreeNode('', event.args[0]);
                                 },

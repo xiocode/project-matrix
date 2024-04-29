@@ -22,13 +22,15 @@ import ShopfloorExtension from '~/shopfloor-extension/mod';
 import antdStyles from 'antd/dist/antd.css';
 import indexStyles from '~/styles/index.css';
 import customizeStyles from '~/styles/customize.css';
+import flexStyles from '~/styles/flex.css';
+import linkshopBuilderStyles from '~/styles/linkshop-builder.css';
 import rapidService from '~/rapidService';
 
 import { ShopfloorApp } from '~/_definitions/meta/entity-types';
 import { RuiLoggerProvider } from 'rui-logger';
 
 export function links() {
-  return [antdStyles, indexStyles, customizeStyles].map((styles) => {
+  return [antdStyles, indexStyles, linkshopBuilderStyles, customizeStyles, flexStyles].map((styles) => {
     return { rel: 'stylesheet', href: styles };
   });
 }
@@ -202,7 +204,7 @@ export default function Index() {
       stores: get(shopfloorApp.content, 'stores', []),
       view: [
         {
-          $id: "linkshopApp",
+          $id: 'linkshopApp',
           $type: 'linkshopApp',
           steps: get(shopfloorApp.content, 'steps', []),
         },

@@ -1,4 +1,5 @@
 import type { ContainerRockConfig, RockConfigBase, SimpleRockConfig, StoreConfig } from '@ruiapp/move-style';
+import { EntityStoreConfig } from '@ruiapp/rapid-extension';
 
 export type LinkshopWidgetCommonConfig = {
   left: number;
@@ -20,7 +21,6 @@ export type LinkshopAppRockConfig = SimpleRockConfig &
      * 应用步骤
      */
     steps: LinkshopAppStepRockConfig[];
-    stores: StoreConfig[];
   };
 
 export type LinkshopAppStepRockConfig = ContainerRockConfig &

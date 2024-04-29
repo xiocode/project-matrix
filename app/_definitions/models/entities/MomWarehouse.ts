@@ -11,8 +11,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: 'building',
       name: '建筑',
       type: 'relation',
-      targetSingularCode: "base_building",
-      targetIdColumnName: "building_id",
+      targetSingularCode: 'base_building',
+      targetIdColumnName: 'building_id',
     },
     {
       code: 'location',

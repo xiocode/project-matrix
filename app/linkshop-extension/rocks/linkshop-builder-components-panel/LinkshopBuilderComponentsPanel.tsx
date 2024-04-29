@@ -1,14 +1,14 @@
-import type { Framework, Page, PageConfig, PageWithoutLayoutConfig, Rock, RockConfig, RockEvent, RockEventHandlerScript } from "@ruiapp/move-style";
-import LinkshopBuilderComponentsPanelMeta from "./LinkshopBuilderComponentsPanelMeta";
-import type { LinkshopBuilderComponentsPanelRockConfig } from "./linkshop-builder-components-panel-types";
-import { renderRock } from "@ruiapp/react-renderer";
-import { useCallback, useMemo } from "react";
-import type { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
+import type { Framework, Page, PageConfig, PageWithoutLayoutConfig, Rock, RockConfig, RockEvent, RockEventHandlerScript } from '@ruiapp/move-style';
+import LinkshopBuilderComponentsPanelMeta from './LinkshopBuilderComponentsPanelMeta';
+import type { LinkshopBuilderComponentsPanelRockConfig } from './linkshop-builder-components-panel-types';
+import { renderRock } from '@ruiapp/react-renderer';
+import { useCallback, useMemo } from 'react';
+import type { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
 
 export type ComponentTreeNode = ComponentNode | SlotNode;
 
 export interface ComponentNode {
-  $nodeType: "component";
+  $nodeType: 'component';
   $id: string;
   $type?: string;
   label: string;
@@ -16,7 +16,7 @@ export interface ComponentNode {
 }
 
 export interface SlotNode {
-  $nodeType: "slot";
+  $nodeType: 'slot';
   $id: string;
   $componentId: string;
   $slotPropName: string;
@@ -29,63 +29,65 @@ export default {
     const { framework, page } = context;
 
     const { designerStoreName } = props;
-    const designerStore = page.getStore<LinkshopAppDesignerStore>(designerStoreName || "designerStore");
+    const designerStore = page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
 
     const designingPage: Page = designerStore.page;
     const designingPageConfig = designingPage.getConfig();
 
     const componentTree = useMemo(() => convertPageConfigToComponentTree(framework, designingPageConfig), [framework, designingPageConfig]);
 
-    const onComponentTreeNodeSelect: RockEventHandlerScript["script"] = useCallback((event: RockEvent) => {
-      const [selectedKeys, {node}] = event.args as [string[], { node: ComponentTreeNode }];
-      const isNodeSelected = selectedKeys.length !== 0;
-      let selectedComponentId: string | null = null;
-      let selectedSlotPropName: string | null = null;
-      if (isNodeSelected) {
-        if (node.$nodeType === "component") {
-          selectedComponentId = node.$id;
-          selectedSlotPropName = null;
-        } else if (node.$nodeType === "slot") {
-          selectedComponentId = node.$componentId;
-          selectedSlotPropName = node.$slotPropName;
+    const onComponentTreeNodeSelect: RockEventHandlerScript['script'] = useCallback(
+      (event: RockEvent) => {
+        const [selectedKeys, { node }] = event.args as [string[], { node: ComponentTreeNode }];
+        const isNodeSelected = selectedKeys.length !== 0;
+        let selectedComponentId: string | null = null;
+        let selectedSlotPropName: string | null = null;
+        if (isNodeSelected) {
+          if (node.$nodeType === 'component') {
+            selectedComponentId = node.$id;
+            selectedSlotPropName = null;
+          } else if (node.$nodeType === 'slot') {
+            selectedComponentId = node.$componentId;
+            selectedSlotPropName = node.$slotPropName;
+          }
         }
-      }
-      designerStore.setSelectedComponentTreeNode(selectedKeys[0], selectedComponentId, selectedSlotPropName);
-    }, [designerStore]);
+        designerStore.setSelectedComponentTreeNode(selectedKeys[0], selectedComponentId, selectedSlotPropName);
+      },
+      [designerStore],
+    );
 
-    const onComponentTreeNodeDrop: RockEventHandlerScript["script"] = useCallback((event: RockEvent) => {
+    const onComponentTreeNodeDrop: RockEventHandlerScript['script'] = useCallback((event: RockEvent) => {
       const { event: dragEvent, node, dragNode } = event.args[0];
       console.log({
         dragEvent,
         node,
         dragNode,
-      })
+      });
     }, []);
 
     const rockConfig: RockConfig = {
       $id: `${props.$id}-internal`,
-      $type: "antdTree",
-      fieldNames: { key: "$id", title: "label" },
+      $type: 'antdTree',
+      fieldNames: { key: '$id', title: 'label' },
       defaultExpandAll: true,
       treeData: componentTree,
       selectedKeys: [designerStore.selectedComponentTreeNodeId],
       style: props.style,
       onSelect: {
-        $action: "script",
+        $action: 'script',
         script: onComponentTreeNodeSelect,
       } as RockEventHandlerScript,
       onDrop: {
-        $action: "script",
+        $action: 'script',
         script: onComponentTreeNodeDrop,
       } as RockEventHandlerScript,
     };
 
-    return renderRock({context, rockConfig});
+    return renderRock({ context, rockConfig });
   },
 
   ...LinkshopBuilderComponentsPanelMeta,
 } as Rock;
-
 
 export function convertPageConfigToComponentTree(framework: Framework, pageConfig: PageConfig) {
   const componentTree: ComponentTreeNode[] = [];
@@ -100,7 +102,7 @@ function travalRockTree(framework: Framework, rockTree: RockConfig[], componentT
 
     const rockLabel = rock.$name || rockMeta.name || rock.$type;
     const component: ComponentTreeNode = {
-      $nodeType: "component",
+      $nodeType: 'component',
       $id: rock.$id!,
       $type: rock.$type,
       label: rockLabel,
@@ -111,14 +113,14 @@ function travalRockTree(framework: Framework, rockTree: RockConfig[], componentT
         component.children = [];
       }
 
-      for(const slotPropName in rockMeta.slots) {
+      for (const slotPropName in rockMeta.slots) {
         const slotMeta = rockMeta.slots[slotPropName];
         let slotLabel = `#${slotPropName}`;
         if (slotMeta.name) {
-          slotLabel += ` ${slotMeta.name}`
+          slotLabel += ` ${slotMeta.name}`;
         }
         const slotNode: ComponentTreeNode = {
-          $nodeType: "slot",
+          $nodeType: 'slot',
           $id: `${rock.$id}.${slotPropName}`,
           $componentId: rock.$id!,
           $slotPropName: slotPropName,
@@ -136,7 +138,6 @@ function travalRockTree(framework: Framework, rockTree: RockConfig[], componentT
           }
         }
       }
-
     }
 
     if (rock.children) {

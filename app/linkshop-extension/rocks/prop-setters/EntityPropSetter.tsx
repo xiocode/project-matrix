@@ -1,17 +1,16 @@
-import { TextRockPropSetter, RockConfig, Rock, MoveStyleUtils, RockPropSetterControl } from '@ruiapp/move-style';
+import { TextRockPropSetter, RockConfig, Rock, MoveStyleUtils, RockEvent } from '@ruiapp/move-style';
 import { renderRock } from '@ruiapp/react-renderer';
 
-export interface TextPropSetterProps extends TextRockPropSetter {
+export interface EntityPropSetterProps extends TextRockPropSetter {
   $id: string;
   componentConfig: RockConfig;
-  controls?: RockPropSetterControl[];
 }
 
 export default {
-  $type: 'itemControlsPropSetter',
+  $type: 'entityPropSetter',
 
-  Renderer(context, props: TextPropSetterProps) {
-    const { $id, label, labelTip, componentConfig, propName, defaultValue, controls } = props;
+  Renderer(context, props: EntityPropSetterProps) {
+    const { $id, label, labelTip, componentConfig, propName, defaultValue } = props;
     const isPropDynamic = MoveStyleUtils.isComponentPropertyDynamic(componentConfig, propName);
 
     let rockConfig: any = {
@@ -26,8 +25,7 @@ export default {
     if (!isPropDynamic) {
       (rockConfig as any).defaultValue = defaultValue;
       (rockConfig as any).control = {
-        $type: 'itemControlsSetterInput',
-        controls,
+        $type: 'entitySetterSelect',
       };
     }
 
