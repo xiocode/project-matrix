@@ -4210,10 +4210,6 @@ export interface MomInventoryStatTable {
    */
   name?: string;
   /**
-   * 实体编号
-   */
-  entityCode?: string;
-  /**
    * 配置
    */
   config?: Record<string, any>;
@@ -4751,7 +4747,7 @@ export type SaveMomMaterialBreakdownPartInput = Omit<MomMaterialBreakdownPart, '
 /**
  * 库存量-按物品分组
  */
-export interface MomMaterialInventory {
+export interface MomMaterialInventoryBalance {
   /**
    * id
    */
@@ -4829,12 +4825,131 @@ export interface MomMaterialInventory {
 /**
  * 库存量-按物品分组
  */
-export type SaveMomMaterialInventoryInput = Omit<MomMaterialInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialInventoryBalanceInput = Omit<MomMaterialInventoryBalance, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存量变更记录-按物品分组
+ */
+export interface MomMaterialInventoryLog {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 库存量
+   */
+  balanceRecord?: Partial<MomMaterialInventoryBalance>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 可用数量
+   */
+  availableQuantity?: number;
+  /**
+   * 可用数量变化
+   */
+  availableQuantityChange?: number;
+  /**
+   * 可分配数量
+   */
+  allocableQuantity?: number;
+  /**
+   * 可分配数量变化
+   */
+  allocableQuantityChange?: number;
+  /**
+   * 在单数量
+   */
+  onOrderQuantity?: number;
+  /**
+   * 在单数量变化
+   */
+  onOrderQuantityChange?: number;
+  /**
+   * 采购在途数量
+   */
+  intransitQuantity?: number;
+  /**
+   * 采购在途数量变化
+   */
+  intransitQuantityChange?: number;
+  /**
+   * 在库数量
+   */
+  onHandQuantity?: number;
+  /**
+   * 在库数量变化
+   */
+  onHandQuantityChange?: number;
+  /**
+   * 已预定数量
+   */
+  reservedQuantity?: number;
+  /**
+   * 已预定数量变化
+   */
+  reservedQuantityChange?: number;
+  /**
+   * 已分配数量
+   */
+  allocatedQuantity?: number;
+  /**
+   * 已分配数量变化
+   */
+  allocatedQuantityChange?: number;
+  /**
+   * 销售在途数量
+   */
+  shippingQuantity?: number;
+  /**
+   * 销售在途数量变化
+   */
+  shippingQuantityChange?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存量变更记录-按物品分组
+ */
+export type SaveMomMaterialInventoryLogInput = Omit<MomMaterialInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 库存量-按物品、批次和仓库分组
  */
-export interface MomMaterialLotWarehouseInventory {
+export interface MomMaterialLotWarehouseInventoryBalance {
   /**
    * id
    */
@@ -4892,12 +5007,83 @@ export interface MomMaterialLotWarehouseInventory {
 /**
  * 库存量-按物品、批次和仓库分组
  */
-export type SaveMomMaterialLotWarehouseInventoryInput = Omit<MomMaterialLotWarehouseInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialLotWarehouseInventoryBalanceInput = Omit<MomMaterialLotWarehouseInventoryBalance, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存量变更记录-按物品、批次和仓库分组
+ */
+export interface MomMaterialLotWarehouseInventoryLog {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 库存量
+   */
+  balanceRecord?: Partial<MomMaterialLotWarehouseInventoryBalance>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 在库数量
+   */
+  onHandQuantity?: number;
+  /**
+   * 在库数量变化
+   */
+  onHandQuantityChange?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存量变更记录-按物品、批次和仓库分组
+ */
+export type SaveMomMaterialLotWarehouseInventoryLogInput = Omit<MomMaterialLotWarehouseInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 库存量-按物品和仓库分组
  */
-export interface MomMaterialWarehouseInventory {
+export interface MomMaterialWarehouseInventoryBalance {
   /**
    * id
    */
@@ -4959,7 +5145,90 @@ export interface MomMaterialWarehouseInventory {
 /**
  * 库存量-按物品和仓库分组
  */
-export type SaveMomMaterialWarehouseInventoryInput = Omit<MomMaterialWarehouseInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialWarehouseInventoryBalanceInput = Omit<MomMaterialWarehouseInventoryBalance, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 库存量变更记录-按物品和仓库分组
+ */
+export interface MomMaterialWarehouseInventoryLog {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 库存量
+   */
+  balanceRecord?: Partial<MomMaterialWarehouseInventoryBalance>;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 可分配数量
+   */
+  allocableQuantity?: number;
+  /**
+   * 可分配数量变化
+   */
+  allocableQuantityChange?: number;
+  /**
+   * 在库数量
+   */
+  onHandQuantity?: number;
+  /**
+   * 在库数量变化
+   */
+  onHandQuantityChange?: number;
+  /**
+   * 已分配数量
+   */
+  allocatedQuantity?: number;
+  /**
+   * 已分配数量变化
+   */
+  allocatedQuantityChange?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存量变更记录-按物品和仓库分组
+ */
+export type SaveMomMaterialWarehouseInventoryLogInput = Omit<MomMaterialWarehouseInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 物品包

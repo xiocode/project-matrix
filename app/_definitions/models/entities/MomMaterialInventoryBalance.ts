@@ -4,7 +4,7 @@ import type { RapidEntity } from '@ruiapp/rapid-extension';
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: 'mom',
-  code: 'MomMaterialInventory',
+  code: 'MomMaterialInventoryBalance',
   name: '库存量-按物品分组',
   description: '记录某一种物品的数量',
   fields: [
@@ -60,14 +60,14 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: 'reservedQuantity',
       name: '已预定数量',
-      type: 'double',
       description: '客户订单审核通过预定的成品数量；或者生产工单审核通过预定的原料数量。已预定数量和在库数量无关，在库数量不一定大于等于已预定数量。一旦销售发货单或者生产领料单审核通过，应该扣减掉对应的已预定数量，增加对应的已分配数量。',
+      type: 'double',
     },
     {
       code: 'allocatedQuantity',
       name: '已分配数量',
-      type: 'double',
       description: '销售发货单已经批准但还没有发货的成品数量；或者生产领料单已经审核通过但还未领料的数量。已分配数量和在库数量无关，在库数量不一定大于等于已分配数量。一旦订单开始发货，或者完成了生产领料，应该扣减掉对应的已分配数量和在库数量。',
+      type: 'double',
     },
     {
       code: 'shippingQuantity',

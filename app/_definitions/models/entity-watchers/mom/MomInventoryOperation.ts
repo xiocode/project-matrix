@@ -1,6 +1,8 @@
 import type { EntityWatchHandlerContext, EntityWatcher, IRpdServer } from "@ruiapp/rapid-core";
-import { map, uniqBy, uniqWith } from "lodash";
-import type { MomInventoryBusinessType, BaseLot, MomInventory, MomInventoryOperation, SaveBaseLotInput, SaveMomInspectionSheetInput, MomInspectionSheet } from "~/_definitions/meta/entity-types";
+import { every, map, uniqWith } from "lodash";
+import { MomInventoryOperationType } from "~/_definitions/meta/data-dictionary-types";
+import { type MomInventoryBusinessType, type BaseLot, type MomInventory, type MomInventoryOperation, type SaveBaseLotInput, type SaveMomInspectionSheetInput, type MomInspectionSheet, MomInventoryStatTrigger, MomInventoryStatTable } from "~/_definitions/meta/entity-types";
+import InventoryStatService, { StatTableConfig } from "~/services/InventoryStatService";
 
 export default [
   {
@@ -50,125 +52,94 @@ export default [
             [after.id]
             );
 
-          const inventoryManager = server.getEntityManager<MomInventory>('mom_inventory');
-
-          for (const transfer of transfers) {
-            // 更新库存量
-            let inventory = await inventoryManager.findEntity({
-              filters: [
-                {
-                  operator: 'eq',
-                  field: 'material_id',
-                  value: transfer.material_id,
-                },
-                {
-                  operator: 'eq',
-                  field: 'tags',
-                  value: transfer.tags || "",
-                },
-              ]
-            })
-
-            if (!inventory) {
-              await inventoryManager.createEntity({
-                entity: {
-                  material: { id: transfer.material_id },
-                  unit: transfer.unit_id,
-                  lotNum: transfer.lot_num || "",
-                  tags: transfer.tags || "",
-                  allocableQuantity: transfer.quantity,
-                  availableQuantity: transfer.quantity,
-                  onHandQuantity: transfer.quantity,
-                  onOrderQuantity: 0,
-                  intransitQuantity: 0,
-                  processingQuantity: 0,
-                  processedQuantity: 0,
-                  yieldQuantity: 0,
-                  reservedQuantity: 0,
-                  allocatedQuantity: 0,
-                  shippingQuantity: 0,
-                  deliveredQuantity: 0,
-                } as Partial<MomInventory>
-              });
-            } else {
-              await inventoryManager.updateEntityById({
-                id: inventory.id,
-                entityToSave: {
-                  allocableQuantity: inventory.allocableQuantity + transfer.quantity,
-                  availableQuantity: inventory.availableQuantity + transfer.quantity,
-                  onHandQuantity: inventory.onHandQuantity + transfer.quantity,
-                } as Partial<MomInventory>
-              });
-            }
-          }
+          await updateInventoryStats(server,
+            after.business_id,
+            after.operationType,
+            transfers,
+          );
         }
       }
 
       if (after.operationType === "out") {
-        if (!changes.hasOwnProperty('approvalState') || changes.approvalState !== "approved") {
-          return;
-        }
+        if (changes.hasOwnProperty('approvalState') && changes.approvalState === "approved") {
+          const transfers = await server.queryDatabaseObject(
+            `select * from mom_good_transfers where operation_id=$1;`,
+            [after.id]
+            );
 
-        const transfers = await server.queryDatabaseObject(
-          `select * from mom_good_transfers where operation_id=$1;`,
-          [after.id]
+          await updateInventoryStats(server,
+            after.business_id,
+            after.operationType,
+            transfers,
           );
-
-        const inventoryManager = server.getEntityManager<MomInventory>('mom_inventory');
-
-        for (const transfer of transfers) {
-          let inventory = await inventoryManager.findEntity({
-            filters: [
-              {
-                operator: 'eq',
-                field: 'material_id',
-                value: transfer.material_id,
-              },
-              {
-                operator: 'eq',
-                field: 'tags',
-                value: transfer.tags || "",
-              },
-            ]
-          })
-
-          if (!inventory) {
-            await inventoryManager.createEntity({
-              entity: {
-                material: { id: transfer.material_id },
-                unit: transfer.unit_id,
-                lotNum: transfer.lot_num || "",
-                tags: transfer.tags || "",
-                allocableQuantity: 0,
-                availableQuantity: 0,
-                onHandQuantity: 0,
-                onOrderQuantity: 0,
-                intransitQuantity: 0,
-                processingQuantity: 0,
-                processedQuantity: 0,
-                yieldQuantity: 0,
-                reservedQuantity: 0,
-                allocatedQuantity: 0,
-                shippingQuantity: 0,
-                deliveredQuantity: 0,
-              } as Partial<MomInventory>
-            });
-          } else {
-            await inventoryManager.updateEntityById({
-              id: inventory.id,
-              entityToSave: {
-                allocableQuantity: (inventory.allocableQuantity || 0) - transfer.quantity,
-                availableQuantity: (inventory.availableQuantity || 0) - transfer.quantity,
-                onHandQuantity: (inventory.onHandQuantity || 0) - transfer.quantity,
-              } as Partial<MomInventory>
-            });
-          }
         }
       }
     }
   },
 ] satisfies EntityWatcher<any>[];
 
+
+async function updateInventoryStats(server: IRpdServer, businessId: number, operationType: MomInventoryOperationType, transfers: any[]) {
+  const businessTypeManager = server.getEntityManager<MomInventoryBusinessType>('mom_inventory_business_type');
+  const businessType = await businessTypeManager.findById(businessId);
+  if (!businessType) {
+    return;
+  }
+
+  const statTriggerName = businessType?.config?.statTriggerName;
+
+  let quantityFieldsToIncrease: string[] = [];
+  let quantityFieldsToDecrease: string[] = [];
+  const defaultGroupFields = ['material_id', 'tags'];
+  if (statTriggerName) {
+    const statTriggerManager = server.getEntityManager<MomInventoryStatTrigger>('mom_inventory_stat_trigger');
+    const statTrigger = await statTriggerManager.findEntity({
+      filters: [
+        {
+          operator: 'eq',
+          field: 'name',
+          value: businessType.config?.statTriggerName,
+        }
+      ],
+    });
+
+    quantityFieldsToIncrease = statTrigger?.config?.quantityFieldsToIncrease || [];
+    quantityFieldsToDecrease = statTrigger?.config?.quantityFieldsToDecrease || [];
+  }
+
+  const statTableManager = server.getEntityManager<MomInventoryStatTable>('mom_inventory_stat_table');
+  const statTables = await statTableManager.findEntities({});
+
+  const inventoryStatService = new InventoryStatService(server);
+  for (const transfer of transfers) {
+
+    for (const statTable of statTables) {
+      const statTableConfig: StatTableConfig = statTable.config as any;
+      const quantityBalanceFields: string[] = statTableConfig.quantityBalanceFields;
+      if (!quantityBalanceFields) {
+        continue;
+      }
+
+      const groupFields: string[] = statTableConfig.groupFields || defaultGroupFields;
+      let quantityChange = transfer.quantity;
+      if (operationType === "out") {
+        quantityChange *= -1;
+      }
+
+      await inventoryStatService.changeInventoryQuantities({
+        balanceEntityCode: statTableConfig.balanceEntityCode,
+        logEntityCode: statTableConfig.logEntityCode,
+        quantityBalanceFields: quantityBalanceFields,
+        quantityChangeFields: statTableConfig.quantityChangeFields,
+        groupFields: groupFields,
+        groupValues: transfer,
+        quantityFieldsToIncrease,
+        quantityFieldsToDecrease,
+        change: quantityChange,
+      });
+    }
+  }
+}
 
 
 async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {

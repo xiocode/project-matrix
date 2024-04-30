@@ -72,9 +72,12 @@ import MomMasterProductionSchedule from '../models/entities/MomMasterProductionS
 import MomMasterProductionScheduleItem from '../models/entities/MomMasterProductionScheduleItem';
 import MomMaterialBreakdown from '../models/entities/MomMaterialBreakdown';
 import MomMaterialBreakdownPart from '../models/entities/MomMaterialBreakdownPart';
-import MomMaterialInventory from '../models/entities/MomMaterialInventory';
-import MomMaterialLotWarehouseInventory from '../models/entities/MomMaterialLotWarehouseInventory';
-import MomMaterialWarehouseInventory from '../models/entities/MomMaterialWarehouseInventory';
+import MomMaterialInventoryBalance from '../models/entities/MomMaterialInventoryBalance';
+import MomMaterialInventoryLog from '../models/entities/MomMaterialInventoryLog';
+import MomMaterialLotWarehouseInventoryBalance from '../models/entities/MomMaterialLotWarehouseInventoryBalance';
+import MomMaterialLotWarehouseInventoryLog from '../models/entities/MomMaterialLotWarehouseInventoryLog';
+import MomMaterialWarehouseInventoryBalance from '../models/entities/MomMaterialWarehouseInventoryBalance';
+import MomMaterialWarehouseInventoryLog from '../models/entities/MomMaterialWarehouseInventoryLog';
 import MomPackage from '../models/entities/MomPackage';
 import MomPackageGood from '../models/entities/MomPackageGood';
 import MomProcess from '../models/entities/MomProcess';
@@ -187,9 +190,12 @@ export default [
   autoConfigureRapidEntity(MomMasterProductionScheduleItem),
   autoConfigureRapidEntity(MomMaterialBreakdown),
   autoConfigureRapidEntity(MomMaterialBreakdownPart),
-  autoConfigureRapidEntity(MomMaterialInventory),
-  autoConfigureRapidEntity(MomMaterialLotWarehouseInventory),
-  autoConfigureRapidEntity(MomMaterialWarehouseInventory),
+  autoConfigureRapidEntity(MomMaterialInventoryBalance),
+  autoConfigureRapidEntity(MomMaterialInventoryLog),
+  autoConfigureRapidEntity(MomMaterialLotWarehouseInventoryBalance),
+  autoConfigureRapidEntity(MomMaterialLotWarehouseInventoryLog),
+  autoConfigureRapidEntity(MomMaterialWarehouseInventoryBalance),
+  autoConfigureRapidEntity(MomMaterialWarehouseInventoryLog),
   autoConfigureRapidEntity(MomPackage),
   autoConfigureRapidEntity(MomPackageGood),
   autoConfigureRapidEntity(MomProcess),

@@ -10,7 +10,7 @@
       "type": "node",
       "program": "${workspaceFolder}/index.ts",
       "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "node.exe",
+      "runtimeExecutable": "node",
       "runtimeArgs": [
         "${workspaceFolder}/node_modules/ts-node/dist/bin-esm.js",
         "--project",
