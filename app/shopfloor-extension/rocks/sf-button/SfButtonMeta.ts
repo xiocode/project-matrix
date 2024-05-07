@@ -1,4 +1,5 @@
 import type { RockMeta } from '@ruiapp/move-style';
+import { merge } from 'lodash';
 
 export default {
   $type: 'sfButton',
@@ -13,6 +14,14 @@ export default {
     text: {
       valueType: 'string',
       defaultValue: '按钮',
+    },
+    height: {
+      valueType: 'number',
+      defaultValue: 40,
+    },
+    width: {
+      valueType: 'number',
+      defaultValue: 100,
     },
   },
 
@@ -49,3 +58,49 @@ export default {
     { $type: 'sizePropPanel' },
   ],
 } as RockMeta;
+
+export type ButtonKind = 'default' | 'previous' | 'next' | 'menu' | 'complete';
+
+export function getButtonMetaByKind(meta: RockMeta, kind: ButtonKind) {
+  switch (kind) {
+    case 'previous':
+      return merge({}, meta, {
+        props: {
+          text: {
+            valueType: 'string',
+            defaultValue: '上一步',
+          },
+        },
+      });
+    case 'next':
+      return merge({}, meta, {
+        props: {
+          text: {
+            valueType: 'string',
+            defaultValue: '下一步',
+          },
+        },
+      });
+    case 'menu':
+      return merge({}, meta, {
+        props: {
+          text: {
+            valueType: 'string',
+            defaultValue: '菜单',
+          },
+        },
+      });
+    case 'complete':
+      return merge({}, meta, {
+        props: {
+          text: {
+            valueType: 'string',
+            defaultValue: '完成步骤',
+          },
+        },
+      });
+    case 'default':
+    default:
+      return meta;
+  }
+}
