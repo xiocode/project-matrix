@@ -53,6 +53,10 @@ const page: RapidPage = {
           type: 'auto',
           code: 'name',
         },
+        {
+          type: 'auto',
+          code: 'config',
+        },
       ],
       actions: [
         {

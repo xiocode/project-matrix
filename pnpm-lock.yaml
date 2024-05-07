@@ -42,11 +42,11 @@ dependencies:
     specifier: ^0.0.22
     version: 0.0.22(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ^0.1.23
-    version: 0.1.23(winston@3.11.0)
+    specifier: ^0.1.25
+    version: 0.1.25(winston@3.11.0)
   '@ruiapp/rapid-express':
-    specifier: ^0.1.23
-    version: 0.1.23(express@4.18.2)(winston@3.11.0)
+    specifier: ^0.1.25
+    version: 0.1.25(express@4.18.2)(winston@3.11.0)
   '@ruiapp/rapid-extension':
     specifier: ^0.0.44
     version: 0.0.44(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.22)(@ruiapp/react-renderer@0.0.22)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2475,8 +2475,8 @@ packages:
       tough-cookie: 4.1.3
     dev: true
 
-  /@ruiapp/rapid-core@0.1.23(winston@3.11.0):
-    resolution: {integrity: sha512-t0wyY4vJCjbPysPfWYPT1K/6+dwAKVVKeNXdHsP0I7PkIKbWN9SFk0MpHre/RzLGP+ycjXN8bd3UEaQsiNpGVg==}
+  /@ruiapp/rapid-core@0.1.25(winston@3.11.0):
+    resolution: {integrity: sha512-HVShkHs1cLJS8I+ImGFrpOfkhzZWByWunS+agAZf5aW9DTG84i5bXkQu/R3lAbim61fxRdbO9N54UGEYzfdfQg==}
     peerDependencies:
       winston: ^3.11.0
     dependencies:
@@ -2488,19 +2488,19 @@ packages:
       winston: 3.11.0
     dev: false
 
-  /@ruiapp/rapid-express@0.1.23(express@4.18.2)(winston@3.11.0):
-    resolution: {integrity: sha512-e1k9y+F7ubWLo8e/cOgX4Chc7/BrddwiSYdZa7PoQ0Lwzqv2G427BRyCRtaAy1QP6LcwKPaF4hgRP7cZG8+7uA==}
+  /@ruiapp/rapid-express@0.1.25(express@4.18.2)(winston@3.11.0):
+    resolution: {integrity: sha512-K7db3PSFM4ckEhiszN6HMUDidGSOK3RjUKb1U3lSwApkNpD3NrJJELoe4unTsiT+dPCeVgVlnG6t348JJ3HJFA==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.23(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.25(winston@3.11.0)
       express: 4.18.2
     transitivePeerDependencies:
       - winston
     dev: false
 
   /@ruiapp/rapid-extension@0.0.44(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.22)(@ruiapp/react-renderer@0.0.22)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-VMu07KerCrsbsBzCUaj1Xijh15FPB+lYgvcmixUTGTAyvhSKJkk+cHbzCjOZmHBZ7bZ5xhQ8z9APfu9gcAEKYg==, tarball: https://registry.npmmirror.com/@ruiapp/rapid-extension/-/rapid-extension-0.0.44.tgz}
+    resolution: {integrity: sha512-VMu07KerCrsbsBzCUaj1Xijh15FPB+lYgvcmixUTGTAyvhSKJkk+cHbzCjOZmHBZ7bZ5xhQ8z9APfu9gcAEKYg==}
     peerDependencies:
       '@ant-design/icons': ^4.7.0
       '@ruiapp/move-style': ^0.0.21

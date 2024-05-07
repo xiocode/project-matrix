@@ -9,10 +9,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: 'auto',
-      code: 'entityCode',
-    },
-    {
-      type: 'auto',
       code: 'config',
     },
   ],
@@ -59,7 +55,7 @@ const page: RapidPage = {
         },
         {
           type: 'auto',
-          code: 'entityCode',
+          code: 'config',
         },
       ],
       actions: [

@@ -1,5 +1,5 @@
 import type { EntityFilterOptions, IRpdServer } from "@ruiapp/rapid-core";
-import { isNull } from "lodash";
+import { isNull, isUndefined } from "lodash";
 
 export type StatTableConfig = {
   balanceEntityCode: string;
@@ -43,7 +43,7 @@ export default class InventoryStatService {
 
     const balanceRecordManager = this.#server.getEntityManager<Record<string, any>>(balanceEntityCode);
     const logRecordManager = this.#server.getEntityManager<Record<string, any>>(logEntityCode);
-    const findRecordFilters = groupFields.map((groupField) => {
+    const findRecordFilters = groupFields.filter((groupField) => !isUndefined(groupValues[groupField])).map((groupField) => {
       const fieldValue = groupValues[groupField];
       if (isNull(fieldValue)) {
         return {
