@@ -256,7 +256,7 @@ export default {
         defaultProps.$id = genRandomComponentId();
 
         // 覆盖默认属性
-        const itemProps = Object.assign({}, defaultProps, item.props);
+        const itemProps = Object.assign(defaultProps, item.props);
 
         sendDesignerCommand(page, designerStore, {
           name: 'addComponent',
