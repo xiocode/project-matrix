@@ -3,10 +3,12 @@ import LinkshopBuilderToolbarMeta from './LinkshopBuilderToolbarMeta';
 import type { LinkshopBuilderToolbarRockConfig } from './linkshop-builder-toolbar-types';
 import { Button, Dropdown, MenuProps, Space, message } from 'antd';
 import {
+  ArrowLeftOutlined,
   ArrowRightOutlined,
   BarcodeOutlined,
   CalendarOutlined,
   CheckCircleOutlined,
+  CheckOutlined,
   CheckSquareOutlined,
   ColumnHeightOutlined,
   ColumnWidthOutlined,
@@ -14,13 +16,13 @@ import {
   FileTextOutlined,
   FontSizeOutlined,
   FormOutlined,
+  MenuOutlined,
   NumberOutlined,
   PictureOutlined,
   PlusOutlined,
   ProfileOutlined,
   QrcodeOutlined,
   SaveFilled,
-  SaveOutlined,
   StarOutlined,
   TableOutlined,
   VerticalAlignBottomOutlined,
@@ -31,6 +33,41 @@ import { renderRockChildren } from '@ruiapp/react-renderer';
 import { useCallback } from 'react';
 import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
 import { genRandomComponentId, sendDesignerCommand } from '~/linkshop-extension/utilities/DesignerUtility';
+import {ItemType} from "antd/lib/menu/hooks/useItems";
+
+type ComponentItem = ItemType & {
+  props?: {}
+  children?: ComponentItems
+}
+
+type ComponentItems = ComponentItem[]
+
+function GetComponentItem(items: ComponentItems, keyPath: string[]): ComponentItem | undefined {
+  if (keyPath.length == 0) {
+    return;
+  }
+  for (let item of items) {
+    if (item.key) {
+      if (item.key != keyPath[keyPath.length - 1]) {
+        continue;
+      }
+      if (keyPath.length == 1) {
+        return item;
+      }
+    }
+    if (!item.children) {
+      continue;
+    }
+    if (item.key) {
+      keyPath = keyPath.slice(0, keyPath.length - 1);
+    }
+    let res = GetComponentItem(item.children, keyPath);
+    if (res) {
+      return res;
+    }
+  }
+  return;
+}
 
 export default {
   Renderer(context, props: LinkshopBuilderToolbarRockConfig) {
@@ -38,7 +75,7 @@ export default {
     const { designerStoreName } = props;
     const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
 
-    const insertComponentItems: MenuProps['items'] = [
+    const insertComponentItems: ComponentItems = [
       {
         type: 'group',
         label: '基本',
@@ -60,8 +97,63 @@ export default {
           },
           {
             label: '按钮',
-            key: 'sfButton',
+            key: 'buttons',
             icon: <ArrowRightOutlined />,
+            children: [
+              {
+                label: '点击按钮',
+                key: 'sfButton',
+                icon: <FontSizeOutlined />,
+              },
+              {
+                label: '上一步',
+                key: 'sfButton.prev',
+                icon: <ArrowLeftOutlined />,
+                props: {
+                  text: '上一步',
+                  icon: 'ArrowLeftOutlined',
+                  width: 110,
+                  height:40,
+                  onClick: {
+                    "script": "(function() {\n    (function() {\n    event.page.sendComponentMessage(\"linkshopApp\", {name: \"gotoPreviousStep\"});\n  }).apply(this, []);\n\n})();\n\n",
+                    "$action": "script",
+                    "blockly": {
+                      "configs": "{\"blocks\":{\"languageVersion\":0,\"blocks\":[{\"type\":\"event_start\",\"id\":\"Dm7N@r:z,Us*Qr?dHSK_\",\"x\":150,\"y\":270,\"inputs\":{\"STATEMENT_DO\":{\"block\":{\"type\":\"js_script\",\"id\":\"L7xLW1}xk,r;YwS8giWA\",\"inputs\":{\"EXPRESSION\":{\"shadow\":{\"type\":\"text_multiline\",\"id\":\"M+~]1y,#_([XQBKxdf!F\",\"fields\":{\"TEXT\":\"event.page.sendComponentMessage(\\\"linkshopApp\\\", {name: \\\"gotoPreviousStep\\\"});\"}}}}}}}}]}}"
+                    },
+                    "generator": "blockly"
+                  }
+                },
+              },
+              {
+                label: '下一步',
+                key: 'sfButton.next',
+                icon: <ArrowRightOutlined />,
+                props: {
+                  text: '下一步',
+                  icon: 'ArrowRightOutlined',
+                  width: 110,
+                  height:40,
+                  onClick: {
+                    "script": "(function() {\n    (function() {\n    event.page.sendComponentMessage(\"linkshopApp\", {name: \"gotoNextStep\"});\n  }).apply(this, []);\n\n})();\n\n",
+                    "$action": "script",
+                    "blockly": {
+                      "configs": "{\"blocks\":{\"languageVersion\":0,\"blocks\":[{\"type\":\"event_start\",\"id\":\"Dm7N@r:z,Us*Qr?dHSK_\",\"x\":150,\"y\":270,\"inputs\":{\"STATEMENT_DO\":{\"block\":{\"type\":\"js_script\",\"id\":\"L7xLW1}xk,r;YwS8giWA\",\"inputs\":{\"EXPRESSION\":{\"shadow\":{\"type\":\"text_multiline\",\"id\":\"M+~]1y,#_([XQBKxdf!F\",\"fields\":{\"TEXT\":\"event.page.sendComponentMessage(\\\"linkshopApp\\\", {name: \\\"gotoNextStep\\\"});\"}}}}}}}}]}}"
+                    },
+                    "generator": "blockly"
+                  }
+                },
+              },
+              {
+                label: '菜单',
+                key: 'sfButton.menu',
+                icon: <MenuOutlined />,
+              },
+              {
+                label: '完成步骤',
+                key: 'sfButton.complete',
+                icon: <CheckOutlined />,
+              },
+            ],
           },
         ],
       },
@@ -141,8 +233,15 @@ export default {
 
     const insertComponentMenuProps = {
       items: insertComponentItems,
+      mode: 'vertical',
       onClick: (e: any) => {
-        const rockType = e.key;
+
+        const item = GetComponentItem(insertComponentItems, e.keyPath);
+        if (!item) {
+          return;
+        }
+
+        const rockType = e.key.split('.')[0];
 
         const { framework, page } = context;
         const rockMeta = framework.getComponent(rockType);
@@ -150,13 +249,15 @@ export default {
         const defaultProps: any = MoveStyleUtils.getRockDefaultProps(rockMeta);
         defaultProps.$id = genRandomComponentId();
 
+        const itemProps = Object.assign({}, defaultProps, item.props);
+
         sendDesignerCommand(page, designerStore, {
           name: 'addComponent',
           payload: {
             componentType: rockType,
             parentComponentId: designerStore.selectedComponentId,
             slotPropName: designerStore.selectedSlotPropName,
-            defaultProps,
+            defaultProps: itemProps,
           },
         } as PageCommandAddComponent);
       },
