@@ -2,10 +2,11 @@ import { memo, useEffect, useState } from 'react';
 import { Checkbox, Col, Form, Input, Modal, Row } from 'antd';
 import ModelSelector from './ModelSelector';
 import rapidAppDefinition from '~/rapidAppDefinition';
-import { RapidEntity } from '@ruiapp/rapid-extension';
+import { EntityStoreConfig, RapidEntity } from '@ruiapp/rapid-extension';
 
 interface ModelSettingsFormModalProps {
-  entityStoreConfig?: any;
+  entityStoreConfig?: EntityStoreConfig;
+  storeConfigs: EntityStoreConfig[];
   visible: boolean;
   onVisibleChange(visble: boolean): void;
   onFormSubmit(config: any): void;
@@ -20,8 +21,8 @@ const ModelSettingsFormModal = memo<ModelSettingsFormModalProps>((props) => {
       form.setFieldsValue(
         props.entityStoreConfig || {
           name: undefined,
-          modelCode: undefined,
-          modelProperties: [],
+          entityCode: undefined,
+          properties: [],
         },
       );
 
@@ -46,36 +47,55 @@ const ModelSettingsFormModal = memo<ModelSettingsFormModalProps>((props) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         onFinish={(formData) => {
-          const storeConfig = {
-            type: 'entityStore',
-            name: formData.name,
-            entityCode: formData.modelCode,
-            properties: formData.modelProperties || [],
-            filters: [],
-            orderBy: [],
+          let storeConfig = {
+            ...(props.entityStoreConfig || {}),
+            ...formData,
           };
+          if (!props.entityStoreConfig) {
+            storeConfig = {
+              type: 'entityStore',
+              name: formData.name,
+              entityCode: formData.entityCode,
+              properties: formData.properties || [],
+              filters: [],
+              orderBy: [],
+            };
+          }
 
           props.onFormSubmit(storeConfig);
           props.onVisibleChange(false);
         }}
         onValuesChange={(values) => {
-          if ('modelCode' in values) {
-            const entiry = rapidAppDefinition.entities.find((e) => e.code === values.modelCode);
+          if ('entityCode' in values) {
+            const entiry = rapidAppDefinition.entities.find((e) => e.code === values.entityCode);
             setSelectedEntity(entiry);
             form.setFieldValue(
-              'modelProperties',
+              'properties',
               (entiry?.fields || []).map((f) => f.code),
             );
           }
         }}
       >
-        <Form.Item name="name" label="数据名称" required rules={[{ required: true, message: '数据名称必填' }]}>
-          <Input placeholder="请输入" />
+        <Form.Item
+          name="name"
+          label="数据名称"
+          required
+          rules={[
+            { required: true, message: '数据名称必填' },
+            {
+              validator(rule, value, callback) {
+                const isExist = props.storeConfigs?.some((c) => props.entityStoreConfig?.name !== c.name && c.name === value);
+                callback(isExist ? '数据名称已存在' : undefined);
+              },
+            },
+          ]}
+        >
+          <Input disabled={props.entityStoreConfig != null} placeholder="请输入" />
         </Form.Item>
-        <Form.Item name="modelCode" label="数据模型" required rules={[{ required: true, message: '数据模型必选' }]}>
+        <Form.Item name="entityCode" label="数据模型" required rules={[{ required: true, message: '数据模型必选' }]}>
           <ModelSelector />
         </Form.Item>
-        <Form.Item name="modelProperties" label="模型属性" required rules={[{ required: true, message: '模型属性必选' }]}>
+        <Form.Item name="properties" label="模型属性" required rules={[{ required: true, message: '模型属性必选' }]}>
           <Checkbox.Group style={{ width: '100%' }}>
             {selectEntity ? (
               <Row gutter={24}>

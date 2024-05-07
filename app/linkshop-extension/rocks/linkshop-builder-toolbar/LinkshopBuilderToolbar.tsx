@@ -71,7 +71,7 @@ export default {
         children: [
           {
             label: '表单',
-            key: 'sfForm',
+            key: 'sfEntityForm',
             icon: <FormOutlined />,
           },
           {

@@ -12,20 +12,54 @@
 .lsb-toolbar-extras {
 }
 
-.lsb-stores-panel {
+.lsb-sidebar-panel {
   height: 100%;
   padding: 8px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.lsb-stores-panel--addBtn {
+.lsb-sidebar-panel--add_btn {
   color: #1890ff;
   font-size: 14px;
   cursor: pointer;
-  margin-bottom: 10px;
+  border-radius: 4px;
+  padding: 8px 16px;
 }
 
+.lsb-sidebar-panel--add_btn:hover {
+  background-color: rgba(24, 144, 255, 0.1);
+}
+
+.lsb-sidebar-panel--item {
+  height: 36px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 16px;
+}
+
+.lsb-sidebar-panel--item_selected {
+  background-color: rgba(24, 144, 255, 0.1);
+}
+
+.lsb-sidebar-panel--item_icon {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1890ff;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.lsb-sidebar-panel--item:hover {
+  background-color: rgba(24, 144, 255, 0.1);
+}
+
+.lsb-sidebar-panel--item:hover .lsb-sidebar-panel--item_icon {
+  visibility: visible;
+}
+
+.lsb-antd-table .ant-table-wrapper,
 .lsb-antd-table .ant-spin-nested-loading,
 .lsb-antd-table .ant-spin-container,
 .lsb-antd-table .ant-table,
@@ -33,4 +67,8 @@
 .lsb-antd-table .ant-table-content,
 .lsb-antd-table table {
   height: 100%;
+}
+
+.lsb-antd-row .ant-row {
+  margin: 0 !important;
 }

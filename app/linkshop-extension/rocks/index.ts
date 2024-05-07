@@ -8,8 +8,13 @@ import LinkshopBuilderTriggersPanel from './linkshop-builder-triggers-panel/Link
 import LinkshopBuilderToolbar from './linkshop-builder-toolbar/LinkshopBuilderToolbar';
 
 // setters
-import ItemControlsSetterInput from './prop-controls/ItemControlsSetterInput';
-import ItemControlsPropSetter from './prop-setters/ItemControlsPropSetter';
+import DynamicArraySetterInput from './prop-controls/DynamicArraySetterInput';
+import DynamicArrayPropSetter from './prop-setters/DynamicArrayPropSetter';
+import StoreEntitySetterSelect from './prop-controls/StoreEntitySetterSelect';
+import StoreEntityPropSetter from './prop-setters/StoreEntityPropSetter';
+import EntitySetterSelect from './prop-controls/EntitySetterSelect';
+import EntityPropSetter from './prop-setters/EntityPropSetter';
+import JsonPropsSetter from './prop-setters/JsonPropsSetter';
 
 export default [
   LinkshopApp,
@@ -22,6 +27,11 @@ export default [
   LinkshopBuilderToolbar,
 
   // setters
-  ItemControlsSetterInput,
-  ItemControlsPropSetter,
+  DynamicArraySetterInput,
+  DynamicArrayPropSetter,
+  StoreEntitySetterSelect,
+  StoreEntityPropSetter,
+  EntitySetterSelect,
+  EntityPropSetter,
+  JsonPropsSetter,
 ];

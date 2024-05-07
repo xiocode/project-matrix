@@ -1,20 +1,56 @@
-import { CommonProps, type Rock } from '@ruiapp/move-style';
+import { CommonProps, type Rock, type RockConfig } from '@ruiapp/move-style';
+import { renderRock } from '@ruiapp/react-renderer';
 import SfEntityTableMeta from './SfEntityTableMeta';
-import type { SfEntityTableRockConfig } from './sf-entity-table-types';
-import { pick } from 'lodash';
-import { convertToEventHandlers, renderRock } from '@ruiapp/react-renderer';
-import { Table } from 'antd';
+import type { SfEntityTableRockConfig, SfEntityTableState } from './sf-entity-table-types';
+import { find, pick } from 'lodash';
+import rapidAppDefinition from '~/rapidAppDefinition';
+import { generateRockConfigOfError, RapidEntity } from '@ruiapp/rapid-extension';
 
 export default {
-  Renderer(context, props: SfEntityTableRockConfig) {
+  Renderer(context, props, state) {
+    const { pageSize = 20 } = props;
+
+    const entities = rapidAppDefinition.entities;
+    const entityConfig = props.entityConfig;
+    let mainEntity: RapidEntity | undefined;
+
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
     wrapStyle.position = 'absolute';
+    wrapStyle.overflowY = 'auto';
 
-    const eventHandlers = convertToEventHandlers({ context, rockConfig: props });
+    if (entityConfig?.entityCode) {
+      mainEntity = find(entities, (item) => item.code === entityConfig.entityCode);
+      if (!mainEntity) {
+        const errorRockConfig = generateRockConfigOfError(new Error(`Entitiy with code '${entityConfig.entityCode}' not found.`));
+        return renderRock({
+          context,
+          rockConfig: {
+            ...errorRockConfig,
+            style: wrapStyle,
+          },
+        });
+      }
+    }
 
-    return <Table className="lsb-antd-table" columns={props.columns || []} style={wrapStyle} />;
+    const tableRockConfig: RockConfig = {
+      $id: `${props.$id}-entity-list`,
+      $type: 'rapidEntityList',
+      dataSourceCode: entityConfig?.name,
+      listActions: props.listActions,
+      extraActions: props.extraActions,
+      selectionMode: props.selectionMode,
+      selectOnClickRow: props.selectOnClickRow,
+      onSelectedIdsChange: props.onSelectedIdsChange,
+      viewMode: 'table',
+      pageSize,
+      actions: props.actions || [],
+      columns: props.columns || [],
+      fixedFilters: props.fixedFilters || [],
+    };
+
+    return <div style={wrapStyle}>{renderRock({ context, rockConfig: tableRockConfig })}</div>;
   },
 
   ...SfEntityTableMeta,
-} as Rock;
+} as Rock<SfEntityTableRockConfig, SfEntityTableState>;

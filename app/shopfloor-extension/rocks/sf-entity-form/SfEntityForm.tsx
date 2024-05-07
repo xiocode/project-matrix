@@ -1,16 +1,14 @@
 import { CommonProps, RockConfig, type Rock } from '@ruiapp/move-style';
-import SfEntityDetailsMeta from './SfEntityDetailsMeta';
-import type { SfEntityDetailsRockConfig } from './sf-entity-details-types';
+import SfEntityFormMeta from './SfEntityFormMeta';
+import type { SfEntityFormRockConfig } from './sf-entity-form-types';
 import { find, pick } from 'lodash';
 import { renderRock } from '@ruiapp/react-renderer';
 import rapidAppDefinition from '~/rapidAppDefinition';
 import { generateRockConfigOfError, RapidEntity } from '@ruiapp/rapid-extension';
 
 export default {
-  onReceiveMessage(message, state, props) {},
-
-  Renderer(context, props: SfEntityDetailsRockConfig) {
-    const { column = 3, items = [], entityConfig } = props;
+  Renderer(context, props: SfEntityFormRockConfig) {
+    const { items = [], column = 1, actions = [], entityConfig } = props;
 
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
@@ -34,13 +32,16 @@ export default {
       }
     }
 
-    const detailsRockConfig: RockConfig = {
+    const formMode = props.mode || 'new';
+
+    const formRockConfig: RockConfig = {
       $type: 'rapidEntityForm',
       entityCode: entityConfig?.entityCode,
-      dataSourceCode: `${entityConfig?.name}_details`,
-      mode: 'view',
+      dataSourceCode: formMode === 'new' ? null : `${entityConfig?.name}_${formMode}`,
+      mode: formMode,
       column,
       items,
+      actions,
       $exps: props.$exps,
     };
 
@@ -48,11 +49,11 @@ export default {
       <div style={wrapStyle} className="lsb-antd-row">
         {renderRock({
           context,
-          rockConfig: detailsRockConfig,
+          rockConfig: formRockConfig,
         })}
       </div>
     );
   },
 
-  ...SfEntityDetailsMeta,
+  ...SfEntityFormMeta,
 } as Rock;

@@ -36,28 +36,14 @@ export default {
           propName: '$name',
         },
         {
-          $type: 'textPropSetter',
-          label: '标题',
-          propName: 'title',
+          $type: 'storeEntityPropSetter',
+          label: '数据模型',
+          propName: 'entityConfig',
         },
         {
-          $type: 'itemControlsPropSetter',
-          label: '表格列',
-          propName: 'columns',
-          controls: [
-            {
-              propName: 'title',
-              control: {
-                $type: 'textSetterInput',
-              },
-            },
-            {
-              propName: 'dataIndex',
-              control: {
-                $type: 'textSetterInput',
-              },
-            },
-          ],
+          $type: 'jsonPropsSetter',
+          label: '表格',
+          propNames: ['$id', 'columns', 'listActions', 'extraActions', 'actions', 'fixedFilters', 'selectionMode', 'selectOnClickRow', 'onSelectedIdsChange'],
         },
       ],
     },

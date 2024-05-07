@@ -1,7 +1,7 @@
 import type { RockMeta } from '@ruiapp/move-style';
 
 export default {
-  $type: 'sfForm',
+  $type: 'sfEntityForm',
 
   name: '表单',
 
@@ -36,28 +36,19 @@ export default {
           propName: '$name',
         },
         {
-          $type: 'textPropSetter',
-          label: '标题',
-          propName: 'title',
+          $type: 'storeEntityPropSetter',
+          label: '数据模型',
+          propName: 'entityConfig',
         },
         {
-          $type: 'itemControlsPropSetter',
+          $type: 'jsonPropsSetter',
           label: '表单项',
-          propName: 'items',
-          controls: [
-            {
-              propName: 'label',
-              control: {
-                $type: 'textSetterInput',
-              },
-            },
-            {
-              propName: 'name',
-              control: {
-                $type: 'textSetterInput',
-              },
-            },
-          ],
+          propNames: ['$id', 'items', 'actions', 'column'],
+          defaultValue: {
+            items: [],
+            actions: [],
+            column: 1,
+          },
         },
       ],
     },

@@ -13,7 +13,7 @@ import { renderRockChildren } from '@ruiapp/react-renderer';
 import _, { forEach, split } from 'lodash';
 import { useCallback, useMemo } from 'react';
 
-export interface ItemControlsSetterInputProps extends RockConfigBase {
+export interface DynamicArraySetterInputProps extends RockConfigBase {
   $id: string;
   value?: Record<string, any>[];
   onChange?: RockEventHandler;
@@ -21,15 +21,15 @@ export interface ItemControlsSetterInputProps extends RockConfigBase {
 }
 
 export default {
-  $type: 'itemControlsSetterInput',
+  $type: 'dynamicArraySetterInput',
 
-  Renderer(context, props: ItemControlsSetterInputProps) {
+  Renderer(context, props: DynamicArraySetterInputProps) {
     const { page, framework, scope } = context;
     const { $id, controls, onChange, value } = props;
 
     const onControlsChange = useCallback(
-      (v: any) => {
-        handleComponentEvent('onChange', framework, page, scope, props, onChange!, v);
+      (value: DynamicArraySetterInputProps['value']) => {
+        handleComponentEvent('onChange', framework, page, scope, props, onChange!, [value]);
       },
       [page, $id, onChange],
     );
@@ -60,7 +60,7 @@ export default {
             }
 
             const onInputControlChange: RockEventHandlerScript['script'] = (event: RockEvent) => {
-              const propValue = event.args;
+              const propValue = event.args[0];
               onControlsChange(
                 value?.map((item, i) => {
                   return i === rIdx ? { ...(item || {}), [control.propName!]: propValue } : item;
@@ -78,6 +78,9 @@ export default {
             $id: `${$id}-row-${rIdx}-${cIdx}`,
             $type: 'antdCol',
             flex: 1,
+            style: {
+              marginRight: 4,
+            },
             children: config,
           } as RockConfig);
         });

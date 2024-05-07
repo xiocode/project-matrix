@@ -5,48 +5,99 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import ModelSettingsFormModal from './ModelSettingsFormModal';
 import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
+import { sendDesignerCommand } from '~/linkshop-extension/utilities/DesignerUtility';
+import { EllipsisOutlined } from '@ant-design/icons';
+import { Dropdown } from 'antd';
+
+enum StoreOperator {
+  Modify = 'modify',
+  Remove = 'remove',
+}
 
 export default {
-  Renderer(context, props: LinkshopBuilderStoresPanelRockConfig, state) {
+  Renderer(context, props: LinkshopBuilderStoresPanelRockConfig) {
     const { page } = context;
     const { designerStoreName } = props;
 
-    const [visible, setVisible] = useState<boolean>(false);
+    const [state, setState] = useState<{ visible?: boolean; entityStoreConfig?: any }>({});
 
-    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
-    const shopfloorApp = designerStore.appConfig;
+    const designerStore = page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
 
-    const stores = shopfloorApp?.stores || [];
+    const stores = designerStore.page.scope.config.stores || [];
+
+    const onStoreOperator = (key: StoreOperator, store: any) => {
+      switch (key) {
+        case StoreOperator.Modify:
+          setState((draft) => {
+            return { ...draft, entityStoreConfig: store, visible: true };
+          });
+          break;
+        case StoreOperator.Remove:
+          sendDesignerCommand(context.page, designerStore, {
+            name: 'removeStore',
+            payload: {
+              store,
+            },
+          });
+          break;
+      }
+    };
 
     return (
       <>
-        <div className="lsb-stores-panel">
-          <div className="lsb-stores-panel--addBtn">
-            <span
-              onClick={() => {
-                setVisible(true);
-              }}
-            >
+        <div className="lsb-sidebar-panel">
+          <div
+            className="lsb-sidebar-panel--add_btn"
+            onClick={() => {
+              setState((draft) => {
+                return {
+                  ...draft,
+                  visible: true,
+                  entityStoreConfig: null,
+                };
+              });
+            }}
+          >
+            <span>
               <PlusOutlined style={{ marginRight: 4 }} />
               添加
             </span>
           </div>
           {stores?.map((s) => {
             return (
-              <div key={s.name} style={{ padding: '8px 16px' }}>
-                {s.name}
+              <div key={s.name} className="lsb-sidebar-panel--item rui-row-mid">
+                <span className="rui-text-ellipsis rui-flex">{s.name}</span>
+                <Dropdown
+                  menu={{
+                    items: [
+                      { label: '修改', key: StoreOperator.Modify },
+                      { label: '删除', key: StoreOperator.Remove },
+                    ],
+                    onClick: ({ key }) => {
+                      onStoreOperator(key as StoreOperator, s);
+                    },
+                  }}
+                >
+                  <span className="lsb-sidebar-panel--item_icon rui-noshrink" style={{ marginLeft: 6 }}>
+                    <EllipsisOutlined />
+                  </span>
+                </Dropdown>
               </div>
             );
           })}
         </div>
         <ModelSettingsFormModal
-          visible={visible}
+          visible={state.visible || false}
+          storeConfigs={stores as any[]}
+          entityStoreConfig={state.entityStoreConfig}
           onVisibleChange={(v) => {
-            setVisible(v);
+            setState((draft) => {
+              return { ...draft, visible: v };
+            });
           }}
           onFormSubmit={(config) => {
-            designerStore.processCommand({
-              name: 'addStore',
+            sendDesignerCommand(context.page, designerStore, {
+              name: state.entityStoreConfig != null ? 'modifyStore' : 'addStore',
               payload: {
                 store: config,
               },

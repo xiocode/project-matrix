@@ -3,10 +3,10 @@ import SfIcon from './sf-icon/SfIcon';
 import SfPicture from './sf-picture/SfPicture';
 import SfText from './sf-text/SfText';
 
-// layout components
+// layout entity components
 import SfEntityDetails from './sf-entity-details/SfEntityDetails';
 import SfEntityTable from './sf-entity-table/SfEntityTable';
-import SfForm from './sf-form/SfForm';
+import SfEntityForm from './sf-entity-form/SfEntityForm';
 
 export default [
   SfButton,
@@ -17,5 +17,5 @@ export default [
   // layout
   SfEntityDetails,
   SfEntityTable,
-  SfForm,
+  SfEntityForm,
 ];
