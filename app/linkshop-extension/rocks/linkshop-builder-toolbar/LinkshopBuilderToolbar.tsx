@@ -48,19 +48,23 @@ function GetComponentItem(items: ComponentItems, keyPath: string[]): ComponentIt
   }
   for (let item of items) {
     if (item.key) {
+      // 存在 key 的检查是否匹配
       if (item.key != keyPath[keyPath.length - 1]) {
         continue;
       }
+      // 匹配仅剩一层路径的直接返回
       if (keyPath.length == 1) {
         return item;
       }
     }
+
     if (!item.children) {
       continue;
     }
     if (item.key) {
       keyPath = keyPath.slice(0, keyPath.length - 1);
     }
+    // 递归查找
     let res = GetComponentItem(item.children, keyPath);
     if (res) {
       return res;
@@ -236,11 +240,13 @@ export default {
       mode: 'vertical',
       onClick: (e: any) => {
 
+        // 获取菜单定义
         const item = GetComponentItem(insertComponentItems, e.keyPath);
         if (!item) {
           return;
         }
 
+        // key 使用 <rockType>.<name> 定义，兼容未定义 <name> 的配置
         const rockType = e.key.split('.')[0];
 
         const { framework, page } = context;
@@ -249,6 +255,7 @@ export default {
         const defaultProps: any = MoveStyleUtils.getRockDefaultProps(rockMeta);
         defaultProps.$id = genRandomComponentId();
 
+        // 覆盖默认属性
         const itemProps = Object.assign({}, defaultProps, item.props);
 
         sendDesignerCommand(page, designerStore, {
