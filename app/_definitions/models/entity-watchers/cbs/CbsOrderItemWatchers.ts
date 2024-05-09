@@ -11,7 +11,7 @@ async function updateTotalAmountOfOrderByOrderItemId(server: IRpdServer, orderIt
   update cbs_orders
   set total_amount = cte.total_amount
   from cte
-  where id = cte.order_id;`
+  where id = cte.order_id;`;
   await server.queryDatabaseObject(sql, [orderItemId]);
 }
 
@@ -26,7 +26,7 @@ async function updateTotalAmountOfOrderByOrderId(server: IRpdServer, orderId: an
   update cbs_orders
   set total_amount = cte.total_amount
   from cte
-  where id = cte.order_id;`
+  where id = cte.order_id;`;
   await server.queryDatabaseObject(sql, [orderId]);
 }
 
@@ -38,7 +38,7 @@ export default [
       const { server, payload } = ctx;
       const orderItem = payload.after;
       await updateTotalAmountOfOrderByOrderItemId(server, orderItem.id);
-    }
+    },
   },
   {
     eventName: "entity.update",
@@ -46,12 +46,12 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const { server, payload } = ctx;
       const { changes } = payload;
-      if (!changes.hasOwnProperty('price') && !changes.hasOwnProperty("quantity")) {
+      if (!changes.hasOwnProperty("price") && !changes.hasOwnProperty("quantity")) {
         return;
       }
       const orderItem = payload.after;
       await updateTotalAmountOfOrderByOrderItemId(server, orderItem.id);
-    }
+    },
   },
   {
     eventName: "entity.delete",
@@ -60,6 +60,6 @@ export default [
       const { server, payload } = ctx;
       const orderItem = payload.before;
       await updateTotalAmountOfOrderByOrderId(server, orderItem.order_id);
-    }
+    },
   },
 ] satisfies EntityWatcher<any>[];

@@ -1,6 +1,6 @@
-import type { RockConfig, RockEventHandlerConfig, SimpleRockConfig } from '@ruiapp/move-style';
-import { EntityFilterOptions, FindEntityOrderByOptions } from '@ruiapp/rapid-core';
-import { EntityStoreConfig, RapidRecordAction, RapidTableColumnConfig } from '@ruiapp/rapid-extension';
+import type { RockConfig, RockEventHandlerConfig, SimpleRockConfig } from "@ruiapp/move-style";
+import { EntityFilterOptions, FindEntityOrderByOptions } from "@ruiapp/rapid-core";
+import { EntityStoreConfig, RapidRecordAction, RapidTableColumnConfig } from "@ruiapp/rapid-extension";
 
 export interface SfEntityTableConfig {
   /**
@@ -11,7 +11,7 @@ export interface SfEntityTableConfig {
   /**
    * 视图模式
    */
-  viewMode: 'table';
+  viewMode: "table";
 
   /**
    * 数据源编号
@@ -35,7 +35,7 @@ export interface SfEntityTableConfig {
 
   pageNum?: number;
 
-  selectionMode?: 'none' | 'single' | 'multiple';
+  selectionMode?: "none" | "single" | "multiple";
 
   /**
    * 针对列表的操作

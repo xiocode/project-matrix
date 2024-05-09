@@ -1,9 +1,9 @@
-import { CommonProps, type Rock } from '@ruiapp/move-style';
-import SfButtonMeta from './SfButtonMeta';
-import type { SfButtonRockConfig } from './sf-button-types';
-import { pick } from 'lodash';
-import { Button } from 'antd';
-import { convertToEventHandlers, renderRock } from '@ruiapp/react-renderer';
+import { CommonProps, type Rock } from "@ruiapp/move-style";
+import SfButtonMeta from "./SfButtonMeta";
+import type { SfButtonRockConfig } from "./sf-button-types";
+import { pick } from "lodash";
+import { Button } from "antd";
+import { convertToEventHandlers, renderRock } from "@ruiapp/react-renderer";
 
 export default {
   Renderer(context, props: SfButtonRockConfig) {
@@ -11,7 +11,7 @@ export default {
 
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    wrapStyle.position = 'absolute';
+    wrapStyle.position = "absolute";
     wrapStyle.backgroundColor = props.backgroundColor;
 
     const eventHandlers = convertToEventHandlers({ context, rockConfig: props });
@@ -22,7 +22,7 @@ export default {
           renderRock({
             context,
             rockConfig: {
-              $type: 'antdIcon',
+              $type: "antdIcon",
               name: icon,
             },
           })}

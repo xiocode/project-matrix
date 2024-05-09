@@ -1,7 +1,7 @@
-import { memo, useEffect } from 'react';
-import { Form, Input, Modal } from 'antd';
-import { LinkshopAppStepRockConfig } from '~/linkshop-extension/linkshop-types';
-import { genRandomComponentId } from '~/linkshop-extension/utilities/DesignerUtility';
+import { memo, useEffect } from "react";
+import { Form, Input, Modal } from "antd";
+import { LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
+import { genRandomComponentId } from "~/linkshop-extension/utilities/DesignerUtility";
 
 interface StepSettingsFormModalProps {
   steps: LinkshopAppStepRockConfig[];
@@ -26,7 +26,7 @@ const StepSettingsFormModal = memo<StepSettingsFormModalProps>((props) => {
 
   return (
     <Modal
-      title={props.stepConfig ? '修改步骤' : '添加步骤'}
+      title={props.stepConfig ? "修改步骤" : "添加步骤"}
       open={props.visible}
       onCancel={() => {
         props.onVisibleChange(false);
@@ -48,7 +48,7 @@ const StepSettingsFormModal = memo<StepSettingsFormModalProps>((props) => {
           if (!stepConfig.$id) {
             stepConfig = {
               $id: genRandomComponentId(),
-              $type: 'linkshopAppStep',
+              $type: "linkshopAppStep",
               $name: formData.$name,
               children: [],
             };
@@ -63,12 +63,12 @@ const StepSettingsFormModal = memo<StepSettingsFormModalProps>((props) => {
           label="步骤名称"
           required
           rules={[
-            { required: true, message: '步骤名称必填' },
+            { required: true, message: "步骤名称必填" },
             {
               validator: (rule, value, cb) => {
                 const isExist = props.steps?.some((step) => step.$name === value);
                 if (isExist) {
-                  cb('步骤名称已存在');
+                  cb("步骤名称已存在");
                 }
 
                 cb();

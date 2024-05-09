@@ -1,9 +1,9 @@
-import type { RockMeta } from '@ruiapp/move-style';
+import type { RockMeta } from "@ruiapp/move-style";
 
 export default {
-  $type: 'sfEntityForm',
+  $type: "sfEntityForm",
 
-  name: '表单',
+  name: "表单",
 
   slots: {},
 
@@ -11,15 +11,15 @@ export default {
 
   props: {
     title: {
-      valueType: 'string',
-      defaultValue: '表单',
+      valueType: "string",
+      defaultValue: "表单",
     },
     height: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 300,
     },
     width: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 300,
     },
   },
@@ -28,22 +28,22 @@ export default {
 
   propertyPanels: [
     {
-      $type: 'componentPropPanel',
+      $type: "componentPropPanel",
       setters: [
         {
-          $type: 'textPropSetter',
-          label: '名称',
-          propName: '$name',
+          $type: "textPropSetter",
+          label: "名称",
+          propName: "$name",
         },
         {
-          $type: 'storeEntityPropSetter',
-          label: '数据模型',
-          propName: 'entityConfig',
+          $type: "storeEntityPropSetter",
+          label: "数据模型",
+          propName: "entityConfig",
         },
         {
-          $type: 'jsonPropsSetter',
-          label: '表单项',
-          propNames: ['$id', 'items', 'actions', 'column'],
+          $type: "jsonPropsSetter",
+          label: "表单项",
+          propNames: ["$id", "items", "actions", "column"],
           defaultValue: {
             items: [],
             actions: [],
@@ -52,7 +52,7 @@ export default {
         },
       ],
     },
-    { $type: 'positionPropPanel' },
-    { $type: 'sizePropPanel' },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;

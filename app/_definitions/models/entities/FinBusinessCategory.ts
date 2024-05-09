@@ -1,36 +1,36 @@
-import type { TDictionaryCodes } from '../../meta/data-dictionary-codes';
-import type { TEntitySingularCodes } from '../../meta/model-codes';
-import type { RapidEntity } from '@ruiapp/rapid-extension';
+import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
-  namespace: 'app',
-  code: 'FinBusinessCategory',
-  name: '业务类型',
+  namespace: "app",
+  code: "FinBusinessCategory",
+  name: "业务类型",
   fields: [
     {
-      code: 'code',
-      name: '编号',
-      type: 'text',
+      code: "code",
+      name: "编号",
+      type: "text",
       required: false,
     },
     {
-      code: 'name',
-      name: '名称',
-      type: 'text',
+      code: "name",
+      name: "名称",
+      type: "text",
       required: true,
     },
     {
-      code: 'orderNum',
-      name: '排序号',
-      type: 'integer',
+      code: "orderNum",
+      name: "排序号",
+      type: "integer",
       required: true,
     },
     {
-      code: 'parent',
-      name: '上级分类',
-      type: 'relation',
-      targetSingularCode: 'fin_business_category',
-      targetIdColumnName: 'parent_id',
+      code: "parent",
+      name: "上级分类",
+      type: "relation",
+      targetSingularCode: "fin_business_category",
+      targetIdColumnName: "parent_id",
     },
   ],
 };

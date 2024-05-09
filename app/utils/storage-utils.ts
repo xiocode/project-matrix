@@ -1,4 +1,4 @@
-const NAME_SPACE = 'LINK_FACTORY_STORAGE.';
+const NAME_SPACE = "LINK_FACTORY_STORAGE.";
 
 export class LFStorage {
   static get(key: string) {
@@ -14,7 +14,7 @@ export class LFStorage {
   static set(key: string, val: any) {
     try {
       const k = `${NAME_SPACE}${key}`;
-      localStorage.setItem(k, JSON.stringify(val) || 'null');
+      localStorage.setItem(k, JSON.stringify(val) || "null");
     } catch (err) {
       console.error(err);
     }

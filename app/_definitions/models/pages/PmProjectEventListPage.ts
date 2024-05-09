@@ -1,28 +1,28 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'project',
+      type: "auto",
+      code: "project",
     },
     {
-      type: 'auto',
-      code: 'title',
+      type: "auto",
+      code: "title",
     },
     {
-      type: 'textarea',
-      code: 'content',
+      type: "textarea",
+      code: "content",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'pm_project_event_list',
-  name: '事件记录',
-  title: '事件记录',
-  permissionCheck: {any: ["pmProject.manage"]},
+  code: "pm_project_event_list",
+  name: "事件记录",
+  title: "事件记录",
+  permissionCheck: { any: ["pmProject.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -34,7 +34,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -44,25 +44,25 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code", "name"],
-        }
+        },
       ],
       pageSize: 20,
       orderBy: [
         {
-          field: 'createdAt',
+          field: "createdAt",
           desc: true,
-        }
+        },
       ],
       columns: [
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'project',
-          width: '250px',
+          type: "auto",
+          code: "project",
+          width: "250px",
           rendererType: "rapidLinkRenderer",
           rendererProps: {
             text: "{{code}} {{name}}",
@@ -70,48 +70,48 @@ const page: RapidPage = {
           },
         },
         {
-          type: 'auto',
-          code: 'title',
-          width: '150px',
+          type: "auto",
+          code: "title",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'content',
+          type: "auto",
+          code: "content",
         },
         {
-          type: 'auto',
-          code: 'createdBy',
-          width: '100px',
+          type: "auto",
+          code: "createdBy",
+          width: "100px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'updatedAt',
-          width: '150px',
+          type: "auto",
+          code: "updatedAt",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'updatedBy',
-          width: '100px',
+          type: "auto",
+          code: "updatedBy",
+          width: "100px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "PmProjectEvent",
         },

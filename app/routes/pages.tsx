@@ -1,46 +1,46 @@
-import type { LoaderFunction } from '@remix-run/node';
-import { Outlet, useLoaderData } from '@remix-run/react';
-import { Layout } from 'antd';
+import type { LoaderFunction } from "@remix-run/node";
+import { Outlet, useLoaderData } from "@remix-run/react";
+import { Layout } from "antd";
 
-import antdStyles from 'antd/dist/antd.css';
-import { Content } from 'antd/lib/layout/layout';
-import Sider from 'antd/lib/layout/Sider';
-import AppLeftNav from '~/components/AppLeftNav';
-import rapidService from '~/rapidService';
+import antdStyles from "antd/dist/antd.css";
+import { Content } from "antd/lib/layout/layout";
+import Sider from "antd/lib/layout/Sider";
+import AppLeftNav from "~/components/AppLeftNav";
+import rapidService from "~/rapidService";
 
-import indexStyles from '~/styles/index.css';
-import customizeStyles from '~/styles/customize.css';
-import { filter } from 'lodash';
-import { isAccessAllowed } from '~/utils/access-control-utility';
+import indexStyles from "~/styles/index.css";
+import customizeStyles from "~/styles/customize.css";
+import { filter } from "lodash";
+import { isAccessAllowed } from "~/utils/access-control-utility";
 
 export function links() {
   return [antdStyles, indexStyles, customizeStyles].map((styles) => {
-    return { rel: 'stylesheet', href: styles };
+    return { rel: "stylesheet", href: styles };
   });
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const findAppNavItemOption = {
-    properties: ['id', 'code', 'name', 'icon', 'pageCode', 'parent', 'config'],
+    properties: ["id", "code", "name", "icon", "pageCode", "parent", "config"],
     filters: [
       {
-        field: 'state',
-        operator: 'eq',
-        value: 'enabled',
+        field: "state",
+        operator: "eq",
+        value: "enabled",
       },
     ],
     orderBy: [
       {
-        field: 'order_num',
+        field: "order_num",
       },
     ],
   };
-  let navItems = (await rapidService.post('app/app_nav_items/operations/find', findAppNavItemOption)).data.list;
+  let navItems = (await rapidService.post("app/app_nav_items/operations/find", findAppNavItemOption)).data.list;
 
   const myAllowedActions = (
     await rapidService.get(`app/listMyAllowedSysActions`, {
       headers: {
-        Cookie: request.headers.get('Cookie'),
+        Cookie: request.headers.get("Cookie"),
       },
     })
   ).data;
@@ -63,7 +63,7 @@ export default function Index() {
 
   return (
     <>
-      <Layout style={{ minHeight: '100vh' }} hasSider>
+      <Layout style={{ minHeight: "100vh" }} hasSider>
         <Sider className="rui-player-left-sider">
           <h1 className="branch-title">Project Matrix</h1>
           <AppLeftNav navItems={viewModel.navItems} />

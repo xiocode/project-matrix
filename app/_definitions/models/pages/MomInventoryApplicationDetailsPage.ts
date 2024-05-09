@@ -1,46 +1,46 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'material',
+      type: "auto",
+      code: "material",
       listDataFindOptions: {
-        properties: ['id', 'code', 'name', 'defaultUnit'],
+        properties: ["id", "code", "name", "defaultUnit"],
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
+        listFilterFields: ["label"],
+      },
     },
     {
-      type: 'auto',
-      code: 'lotNum',
+      type: "auto",
+      code: "lotNum",
     },
     {
-      type: 'auto',
-      code: 'binNum',
+      type: "auto",
+      code: "binNum",
     },
     {
-      type: 'auto',
-      code: 'serialNum',
+      type: "auto",
+      code: "serialNum",
     },
     {
-      type: 'auto',
-      code: 'trackingCode',
+      type: "auto",
+      code: "trackingCode",
     },
     {
-      type: 'auto',
-      code: 'tags',
+      type: "auto",
+      code: "tags",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
   ],
   onValuesChange: [
@@ -60,51 +60,50 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             }
           });
         }
-      `
+      `,
     },
   ],
 };
 
-
 const page: RapidPage = {
-  code: 'mom_inventory_application_details',
-  name: '库存业务申请单详情',
-  title: '库存业务申请单详情',
+  code: "mom_inventory_application_details",
+  name: "库存业务申请单详情",
+  title: "库存业务申请单详情",
   // permissionCheck: {any: []},
   view: [
     {
-      $type: 'rapidEntityForm',
-      entityCode: 'MomInventoryApplication',
-      mode: 'view',
+      $type: "rapidEntityForm",
+      entityCode: "MomInventoryApplication",
+      mode: "view",
       column: 3,
       items: [
         {
-          type: 'auto',
-          code: 'code',
+          type: "auto",
+          code: "code",
         },
         {
-          type: 'auto',
-          code: 'operationType',
+          type: "auto",
+          code: "operationType",
         },
         {
-          type: 'auto',
-          code: 'businessType',
+          type: "auto",
+          code: "businessType",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'state',
+          type: "auto",
+          code: "state",
         },
         {
-          type: 'auto',
-          code: 'createdAt',
+          type: "auto",
+          code: "createdAt",
         },
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
-      }
+      },
     },
     {
       $type: "antdTabs",
@@ -126,10 +125,10 @@ const page: RapidPage = {
                     {
                       field: "id",
                       operator: "eq",
-                      value: ""
-                    }
-                  ]
-                }
+                      value: "",
+                    },
+                  ],
+                },
               ],
               listActions: [
                 {
@@ -147,8 +146,8 @@ const page: RapidPage = {
               pageSize: -1,
               orderBy: [
                 {
-                  field: 'orderNum',
-                }
+                  field: "orderNum",
+                },
               ],
               columns: [
                 // {
@@ -160,15 +159,15 @@ const page: RapidPage = {
                 //   },
                 // },
                 {
-                  type: 'auto',
-                  code: 'material',
+                  type: "auto",
+                  code: "material",
                   rendererType: "anchor",
                   rendererProps: {
                     children: {
-                      $type: 'materialLabelRenderer',
+                      $type: "materialLabelRenderer",
                       $exps: {
-                        value: '$slot.value',
-                      }
+                        value: "$slot.value",
+                      },
                     },
                     $exps: {
                       href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -176,39 +175,39 @@ const page: RapidPage = {
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'lotNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "lotNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'binNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "binNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'serialNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "serialNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'trackingCode',
-                  width: '100px',
+                  type: "auto",
+                  code: "trackingCode",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  width: '100px',
+                  type: "auto",
+                  code: "tags",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'quantity',
-                  width: '100px',
+                  type: "auto",
+                  code: "quantity",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'unit',
-                  width: '80px',
+                  type: "auto",
+                  code: "unit",
+                  width: "80px",
                   rendererProps: {
                     format: "{{name}}",
                   },
@@ -217,15 +216,15 @@ const page: RapidPage = {
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomInventoryApplicationItem",
                 },
@@ -236,11 +235,11 @@ const page: RapidPage = {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
               },
-            }
-          ]
+            },
+          ],
         },
-      ]
-    }
+      ],
+    },
   ],
 };
 

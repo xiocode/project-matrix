@@ -1,9 +1,9 @@
-import type { RockMeta } from '@ruiapp/move-style';
+import type { RockMeta } from "@ruiapp/move-style";
 
 export default {
-  $type: 'sfEntityTable',
+  $type: "sfEntityTable",
 
-  name: '数据表格',
+  name: "数据表格",
 
   slots: {},
 
@@ -11,15 +11,15 @@ export default {
 
   props: {
     title: {
-      valueType: 'string',
-      defaultValue: '表格',
+      valueType: "string",
+      defaultValue: "表格",
     },
     height: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 300,
     },
     width: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 300,
     },
   },
@@ -28,26 +28,26 @@ export default {
 
   propertyPanels: [
     {
-      $type: 'componentPropPanel',
+      $type: "componentPropPanel",
       setters: [
         {
-          $type: 'textPropSetter',
-          label: '名称',
-          propName: '$name',
+          $type: "textPropSetter",
+          label: "名称",
+          propName: "$name",
         },
         {
-          $type: 'storeEntityPropSetter',
-          label: '数据模型',
-          propName: 'entityConfig',
+          $type: "storeEntityPropSetter",
+          label: "数据模型",
+          propName: "entityConfig",
         },
         {
-          $type: 'jsonPropsSetter',
-          label: '表格',
-          propNames: ['$id', 'columns', 'listActions', 'extraActions', 'actions', 'fixedFilters', 'selectionMode', 'selectOnClickRow', 'onSelectedIdsChange'],
+          $type: "jsonPropsSetter",
+          label: "表格",
+          propNames: ["$id", "columns", "listActions", "extraActions", "actions", "fixedFilters", "selectionMode", "selectOnClickRow", "onSelectedIdsChange"],
         },
       ],
     },
-    { $type: 'positionPropPanel' },
-    { $type: 'sizePropPanel' },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;

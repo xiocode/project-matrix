@@ -8,7 +8,6 @@ export function sendDesignerCommand(designerPage: IPage, designerStore: Linkshop
   targetWindow.postMessage(command, "*");
 }
 
-
 export function genRandomComponentId() {
   return createRandomString(10);
 }

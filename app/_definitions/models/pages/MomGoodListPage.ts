@@ -1,48 +1,48 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'material',
+      type: "auto",
+      code: "material",
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
+        listFilterFields: ["label"],
       },
     },
     {
-      type: 'auto',
-      code: 'lotNum',
+      type: "auto",
+      code: "lotNum",
     },
     {
-      type: 'auto',
-      code: 'serialNum',
+      type: "auto",
+      code: "serialNum",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
       formControlProps: {
         listSearchable: true,
         listTextFormat: "{{name}} {{value}}",
-        listFilterFields: ['label'],
+        listFilterFields: ["label"],
       },
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'mom_good_list',
-  name: '物品列表',
-  title: '物品列表',
+  code: "mom_good_list",
+  name: "物品列表",
+  title: "物品列表",
   // permissionCheck: {any: []},
   view: [
     {
@@ -65,20 +65,20 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["materialCode", "lotNum", "serialNum"],
-        }
+        },
       ],
       pageSize: 20,
       columns: [
         {
-          type: 'auto',
-          code: 'material',
+          type: "auto",
+          code: "material",
           rendererType: "anchor",
           rendererProps: {
             children: {
-              $type: 'materialLabelRenderer',
+              $type: "materialLabelRenderer",
               $exps: {
-                value: '$slot.value',
-              }
+                value: "$slot.value",
+              },
             },
             $exps: {
               href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -86,54 +86,54 @@ const page: RapidPage = {
           },
         },
         {
-          type: 'auto',
-          code: 'lotNum',
-          width: '200px',
+          type: "auto",
+          code: "lotNum",
+          width: "200px",
         },
         {
-          type: 'auto',
-          code: 'serialNum',
-          width: '200px',
+          type: "auto",
+          code: "serialNum",
+          width: "200px",
         },
         {
-          type: 'auto',
-          code: 'quantity',
-          width: '100px',
+          type: "auto",
+          code: "quantity",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'unit',
-          width: '100px',
+          type: "auto",
+          code: "unit",
+          width: "100px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
+          type: "auto",
+          code: "state",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'location',
-          width: '100px',
+          type: "auto",
+          code: "location",
+          width: "100px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomGood",
         },

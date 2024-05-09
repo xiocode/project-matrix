@@ -1,27 +1,27 @@
-import type { RockMeta } from '@ruiapp/move-style';
+import type { RockMeta } from "@ruiapp/move-style";
 
 export default {
-  $type: 'sfQrcode',
+  $type: "sfQrcode",
 
-  name: '二维码',
+  name: "二维码",
 
   voidComponent: true,
 
   props: {
     value: {
-      valueType: 'string',
-      defaultValue: 'TEST-9192019210',
+      valueType: "string",
+      defaultValue: "TEST-9192019210",
     },
     bgColor: {
-      valueType: 'string',
-      defaultValue: '#f1f2f3',
+      valueType: "string",
+      defaultValue: "#f1f2f3",
     },
     height: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 200,
     },
     width: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 200,
     },
   },
@@ -30,21 +30,21 @@ export default {
 
   propertyPanels: [
     {
-      $type: 'componentPropPanel',
+      $type: "componentPropPanel",
       setters: [
         {
-          $type: 'textPropSetter',
-          label: '名称',
-          propName: '$name',
+          $type: "textPropSetter",
+          label: "名称",
+          propName: "$name",
         },
         {
-          $type: 'textPropSetter',
-          label: '编码值',
-          propName: 'value',
+          $type: "textPropSetter",
+          label: "编码值",
+          propName: "value",
         },
       ],
     },
-    { $type: 'positionPropPanel' },
-    { $type: 'sizePropPanel' },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;

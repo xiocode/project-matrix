@@ -5,7 +5,7 @@ import AntdExtension from "@ruiapp/antd-extension";
 import { useState } from "react";
 
 import styles from "antd/dist/antd.css";
-import RapidExtension, { RapidFormRockConfig } from '@ruiapp/rapid-extension';
+import RapidExtension, { RapidFormRockConfig } from "@ruiapp/rapid-extension";
 import { message } from "antd";
 import { RuiLoggerProvider } from "rui-logger";
 
@@ -23,7 +23,6 @@ framework.registerComponent(Text);
 
 framework.loadExtension(AntdExtension);
 framework.loadExtension(RapidExtension);
-
 
 const initialPageConfig: PageConfig = {
   view: [
@@ -46,7 +45,7 @@ const initialPageConfig: PageConfig = {
               rules: [
                 // eslint-disable-next-line no-template-curly-in-string
                 { required: true, message: "请输入${label}" },
-              ]
+              ],
             },
             {
               type: "password",
@@ -56,7 +55,7 @@ const initialPageConfig: PageConfig = {
               rules: [
                 // eslint-disable-next-line no-template-curly-in-string
                 { required: true, message: "请输入${label}" },
-              ]
+              ],
             },
           ],
           actions: [
@@ -65,8 +64,8 @@ const initialPageConfig: PageConfig = {
               actionText: "登录",
               actionProps: {
                 block: true,
-              }
-            }
+              },
+            },
           ],
           onFinish: [
             {
@@ -86,22 +85,22 @@ const initialPageConfig: PageConfig = {
                   message.error(errorMessage);
                   throw err;
                 }
-              }
+              },
             },
             {
               $action: "goToPage",
               pageCode: "home",
-            }
-          ]
+            },
+          ],
         } as RapidFormRockConfig,
-      ]
+      ],
     },
   ],
-}
+};
 
 export default function Index() {
   const [pageConfig] = useState(initialPageConfig);
   const [page] = useState(() => new Page(framework, pageConfig));
 
-  return <Rui framework={framework} page={page} />
+  return <Rui framework={framework} page={page} />;
 }

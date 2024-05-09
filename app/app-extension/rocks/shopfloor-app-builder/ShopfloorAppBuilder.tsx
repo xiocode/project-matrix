@@ -10,20 +10,20 @@ export default {
     const detailDataStoreConfig = {
       type: "entityStore",
       name: "appDetail",
-      entityModel: find(rapidAppDefinition.entities, { code: "ShopfloorApp"}),
+      entityModel: find(rapidAppDefinition.entities, { code: "ShopfloorApp" }),
       properties: ["id", "name", "content"],
       filters: [
         {
           field: "id",
           operator: "eq",
           value: "",
-        }
+        },
       ],
       // TODO: Expression should be a static string, so that we can configure it at design time.
       $exps: {
         frozon: `!(${props.$exps?.appId || `${props.appId}`})`,
         "filters[0].value": props.$exps?.appId || `${props.appId}`,
-      }
+      },
     };
     context.scope.addStore(detailDataStoreConfig);
   },
@@ -40,7 +40,7 @@ export default {
       $type: "scope",
     };
 
-    return renderRock({context, rockConfig});
+    return renderRock({ context, rockConfig });
   },
 
   ...ShopfloorAppBuilderMeta,

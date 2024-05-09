@@ -10,7 +10,7 @@ export default {
       } else if (isArray(policy)) {
         policy = { all: policy };
       }
-      set(config, "$exps._hidden", `!$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`)
+      set(config, "$exps._hidden", `!$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
     }
   },
 } as ConfigProcessor;

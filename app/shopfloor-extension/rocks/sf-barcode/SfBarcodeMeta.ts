@@ -1,27 +1,27 @@
-import type { RockMeta } from '@ruiapp/move-style';
+import type { RockMeta } from "@ruiapp/move-style";
 
 export default {
-  $type: 'sfBarcode',
+  $type: "sfBarcode",
 
-  name: '条形码',
+  name: "条形码",
 
   voidComponent: true,
 
   props: {
     value: {
-      valueType: 'string',
-      defaultValue: '1234567890',
+      valueType: "string",
+      defaultValue: "1234567890",
     },
     height: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 100,
     },
     width: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 200,
     },
     displayValue: {
-      valueType: 'boolean',
+      valueType: "boolean",
       defaultValue: true,
     },
   },
@@ -30,28 +30,28 @@ export default {
 
   propertyPanels: [
     {
-      $type: 'componentPropPanel',
+      $type: "componentPropPanel",
       setters: [
         {
-          $type: 'textPropSetter',
-          label: '名称',
-          propName: '$name',
+          $type: "textPropSetter",
+          label: "名称",
+          propName: "$name",
         },
         {
-          $type: 'textPropSetter',
-          label: '编码值',
-          propName: 'value',
+          $type: "textPropSetter",
+          label: "编码值",
+          propName: "value",
         },
         {
-          $type: 'switchPropSetter',
-          label: '显示编码',
-          propName: 'displayValue',
+          $type: "switchPropSetter",
+          label: "显示编码",
+          propName: "displayValue",
           checkedValue: true,
           uncheckedValue: false,
         },
       ],
     },
-    { $type: 'positionPropPanel' },
-    { $type: 'sizePropPanel' },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;

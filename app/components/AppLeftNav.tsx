@@ -44,8 +44,6 @@ function getMenuItems(navItems: AppNavItem[]) {
   return menuItems;
 }
 
-
-
 export interface IProps {
   navItems: AppNavItem[];
 }
@@ -54,9 +52,7 @@ export default function LeftNav(props: IProps) {
   const { navItems } = props;
   const menuItems = useMemo(() => {
     return getMenuItems(navItems);
-  }, [navItems])
+  }, [navItems]);
 
-  return (
-    <Menu className="rui-left-nav-menu" theme="dark" mode="inline" items={menuItems} />
-  )
+  return <Menu className="rui-left-nav-menu" theme="dark" mode="inline" items={menuItems} />;
 }

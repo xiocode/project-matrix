@@ -1,17 +1,17 @@
-import type { Rock } from '@ruiapp/move-style';
-import LinkshopBuilderStoresPanelMeta from './LinkshopBuilderStoresPanelMeta';
-import type { LinkshopBuilderStoresPanelRockConfig } from './linkshop-builder-stores-panel-types';
-import { PlusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import ModelSettingsFormModal from './ModelSettingsFormModal';
-import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
-import { sendDesignerCommand } from '~/linkshop-extension/utilities/DesignerUtility';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { Dropdown } from 'antd';
+import type { Rock } from "@ruiapp/move-style";
+import LinkshopBuilderStoresPanelMeta from "./LinkshopBuilderStoresPanelMeta";
+import type { LinkshopBuilderStoresPanelRockConfig } from "./linkshop-builder-stores-panel-types";
+import { PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import ModelSettingsFormModal from "./ModelSettingsFormModal";
+import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
+import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { Dropdown } from "antd";
 
 enum StoreOperator {
-  Modify = 'modify',
-  Remove = 'remove',
+  Modify = "modify",
+  Remove = "remove",
 }
 
 export default {
@@ -21,7 +21,7 @@ export default {
 
     const [state, setState] = useState<{ visible?: boolean; entityStoreConfig?: any }>({});
 
-    const designerStore = page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
+    const designerStore = page.getStore<LinkshopAppDesignerStore>(designerStoreName || "designerStore");
 
     const stores = designerStore.page.scope.config.stores || [];
 
@@ -34,7 +34,7 @@ export default {
           break;
         case StoreOperator.Remove:
           sendDesignerCommand(context.page, designerStore, {
-            name: 'removeStore',
+            name: "removeStore",
             payload: {
               store,
             },
@@ -70,8 +70,8 @@ export default {
                 <Dropdown
                   menu={{
                     items: [
-                      { label: '修改', key: StoreOperator.Modify },
-                      { label: '删除', key: StoreOperator.Remove },
+                      { label: "修改", key: StoreOperator.Modify },
+                      { label: "删除", key: StoreOperator.Remove },
                     ],
                     onClick: ({ key }) => {
                       onStoreOperator(key as StoreOperator, s);
@@ -97,7 +97,7 @@ export default {
           }}
           onFormSubmit={(config) => {
             sendDesignerCommand(context.page, designerStore, {
-              name: state.entityStoreConfig != null ? 'modifyStore' : 'addStore',
+              name: state.entityStoreConfig != null ? "modifyStore" : "addStore",
               payload: {
                 store: config,
               },

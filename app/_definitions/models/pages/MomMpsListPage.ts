@@ -1,65 +1,65 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'material',
+      type: "auto",
+      code: "material",
       listDataFindOptions: {
         fixedFilters: [
           {
-            operator: 'eq',
-            field: 'can_produce',
+            operator: "eq",
+            field: "can_produce",
             value: true,
-          }
+          },
         ],
         orderBy: [
           {
             field: "code",
-          }
+          },
         ],
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label'],
-      }
+        listFilterFields: ["label"],
+      },
     },
     {
-      type: 'auto',
-      code: 'tags',
+      type: "auto",
+      code: "tags",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
     {
-      type: 'auto',
-      code: 'scheduledStartDate',
+      type: "auto",
+      code: "scheduledStartDate",
     },
     {
-      type: 'auto',
-      code: 'scheduledFinishDate',
+      type: "auto",
+      code: "scheduledFinishDate",
     },
     {
-      type: 'auto',
-      code: 'scheduleState',
+      type: "auto",
+      code: "scheduleState",
     },
     {
-      type: 'auto',
-      code: 'executionState',
+      type: "auto",
+      code: "executionState",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'mom_mps_list',
-  name: '生产计划列表',
-  title: '主生产计划',
+  code: "mom_mps_list",
+  name: "生产计划列表",
+  title: "主生产计划",
   view: [
     {
       $type: "antdTabs",
@@ -69,7 +69,7 @@ const page: RapidPage = {
           label: "未计划",
           children: [
             {
-              $id: 'unscheduledMpsList',
+              $id: "unscheduledMpsList",
               $type: "sonicEntityList",
               entityCode: "MomMasterProductionSchedule",
               viewMode: "table",
@@ -93,8 +93,8 @@ const page: RapidPage = {
                       mode: "new",
                       items: [
                         {
-                          type: 'auto',
-                          code: 'name',
+                          type: "auto",
+                          code: "name",
                         },
                       ],
                       $exps: {
@@ -107,10 +107,10 @@ const page: RapidPage = {
                           $action: "setVars",
                           vars: {
                             "modal-open": false,
-                          }
+                          },
                         },
                       ],
-                    }
+                    },
                   ],
                   onModalOpen: [
                     {
@@ -118,8 +118,8 @@ const page: RapidPage = {
                       componentId: "createMrpForm",
                       message: {
                         name: "resetFields",
-                      }
-                    }
+                      },
+                    },
                   ],
                   onModalOk: [
                     {
@@ -127,8 +127,8 @@ const page: RapidPage = {
                       componentId: "createMrpForm",
                       message: {
                         name: "submit",
-                      }
-                    }
+                      },
+                    },
                   ],
                 },
                 {
@@ -145,31 +145,31 @@ const page: RapidPage = {
                   actionEventName: "onSearch",
                   filterMode: "contains",
                   filterFields: ["code"],
-                }
+                },
               ],
               fixedFilters: [
                 {
                   field: "schedule_state",
                   operator: "eq",
                   value: "unscheduled",
-                }
+                },
               ],
               orderBy: [
                 {
                   field: "scheduledFinishDate",
-                }
+                },
               ],
               columns: [
                 {
-                  type: 'auto',
-                  code: 'material',
+                  type: "auto",
+                  code: "material",
                   rendererType: "anchor",
                   rendererProps: {
                     children: {
-                      $type: 'materialLabelRenderer',
+                      $type: "materialLabelRenderer",
                       $exps: {
-                        value: '$slot.value',
-                      }
+                        value: "$slot.value",
+                      },
                     },
                     $exps: {
                       href: "$rui.execVarText('/pages/mom_mps_details?id={{id}}', $slot.record)",
@@ -182,96 +182,96 @@ const page: RapidPage = {
                 //   width: '200px',
                 // },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  title: 'd',
-                  fieldName: 'tags',
-                  width: '50px',
-                  align: 'right',
+                  type: "auto",
+                  code: "tags",
+                  title: "d",
+                  fieldName: "tags",
+                  width: "50px",
+                  align: "right",
                   rendererProps: {
                     $exps: {
                       value: "qs.parse($slot.value).d",
-                    }
-                  }
+                    },
+                  },
                 },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  title: 'D',
-                  fieldName: 'tags',
-                  width: '50px',
-                  align: 'right',
+                  type: "auto",
+                  code: "tags",
+                  title: "D",
+                  fieldName: "tags",
+                  width: "50px",
+                  align: "right",
                   rendererProps: {
                     $exps: {
                       value: "qs.parse($slot.value).D",
-                    }
-                  }
+                    },
+                  },
                 },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  title: 'b',
-                  fieldName: 'tags',
-                  width: '50px',
-                  align: 'right',
+                  type: "auto",
+                  code: "tags",
+                  title: "b",
+                  fieldName: "tags",
+                  width: "50px",
+                  align: "right",
                   rendererProps: {
                     $exps: {
                       value: "qs.parse($slot.value).b",
-                    }
-                  }
+                    },
+                  },
                 },
                 {
-                  type: 'auto',
-                  code: 'quantity',
-                  width: '100px',
+                  type: "auto",
+                  code: "quantity",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'unit',
-                  width: '100px',
+                  type: "auto",
+                  code: "unit",
+                  width: "100px",
                   rendererProps: {
                     format: "{{name}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'scheduledStartDate',
-                  width: '100px',
+                  type: "auto",
+                  code: "scheduledStartDate",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'scheduledFinishDate',
-                  width: '100px',
+                  type: "auto",
+                  code: "scheduledFinishDate",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'scheduleState',
-                  width: '100px',
+                  type: "auto",
+                  code: "scheduleState",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'executionState',
-                  width: '100px',
+                  type: "auto",
+                  code: "executionState",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  width: '150px',
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
                 },
               ],
               actionsColumnWidth: "80px",
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomMasterProductionSchedule",
                 },
@@ -284,16 +284,16 @@ const page: RapidPage = {
                   $exps: {
                     "vars.selectedIds": "$event.args[0].selectedIds",
                     "vars.selectedRecords": "$event.args[0].selectedRecords",
-                  }
-                }
+                  },
+                },
               ],
               searchForm: {
-                entityCode: 'MomMasterProductionSchedule',
+                entityCode: "MomMasterProductionSchedule",
                 items: [
                   {
-                    type: 'auto',
-                    code: 'scheduledStartDate',
-                    filterMode: 'eq',
+                    type: "auto",
+                    code: "scheduledStartDate",
+                    filterMode: "eq",
                   },
                 ],
               },
@@ -305,7 +305,7 @@ const page: RapidPage = {
           label: "已计划",
           children: [
             {
-              $id: 'scheduledMpsList',
+              $id: "scheduledMpsList",
               $type: "sonicEntityList",
               entityCode: "MomMasterProductionSchedule",
               viewMode: "table",
@@ -325,26 +325,26 @@ const page: RapidPage = {
                   actionEventName: "onSearch",
                   filterMode: "contains",
                   filterFields: ["code"],
-                }
+                },
               ],
               fixedFilters: [
                 {
                   field: "schedule_state",
                   operator: "eq",
                   value: "scheduled",
-                }
+                },
               ],
               columns: [
                 {
-                  type: 'auto',
-                  code: 'material',
+                  type: "auto",
+                  code: "material",
                   rendererType: "anchor",
                   rendererProps: {
                     children: {
-                      $type: 'materialLabelRenderer',
+                      $type: "materialLabelRenderer",
                       $exps: {
-                        value: '$slot.value',
-                      }
+                        value: "$slot.value",
+                      },
                     },
                     $exps: {
                       href: "$rui.execVarText('/pages/mom_mps_details?id={{id}}', $slot.record)",
@@ -357,96 +357,96 @@ const page: RapidPage = {
                 //   width: '200px',
                 // },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  title: 'd',
-                  fieldName: 'tags',
-                  width: '50px',
-                  align: 'right',
+                  type: "auto",
+                  code: "tags",
+                  title: "d",
+                  fieldName: "tags",
+                  width: "50px",
+                  align: "right",
                   rendererProps: {
                     $exps: {
                       value: "qs.parse($slot.value).d",
-                    }
-                  }
+                    },
+                  },
                 },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  title: 'D',
-                  fieldName: 'tags',
-                  width: '50px',
-                  align: 'right',
+                  type: "auto",
+                  code: "tags",
+                  title: "D",
+                  fieldName: "tags",
+                  width: "50px",
+                  align: "right",
                   rendererProps: {
                     $exps: {
                       value: "qs.parse($slot.value).D",
-                    }
-                  }
+                    },
+                  },
                 },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  title: 'b',
-                  fieldName: 'tags',
-                  width: '50px',
-                  align: 'right',
+                  type: "auto",
+                  code: "tags",
+                  title: "b",
+                  fieldName: "tags",
+                  width: "50px",
+                  align: "right",
                   rendererProps: {
                     $exps: {
                       value: "qs.parse($slot.value).b",
-                    }
-                  }
+                    },
+                  },
                 },
                 {
-                  type: 'auto',
-                  code: 'quantity',
-                  width: '100px',
+                  type: "auto",
+                  code: "quantity",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'unit',
-                  width: '100px',
+                  type: "auto",
+                  code: "unit",
+                  width: "100px",
                   rendererProps: {
                     format: "{{name}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'scheduledStartDate',
-                  width: '100px',
+                  type: "auto",
+                  code: "scheduledStartDate",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'scheduledFinishDate',
-                  width: '100px',
+                  type: "auto",
+                  code: "scheduledFinishDate",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'scheduleState',
-                  width: '100px',
+                  type: "auto",
+                  code: "scheduleState",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'executionState',
-                  width: '100px',
+                  type: "auto",
+                  code: "executionState",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  width: '150px',
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
                 },
               ],
               actionsColumnWidth: "80px",
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomMasterProductionSchedule",
                 },
@@ -459,16 +459,16 @@ const page: RapidPage = {
                   $exps: {
                     "vars.selectedIds": "$event.args[0].selectedIds",
                     "vars.selectedRecords": "$event.args[0].selectedRecords",
-                  }
-                }
+                  },
+                },
               ],
               searchForm: {
-                entityCode: 'MomMasterProductionSchedule',
+                entityCode: "MomMasterProductionSchedule",
                 items: [
                   {
-                    type: 'auto',
-                    code: 'scheduledStartDate',
-                    filterMode: 'eq',
+                    type: "auto",
+                    code: "scheduledStartDate",
+                    filterMode: "eq",
                   },
                 ],
               },

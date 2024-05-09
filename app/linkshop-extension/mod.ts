@@ -1,8 +1,8 @@
-import type { RuiExtension } from '@ruiapp/move-style';
-import rocks from './rocks';
-import functions from './functions';
-import configProcessors from './config-processors';
-import stores from './stores';
+import type { RuiExtension } from "@ruiapp/move-style";
+import rocks from "./rocks";
+import functions from "./functions";
+import configProcessors from "./config-processors";
+import stores from "./stores";
 
 export default {
   rocks,
@@ -11,6 +11,6 @@ export default {
   configProcessors,
 } as RuiExtension;
 
-export * from './linkshop-types';
+export * from "./linkshop-types";
 
-export type { LinkshopWidgetConfig } from './widget-props';
+export type { LinkshopWidgetConfig } from "./widget-props";

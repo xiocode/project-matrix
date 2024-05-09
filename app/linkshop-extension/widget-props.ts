@@ -6,10 +6,10 @@ export interface LinkshopWidgetConfig extends SimpleRockConfig {
    */
   name: string;
 
-   /**
-    * 说明
-    */
-  note: string; 
+  /**
+   * 说明
+   */
+  note: string;
 
   left: number;
 
@@ -30,7 +30,6 @@ export interface LinkshopAppRockConfig extends LinkshopWidgetConfig {
 }
 
 export interface LinkshopAppStepRockConfig extends LinkshopWidgetConfig {
-
   /**
    * 背景颜色
    */

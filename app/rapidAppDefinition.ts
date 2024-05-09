@@ -4,4 +4,4 @@ import entityModels from "./_definitions/meta/entity-models";
 export default {
   entities: entityModels,
   dataDictionaries: dataDictionaryModels,
-}
+};

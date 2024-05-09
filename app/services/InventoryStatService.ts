@@ -7,7 +7,7 @@ export type StatTableConfig = {
   groupFields: string[];
   quantityBalanceFields: string[];
   quantityChangeFields: string[];
-}
+};
 
 export type ChangeInventoryQuantityOptions = {
   balanceEntityCode: string;
@@ -19,7 +19,7 @@ export type ChangeInventoryQuantityOptions = {
   groupFields: string[];
   groupValues: Record<string, any>;
   change: number;
-}
+};
 
 export default class InventoryStatService {
   #server: IRpdServer;
@@ -38,28 +38,30 @@ export default class InventoryStatService {
       groupValues,
       quantityFieldsToIncrease,
       quantityFieldsToDecrease,
-      change
+      change,
     } = options;
 
     const balanceRecordManager = this.#server.getEntityManager<Record<string, any>>(balanceEntityCode);
     const logRecordManager = this.#server.getEntityManager<Record<string, any>>(logEntityCode);
-    const findRecordFilters = groupFields.filter((groupField) => !isUndefined(groupValues[groupField])).map((groupField) => {
-      const fieldValue = groupValues[groupField];
-      if (isNull(fieldValue)) {
-        return {
-          operator: 'null',
-          field: groupField,
-        } satisfies EntityFilterOptions;
-      }
+    const findRecordFilters = groupFields
+      .filter((groupField) => !isUndefined(groupValues[groupField]))
+      .map((groupField) => {
+        const fieldValue = groupValues[groupField];
+        if (isNull(fieldValue)) {
+          return {
+            operator: "null",
+            field: groupField,
+          } satisfies EntityFilterOptions;
+        }
 
-      return {
-        operator: 'eq',
-        field: groupField,
-        value: groupValues[groupField],
-      } satisfies EntityFilterOptions;
-    });
+        return {
+          operator: "eq",
+          field: groupField,
+          value: groupValues[groupField],
+        } satisfies EntityFilterOptions;
+      });
     const balanceRecord = await balanceRecordManager.findEntity({
-      filters: findRecordFilters as any
+      filters: findRecordFilters as any,
     });
 
     const logRecord: Record<string, any> = {};
@@ -100,7 +102,6 @@ export default class InventoryStatService {
       for (const quantityBalanceField of quantityBalanceFields) {
         logRecord[quantityBalanceField] = savedBalanceRecord[quantityBalanceField];
       }
-
     } else {
       const statToCreate: Record<string, any> = {};
       for (const groupField of groupFields) {

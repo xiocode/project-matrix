@@ -1,4 +1,4 @@
-const NAME_SPACE = 'LINK_FACTORY_SESSION.';
+const NAME_SPACE = "LINK_FACTORY_SESSION.";
 
 export class LFSession {
   static get(key: string) {
@@ -14,7 +14,7 @@ export class LFSession {
   static set(key: string, val: any) {
     try {
       const k = `${NAME_SPACE}${key}`;
-      sessionStorage.setItem(k, JSON.stringify(val) || 'null');
+      sessionStorage.setItem(k, JSON.stringify(val) || "null");
     } catch (err) {
       console.error(err);
     }

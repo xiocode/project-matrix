@@ -1,66 +1,66 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'material',
+      type: "auto",
+      code: "material",
       listDataFindOptions: {
-        properties: ['id', 'code', 'name', 'defaultUnit'],
+        properties: ["id", "code", "name", "defaultUnit"],
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
+        listFilterFields: ["label"],
+      },
     },
     {
-      type: 'auto',
-      code: 'lotNum',
+      type: "auto",
+      code: "lotNum",
     },
     {
-      type: 'auto',
-      code: 'binNum',
+      type: "auto",
+      code: "binNum",
     },
     {
-      type: 'auto',
-      code: 'serialNum',
+      type: "auto",
+      code: "serialNum",
     },
     {
-      type: 'auto',
-      code: 'trackingCode',
+      type: "auto",
+      code: "trackingCode",
     },
     {
-      type: 'auto',
-      code: 'tags',
+      type: "auto",
+      code: "tags",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
     {
-      type: 'treeSelect',
-      code: 'from',
+      type: "treeSelect",
+      code: "from",
       formControlProps: {
         listDataSourceCode: "locations",
         listParentField: "parent.id",
       },
     },
     {
-      type: 'treeSelect',
-      code: 'to',
+      type: "treeSelect",
+      code: "to",
       formControlProps: {
         listDataSourceCode: "locations",
         listParentField: "parent.id",
       },
     },
     {
-      type: 'auto',
-      code: 'transferTime',
+      type: "auto",
+      code: "transferTime",
     },
   ],
   onValuesChange: [
@@ -80,56 +80,55 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             }
           });
         }
-      `
+      `,
     },
   ],
 };
 
-
 const page: RapidPage = {
-  code: 'mom_inventory_operation_details',
-  name: '库存操作详情',
-  title: '库存操作详情',
+  code: "mom_inventory_operation_details",
+  name: "库存操作详情",
+  title: "库存操作详情",
   // permissionCheck: {any: []},
   view: [
     {
-      $type: 'rapidEntityForm',
-      entityCode: 'MomInventoryOperation',
-      mode: 'view',
+      $type: "rapidEntityForm",
+      entityCode: "MomInventoryOperation",
+      mode: "view",
       column: 3,
       extraProperties: ["application"],
       items: [
         {
-          type: 'auto',
-          code: 'code',
+          type: "auto",
+          code: "code",
         },
         {
-          type: 'auto',
-          code: 'operationType',
+          type: "auto",
+          code: "operationType",
         },
         {
-          type: 'auto',
-          code: 'businessType',
+          type: "auto",
+          code: "businessType",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'createdAt',
+          type: "auto",
+          code: "createdAt",
         },
         {
-          type: 'auto',
-          code: 'state',
+          type: "auto",
+          code: "state",
         },
         {
-          type: 'auto',
-          code: 'approvalState',
+          type: "auto",
+          code: "approvalState",
         },
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
-      }
+      },
     },
     {
       $type: "box",
@@ -146,7 +145,7 @@ const page: RapidPage = {
               $type: "text",
               text: "申请明细",
             },
-          ]
+          ],
         },
         {
           $id: "applicationItemList",
@@ -162,28 +161,28 @@ const page: RapidPage = {
                 {
                   field: "id",
                   operator: "eq",
-                  value: ""
-                }
-              ]
-            }
+                  value: "",
+                },
+              ],
+            },
           ],
           pageSize: -1,
           orderBy: [
             {
-              field: 'orderNum',
-            }
+              field: "orderNum",
+            },
           ],
           columns: [
             {
-              type: 'auto',
-              code: 'material',
+              type: "auto",
+              code: "material",
               rendererType: "anchor",
               rendererProps: {
                 children: {
-                  $type: 'materialLabelRenderer',
+                  $type: "materialLabelRenderer",
                   $exps: {
-                    value: '$slot.value',
-                  }
+                    value: "$slot.value",
+                  },
                 },
                 $exps: {
                   href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -191,39 +190,39 @@ const page: RapidPage = {
               },
             },
             {
-              type: 'auto',
-              code: 'lotNum',
-              width: '100px',
+              type: "auto",
+              code: "lotNum",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'binNum',
-              width: '100px',
+              type: "auto",
+              code: "binNum",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'serialNum',
-              width: '100px',
+              type: "auto",
+              code: "serialNum",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'trackingCode',
-              width: '100px',
+              type: "auto",
+              code: "trackingCode",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'tags',
-              width: '100px',
+              type: "auto",
+              code: "tags",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'quantity',
-              width: '100px',
+              type: "auto",
+              code: "quantity",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'unit',
-              width: '80px',
+              type: "auto",
+              code: "unit",
+              width: "80px",
               rendererProps: {
                 format: "{{name}}",
               },
@@ -236,7 +235,7 @@ const page: RapidPage = {
       ],
       $exps: {
         _hidden: "!_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
-      }
+      },
     },
     {
       $type: "sectionSeparator",
@@ -262,10 +261,10 @@ const page: RapidPage = {
                     {
                       field: "id",
                       operator: "eq",
-                      value: ""
-                    }
-                  ]
-                }
+                      value: "",
+                    },
+                  ],
+                },
               ],
               listActions: [
                 {
@@ -286,8 +285,8 @@ const page: RapidPage = {
               pageSize: -1,
               orderBy: [
                 {
-                  field: 'orderNum',
-                }
+                  field: "orderNum",
+                },
               ],
               columns: [
                 // {
@@ -299,15 +298,15 @@ const page: RapidPage = {
                 //   },
                 // },
                 {
-                  type: 'auto',
-                  code: 'material',
+                  type: "auto",
+                  code: "material",
                   rendererType: "anchor",
                   rendererProps: {
                     children: {
-                      $type: 'materialLabelRenderer',
+                      $type: "materialLabelRenderer",
                       $exps: {
-                        value: '$slot.value',
-                      }
+                        value: "$slot.value",
+                      },
                     },
                     $exps: {
                       href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -315,52 +314,52 @@ const page: RapidPage = {
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'lotNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "lotNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'binNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "binNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'serialNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "serialNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'trackingCode',
-                  width: '100px',
+                  type: "auto",
+                  code: "trackingCode",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'tags',
-                  width: '100px',
+                  type: "auto",
+                  code: "tags",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'quantity',
-                  width: '100px',
+                  type: "auto",
+                  code: "quantity",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'unit',
-                  width: '80px',
+                  type: "auto",
+                  code: "unit",
+                  width: "80px",
                   rendererProps: {
                     format: "{{name}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'from',
-                  width: '150px',
+                  type: "auto",
+                  code: "from",
+                  width: "150px",
                 },
                 {
-                  type: 'auto',
-                  code: 'to',
-                  width: '150px',
+                  type: "auto",
+                  code: "to",
+                  width: "150px",
                   rendererProps: {
                     format: "{{name}}",
                   },
@@ -369,18 +368,18 @@ const page: RapidPage = {
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomGoodTransfer",
                   $exps: {
@@ -396,23 +395,22 @@ const page: RapidPage = {
                   name: "locations",
                   entityCode: "BaseLocation",
                   properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-                  filters: [
-                  ],
+                  filters: [],
                   orderBy: [
                     {
-                      field: 'orderNum',
-                    }
+                      field: "orderNum",
+                    },
                   ],
-                }
+                },
               ],
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
               },
-            }
-          ]
+            },
+          ],
         },
-      ]
+      ],
     },
     {
       $type: "sectionSeparator",
@@ -430,15 +428,15 @@ const page: RapidPage = {
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: {state: 'done', approvalState: 'approving'},
+              data: { state: "done", approvalState: "approving" },
               $exps: {
                 url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              }
+              },
             },
           ],
           $exps: {
             _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-          }
+          },
         },
         {
           $type: "rapidToolbarButton",
@@ -449,15 +447,15 @@ const page: RapidPage = {
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: {approvalState: 'approved'},
+              data: { approvalState: "approved" },
               $exps: {
                 url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              }
+              },
             },
           ],
           $exps: {
             _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
-          }
+          },
         },
         {
           $type: "rapidToolbarButton",
@@ -468,15 +466,15 @@ const page: RapidPage = {
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: {approvalState: 'rejected'},
+              data: { approvalState: "rejected" },
               $exps: {
                 url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              }
+              },
             },
           ],
           $exps: {
             _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
-          }
+          },
         },
       ],
     },

@@ -1,10 +1,10 @@
-import { CommonProps, type Rock, type RockConfig } from '@ruiapp/move-style';
-import { renderRock } from '@ruiapp/react-renderer';
-import SfEntityTableMeta from './SfEntityTableMeta';
-import type { SfEntityTableRockConfig, SfEntityTableState } from './sf-entity-table-types';
-import { find, pick } from 'lodash';
-import rapidAppDefinition from '~/rapidAppDefinition';
-import { generateRockConfigOfError, RapidEntity } from '@ruiapp/rapid-extension';
+import { CommonProps, type Rock, type RockConfig } from "@ruiapp/move-style";
+import { renderRock } from "@ruiapp/react-renderer";
+import SfEntityTableMeta from "./SfEntityTableMeta";
+import type { SfEntityTableRockConfig, SfEntityTableState } from "./sf-entity-table-types";
+import { find, pick } from "lodash";
+import rapidAppDefinition from "~/rapidAppDefinition";
+import { generateRockConfigOfError, RapidEntity } from "@ruiapp/rapid-extension";
 
 export default {
   Renderer(context, props, state) {
@@ -16,8 +16,8 @@ export default {
 
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    wrapStyle.position = 'absolute';
-    wrapStyle.overflowY = 'auto';
+    wrapStyle.position = "absolute";
+    wrapStyle.overflowY = "auto";
 
     if (entityConfig?.entityCode) {
       mainEntity = find(entities, (item) => item.code === entityConfig.entityCode);
@@ -35,14 +35,14 @@ export default {
 
     const tableRockConfig: RockConfig = {
       $id: `${props.$id}-entity-list`,
-      $type: 'rapidEntityList',
+      $type: "rapidEntityList",
       dataSourceCode: entityConfig?.name,
       listActions: props.listActions,
       extraActions: props.extraActions,
       selectionMode: props.selectionMode,
       selectOnClickRow: props.selectOnClickRow,
       onSelectedIdsChange: props.onSelectedIdsChange,
-      viewMode: 'table',
+      viewMode: "table",
       pageSize,
       actions: props.actions || [],
       columns: props.columns || [],

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import ruiPlayerConfig from './rui-player-config';
+import axios from "axios";
+import ruiPlayerConfig from "./rui-player-config";
 
 const rapidApi = axios.create({
   baseURL: ruiPlayerConfig.apiBase,
@@ -10,4 +10,4 @@ export default rapidApi;
 
 export const rapidApiCancelToken = axios.CancelToken;
 
-export { type CancelTokenSource } from 'axios';
+export { type CancelTokenSource } from "axios";

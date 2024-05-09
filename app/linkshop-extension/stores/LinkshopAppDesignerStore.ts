@@ -1,11 +1,11 @@
-import { EventEmitter, Framework, IStore, Page, PageCommand, PageConfig, RockConfig, StoreConfigBase, StoreMeta } from '@ruiapp/move-style';
-import type { LinkshopAppRockConfig } from '../linkshop-types';
-import { cloneDeep, find, map } from 'lodash';
-import { DesignStage } from '../designer-types';
-import { UpdateEntityByIdOptions } from '@ruiapp/rapid-core';
-import rapidApi from '~/rapidApi';
-import { EntityStoreConfig } from '@ruiapp/rapid-extension';
-import { genRandomComponentId } from '../utilities/DesignerUtility';
+import { EventEmitter, Framework, IStore, Page, PageCommand, PageConfig, RockConfig, StoreConfigBase, StoreMeta } from "@ruiapp/move-style";
+import type { LinkshopAppRockConfig } from "../linkshop-types";
+import { cloneDeep, find, map } from "lodash";
+import { DesignStage } from "../designer-types";
+import { UpdateEntityByIdOptions } from "@ruiapp/rapid-core";
+import rapidApi from "~/rapidApi";
+import { EntityStoreConfig } from "@ruiapp/rapid-extension";
+import { genRandomComponentId } from "../utilities/DesignerUtility";
 
 export interface LinkshopAppStoreConfig extends StoreConfigBase {
   appId?: string;
@@ -28,7 +28,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
   id: string;
 
   constructor(framework: Framework) {
-    this.#name = '';
+    this.#name = "";
     this.#emitter = new EventEmitter();
 
     this.#snippets = [];
@@ -37,7 +37,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     this.#framework = framework;
     this.#page = new Page(framework);
     this.#page.observe(() => {
-      this.#emitter.emit('dataChange', null);
+      this.#emitter.emit("dataChange", null);
     });
   }
 
@@ -51,14 +51,14 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     if (storeConfig.appConfig) {
       this.setAppConfig(
         storeConfig.appConfig || {
-          $type: 'linkshopApp',
+          $type: "linkshopApp",
           steps: [],
         },
       );
     }
 
     this.processCommand({
-      name: 'addStores',
+      name: "addStores",
       payload: {
         stores: storeConfig.stores || [],
       },
@@ -69,7 +69,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
 
   setAppConfig(value: LinkshopAppRockConfig) {
     this.appConfig = value;
-    this.#emitter.emit('dataChange', null);
+    this.#emitter.emit("dataChange", null);
   }
 
   get selectedSetpId(): string | null {
@@ -77,7 +77,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       return null;
     }
 
-    if (this.#stage.type === 'step') {
+    if (this.#stage.type === "step") {
       return this.#stage.stepId;
     }
 
@@ -88,7 +88,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     const currentStage = this.#stage;
 
     if (currentStage) {
-      if (currentStage.type === 'step') {
+      if (currentStage.type === "step") {
         const currentStep = this.currentStep!;
         const stagePageConfig = this.#page.getSerializableConfig();
         if (currentStep) {
@@ -107,7 +107,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     this.#selectedComponentId = undefined;
     this.#selectedSlotPropName = undefined;
 
-    this.#emitter.emit('dataChange', null);
+    this.#emitter.emit("dataChange", null);
   }
 
   get currentStep() {
@@ -120,7 +120,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       return null;
     }
 
-    if (currentStage.type === 'step') {
+    if (currentStage.type === "step") {
       const step = find(this.appConfig.steps, { $id: currentStage.stepId });
       return step;
     }
@@ -130,7 +130,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
 
   setPageConfig(value: PageConfig) {
     this.#page.setConfig(value);
-    this.#emitter.emit('dataChange', null);
+    this.#emitter.emit("dataChange", null);
   }
 
   setPropertyExpression(propName: string, propExpression: string) {}
@@ -140,7 +140,7 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
   }
 
   observe(callback: (data: any) => void) {
-    this.#emitter.on('dataChange', callback);
+    this.#emitter.on("dataChange", callback);
   }
 
   get data() {
@@ -188,30 +188,30 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     this.#selectedComponentTreeNodeId = nodeId;
     this.#selectedComponentId = componentId;
     this.#selectedSlotPropName = slotPropName;
-    this.#emitter.emit('dataChange', null);
+    this.#emitter.emit("dataChange", null);
   }
 
   processCommand(command: PageCommand) {
-    if (command.name === 'setPageConfig') {
+    if (command.name === "setPageConfig") {
       // 这里的 setPageConfig 是 step 切换引起的
       const { payload } = command;
       this.#page.setConfig(payload.pageConfig);
-    } else if (command.name === 'setComponentProperty') {
+    } else if (command.name === "setComponentProperty") {
       const { payload } = command;
       this.#page.setComponentProperty(payload.componentId, payload.propName, payload.propValue);
-    } else if (command.name === 'setComponentProperties') {
+    } else if (command.name === "setComponentProperties") {
       const { payload } = command;
       this.#page.setComponentProperties(payload.componentId, payload.props);
-    } else if (command.name === 'removeComponentProperty') {
+    } else if (command.name === "removeComponentProperty") {
       const { payload } = command;
       this.#page.removeComponentProperty(payload.componentId, payload.propName);
-    } else if (command.name === 'setComponentPropertyExpression') {
+    } else if (command.name === "setComponentPropertyExpression") {
       const { payload } = command;
       this.#page.setComponentPropertyExpression(payload.componentId, payload.propName, payload.propExpression);
-    } else if (command.name === 'removeComponentPropertyExpression') {
+    } else if (command.name === "removeComponentPropertyExpression") {
       const { payload } = command;
       this.#page.removeComponentPropertyExpression(payload.componentId, payload.propName);
-    } else if (command.name === 'addComponent') {
+    } else if (command.name === "addComponent") {
       const { payload } = command;
       const { componentType, parentComponentId, slotPropName, prevSiblingComponentId, defaultProps } = payload;
 
@@ -233,10 +233,10 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       //   throw new Error("Component id MUST be set before added to page.");
       // }
       this.#page.addComponents([componentConfig], parentComponentId, slotPropName, prevSiblingComponentId);
-    } else if (command.name === 'removeComponents') {
+    } else if (command.name === "removeComponents") {
       this.#page.removeComponents(command.payload.componentIds);
       this.setSelectedComponentTreeNode(undefined, undefined, undefined);
-    } else if (command.name === 'cutComponents') {
+    } else if (command.name === "cutComponents") {
       const componentIds = command.payload.componentIds;
       if (!componentIds || !componentIds.length) {
         return;
@@ -244,13 +244,13 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       this.#snippets = map(componentIds, (componentId) => this.#page.getComponent(componentId));
       this.#page.removeComponents(componentIds);
       this.setSelectedComponentTreeNode(undefined, undefined, undefined);
-    } else if (command.name === 'copyComponents') {
+    } else if (command.name === "copyComponents") {
       const componentIds = command.payload.componentIds;
       if (!componentIds || !componentIds.length) {
         return;
       }
       this.#snippets = map(componentIds, (componentId) => cloneDeep(this.#page.getComponent(componentId)));
-    } else if (command.name === 'pasteComponents') {
+    } else if (command.name === "pasteComponents") {
       if (!this.#snippets || !this.#snippets.length) {
         return;
       }
@@ -259,15 +259,15 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       const { parentComponentId, slotPropName, prevSiblingComponentId } = payload;
 
       this.#page.addComponents(this.#snippets, parentComponentId, slotPropName, prevSiblingComponentId);
-    } else if (command.name === 'addStores') {
+    } else if (command.name === "addStores") {
       this.#page.scope.addStores(command.payload?.stores);
-    } else if (command.name === 'addStore') {
+    } else if (command.name === "addStore") {
       this.#page.addStore(command.payload?.store);
-    } else if (command.name === 'modifyStore') {
+    } else if (command.name === "modifyStore") {
       this.#page.updateStore(command.payload.store);
-    } else if (command.name === 'removeStore') {
+    } else if (command.name === "removeStore") {
       this.#page.removeStore(command.payload?.store);
-    } else if (command.name === 'addStep') {
+    } else if (command.name === "addStep") {
       const existedSteps = this.appConfig?.steps || [];
       const isExistedStep = existedSteps.some((s) => s.$name === command.payload?.step?.$name);
       if (isExistedStep) {
@@ -278,14 +278,14 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
         ...(this.appConfig || {}),
         steps: [...existedSteps, command.payload?.step],
       } as LinkshopAppRockConfig);
-    } else if (command.name === 'modifyStep') {
+    } else if (command.name === "modifyStep") {
       const existedSteps = this.appConfig?.steps || [];
       this.setAppConfig({
         ...(this.appConfig || {}),
         // TODO: store name editable?
         steps: existedSteps?.map((s) => (s.$id === command.payload?.step?.$id ? { ...s, ...(command.payload.step || {}) } : s)),
       } as LinkshopAppRockConfig);
-    } else if (command.name === 'removeStep') {
+    } else if (command.name === "removeStep") {
       const existedSteps = this.appConfig?.steps || [];
       this.setAppConfig({
         ...(this.appConfig || {}),
@@ -296,6 +296,6 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
 }
 
 export default {
-  type: 'linkshopAppDesignerStore',
+  type: "linkshopAppDesignerStore",
   store: LinkshopAppDesignerStore,
 } as StoreMeta<LinkshopAppStoreConfig>;

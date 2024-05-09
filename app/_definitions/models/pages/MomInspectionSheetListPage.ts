@@ -1,43 +1,43 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'material',
+      type: "auto",
+      code: "material",
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
+        listFilterFields: ["label"],
+      },
     },
     {
-      type: 'auto',
-      code: 'lotNum',
+      type: "auto",
+      code: "lotNum",
     },
     {
-      type: 'auto',
-      code: 'serialNum',
+      type: "auto",
+      code: "serialNum",
     },
     {
-      type: 'auto',
-      code: 'sender',
+      type: "auto",
+      code: "sender",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'mom_inspection_sheet_list',
-  name: '检验记录列表',
-  title: '检验记录',
+  code: "mom_inspection_sheet_list",
+  name: "检验记录列表",
+  title: "检验记录",
   view: [
     {
       $type: "sonicEntityList",
@@ -49,7 +49,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -59,7 +59,7 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code"],
-        }
+        },
       ],
       orderBy: [
         {
@@ -69,31 +69,31 @@ const page: RapidPage = {
       ],
       columns: [
         {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
+          type: "auto",
+          code: "state",
+          width: "100px",
         },
         {
-          type: 'link',
-          code: 'code',
-          width: '200px',
-          fixed: 'left',
+          type: "link",
+          code: "code",
+          width: "200px",
+          fixed: "left",
           rendererType: "link",
           rendererProps: {
             url: "/pages/mom_inspection_sheet_details?id={{id}}",
           },
         },
         {
-          type: 'auto',
-          code: 'material',
-          fixed: 'left',
+          type: "auto",
+          code: "material",
+          fixed: "left",
           rendererType: "anchor",
           rendererProps: {
             children: {
-              $type: 'materialLabelRenderer',
+              $type: "materialLabelRenderer",
               $exps: {
-                value: '$slot.value',
-              }
+                value: "$slot.value",
+              },
             },
             $exps: {
               href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -101,57 +101,57 @@ const page: RapidPage = {
           },
         },
         {
-          type: 'auto',
-          code: 'lotNum',
-          width: '150px',
+          type: "auto",
+          code: "lotNum",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'serialNum',
-          width: '150px',
+          type: "auto",
+          code: "serialNum",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'sender',
-          width: '150px',
+          type: "auto",
+          code: "sender",
+          width: "150px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'inspector',
-          width: '150px',
+          type: "auto",
+          code: "inspector",
+          width: "150px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'reviewer',
-          width: '150px',
+          type: "auto",
+          code: "reviewer",
+          width: "150px",
           rendererProps: {
-            format: '{{name}}',
+            format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionSheet",
         },
@@ -159,8 +159,8 @@ const page: RapidPage = {
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       $exps: {
-        'newForm.fixedFields.state': '"pending"',
-      }
+        "newForm.fixedFields.state": '"pending"',
+      },
     },
   ],
 };

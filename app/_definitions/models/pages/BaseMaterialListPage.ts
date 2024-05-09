@@ -1,65 +1,64 @@
-
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'treeSelect',
-      code: 'category',
+      type: "treeSelect",
+      code: "category",
       formControlProps: {
         listDataSourceCode: "categories",
         listParentField: "parent.id",
-      }
+      },
     },
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'defaultUnit',
+      type: "auto",
+      code: "defaultUnit",
     },
     {
-      type: 'auto',
-      code: 'brand',
+      type: "auto",
+      code: "brand",
     },
     {
-      type: 'textarea',
-      code: 'specification',
+      type: "textarea",
+      code: "specification",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
     {
-      type: 'auto',
-      code: 'canProduce',
+      type: "auto",
+      code: "canProduce",
     },
     {
-      type: 'auto',
-      code: 'canPurchase',
+      type: "auto",
+      code: "canPurchase",
     },
     {
-      type: 'auto',
-      code: 'canSale',
+      type: "auto",
+      code: "canSale",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'base_material_list',
-  name: '货品管理',
-  title: '货品管理',
-  permissionCheck: {any: ["baseMaterial.manage"]},
+  code: "base_material_list",
+  name: "货品管理",
+  title: "货品管理",
+  permissionCheck: { any: ["baseMaterial.manage"] },
   view: [
     {
       $id: "mainLayout",
@@ -96,11 +95,11 @@ const page: RapidPage = {
               name: "notifySelectedIdsChange",
               payload: {
                 selectedIds: [],
-              }
+              },
             },
             $exps: {
               "message.payload.selectedIds": "$event.args[0]",
-            }
+            },
           },
           // {
           //   $action: "setVars",
@@ -109,7 +108,7 @@ const page: RapidPage = {
           //     "vars.activeId": "_.first($event.args[0])"
           //   }
           // }
-        ]
+        ],
       },
       secondary: [
         {
@@ -121,7 +120,7 @@ const page: RapidPage = {
               field: "category_id",
               operator: "eq",
               value: "",
-            }
+            },
           ],
           listActions: [
             {
@@ -132,7 +131,7 @@ const page: RapidPage = {
               // $exps: {
               //   _hidden: "!$scope.vars.activeId",
               // }
-            }
+            },
           ],
           extraActions: [
             {
@@ -142,80 +141,80 @@ const page: RapidPage = {
               actionEventName: "onSearch",
               filterMode: "contains",
               filterFields: ["code", "name"],
-            }
+            },
           ],
           orderBy: [
             {
               field: "code",
-            }
+            },
           ],
           pageSize: 20,
           columns: [
             {
-              type: 'link',
-              code: 'code',
-              fixed: 'left',
-              width: '150px',
+              type: "link",
+              code: "code",
+              fixed: "left",
+              width: "150px",
               rendererType: "link",
               rendererProps: {
                 url: "/pages/base_material_details?id={{id}}",
               },
             },
             {
-              type: 'link',
-              code: 'name',
-              fixed: 'left',
-              width: '200px',
+              type: "link",
+              code: "name",
+              fixed: "left",
+              width: "200px",
               rendererType: "link",
               rendererProps: {
                 url: "/pages/base_material_details?id={{id}}",
               },
             },
             {
-              type: 'auto',
-              code: 'defaultUnit',
-              width: '100px',
+              type: "auto",
+              code: "defaultUnit",
+              width: "100px",
               rendererProps: {
-                format: '{{name}}',
+                format: "{{name}}",
               },
             },
             {
-              type: 'auto',
-              code: 'brand',
-              width: '100px',
+              type: "auto",
+              code: "brand",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'specification',
+              type: "auto",
+              code: "specification",
             },
             {
-              type: 'auto',
-              code: 'state',
-              width: '100px',
+              type: "auto",
+              code: "state",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'createdAt',
-              width: '150px',
+              type: "auto",
+              code: "createdAt",
+              width: "150px",
             },
             {
-              type: 'auto',
-              code: 'updatedAt',
-              width: '150px',
+              type: "auto",
+              code: "updatedAt",
+              width: "150px",
             },
           ],
           actions: [
             {
               $type: "sonicRecordActionEditEntity",
-              code: 'edit',
+              code: "edit",
               actionType: "edit",
-              actionText: '修改',
+              actionText: "修改",
             },
             {
               $type: "sonicRecordActionDeleteEntity",
-              code: 'delete',
-              actionType: 'delete',
-              actionText: '删除',
+              code: "delete",
+              actionType: "delete",
+              actionText: "删除",
               dataSourceCode: "list",
               entityCode: "BaseMaterial",
             },
@@ -230,15 +229,15 @@ const page: RapidPage = {
               properties: ["id", "code", "name", "parent", "orderNum"],
               orderBy: [
                 {
-                  field: 'orderNum',
-                }
+                  field: "orderNum",
+                },
               ],
-            }
+            },
           ],
           $exps: {
             "fixedFilters[0].value": "$scope.vars.activeId",
             "newForm.fixedFields.category_id": "$scope.vars.activeId",
-          }
+          },
         },
       ],
       stores: [
@@ -249,11 +248,11 @@ const page: RapidPage = {
           properties: ["id", "code", "name", "parent", "orderNum"],
           orderBy: [
             {
-              field: 'orderNum',
-            }
+              field: "orderNum",
+            },
           ],
-        }
-      ]
+        },
+      ],
     },
   ],
 };
