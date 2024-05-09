@@ -2,6 +2,8 @@ import SfButton from './sf-button/SfButton';
 import SfIcon from './sf-icon/SfIcon';
 import SfPicture from './sf-picture/SfPicture';
 import SfText from './sf-text/SfText';
+import SfQRCode from './sf-qrcode/SfQRCode';
+import SfBarcode from './sf-barcode/SfBarcode';
 
 // layout entity components
 import SfEntityDetails from './sf-entity-details/SfEntityDetails';
@@ -13,6 +15,8 @@ export default [
   SfIcon,
   SfPicture,
   SfText,
+  SfQRCode,
+  SfBarcode,
 
   // layout
   SfEntityDetails,
