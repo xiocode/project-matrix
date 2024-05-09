@@ -5,7 +5,7 @@ import compression from "compression";
 import { format, transports } from "winston";
 import expressWinston from "express-winston";
 import { createRequestHandler } from "@remix-run/express";
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createProxyMiddleware } from "http-proxy-middleware";
 import { consoleFormat, createAppLogger } from "./rapid-logger";
 import DatabaseAccessor from "./database-accessor";
 import {
@@ -18,8 +18,8 @@ import {
   FileManagePlugin,
   ServerOperationPlugin,
   EntityWatchPlugin,
-} from '@ruiapp/rapid-core';
-import { createRapidRequestHandler } from '@ruiapp/rapid-express';
+} from "@ruiapp/rapid-core";
+import { createRapidRequestHandler } from "@ruiapp/rapid-express";
 
 import serverOperations from "./app/_definitions/meta/server-operations";
 import entityWatchers from "./app/_definitions/meta/entity-watchers";
@@ -32,7 +32,7 @@ const BUILD_DIR = path.join(process.cwd(), "build");
 
 export async function startServer() {
   const logger = createAppLogger({
-    level: isDevelopmentEnv? "debug" : "info",
+    level: isDevelopmentEnv ? "debug" : "info",
   });
   const app = express();
 
@@ -42,59 +42,63 @@ export async function startServer() {
   app.disable("x-powered-by");
 
   // Remix fingerprints its assets so we can cache forever.
-  app.use(
-    "/build",
-    express.static("public/build", { immutable: true, maxAge: "1y" })
-  );
+  app.use("/build", express.static("public/build", { immutable: true, maxAge: "1y" }));
 
   // Everything else (like favicon.ico) is cached for an hour. You may want to be
   // more aggressive with this caching.
   app.use(express.static("public", { maxAge: "1h" }));
 
   if (isDevelopmentEnv) {
-    app.use(expressWinston.logger({
-      format: format.combine(
-        format.timestamp(),
-        format.splat(),
-      ),
-      transports: [
-        new transports.Console({
-          format: consoleFormat(),
-        })
-      ],
-      meta: false,
-      expressFormat: true,
-    }));
+    app.use(
+      expressWinston.logger({
+        format: format.combine(format.timestamp(), format.splat()),
+        transports: [
+          new transports.Console({
+            format: consoleFormat(),
+          }),
+        ],
+        meta: false,
+        expressFormat: true,
+      }),
+    );
   }
 
-  const customizeAPI = process.env.CUSTOMIZE_SERVICE_URL || 'http://127.0.0.1:3001';
-  app.use('/api/customize', createProxyMiddleware({ target: customizeAPI, changeOrigin: true, pathRewrite: {
-    '^/api/customize': '/',
-  }, }));
+  const customizeAPI = process.env.CUSTOMIZE_SERVICE_URL || "http://127.0.0.1:3001";
+  app.use(
+    "/api/customize",
+    createProxyMiddleware({
+      target: customizeAPI,
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api/customize": "/",
+      },
+    }),
+  );
 
   const envFromProcess = process.env;
   const env = {
     get: (name: string, defaultValue = "") => {
       return envFromProcess[name] || defaultValue;
-    }
+    },
   };
 
-  const defaultJWTKey = "DyYR1em73ZR5s3rUV32ek3FCZBMxE0YMjuPCvpyQKn+MhCQwlwCiN+8ghgTYcoijtLhKX4G93DPxsJOIuf/ub5qRi0lx5AnHEYGQ8c2zpxJ873viF7marKQ7k5dtBU83f0Oki3aeugSeAfYbOzeK49+LopkgjDeQikgLMyC4JFo=";
+  const defaultJWTKey =
+    "DyYR1em73ZR5s3rUV32ek3FCZBMxE0YMjuPCvpyQKn+MhCQwlwCiN+8ghgTYcoijtLhKX4G93DPxsJOIuf/ub5qRi0lx5AnHEYGQ8c2zpxJ873viF7marKQ7k5dtBU83f0Oki3aeugSeAfYbOzeK49+LopkgjDeQikgLMyC4JFo=";
   const rapidConfig = {
     dbHost: env.get("DATABASE_HOST", "127.0.0.1"),
     dbPort: parseInt(env.get("DATABASE_PORT"), 10) || 5432,
     dbName: env.get("DATABASE_NAME", "project_matrix"),
     dbUser: env.get("DATABASE_USERNAME", "postgres"),
     dbPassword: env.get("DATABASE_PASSWORD", "postgres"),
-    dbDefaultSchema: env.get("DATABASE_DEFAULT_SCHEMA") || 'public',
+    dbDefaultSchema: env.get("DATABASE_DEFAULT_SCHEMA") || "public",
     dbPoolMaxConnections: parseInt(env.get("DATABASE_POOL_MAX_CONNECTIONS"), 10) || 20,
     sessionCookieName: env.get("SESSION_COOKIE_NAME", "RAPID_SESSION"),
     jwtKey: env.get("JWT_KEY", defaultJWTKey),
     localFileStoragePath: env.get("LOCAL_FILE_STORAGE_PATH", "/data/rapid-data/local-storage"),
   };
-  logger.info("Staring rapid with config: ", rapidConfig)
+  logger.info("Staring rapid with config: ", rapidConfig);
 
-  const databaseAccessor  = new DatabaseAccessor(logger, {
+  const databaseAccessor = new DatabaseAccessor(logger, {
     host: rapidConfig.dbHost,
     port: rapidConfig.dbPort,
     database: rapidConfig.dbName,
@@ -136,7 +140,7 @@ export async function startServer() {
   });
   await rapidServer.start();
 
-  const rapidRequestHandler = createRapidRequestHandler(rapidServer as any)
+  const rapidRequestHandler = createRapidRequestHandler(rapidServer as any);
   app.use("/api", (req, res, next) => {
     rapidRequestHandler(req, res, next);
   });
@@ -155,7 +159,7 @@ export async function startServer() {
       : createRequestHandler({
           build: require(BUILD_DIR),
           mode: process.env.NODE_ENV,
-        })
+        }),
   );
   const port = process.env.PORT || 3000;
 

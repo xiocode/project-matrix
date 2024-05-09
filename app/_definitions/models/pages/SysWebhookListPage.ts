@@ -1,45 +1,44 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
-
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'url',
+      type: "auto",
+      code: "url",
     },
     {
-      type: 'auto',
-      code: 'secret',
+      type: "auto",
+      code: "secret",
     },
     {
-      type: 'auto',
-      code: 'namespace',
+      type: "auto",
+      code: "namespace",
     },
     {
-      type: 'auto',
-      code: 'modelSingularCode',
+      type: "auto",
+      code: "modelSingularCode",
     },
     {
-      type: 'auto',
-      code: 'events',
+      type: "auto",
+      code: "events",
     },
     {
-      type: 'auto',
-      code: 'enabled',
+      type: "auto",
+      code: "enabled",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'sys_webhook_list',
-  name: 'Webhook',
-  title: 'Webhook管理',
-  permissionCheck: {any: ["dev.manage"]},
+  code: "sys_webhook_list",
+  name: "Webhook",
+  title: "Webhook管理",
+  permissionCheck: { any: ["dev.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -51,7 +50,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -61,58 +60,58 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["name", "url", "modelSingularCode"],
-        }
+        },
       ],
       columns: [
         {
-          type: 'auto',
-          code: 'name',
-          width: '150px',
-          fixed: 'left',
+          type: "auto",
+          code: "name",
+          width: "150px",
+          fixed: "left",
         },
         {
-          type: 'auto',
-          code: 'url',
+          type: "auto",
+          code: "url",
         },
         {
-          type: 'auto',
-          code: 'secret',
-          width: '100px',
+          type: "auto",
+          code: "secret",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'namespace',
-          title: 'Ns.',
-          width: '100px',
+          type: "auto",
+          code: "namespace",
+          title: "Ns.",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'modelSingularCode',
-          width: '100px',
+          type: "auto",
+          code: "modelSingularCode",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'events',
-          width: '200px',
+          type: "auto",
+          code: "events",
+          width: "200px",
         },
         {
-          type: 'auto',
-          code: 'enabled',
-          width: '100px',
+          type: "auto",
+          code: "enabled",
+          width: "100px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "Webhook",
         },
@@ -120,27 +119,27 @@ const page: RapidPage = {
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       searchForm: {
-        entityCode: 'Webhook',
+        entityCode: "Webhook",
         items: [
           {
-            type: 'auto',
-            code: 'name',
-            filterMode: 'contains',
+            type: "auto",
+            code: "name",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'url',
-            filterMode: 'contains',
+            type: "auto",
+            code: "url",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'modelSingularCode',
-            filterMode: 'contains',
+            type: "auto",
+            code: "modelSingularCode",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'enabled',
-            filterMode: 'eq',
+            type: "auto",
+            code: "enabled",
+            filterMode: "eq",
             defaultValue: true,
           },
         ],

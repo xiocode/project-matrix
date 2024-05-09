@@ -1,54 +1,54 @@
-import type { TDictionaryCodes } from '../../meta/data-dictionary-codes';
-import type { TEntitySingularCodes } from '../../meta/model-codes';
-import type { RapidEntity } from '@ruiapp/rapid-extension';
+import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   metaOnly: true,
-  namespace: 'sys',
-  code: 'Webhook',
-  name: 'Webhook',
-  tableName: 'sys_webhooks',
+  namespace: "sys",
+  code: "Webhook",
+  name: "Webhook",
+  tableName: "sys_webhooks",
   fields: [
     {
-      code: 'name',
-      name: '名称',
-      type: 'text',
+      code: "name",
+      name: "名称",
+      type: "text",
       required: true,
     },
     {
-      code: 'url',
-      name: 'URL',
-      type: 'text',
+      code: "url",
+      name: "URL",
+      type: "text",
       required: true,
     },
     {
-      code: 'secret',
-      name: '密钥',
-      type: 'text',
+      code: "secret",
+      name: "密钥",
+      type: "text",
       required: false,
     },
     {
-      code: 'namespace',
-      name: 'namespace',
-      type: 'text',
+      code: "namespace",
+      name: "namespace",
+      type: "text",
       required: true,
     },
     {
-      code: 'modelSingularCode',
-      name: '模型Code',
-      type: 'text',
+      code: "modelSingularCode",
+      name: "模型Code",
+      type: "text",
       required: true,
     },
     {
-      code: 'events',
-      name: '事件',
-      type: 'json',
+      code: "events",
+      name: "事件",
+      type: "json",
       required: false,
     },
     {
-      code: 'enabled',
-      name: '是否启用',
-      type: 'boolean',
+      code: "enabled",
+      name: "是否启用",
+      type: "boolean",
       required: true,
     },
   ],

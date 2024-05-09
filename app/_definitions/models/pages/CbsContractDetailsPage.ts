@@ -1,12 +1,11 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
-
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const contractFileNewForm: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'storageObject',
+      type: "auto",
+      code: "storageObject",
       label: "文件",
       valueFieldType: "json",
       formControlType: "rapidDocumentFormControl",
@@ -30,120 +29,120 @@ const contractFileNewForm: Partial<RapidEntityFormConfig> = {
                   key: fileInfo.key,
                 }
               });
-            `
-          }
+            `,
+          },
         ],
       },
     },
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'size',
+      type: "auto",
+      code: "size",
       hidden: true,
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
   ],
-}
+};
 
 const contractFileEditForm: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
-  ]
-}
+  ],
+};
 
 const relatedContractFormConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'target',
+      type: "auto",
+      code: "target",
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
+        listFilterFields: ["label"],
+      },
     },
     {
-      type: 'auto',
-      code: 'kind',
+      type: "auto",
+      code: "kind",
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
+        listFilterFields: ["label"],
+      },
     },
   ],
 };
 
 const page: RapidPage = {
-  code: 'cbs_contract_details',
-  name: '合同详情',
-  title: '合同详情',
-  permissionCheck: {any: ["cbsContract.view", "cbsContract.manage"]},
+  code: "cbs_contract_details",
+  name: "合同详情",
+  title: "合同详情",
+  permissionCheck: { any: ["cbsContract.view", "cbsContract.manage"] },
   view: [
     {
-      $type: 'rapidEntityForm',
-      entityCode: 'CbsContract',
-      mode: 'view',
+      $type: "rapidEntityForm",
+      entityCode: "CbsContract",
+      mode: "view",
       column: 3,
       items: [
         {
-          type: 'auto',
-          code: 'kind',
+          type: "auto",
+          code: "kind",
         },
         {
-          type: 'auto',
-          code: 'code',
+          type: "auto",
+          code: "code",
         },
         {
-          type: 'auto',
-          code: 'name',
+          type: "auto",
+          code: "name",
         },
         {
-          type: 'auto',
-          code: 'project',
+          type: "auto",
+          code: "project",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'salesman',
+          type: "auto",
+          code: "salesman",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'totalAmount',
-          rendererType: 'rapidCurrencyRenderer',
+          type: "auto",
+          code: "totalAmount",
+          rendererType: "rapidCurrencyRenderer",
         },
         {
-          type: 'auto',
-          code: 'state',
+          type: "auto",
+          code: "state",
         },
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
-      }
+      },
     },
     {
       $type: "antdTabs",
@@ -161,7 +160,7 @@ const page: RapidPage = {
                   field: "contract_id",
                   operator: "eq",
                   value: "",
-                }
+                },
               ],
               orderBy: [
                 {
@@ -184,14 +183,14 @@ const page: RapidPage = {
               extraProperties: ["storageObject"],
               columns: [
                 {
-                  type: 'auto',
-                  code: 'code',
-                  width: '150px',
+                  type: "auto",
+                  code: "code",
+                  width: "150px",
                 },
                 {
-                  type: 'auto',
-                  code: 'name',
-                  width: '250px',
+                  type: "auto",
+                  code: "name",
+                  width: "250px",
                   rendererType: "rapidLinkRenderer",
                   rendererProps: {
                     $exps: {
@@ -201,33 +200,33 @@ const page: RapidPage = {
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'description',
+                  type: "auto",
+                  code: "description",
                 },
                 {
-                  type: 'auto',
-                  code: 'size',
-                  width: '150px',
-                  rendererType: 'rapidFileSizeRenderer',
+                  type: "auto",
+                  code: "size",
+                  width: "150px",
+                  rendererType: "rapidFileSizeRenderer",
                 },
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  width: '150px',
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
                 },
               ],
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "CbsContractFile",
                 },
@@ -258,10 +257,10 @@ const page: RapidPage = {
                     {
                       field: "id",
                       operator: "eq",
-                      value: ""
-                    }
-                  ]
-                }
+                      value: "",
+                    },
+                  ],
+                },
               ],
               listActions: [
                 {
@@ -279,16 +278,16 @@ const page: RapidPage = {
               pageSize: 20,
               columns: [
                 {
-                  type: 'auto',
-                  code: 'kind',
-                  width: '150px',
+                  type: "auto",
+                  code: "kind",
+                  width: "150px",
                   rendererProps: {
                     format: "{{name}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'target',
+                  type: "auto",
+                  code: "target",
                   rendererType: "rapidLinkRenderer",
                   rendererProps: {
                     text: "{{code}} {{name}}",
@@ -299,15 +298,15 @@ const page: RapidPage = {
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "CbsContractRelation",
                 },
@@ -318,8 +317,8 @@ const page: RapidPage = {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.main_id": "$rui.parseQuery().id",
               },
-            }
-          ]
+            },
+          ],
         },
         {
           key: "orders",
@@ -338,10 +337,10 @@ const page: RapidPage = {
                     {
                       field: "id",
                       operator: "eq",
-                      value: ""
-                    }
-                  ]
-                }
+                      value: "",
+                    },
+                  ],
+                },
               ],
               listActions: [
                 {
@@ -353,36 +352,36 @@ const page: RapidPage = {
               pageSize: 20,
               columns: [
                 {
-                  type: 'auto',
-                  code: 'kind',
-                  fixed: 'left',
-                  width: '100px',
+                  type: "auto",
+                  code: "kind",
+                  fixed: "left",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'code',
-                  fixed: 'left',
-                  width: '100px',
+                  type: "auto",
+                  code: "code",
+                  fixed: "left",
+                  width: "100px",
                 },
                 {
-                  type: 'link',
-                  code: 'name',
-                  fixed: 'left',
+                  type: "link",
+                  code: "name",
+                  fixed: "left",
                   rendererProps: {
                     url: "/pages/cbs_order_details?id={{id}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'totalAmount',
-                  width: '120px',
-                  align: 'right',
-                  rendererType: 'rapidCurrencyRenderer',
+                  type: "auto",
+                  code: "totalAmount",
+                  width: "120px",
+                  align: "right",
+                  rendererType: "rapidCurrencyRenderer",
                 },
                 {
-                  type: 'auto',
-                  code: 'projects',
-                  width: '300px',
+                  type: "auto",
+                  code: "projects",
+                  width: "300px",
                   rendererProps: {
                     listContainer: {
                       $type: "htmlElement",
@@ -400,13 +399,13 @@ const page: RapidPage = {
                     separator: {
                       $type: "htmlElement",
                       htmlTag: "div",
-                    }
+                    },
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'contracts',
-                  width: '300px',
+                  type: "auto",
+                  code: "contracts",
+                  width: "300px",
                   rendererProps: {
                     listContainer: {
                       $type: "htmlElement",
@@ -424,28 +423,28 @@ const page: RapidPage = {
                     separator: {
                       $type: "htmlElement",
                       htmlTag: "div",
-                    }
+                    },
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'state',
-                  width: '100px',
+                  type: "auto",
+                  code: "state",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  width: '150px',
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
                 },
               ],
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
               },
-            }
-          ]
+            },
+          ],
         },
-      ]
-    }
+      ],
+    },
   ],
 };
 

@@ -1,32 +1,32 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'fin_account_list',
-  name: '资金账户',
-  title: '资金账户',
-  permissionCheck: {any: ["finAccount.manage"]},
+  code: "fin_account_list",
+  name: "资金账户",
+  title: "资金账户",
+  permissionCheck: { any: ["finAccount.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -38,7 +38,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -48,7 +48,7 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code", "name"],
-        }
+        },
       ],
       orderBy: [
         {
@@ -58,50 +58,50 @@ const page: RapidPage = {
       pageSize: 20,
       columns: [
         {
-          type: 'auto',
-          code: 'code',
-          width: '100px',
-          fixed: 'left',
+          type: "auto",
+          code: "code",
+          width: "100px",
+          fixed: "left",
         },
         {
-          type: 'auto',
-          code: 'name',
-          width: '150px',
+          type: "auto",
+          code: "name",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'balance',
-          width: '120px',
-          align: 'right',
-          rendererType: 'rapidCurrencyRenderer',
+          type: "auto",
+          code: "balance",
+          width: "120px",
+          align: "right",
+          rendererType: "rapidCurrencyRenderer",
         },
         {
-          type: 'auto',
-          code: 'description',
+          type: "auto",
+          code: "description",
         },
         {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
+          type: "auto",
+          code: "state",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "FinAccount",
         },

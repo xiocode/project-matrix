@@ -13,18 +13,18 @@ export default {
       name: icon,
       color,
       size: size || min([width, height]) || 32,
-    }
+    };
 
     const wrapStyle: React.CSSProperties = pick(props, CommonProps.PositionStylePropNames) as any;
     wrapStyle.position = "absolute";
-    return <div data-component-id={props.$id} style={wrapStyle}>
-      {
-        renderRock({
+    return (
+      <div data-component-id={props.$id} style={wrapStyle}>
+        {renderRock({
           context,
           rockConfig: iconRockConfig,
-        })
-      }
-    </div>;
+        })}
+      </div>
+    );
   },
 
   ...SfIconMeta,

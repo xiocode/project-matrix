@@ -1,5 +1,5 @@
-import type { ContainerRockConfig, RockConfigBase, SimpleRockConfig, StoreConfig } from '@ruiapp/move-style';
-import { EntityStoreConfig } from '@ruiapp/rapid-extension';
+import type { ContainerRockConfig, RockConfigBase, SimpleRockConfig, StoreConfig } from "@ruiapp/move-style";
+import { EntityStoreConfig } from "@ruiapp/rapid-extension";
 
 export type LinkshopWidgetCommonConfig = {
   left: number;
@@ -15,7 +15,7 @@ export type LinkshopWidgetRockConfig = RockConfigBase & LinkshopWidgetCommonConf
 
 export type LinkshopAppRockConfig = SimpleRockConfig &
   LinkshopWidgetCommonConfig & {
-    $type: 'linkshopApp';
+    $type: "linkshopApp";
 
     /**
      * 应用步骤
@@ -25,7 +25,7 @@ export type LinkshopAppRockConfig = SimpleRockConfig &
 
 export type LinkshopAppStepRockConfig = ContainerRockConfig &
   LinkshopWidgetCommonConfig & {
-    $type: 'linkshopAppStep';
+    $type: "linkshopAppStep";
 
     /**
      * 背景颜色

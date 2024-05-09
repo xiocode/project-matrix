@@ -1,11 +1,11 @@
-import { Rock } from '@ruiapp/move-style';
+import { Rock } from "@ruiapp/move-style";
 
-const appActionMap: Record<string, Rock['onReceiveMessage']> = {
+const appActionMap: Record<string, Rock["onReceiveMessage"]> = {
   gotoNextStep: (message, state, props) => {
-    state.switchStep('next');
+    state.switchStep("next");
   },
   gotoPreviousStep: (message, state, props) => {
-    state.switchStep('prev');
+    state.switchStep("prev");
   },
 };
 

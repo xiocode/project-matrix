@@ -1,6 +1,6 @@
 import type { ActionHandlerContext, ServerOperation } from "@ruiapp/rapid-core";
-import type { MRPInput, MRPOutput } from "@linkfactory/algorithm-mrp"
-import type { MomWorkOrder, BaseMaterial, MomManufacturingResourcePlan, CbsOrder, CbsOrderItem  } from "~/_definitions/meta/entity-types";
+import type { MRPInput, MRPOutput } from "@linkfactory/algorithm-mrp";
+import type { MomWorkOrder, BaseMaterial, MomManufacturingResourcePlan, CbsOrder, CbsOrderItem } from "~/_definitions/meta/entity-types";
 import { find } from "lodash";
 
 type MrpResult = {
@@ -11,10 +11,10 @@ type MrpResult = {
   decisions: MRPInput["decisions"];
   requirements: MRPOutput["requirements"];
   actions: MRPOutput["actions"];
-}
+};
 
 export default {
-  code: 'submitMrpResult',
+  code: "submitMrpResult",
 
   method: "POST",
 
@@ -31,12 +31,12 @@ export default {
       actions: input.actions,
     };
 
-    const mrpManager = server.getEntityManager<MomManufacturingResourcePlan>('mom_manufacturing_resource_plan');
+    const mrpManager = server.getEntityManager<MomManufacturingResourcePlan>("mom_manufacturing_resource_plan");
 
     const updatedMrp = await mrpManager.updateEntityById({
       id: mrpId,
       entityToSave: {
-        planningState: 'planned',
+        planningState: "planned",
         result: mrpResult,
       },
     });
@@ -45,19 +45,10 @@ export default {
     //   singularCode: 'mom_master_production_schedule',
     // });
 
-    await server.queryDatabaseObject("update mom_master_production_schedules set schedule_state = $1 where mrp_id = $2", [
-      'scheduled',
-      mrpId
-    ]);
+    await server.queryDatabaseObject("update mom_master_production_schedules set schedule_state = $1 where mrp_id = $2", ["scheduled", mrpId]);
 
-    const materials = await server.queryDatabaseObject(
-      `select * from base_materials;`,
-      []
-      );
-    const units = await server.queryDatabaseObject(
-      `select * from base_units;`,
-      []
-      );
+    const materials = await server.queryDatabaseObject(`select * from base_materials;`, []);
+    const units = await server.queryDatabaseObject(`select * from base_units;`, []);
 
     // 生成工单
     const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
@@ -72,16 +63,16 @@ export default {
       const workOrder = await workOrderManager.findEntity({
         filters: [
           {
-            operator: 'eq',
-            field: 'mrp_id',
+            operator: "eq",
+            field: "mrp_id",
             value: mrpId,
           },
           {
-            operator: 'eq',
-            field: 'material_id',
+            operator: "eq",
+            field: "material_id",
             value: material.id,
           },
-        ]
+        ],
       });
 
       if (!workOrder) {
@@ -89,20 +80,20 @@ export default {
         await workOrderManager.createEntity({
           entity: {
             code: woCode,
-            material: { id: material.id},
+            material: { id: material.id },
             quantity: productionOrderItem.quantity,
             unit,
             mrp: { id: mrpId },
-            assignmentState: 'unassigned',
-            executionState: 'pending',
-          } as Partial<MomWorkOrder>
+            assignmentState: "unassigned",
+            executionState: "pending",
+          } as Partial<MomWorkOrder>,
         });
       }
     }
 
     // 生成采购订单
-    const cbsOrderManager = server.getEntityManager<CbsOrder>("cbs_order"); 
-    const cbsOrderItemManager = server.getEntityManager<CbsOrderItem>("cbs_order_item"); 
+    const cbsOrderManager = server.getEntityManager<CbsOrder>("cbs_order");
+    const cbsOrderItemManager = server.getEntityManager<CbsOrderItem>("cbs_order_item");
     const purchaseOrderItems = mrpResult.actions.purchaseOrderItems || [];
     for (const purchaseOrderItem of purchaseOrderItems) {
       const material = find(materials, { code: purchaseOrderItem.code });
@@ -114,16 +105,16 @@ export default {
       const cbsOrderItem = await cbsOrderItemManager.findEntity({
         filters: [
           {
-            operator: 'eq',
-            field: 'mrp_id',
+            operator: "eq",
+            field: "mrp_id",
             value: mrpId,
           },
           {
-            operator: 'eq',
-            field: 'subject_id',
+            operator: "eq",
+            field: "subject_id",
             value: material.id,
           },
-        ]
+        ],
       });
 
       if (!cbsOrderItem) {
@@ -133,9 +124,9 @@ export default {
             code: "-",
             name: poCode,
             kind: "purchase",
-            state: 'unsigned',
+            state: "unsigned",
             mrp: { id: mrpId },
-          } as Partial<CbsOrder>
+          } as Partial<CbsOrder>,
         });
 
         await cbsOrderItemManager.createEntity({
@@ -144,18 +135,18 @@ export default {
             order: { id: cbsOrder.id },
             mrp: { id: mrpId },
             name: material.name,
-            subject: { id: material.id},
+            subject: { id: material.id },
             quantity: purchaseOrderItem.quantity,
             unit,
             price: 0,
             taxRate: 0,
-          } as Partial<CbsOrderItem>
-        })
+          } as Partial<CbsOrderItem>,
+        });
       }
     }
 
     ctx.output = {
       result: ctx.input,
     };
-  }
+  },
 } satisfies ServerOperation;

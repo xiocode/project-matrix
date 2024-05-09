@@ -13,8 +13,8 @@
     "gen-meta": "ts-node-esm --project ./tsconfig-node.json -r dotenv/config -r tsconfig-paths/register ./app/tools/gen-meta.ts",
     "update-rpd-models": "ts-node-esm --project ./tsconfig-node.json -r dotenv/config -r tsconfig-paths/register ./app/tools/update-rpd-models.ts",
     "test": "echo \"Error: no test specified\"",
-    "fmt:code": "prettier --write .",
-    "gen:svg-icons": "npx @svgr/cli --out-dir ./app/shopfloor-extension/rocks/custom-icons/components -- ./app/shopfloor-extension/rocks/custom-icons/svgs"
+    "gen:svg-icons": "npx @svgr/cli --out-dir ./app/shopfloor-extension/rocks/custom-icons/components -- ./app/shopfloor-extension/rocks/custom-icons/svgs",
+    "fmt:code": "prettier . --write"
   },
   "keywords": [],
   "author": "Fossil",

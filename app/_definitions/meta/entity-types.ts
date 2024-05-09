@@ -101,7 +101,7 @@ export interface AppClient {
 /**
  * 客户端
  */
-export type SaveAppClientInput = Omit<AppClient, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveAppClientInput = Omit<AppClient, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 导航菜单
@@ -176,7 +176,7 @@ export interface AppNavItem {
 /**
  * 导航菜单
  */
-export type SaveAppNavItemInput = Omit<AppNavItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveAppNavItemInput = Omit<AppNavItem, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 建筑物
@@ -231,7 +231,7 @@ export interface BaseBuilding {
 /**
  * 建筑物
  */
-export type SaveBaseBuildingInput = Omit<BaseBuilding, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseBuildingInput = Omit<BaseBuilding, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 员工
@@ -286,7 +286,7 @@ export interface BaseEmployee {
 /**
  * 员工
  */
-export type SaveBaseEmployeeInput = Omit<BaseEmployee, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseEmployeeInput = Omit<BaseEmployee, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 表单字段
@@ -357,7 +357,7 @@ export interface BaseFormField {
 /**
  * 表单字段
  */
-export type SaveBaseFormFieldInput = Omit<BaseFormField, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseFormFieldInput = Omit<BaseFormField, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 大门
@@ -412,7 +412,7 @@ export interface BaseGate {
 /**
  * 大门
  */
-export type SaveBaseGateInput = Omit<BaseGate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseGateInput = Omit<BaseGate, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 位置
@@ -475,7 +475,7 @@ export interface BaseLocation {
 /**
  * 位置
  */
-export type SaveBaseLocationInput = Omit<BaseLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseLocationInput = Omit<BaseLocation, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 批次
@@ -538,7 +538,7 @@ export interface BaseLot {
 /**
  * 批次
  */
-export type SaveBaseLotInput = Omit<BaseLot, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseLotInput = Omit<BaseLot, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物料
@@ -629,7 +629,7 @@ export interface BaseMaterial {
 /**
  * 物料
  */
-export type SaveBaseMaterialInput = Omit<BaseMaterial, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseMaterialInput = Omit<BaseMaterial, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物料分类
@@ -692,7 +692,7 @@ export interface BaseMaterialCategory {
 /**
  * 物料分类
  */
-export type SaveBaseMaterialCategoryInput = Omit<BaseMaterialCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseMaterialCategoryInput = Omit<BaseMaterialCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物料文档
@@ -743,7 +743,7 @@ export interface BaseMaterialDocument {
 /**
  * 物料文档
  */
-export type SaveBaseMaterialDocumentInput = Omit<BaseMaterialDocument, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseMaterialDocumentInput = Omit<BaseMaterialDocument, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物料类型
@@ -798,7 +798,7 @@ export interface BaseMaterialType {
 /**
  * 物料类型
  */
-export type SaveBaseMaterialTypeInput = Omit<BaseMaterialType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseMaterialTypeInput = Omit<BaseMaterialType, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 办公室
@@ -857,7 +857,7 @@ export interface BaseOffice {
 /**
  * 办公室
  */
-export type SaveBaseOfficeInput = Omit<BaseOffice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseOfficeInput = Omit<BaseOffice, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 合作伙伴
@@ -908,7 +908,7 @@ export interface BasePartner {
 /**
  * 合作伙伴
  */
-export type SaveBasePartnerInput = Omit<BasePartner, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBasePartnerInput = Omit<BasePartner, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 合作伙伴分类
@@ -959,7 +959,7 @@ export interface BasePartnerCategory {
 /**
  * 合作伙伴分类
  */
-export type SaveBasePartnerCategoryInput = Omit<BasePartnerCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBasePartnerCategoryInput = Omit<BasePartnerCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 单位
@@ -1026,7 +1026,7 @@ export interface BaseUnit {
 /**
  * 单位
  */
-export type SaveBaseUnitInput = Omit<BaseUnit, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseUnitInput = Omit<BaseUnit, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 单位分组
@@ -1077,7 +1077,7 @@ export interface BaseUnitCategory {
 /**
  * 单位分组
  */
-export type SaveBaseUnitCategoryInput = Omit<BaseUnitCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBaseUnitCategoryInput = Omit<BaseUnitCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 审批步骤
@@ -1140,7 +1140,7 @@ export interface BpmActivity {
 /**
  * 审批步骤
  */
-export type SaveBpmActivityInput = Omit<BpmActivity, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmActivityInput = Omit<BpmActivity, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 业务申请单
@@ -1211,7 +1211,7 @@ export interface BpmApplication {
 /**
  * 业务申请单
  */
-export type SaveBpmApplicationInput = Omit<BpmApplication, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmApplicationInput = Omit<BpmApplication, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 审批任务
@@ -1266,7 +1266,7 @@ export interface BpmTask {
 /**
  * 审批任务
  */
-export type SaveBpmTaskInput = Omit<BpmTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmTaskInput = Omit<BpmTask, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 业务流程
@@ -1345,7 +1345,7 @@ export interface BpmProcess {
 /**
  * 业务流程
  */
-export type SaveBpmProcessInput = Omit<BpmProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmProcessInput = Omit<BpmProcess, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 流程分组
@@ -1392,7 +1392,7 @@ export interface BpmProcessCategory {
 /**
  * 流程分组
  */
-export type SaveBpmProcessCategoryInput = Omit<BpmProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmProcessCategoryInput = Omit<BpmProcessCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 业务流程版本
@@ -1459,7 +1459,7 @@ export interface BpmProcessRevision {
 /**
  * 业务流程版本
  */
-export type SaveBpmProcessRevisionInput = Omit<BpmProcessRevision, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveBpmProcessRevisionInput = Omit<BpmProcessRevision, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 合同
@@ -1538,7 +1538,7 @@ export interface CbsContract {
 /**
  * 合同
  */
-export type SaveCbsContractInput = Omit<CbsContract, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsContractInput = Omit<CbsContract, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 合同文件
@@ -1601,7 +1601,7 @@ export interface CbsContractFile {
 /**
  * 合同文件
  */
-export type SaveCbsContractFileInput = Omit<CbsContractFile, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsContractFileInput = Omit<CbsContractFile, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 资金预算
@@ -1672,7 +1672,7 @@ export interface CbsContractFundingBudget {
 /**
  * 资金预算
  */
-export type SaveCbsContractFundingBudgetInput = Omit<CbsContractFundingBudget, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsContractFundingBudgetInput = Omit<CbsContractFundingBudget, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 合同关联
@@ -1723,7 +1723,7 @@ export interface CbsContractRelation {
 /**
  * 合同关联
  */
-export type SaveCbsContractRelationInput = Omit<CbsContractRelation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsContractRelationInput = Omit<CbsContractRelation, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 合同关联关系
@@ -1778,7 +1778,7 @@ export interface CbsContractRelationKind {
 /**
  * 合同关联关系
  */
-export type SaveCbsContractRelationKindInput = Omit<CbsContractRelationKind, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsContractRelationKindInput = Omit<CbsContractRelationKind, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 订单
@@ -1865,7 +1865,7 @@ export interface CbsOrder {
 /**
  * 订单
  */
-export type SaveCbsOrderInput = Omit<CbsOrder, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsOrderInput = Omit<CbsOrder, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 订单项
@@ -1948,7 +1948,7 @@ export interface CbsOrderItem {
 /**
  * 订单项
  */
-export type SaveCbsOrderItemInput = Omit<CbsOrderItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveCbsOrderItemInput = Omit<CbsOrderItem, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 文档
@@ -2027,7 +2027,7 @@ export interface EcmDocument {
 /**
  * 文档
  */
-export type SaveEcmDocumentInput = Omit<EcmDocument, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveEcmDocumentInput = Omit<EcmDocument, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 文档版本
@@ -2082,7 +2082,7 @@ export interface EcmRevision {
 /**
  * 文档版本
  */
-export type SaveEcmRevisionInput = Omit<EcmRevision, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveEcmRevisionInput = Omit<EcmRevision, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 存储对象
@@ -2133,7 +2133,7 @@ export interface EcmStorageObject {
 /**
  * 存储对象
  */
-export type SaveEcmStorageObjectInput = Omit<EcmStorageObject, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveEcmStorageObjectInput = Omit<EcmStorageObject, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 账户
@@ -2196,7 +2196,7 @@ export interface FinAccount {
 /**
  * 账户
  */
-export type SaveFinAccountInput = Omit<FinAccount, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveFinAccountInput = Omit<FinAccount, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 业务类型
@@ -2251,7 +2251,7 @@ export interface FinBusinessCategory {
 /**
  * 业务类型
  */
-export type SaveFinBusinessCategoryInput = Omit<FinBusinessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveFinBusinessCategoryInput = Omit<FinBusinessCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 费用类型
@@ -2306,7 +2306,7 @@ export interface FinExpenseCategory {
 /**
  * 费用类型
  */
-export type SaveFinExpenseCategoryInput = Omit<FinExpenseCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveFinExpenseCategoryInput = Omit<FinExpenseCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 转账
@@ -2385,7 +2385,7 @@ export interface FinTransaction {
 /**
  * 转账
  */
-export type SaveFinTransactionInput = Omit<FinTransaction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveFinTransactionInput = Omit<FinTransaction, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 数据字典
@@ -2464,7 +2464,7 @@ export interface DataDictionary {
 /**
  * 数据字典
  */
-export type SaveDataDictionaryInput = Omit<DataDictionary, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveDataDictionaryInput = Omit<DataDictionary, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 数据字典条目
@@ -2535,7 +2535,7 @@ export interface DataDictionaryEntry {
 /**
  * 数据字典条目
  */
-export type SaveDataDictionaryEntryInput = Omit<DataDictionaryEntry, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveDataDictionaryEntryInput = Omit<DataDictionaryEntry, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 实体模型
@@ -2598,7 +2598,7 @@ export interface Model {
 /**
  * 实体模型
  */
-export type SaveModelInput = Omit<Model, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveModelInput = Omit<Model, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 实体属性
@@ -2713,7 +2713,7 @@ export interface Property {
 /**
  * 实体属性
  */
-export type SavePropertyInput = Omit<Property, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePropertyInput = Omit<Property, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * HTTP路由
@@ -2784,7 +2784,7 @@ export interface Route {
 /**
  * HTTP路由
  */
-export type SaveRouteInput = Omit<Route, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveRouteInput = Omit<Route, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 设备
@@ -2855,7 +2855,7 @@ export interface MomEquipment {
 /**
  * 设备
  */
-export type SaveMomEquipmentInput = Omit<MomEquipment, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomEquipmentInput = Omit<MomEquipment, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 设备分类
@@ -2910,7 +2910,7 @@ export interface MomEquipmentCategory {
 /**
  * 设备分类
  */
-export type SaveMomEquipmentCategoryInput = Omit<MomEquipmentCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomEquipmentCategoryInput = Omit<MomEquipmentCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品
@@ -3009,7 +3009,7 @@ export interface MomGood {
 /**
  * 物品
  */
-export type SaveMomGoodInput = Omit<MomGood, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomGoodInput = Omit<MomGood, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品标签
@@ -3064,7 +3064,7 @@ export interface MomGoodLabel {
 /**
  * 物品标签
  */
-export type SaveMomGoodLabelInput = Omit<MomGoodLabel, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomGoodLabelInput = Omit<MomGoodLabel, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品位置
@@ -3119,7 +3119,7 @@ export interface MomGoodLocation {
 /**
  * 物品位置
  */
-export type SaveMomGoodLocationInput = Omit<MomGoodLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomGoodLocationInput = Omit<MomGoodLocation, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品转移记录
@@ -3214,7 +3214,7 @@ export interface MomGoodTransfer {
 /**
  * 物品转移记录
  */
-export type SaveMomGoodTransferInput = Omit<MomGoodTransfer, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomGoodTransferInput = Omit<MomGoodTransfer, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验类型
@@ -3261,7 +3261,7 @@ export interface MomInspectionCategory {
 /**
  * 检验类型
  */
-export type SaveMomInspectionCategoryInput = Omit<MomInspectionCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionCategoryInput = Omit<MomInspectionCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验特征
@@ -3328,7 +3328,7 @@ export interface MomInspectionCharacteristic {
 /**
  * 检验特征
  */
-export type SaveMomInspectionCharacteristicInput = Omit<MomInspectionCharacteristic, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionCharacteristicInput = Omit<MomInspectionCharacteristic, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验特征类型
@@ -3375,7 +3375,10 @@ export interface MomInspectionCharacteristicCategory {
 /**
  * 检验特征类型
  */
-export type SaveMomInspectionCharacteristicCategoryInput = Omit<MomInspectionCharacteristicCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionCharacteristicCategoryInput = Omit<
+  MomInspectionCharacteristicCategory,
+  "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy"
+>;
 
 /**
  * 检验仪器
@@ -3422,7 +3425,7 @@ export interface MomInspectionInstrument {
 /**
  * 检验仪器
  */
-export type SaveMomInspectionInstrumentInput = Omit<MomInspectionInstrument, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionInstrumentInput = Omit<MomInspectionInstrument, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验仪器类型
@@ -3469,7 +3472,7 @@ export interface MomInspectionInstrumentCategory {
 /**
  * 检验仪器类型
  */
-export type SaveMomInspectionInstrumentCategoryInput = Omit<MomInspectionInstrumentCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionInstrumentCategoryInput = Omit<MomInspectionInstrumentCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验方法
@@ -3516,7 +3519,7 @@ export interface MomInspectionMethod {
 /**
  * 检验方法
  */
-export type SaveMomInspectionMethodInput = Omit<MomInspectionMethod, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionMethodInput = Omit<MomInspectionMethod, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验记录
@@ -3591,7 +3594,7 @@ export interface MomInspectionRecord {
 /**
  * 检验记录
  */
-export type SaveMomInspectionRecordInput = Omit<MomInspectionRecord, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionRecordInput = Omit<MomInspectionRecord, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验规则
@@ -3646,7 +3649,7 @@ export interface MomInspectionRule {
 /**
  * 检验规则
  */
-export type SaveMomInspectionRuleInput = Omit<MomInspectionRule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionRuleInput = Omit<MomInspectionRule, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 检验单
@@ -3749,7 +3752,7 @@ export interface MomInspectionSheet {
 /**
  * 检验单
  */
-export type SaveMomInspectionSheetInput = Omit<MomInspectionSheet, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionSheetInput = Omit<MomInspectionSheet, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品库存
@@ -3868,7 +3871,7 @@ export interface MomInventory {
 /**
  * 物品库存
  */
-export type SaveMomInventoryInput = Omit<MomInventory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryInput = Omit<MomInventory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存业务申请
@@ -3935,7 +3938,7 @@ export interface MomInventoryApplication {
 /**
  * 库存业务申请
  */
-export type SaveMomInventoryApplicationInput = Omit<MomInventoryApplication, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryApplicationInput = Omit<MomInventoryApplication, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存业务申请货品项
@@ -4018,7 +4021,7 @@ export interface MomInventoryApplicationItem {
 /**
  * 库存业务申请货品项
  */
-export type SaveMomInventoryApplicationItemInput = Omit<MomInventoryApplicationItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryApplicationItemInput = Omit<MomInventoryApplicationItem, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存业务类型
@@ -4069,7 +4072,7 @@ export interface MomInventoryBusinessType {
 /**
  * 库存业务类型
  */
-export type SaveMomInventoryBusinessTypeInput = Omit<MomInventoryBusinessType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryBusinessTypeInput = Omit<MomInventoryBusinessType, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存标签
@@ -4124,7 +4127,7 @@ export interface MomInventoryLabel {
 /**
  * 库存标签
  */
-export type SaveMomInventoryLabelInput = Omit<MomInventoryLabel, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryLabelInput = Omit<MomInventoryLabel, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存操作记录
@@ -4195,7 +4198,7 @@ export interface MomInventoryOperation {
 /**
  * 库存操作记录
  */
-export type SaveMomInventoryOperationInput = Omit<MomInventoryOperation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryOperationInput = Omit<MomInventoryOperation, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存统计表配置
@@ -4242,7 +4245,7 @@ export interface MomInventoryStatTable {
 /**
  * 库存统计表配置
  */
-export type SaveMomInventoryStatTableInput = Omit<MomInventoryStatTable, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryStatTableInput = Omit<MomInventoryStatTable, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品库存统计触发配置
@@ -4289,7 +4292,7 @@ export interface MomInventoryStatTrigger {
 /**
  * 物品库存统计触发配置
  */
-export type SaveMomInventoryStatTriggerInput = Omit<MomInventoryStatTrigger, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInventoryStatTriggerInput = Omit<MomInventoryStatTrigger, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 实验室
@@ -4348,7 +4351,7 @@ export interface MomLab {
 /**
  * 实验室
  */
-export type SaveMomLabInput = Omit<MomLab, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomLabInput = Omit<MomLab, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产线
@@ -4403,7 +4406,7 @@ export interface MomLine {
 /**
  * 生产线
  */
-export type SaveMomLineInput = Omit<MomLine, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomLineInput = Omit<MomLine, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物料需求计划
@@ -4466,7 +4469,7 @@ export interface MomManufacturingResourcePlan {
 /**
  * 物料需求计划
  */
-export type SaveMomManufacturingResourcePlanInput = Omit<MomManufacturingResourcePlan, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomManufacturingResourcePlanInput = Omit<MomManufacturingResourcePlan, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 主生产计划
@@ -4561,7 +4564,7 @@ export interface MomMasterProductionSchedule {
 /**
  * 主生产计划
  */
-export type SaveMomMasterProductionScheduleInput = Omit<MomMasterProductionSchedule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMasterProductionScheduleInput = Omit<MomMasterProductionSchedule, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产计划项
@@ -4616,7 +4619,7 @@ export interface MomMasterProductionScheduleItem {
 /**
  * 生产计划项
  */
-export type SaveMomMasterProductionScheduleItemInput = Omit<MomMasterProductionScheduleItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMasterProductionScheduleItemInput = Omit<MomMasterProductionScheduleItem, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * BOM
@@ -4679,7 +4682,7 @@ export interface MomMaterialBreakdown {
 /**
  * BOM
  */
-export type SaveMomMaterialBreakdownInput = Omit<MomMaterialBreakdown, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialBreakdownInput = Omit<MomMaterialBreakdown, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 下级物料
@@ -4742,7 +4745,7 @@ export interface MomMaterialBreakdownPart {
 /**
  * 下级物料
  */
-export type SaveMomMaterialBreakdownPartInput = Omit<MomMaterialBreakdownPart, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialBreakdownPartInput = Omit<MomMaterialBreakdownPart, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存量-按物品分组
@@ -4825,7 +4828,7 @@ export interface MomMaterialInventoryBalance {
 /**
  * 库存量-按物品分组
  */
-export type SaveMomMaterialInventoryBalanceInput = Omit<MomMaterialInventoryBalance, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialInventoryBalanceInput = Omit<MomMaterialInventoryBalance, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存量变更记录-按物品分组
@@ -4944,7 +4947,7 @@ export interface MomMaterialInventoryLog {
 /**
  * 库存量变更记录-按物品分组
  */
-export type SaveMomMaterialInventoryLogInput = Omit<MomMaterialInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialInventoryLogInput = Omit<MomMaterialInventoryLog, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 库存量-按物品、批次和仓库分组
@@ -5007,7 +5010,10 @@ export interface MomMaterialLotWarehouseInventoryBalance {
 /**
  * 库存量-按物品、批次和仓库分组
  */
-export type SaveMomMaterialLotWarehouseInventoryBalanceInput = Omit<MomMaterialLotWarehouseInventoryBalance, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialLotWarehouseInventoryBalanceInput = Omit<
+  MomMaterialLotWarehouseInventoryBalance,
+  "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy"
+>;
 
 /**
  * 库存量变更记录-按物品、批次和仓库分组
@@ -5078,7 +5084,10 @@ export interface MomMaterialLotWarehouseInventoryLog {
 /**
  * 库存量变更记录-按物品、批次和仓库分组
  */
-export type SaveMomMaterialLotWarehouseInventoryLogInput = Omit<MomMaterialLotWarehouseInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialLotWarehouseInventoryLogInput = Omit<
+  MomMaterialLotWarehouseInventoryLog,
+  "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy"
+>;
 
 /**
  * 库存量-按物品和仓库分组
@@ -5145,7 +5154,10 @@ export interface MomMaterialWarehouseInventoryBalance {
 /**
  * 库存量-按物品和仓库分组
  */
-export type SaveMomMaterialWarehouseInventoryBalanceInput = Omit<MomMaterialWarehouseInventoryBalance, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialWarehouseInventoryBalanceInput = Omit<
+  MomMaterialWarehouseInventoryBalance,
+  "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy"
+>;
 
 /**
  * 库存量变更记录-按物品和仓库分组
@@ -5228,7 +5240,7 @@ export interface MomMaterialWarehouseInventoryLog {
 /**
  * 库存量变更记录-按物品和仓库分组
  */
-export type SaveMomMaterialWarehouseInventoryLogInput = Omit<MomMaterialWarehouseInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialWarehouseInventoryLogInput = Omit<MomMaterialWarehouseInventoryLog, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品包
@@ -5275,7 +5287,7 @@ export interface MomPackage {
 /**
  * 物品包
  */
-export type SaveMomPackageInput = Omit<MomPackage, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomPackageInput = Omit<MomPackage, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 物品包内物品
@@ -5326,7 +5338,7 @@ export interface MomPackageGood {
 /**
  * 物品包内物品
  */
-export type SaveMomPackageGoodInput = Omit<MomPackageGood, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomPackageGoodInput = Omit<MomPackageGood, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工序
@@ -5385,7 +5397,7 @@ export interface MomProcess {
 /**
  * 工序
  */
-export type SaveMomProcessInput = Omit<MomProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomProcessInput = Omit<MomProcess, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工序分类
@@ -5436,7 +5448,7 @@ export interface MomProcessCategory {
 /**
  * 工序分类
  */
-export type SaveMomProcessCategoryInput = Omit<MomProcessCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomProcessCategoryInput = Omit<MomProcessCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工艺流程
@@ -5495,7 +5507,7 @@ export interface MomRoute {
 /**
  * 工艺流程
  */
-export type SaveMomRouteInput = Omit<MomRoute, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomRouteInput = Omit<MomRoute, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工序
@@ -5566,7 +5578,7 @@ export interface MomRouteProcess {
 /**
  * 工序
  */
-export type SaveMomRouteProcessInput = Omit<MomRouteProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomRouteProcessInput = Omit<MomRouteProcess, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产工序输入物料
@@ -5625,7 +5637,7 @@ export interface MomRouteProcessInput {
 /**
  * 生产工序输入物料
  */
-export type SaveMomRouteProcessInputInput = Omit<MomRouteProcessInput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomRouteProcessInputInput = Omit<MomRouteProcessInput, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产工序输出物料
@@ -5684,7 +5696,7 @@ export interface MomRouteProcessOutput {
 /**
  * 生产工序输出物料
  */
-export type SaveMomRouteProcessOutputInput = Omit<MomRouteProcessOutput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomRouteProcessOutputInput = Omit<MomRouteProcessOutput, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工艺流程模板
@@ -5731,7 +5743,7 @@ export interface MomRouteTemplate {
 /**
  * 工艺流程模板
  */
-export type SaveMomRouteTemplateInput = Omit<MomRouteTemplate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomRouteTemplateInput = Omit<MomRouteTemplate, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工艺流程模板工序
@@ -5782,7 +5794,7 @@ export interface MomRouteTemplateProcess {
 /**
  * 工艺流程模板工序
  */
-export type SaveMomRouteTemplateProcessInput = Omit<MomRouteTemplateProcess, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomRouteTemplateProcessInput = Omit<MomRouteTemplateProcess, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 班次
@@ -5833,7 +5845,7 @@ export interface MomShift {
 /**
  * 班次
  */
-export type SaveMomShiftInput = Omit<MomShift, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomShiftInput = Omit<MomShift, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 车间
@@ -5892,7 +5904,7 @@ export interface MomShop {
 /**
  * 车间
  */
-export type SaveMomShopInput = Omit<MomShop, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomShopInput = Omit<MomShop, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工站
@@ -5959,7 +5971,7 @@ export interface MomStation {
 /**
  * 工站
  */
-export type SaveMomStationInput = Omit<MomStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomStationInput = Omit<MomStation, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 仓库
@@ -6022,7 +6034,7 @@ export interface MomWarehouse {
 /**
  * 仓库
  */
-export type SaveMomWarehouseInput = Omit<MomWarehouse, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomWarehouseInput = Omit<MomWarehouse, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产工单
@@ -6125,7 +6137,7 @@ export interface MomWorkOrder {
 /**
  * 生产工单
  */
-export type SaveMomWorkOrderInput = Omit<MomWorkOrder, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomWorkOrderInput = Omit<MomWorkOrder, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产报工
@@ -6220,7 +6232,7 @@ export interface MomWorkReport {
 /**
  * 生产报工
  */
-export type SaveMomWorkReportInput = Omit<MomWorkReport, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomWorkReportInput = Omit<MomWorkReport, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 工序任务
@@ -6347,7 +6359,7 @@ export interface MomWorkTask {
 /**
  * 工序任务
  */
-export type SaveMomWorkTaskInput = Omit<MomWorkTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomWorkTaskInput = Omit<MomWorkTask, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 班组
@@ -6410,7 +6422,7 @@ export interface MomWorkTeam {
 /**
  * 班组
  */
-export type SaveMomWorkTeamInput = Omit<MomWorkTeam, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomWorkTeamInput = Omit<MomWorkTeam, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 生产流转单
@@ -6501,7 +6513,7 @@ export interface MomWorkTrack {
 /**
  * 生产流转单
  */
-export type SaveMomWorkTrackInput = Omit<MomWorkTrack, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomWorkTrackInput = Omit<MomWorkTrack, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 部门
@@ -6560,7 +6572,7 @@ export interface OcDepartment {
 /**
  * 部门
  */
-export type SaveOcDepartmentInput = Omit<OcDepartment, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveOcDepartmentInput = Omit<OcDepartment, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 角色
@@ -6623,7 +6635,7 @@ export interface OcRole {
 /**
  * 角色
  */
-export type SaveOcRoleInput = Omit<OcRole, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveOcRoleInput = Omit<OcRole, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 用户
@@ -6694,7 +6706,7 @@ export interface OcUser {
 /**
  * 用户
  */
-export type SaveOcUserInput = Omit<OcUser, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveOcUserInput = Omit<OcUser, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 里程碑
@@ -6761,7 +6773,7 @@ export interface PmMilestone {
 /**
  * 里程碑
  */
-export type SavePmMilestoneInput = Omit<PmMilestone, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmMilestoneInput = Omit<PmMilestone, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 阶段
@@ -6832,7 +6844,7 @@ export interface PmPhase {
 /**
  * 阶段
  */
-export type SavePmPhaseInput = Omit<PmPhase, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmPhaseInput = Omit<PmPhase, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 项目
@@ -6927,7 +6939,7 @@ export interface PmProject {
 /**
  * 项目
  */
-export type SavePmProjectInput = Omit<PmProject, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectInput = Omit<PmProject, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 项目预算
@@ -7018,7 +7030,7 @@ export interface PmProjectBudget {
 /**
  * 项目预算
  */
-export type SavePmProjectBudgetInput = Omit<PmProjectBudget, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectBudgetInput = Omit<PmProjectBudget, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 项目类型
@@ -7069,7 +7081,7 @@ export interface PmProjectCategory {
 /**
  * 项目类型
  */
-export type SavePmProjectCategoryInput = Omit<PmProjectCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectCategoryInput = Omit<PmProjectCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 项目成本
@@ -7128,7 +7140,7 @@ export interface PmProjectCostBudget {
 /**
  * 项目成本
  */
-export type SavePmProjectCostBudgetInput = Omit<PmProjectCostBudget, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectCostBudgetInput = Omit<PmProjectCostBudget, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 项目成本类型
@@ -7183,7 +7195,7 @@ export interface PmProjectCostCategory {
 /**
  * 项目成本类型
  */
-export type SavePmProjectCostCategoryInput = Omit<PmProjectCostCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectCostCategoryInput = Omit<PmProjectCostCategory, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 项目事件
@@ -7234,7 +7246,7 @@ export interface PmProjectEvent {
 /**
  * 项目事件
  */
-export type SavePmProjectEventInput = Omit<PmProjectEvent, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SavePmProjectEventInput = Omit<PmProjectEvent, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 车间配置系统-应用
@@ -7309,7 +7321,7 @@ export interface ShopfloorApp {
 /**
  * 车间配置系统-应用
  */
-export type SaveShopfloorAppInput = Omit<ShopfloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorAppInput = Omit<ShopfloorApp, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 车间配置系统-应用-步骤
@@ -7376,7 +7388,7 @@ export interface ShopfloorAppStep {
 /**
  * 车间配置系统-应用-步骤
  */
-export type SaveShopfloorAppStepInput = Omit<ShopfloorAppStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorAppStepInput = Omit<ShopfloorAppStep, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 车间配置系统-应用
@@ -7431,7 +7443,7 @@ export interface ShopfloorAppVersion {
 /**
  * 车间配置系统-应用
  */
-export type SaveShopfloorAppVersionInput = Omit<ShopfloorAppVersion, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorAppVersionInput = Omit<ShopfloorAppVersion, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 车间配置系统-显示设备
@@ -7490,7 +7502,7 @@ export interface ShopfloorDisplayDevice {
 /**
  * 车间配置系统-显示设备
  */
-export type SaveShopfloorDisplayDeviceInput = Omit<ShopfloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorDisplayDeviceInput = Omit<ShopfloorDisplayDevice, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 车间配置系统-工位
@@ -7549,7 +7561,7 @@ export interface ShopfloorStation {
 /**
  * 车间配置系统-工位
  */
-export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveShopfloorStationInput = Omit<ShopfloorStation, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 系统操作
@@ -7608,7 +7620,7 @@ export interface SysAction {
 /**
  * 系统操作
  */
-export type SaveSysActionInput = Omit<SysAction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveSysActionInput = Omit<SysAction, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * 系统操作分组
@@ -7659,7 +7671,7 @@ export interface SysActionGroup {
 /**
  * 系统操作分组
  */
-export type SaveSysActionGroupInput = Omit<SysActionGroup, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveSysActionGroupInput = Omit<SysActionGroup, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;
 
 /**
  * Webhook
@@ -7726,4 +7738,4 @@ export interface Webhook {
 /**
  * Webhook
  */
-export type SaveWebhookInput = Omit<Webhook, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveWebhookInput = Omit<Webhook, "id" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy">;

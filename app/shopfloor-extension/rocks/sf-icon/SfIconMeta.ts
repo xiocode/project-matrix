@@ -14,8 +14,7 @@ export default {
     },
   },
 
-  slots: {
-  },
+  slots: {},
 
   propertyPanels: [
     {
@@ -43,7 +42,7 @@ export default {
           propName: "size",
           defaultValue: "32",
         },
-      ]
+      ],
     },
     { $type: "positionPropPanel" },
     { $type: "sizePropPanel" },

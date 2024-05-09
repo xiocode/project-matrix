@@ -16,7 +16,7 @@ type PerformMrpResult = {
   materials: BaseMaterial[];
   input: MRPInput;
   output: MRPOutput;
-}
+};
 
 type MrpTableItem = {
   code: string;
@@ -24,14 +24,14 @@ type MrpTableItem = {
   quantities: MaterialRequirementQuantities;
   decisionQuantities?: FulfillmentDecisionQualities;
   unit: string;
-}
+};
 
 type UpdateDecisionQuantityOptions = {
   code: string;
   tags: string;
   quantityField: keyof FulfillmentDecisionQualities;
   quantity: number;
-}
+};
 
 export default {
   Renderer(context, props: MrpSandTableRockConfig) {
@@ -39,12 +39,12 @@ export default {
     const [decisions, setDecisions] = useState<FulfillmentDecision[]>([]);
 
     const performMrp = async () => {
-      const res = await rapidApi.post('app/calcMaterialRequirements?mrpId=' + mrpId, {
+      const res = await rapidApi.post("app/calcMaterialRequirements?mrpId=" + mrpId, {
         decisions,
       });
       // await waitSeconds(1);
       return res.data;
-    }
+    };
     const { data, loading, error, refresh } = useRequest<PerformMrpResult, []>(performMrp);
 
     const materials = data?.materials;
@@ -67,8 +67,8 @@ export default {
               produce: 0,
               purchase: 0,
               outsource: 0,
-            }
-          }
+            },
+          };
         }
 
         mrpItems.push({
@@ -77,8 +77,8 @@ export default {
           unit: item.unit,
           quantities: item.quantities,
           decisionQuantities: decision?.quantities,
-        })
-      })
+        });
+      });
 
       return mrpItems;
     }, [materials, mrpInput, mrpOutput, decisions]);
@@ -104,15 +104,15 @@ export default {
             quantities: {
               produce: produceQuantity,
               purchase: purchaseQuantity,
-            }
-          })
+            },
+          });
         }
       });
 
       setDecisions(decisions);
-    }
+    };
 
-    // 
+    //
     const canSubmit = useMemo(() => {
       let result = false;
       if (!mrpOutput || !mrpInput) {
@@ -144,11 +144,11 @@ export default {
             outsource: 0,
             [options.quantityField]: options.quantity,
           },
-        })
+        });
       }
 
       setDecisions(cloneDeep(decisions));
-    }
+    };
 
     const submitMrp = () => {
       const mrpResult = {
@@ -163,178 +163,200 @@ export default {
       };
 
       rapidApi.post("app/submitMrpResult", mrpResult);
-    }
+    };
 
     const columns: ColumnsType<MrpTableItem> = [
       {
         title: "物品",
-        dataIndex: 'code',
-        key: 'code',
+        dataIndex: "code",
+        key: "code",
         render: (value, record, index) => {
           const material = find(materials, { code: record.code })!;
           return renderMaterial(material);
-        }
+        },
       },
       {
-        title: 'd',
-        dataIndex: 'tags',
-        key: 'd',
-        width: '50px',
+        title: "d",
+        dataIndex: "tags",
+        key: "d",
+        width: "50px",
         render: (value, record, index) => {
           if (!value) {
             return "";
           }
 
           return (qs.parse(value).d || "") as string;
-        }
+        },
       },
       {
-        title: 'D',
-        dataIndex: 'tags',
-        key: 'D',
-        width: '50px',
+        title: "D",
+        dataIndex: "tags",
+        key: "D",
+        width: "50px",
         render: (value, record, index) => {
           if (!value) {
             return "";
           }
 
           return (qs.parse(value).D || "") as string;
-        }
+        },
       },
       {
-        title: 'b',
-        dataIndex: 'tags',
-        key: 'b',
-        width: '50px',
+        title: "b",
+        dataIndex: "tags",
+        key: "b",
+        width: "50px",
         render: (value, record, index) => {
           if (!value) {
             return "";
           }
 
           return (qs.parse(value).b || "") as string;
-        }
+        },
       },
       {
-        title: '单位',
-        dataIndex: 'unit',
-        key: 'unit',
-        width: '50px',
+        title: "单位",
+        dataIndex: "unit",
+        key: "unit",
+        width: "50px",
       },
       {
         title: <Tooltip title="主计划中的数量">计划数</Tooltip>,
-        dataIndex: 'quantities.scheduled'.split('.'),
-        key: 'quantities.scheduled',
-        width: '100px',
-        align: 'right',
+        dataIndex: "quantities.scheduled".split("."),
+        key: "quantities.scheduled",
+        width: "100px",
+        align: "right",
         render: (value) => {
           if (value) {
             return value.toString();
           }
 
           return null;
-        }
+        },
       },
       {
         title: <Tooltip title="满足主计划所需的数量">需求量</Tooltip>,
-        dataIndex: 'quantities.demand'.split('.'),
-        key: 'quantities.demand',
-        width: '100px',
-        align: 'right',
+        dataIndex: "quantities.demand".split("."),
+        key: "quantities.demand",
+        width: "100px",
+        align: "right",
       },
       {
         title: <Tooltip title="当前可用数量（包括已采购在途以及在库的数量）">可用量</Tooltip>,
-        dataIndex: 'quantities.available'.split('.'),
-        key: 'quantities.available',
-        width: '100px',
-        align: 'right',
+        dataIndex: "quantities.available".split("."),
+        key: "quantities.available",
+        width: "100px",
+        align: "right",
       },
       {
         title: <Tooltip title="需求量 - 可用量">净需求</Tooltip>,
-        dataIndex: 'quantities.netDemand'.split('.'),
-        key: 'quantities.netDemand',
-        width: '100px',
-        align: 'right',
+        dataIndex: "quantities.netDemand".split("."),
+        key: "quantities.netDemand",
+        width: "100px",
+        align: "right",
       },
       {
-        title: '生产数',
-        dataIndex: 'decisionQuantities.produce'.split('.'),
-        key: 'decisionQuantities.produce',
-        width: '100px',
+        title: "生产数",
+        dataIndex: "decisionQuantities.produce".split("."),
+        key: "decisionQuantities.produce",
+        width: "100px",
         render: (value, record, index) => {
           const material = find(materials, { code: record.code })!;
           if (!material.canProduce) {
             return null;
           }
 
-          return <InputNumber size="small" min={0} value={value || 0} onChange={(value) => updateDecisionQuantity({
-            quantityField: "produce",
-            code: record.code,
-            tags: record.tags,
-            quantity: value,
-          })} />;
-        }
+          return (
+            <InputNumber
+              size="small"
+              min={0}
+              value={value || 0}
+              onChange={(value) =>
+                updateDecisionQuantity({
+                  quantityField: "produce",
+                  code: record.code,
+                  tags: record.tags,
+                  quantity: value,
+                })
+              }
+            />
+          );
+        },
       },
       {
-        title: '采购数',
-        dataIndex: 'decisionQuantities.purchase'.split('.'),
-        key: 'decisionQuantities.purchase',
-        width: '100px',
+        title: "采购数",
+        dataIndex: "decisionQuantities.purchase".split("."),
+        key: "decisionQuantities.purchase",
+        width: "100px",
         render: (value, record, index) => {
           const material = find(materials, { code: record.code })!;
           if (!material.canPurchase) {
             return null;
           }
 
-          return <InputNumber size="small" min={0} value={value || 0} onChange={(value) => updateDecisionQuantity({
-            quantityField: "purchase",
-            code: record.code,
-            tags: record.tags,
-            quantity: value,
-          })} />;
-        }
+          return (
+            <InputNumber
+              size="small"
+              min={0}
+              value={value || 0}
+              onChange={(value) =>
+                updateDecisionQuantity({
+                  quantityField: "purchase",
+                  code: record.code,
+                  tags: record.tags,
+                  quantity: value,
+                })
+              }
+            />
+          );
+        },
       },
       {
         title: <Tooltip title="净需求 - (生产数 + 采购数)">短缺数量</Tooltip>,
-        dataIndex: 'quantities.shortage'.split('.'),
-        key: 'quantities.shortage',
-        width: '100px',
-        align: 'right',
+        dataIndex: "quantities.shortage".split("."),
+        key: "quantities.shortage",
+        width: "100px",
+        align: "right",
       },
     ];
 
+    const columnsTotalWidth = reduce(
+      columns,
+      (accumulatedWidth, column) => {
+        return accumulatedWidth + (parseInt(column.width + "", 10) || 200);
+      },
+      0,
+    );
 
-    const columnsTotalWidth = reduce(columns, (accumulatedWidth, column) => {
-      return accumulatedWidth + (parseInt(column.width + "", 10) || 200)
-    }, 0);
-
-    return <div>
-      {
-        (loading && !data) && <Spin></Spin>
-      }
-      {
-        error && <code>{ error.message.toString() }</code>
-      }
-      {
-        data && <div>
-          <Table
-            loading={loading}
-            size="small"
-            pagination={false}
-            columns={columns}
-            scroll={{
-              x: columnsTotalWidth,
-            }}
-            dataSource={dataSource} />
-          <div style={{padding: "10px 0", textAlign: "right"}}>
-            <Space>
-              <Button onClick={autoPlan}>自动规划</Button>
-              <Button onClick={refresh}>重新计算</Button>
-              <Button type="primary" disabled={!canSubmit} onClick={submitMrp}>提交确认</Button>
-            </Space>
+    return (
+      <div>
+        {loading && !data && <Spin></Spin>}
+        {error && <code>{error.message.toString()}</code>}
+        {data && (
+          <div>
+            <Table
+              loading={loading}
+              size="small"
+              pagination={false}
+              columns={columns}
+              scroll={{
+                x: columnsTotalWidth,
+              }}
+              dataSource={dataSource}
+            />
+            <div style={{ padding: "10px 0", textAlign: "right" }}>
+              <Space>
+                <Button onClick={autoPlan}>自动规划</Button>
+                <Button onClick={refresh}>重新计算</Button>
+                <Button type="primary" disabled={!canSubmit} onClick={submitMrp}>
+                  提交确认
+                </Button>
+              </Space>
+            </div>
           </div>
-        </div>
-      }
-    </div>;
+        )}
+      </div>
+    );
   },
 
   ...MrpSandTableMeta,

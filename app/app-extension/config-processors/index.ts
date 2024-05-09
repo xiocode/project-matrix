@@ -1,5 +1,3 @@
 import permissionCheck from "./permissionCheck";
 
-export default [
-  permissionCheck,
-]
+export default [permissionCheck];

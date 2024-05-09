@@ -1,9 +1,9 @@
-import { Rock, RockConfigBase, RockEvent, RockEventHandler, handleComponentEvent } from '@ruiapp/move-style';
-import { EntityStoreConfig } from '@ruiapp/rapid-extension';
-import { renderRock } from '@ruiapp/react-renderer';
-import { useCallback, useState } from 'react';
-import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
-import ModelSettingsFormModal from '../linkshop-builder-stores-panel/ModelSettingsFormModal';
+import { Rock, RockConfigBase, RockEvent, RockEventHandler, handleComponentEvent } from "@ruiapp/move-style";
+import { EntityStoreConfig } from "@ruiapp/rapid-extension";
+import { renderRock } from "@ruiapp/react-renderer";
+import { useCallback, useState } from "react";
+import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
+import ModelSettingsFormModal from "../linkshop-builder-stores-panel/ModelSettingsFormModal";
 
 export interface EntitySetterSelectProps extends RockConfigBase {
   $id: string;
@@ -12,7 +12,7 @@ export interface EntitySetterSelectProps extends RockConfigBase {
 }
 
 export default {
-  $type: 'entitySetterSelect',
+  $type: "entitySetterSelect",
 
   Renderer(context, props: EntitySetterSelectProps) {
     const { page, framework, scope } = context;
@@ -25,17 +25,17 @@ export default {
         {renderRock({
           context,
           rockConfig: {
-            $type: 'htmlElement',
-            htmlTag: 'a',
+            $type: "htmlElement",
+            htmlTag: "a",
             $id: `entity_${value?.name}`,
             children: [
               {
-                $type: 'text',
-                text: 'Edit',
+                $type: "text",
+                text: "Edit",
               },
             ],
             onClick: {
-              $action: 'script',
+              $action: "script",
               script: () => {
                 setVisible(true);
               },
@@ -50,7 +50,7 @@ export default {
             setVisible(v);
           }}
           onFormSubmit={(config) => {
-            handleComponentEvent('onChange', framework, page, scope, props, onChange!, [config]);
+            handleComponentEvent("onChange", framework, page, scope, props, onChange!, [config]);
           }}
         />
       </>

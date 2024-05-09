@@ -7,8 +7,7 @@ export default {
 
   voidComponent: true,
 
-  slots: {
-  },
+  slots: {},
 
   propertyPanels: [
     {
@@ -24,7 +23,7 @@ export default {
           label: "地址",
           propName: "url",
         },
-      ]
+      ],
     },
     { $type: "positionPropPanel" },
     { $type: "sizePropPanel" },

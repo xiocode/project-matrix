@@ -10,42 +10,39 @@ export default [
       const { server, payload } = ctx;
       const changes: Partial<MomWorkOrder> = payload.changes;
       const after: MomWorkOrder = payload.after;
-      
-      if (!changes.hasOwnProperty('executionState') || changes.executionState !== "finished") {
+
+      if (!changes.hasOwnProperty("executionState") || changes.executionState !== "finished") {
         return;
       }
 
-      const workOrders = await server.queryDatabaseObject(
-        `select * from mom_work_orders where id=$1;`,
-        [after.id]
-        );
+      const workOrders = await server.queryDatabaseObject(`select * from mom_work_orders where id=$1;`, [after.id]);
 
       const workOrder = first(workOrders);
       if (!workOrder) {
         return;
       }
 
-      const inventoryManager = server.getEntityManager<MomInventory>('mom_inventory');
+      const inventoryManager = server.getEntityManager<MomInventory>("mom_inventory");
 
       let inventory = await inventoryManager.findEntity({
         filters: [
           {
-            operator: 'eq',
-            field: 'material_id',
+            operator: "eq",
+            field: "material_id",
             value: workOrder.material_id,
           },
           {
-            operator: 'eq',
-            field: 'lot_num',
+            operator: "eq",
+            field: "lot_num",
             value: workOrder.lot_num || "",
           },
           {
-            operator: 'eq',
-            field: 'tags',
+            operator: "eq",
+            field: "tags",
             value: workOrder.tags || "",
           },
-        ]
-      })
+        ],
+      });
 
       if (!inventory) {
         await inventoryManager.createEntity({
@@ -66,7 +63,7 @@ export default [
             allocatedQuantity: 0,
             shippingQuantity: 0,
             deliveredQuantity: 0,
-          } as Partial<MomInventory>
+          } as Partial<MomInventory>,
         });
       } else {
         await inventoryManager.updateEntityById({
@@ -75,9 +72,9 @@ export default [
             allocableQuantity: inventory.allocableQuantity + workOrder.quantity,
             availableQuantity: inventory.availableQuantity + workOrder.quantity,
             onHandQuantity: inventory.onHandQuantity + workOrder.quantity,
-          } as Partial<MomInventory>
+          } as Partial<MomInventory>,
         });
       }
-    }
+    },
   },
 ] satisfies EntityWatcher<any>[];

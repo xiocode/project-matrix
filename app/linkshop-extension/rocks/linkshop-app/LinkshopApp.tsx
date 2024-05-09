@@ -1,11 +1,11 @@
-import type { Rock } from '@ruiapp/move-style';
-import ShopfloorAppMeta from './LinkshopAppMeta';
-import { renderRock } from '@ruiapp/react-renderer';
-import type { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from '~/linkshop-extension/linkshop-types';
+import type { Rock } from "@ruiapp/move-style";
+import ShopfloorAppMeta from "./LinkshopAppMeta";
+import { renderRock } from "@ruiapp/react-renderer";
+import type { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
 
-import appActionMap from './app-actions';
-import { useEffect, useState } from 'react';
-import { isEmpty } from 'lodash';
+import appActionMap from "./app-actions";
+import { useEffect, useState } from "react";
+import { isEmpty } from "lodash";
 
 export default {
   onResolveState(props, state) {
@@ -20,16 +20,16 @@ export default {
 
     return {
       currentStep,
-      switchStep: (key: 'next' | 'prev') => {
+      switchStep: (key: "next" | "prev") => {
         const currentStepIndex = steps.findIndex((s: any) => s.$id === currentStep.$id);
         switch (key) {
-          case 'next':
+          case "next":
             const nextStep = steps[currentStepIndex + 1];
             if (nextStep) {
               setCurrentStep(nextStep);
             }
             break;
-          case 'prev':
+          case "prev":
             const prevStep = steps[currentStepIndex - 1];
             if (prevStep) {
               setCurrentStep(prevStep);
@@ -42,7 +42,7 @@ export default {
 
   onReceiveMessage(message, state, props) {
     const appAction = appActionMap[message.name];
-    if (typeof appAction === 'function') {
+    if (typeof appAction === "function") {
       appAction(message, state, props);
     }
   },

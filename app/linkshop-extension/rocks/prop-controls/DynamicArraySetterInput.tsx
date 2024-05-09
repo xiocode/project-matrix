@@ -8,10 +8,10 @@ import {
   RockPropSetterControl,
   RockEventHandler,
   handleComponentEvent,
-} from '@ruiapp/move-style';
-import { renderRockChildren } from '@ruiapp/react-renderer';
-import _, { forEach, split } from 'lodash';
-import { useCallback, useMemo } from 'react';
+} from "@ruiapp/move-style";
+import { renderRockChildren } from "@ruiapp/react-renderer";
+import _, { forEach, split } from "lodash";
+import { useCallback, useMemo } from "react";
 
 export interface DynamicArraySetterInputProps extends RockConfigBase {
   $id: string;
@@ -21,15 +21,15 @@ export interface DynamicArraySetterInputProps extends RockConfigBase {
 }
 
 export default {
-  $type: 'dynamicArraySetterInput',
+  $type: "dynamicArraySetterInput",
 
   Renderer(context, props: DynamicArraySetterInputProps) {
     const { page, framework, scope } = context;
     const { $id, controls, onChange, value } = props;
 
     const onControlsChange = useCallback(
-      (value: DynamicArraySetterInputProps['value']) => {
-        handleComponentEvent('onChange', framework, page, scope, props, onChange!, [value]);
+      (value: DynamicArraySetterInputProps["value"]) => {
+        handleComponentEvent("onChange", framework, page, scope, props, onChange!, [value]);
       },
       [page, $id, onChange],
     );
@@ -40,8 +40,8 @@ export default {
       forEach(value, (r, rIdx) => {
         let currentRowRock: ContainerRockConfig = {
           $id: `${$id}-row-${rIdx}`,
-          $type: 'antdRow',
-          align: 'middle',
+          $type: "antdRow",
+          align: "middle",
           wrap: false,
           children: [],
         };
@@ -59,7 +59,7 @@ export default {
               config.value = defaultValue;
             }
 
-            const onInputControlChange: RockEventHandlerScript['script'] = (event: RockEvent) => {
+            const onInputControlChange: RockEventHandlerScript["script"] = (event: RockEvent) => {
               const propValue = event.args[0];
               onControlsChange(
                 value?.map((item, i) => {
@@ -69,14 +69,14 @@ export default {
             };
 
             config.onChange = {
-              $action: 'script',
+              $action: "script",
               script: onInputControlChange,
             };
           }
 
           currentRowRock.children?.push({
             $id: `${$id}-row-${rIdx}-${cIdx}`,
-            $type: 'antdCol',
+            $type: "antdCol",
             flex: 1,
             style: {
               marginRight: 4,
@@ -87,18 +87,18 @@ export default {
 
         currentRowRock.children?.push({
           $id: `${$id}-row-${rIdx}-remove-btn`,
-          $type: 'htmlElement',
-          htmlTag: 'span',
+          $type: "htmlElement",
+          htmlTag: "span",
           onClick: {
-            $action: 'script',
+            $action: "script",
             script: (event: RockEvent) => {
               onControlsChange(value?.filter((_, i) => i !== rIdx));
             },
           },
           children: [
             {
-              $type: 'antdIcon',
-              name: 'MinusCircleOutlined',
+              $type: "antdIcon",
+              name: "MinusCircleOutlined",
             },
           ],
         } as RockConfig);
@@ -108,18 +108,18 @@ export default {
 
       rowRocks.push({
         $id: `${$id}-add-btn`,
-        $type: 'antdButton',
-        type: 'dashed',
+        $type: "antdButton",
+        type: "dashed",
         block: true,
         style: {
           marginTop: 4,
         },
         icon: {
-          $type: 'antdIcon',
-          name: 'PlusOutlined',
+          $type: "antdIcon",
+          name: "PlusOutlined",
         },
         onClick: {
-          $action: 'script',
+          $action: "script",
           script: (event: RockEvent) => {
             onControlsChange([...(value || []), {}]);
           },

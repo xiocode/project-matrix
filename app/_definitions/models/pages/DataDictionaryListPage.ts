@@ -1,23 +1,23 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormRockConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'valueType',
+      type: "auto",
+      code: "valueType",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
   ],
 };
@@ -25,33 +25,33 @@ const formConfig: Partial<RapidEntityFormRockConfig> = {
 const entryFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'value',
+      type: "auto",
+      code: "value",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
     {
-      type: 'auto',
-      code: 'disabled',
+      type: "auto",
+      code: "disabled",
     },
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
   ],
 };
 
 const page: RapidPage = {
-  code: 'data_dictionary_list',
-  name: '数据字典列表',
-  title: '数据字典',
-  permissionCheck: {any: ["baseDataDictionary.manage"]},
+  code: "data_dictionary_list",
+  name: "数据字典列表",
+  title: "数据字典",
+  permissionCheck: { any: ["baseDataDictionary.manage"] },
   view: [
     {
       $type: "sonicMainSecondaryLayout",
@@ -72,7 +72,7 @@ const page: RapidPage = {
             text: "新建",
             icon: "PlusOutlined",
             actionStyle: "primary",
-          }
+          },
         ],
         extraActions: [
           {
@@ -82,15 +82,15 @@ const page: RapidPage = {
             actionEventName: "onSearch",
             filterMode: "contains",
             filterFields: ["code", "name"],
-          }
+          },
         ],
         extraProperties: ["name", "level"],
         columns: [
           {
-            type: 'auto',
-            code: 'code',
-            title: '字典',
-            width: '200px',
+            type: "auto",
+            code: "code",
+            title: "字典",
+            width: "200px",
             cell: {
               $type: "antdListItemMeta",
               title: {
@@ -104,32 +104,32 @@ const page: RapidPage = {
                     $type: "rapidOptionFieldRenderer",
                     dictionaryCode: "DataDictionaryLevel",
                     value: "",
-                  }
-                ]
+                  },
+                ],
               },
               $exps: {
                 "title.children[0].text": "$slot.value",
                 "title.children[1].value": "$slot.record.level",
                 description: "$slot.record.name",
-              }
-            }
+              },
+            },
           },
         ],
         actions: [
           {
             $type: "sonicRecordActionEditEntity",
-            code: 'edit',
+            code: "edit",
             actionType: "edit",
-            actionText: '修改',
+            actionText: "修改",
             $exps: {
               _hidden: "$slot.record.level !== 'user'",
             },
           },
           {
             $type: "sonicRecordActionDeleteEntity",
-            code: 'delete',
-            actionType: 'delete',
-            actionText: '删除',
+            code: "delete",
+            actionType: "delete",
+            actionText: "删除",
             dataSourceCode: "list",
             entityCode: "DataDictionary",
             $exps: {
@@ -142,7 +142,7 @@ const page: RapidPage = {
         editForm: cloneDeep(formConfig),
         $exps: {
           "newForm.fixedFields.level": "'user'",
-        }
+        },
       },
       secondary: [
         {
@@ -155,7 +155,7 @@ const page: RapidPage = {
               field: "dictionary_id",
               operator: "eq",
               value: "",
-            }
+            },
           ],
           listActions: [
             {
@@ -170,46 +170,46 @@ const page: RapidPage = {
           ],
           columns: [
             {
-              type: 'auto',
-              code: 'value',
-              width: '150px',
-              fixed: 'left',
+              type: "auto",
+              code: "value",
+              width: "150px",
+              fixed: "left",
             },
             {
-              type: 'auto',
-              code: 'name',
-              width: '150px',
+              type: "auto",
+              code: "name",
+              width: "150px",
             },
             {
-              type: 'auto',
-              code: 'description',
+              type: "auto",
+              code: "description",
             },
             {
-              type: 'auto',
-              code: 'disabled',
-              width: '100px',
+              type: "auto",
+              code: "disabled",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'orderNum',
-              width: '100px',
+              type: "auto",
+              code: "orderNum",
+              width: "100px",
             },
           ],
           actions: [
             {
               $type: "sonicRecordActionEditEntity",
-              code: 'edit',
+              code: "edit",
               actionType: "edit",
-              actionText: '修改',
+              actionText: "修改",
               $exps: {
                 _hidden: "_.get($page.getScope('dictionariesLayout-scope'), 'vars.activeRecord.level') !== 'user'",
               },
             },
             {
               $type: "sonicRecordActionDeleteEntity",
-              code: 'delete',
-              actionType: 'delete',
-              actionText: '删除',
+              code: "delete",
+              actionType: "delete",
+              actionText: "删除",
               dataSourceCode: "list",
               entityCode: "DataDictionaryEntry",
               $exps: {
@@ -220,14 +220,13 @@ const page: RapidPage = {
           newForm: cloneDeep(entryFormConfig),
           editForm: cloneDeep(entryFormConfig),
           $exps: {
-            "_hidden": "!$scope.vars.activeId",
+            _hidden: "!$scope.vars.activeId",
             "fixedFilters[0].value": "$scope.vars.activeId",
-            "newForm.fixedFields.dictionary_id": "$scope.vars.activeId"
+            "newForm.fixedFields.dictionary_id": "$scope.vars.activeId",
           },
         },
-      ]
+      ],
     },
-
   ],
 };
 

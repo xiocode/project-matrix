@@ -5,16 +5,18 @@ import { MESSAGE } from "triple-beam";
 import { logLevels } from "./rui-logger";
 
 export const consoleFormat = format((info) => {
-  const stringifiedRest = JSON.stringify(Object.assign({}, info, {
-    timestamp: undefined,
-    level: undefined,
-    message: undefined,
-    splat: undefined
-  }));
+  const stringifiedRest = JSON.stringify(
+    Object.assign({}, info, {
+      timestamp: undefined,
+      level: undefined,
+      message: undefined,
+      splat: undefined,
+    }),
+  );
 
-  const padding = info.padding && info.padding[info.level] || '';
-  const formattedTime = dayjs(info.timestamp).format('YYYY-MM-DD HH:mm:ss.SSS')
-  if (stringifiedRest !== '{}') {
+  const padding = (info.padding && info.padding[info.level]) || "";
+  const formattedTime = dayjs(info.timestamp).format("YYYY-MM-DD HH:mm:ss.SSS");
+  if (stringifiedRest !== "{}") {
     info[MESSAGE] = `[${formattedTime}] ${info.level}:${padding} ${info.message} ${stringifiedRest}`;
   } else {
     info[MESSAGE] = `[${formattedTime}] ${info.level}:${padding} ${info.message}`;
@@ -31,15 +33,12 @@ export function createAppLogger(options: CreateAppLoggerOptions): Logger {
   const logger = createLogger({
     level: options.level,
     levels: logLevels,
-    format: format.combine(
-      format.timestamp(),
-      format.splat(),
-    ),
+    format: format.combine(format.timestamp(), format.splat()),
     transports: [
       new transports.Console({
         format: consoleFormat(),
       }),
-    ]
+    ],
   });
 
   return logger;

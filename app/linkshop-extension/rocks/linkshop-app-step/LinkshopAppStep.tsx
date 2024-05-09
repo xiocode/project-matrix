@@ -1,14 +1,14 @@
-import type { Rock } from '@ruiapp/move-style';
-import ShopfloorAppStepMeta from './LinkshopAppStepMeta';
-import { renderRockChildren } from '@ruiapp/react-renderer';
-import type { LinkshopAppStepRockConfig } from '~/linkshop-extension/linkshop-types';
+import type { Rock } from "@ruiapp/move-style";
+import ShopfloorAppStepMeta from "./LinkshopAppStepMeta";
+import { renderRockChildren } from "@ruiapp/react-renderer";
+import type { LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
 
-import stepActionMap from './step-actions';
+import stepActionMap from "./step-actions";
 
 export default {
   onReceiveMessage(message, state, props) {
     const stepAction = stepActionMap[message.name];
-    if (typeof stepAction === 'function') {
+    if (typeof stepAction === "function") {
       stepAction(message, state, props);
     }
   },
@@ -17,7 +17,7 @@ export default {
     const { children } = props;
 
     return (
-      <div style={{ position: 'relative', width: '1200px', height: '800px', border: '1px solid', backgroundColor: props.backgroundColor }}>
+      <div style={{ position: "relative", width: "1200px", height: "800px", border: "1px solid", backgroundColor: props.backgroundColor }}>
         {renderRockChildren({ context, rockChildrenConfig: children || [] })}
       </div>
     );

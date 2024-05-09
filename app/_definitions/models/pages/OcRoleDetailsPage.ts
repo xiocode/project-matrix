@@ -1,34 +1,34 @@
-import type { RapidPage } from '@ruiapp/rapid-extension';
+import type { RapidPage } from "@ruiapp/rapid-extension";
 
 const page: RapidPage = {
-  code: 'oc_role_details',
-  name: '角色详情',
-  title: '角色详情',
-  permissionCheck: {any: ["sysRole.manage"]},
+  code: "oc_role_details",
+  name: "角色详情",
+  title: "角色详情",
+  permissionCheck: { any: ["sysRole.manage"] },
   view: [
     {
-      $type: 'rapidEntityForm',
-      entityCode: 'OcRole',
-      mode: 'view',
+      $type: "rapidEntityForm",
+      entityCode: "OcRole",
+      mode: "view",
       column: 2,
-      extraProperties: ['actions'],
+      extraProperties: ["actions"],
       items: [
         {
-          type: 'auto',
-          code: 'name',
+          type: "auto",
+          code: "name",
         },
         {
-          type: 'auto',
-          code: 'state',
+          type: "auto",
+          code: "state",
         },
         {
-          type: 'auto',
-          code: 'description',
+          type: "auto",
+          code: "description",
         },
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
-      }
+      },
     },
     {
       $type: "antdTabs",
@@ -38,30 +38,30 @@ const page: RapidPage = {
           label: "权限",
           children: [
             {
-              $type: 'rapidEntityForm',
-              dataSourceCode: 'detail',
-              entityCode: 'OcRole',
-              layout: 'vertical',
+              $type: "rapidEntityForm",
+              dataSourceCode: "detail",
+              entityCode: "OcRole",
+              layout: "vertical",
               items: [
                 {
-                  type: 'select',
-                  code: 'actions',
+                  type: "select",
+                  code: "actions",
                   label: null,
                   multipleValues: true,
                   formControlProps: {
                     listDataSourceCode: "sysActions",
                     listTextField: "name",
-                  }
+                  },
                 },
               ],
               actions: [
                 {
-                  actionType: 'submit',
-                  actionText: '保存',
+                  actionType: "submit",
+                  actionText: "保存",
                 },
               ],
               $exps: {
-                'entityId': `$rui.parseQuery().id`,
+                entityId: `$rui.parseQuery().id`,
               },
             },
           ],
@@ -83,10 +83,10 @@ const page: RapidPage = {
                     {
                       field: "id",
                       operator: "eq",
-                      value: ""
-                    }
-                  ]
-                }
+                      value: "",
+                    },
+                  ],
+                },
               ],
               listActions: [
                 {
@@ -98,12 +98,12 @@ const page: RapidPage = {
                   quickSearchFields: ["name", "login"],
                   columns: [
                     {
-                      type: 'auto',
-                      code: 'name',
+                      type: "auto",
+                      code: "name",
                     },
                     {
-                      type: 'auto',
-                      code: 'login',
+                      type: "auto",
+                      code: "login",
                     },
                   ],
                   onSelected: [
@@ -124,7 +124,7 @@ const page: RapidPage = {
                       scopeId: "userList-scope",
                       storeName: "list",
                     },
-                  ]
+                  ],
                 },
                 {
                   $type: "sonicToolbarRefreshButton",
@@ -134,49 +134,49 @@ const page: RapidPage = {
               ],
               columns: [
                 {
-                  type: 'auto',
-                  code: 'name',
-                  fixed: 'left',
+                  type: "auto",
+                  code: "name",
+                  fixed: "left",
                 },
                 {
-                  type: 'auto',
-                  code: 'login',
-                  fixed: 'left',
+                  type: "auto",
+                  code: "login",
+                  fixed: "left",
                 },
                 {
-                  type: 'auto',
-                  code: 'department',
-                  fieldName: 'department.name',
-                  width: '150px',
+                  type: "auto",
+                  code: "department",
+                  fieldName: "department.name",
+                  width: "150px",
                 },
                 {
-                  type: 'auto',
-                  code: 'roles',
-                  width: '250px',
+                  type: "auto",
+                  code: "roles",
+                  width: "250px",
                   rendererProps: {
                     item: {
                       $type: "rapidLinkRenderer",
                       url: "/pages/oc_role_details?id={{id}}",
                       text: "{{name}}",
-                    }
+                    },
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'state',
-                  width: '100px',
+                  type: "auto",
+                  code: "state",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  width: '150px',
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
                 },
               ],
               actions: [
                 {
                   $type: "rapidTableAction",
                   code: "remove",
-                  actionText: '移除',
+                  actionText: "移除",
                   confirmText: "您确定要从角色中移除此用户吗？",
                   onAction: [
                     {
@@ -194,17 +194,17 @@ const page: RapidPage = {
                     {
                       $action: "loadStoreData",
                       storeName: "list",
-                    }
-                  ]
+                    },
+                  ],
                 },
               ],
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
               },
-            }
-          ]
+            },
+          ],
         },
-      ]
+      ],
     },
   ],
   stores: [
@@ -213,11 +213,10 @@ const page: RapidPage = {
       name: "sysActionGroups",
       entityCode: "SysActionGroup",
       properties: ["id", "code", "name", "orderNum"],
-      filters: [
-      ],
+      filters: [],
       orderBy: [
         {
-          field: 'orderNum',
+          field: "orderNum",
         },
       ],
     },
@@ -226,18 +225,17 @@ const page: RapidPage = {
       name: "sysActions",
       entityCode: "SysAction",
       properties: ["id", "code", "name", "group", "orderNum"],
-      filters: [
-      ],
+      filters: [],
       orderBy: [
         {
-          field: 'group_id',
+          field: "group_id",
         },
         {
-          field: 'orderNum',
+          field: "orderNum",
         },
       ],
     },
-  ]
+  ],
 };
 
 export default page;

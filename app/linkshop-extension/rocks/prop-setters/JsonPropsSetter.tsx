@@ -1,7 +1,7 @@
-import { RockConfig, Rock, RockConfigBase } from '@ruiapp/move-style';
-import { renderRock } from '@ruiapp/react-renderer';
-import { isUndefined } from 'lodash';
-import { getComponentPropsValue } from '@ruiapp/designer-extension';
+import { RockConfig, Rock, RockConfigBase } from "@ruiapp/move-style";
+import { renderRock } from "@ruiapp/react-renderer";
+import { isUndefined } from "lodash";
+import { getComponentPropsValue } from "@ruiapp/designer-extension";
 
 export interface JsonPropsSetterProps extends RockConfigBase {
   $id: string;
@@ -13,14 +13,14 @@ export interface JsonPropsSetterProps extends RockConfigBase {
 }
 
 export default {
-  $type: 'jsonPropsSetter',
+  $type: "jsonPropsSetter",
 
   Renderer(context, props: JsonPropsSetterProps) {
     const { $id, label, labelTip, componentConfig, propNames, defaultValue } = props;
 
     let rockConfig = {
       $id: `${$id}-static`,
-      $type: 'singleControlPropsSetter',
+      $type: "singleControlPropsSetter",
       label,
       labelTip,
       propNames,
@@ -29,13 +29,13 @@ export default {
 
     (rockConfig as any).defaultValue = defaultValue;
     (rockConfig as any).control = {
-      $type: 'jsonSetterInput',
+      $type: "jsonSetterInput",
     };
 
     const value = getComponentPropsValue(componentConfig, propNames, defaultValue);
     if (!isUndefined(value)) {
       (rockConfig as any).extra = {
-        $type: 'jsonValueDisplay',
+        $type: "jsonValueDisplay",
       };
     }
 

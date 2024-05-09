@@ -1,36 +1,36 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'namespace',
+      type: "auto",
+      code: "namespace",
     },
     {
-      type: 'auto',
-      code: 'singularCode',
+      type: "auto",
+      code: "singularCode",
     },
     {
-      type: 'auto',
-      code: 'pluralCode',
+      type: "auto",
+      code: "pluralCode",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'meta_model_list',
-  name: '实体模型列表',
-  title: '模型管理',
-  permissionCheck: {any: ["dev.manage"]},
+  code: "meta_model_list",
+  name: "实体模型列表",
+  title: "模型管理",
+  permissionCheck: { any: ["dev.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -42,7 +42,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -52,60 +52,60 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["plural_code", "name"],
-        }
+        },
       ],
       orderBy: [
         {
-          field: 'namespace',
+          field: "namespace",
         },
         {
-          field: 'singularCode',
+          field: "singularCode",
         },
       ],
       pageSize: -1,
       columns: [
         {
-          type: 'link',
-          code: 'name',
-          width: '200px',
-          fixed: 'left',
+          type: "link",
+          code: "name",
+          width: "200px",
+          fixed: "left",
           rendererProps: {
             url: "/pages/meta_model_details?id={{id}}",
           },
         },
         {
-          type: 'auto',
-          code: 'namespace',
-          title: 'Ns.',
-          width: '100px',
+          type: "auto",
+          code: "namespace",
+          title: "Ns.",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'singularCode',
-          width: '300px',
+          type: "auto",
+          code: "singularCode",
+          width: "300px",
         },
         {
-          type: 'auto',
-          code: 'pluralCode',
-          width: '300px',
+          type: "auto",
+          code: "pluralCode",
+          width: "300px",
         },
         {
-          type: 'auto',
-          code: 'description',
+          type: "auto",
+          code: "description",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "Model",
         },
@@ -113,22 +113,22 @@ const page: RapidPage = {
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       searchForm: {
-        entityCode: 'AppNavItem',
+        entityCode: "AppNavItem",
         items: [
           {
-            type: 'auto',
-            code: 'code',
-            filterMode: 'contains',
+            type: "auto",
+            code: "code",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'name',
-            filterMode: 'contains',
+            type: "auto",
+            code: "name",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'state',
-            filterMode: 'eq',
+            type: "auto",
+            code: "state",
+            filterMode: "eq",
           },
         ],
       },

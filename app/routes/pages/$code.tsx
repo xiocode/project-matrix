@@ -5,7 +5,7 @@ import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, L
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
-import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from '@ruiapp/rapid-extension';
+import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from "@ruiapp/rapid-extension";
 import { useMemo } from "react";
 import _, { find } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
@@ -22,7 +22,7 @@ import AppExtension from "~/app-extension/mod";
 import styles from "antd/dist/antd.css";
 import rapidService from "~/rapidService";
 
-import { Avatar, Dropdown,  PageHeader } from "antd";
+import { Avatar, Dropdown, PageHeader } from "antd";
 import type { MenuProps } from "antd";
 import { ExportOutlined, UserOutlined } from "@ant-design/icons";
 import { isAccessAllowed } from "~/utils/access-control-utility";
@@ -59,9 +59,8 @@ framework.loadExtension(AppExtension);
 RapidExtensionSetting.setDefaultRendererPropsOfRendererType("rapidCurrencyRenderer", {
   usingThousandSeparator: true,
   decimalPlaces: 2,
-  currencyCode: 'CNY',
+  currencyCode: "CNY",
 });
-
 
 export interface GenerateRuiPageConfigOption<TPage = RapidPage> {
   sdPage: TPage;
@@ -82,7 +81,7 @@ export function generateRuiPage(option: GenerateRuiPageConfigOption) {
         $id: `page-section`,
         className: "rui-page-section",
         children: viewRocks,
-      }
+      },
     ],
     // view: viewRocks.map((child, index) => {
     //   return {
@@ -98,11 +97,9 @@ export function generateRuiPage(option: GenerateRuiPageConfigOption) {
   return ruiPageConfig;
 }
 
-
-
 export type Params = {
   code: string;
-}
+};
 
 type ViewModel = {
   myProfile: any;
@@ -112,27 +109,31 @@ type ViewModel = {
   sdPage: RapidPage;
   entities: RapidEntity[];
   dataDictionaries: RapidDataDictionary[];
-}
+};
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const myProfile = (await rapidService.get(`me`, {
-    headers: {
-      "Cookie": request.headers.get("Cookie"),
-    }
-  })).data?.user;
+  const myProfile = (
+    await rapidService.get(`me`, {
+      headers: {
+        Cookie: request.headers.get("Cookie"),
+      },
+    })
+  ).data?.user;
 
   if (!myProfile) {
     return redirect("/signin");
   }
 
   const pageCode = params.code;
-  const sdPage: RapidPage | undefined = find(pageModels, item => item.code === pageCode);
+  const sdPage: RapidPage | undefined = find(pageModels, (item) => item.code === pageCode);
 
-  const myAllowedActions = (await rapidService.get(`app/listMyAllowedSysActions`, {
-    headers: {
-      "Cookie": request.headers.get("Cookie"),
-    }
-  })).data;
+  const myAllowedActions = (
+    await rapidService.get(`app/listMyAllowedSysActions`, {
+      headers: {
+        Cookie: request.headers.get("Cookie"),
+      },
+    })
+  ).data;
   let pageAccessAllowed = true;
   const permissionCheckPolicy = sdPage?.permissionCheck;
   if (permissionCheckPolicy) {
@@ -147,15 +148,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     sdPage,
     entities: entityModels,
     dataDictionaries: dataDictionaryModels,
-  }
-}
-
+  };
+};
 
 export default function Index() {
   const viewModel = useLoaderData<ViewModel>();
   const { myProfile, myAllowedActions, pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed } = viewModel;
 
-  framework.registerExpressionVar('me', {
+  framework.registerExpressionVar("me", {
     profile: myProfile,
     allowedActions: myAllowedActions,
   });
@@ -163,25 +163,21 @@ export default function Index() {
   rapidAppDefinition.setAppDefinition({
     entities,
     dataDictionaries,
-  })
+  });
 
   const page = useMemo(() => {
     let ruiPageConfig: PageConfig | undefined;
     if (!pageAccessAllowed) {
       ruiPageConfig = {
-        view: [
-          { $type: "text", text: `You are not allowed to visit this page.`}
-        ]
-      }
+        view: [{ $type: "text", text: `You are not allowed to visit this page.` }],
+      };
       return new Page(framework, ruiPageConfig);
     }
 
     if (!sdPage) {
       ruiPageConfig = {
-        view: [
-          { $type: "text", text: `Page with code '${pageCode}' was not configured.`}
-        ]
-      }
+        view: [{ $type: "text", text: `Page with code '${pageCode}' was not configured.` }],
+      };
       return new Page(framework, ruiPageConfig);
     }
 
@@ -194,31 +190,32 @@ export default function Index() {
     return new Page(framework, ruiPageConfig);
   }, [pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed]);
 
-  const profileMenuItems: MenuProps['items'] = [
+  const profileMenuItems: MenuProps["items"] = [
     {
       key: "signout",
       label: <a href="/api/signout">登出</a>,
-      icon: <ExportOutlined rev={undefined} />
-    }
-  ]
+      icon: <ExportOutlined rev={undefined} />,
+    },
+  ];
 
-  return <>
-    <PageHeader
-      title={sdPage?.title || sdPage?.name || pageCode}
-      extra={
-        <div>
-            <Dropdown menu={{items: profileMenuItems}}>
+  return (
+    <>
+      <PageHeader
+        title={sdPage?.title || sdPage?.name || pageCode}
+        extra={
+          <div>
+            <Dropdown menu={{ items: profileMenuItems }}>
               <div className="rui-current-user-indicator">
                 <Avatar icon={<UserOutlined rev={undefined} />} />
                 {"" + myProfile?.name}
               </div>
             </Dropdown>
-        </div>
-      }
-    >
-    </PageHeader>
-    <div className="rui-play-main-container-body">
-      <Rui framework={framework} page={page} />
-    </div>
-  </>
+          </div>
+        }
+      ></PageHeader>
+      <div className="rui-play-main-container-body">
+        <Rui framework={framework} page={page} />
+      </div>
+    </>
+  );
 }

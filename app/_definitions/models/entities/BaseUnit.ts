@@ -1,54 +1,54 @@
-import type { TDictionaryCodes } from '../../meta/data-dictionary-codes';
-import type { TEntitySingularCodes } from '../../meta/model-codes';
-import type { RapidEntity } from '@ruiapp/rapid-extension';
+import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
-  namespace: 'app',
-  code: 'BaseUnit',
-  name: '单位',
+  namespace: "app",
+  code: "BaseUnit",
+  name: "单位",
   fields: [
     {
-      code: 'code',
-      name: 'Code',
-      type: 'text',
+      code: "code",
+      name: "Code",
+      type: "text",
       required: true,
     },
     {
-      code: 'name',
-      name: '名称',
-      type: 'text',
+      code: "name",
+      name: "名称",
+      type: "text",
       required: true,
     },
     {
-      code: 'nameEn',
-      name: '英文名称',
-      type: 'text',
+      code: "nameEn",
+      name: "英文名称",
+      type: "text",
     },
     {
-      code: 'printSymbol',
-      name: '打印符号',
-      type: 'text',
+      code: "printSymbol",
+      name: "打印符号",
+      type: "text",
     },
     {
-      code: 'type',
-      name: '类型',
-      type: 'option',
-      dataDictionary: 'UnitType',
+      code: "type",
+      name: "类型",
+      type: "option",
+      dataDictionary: "UnitType",
       required: true,
     },
     {
-      code: 'orderNum',
-      name: '排序号',
-      type: 'integer',
+      code: "orderNum",
+      name: "排序号",
+      type: "integer",
       required: true,
     },
     {
-      code: 'category',
-      name: '单位分组',
-      type: 'relation',
+      code: "category",
+      name: "单位分组",
+      type: "relation",
       required: true,
-      targetSingularCode: 'base_unit_category',
-      targetIdColumnName: 'category_id',
+      targetSingularCode: "base_unit_category",
+      targetIdColumnName: "category_id",
     },
   ],
 };

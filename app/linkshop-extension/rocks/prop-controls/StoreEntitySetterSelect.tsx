@@ -1,8 +1,8 @@
-import { Rock, RockConfigBase, RockEvent, RockEventHandler, handleComponentEvent } from '@ruiapp/move-style';
-import { EntityStoreConfig } from '@ruiapp/rapid-extension';
-import { renderRock } from '@ruiapp/react-renderer';
-import { useCallback } from 'react';
-import { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
+import { Rock, RockConfigBase, RockEvent, RockEventHandler, handleComponentEvent } from "@ruiapp/move-style";
+import { EntityStoreConfig } from "@ruiapp/rapid-extension";
+import { renderRock } from "@ruiapp/react-renderer";
+import { useCallback } from "react";
+import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
 
 export interface StoreEntitySetterSelectProps extends RockConfigBase {
   $id: string;
@@ -11,13 +11,13 @@ export interface StoreEntitySetterSelectProps extends RockConfigBase {
 }
 
 export default {
-  $type: 'storeEntitySetterSelect',
+  $type: "storeEntitySetterSelect",
 
   Renderer(context, props: StoreEntitySetterSelectProps) {
     const { page, framework, scope } = context;
     const { $id, onChange, value } = props;
 
-    const designerStore = page.getStore<LinkshopAppDesignerStore>('designerStore');
+    const designerStore = page.getStore<LinkshopAppDesignerStore>("designerStore");
 
     const stores = (designerStore.page.scope.config.stores || []) as EntityStoreConfig[];
 
@@ -25,7 +25,7 @@ export default {
       (e: RockEvent) => {
         const code = e.args[0];
         const store = stores.find((store) => store.entityCode === code);
-        handleComponentEvent('onChange', framework, page, scope, props, onChange!, [store]);
+        handleComponentEvent("onChange", framework, page, scope, props, onChange!, [store]);
       },
       [page, $id, onChange, stores],
     );
@@ -33,13 +33,13 @@ export default {
     return renderRock({
       context,
       rockConfig: {
-        $type: 'antdSelect',
+        $type: "antdSelect",
         $id: `store-selector_${stores?.length}`,
-        style: { width: '100%' },
+        style: { width: "100%" },
         options: (stores || []).map((s) => ({ label: s.name, value: s.entityCode })),
         value: value?.entityCode,
         onChange: {
-          $action: 'script',
+          $action: "script",
           script: onEntityChange,
         },
       },

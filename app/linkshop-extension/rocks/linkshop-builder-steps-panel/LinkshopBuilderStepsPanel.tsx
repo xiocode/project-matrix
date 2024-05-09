@@ -1,25 +1,25 @@
-import type { Rock, RockConfig, RockEvent, RockEventHandlerScript, RockInstanceContext } from '@ruiapp/move-style';
-import LinkshopBuilderStepsPanelMeta from './LinkshopBuilderStepsPanelMeta';
-import type { LinkshopBuilderStepsPanelRockConfig } from './linkshop-builder-steps-panel-types';
-import type { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from '~/linkshop-extension/linkshop-types';
-import { useCallback, useMemo, useState } from 'react';
-import { find, forEach } from 'lodash';
-import type { LinkshopAppDesignerStore } from '~/linkshop-extension/stores/LinkshopAppDesignerStore';
-import { sendDesignerCommand } from '~/linkshop-extension/utilities/DesignerUtility';
-import StepSettingsFormModal from './StepSettingsFormModal';
-import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
-import { Dropdown } from 'antd';
+import type { Rock, RockConfig, RockEvent, RockEventHandlerScript, RockInstanceContext } from "@ruiapp/move-style";
+import LinkshopBuilderStepsPanelMeta from "./LinkshopBuilderStepsPanelMeta";
+import type { LinkshopBuilderStepsPanelRockConfig } from "./linkshop-builder-steps-panel-types";
+import type { LinkshopAppRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
+import { useCallback, useMemo, useState } from "react";
+import { find, forEach } from "lodash";
+import type { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
+import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
+import StepSettingsFormModal from "./StepSettingsFormModal";
+import { EllipsisOutlined, PlusOutlined } from "@ant-design/icons";
+import { Dropdown } from "antd";
 
 enum StepOperator {
-  View = 'view',
-  Modify = 'modify',
-  Remove = 'remove',
+  View = "view",
+  Modify = "modify",
+  Remove = "remove",
 }
 
 export type StepTreeNode = StepNode | ComponentNode | SlotNode;
 
 export interface StepNode {
-  $nodeType: 'step';
+  $nodeType: "step";
   $id: string;
   $type?: string;
   label: string;
@@ -27,7 +27,7 @@ export interface StepNode {
 }
 
 export interface ComponentNode {
-  $nodeType: 'component';
+  $nodeType: "component";
   $id: string;
   $type?: string;
   label: string;
@@ -35,7 +35,7 @@ export interface ComponentNode {
 }
 
 export interface SlotNode {
-  $nodeType: 'slot';
+  $nodeType: "slot";
   $id: string;
   $componentId: string;
   $slotPropName: string;
@@ -46,7 +46,7 @@ export interface SlotNode {
 export default {
   Renderer(context: RockInstanceContext, props: LinkshopBuilderStepsPanelRockConfig) {
     const { designerStoreName } = props;
-    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || 'designerStore');
+    const designerStore = context.page.getStore<LinkshopAppDesignerStore>(designerStoreName || "designerStore");
     const shopfloorApp = designerStore.appConfig;
     const steps = shopfloorApp?.steps || [];
 
@@ -57,7 +57,7 @@ export default {
         case StepOperator.View:
           const selectedSetpId = step.$id;
           designerStore.setDesignStage({
-            type: 'step',
+            type: "step",
             stepId: selectedSetpId,
           });
 
@@ -65,10 +65,10 @@ export default {
           if (currentStep) {
             const stores = designerStore.page.scope.config.stores || [];
             sendDesignerCommand(context.page, designerStore, {
-              name: 'setPageConfig',
+              name: "setPageConfig",
               payload: {
                 pageConfig: {
-                  $id: 'designPreviewPage',
+                  $id: "designPreviewPage",
                   stores,
                   view: currentStep.children || [],
                 },
@@ -83,7 +83,7 @@ export default {
           break;
         case StepOperator.Remove:
           sendDesignerCommand(context.page, designerStore, {
-            name: 'removeStep',
+            name: "removeStep",
             payload: {
               step,
             },
@@ -121,8 +121,8 @@ export default {
             return (
               <div
                 key={s.$name}
-                style={{ cursor: 'pointer' }}
-                className={`lsb-sidebar-panel--item rui-row-mid ${selected ? 'lsb-sidebar-panel--item_selected' : ''}`}
+                style={{ cursor: "pointer" }}
+                className={`lsb-sidebar-panel--item rui-row-mid ${selected ? "lsb-sidebar-panel--item_selected" : ""}`}
                 onClick={() => {
                   onStepOperator(StepOperator.View, s);
                 }}
@@ -131,8 +131,8 @@ export default {
                 <Dropdown
                   menu={{
                     items: [
-                      { label: '修改', key: StepOperator.Modify },
-                      { label: '删除', key: StepOperator.Remove },
+                      { label: "修改", key: StepOperator.Modify },
+                      { label: "删除", key: StepOperator.Remove },
                     ],
                     onClick: ({ key }) => {
                       onStepOperator(key as StepOperator, s);
@@ -153,7 +153,7 @@ export default {
           visible={state.visible || false}
           onFormSubmit={(config) => {
             sendDesignerCommand(context.page, designerStore, {
-              name: state.stepConfig?.$id === config?.$id ? 'modifyStep' : 'addStep',
+              name: state.stepConfig?.$id === config?.$id ? "modifyStep" : "addStep",
               payload: {
                 step: config,
               },

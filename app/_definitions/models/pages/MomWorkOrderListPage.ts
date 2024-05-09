@@ -1,70 +1,70 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'material',
+      type: "auto",
+      code: "material",
       listDataFindOptions: {
         fixedFilters: [
           {
-            operator: 'eq',
-            field: 'can_produce',
+            operator: "eq",
+            field: "can_produce",
             value: true,
-          }
-        ]
+          },
+        ],
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-      }
+      },
     },
     {
-      type: 'auto',
-      code: 'tags',
+      type: "auto",
+      code: "tags",
     },
     {
-      type: 'auto',
-      code: 'route',
+      type: "auto",
+      code: "route",
       formControlProps: {
         listTextFieldName: "version",
       },
     },
     {
-      type: 'auto',
-      code: 'scheduledStartDate',
+      type: "auto",
+      code: "scheduledStartDate",
     },
     {
-      type: 'auto',
-      code: 'scheduledFinishDate',
+      type: "auto",
+      code: "scheduledFinishDate",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
     {
-      type: 'auto',
-      code: 'assignmentState',
+      type: "auto",
+      code: "assignmentState",
     },
     {
-      type: 'auto',
-      code: 'executionState',
+      type: "auto",
+      code: "executionState",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'mom_work_order_list',
-  name: '工单列表',
-  title: '工单管理',
+  code: "mom_work_order_list",
+  name: "工单列表",
+  title: "工单管理",
   view: [
     {
       $type: "sonicEntityList",
@@ -76,7 +76,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -86,30 +86,30 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code"],
-        }
+        },
       ],
       columns: [
         {
-          type: 'link',
-          code: 'code',
-          width: '200px',
-          fixed: 'left',
+          type: "link",
+          code: "code",
+          width: "200px",
+          fixed: "left",
           rendererType: "link",
           rendererProps: {
             url: "/pages/mom_work_order_details?id={{id}}",
           },
         },
         {
-          type: 'auto',
-          code: 'material',
-          fixed: 'left',
+          type: "auto",
+          code: "material",
+          fixed: "left",
           rendererType: "anchor",
           rendererProps: {
             children: {
-              $type: 'materialLabelRenderer',
+              $type: "materialLabelRenderer",
               $exps: {
-                value: '$slot.value',
-              }
+                value: "$slot.value",
+              },
             },
             $exps: {
               href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -117,69 +117,69 @@ const page: RapidPage = {
           },
         },
         {
-          type: 'auto',
-          code: 'route',
-          width: '100px',
+          type: "auto",
+          code: "route",
+          width: "100px",
           rendererProps: {
             format: "{{version}}",
           },
         },
         {
-          type: 'auto',
-          code: 'tags',
-          width: '100px',
+          type: "auto",
+          code: "tags",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'scheduledStartDate',
-          width: '100px',
+          type: "auto",
+          code: "scheduledStartDate",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'scheduledFinishDate',
-          width: '100px',
+          type: "auto",
+          code: "scheduledFinishDate",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'quantity',
-          width: '100px',
+          type: "auto",
+          code: "quantity",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'unit',
-          width: '50px',
+          type: "auto",
+          code: "unit",
+          width: "50px",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'assignmentState',
-          width: '100px',
+          type: "auto",
+          code: "assignmentState",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'executionState',
-          width: '100px',
+          type: "auto",
+          code: "executionState",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomWorkOrder",
         },
@@ -187,12 +187,12 @@ const page: RapidPage = {
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       searchForm: {
-        entityCode: 'OcUser',
+        entityCode: "OcUser",
         items: [
           {
-            type: 'auto',
-            code: 'code',
-            filterMode: 'contains',
+            type: "auto",
+            code: "code",
+            filterMode: "contains",
           },
         ],
       },

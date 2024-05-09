@@ -1,57 +1,57 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'kind',
+      type: "auto",
+      code: "kind",
     },
     {
-      type: 'auto',
-      code: 'projects',
+      type: "auto",
+      code: "projects",
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
+        listFilterFields: ["label"],
       },
     },
     {
-      type: 'auto',
-      code: 'contracts',
+      type: "auto",
+      code: "contracts",
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
+        listFilterFields: ["label"],
       },
     },
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
       formControlProps: {
         listSearchable: true,
         listTextFormat: "{{name}} {{value}}",
-        listFilterFields: ['label'],
+        listFilterFields: ["label"],
       },
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'cbs_order_list',
-  name: '订单列表',
-  title: '订单列表',
-  permissionCheck: {any: ["cbsOrder.view", "cbsOrder.new", "cbsOrder.manage", "cbsOrder.delete"]},
+  code: "cbs_order_list",
+  name: "订单列表",
+  title: "订单列表",
+  permissionCheck: { any: ["cbsOrder.view", "cbsOrder.new", "cbsOrder.manage", "cbsOrder.delete"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -73,41 +73,41 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code", "name"],
-        }
+        },
       ],
       pageSize: 20,
       columns: [
         {
-          type: 'auto',
-          code: 'kind',
-          fixed: 'left',
-          width: '100px',
+          type: "auto",
+          code: "kind",
+          fixed: "left",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'code',
-          fixed: 'left',
-          width: '100px',
+          type: "auto",
+          code: "code",
+          fixed: "left",
+          width: "100px",
         },
         {
-          type: 'link',
-          code: 'name',
-          fixed: 'left',
+          type: "link",
+          code: "name",
+          fixed: "left",
           rendererProps: {
             url: "/pages/cbs_order_details?id={{id}}",
           },
         },
         {
-          type: 'auto',
-          code: 'totalAmount',
-          width: '120px',
-          align: 'right',
-          rendererType: 'rapidCurrencyRenderer',
+          type: "auto",
+          code: "totalAmount",
+          width: "120px",
+          align: "right",
+          rendererType: "rapidCurrencyRenderer",
         },
         {
-          type: 'auto',
-          code: 'projects',
-          width: '300px',
+          type: "auto",
+          code: "projects",
+          width: "300px",
           rendererProps: {
             listContainer: {
               $type: "htmlElement",
@@ -125,13 +125,13 @@ const page: RapidPage = {
             separator: {
               $type: "htmlElement",
               htmlTag: "div",
-            }
+            },
           },
         },
         {
-          type: 'auto',
-          code: 'contracts',
-          width: '300px',
+          type: "auto",
+          code: "contracts",
+          width: "300px",
           rendererProps: {
             listContainer: {
               $type: "htmlElement",
@@ -149,32 +149,32 @@ const page: RapidPage = {
             separator: {
               $type: "htmlElement",
               htmlTag: "div",
-            }
+            },
           },
         },
         {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
+          type: "auto",
+          code: "state",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "CbsOrder",
         },

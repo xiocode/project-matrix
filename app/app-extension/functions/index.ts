@@ -1,5 +1,3 @@
 import IsAccessAllowed from "./isAccessAllowed";
 
-export default [
-  IsAccessAllowed,
-]
+export default [IsAccessAllowed];

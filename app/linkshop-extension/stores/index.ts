@@ -1,3 +1,3 @@
-import LinkshopAppDesignerStore from './LinkshopAppDesignerStore';
+import LinkshopAppDesignerStore from "./LinkshopAppDesignerStore";
 
 export default [LinkshopAppDesignerStore];

@@ -1,39 +1,39 @@
-import { Framework, Page } from '@ruiapp/move-style';
-import type { PageConfig, RockConfig, RockEvent } from '@ruiapp/move-style';
-import { renderRock, Rui } from '@ruiapp/react-renderer';
-import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from '@ruiapp/react-rocks';
-import AntdExtension from '@ruiapp/antd-extension';
-import MonacoExtension from '@ruiapp/monaco-extension';
-import RapidExtension from '@ruiapp/rapid-extension';
-import { useEffect, useMemo, useState } from 'react';
-import _, { first, get } from 'lodash';
-import { redirect, type LoaderFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import qs from 'qs';
+import { Framework, Page } from "@ruiapp/move-style";
+import type { PageConfig, RockConfig, RockEvent } from "@ruiapp/move-style";
+import { renderRock, Rui } from "@ruiapp/react-renderer";
+import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
+import AntdExtension from "@ruiapp/antd-extension";
+import MonacoExtension from "@ruiapp/monaco-extension";
+import RapidExtension from "@ruiapp/rapid-extension";
+import { useEffect, useMemo, useState } from "react";
+import _, { first, get } from "lodash";
+import { redirect, type LoaderFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import qs from "qs";
 
-import AppExtension from '~/app-extension/mod';
-import LinkshopExtension from '~/linkshop-extension/mod';
-import ShopfloorExtension from '~/shopfloor-extension/mod';
+import AppExtension from "~/app-extension/mod";
+import LinkshopExtension from "~/linkshop-extension/mod";
+import ShopfloorExtension from "~/shopfloor-extension/mod";
 
-import antdStyles from 'antd/dist/antd.css';
-import indexStyles from '~/styles/index.css';
-import customizeStyles from '~/styles/customize.css';
-import flexStyles from '~/styles/flex.css';
-import rapidService from '~/rapidService';
+import antdStyles from "antd/dist/antd.css";
+import indexStyles from "~/styles/index.css";
+import customizeStyles from "~/styles/customize.css";
+import flexStyles from "~/styles/flex.css";
+import rapidService from "~/rapidService";
 
-import { ShopfloorApp } from '~/_definitions/meta/entity-types';
-import { LFStorage } from '~/utils/storage-utils';
+import { ShopfloorApp } from "~/_definitions/meta/entity-types";
+import { LFStorage } from "~/utils/storage-utils";
 
 export function links() {
   return [antdStyles, indexStyles, customizeStyles, flexStyles].map((styles) => {
-    return { rel: 'stylesheet', href: styles };
+    return { rel: "stylesheet", href: styles };
   });
 }
 
 const framework = new Framework();
 
-framework.registerExpressionVar('_', _);
-framework.registerExpressionVar('qs', qs);
+framework.registerExpressionVar("_", _);
+framework.registerExpressionVar("qs", qs);
 
 framework.registerComponent(RuiRock);
 framework.registerComponent(ErrorBoundary);
@@ -54,7 +54,7 @@ framework.loadExtension(AppExtension);
 framework.loadExtension(LinkshopExtension);
 framework.loadExtension(ShopfloorExtension);
 
-const SHOPFLOOR_APP_CONFIG_CACHE_KEY = 'shopfloor_app_config';
+const SHOPFLOOR_APP_CONFIG_CACHE_KEY = "shopfloor_app_config";
 
 export type Params = {
   code: string;
@@ -71,19 +71,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const myProfile = (
     await rapidService.get(`me`, {
       headers: {
-        Cookie: request.headers.get('Cookie'),
+        Cookie: request.headers.get("Cookie"),
       },
     })
   ).data?.user;
 
   if (!myProfile) {
-    return redirect('/signin');
+    return redirect("/signin");
   }
 
   const myAllowedActions = (
     await rapidService.get(`app/listMyAllowedSysActions`, {
       headers: {
-        Cookie: request.headers.get('Cookie'),
+        Cookie: request.headers.get("Cookie"),
       },
     })
   ).data;
@@ -92,11 +92,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     await rapidService.post(
       `shopfloor/shopfloor_apps/operations/find`,
       {
-        properties: ['id', 'name', 'content'],
+        properties: ["id", "name", "content"],
       },
       {
         headers: {
-          Cookie: request.headers.get('Cookie'),
+          Cookie: request.headers.get("Cookie"),
         },
       },
     )
@@ -117,7 +117,7 @@ export default function Begin() {
   const shopfloorAppConfigCache = LFStorage.get(SHOPFLOOR_APP_CONFIG_CACHE_KEY);
   const [currentAppId, setCurrentAppId] = useState<any>(shopfloorAppConfigCache?.appId);
 
-  framework.registerExpressionVar('me', {
+  framework.registerExpressionVar("me", {
     profile: myProfile,
     allowedActions: myAllowedActions,
   });
@@ -134,14 +134,14 @@ export default function Begin() {
     let ruiPageConfig: PageConfig | undefined;
     if (!pageAccessAllowed) {
       ruiPageConfig = {
-        view: [{ $type: 'text', text: `You are not allowed to visit this Shopfloor App.` }],
+        view: [{ $type: "text", text: `You are not allowed to visit this Shopfloor App.` }],
       };
       return new Page(framework, ruiPageConfig);
     }
 
     if (!shopfloorApps?.length) {
       ruiPageConfig = {
-        view: [{ $type: 'text', text: `No Shopfloor Apps` }],
+        view: [{ $type: "text", text: `No Shopfloor Apps` }],
       };
       return new Page(framework, ruiPageConfig);
     }
@@ -155,26 +155,26 @@ export default function Begin() {
       $id: `beginPage-${currentAppId}`,
       view: [
         {
-          $type: 'htmlElement',
-          htmlTag: 'div',
+          $type: "htmlElement",
+          htmlTag: "div",
           attributes: {
-            className: 'rui-fullscreen rui-col-around',
+            className: "rui-fullscreen rui-col-around",
           },
           style: {
-            height: '100vh',
+            height: "100vh",
             padding: 36,
           },
           children: [
             {
-              $type: 'htmlElement',
-              htmlTag: 'div',
+              $type: "htmlElement",
+              htmlTag: "div",
               attributes: {
-                className: 'rui-row-mid',
+                className: "rui-row-mid",
               },
-              style: { cursor: 'pointer' },
+              style: { cursor: "pointer" },
               children: [
                 {
-                  $type: 'antdDropdown',
+                  $type: "antdDropdown",
                   menu: {
                     items: (shopfloorApps || []).map((app) => ({ key: `${app.id}`, label: app.name })),
                     selectedKeys: currentApp ? [`${currentApp.id}`] : [],
@@ -184,26 +184,26 @@ export default function Begin() {
                     },
                   },
                   children: {
-                    $type: 'htmlElement',
-                    htmlTag: 'span',
+                    $type: "htmlElement",
+                    htmlTag: "span",
                     attributes: {
-                      className: 'rui-row-mid',
+                      className: "rui-row-mid",
                     },
                     children: [
                       {
-                        $type: 'antdIcon',
+                        $type: "antdIcon",
                         size: 56,
-                        name: 'BarsOutlined',
+                        name: "BarsOutlined",
                       },
                       {
-                        $type: 'htmlElement',
-                        htmlTag: 'span',
+                        $type: "htmlElement",
+                        htmlTag: "span",
                         style: {
                           fontSize: 36,
                           marginLeft: 16,
                         },
                         children: {
-                          $type: 'text',
+                          $type: "text",
                           text: `${currentApp?.name}`,
                         },
                       },
@@ -213,11 +213,11 @@ export default function Begin() {
               ],
             },
             {
-              $type: 'htmlElement',
-              htmlTag: 'div',
+              $type: "htmlElement",
+              htmlTag: "div",
               children: [
                 {
-                  $type: 'antdButton',
+                  $type: "antdButton",
                   disabled: !currentApp,
                   style: {
                     width: 360,
@@ -225,27 +225,27 @@ export default function Begin() {
                     borderRadius: 8,
                     fontSize: 60,
                     padding: 0,
-                    lineHeight: '200px',
-                    textAlign: 'center',
+                    lineHeight: "200px",
+                    textAlign: "center",
                   },
-                  type: 'primary',
+                  type: "primary",
                   children: {
-                    $type: 'text',
-                    text: '开 始',
+                    $type: "text",
+                    text: "开 始",
                   },
                   href: `/shopfloor/player?appId=${currentApp?.id}`,
                 },
               ],
             },
             {
-              $type: 'htmlElement',
-              htmlTag: 'div',
+              $type: "htmlElement",
+              htmlTag: "div",
               attributes: {
-                className: 'rui-row-mid',
+                className: "rui-row-mid",
               },
               children: [
                 {
-                  $type: 'antdAvatar',
+                  $type: "antdAvatar",
                   size: 56,
                   src: myProfile?.avatar,
                   style: {
@@ -253,13 +253,13 @@ export default function Begin() {
                   },
                 },
                 {
-                  $type: 'htmlElement',
-                  htmlTag: 'span',
+                  $type: "htmlElement",
+                  htmlTag: "span",
                   style: {
                     fontSize: 28,
                   },
                   children: {
-                    $type: 'text',
+                    $type: "text",
                     text: `${myProfile?.name}`,
                   },
                 },

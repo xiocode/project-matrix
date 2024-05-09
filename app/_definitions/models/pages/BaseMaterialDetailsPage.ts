@@ -1,19 +1,19 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormRockConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
 const flowFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'version',
+      type: "auto",
+      code: "version",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
     {
-      type: 'auto',
-      code: 'publishState',
+      type: "auto",
+      code: "publishState",
     },
   ],
 };
@@ -21,84 +21,82 @@ const flowFormConfig: Partial<RapidEntityFormRockConfig> = {
 const flowProcessFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
     {
-      type: 'auto',
-      code: 'process',
+      type: "auto",
+      code: "process",
       formControlProps: {
         listTextFormat: "{{name}}",
-        listFilterFields: ['label'],
+        listFilterFields: ["label"],
         listOrderBy: [
           {
-            field: 'code',
-          }
+            field: "code",
+          },
         ],
-      }
+      },
     },
     {
-      type: 'auto',
-      code: 'aliasName',
+      type: "auto",
+      code: "aliasName",
     },
     {
-      type: 'auto',
-      code: 'standardCycleTime',
+      type: "auto",
+      code: "standardCycleTime",
     },
   ],
 };
-
 
 const breakdownFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'version',
+      type: "auto",
+      code: "version",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
   ],
 };
 
-
 const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
     {
-      type: 'auto',
-      code: 'subMaterial',
+      type: "auto",
+      code: "subMaterial",
       listDataFindOptions: {
-        properties: ['id', 'code', 'name', 'defaultUnit'],
+        properties: ["id", "code", "name", "defaultUnit"],
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ['label']
-      }
+        listFilterFields: ["label"],
+      },
     },
     {
-      type: 'auto',
-      code: 'matchTags',
+      type: "auto",
+      code: "matchTags",
     },
     {
-      type: 'auto',
-      code: 'quantity',
+      type: "auto",
+      code: "quantity",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
   ],
   onValuesChange: [
@@ -118,20 +116,18 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
             }
           });
         }
-      `
+      `,
     },
-  ]
+  ],
 };
-
-
 
 const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'document',
-      label: '文件',
-      valueFieldType: 'json',
+      type: "auto",
+      code: "document",
+      label: "文件",
+      valueFieldType: "json",
       formControlType: "rapidDocumentFormControl",
       formControlProps: {
         uploadProps: {
@@ -141,7 +137,7 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
           maxCount: 1,
         },
         onUploaded: [
-          {$action: "printToConsole"},
+          { $action: "printToConsole" },
           {
             $action: "script",
             script: `
@@ -160,58 +156,57 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
                   publishState: "published",
                 },
               });
-            `
-          }
+            `,
+          },
         ],
-      }
+      },
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
   ],
 };
 
-
 const page: RapidPage = {
-  code: 'base_material_details',
-  name: '物料详情',
-  title: '物料详情',
-  permissionCheck: {any: ["baseMaterial.manage"]},
+  code: "base_material_details",
+  name: "物料详情",
+  title: "物料详情",
+  permissionCheck: { any: ["baseMaterial.manage"] },
   view: [
     {
-      $type: 'rapidEntityForm',
-      entityCode: 'BaseMaterial',
-      mode: 'view',
+      $type: "rapidEntityForm",
+      entityCode: "BaseMaterial",
+      mode: "view",
       column: 3,
       items: [
         {
-          type: 'auto',
-          code: 'category',
+          type: "auto",
+          code: "category",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'code',
+          type: "auto",
+          code: "code",
         },
         {
-          type: 'auto',
-          code: 'name',
+          type: "auto",
+          code: "name",
         },
         {
-          type: 'auto',
-          code: 'state',
+          type: "auto",
+          code: "state",
         },
         {
-          type: 'auto',
-          code: 'description',
+          type: "auto",
+          code: "description",
         },
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
-      }
+      },
     },
     {
       $type: "antdTabs",
@@ -239,14 +234,14 @@ const page: RapidPage = {
                     text: "新建",
                     icon: "PlusOutlined",
                     actionStyle: "primary",
-                  }
+                  },
                 ],
                 fixedFilters: [
                   {
                     field: "material_id",
                     operator: "eq",
                     value: "",
-                  }
+                  },
                 ],
                 orderBy: [
                   {
@@ -255,32 +250,32 @@ const page: RapidPage = {
                 ],
                 columns: [
                   {
-                    type: 'auto',
-                    code: 'version',
+                    type: "auto",
+                    code: "version",
                   },
                   {
-                    type: 'auto',
-                    code: 'state',
-                    width: '100px',
+                    type: "auto",
+                    code: "state",
+                    width: "100px",
                   },
                   {
-                    type: 'auto',
-                    code: 'publishState',
-                    width: '100px',
+                    type: "auto",
+                    code: "publishState",
+                    width: "100px",
                   },
                 ],
                 actions: [
                   {
                     $type: "sonicRecordActionEditEntity",
-                    code: 'edit',
+                    code: "edit",
                     actionType: "edit",
-                    actionText: '修改',
+                    actionText: "修改",
                   },
                   {
                     $type: "sonicRecordActionDeleteEntity",
-                    code: 'delete',
-                    actionType: 'delete',
-                    actionText: '删除',
+                    code: "delete",
+                    actionType: "delete",
+                    actionText: "删除",
                     dataSourceCode: "list",
                     entityCode: "MomRoute",
                   },
@@ -306,7 +301,7 @@ const page: RapidPage = {
                       field: "route_id",
                       operator: "eq",
                       value: "",
-                    }
+                    },
                   ],
                   orderBy: [
                     {
@@ -321,76 +316,76 @@ const page: RapidPage = {
                       icon: "PlusOutlined",
                       actionStyle: "primary",
                       $exps: {
-                        "_hidden": "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
-                      }
+                        _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
+                      },
                     },
                   ],
                   columns: [
                     {
-                      type: 'auto',
-                      code: 'orderNum',
-                      width: '100px',
+                      type: "auto",
+                      code: "orderNum",
+                      width: "100px",
                     },
                     {
-                      type: 'auto',
-                      code: 'process',
+                      type: "auto",
+                      code: "process",
                       rendererProps: {
                         format: "{{name}}",
-                      }
+                      },
                     },
                     {
-                      type: 'auto',
-                      code: 'aliasName',
-                      width: '200px',
+                      type: "auto",
+                      code: "aliasName",
+                      width: "200px",
                     },
                     {
-                      type: 'auto',
-                      code: 'inputs',
+                      type: "auto",
+                      code: "inputs",
                     },
                     {
-                      type: 'auto',
-                      code: 'outputs',
+                      type: "auto",
+                      code: "outputs",
                     },
                     {
-                      type: 'auto',
-                      code: 'standardCycleTime',
-                      width: '100px',
+                      type: "auto",
+                      code: "standardCycleTime",
+                      width: "100px",
                     },
                   ],
                   actions: [
                     {
                       $type: "sonicRecordActionEditEntity",
-                      code: 'edit',
+                      code: "edit",
                       actionType: "edit",
-                      actionText: '修改',
+                      actionText: "修改",
                       $exps: {
-                        "_hidden": "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
-                      }
+                        _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
+                      },
                     },
                     {
                       $type: "sonicRecordActionDeleteEntity",
-                      code: 'delete',
-                      actionType: 'delete',
-                      actionText: '删除',
+                      code: "delete",
+                      actionType: "delete",
+                      actionText: "删除",
                       dataSourceCode: "list",
                       entityCode: "MomRouteProcess",
                       $exps: {
-                        "_hidden": "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
-                      }
+                        _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
+                      },
                     },
                   ],
                   newForm: cloneDeep(flowProcessFormConfig),
                   editForm: cloneDeep(flowProcessFormConfig),
                   $exps: {
-                    "_hidden": "!$scope.vars.activeId",
+                    _hidden: "!$scope.vars.activeId",
                     "fixedFilters[0].value": "$scope.vars.activeId",
                     "newForm.fixedFields.route_id": "$scope.vars.activeId",
-                    "hideActionsColumn": "$scope.vars.activeRecord?.publishState !== 'draft'",
+                    hideActionsColumn: "$scope.vars.activeRecord?.publishState !== 'draft'",
                   },
                 },
-              ]
+              ],
             },
-          ]
+          ],
         },
         {
           key: "breakdowns",
@@ -415,14 +410,14 @@ const page: RapidPage = {
                     text: "新建",
                     icon: "PlusOutlined",
                     actionStyle: "primary",
-                  }
+                  },
                 ],
                 fixedFilters: [
                   {
                     field: "material_id",
                     operator: "eq",
                     value: "",
-                  }
+                  },
                 ],
                 orderBy: [
                   {
@@ -431,38 +426,38 @@ const page: RapidPage = {
                 ],
                 columns: [
                   {
-                    type: 'auto',
-                    code: 'version',
+                    type: "auto",
+                    code: "version",
                   },
                   {
-                    type: 'auto',
-                    code: 'quantity',
+                    type: "auto",
+                    code: "quantity",
                   },
                   {
-                    type: 'auto',
-                    code: 'unit',
+                    type: "auto",
+                    code: "unit",
                     rendererProps: {
                       format: "{{name}}",
                     },
                   },
                   {
-                    type: 'auto',
-                    code: 'state',
-                    width: '100px',
+                    type: "auto",
+                    code: "state",
+                    width: "100px",
                   },
                 ],
                 actions: [
                   {
                     $type: "sonicRecordActionEditEntity",
-                    code: 'edit',
+                    code: "edit",
                     actionType: "edit",
-                    actionText: '修改',
+                    actionText: "修改",
                   },
                   {
                     $type: "sonicRecordActionDeleteEntity",
-                    code: 'delete',
-                    actionType: 'delete',
-                    actionText: '删除',
+                    code: "delete",
+                    actionType: "delete",
+                    actionText: "删除",
                     dataSourceCode: "list",
                     entityCode: "MomMaterialBreakdown",
                   },
@@ -488,7 +483,7 @@ const page: RapidPage = {
                       field: "breakdown_id",
                       operator: "eq",
                       value: "",
-                    }
+                    },
                   ],
                   orderBy: [
                     {
@@ -506,20 +501,20 @@ const page: RapidPage = {
                   ],
                   columns: [
                     {
-                      type: 'auto',
-                      code: 'orderNum',
-                      width: '100px',
+                      type: "auto",
+                      code: "orderNum",
+                      width: "100px",
                     },
                     {
-                      type: 'auto',
-                      code: 'subMaterial',
+                      type: "auto",
+                      code: "subMaterial",
                       rendererType: "anchor",
                       rendererProps: {
                         children: {
-                          $type: 'materialLabelRenderer',
+                          $type: "materialLabelRenderer",
                           $exps: {
-                            value: '$slot.value',
-                          }
+                            value: "$slot.value",
+                          },
                         },
                         $exps: {
                           href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
@@ -527,36 +522,36 @@ const page: RapidPage = {
                       },
                     },
                     {
-                      type: 'auto',
-                      code: 'matchTags',
-                      width: '100px',
+                      type: "auto",
+                      code: "matchTags",
+                      width: "100px",
                     },
                     {
-                      type: 'auto',
-                      code: 'quantity',
-                      width: '100px',
+                      type: "auto",
+                      code: "quantity",
+                      width: "100px",
                     },
                     {
-                      type: 'auto',
-                      code: 'unit',
+                      type: "auto",
+                      code: "unit",
                       rendererProps: {
                         format: "{{name}}",
                       },
-                      width: '100px',
+                      width: "100px",
                     },
                   ],
                   actions: [
                     {
                       $type: "sonicRecordActionEditEntity",
-                      code: 'edit',
+                      code: "edit",
                       actionType: "edit",
-                      actionText: '修改',
+                      actionText: "修改",
                     },
                     {
                       $type: "sonicRecordActionDeleteEntity",
-                      code: 'delete',
-                      actionType: 'delete',
-                      actionText: '删除',
+                      code: "delete",
+                      actionType: "delete",
+                      actionText: "删除",
                       dataSourceCode: "list",
                       entityCode: "MomMaterialBreakdownPart",
                     },
@@ -564,14 +559,14 @@ const page: RapidPage = {
                   newForm: cloneDeep(breakdownPartFormConfig),
                   editForm: cloneDeep(breakdownPartFormConfig),
                   $exps: {
-                    "_hidden": "!$scope.vars.activeId",
+                    _hidden: "!$scope.vars.activeId",
                     "fixedFilters[0].value": "$scope.vars.activeId",
                     "newForm.fixedFields.breakdown_id": "$scope.vars.activeId",
                   },
                 },
-              ]
+              ],
             },
-          ]
+          ],
         },
         {
           key: "documents",
@@ -587,7 +582,7 @@ const page: RapidPage = {
                   field: "material_id",
                   operator: "eq",
                   value: "",
-                }
+                },
               ],
               listActions: [
                 {
@@ -605,10 +600,10 @@ const page: RapidPage = {
               extraProperties: ["document", "createdBy"],
               columns: [
                 {
-                  type: 'auto',
-                  code: 'document',
+                  type: "auto",
+                  code: "document",
                   title: "名称",
-                  fixed: 'left',
+                  fixed: "left",
                   cell: [
                     {
                       $type: "antdListItemMeta",
@@ -622,35 +617,36 @@ const page: RapidPage = {
                           {
                             $type: "anchor",
                             href: "",
-                            children: "下载"
-                          }
-                        ]
+                            children: "下载",
+                          },
+                        ],
                       },
                       $exps: {
                         "title.children[0].text": "$slot.value.name",
                         "title.children[1].href": "'/api/download/document?documentId=' + $slot.value.id",
-                        description: "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
-                      }
-                    }
+                        description:
+                          "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
+                      },
+                    },
                   ],
                 },
                 {
-                  type: 'auto',
-                  code: 'state',
-                  width: '100px',
+                  type: "auto",
+                  code: "state",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  width: '150px',
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
                 },
               ],
               actions: [
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "BaseMaterialDocument",
                 },
@@ -660,11 +656,11 @@ const page: RapidPage = {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.material_id": "$rui.parseQuery().id",
               },
-            } 
-          ]
+            },
+          ],
         },
-      ]
-    }
+      ],
+    },
   ],
 };
 

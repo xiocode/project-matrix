@@ -3,11 +3,11 @@ export type DesignStageType = "step" | "layout";
 export type DesignStage = StepDesignStage | LayoutDesignStage;
 
 export type StepDesignStage = {
-  type: "step",
+  type: "step";
   stepId: string;
-}
+};
 
 export type LayoutDesignStage = {
-  type: "layout",
+  type: "layout";
   layoutId: string;
-}
+};

@@ -1,4 +1,3 @@
-
 let env: Record<string, any> = {};
 
 if (global.process) {
@@ -7,4 +6,4 @@ if (global.process) {
 
 export default {
   apiBase: env.BACKEND_URL ? `${env.BACKEND_URL}/api` : "http://localhost:3000/api",
-}
+};

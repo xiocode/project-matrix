@@ -1,76 +1,76 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'client',
+      type: "auto",
+      code: "client",
     },
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'parent',
+      type: "auto",
+      code: "parent",
       listDataFindOptions: {
         fixedFilters: [
           {
             operator: "null",
             field: "parent_id",
-          }
+          },
         ],
         orderBy: [
           {
-            field: 'orderNum',
+            field: "orderNum",
           },
         ],
-      }
-    },
-    {
-      type: 'auto',
-      code: 'orderNum',
-    },
-    {
-      type: 'auto',
-      code: 'icon',
-    },
-    {
-      type: 'auto',
-      code: 'pageCode',
-    },
-    {
-      type: 'select',
-      code: 'config',
-      valueFieldName: 'config.permissionCheck.any',
-      label: '权限检查',
-      multipleValues: true,
-      formControlProps: {
-        listDataSourceCode: 'sysActions',
-        listValueFieldName: 'code',
       },
     },
     {
-      type: 'auto',
-      code: 'config',
+      type: "auto",
+      code: "orderNum",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "icon",
+    },
+    {
+      type: "auto",
+      code: "pageCode",
+    },
+    {
+      type: "select",
+      code: "config",
+      valueFieldName: "config.permissionCheck.any",
+      label: "权限检查",
+      multipleValues: true,
+      formControlProps: {
+        listDataSourceCode: "sysActions",
+        listValueFieldName: "code",
+      },
+    },
+    {
+      type: "auto",
+      code: "config",
+    },
+    {
+      type: "auto",
+      code: "state",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'app_nav_item_list',
-  name: '导航列表',
-  title: '导航管理',
-  permissionCheck: {any: ["dev.manage"]},
+  code: "app_nav_item_list",
+  name: "导航列表",
+  title: "导航管理",
+  permissionCheck: { any: ["dev.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -82,7 +82,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -92,119 +92,119 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code", "name"],
-        }
+        },
       ],
       orderBy: [
         {
-          field: 'orderNum',
+          field: "orderNum",
         },
       ],
       convertListToTree: true,
       listParentField: "parent.id",
       pageSize: -1,
-      extraProperties: ['parent'],
+      extraProperties: ["parent"],
       columns: [
         {
-          type: 'link',
-          code: 'code',
-          fixed: 'left',
+          type: "link",
+          code: "code",
+          fixed: "left",
           minWidth: 300,
         },
         {
-          type: 'auto',
-          code: 'name',
-          width: '150px',
-          fixed: 'left',
+          type: "auto",
+          code: "name",
+          width: "150px",
+          fixed: "left",
         },
         {
-          type: 'auto',
-          code: 'client',
-          width: '100px',
+          type: "auto",
+          code: "client",
+          width: "100px",
           rendererProps: {
-            format: "{{name}}"
+            format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'orderNum',
-          width: '100px',
+          type: "auto",
+          code: "orderNum",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'icon',
-          width: '200px',
+          type: "auto",
+          code: "icon",
+          width: "200px",
         },
         {
-          type: 'auto',
-          code: 'pageCode',
+          type: "auto",
+          code: "pageCode",
         },
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
         {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
+          type: "auto",
+          code: "state",
+          width: "100px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "rapidTableAction",
           code: "disable",
-          actionText: '禁用',
+          actionText: "禁用",
           $exps: {
-            _hidden: "$slot.record.state !== 'enabled'"
+            _hidden: "$slot.record.state !== 'enabled'",
           },
           onAction: [
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: {state: 'disabled'},
+              data: { state: "disabled" },
               $exps: {
                 url: `"/api/app/app_nav_items/" + $event.sender['data-record-id']`,
-              }
+              },
             },
             {
               $action: "loadStoreData",
               storeName: "list",
-            }
-          ]
+            },
+          ],
         },
         {
           $type: "rapidTableAction",
           code: "enable",
-          actionText: '启用',
+          actionText: "启用",
           $exps: {
-            _hidden: "$slot.record.state === 'enabled'"
+            _hidden: "$slot.record.state === 'enabled'",
           },
           onAction: [
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: {state: 'enabled'},
+              data: { state: "enabled" },
               $exps: {
                 url: `"/api/app/app_nav_items/" + $event.sender['data-record-id']`,
-              }
+              },
             },
             {
               $action: "loadStoreData",
               storeName: "list",
-            }
-          ]
+            },
+          ],
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "AppNavItem",
         },
@@ -212,22 +212,22 @@ const page: RapidPage = {
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       searchForm: {
-        entityCode: 'AppNavItem',
+        entityCode: "AppNavItem",
         items: [
           {
-            type: 'auto',
-            code: 'code',
-            filterMode: 'contains',
+            type: "auto",
+            code: "code",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'name',
-            filterMode: 'contains',
+            type: "auto",
+            code: "name",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'state',
-            filterMode: 'eq',
+            type: "auto",
+            code: "state",
+            filterMode: "eq",
           },
         ],
       },
@@ -237,18 +237,17 @@ const page: RapidPage = {
           name: "sysActions",
           entityCode: "SysAction",
           properties: ["id", "code", "name", "group", "orderNum"],
-          filters: [
-          ],
+          filters: [],
           orderBy: [
             {
-              field: 'group_id',
+              field: "group_id",
             },
             {
-              field: 'orderNum',
-            }
+              field: "orderNum",
+            },
           ],
-        }
-      ]
+        },
+      ],
     },
   ],
 };

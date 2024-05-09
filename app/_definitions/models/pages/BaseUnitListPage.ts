@@ -1,15 +1,15 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormRockConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
 const mainFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
   ],
 };
@@ -17,33 +17,33 @@ const mainFormConfig: Partial<RapidEntityFormRockConfig> = {
 const secondaryFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'type',
+      type: "auto",
+      code: "type",
     },
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'printSymbol',
+      type: "auto",
+      code: "printSymbol",
     },
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
   ],
 };
 
 const page: RapidPage = {
-  code: 'base_unit_list',
-  name: '计量单位列表',
-  title: '计量单位',
-  permissionCheck: {any: ["baseUnit.manage"]},
+  code: "base_unit_list",
+  name: "计量单位列表",
+  title: "计量单位",
+  permissionCheck: { any: ["baseUnit.manage"] },
   view: [
     {
       $type: "sonicMainSecondaryLayout",
@@ -62,7 +62,7 @@ const page: RapidPage = {
             text: "新建",
             icon: "PlusOutlined",
             actionStyle: "primary",
-          }
+          },
         ],
         extraActions: [
           {
@@ -72,7 +72,7 @@ const page: RapidPage = {
             actionEventName: "onSearch",
             filterMode: "contains",
             filterFields: ["code", "name"],
-          }
+          },
         ],
         orderBy: [
           {
@@ -81,27 +81,27 @@ const page: RapidPage = {
         ],
         columns: [
           {
-            type: 'auto',
-            code: 'name',
+            type: "auto",
+            code: "name",
           },
           {
-            type: 'auto',
-            code: 'orderNum',
-            width: '100px',
+            type: "auto",
+            code: "orderNum",
+            width: "100px",
           },
         ],
         actions: [
           {
             $type: "sonicRecordActionEditEntity",
-            code: 'edit',
+            code: "edit",
             actionType: "edit",
-            actionText: '修改',
+            actionText: "修改",
           },
           {
             $type: "sonicRecordActionDeleteEntity",
-            code: 'delete',
-            actionType: 'delete',
-            actionText: '删除',
+            code: "delete",
+            actionType: "delete",
+            actionText: "删除",
             dataSourceCode: "list",
             entityCode: "BaseUnitCategory",
           },
@@ -122,7 +122,7 @@ const page: RapidPage = {
               field: "category_id",
               operator: "eq",
               value: "",
-            }
+            },
           ],
           orderBy: [
             {
@@ -139,44 +139,44 @@ const page: RapidPage = {
           ],
           columns: [
             {
-              type: 'auto',
-              code: 'code',
-              width: '100px',
-              fixed: 'left',
+              type: "auto",
+              code: "code",
+              width: "100px",
+              fixed: "left",
             },
             {
-              type: 'auto',
-              code: 'name',
-              fixed: 'left',
+              type: "auto",
+              code: "name",
+              fixed: "left",
             },
             {
-              type: 'auto',
-              code: 'printSymbol',
-              width: '100px',
+              type: "auto",
+              code: "printSymbol",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'type',
-              width: '100px',
+              type: "auto",
+              code: "type",
+              width: "100px",
             },
             {
-              type: 'auto',
-              code: 'orderNum',
-              width: '100px',
+              type: "auto",
+              code: "orderNum",
+              width: "100px",
             },
           ],
           actions: [
             {
               $type: "sonicRecordActionEditEntity",
-              code: 'edit',
+              code: "edit",
               actionType: "edit",
-              actionText: '修改',
+              actionText: "修改",
             },
             {
               $type: "sonicRecordActionDeleteEntity",
-              code: 'delete',
-              actionType: 'delete',
-              actionText: '删除',
+              code: "delete",
+              actionType: "delete",
+              actionText: "删除",
               dataSourceCode: "list",
               entityCode: "BaseUnit",
             },
@@ -184,14 +184,13 @@ const page: RapidPage = {
           newForm: cloneDeep(secondaryFormConfig),
           editForm: cloneDeep(secondaryFormConfig),
           $exps: {
-            "_hidden": "!$scope.vars.activeId",
+            _hidden: "!$scope.vars.activeId",
             "fixedFilters[0].value": "$scope.vars.activeId",
-            "newForm.fixedFields.category_id": "$scope.vars.activeId"
+            "newForm.fixedFields.category_id": "$scope.vars.activeId",
           },
         },
-      ]
+      ],
     },
-
   ],
 };
 

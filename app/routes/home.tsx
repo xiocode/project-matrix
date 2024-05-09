@@ -26,46 +26,48 @@ const initialPageConfig: PageConfig = {
     {
       $type: "htmlElement",
       htmlTag: "ul",
-      children: ['components', 'modal', 'new-form', 'edit-form', 'table', 'code-editor'].map((item) => {
-        return {
-          $type: "htmlElement",
-          htmlTag: "li",
-          children: {
+      children: ["components", "modal", "new-form", "edit-form", "table", "code-editor"]
+        .map((item) => {
+          return {
             $type: "htmlElement",
-            htmlTag: "a",
-            attributes: {
-              href: "/demo/" + item,
-            },
+            htmlTag: "li",
             children: {
-              $type: "text",
-              text: "/demo/" + item,
-            }
-          },
-        }
-      }).concat([
-        {
-          $type: "htmlElement",
-          htmlTag: "li",
-          children: {
+              $type: "htmlElement",
+              htmlTag: "a",
+              attributes: {
+                href: "/demo/" + item,
+              },
+              children: {
+                $type: "text",
+                text: "/demo/" + item,
+              },
+            },
+          };
+        })
+        .concat([
+          {
             $type: "htmlElement",
-            htmlTag: "a",
-            attributes: {
-              href: "/designer",
-            },
+            htmlTag: "li",
             children: {
-              $type: "text",
-              text: "/designer",
-            }
+              $type: "htmlElement",
+              htmlTag: "a",
+              attributes: {
+                href: "/designer",
+              },
+              children: {
+                $type: "text",
+                text: "/designer",
+              },
+            },
           },
-        }
-      ])
+        ]),
     },
   ],
-}
+};
 
 export default function Index() {
   const [pageConfig] = useState(initialPageConfig);
   const [page] = useState(() => new Page(framework, pageConfig));
 
-  return <Rui framework={framework} page={page} />
+  return <Rui framework={framework} page={page} />;
 }

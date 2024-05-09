@@ -1,45 +1,45 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'amount',
+      type: "auto",
+      code: "amount",
     },
     {
-      type: 'auto',
-      code: 'unit',
+      type: "auto",
+      code: "unit",
     },
     {
-      type: 'auto',
-      code: 'operators',
+      type: "auto",
+      code: "operators",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'mom_prod_task_details',
-  name: '任务详情',
-  title: '任务详情',
+  code: "mom_prod_task_details",
+  name: "任务详情",
+  title: "任务详情",
   view: [
     {
-      $type: 'rapidEntityForm',
-      entityCode: 'ProductionTask',
-      mode: 'view',
+      $type: "rapidEntityForm",
+      entityCode: "ProductionTask",
+      mode: "view",
       column: 3,
       items: [
         {
-          type: 'auto',
-          code: 'code',
+          type: "auto",
+          code: "code",
         },
         {
-          type: 'auto',
-          code: 'material',
+          type: "auto",
+          code: "material",
           rendererType: "rapidLinkRenderer",
           rendererProps: {
             text: "{{code}} {{name}}",
@@ -47,60 +47,60 @@ const page: RapidPage = {
           },
         },
         {
-          type: 'auto',
-          code: 'materialProcess',
+          type: "auto",
+          code: "materialProcess",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'amount',
+          type: "auto",
+          code: "amount",
         },
         {
-          type: 'auto',
-          code: 'unit',
+          type: "auto",
+          code: "unit",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'equipment',
+          type: "auto",
+          code: "equipment",
           rendererProps: {
             format: "{{code}} {{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'assignees',
+          type: "auto",
+          code: "assignees",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'deadline',
+          type: "auto",
+          code: "deadline",
         },
         {
-          type: 'auto',
-          code: 'assigner',
+          type: "auto",
+          code: "assigner",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'assignmentState',
+          type: "auto",
+          code: "assignmentState",
         },
         {
-          type: 'auto',
-          code: 'executionState',
+          type: "auto",
+          code: "executionState",
         },
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
-      }
+      },
     },
     {
       $type: "antdTabs",
@@ -118,7 +118,7 @@ const page: RapidPage = {
                   field: "work_task_id",
                   operator: "eq",
                   value: "",
-                }
+                },
               ],
               listActions: [
                 {
@@ -131,38 +131,38 @@ const page: RapidPage = {
                   $type: "sonicToolbarRefreshButton",
                   text: "刷新",
                   icon: "ReloadOutlined",
-                }
+                },
               ],
               columns: [
                 {
-                  type: 'auto',
-                  code: 'createdAt',
-                  title: '报工时间',
-                  width: '150px',
-                  fixed: 'left',
+                  type: "auto",
+                  code: "createdAt",
+                  title: "报工时间",
+                  width: "150px",
+                  fixed: "left",
                 },
                 {
-                  type: 'auto',
-                  code: 'code',
-                  fixed: 'left',
+                  type: "auto",
+                  code: "code",
+                  fixed: "left",
                 },
                 {
-                  type: 'auto',
-                  code: 'amount',
-                  width: '100px',
+                  type: "auto",
+                  code: "amount",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'unit',
-                  width: '100px',
+                  type: "auto",
+                  code: "unit",
+                  width: "100px",
                   rendererProps: {
                     format: "{{name}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'operators',
-                  width: '250px',
+                  type: "auto",
+                  code: "operators",
+                  width: "250px",
                   rendererProps: {
                     format: "{{name}}",
                   },
@@ -171,15 +171,15 @@ const page: RapidPage = {
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "ProductionTask",
                 },
@@ -190,11 +190,11 @@ const page: RapidPage = {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.work_task_id": "$rui.parseQuery().id",
               },
-            }
-          ]
+            },
+          ],
         },
-      ]
-    }
+      ],
+    },
   ],
 };
 

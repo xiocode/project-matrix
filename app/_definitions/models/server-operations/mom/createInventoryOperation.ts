@@ -1,5 +1,15 @@
 import type { ActionHandlerContext, IRpdServer, ServerOperation } from "@ruiapp/rapid-core";
-import type { BaseMaterial, MomInventoryOperation, MomGoodTransfer, SaveMomInventoryOperationInput, BaseLocation, BaseUnit, MomGood, SaveMomGoodInput, SaveMomGoodTransferInput  } from "~/_definitions/meta/entity-types";
+import type {
+  BaseMaterial,
+  MomInventoryOperation,
+  MomGoodTransfer,
+  SaveMomInventoryOperationInput,
+  BaseLocation,
+  BaseUnit,
+  MomGood,
+  SaveMomGoodInput,
+  SaveMomGoodTransferInput,
+} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 
 export type CreateInventoryOperationInput = {
@@ -43,10 +53,10 @@ export type CreateInventoryOperationInput = {
      */
     unit?: Partial<BaseUnit>;
   }[];
-}
+};
 
 export default {
-  code: 'createInventoryOperation',
+  code: "createInventoryOperation",
 
   method: "POST",
 
@@ -59,13 +69,13 @@ export default {
     ctx.output = {
       result: ctx.input,
     };
-  }
+  },
 } satisfies ServerOperation;
 
 export async function createInventoryOperation(server: IRpdServer, input: CreateInventoryOperationInput) {
-  const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>('mom_inventory_operation');
-  const goodManager = server.getEntityManager<MomGood>('mom_good');
-  const goodTransferManager = server.getEntityManager<MomGoodTransfer>('mom_good_transfer');
+  const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
+  const goodManager = server.getEntityManager<MomGood>("mom_good");
+  const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
 
   const inventoryOperation = await inventoryOperationManager.createEntity({
     entity: {
@@ -80,38 +90,38 @@ export async function createInventoryOperation(server: IRpdServer, input: Create
     let good = await goodManager.findEntity({
       filters: [
         {
-          operator: 'eq',
-          field: 'material_id',
+          operator: "eq",
+          field: "material_id",
           value: transfer.material?.id,
         },
         {
-          operator: 'eq',
-          field: 'lot_num',
+          operator: "eq",
+          field: "lot_num",
           value: transfer.lotNum,
         },
-      ]
+      ],
     });
 
     if (!good) {
       good = await goodManager.createEntity({
         entity: {
-          material: { id: transfer.material?.id},
+          material: { id: transfer.material?.id },
           materialCode: transfer.material?.code,
           lotNum: transfer.lotNum,
           binNum: transfer.binNum,
           serialNum: transfer.serialNum,
           quantity: transfer.quantity,
           unit: { id: transfer.unit?.id },
-          state: 'normal',
+          state: "normal",
         } as SaveMomGoodInput,
-      })
+      });
     }
 
     await goodTransferManager.createEntity({
       entity: {
         operation: { id: inventoryOperation.id },
         good: { id: good.id },
-        material: { id: transfer.material?.id},
+        material: { id: transfer.material?.id },
         lotNum: transfer.lotNum,
         binNum: transfer.binNum,
         serialNum: transfer.serialNum,
@@ -128,5 +138,5 @@ export async function createInventoryOperation(server: IRpdServer, input: Create
     entityToSave: {
       state: "done",
     } as SaveMomInventoryOperationInput,
-  })
+  });
 }

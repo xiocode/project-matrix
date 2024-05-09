@@ -1,7 +1,7 @@
-import { Select } from 'antd';
-import { camelCase, upperFirst } from 'lodash';
-import { memo, PropsWithChildren, useEffect, useMemo, useState } from 'react';
-import rapidApi from '~/rapidApi';
+import { Select } from "antd";
+import { camelCase, upperFirst } from "lodash";
+import { memo, PropsWithChildren, useEffect, useMemo, useState } from "react";
+import rapidApi from "~/rapidApi";
 
 type IProps = PropsWithChildren<{
   value?: string;

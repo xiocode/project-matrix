@@ -1,35 +1,35 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'department',
+      type: "auto",
+      code: "department",
     },
     {
-      type: 'auto',
-      code: 'state',
+      type: "auto",
+      code: "state",
     },
   ],
   defaultFormFields: {
-    state: 'normal',
-  }
-}
+    state: "normal",
+  },
+};
 
 const page: RapidPage = {
-  code: 'base_employee_list',
-  name: '员工列表',
-  title: '员工管理',
-  permissionCheck: {any: ["baseEmployee.manage"]},
+  code: "base_employee_list",
+  name: "员工列表",
+  title: "员工管理",
+  permissionCheck: { any: ["baseEmployee.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -37,7 +37,7 @@ const page: RapidPage = {
       viewMode: "table",
       orderBy: [
         {
-          field: 'code',
+          field: "code",
         },
       ],
       listActions: [
@@ -46,7 +46,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-        }
+        },
       ],
       extraActions: [
         {
@@ -56,51 +56,51 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code", "name"],
-        }
+        },
       ],
       columns: [
         {
-          type: 'link',
-          code: 'code',
-          width: '100px',
-          fixed: 'left',
+          type: "link",
+          code: "code",
+          width: "100px",
+          fixed: "left",
         },
         {
-          type: 'auto',
-          code: 'name',
-          fixed: 'left',
+          type: "auto",
+          code: "name",
+          fixed: "left",
         },
         {
-          type: 'auto',
-          code: 'department',
-          width: '150px',
+          type: "auto",
+          code: "department",
+          width: "150px",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
-          type: 'auto',
-          code: 'state',
-          width: '100px',
+          type: "auto",
+          code: "state",
+          width: "100px",
         },
         {
-          type: 'auto',
-          code: 'createdAt',
-          width: '150px',
+          type: "auto",
+          code: "createdAt",
+          width: "150px",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "BaseEmployee",
         },
@@ -108,17 +108,17 @@ const page: RapidPage = {
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       searchForm: {
-        entityCode: 'BaseEmployee',
+        entityCode: "BaseEmployee",
         items: [
           {
-            type: 'auto',
-            code: 'code',
-            filterMode: 'contains',
+            type: "auto",
+            code: "code",
+            filterMode: "contains",
           },
           {
-            type: 'auto',
-            code: 'name',
-            filterMode: 'contains',
+            type: "auto",
+            code: "name",
+            filterMode: "contains",
           },
         ],
       },

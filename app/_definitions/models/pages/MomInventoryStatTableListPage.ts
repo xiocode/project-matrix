@@ -1,24 +1,24 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormConfig } from '@ruiapp/rapid-extension';
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'config',
+      type: "auto",
+      code: "config",
     },
   ],
-}
+};
 
 const page: RapidPage = {
-  code: 'mom_inventory_stat_table_list',
-  name: '库存统计表配置列表',
-  title: '库存统计表配置',
-  permissionCheck: {any: []},
+  code: "mom_inventory_stat_table_list",
+  name: "库存统计表配置列表",
+  title: "库存统计表配置",
+  permissionCheck: { any: [] },
   view: [
     {
       $type: "sonicEntityList",
@@ -40,36 +40,36 @@ const page: RapidPage = {
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["name"],
-        }
+        },
       ],
       orderBy: [
         {
-          field: 'id',
-        }
+          field: "id",
+        },
       ],
       pageSize: 20,
       columns: [
         {
-          type: 'auto',
-          code: 'name',
+          type: "auto",
+          code: "name",
         },
         {
-          type: 'auto',
-          code: 'config',
+          type: "auto",
+          code: "config",
         },
       ],
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
-          code: 'edit',
+          code: "edit",
           actionType: "edit",
-          actionText: '修改',
+          actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
-          code: 'delete',
-          actionType: 'delete',
-          actionText: '删除',
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInventoryStatTable",
         },

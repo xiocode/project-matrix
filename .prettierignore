@@ -2,16 +2,11 @@ node_modules
 
 /.cache
 /build
-/public/build
+/public
+/tools
+/app/_definitions/meta
 .env
 .idea
-.vscode
-.cache
-.dockerignore
-.eslintrc
-.gitignore
-pnpm-lock.yaml
-pnpm-lock.yaml.sha1
 
 ### OSX ###
 # General
@@ -21,3 +16,16 @@ pnpm-lock.yaml.sha1
 
 # Thumbnails
 ._*
+
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/.vscode
+
+.dockerignore
+.editorconfig
+.eslintrc
+.gitignore
+pnpm-lock.yaml
+pnpm-lock.yaml.sha1

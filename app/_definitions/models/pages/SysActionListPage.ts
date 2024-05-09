@@ -1,64 +1,61 @@
-import { cloneDeep } from 'lodash';
-import type { RapidPage, RapidEntityFormRockConfig } from '@ruiapp/rapid-extension';
-
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
 const actionFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'group',
+      type: "auto",
+      code: "group",
       formControlProps: {
         listOrderBy: [
           {
-            field: 'orderNum'
-          }
+            field: "orderNum",
+          },
         ],
-      }
+      },
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'textarea',
-      code: 'description',
+      type: "textarea",
+      code: "description",
     },
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
   ],
 };
-
 
 const actionGroupFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
-      type: 'auto',
-      code: 'code',
+      type: "auto",
+      code: "code",
     },
     {
-      type: 'auto',
-      code: 'name',
+      type: "auto",
+      code: "name",
     },
     {
-      type: 'auto',
-      code: 'orderNum',
+      type: "auto",
+      code: "orderNum",
     },
   ],
 };
 
-
 const page: RapidPage = {
-  code: 'sys_action_list',
-  name: '系统操作',
-  title: '系统操作',
+  code: "sys_action_list",
+  name: "系统操作",
+  title: "系统操作",
   permissionCheck: {
-    any: ['dev.manage'],
+    any: ["dev.manage"],
     all: [],
   },
   view: [
@@ -73,8 +70,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "SysAction",
               viewMode: "table",
-              fixedFilters: [
-              ],
+              fixedFilters: [],
               listActions: [
                 {
                   $type: "sonicToolbarNewEntityButton",
@@ -91,53 +87,53 @@ const page: RapidPage = {
               pageSize: -1,
               columns: [
                 {
-                  type: 'auto',
-                  code: 'orderNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "orderNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'group',
-                  width: '150px',
+                  type: "auto",
+                  code: "group",
+                  width: "150px",
                   rendererProps: {
                     format: "{{name}}",
                   },
                 },
                 {
-                  type: 'auto',
-                  code: 'name',
-                  width: '200px',
+                  type: "auto",
+                  code: "name",
+                  width: "200px",
                 },
                 {
-                  type: 'auto',
-                  code: 'code',
-                  width: '250px',
+                  type: "auto",
+                  code: "code",
+                  width: "250px",
                 },
                 {
-                  type: 'auto',
-                  code: 'description',
+                  type: "auto",
+                  code: "description",
                 },
               ],
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "SysAction",
                 },
               ],
               newForm: cloneDeep(actionFormConfig),
               editForm: cloneDeep(actionFormConfig),
-            } 
-          ]
+            },
+          ],
         },
         {
           key: "actionGroups",
@@ -147,8 +143,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "SysActionGroup",
               viewMode: "table",
-              fixedFilters: [
-              ],
+              fixedFilters: [],
               listActions: [
                 {
                   $type: "sonicToolbarNewEntityButton",
@@ -165,43 +160,43 @@ const page: RapidPage = {
               pageSize: -1,
               columns: [
                 {
-                  type: 'auto',
-                  code: 'orderNum',
-                  width: '100px',
+                  type: "auto",
+                  code: "orderNum",
+                  width: "100px",
                 },
                 {
-                  type: 'auto',
-                  code: 'code',
-                  width: '150px',
+                  type: "auto",
+                  code: "code",
+                  width: "150px",
                 },
                 {
-                  type: 'auto',
-                  code: 'name',
+                  type: "auto",
+                  code: "name",
                 },
               ],
               actions: [
                 {
                   $type: "sonicRecordActionEditEntity",
-                  code: 'edit',
+                  code: "edit",
                   actionType: "edit",
-                  actionText: '修改',
+                  actionText: "修改",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
-                  code: 'delete',
-                  actionType: 'delete',
-                  actionText: '删除',
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "SysActionGroup",
                 },
               ],
               newForm: cloneDeep(actionGroupFormConfig),
               editForm: cloneDeep(actionGroupFormConfig),
-            } 
-          ]
+            },
+          ],
         },
-      ]
-    }
+      ],
+    },
   ],
 };
 

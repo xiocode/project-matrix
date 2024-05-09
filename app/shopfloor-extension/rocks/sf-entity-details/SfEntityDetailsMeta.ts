@@ -1,9 +1,9 @@
-import type { RockMeta } from '@ruiapp/move-style';
+import type { RockMeta } from "@ruiapp/move-style";
 
 export default {
-  $type: 'sfEntityDetails',
+  $type: "sfEntityDetails",
 
-  name: '记录详情',
+  name: "记录详情",
 
   slots: {},
 
@@ -11,15 +11,15 @@ export default {
 
   props: {
     title: {
-      valueType: 'string',
-      defaultValue: '详情',
+      valueType: "string",
+      defaultValue: "详情",
     },
     height: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 300,
     },
     width: {
-      valueType: 'number',
+      valueType: "number",
       defaultValue: 300,
     },
   },
@@ -28,22 +28,22 @@ export default {
 
   propertyPanels: [
     {
-      $type: 'componentPropPanel',
+      $type: "componentPropPanel",
       setters: [
         {
-          $type: 'textPropSetter',
-          label: '名称',
-          propName: '$name',
+          $type: "textPropSetter",
+          label: "名称",
+          propName: "$name",
         },
         {
-          $type: 'storeEntityPropSetter',
-          label: '数据模型',
-          propName: 'entityConfig',
+          $type: "storeEntityPropSetter",
+          label: "数据模型",
+          propName: "entityConfig",
         },
         {
-          $type: 'jsonPropsSetter',
-          label: '展示信息',
-          propNames: ['$id', 'items', 'column', '$exps', '$vars'],
+          $type: "jsonPropsSetter",
+          label: "展示信息",
+          propNames: ["$id", "items", "column", "$exps", "$vars"],
           defaultValue: {
             column: 3,
             items: [],
@@ -51,7 +51,7 @@ export default {
         },
       ],
     },
-    { $type: 'positionPropPanel' },
-    { $type: 'sizePropPanel' },
+    { $type: "positionPropPanel" },
+    { $type: "sizePropPanel" },
   ],
 } as RockMeta;

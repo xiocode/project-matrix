@@ -9,11 +9,11 @@ export default {
 
     const wrapStyle: React.CSSProperties = pick(props, CommonProps.PositionStylePropNames) as any;
     wrapStyle.position = "absolute";
-    return <div data-component-id={props.$id} style={wrapStyle}>
-      {
-        text
-      }
-    </div>;
+    return (
+      <div data-component-id={props.$id} style={wrapStyle}>
+        {text}
+      </div>
+    );
   },
 
   ...SfTextMeta,

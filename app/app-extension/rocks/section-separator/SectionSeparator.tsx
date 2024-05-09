@@ -6,11 +6,7 @@ export default {
   Renderer(context, props: SectionSeparatorRockConfig) {
     const { showLine } = props;
 
-    return <div className="rui-page-section-separator">
-      {
-        showLine && <div className="rui-page-section-separator-line"></div>
-      }
-    </div>
+    return <div className="rui-page-section-separator">{showLine && <div className="rui-page-section-separator-line"></div>}</div>;
   },
 
   ...SectionSeparatorMeta,

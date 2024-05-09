@@ -1,10 +1,10 @@
-import { CommonProps, RockConfig, type Rock } from '@ruiapp/move-style';
-import SfEntityDetailsMeta from './SfEntityDetailsMeta';
-import type { SfEntityDetailsRockConfig } from './sf-entity-details-types';
-import { find, pick } from 'lodash';
-import { renderRock } from '@ruiapp/react-renderer';
-import rapidAppDefinition from '~/rapidAppDefinition';
-import { generateRockConfigOfError, RapidEntity } from '@ruiapp/rapid-extension';
+import { CommonProps, RockConfig, type Rock } from "@ruiapp/move-style";
+import SfEntityDetailsMeta from "./SfEntityDetailsMeta";
+import type { SfEntityDetailsRockConfig } from "./sf-entity-details-types";
+import { find, pick } from "lodash";
+import { renderRock } from "@ruiapp/react-renderer";
+import rapidAppDefinition from "~/rapidAppDefinition";
+import { generateRockConfigOfError, RapidEntity } from "@ruiapp/rapid-extension";
 
 export default {
   onReceiveMessage(message, state, props) {},
@@ -14,8 +14,8 @@ export default {
 
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    wrapStyle.position = 'absolute';
-    wrapStyle.overflow = 'auto';
+    wrapStyle.position = "absolute";
+    wrapStyle.overflow = "auto";
 
     const entities = rapidAppDefinition.entities;
     let mainEntity: RapidEntity | undefined;
@@ -35,10 +35,10 @@ export default {
     }
 
     const detailsRockConfig: RockConfig = {
-      $type: 'rapidEntityForm',
+      $type: "rapidEntityForm",
       entityCode: entityConfig?.entityCode,
       dataSourceCode: `${entityConfig?.name}_details`,
-      mode: 'view',
+      mode: "view",
       column,
       items,
       $exps: props.$exps,

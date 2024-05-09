@@ -1,10 +1,10 @@
-import { CommonProps, RockConfig, type Rock } from '@ruiapp/move-style';
-import SfEntityFormMeta from './SfEntityFormMeta';
-import type { SfEntityFormRockConfig } from './sf-entity-form-types';
-import { find, pick } from 'lodash';
-import { renderRock } from '@ruiapp/react-renderer';
-import rapidAppDefinition from '~/rapidAppDefinition';
-import { generateRockConfigOfError, RapidEntity } from '@ruiapp/rapid-extension';
+import { CommonProps, RockConfig, type Rock } from "@ruiapp/move-style";
+import SfEntityFormMeta from "./SfEntityFormMeta";
+import type { SfEntityFormRockConfig } from "./sf-entity-form-types";
+import { find, pick } from "lodash";
+import { renderRock } from "@ruiapp/react-renderer";
+import rapidAppDefinition from "~/rapidAppDefinition";
+import { generateRockConfigOfError, RapidEntity } from "@ruiapp/rapid-extension";
 
 export default {
   Renderer(context, props: SfEntityFormRockConfig) {
@@ -12,8 +12,8 @@ export default {
 
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    wrapStyle.position = 'absolute';
-    wrapStyle.overflow = 'auto';
+    wrapStyle.position = "absolute";
+    wrapStyle.overflow = "auto";
 
     const entities = rapidAppDefinition.entities;
     let mainEntity: RapidEntity | undefined;
@@ -32,12 +32,12 @@ export default {
       }
     }
 
-    const formMode = props.mode || 'new';
+    const formMode = props.mode || "new";
 
     const formRockConfig: RockConfig = {
-      $type: 'rapidEntityForm',
+      $type: "rapidEntityForm",
       entityCode: entityConfig?.entityCode,
-      dataSourceCode: formMode === 'new' ? null : `${entityConfig?.name}_${formMode}`,
+      dataSourceCode: formMode === "new" ? null : `${entityConfig?.name}_${formMode}`,
       mode: formMode,
       column,
       items,
