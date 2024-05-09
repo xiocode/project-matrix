@@ -120,12 +120,10 @@ export default {
                   width: 110,
                   height: 40,
                   onClick: {
-                    script:
-                      '(function() {\n    (function() {\n    event.page.sendComponentMessage("linkshopApp", {name: "gotoPreviousStep"});\n  }).apply(this, []);\n\n})();\n\n',
-                    $action: "script",
-                    blockly: {
-                      configs:
-                        '{"blocks":{"languageVersion":0,"blocks":[{"type":"event_start","id":"Dm7N@r:z,Us*Qr?dHSK_","x":150,"y":270,"inputs":{"STATEMENT_DO":{"block":{"type":"js_script","id":"L7xLW1}xk,r;YwS8giWA","inputs":{"EXPRESSION":{"shadow":{"type":"text_multiline","id":"M+~]1y,#_([XQBKxdf!F","fields":{"TEXT":"event.page.sendComponentMessage(\\"linkshopApp\\", {name: \\"gotoPreviousStep\\"});"}}}}}}}}]}}',
+                    "script": "(function() {\n    \n    event.page.sendComponentMessage(\"linkshopApp\", {name: \"gotoPreviousStep\"});\n\n})()\n\n",
+                    "$action": "script",
+                    "blockly": {
+                      "configs": "{\"blocks\":{\"languageVersion\":0,\"blocks\":[{\"type\":\"event_start\",\"id\":\"pJcWR9i29Y5#s*w`H8h@\",\"x\":150,\"y\":190,\"inputs\":{\"STATEMENT_DO\":{\"block\":{\"type\":\"goto_step\",\"id\":\"RihB2,7d,$QIgTH6{$AO\",\"fields\":{\"STEP\":\"previous\"}}}}}]}}"
                     },
                     generator: "blockly",
                   },
@@ -141,12 +139,10 @@ export default {
                   width: 110,
                   height: 40,
                   onClick: {
-                    script:
-                      '(function() {\n    (function() {\n    event.page.sendComponentMessage("linkshopApp", {name: "gotoNextStep"});\n  }).apply(this, []);\n\n})();\n\n',
-                    $action: "script",
-                    blockly: {
-                      configs:
-                        '{"blocks":{"languageVersion":0,"blocks":[{"type":"event_start","id":"Dm7N@r:z,Us*Qr?dHSK_","x":150,"y":270,"inputs":{"STATEMENT_DO":{"block":{"type":"js_script","id":"L7xLW1}xk,r;YwS8giWA","inputs":{"EXPRESSION":{"shadow":{"type":"text_multiline","id":"M+~]1y,#_([XQBKxdf!F","fields":{"TEXT":"event.page.sendComponentMessage(\\"linkshopApp\\", {name: \\"gotoNextStep\\"});"}}}}}}}}]}}',
+                    "script": "(function() {\n    \n    event.page.sendComponentMessage(\"linkshopApp\", {name: \"gotoNextStep\"});\n\n})()\n\n",
+                    "$action": "script",
+                    "blockly": {
+                      "configs": "{\"blocks\":{\"languageVersion\":0,\"blocks\":[{\"type\":\"event_start\",\"id\":\"pJcWR9i29Y5#s*w`H8h@\",\"x\":150,\"y\":190,\"inputs\":{\"STATEMENT_DO\":{\"block\":{\"type\":\"goto_step\",\"id\":\"RihB2,7d,$QIgTH6{$AO\",\"fields\":{\"STEP\":\"next\"}}}}}]}}"
                     },
                     generator: "blockly",
                   },
