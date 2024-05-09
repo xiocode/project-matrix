@@ -42,11 +42,11 @@ dependencies:
     specifier: ^0.0.25
     version: 0.0.25(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ^0.1.25
-    version: 0.1.25(winston@3.11.0)
+    specifier: ^0.1.26
+    version: 0.1.26(winston@3.11.0)
   '@ruiapp/rapid-express':
-    specifier: ^0.1.25
-    version: 0.1.25(express@4.18.2)(winston@3.11.0)
+    specifier: ^0.1.26
+    version: 0.1.26(express@4.18.2)(winston@3.11.0)
   '@ruiapp/rapid-extension':
     specifier: ^0.0.44
     version: 0.0.44(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.0.25)(@ruiapp/react-renderer@0.0.25)(antd@4.24.15)(axios@1.6.0)(dayjs@1.11.10)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2496,8 +2496,8 @@ packages:
       tough-cookie: 4.1.3
     dev: true
 
-  /@ruiapp/rapid-core@0.1.25(winston@3.11.0):
-    resolution: {integrity: sha512-HVShkHs1cLJS8I+ImGFrpOfkhzZWByWunS+agAZf5aW9DTG84i5bXkQu/R3lAbim61fxRdbO9N54UGEYzfdfQg==}
+  /@ruiapp/rapid-core@0.1.26(winston@3.11.0):
+    resolution: {integrity: sha512-OwQhp+7fB2mpb+q2+xxwtQ1TpaVXe6a21Cp/eKujdvuOqmknXyuVxLEx3ROAEAO/A1+3pVWTMU7Uo6AbEhHRqA==}
     peerDependencies:
       winston: ^3.11.0
     dependencies:
@@ -2509,12 +2509,12 @@ packages:
       winston: 3.11.0
     dev: false
 
-  /@ruiapp/rapid-express@0.1.25(express@4.18.2)(winston@3.11.0):
-    resolution: {integrity: sha512-K7db3PSFM4ckEhiszN6HMUDidGSOK3RjUKb1U3lSwApkNpD3NrJJELoe4unTsiT+dPCeVgVlnG6t348JJ3HJFA==}
+  /@ruiapp/rapid-express@0.1.26(express@4.18.2)(winston@3.11.0):
+    resolution: {integrity: sha512-ILoFvaCrELFNwl4CEFGvsmTGohzlcNWNsFEld7H9jp0Q1GHaIEAo57rQBhptW9AIVtMcf0gQ9C1RudaJSKadcQ==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.25(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.26(winston@3.11.0)
       express: 4.18.2
     transitivePeerDependencies:
       - winston

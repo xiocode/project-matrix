@@ -38,6 +38,7 @@ import MomInventoryOperationListPage from '../models/pages/MomInventoryOperation
 import MomInventoryStatTableListPage from '../models/pages/MomInventoryStatTableListPage';
 import MomInventoryStatTriggerListPage from '../models/pages/MomInventoryStatTriggerListPage';
 import MomMaterialInventoryListPage from '../models/pages/MomMaterialInventoryListPage';
+import MomMaterialLotInventoryListPage from '../models/pages/MomMaterialLotInventoryListPage';
 import MomMaterialLotListPage from '../models/pages/MomMaterialLotListPage';
 import MomMpsDetailsPage from '../models/pages/MomMpsDetailsPage';
 import MomMpsListPage from '../models/pages/MomMpsListPage';
@@ -105,6 +106,7 @@ export default [
   MomInventoryStatTableListPage,
   MomInventoryStatTriggerListPage,
   MomMaterialInventoryListPage,
+  MomMaterialLotInventoryListPage,
   MomMaterialLotListPage,
   MomMpsDetailsPage,
   MomMpsListPage,

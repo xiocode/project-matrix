@@ -1,7 +1,7 @@
 import type { EntityWatchHandlerContext, EntityWatcher, IRpdServer } from "@ruiapp/rapid-core";
 import { every, map, uniqWith } from "lodash";
 import { MomInventoryOperationType } from "~/_definitions/meta/data-dictionary-types";
-import { type MomInventoryBusinessType, type BaseLot, type MomInventory, type MomInventoryOperation, type SaveBaseLotInput, type SaveMomInspectionSheetInput, type MomInspectionSheet, MomInventoryStatTrigger, MomInventoryStatTable } from "~/_definitions/meta/entity-types";
+import { type MomInventoryBusinessType, type BaseLot, type MomInventory, type MomInventoryOperation, type SaveBaseLotInput, type SaveMomInspectionSheetInput, type MomInspectionSheet, MomInventoryStatTrigger, MomInventoryStatTable, MomGoodTransfer } from "~/_definitions/meta/entity-types";
 import InventoryStatService, { StatTableConfig } from "~/services/InventoryStatService";
 
 export default [
@@ -14,10 +14,7 @@ export default [
       const after = payload.after;
       if (after.operationType === "in") {
         if (changes.hasOwnProperty('state') && changes.state === "done") {
-          const transfers = await server.queryDatabaseObject(
-            `select * from mom_good_transfers where operation_id=$1;`,
-            [after.id]
-            );
+          const transfers = await listTransfersOfOperation(server, after.id);
 
           const businessTypeManager = server.getEntityManager<MomInventoryBusinessType>('mom_inventory_business_type');
           const businessType = await businessTypeManager.findById(after.business_id);
@@ -25,15 +22,15 @@ export default [
           for (const transfer of transfers) {
             // 生成批次信息
             await saveMaterialLotInfo(server, {
-              lotNum: transfer.lot_num,
-              material: { id: transfer.material_id },
+              lotNum: transfer.lotNum,
+              material: { id: (transfer as any).material_id },
               sourceType: businessType?.config?.defaultSourceType || null,
               qualificationState: businessType?.config?.defaultQualificationState || "qualified",
               isAOD: false,
             });
           }
 
-          const materialLotsToInspect = uniqWith(map(transfers, (item) => { return {material_id: item.material_id, lot_num: item.lot_num }}), (item1, item2) => {
+          const materialLotsToInspect = uniqWith(map(transfers, (item) => { return {material_id: (item as any).material_id, lot_num: item.lotNum }}), (item1, item2) => {
             return item1.material_id === item2.material_id && item1.lot_num === item2.lot_num;
           });
 
@@ -47,10 +44,7 @@ export default [
         }
 
         if (changes.hasOwnProperty('approvalState') && changes.approvalState === "approved") {
-          const transfers = await server.queryDatabaseObject(
-            `select * from mom_good_transfers where operation_id=$1;`,
-            [after.id]
-            );
+          const transfers = await listTransfersOfOperation(server, after.id);
 
           await updateInventoryStats(server,
             after.business_id,
@@ -77,6 +71,21 @@ export default [
     }
   },
 ] satisfies EntityWatcher<any>[];
+
+async function listTransfersOfOperation(server: IRpdServer, operationId: number) {
+  const transferManager = server.getEntityManager<MomGoodTransfer>('mom_good_transfer');
+
+  return await transferManager.findEntities({
+    filters: [
+      {
+        operator: "eq",
+        field: "operation_id",
+        value: operationId,
+      }
+    ],
+    keepNonPropertyFields: true,
+  })
+}
 
 
 async function updateInventoryStats(server: IRpdServer, businessId: number, operationType: MomInventoryOperationType, transfers: any[]) {
