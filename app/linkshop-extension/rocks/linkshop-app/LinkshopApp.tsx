@@ -37,6 +37,20 @@ export default {
             break;
         }
       },
+      switchStepById: (id: string) => {
+        const targetStepIndex = steps.findIndex((s: any) => s.$id === id);
+        if (targetStepIndex === -1) {
+          return
+        }
+        setCurrentStep(steps[targetStepIndex]);
+      },
+      switchStepByName: (name: string) => {
+        const targetStepIndex = steps.findIndex((s: any) => s.$name === name);
+        if (targetStepIndex === -1) {
+          return
+        }
+        setCurrentStep(steps[targetStepIndex]);
+      },
     };
   },
 

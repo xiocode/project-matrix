@@ -7,6 +7,12 @@ const appActionMap: Record<string, Rock["onReceiveMessage"]> = {
   gotoPreviousStep: (message, state, props) => {
     state.switchStep("prev");
   },
+  gotoStepById: (message, state, props) => {
+    state.switchStepById(message.payload.$id);
+  },
+  gotoStepByName: (message, state, props) => {
+    state.switchStepByName(message.payload.$name);
+  },
 };
 
 export default appActionMap;
