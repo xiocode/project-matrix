@@ -120,10 +120,11 @@ export default {
                   width: 110,
                   height: 40,
                   onClick: {
-                    "script": "(function() {\n    \n    event.page.sendComponentMessage(\"linkshopApp\", {name: \"gotoPreviousStep\"});\n\n})()\n\n",
-                    "$action": "script",
-                    "blockly": {
-                      "configs": "{\"blocks\":{\"languageVersion\":0,\"blocks\":[{\"type\":\"event_start\",\"id\":\"pJcWR9i29Y5#s*w`H8h@\",\"x\":150,\"y\":190,\"inputs\":{\"STATEMENT_DO\":{\"block\":{\"type\":\"goto_step\",\"id\":\"RihB2,7d,$QIgTH6{$AO\",\"fields\":{\"STEP\":\"previous\"}}}}}]}}"
+                    script: '(function() {\n    \n    event.page.sendComponentMessage("linkshopApp", {name: "gotoPreviousStep"});\n\n})()\n\n',
+                    $action: "script",
+                    blockly: {
+                      configs:
+                        '{"blocks":{"languageVersion":0,"blocks":[{"type":"event_start","id":"pJcWR9i29Y5#s*w`H8h@","x":150,"y":190,"inputs":{"STATEMENT_DO":{"block":{"type":"goto_step","id":"RihB2,7d,$QIgTH6{$AO","fields":{"STEP":"previous"}}}}}]}}',
                     },
                     generator: "blockly",
                   },
@@ -139,10 +140,11 @@ export default {
                   width: 110,
                   height: 40,
                   onClick: {
-                    "script": "(function() {\n    \n    event.page.sendComponentMessage(\"linkshopApp\", {name: \"gotoNextStep\"});\n\n})()\n\n",
-                    "$action": "script",
-                    "blockly": {
-                      "configs": "{\"blocks\":{\"languageVersion\":0,\"blocks\":[{\"type\":\"event_start\",\"id\":\"pJcWR9i29Y5#s*w`H8h@\",\"x\":150,\"y\":190,\"inputs\":{\"STATEMENT_DO\":{\"block\":{\"type\":\"goto_step\",\"id\":\"RihB2,7d,$QIgTH6{$AO\",\"fields\":{\"STEP\":\"next\"}}}}}]}}"
+                    script: '(function() {\n    \n    event.page.sendComponentMessage("linkshopApp", {name: "gotoNextStep"});\n\n})()\n\n',
+                    $action: "script",
+                    blockly: {
+                      configs:
+                        '{"blocks":{"languageVersion":0,"blocks":[{"type":"event_start","id":"pJcWR9i29Y5#s*w`H8h@","x":150,"y":190,"inputs":{"STATEMENT_DO":{"block":{"type":"goto_step","id":"RihB2,7d,$QIgTH6{$AO","fields":{"STEP":"next"}}}}}]}}',
                     },
                     generator: "blockly",
                   },

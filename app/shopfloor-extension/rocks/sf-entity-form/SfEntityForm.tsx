@@ -36,6 +36,7 @@ export default {
 
     const formRockConfig: RockConfig = {
       $type: "rapidEntityForm",
+      $id: `${props.$id}-rapidEntityForm`,
       entityCode: entityConfig?.entityCode,
       dataSourceCode: formMode === "new" ? null : `${entityConfig?.name}_${formMode}`,
       mode: formMode,
