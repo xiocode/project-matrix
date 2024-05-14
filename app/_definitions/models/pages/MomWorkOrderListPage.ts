@@ -70,6 +70,12 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomWorkOrder",
       viewMode: "table",
+      orderBy: [
+        {
+          field: "id",
+          desc: true,
+        },
+      ],
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
