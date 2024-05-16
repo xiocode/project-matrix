@@ -42,11 +42,11 @@ dependencies:
     specifier: ~0.1.26
     version: 0.1.26(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ~0.1.30
-    version: 0.1.30(winston@3.11.0)
+    specifier: ~0.1.33
+    version: 0.1.33(winston@3.11.0)
   '@ruiapp/rapid-express':
-    specifier: ~0.1.30
-    version: 0.1.30(express@4.18.3)(winston@3.11.0)
+    specifier: ~0.1.33
+    version: 0.1.33(express@4.18.3)(winston@3.11.0)
   '@ruiapp/rapid-extension':
     specifier: ~0.1.0
     version: 0.1.0(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(antd@4.24.15)(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -137,8 +137,8 @@ devDependencies:
     specifier: ^1.19.3
     version: 1.19.3(eslint@8.57.0)(react@18.2.0)(typescript@4.9.5)
   '@ruiapp/rapid-configure-tools':
-    specifier: ^0.0.10
-    version: 0.0.10(@ruiapp/rapid-extension@0.1.0)(axios-cookiejar-support@4.0.7)(axios@1.2.6)(lodash@4.17.21)(tough-cookie@4.1.4)
+    specifier: ^0.1.1
+    version: 0.1.1(@ruiapp/rapid-extension@0.1.0)(axios-cookiejar-support@4.0.7)(axios@1.2.6)(lodash@4.17.21)(tough-cookie@4.1.4)
   '@svgr/cli':
     specifier: ^8.1.0
     version: 8.1.0(typescript@4.9.5)
@@ -2498,10 +2498,10 @@ packages:
     transitivePeerDependencies:
       - debug
 
-  /@ruiapp/rapid-configure-tools@0.0.10(@ruiapp/rapid-extension@0.1.0)(axios-cookiejar-support@4.0.7)(axios@1.2.6)(lodash@4.17.21)(tough-cookie@4.1.4):
-    resolution: {integrity: sha512-z435KVQNI40AZPJeDRzd7kAtam3psUNHArAys09+Wx0/VTGiuWZl4zFZkrV8LlG0Eoxpl45SB9yDdXBlONVpMQ==, tarball: https://registry.npmmirror.com/@ruiapp/rapid-configure-tools/-/rapid-configure-tools-0.0.10.tgz}
+  /@ruiapp/rapid-configure-tools@0.1.1(@ruiapp/rapid-extension@0.1.0)(axios-cookiejar-support@4.0.7)(axios@1.2.6)(lodash@4.17.21)(tough-cookie@4.1.4):
+    resolution: {integrity: sha512-LDkahHajvZE05TXDmpV6bIfs0YvRUsvYmkW3pfXBLASxfQtc6z6ZlC1f7p4+2s/cHb7QsZxUoEUpTyZ256jdSQ==}
     peerDependencies:
-      '@ruiapp/rapid-extension': ^0.0.43
+      '@ruiapp/rapid-extension': ^0.1.0
       axios: ^1.1.2
       axios-cookiejar-support: ^4.0.7
       lodash: ^4.17.21
@@ -2514,12 +2514,13 @@ packages:
       tough-cookie: 4.1.4
     dev: true
 
-  /@ruiapp/rapid-core@0.1.30(winston@3.11.0):
-    resolution: {integrity: sha512-HkPg9c2GpzM1dMggff7GWe63MIoC2eRuH5FwBnyhJjhCcwdVvUyKj4NubjSfqsJc9Xdh3QER+hA9EZKruIRzWA==}
+  /@ruiapp/rapid-core@0.1.33(winston@3.11.0):
+    resolution: {integrity: sha512-qs8vhFQiHk/6PfPf3UJbvMFUvDKIvyzFBPBipWEcde3a9WnzUscKApXPixVJ2yScuPwifbLQF/SGL5ASDQq0/g==}
     peerDependencies:
       winston: ^3.11.0
     dependencies:
       bcrypt: 5.1.1
+      cron: 3.1.7
       dayjs: 1.11.11
       jsonwebtoken: 9.0.2
       koa-tree-router: 0.12.1
@@ -2527,17 +2528,18 @@ packages:
       qs: 6.11.2
       uuid: 9.0.1
       winston: 3.11.0
+      xstate: 5.13.0
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: false
 
-  /@ruiapp/rapid-express@0.1.30(express@4.18.3)(winston@3.11.0):
-    resolution: {integrity: sha512-Te0u7ULNoq99pb+CyRRCZ3HJDdS/uNOYRdJwaNUCVaXSBU2txpY3KJ9voDnXfT4tOGrvT0P+JXCMM497P08UhA==}
+  /@ruiapp/rapid-express@0.1.33(express@4.18.3)(winston@3.11.0):
+    resolution: {integrity: sha512-ZROcdtd//f6AncMJzu3JkuGW6LHKwCaY2eEVPMhMwRp6GyIVyCf4p3uzL6eiWI48002FqGJ5GgHN/UpkX4Pu0Q==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.30(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.33(winston@3.11.0)
       express: 4.18.3
     transitivePeerDependencies:
       - encoding
@@ -2999,6 +3001,10 @@ packages:
   /@types/lodash@4.17.1:
     resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
     dev: true
+
+  /@types/luxon@3.4.2:
+    resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
+    dev: false
 
   /@types/mdast@3.0.14:
     resolution: {integrity: sha512-gVZ04PGgw1qLZKsnWnyFv4ORnaJ+DXLdHTVSFbU8yX6xZ34Bjg4Q32yPkmveUP1yItXReKfB0Aknlh/3zxTKAw==}
@@ -4317,6 +4323,13 @@ packages:
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
     dev: true
+
+  /cron@3.1.7:
+    resolution: {integrity: sha512-tlBg7ARsAMQLzgwqVxy8AZl/qlTc5nibqYwtNGoCrd+cV+ugI+tvZC1oT/8dFH8W455YrywGykx/KMmAqOr7Jw==}
+    dependencies:
+      '@types/luxon': 3.4.2
+      luxon: 3.4.4
+    dev: false
 
   /cross-env@7.0.3:
     resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
@@ -6892,6 +6905,11 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
     dev: true
+
+  /luxon@3.4.4:
+    resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
+    engines: {node: '>=12'}
+    dev: false
 
   /lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -10519,6 +10537,10 @@ packages:
 
   /xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
+    dev: false
+
+  /xstate@5.13.0:
+    resolution: {integrity: sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==}
     dev: false
 
   /xtend@4.0.2:

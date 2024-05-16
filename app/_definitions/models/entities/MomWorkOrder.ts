@@ -15,8 +15,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
       config: {
         sequence: {
-          autoGenerate: true,
-          ruleConfig: {
+          enabled: true,
+          config: {
             segments: [
               {
                 type: "literal",
