@@ -6172,7 +6172,7 @@ export interface MomWorkReport {
    */
   unqualifiedQuantity?: number;
   /**
-   * 不合格数量
+   * 报废数量
    */
   scrapQuantity?: number;
   /**

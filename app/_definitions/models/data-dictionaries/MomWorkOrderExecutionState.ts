@@ -6,9 +6,9 @@ export default {
   valueType: "string",
   level: "app",
   entries: [
-    { name: "未开始", value: "pending" },
+    { name: "未开始", value: "pending", color: "orange" },
     { name: "进行中", value: "processing", color: "lime" },
-    { name: "已完成", value: "finished", color: "green" },
+    { name: "已完成", value: "completed", color: "green" },
     { name: "已取消", value: "canceled", color: "red" },
   ],
 } satisfies RapidDataDictionary;

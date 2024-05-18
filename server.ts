@@ -18,6 +18,7 @@ import {
   AuthPlugin,
   FileManagePlugin,
   ServerOperationPlugin,
+  StateMachinePlugin,
   EntityWatchPlugin,
   CronJobPlugin,
 } from "@ruiapp/rapid-core";
@@ -137,6 +138,7 @@ export async function startServer() {
       new ServerOperationPlugin({
         operations: serverOperations,
       }),
+      new StateMachinePlugin(),
       new EntityWatchPlugin({
         watchers: entityWatchers,
       }),

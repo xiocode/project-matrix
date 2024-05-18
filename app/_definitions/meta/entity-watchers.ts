@@ -3,10 +3,14 @@ import cbs$CbsOrderItemWatchers from '../models/entity-watchers/cbs/CbsOrderItem
 import cbs$CbsOrderWatchers from '../models/entity-watchers/cbs/CbsOrderWatchers';
 import mom$MomInventoryOperation from '../models/entity-watchers/mom/MomInventoryOperation';
 import mom$MomWorkOrder from '../models/entity-watchers/mom/MomWorkOrder';
+import mom$MomWorkReport from '../models/entity-watchers/mom/MomWorkReport';
+import mom$MomWorkTask from '../models/entity-watchers/mom/MomWorkTask';
 
 export default [
   ...cbs$CbsOrderItemWatchers,
   ...cbs$CbsOrderWatchers,
   ...mom$MomInventoryOperation,
   ...mom$MomWorkOrder,
+  ...mom$MomWorkReport,
+  ...mom$MomWorkTask,
 ] as TEntityWatcherType[];

@@ -3,7 +3,7 @@ import type { ActionHandlerContext, CronJobConfiguration } from "@ruiapp/rapid-c
 export default {
   code: "testJob",
 
-  cronTime: "0 */1 * * * *",
+  cronTime: "0 0 */1 * * *",
 
   async handler(ctx: ActionHandlerContext) {
     const { server, logger } = ctx;

@@ -1,4 +1,4 @@
-import type { PropertySequenceConfig } from "@ruiapp/rapid-core";
+import type { PropertySequenceConfig, PropertyStateMachineConfig } from "@ruiapp/rapid-core";
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
@@ -90,12 +90,78 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "分配状态",
       type: "option",
       dataDictionary: "MomWorkOrderAssignmentState",
+      defaultValue: "'unassigned'",
+      config: {
+        stateMachine: {
+          enabled: true,
+          config: {
+            initial: "unassigned",
+            states: {
+              unassigned: {
+                on: {
+                  assignTask: "assigning",
+                },
+              },
+              assigning: {
+                on: {
+                  issueOrder: "assigned",
+                },
+              },
+              assigned: {
+                on: {
+                  recallOrder: "assigning",
+                },
+              },
+              canceled: {
+                on: {
+                  reopenOrder: "assigning",
+                },
+              },
+            }
+          }
+
+        } satisfies PropertyStateMachineConfig,
+      },
     },
     {
       code: "executionState",
       name: "执行状态",
       type: "option",
       dataDictionary: "MomWorkOrderExecutionState",
+      defaultValue: "'pending'",
+      config: {
+        stateMachine: {
+          enabled: true,
+          config: {
+            initial: "pending",
+            states: {
+              pending: {
+                on: {
+                  startProcess: "processing",
+                  cancelOrder: "canceled",
+                },
+              },
+              processing: {
+                on: {
+                  completeOrder: "completed",
+                  cancelOrder: "canceled",
+                },
+              },
+              completed: {
+                on: {
+                  reopenOrder: "processing",
+                },
+              },
+              canceled: {
+                on: {
+                  reopenOrder: "processing",
+                },
+              },
+            }
+          }
+
+        } satisfies PropertyStateMachineConfig,
+      },
     },
     {
       code: "scheduledStartDate",

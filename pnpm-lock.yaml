@@ -42,11 +42,11 @@ dependencies:
     specifier: ~0.1.26
     version: 0.1.26(lodash@4.17.21)
   '@ruiapp/rapid-core':
-    specifier: ~0.1.33
-    version: 0.1.33(winston@3.11.0)
+    specifier: ~0.1.37
+    version: 0.1.37(winston@3.11.0)
   '@ruiapp/rapid-express':
-    specifier: ~0.1.33
-    version: 0.1.33(express@4.18.3)(winston@3.11.0)
+    specifier: ~0.1.37
+    version: 0.1.37(express@4.18.3)(winston@3.11.0)
   '@ruiapp/rapid-extension':
     specifier: ~0.1.0
     version: 0.1.0(@ant-design/icons@4.8.1)(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(antd@4.24.15)(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2514,8 +2514,8 @@ packages:
       tough-cookie: 4.1.4
     dev: true
 
-  /@ruiapp/rapid-core@0.1.33(winston@3.11.0):
-    resolution: {integrity: sha512-qs8vhFQiHk/6PfPf3UJbvMFUvDKIvyzFBPBipWEcde3a9WnzUscKApXPixVJ2yScuPwifbLQF/SGL5ASDQq0/g==}
+  /@ruiapp/rapid-core@0.1.37(winston@3.11.0):
+    resolution: {integrity: sha512-dZkqvMw2hEm040gKX3zLnEc5taJQRtexmVVVTLDtUqspjiicWfjdziIJYK5HLGo2PwQU76ZuehBkbWI1dHeCPw==}
     peerDependencies:
       winston: ^3.11.0
     dependencies:
@@ -2534,12 +2534,12 @@ packages:
       - supports-color
     dev: false
 
-  /@ruiapp/rapid-express@0.1.33(express@4.18.3)(winston@3.11.0):
-    resolution: {integrity: sha512-ZROcdtd//f6AncMJzu3JkuGW6LHKwCaY2eEVPMhMwRp6GyIVyCf4p3uzL6eiWI48002FqGJ5GgHN/UpkX4Pu0Q==}
+  /@ruiapp/rapid-express@0.1.37(express@4.18.3)(winston@3.11.0):
+    resolution: {integrity: sha512-sukHkABuRkcsw3krYbeF2/2HIVy4SP8VVxmy/5BL8nI5vCejoq7L5KUR22KLXAY/PkBAcA8264PgHqHQZR9EbQ==}
     peerDependencies:
       express: ^4.18.2
     dependencies:
-      '@ruiapp/rapid-core': 0.1.33(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.37(winston@3.11.0)
       express: 4.18.3
     transitivePeerDependencies:
       - encoding
@@ -7680,7 +7680,7 @@ packages:
     dev: false
 
   /object-assign@4.1.1:
-    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==, tarball: https://registry.npmmirror.com/object-assign/-/object-assign-4.1.1.tgz}
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
 
   /object-inspect@1.13.1:

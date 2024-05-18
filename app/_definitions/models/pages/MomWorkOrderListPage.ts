@@ -202,6 +202,10 @@ const page: RapidPage = {
           },
         ],
       },
+      $exps: {
+        "newForm.fixedFields.assignmentState": "unassigned",
+        "newForm.fixedFields.executionState": "pending",
+      }
     },
   ],
 };

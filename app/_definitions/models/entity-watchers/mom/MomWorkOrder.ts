@@ -11,7 +11,7 @@ export default [
       const changes: Partial<MomWorkOrder> = payload.changes;
       const after: MomWorkOrder = payload.after;
 
-      if (!changes.hasOwnProperty("executionState") || changes.executionState !== "finished") {
+      if (!changes.hasOwnProperty("executionState") || changes.executionState !== "completed") {
         return;
       }
 

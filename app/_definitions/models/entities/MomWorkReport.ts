@@ -64,7 +64,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: "scrapQuantity",
-      name: "不合格数量",
+      name: "报废数量",
       type: "double",
     },
     {

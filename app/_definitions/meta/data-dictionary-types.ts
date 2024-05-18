@@ -342,6 +342,7 @@ export type MomPackageGoodState =
  */
 export type MomWorkOrderAssignmentState =
   | 'unassigned'
+  | 'assigning'
   | 'assigned'
   | 'canceled'
   ;
@@ -352,7 +353,7 @@ export type MomWorkOrderAssignmentState =
 export type MomWorkOrderExecutionState =
   | 'pending'
   | 'processing'
-  | 'finished'
+  | 'completed'
   | 'canceled'
   ;
 
@@ -361,6 +362,7 @@ export type MomWorkOrderExecutionState =
  */
 export type MomWorkTaskAssignmentState =
   | 'unassigned'
+  | 'assigning'
   | 'assigned'
   | 'canceled'
   ;
@@ -371,7 +373,7 @@ export type MomWorkTaskAssignmentState =
 export type MomWorkTaskExecutionState =
   | 'pending'
   | 'processing'
-  | 'finished'
+  | 'completed'
   | 'canceled'
   ;
 
