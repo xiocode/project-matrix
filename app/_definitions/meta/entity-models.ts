@@ -42,6 +42,8 @@ import MetaDataDictionaryEntry from '../models/entities/MetaDataDictionaryEntry'
 import MetaModel from '../models/entities/MetaModel';
 import MetaProperty from '../models/entities/MetaProperty';
 import MetaRoute from '../models/entities/MetaRoute';
+import MomAssemblyMain from '../models/entities/MomAssemblyMain';
+import MomAssemblyPart from '../models/entities/MomAssemblyPart';
 import MomEquipment from '../models/entities/MomEquipment';
 import MomEquipmentCategory from '../models/entities/MomEquipmentCategory';
 import MomGood from '../models/entities/MomGood';
@@ -163,6 +165,8 @@ export default [
   autoConfigureRapidEntity(MetaModel),
   autoConfigureRapidEntity(MetaProperty),
   autoConfigureRapidEntity(MetaRoute),
+  autoConfigureRapidEntity(MomAssemblyMain),
+  autoConfigureRapidEntity(MomAssemblyPart),
   autoConfigureRapidEntity(MomEquipment),
   autoConfigureRapidEntity(MomEquipmentCategory),
   autoConfigureRapidEntity(MomGood),

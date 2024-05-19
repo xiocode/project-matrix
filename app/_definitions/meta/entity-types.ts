@@ -16,6 +16,7 @@ import type {
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  InspectionDetermineType,
   InspectionResult,
   MaterialSourceType,
   MomEquipmentPowerState,
@@ -2787,6 +2788,140 @@ export interface Route {
 export type SaveRouteInput = Omit<Route, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 组装主体记录
+ */
+export interface MomAssemblyMain {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 生产流转单
+   */
+  workTrack?: Partial<MomWorkTrack>;
+  /**
+   * 生产任务
+   */
+  workTask?: Partial<MomWorkTask>;
+  /**
+   * 工艺路线
+   */
+  route?: Partial<MomRoute>;
+  /**
+   * 生产工序
+   */
+  routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 主物料
+   */
+  mainMaterial?: Partial<BaseMaterial>;
+  /**
+   * 主物料号
+   */
+  mainMaterialCode?: string;
+  /**
+   * 批号
+   */
+  mainLotNum?: string;
+  /**
+   * 序列号
+   */
+  mainSerialNum?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 组装主体记录
+ */
+export type SaveMomAssemblyMainInput = Omit<MomAssemblyMain, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 组装零件记录
+ */
+export interface MomAssemblyPart {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 主体记录
+   */
+  main?: Partial<MomAssemblyMain>;
+  /**
+   * 下级物料
+   */
+  partMaterial?: Partial<BaseMaterial>;
+  /**
+   * 主物料号
+   */
+  partMaterialCode?: string;
+  /**
+   * 批号
+   */
+  partLotNum?: string;
+  /**
+   * 序列号
+   */
+  partSerialNum?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 组装零件记录
+ */
+export type SaveMomAssemblyPartInput = Omit<MomAssemblyPart, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 设备
  */
 export interface MomEquipment {
@@ -3295,6 +3430,30 @@ export interface MomInspectionCharacteristic {
    * 检验仪器
    */
   instrument?: Partial<MomInspectionInstrument>;
+  /**
+   * 合格判定方式
+   */
+  determineType?: InspectionDetermineType;
+  /**
+   * 标准值
+   */
+  norminal?: number;
+  /**
+   * 上公差
+   */
+  upperTol?: number;
+  /**
+   * 下公差
+   */
+  lowerTol?: number;
+  /**
+   * 上限值
+   */
+  upperLimit?: number;
+  /**
+   * 下限值
+   */
+  lowerLimit?: number;
   /**
    * 配置
    */
