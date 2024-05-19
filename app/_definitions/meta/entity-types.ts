@@ -3378,6 +3378,175 @@ export interface MomInspectionCharacteristicCategory {
 export type SaveMomInspectionCharacteristicCategoryInput = Omit<MomInspectionCharacteristicCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 缺陷
+ */
+export interface MomInspectionDefect {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 分类
+   */
+  category: Partial<MomInspectionDefectCategory>;
+  /**
+   * 排序号
+   */
+  orderNum?: number;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 缺陷
+ */
+export type SaveMomInspectionDefectInput = Omit<MomInspectionDefect, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 缺陷分类
+ */
+export interface MomInspectionDefectCategory {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 排序号
+   */
+  orderNum?: number;
+  /**
+   * 上级分类
+   */
+  parent?: Partial<MomEquipmentCategory>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 缺陷
+   */
+  defects?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 缺陷分类
+ */
+export type SaveMomInspectionDefectCategoryInput = Omit<MomInspectionDefectCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 缺陷记录
+ */
+export interface MomInspectionDefect {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 检验单
+   */
+  sheet?: Partial<MomInspectionSheet>;
+  /**
+   * 缺陷
+   */
+  defect?: Partial<MomInspectionDefect>;
+  /**
+   * 样本数量
+   */
+  sampleAmount?: number;
+  /**
+   * 缺陷数量
+   */
+  defectAmount?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 缺陷记录
+ */
+export type SaveMomInspectionDefectInput = Omit<MomInspectionDefect, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 检验仪器
  */
 export interface MomInspectionInstrument {
@@ -3472,56 +3641,9 @@ export interface MomInspectionInstrumentCategory {
 export type SaveMomInspectionInstrumentCategoryInput = Omit<MomInspectionInstrumentCategory, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
- * 检验方法
- */
-export interface MomInspectionMethod {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 名称
-   */
-  name?: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 检验方法
- */
-export type SaveMomInspectionMethodInput = Omit<MomInspectionMethod, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
  * 检验记录
  */
-export interface MomInspectionRecord {
+export interface MomInspectionMeasurement {
   /**
    * id
    */
@@ -3591,7 +3713,54 @@ export interface MomInspectionRecord {
 /**
  * 检验记录
  */
-export type SaveMomInspectionRecordInput = Omit<MomInspectionRecord, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionMeasurementInput = Omit<MomInspectionMeasurement, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验方法
+ */
+export interface MomInspectionMethod {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验方法
+ */
+export type SaveMomInspectionMethodInput = Omit<MomInspectionMethod, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 检验规则
@@ -3685,6 +3854,10 @@ export interface MomInspectionSheet {
    */
   serialNum?: string;
   /**
+   * 样本数量
+   */
+  sampleCount?: number;
+  /**
    * 生产工单
    */
   workOrder?: Partial<MomWorkOrder>;
@@ -3719,7 +3892,11 @@ export interface MomInspectionSheet {
   /**
    * 检验记录
    */
-  records?: any;
+  measurements?: any;
+  /**
+   * 缺陷统计
+   */
+  defectStats?: any;
   /**
    * 创建时间
    */

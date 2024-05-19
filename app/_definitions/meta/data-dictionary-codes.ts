@@ -17,6 +17,7 @@ const dictionaryCodes = [
   'EnabledDisabledState',
   'FinTransactionType',
   'FormFieldType',
+  'InspectionDetermineType',
   'InspectionResult',
   'MaterialSourceType',
   'DataDictionaryLevel',

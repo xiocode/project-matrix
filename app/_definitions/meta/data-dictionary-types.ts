@@ -171,6 +171,18 @@ export type FormFieldType =
   ;
 
 /**
+ * 判定方式
+ */
+export type InspectionDetermineType =
+  | 'inTolerance'
+  | 'inLimit'
+  | 'gt'
+  | 'ge'
+  | 'lt'
+  | 'le'
+  ;
+
+/**
  * 检验结果
  */
 export type InspectionResult =

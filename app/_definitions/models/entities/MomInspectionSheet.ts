@@ -6,7 +6,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
   code: "MomInspectionSheet",
   name: "检验单",
-  description: "记录对某个样本使用某个检验规则进行的一次检验，包含被检测样本的信息以及本次检验产生的多条检验记录。",
+  description: "记录对一个或多个样本使用某个检验规则进行的一次检验，包含被检测样本的信息以及本次检验产生的多条检验记录和缺陷记录。",
   fields: [
     {
       code: "code",
@@ -46,6 +46,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "serialNum",
       name: "序列号",
       type: "text",
+    },
+    {
+      code: "sampleCount",
+      name: "样本数量",
+      type: "integer",
+      defaultValue: "1",
     },
     {
       code: "workOrder",
@@ -104,10 +110,17 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "reviewer_id",
     },
     {
-      code: "records",
+      code: "measurements",
       name: "检验记录",
       type: "relation[]",
-      targetSingularCode: "mom_inspection_record",
+      targetSingularCode: "mom_inspection_measurement",
+      selfIdColumnName: "sheet_id",
+    },
+    {
+      code: "defectStats",
+      name: "缺陷统计",
+      type: "relation[]",
+      targetSingularCode: "mom_inspection_defect",
       selfIdColumnName: "sheet_id",
     },
   ],

@@ -49,6 +49,38 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "instrument_id",
     },
     {
+      code: "determineType",
+      name: "合格判定方式",
+      type: "option",
+      dataDictionary: "InspectionDetermineType",
+      defaultValue: "'inTolerance'",
+    },
+    {
+      code: "norminal",
+      name: "标准值",
+      type: "double",
+    },
+    {
+      code: "upperTol",
+      name: "上公差",
+      type: "double",
+    },
+    {
+      code: "lowerTol",
+      name: "下公差",
+      type: "double",
+    },
+    {
+      code: "upperLimit",
+      name: "上限值",
+      type: "double",
+    },
+    {
+      code: "lowerLimit",
+      name: "下限值",
+      type: "double",
+    },
+    {
       code: "config",
       name: "配置",
       type: "json",

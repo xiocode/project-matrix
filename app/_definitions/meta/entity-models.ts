@@ -51,10 +51,13 @@ import MomGoodTransfer from '../models/entities/MomGoodTransfer';
 import MomInspectionCategory from '../models/entities/MomInspectionCategory';
 import MomInspectionCharacteristic from '../models/entities/MomInspectionCharacteristic';
 import MomInspectionCharacteristicCategory from '../models/entities/MomInspectionCharacteristicCategory';
+import MomInspectionDefect from '../models/entities/MomInspectionDefect';
+import MomInspectionDefectCategory from '../models/entities/MomInspectionDefectCategory';
+import MomInspectionDefectStat from '../models/entities/MomInspectionDefectStat';
 import MomInspectionInstrument from '../models/entities/MomInspectionInstrument';
 import MomInspectionInstrumentCategory from '../models/entities/MomInspectionInstrumentCategory';
+import MomInspectionMeasurement from '../models/entities/MomInspectionMeasurement';
 import MomInspectionMethod from '../models/entities/MomInspectionMethod';
-import MomInspectionRecord from '../models/entities/MomInspectionRecord';
 import MomInspectionRule from '../models/entities/MomInspectionRule';
 import MomInspectionSheet from '../models/entities/MomInspectionSheet';
 import MomInventory from '../models/entities/MomInventory';
@@ -169,10 +172,13 @@ export default [
   autoConfigureRapidEntity(MomInspectionCategory),
   autoConfigureRapidEntity(MomInspectionCharacteristic),
   autoConfigureRapidEntity(MomInspectionCharacteristicCategory),
+  autoConfigureRapidEntity(MomInspectionDefect),
+  autoConfigureRapidEntity(MomInspectionDefectCategory),
+  autoConfigureRapidEntity(MomInspectionDefectStat),
   autoConfigureRapidEntity(MomInspectionInstrument),
   autoConfigureRapidEntity(MomInspectionInstrumentCategory),
+  autoConfigureRapidEntity(MomInspectionMeasurement),
   autoConfigureRapidEntity(MomInspectionMethod),
-  autoConfigureRapidEntity(MomInspectionRecord),
   autoConfigureRapidEntity(MomInspectionRule),
   autoConfigureRapidEntity(MomInspectionSheet),
   autoConfigureRapidEntity(MomInventory),

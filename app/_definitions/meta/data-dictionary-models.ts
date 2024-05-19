@@ -17,6 +17,7 @@ import EmployeeState from '../models/data-dictionaries/EmployeeState';
 import EnabledDisabledState from '../models/data-dictionaries/EnabledDisabledState';
 import FinTransactionType from '../models/data-dictionaries/FinTransactionType';
 import FormFieldType from '../models/data-dictionaries/FormFieldType';
+import InspectionDetermineType from '../models/data-dictionaries/InspectionDetermineType';
 import InspectionResult from '../models/data-dictionaries/InspectionResult';
 import MaterialSourceType from '../models/data-dictionaries/MaterialSourceType';
 import MetaDataDictionaryLevel from '../models/data-dictionaries/MetaDataDictionaryLevel';
@@ -71,6 +72,7 @@ export default [
   EnabledDisabledState,
   FinTransactionType,
   FormFieldType,
+  InspectionDetermineType,
   InspectionResult,
   MaterialSourceType,
   MetaDataDictionaryLevel,
