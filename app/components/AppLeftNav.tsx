@@ -17,15 +17,15 @@ export interface AppNavItem {
   children?: AppNavItem[];
 }
 
-function getMenuItemFromNavItem(navItem: AppNavItem): ItemType {
+function getMenuItemFromNavItem(navItem: AppNavItem, appCode?: string): ItemType {
   const IconComponent = navItem.icon ? (antdIcons as any)[navItem.icon] : null;
   const menuItem: ItemType = {
     key: navItem.code,
     icon: IconComponent ? <IconComponent /> : null,
-    label: navItem.pageCode ? <Link to={`/pages/${navItem.pageCode}`}>{navItem.name}</Link> : <span>{navItem.name}</span>,
+    label: navItem.pageCode ? <Link to={`/${appCode || "pages"}/${navItem.pageCode}`}>{navItem.name}</Link> : <span>{navItem.name}</span>,
   };
   if (navItem.children && navItem.children.length) {
-    (menuItem as MenuItemGroupType).children = navItem.children.map(getMenuItemFromNavItem);
+    (menuItem as MenuItemGroupType).children = navItem.children.map((navItem) => getMenuItemFromNavItem(navItem, appCode));
   }
 
   if (!navItem.pageCode && !(menuItem as MenuItemGroupType).children) {
@@ -35,23 +35,24 @@ function getMenuItemFromNavItem(navItem: AppNavItem): ItemType {
   return menuItem;
 }
 
-function getMenuItems(navItems: AppNavItem[]) {
+function getMenuItems(navItems: AppNavItem[], appCode?: string) {
   const navItemsTree = arrayToTree(navItems, null, {
     parentField: "parent.id",
   });
-  const menuItems: ItemType[] = navItemsTree.map(getMenuItemFromNavItem);
+  const menuItems: ItemType[] = navItemsTree.map((navItem) => getMenuItemFromNavItem(navItem, appCode));
 
   return menuItems;
 }
 
 export interface IProps {
   navItems: AppNavItem[];
+  appCode?: string;
 }
 
 export default function LeftNav(props: IProps) {
-  const { navItems } = props;
+  const { navItems, appCode } = props;
   const menuItems = useMemo(() => {
-    return getMenuItems(navItems);
+    return getMenuItems(navItems, appCode);
   }, [navItems]);
 
   return <Menu className="rui-left-nav-menu" theme="dark" mode="inline" items={menuItems} />;

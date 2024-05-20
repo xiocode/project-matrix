@@ -21,8 +21,8 @@ dependencies:
     specifier: ~1.19.3
     version: 1.19.3(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/antd-extension':
-    specifier: ~0.1.27
-    version: 0.1.27(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ~0.1.28
+    version: 0.1.28(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@ruiapp/blockly-extension':
     specifier: ~0.1.27
     version: 0.1.27(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(blockly@10.4.3)(lodash@4.17.21)
@@ -2382,8 +2382,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@ruiapp/antd-extension@0.1.27(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-zl8Y1Kilq2NZsBSgdU8WOx/f+ff13Y96raMOafQLAS0b1zIz1rCWLTHxIiP5U+Z/fOSbeutZELsSxRaIwdjGOQ==}
+  /@ruiapp/antd-extension@0.1.28(@ruiapp/move-style@0.1.26)(@ruiapp/react-renderer@0.1.26)(lodash@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-MMu+WNP/2vrnMc8DOjRpEnlEjt7lnmXEAvwCwuPuSRDuJd+UIE2DiBAAo9xgYiCHqLACRYYQPI9RW+jsn1DF1Q==}
     peerDependencies:
       '@ruiapp/move-style': ^0.1.26
       '@ruiapp/react-renderer': ^0.1.26

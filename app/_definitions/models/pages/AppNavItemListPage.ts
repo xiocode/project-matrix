@@ -96,6 +96,9 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
+          field: "client",
+        },
+        {
           field: "orderNum",
         },
       ],

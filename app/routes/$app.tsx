@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useParams } from "@remix-run/react";
 import { Layout } from "antd";
 
 import antdStyles from "antd/dist/antd.css";
@@ -19,7 +19,8 @@ export function links() {
   });
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const appCode = params.app;
   const findAppNavItemOption = {
     properties: ["id", "code", "name", "icon", "pageCode", "parent", "config"],
     filters: [
@@ -30,7 +31,7 @@ export const loader: LoaderFunction = async ({ request }) => {
           {
             operator: "eq",
             field: "code",
-            value: "web",
+            value: appCode,
           },
         ],
       },
@@ -71,13 +72,14 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   const viewModel = useLoaderData();
+  const params = useParams();
 
   return (
     <>
       <Layout style={{ minHeight: "100vh" }} hasSider>
         <Sider className="rui-player-left-sider">
           <h1 className="branch-title">Project Matrix</h1>
-          <AppLeftNav navItems={viewModel.navItems} />
+          <AppLeftNav appCode={params.app} navItems={viewModel.navItems} />
         </Sider>
         <Layout>
           <Content className="rui-player-main-content">

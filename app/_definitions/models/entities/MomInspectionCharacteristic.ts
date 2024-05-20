@@ -21,6 +21,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "skippable",
+      name: "可跳过检验",
+      type: "boolean",
+    },
+    {
       code: "category",
       name: "特征类型",
       type: "relation",
