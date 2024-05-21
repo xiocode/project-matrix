@@ -28,6 +28,7 @@ import {
   VerticalAlignBottomOutlined,
   VerticalAlignMiddleOutlined,
   VerticalAlignTopOutlined,
+  ScanOutlined,
 } from "@ant-design/icons";
 import { renderRockChildren } from "@ruiapp/react-renderer";
 import { useCallback } from "react";
@@ -179,6 +180,11 @@ export default {
             icon: <FontSizeOutlined />,
           },
           {
+            label: "输入框",
+            key: "sfInput",
+            icon: <FontSizeOutlined />,
+          },
+          {
             label: "数字输入",
             key: "sfNumberInput",
             icon: <NumberOutlined />,
@@ -233,6 +239,11 @@ export default {
             label: "二维码",
             key: "sfQrcode",
             icon: <QrcodeOutlined />,
+          },
+          {
+            label: "扫码",
+            key: "sfQrcodeScanner",
+            icon: <ScanOutlined />,
           },
         ],
       },

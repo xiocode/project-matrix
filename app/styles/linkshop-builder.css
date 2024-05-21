@@ -72,3 +72,10 @@
 .lsb-antd-row .ant-row {
   margin: 0 !important;
 }
+
+.lsb-qrcode-scanner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

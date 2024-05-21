@@ -6,6 +6,7 @@ import LinkshopBuilderStepsPanel from "./linkshop-builder-steps-panel/LinkshopBu
 import LinkshopBuilderStoresPanel from "./linkshop-builder-stores-panel/LinkshopBuilderStoresPanel";
 import LinkshopBuilderTriggersPanel from "./linkshop-builder-triggers-panel/LinkshopBuilderTriggersPanel";
 import LinkshopBuilderToolbar from "./linkshop-builder-toolbar/LinkshopBuilderToolbar";
+import LinkshopScannerProvider from "./linkshop-scanner-provider/LinkshopScannerProvider";
 
 // setters
 import DynamicArraySetterInput from "./prop-controls/DynamicArraySetterInput";
@@ -25,6 +26,7 @@ export default [
   LinkshopBuilderStoresPanel,
   LinkshopBuilderTriggersPanel,
   LinkshopBuilderToolbar,
+  LinkshopScannerProvider,
 
   // setters
   DynamicArraySetterInput,

@@ -204,9 +204,15 @@ export default function Index() {
       stores: get(shopfloorApp.content, "stores", []),
       view: [
         {
-          $id: "linkshopApp",
-          $type: "linkshopApp",
-          steps: get(shopfloorApp.content, "steps", []),
+          $id: "linkshopScannerProvider",
+          $type: "linkshopScannerProvider",
+          children: [
+            {
+              $id: "linkshopApp",
+              $type: "linkshopApp",
+              steps: get(shopfloorApp.content, "steps", []),
+            },
+          ],
         },
       ],
     } as any;

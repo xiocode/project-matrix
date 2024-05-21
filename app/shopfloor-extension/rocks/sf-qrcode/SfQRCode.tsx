@@ -8,7 +8,8 @@ export default {
   Renderer(context, props: SfQRCodeRockConfig) {
     const { value, mode = "canvas", color, height, bgColor } = props;
 
-    const wrapStyle: React.CSSProperties = pick(props, CommonProps.PositionStylePropNames) as any;
+    const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
+    const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
     wrapStyle.position = "absolute";
 
     return (

@@ -1,6 +1,10 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
+import { initInWeb } from "@rebirth/mobile-sdk";
+
+initInWeb();
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Project Matrix",
