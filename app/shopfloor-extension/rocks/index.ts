@@ -4,6 +4,9 @@ import SfPicture from "./sf-picture/SfPicture";
 import SfText from "./sf-text/SfText";
 import SfQRCode from "./sf-qrcode/SfQRCode";
 import SfBarcode from "./sf-barcode/SfBarcode";
+import SfQRCodeScanner from "./sf-qrcode-scanner/SfQRCodeScanner";
+import SfCodeScanner from "./sf-code-scanner/SfCodeScanner";
+import SfInput from "./sf-input/SfInput";
 
 // layout entity components
 import SfEntityDetails from "./sf-entity-details/SfEntityDetails";
@@ -17,6 +20,9 @@ export default [
   SfText,
   SfQRCode,
   SfBarcode,
+  SfQRCodeScanner,
+  SfCodeScanner,
+  SfInput,
 
   // layout
   SfEntityDetails,

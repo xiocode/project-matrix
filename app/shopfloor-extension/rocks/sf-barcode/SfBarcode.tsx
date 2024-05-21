@@ -10,7 +10,8 @@ export default {
   Renderer(context, props: SfBarcodeRockConfig) {
     const { value, color, height, width, displayValue } = props;
 
-    const wrapStyle: React.CSSProperties = pick(props, CommonProps.PositionStylePropNames) as any;
+    const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames];
+    const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
     wrapStyle.position = "absolute";
 
     let barcodeHeight = subtract(height, 2 * BARCODE_MARGIN);

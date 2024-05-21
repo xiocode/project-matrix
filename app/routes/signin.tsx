@@ -78,6 +78,7 @@ const initialPageConfig: PageConfig = {
                     url: "/api/signin",
                     data: formData,
                   });
+
                   message.success("登录成功");
                 } catch (err: any) {
                   console.error("Signin failed.", err);
