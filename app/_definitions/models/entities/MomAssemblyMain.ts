@@ -64,6 +64,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "序列号",
       type: "text",
     },
+    {
+      code: "parts",
+      name: "零件",
+      type: "relation[]",
+      targetSingularCode: "mom_assembly_part",
+      targetIdColumnName: "main_id",
+    },
   ],
 };
 

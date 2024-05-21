@@ -46,6 +46,8 @@ import PmMilestoneState from '../models/data-dictionaries/PmMilestoneState';
 import PmPhaseState from '../models/data-dictionaries/PmPhaseState';
 import PmProjectStage from '../models/data-dictionaries/PmProjectStage';
 import PmProjectState from '../models/data-dictionaries/PmProjectState';
+import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
+import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
 import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
 import QuantityType from '../models/data-dictionaries/QuantityType';
@@ -101,6 +103,8 @@ export default [
   PmPhaseState,
   PmProjectStage,
   PmProjectState,
+  PrinterNetworkState,
+  PrintTaskState,
   PublishState,
   QualificationState,
   QuantityType,

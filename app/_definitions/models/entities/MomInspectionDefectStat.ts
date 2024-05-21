@@ -4,7 +4,7 @@ import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
-  code: "MomInspectionDefect",
+  code: "MomInspectionDefectStat",
   name: "缺陷记录",
   description: "用来记录对某个检验单所检样本的缺陷数量的统计信息。",
   fields: [
