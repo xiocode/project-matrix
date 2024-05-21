@@ -84,6 +84,20 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       dataDictionary: "EnabledDisabledState",
       required: true,
     },
+    {
+      code: "isInspectionFree",
+      name: "是否免检",
+      type: "boolean",
+      required: true,
+      defaultValue: "false",
+    },
+    {
+      code: "qualityGuaranteePeriod",
+      name: "质保期",
+      description: "例如：1Y，6M，30D",
+      type: "text",
+      required: false,
+    },
   ],
 };
 

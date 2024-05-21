@@ -46,6 +46,8 @@ const dictionaryCodes = [
   'PmPhaseState',
   'PmProjectStage',
   'PmProjectState',
+  'PrinterNetworkState',
+  'PrintTaskState',
   'PublishState',
   'QualificationState',
   'QuantityType',

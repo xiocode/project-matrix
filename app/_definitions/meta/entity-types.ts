@@ -41,6 +41,8 @@ import type {
   PmPhaseState,
   PmProjectStage,
   PmProjectState,
+  PrintTaskState,
+  PrinterNetworkState,
   PropertyType,
   PublishState,
   QualificationState,
@@ -601,6 +603,14 @@ export interface BaseMaterial {
    * 状态
    */
   state: EnabledDisabledState;
+  /**
+   * 是否免检
+   */
+  isInspectionFree: boolean;
+  /**
+   * 质保期
+   */
+  qualityGuaranteePeriod?: string;
   /**
    * 创建时间
    */
@@ -2832,6 +2842,10 @@ export interface MomAssemblyMain {
    */
   mainSerialNum?: string;
   /**
+   * 零件
+   */
+  parts?: any;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3415,6 +3429,10 @@ export interface MomInspectionCharacteristic {
    */
   name?: string;
   /**
+   * 可跳过检验
+   */
+  skippable?: boolean;
+  /**
    * 特征类型
    */
   category?: Partial<MomInspectionCharacteristicCategory>;
@@ -3653,7 +3671,7 @@ export type SaveMomInspectionDefectCategoryInput = Omit<MomInspectionDefectCateg
 /**
  * 缺陷记录
  */
-export interface MomInspectionDefect {
+export interface MomInspectionDefectStat {
   /**
    * id
    */
@@ -3703,7 +3721,7 @@ export interface MomInspectionDefect {
 /**
  * 缺陷记录
  */
-export type SaveMomInspectionDefectInput = Omit<MomInspectionDefect, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionDefectStatInput = Omit<MomInspectionDefectStat, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 检验仪器
@@ -7886,6 +7904,120 @@ export interface ShopfloorStation {
  * 车间配置系统-工位
  */
 export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印机
+ */
+export interface SvcPrinter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 网络状态
+   */
+  networkState: PrinterNetworkState;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印机
+ */
+export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印任务
+ */
+export interface SvcPrintTask {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 打印机
+   */
+  printer?: Partial<SvcPrinter>;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 类型
+   */
+  type?: string;
+  /**
+   * 打印数据
+   */
+  data?: string;
+  /**
+   * 状态
+   */
+  state: PrintTaskState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印任务
+ */
+export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 系统操作

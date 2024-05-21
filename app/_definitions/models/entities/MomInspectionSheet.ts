@@ -120,7 +120,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "defectStats",
       name: "缺陷统计",
       type: "relation[]",
-      targetSingularCode: "mom_inspection_defect",
+      targetSingularCode: "mom_inspection_defect_stat",
       selfIdColumnName: "sheet_id",
     },
   ],
