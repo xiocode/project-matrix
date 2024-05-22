@@ -27,10 +27,12 @@ class KisDataSync {
     this.server = server;
   }
 
+  // Initialize API client
   public async initialize() {
     this.api = await new KisHelper(this.server).NewAPIClient();
   }
 
+  // Load base data for categories and units
   private async loadBaseData() {
     await Promise.all([this.loadCategories(), this.loadUnits()]);
   }
@@ -38,7 +40,7 @@ class KisDataSync {
   private async loadCategories() {
     const categoryEntityManager = this.server.getEntityManager("base_material_category");
     this.categories = await categoryEntityManager.findEntities({
-      filters: [{operator: "ne", field: "externalCode", value: null}],
+      filters: [{operator: "notNull", field: "externalCode"}],
     });
     console.log("Categories loaded:", this.categories);
   }
@@ -46,15 +48,17 @@ class KisDataSync {
   private async loadUnits() {
     const unitEntityManager = this.server.getEntityManager("base_unit");
     this.units = await unitEntityManager.findEntities({
-      filters: [{operator: "ne", field: "externalCode", value: null}],
+      filters: [{operator: "notNull", field: "externalCode"}],
     });
     console.log("Units loaded:", this.units);
   }
 
+  // Utility function to pause execution
   private sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  // Fetch paginated list from the API
   private async fetchListPages(url: string, payload: any = {}): Promise<any[]> {
     const results: any[] = [];
     let page = 1;
@@ -88,6 +92,7 @@ class KisDataSync {
     return results;
   }
 
+  // Fetch detail page from the API
   private async fetchDetailPage(url: string, payload: object = {}): Promise<any[]> {
     const results: any[] = [];
     const response = await this.api.PostResourceRequest(url, payload);
@@ -101,10 +106,11 @@ class KisDataSync {
     return results;
   }
 
+  // Sync entities based on the fetched data
   private async syncEntities({url, singularCode, mapToEntity, filter, payload}: SyncOptions) {
     const data = await this.fetchListPages(url, payload);
     const filteredData = filter ? data.filter(filter) : data;
-    const entities = (await Promise.all(filteredData.map(mapToEntity))).filter((item) => item != null);
+    const entities = (await Promise.all(filteredData.map(mapToEntity))).filter(item => item != null);
     const entityManager = this.server.getEntityManager(singularCode);
 
     for (const entity of entities) {
@@ -122,10 +128,11 @@ class KisDataSync {
     console.log(`${singularCode} entities synced:`, entities);
   }
 
+  // Sync detailed entities based on the fetched data
   private async syncDetailEntities({url, singularCode, mapToEntity, filter, payload}: SyncOptions) {
     const data = await this.fetchDetailPage(url, payload);
     const filteredData = filter ? data.filter(filter) : data;
-    const entities: UpdateEntityByIdOptions[] = (await Promise.all(filteredData.map(mapToEntity))).filter((item) => item != null);
+    const entities: UpdateEntityByIdOptions[] = (await Promise.all(filteredData.map(mapToEntity))).filter(item => item != null);
     const entityManager = this.server.getEntityManager(singularCode);
 
     for (const entity of entities) {
@@ -143,6 +150,7 @@ class KisDataSync {
     console.log(`${singularCode} entities synced:`, entities);
   }
 
+  // Create sync function for general entities
   private createSyncFunction(
     url: string,
     singularCode: string,
@@ -155,6 +163,7 @@ class KisDataSync {
     };
   }
 
+  // Create sync function for detailed entities
   private createDetailSyncFunction(
     url: string,
     singularCode: string,
@@ -167,6 +176,7 @@ class KisDataSync {
     };
   }
 
+  // Main sync function to synchronize all entities
   public async syncAll() {
     await this.loadBaseData();
 
@@ -197,7 +207,7 @@ class KisDataSync {
         "/koas/APP006992/api/Material/List",
         "base_material",
         async (item: any) => {
-          const category = this.categories.find((cat) => cat.externalCode === item.FParentID as string);
+          const category = this.categories.find(cat => cat.externalCode === item.FParentID as string);
           if (!category) return null;
 
           return {
@@ -217,7 +227,7 @@ class KisDataSync {
     }
 
     const materials = await this.server.getEntityManager("base_material").findEntities({
-      filters: [{operator: "ne", field: "externalCode", value: null}],
+      filters: [{operator: "notNull", field: "externalCode"}],
     });
 
     const materialIds = materials.map((material: BaseMaterial) => material.externalCode);
@@ -230,7 +240,7 @@ class KisDataSync {
           id: item.id,
           entityToSave: {
             defaultUnit: {
-              id: item.FUnitID ? this.units.find((unit) => unit.externalCode === item.FUnitID)?.id : null,
+              id: item.FUnitID ? this.units.find(unit => unit.externalCode === item.FUnitID)?.id : null,
             },
           },
         } as UpdateEntityByIdOptions),
