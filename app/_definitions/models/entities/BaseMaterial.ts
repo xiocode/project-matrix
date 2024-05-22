@@ -98,6 +98,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
       required: false,
     },
+    {
+      code: "externalCode",
+      name: "外部编号",
+      type: "text",
+    },
   ],
 };
 

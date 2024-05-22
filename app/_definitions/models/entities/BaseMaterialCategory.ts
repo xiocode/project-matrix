@@ -46,6 +46,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_material",
       selfIdColumnName: "category_id",
     },
+    {
+      code: "externalCode",
+      name: "外部编号",
+      type: "text",
+    },
   ],
 };
 

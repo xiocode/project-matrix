@@ -462,20 +462,20 @@ export type PmProjectState =
   ;
 
 /**
- * 打印机网络状态
- */
-export type PrinterNetworkState =
-  | '0'
-  | '1'
-  ;
-
-/**
  * 打印任务状态
  */
 export type PrintTaskState =
   | '0'
   | '1'
   | '2'
+  ;
+
+/**
+ * 打印机网络状态
+ */
+export type PrinterNetworkState =
+  | '0'
+  | '1'
   ;
 
 /**
