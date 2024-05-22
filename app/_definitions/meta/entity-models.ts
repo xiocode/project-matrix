@@ -37,6 +37,7 @@ import FinAccount from '../models/entities/FinAccount';
 import FinBusinessCategory from '../models/entities/FinBusinessCategory';
 import FinExpenseCategory from '../models/entities/FinExpenseCategory';
 import FinTransaction from '../models/entities/FinTransaction';
+import KisConfig from '../models/entities/KisConfig';
 import MetaDataDictionary from '../models/entities/MetaDataDictionary';
 import MetaDataDictionaryEntry from '../models/entities/MetaDataDictionaryEntry';
 import MetaModel from '../models/entities/MetaModel';
@@ -118,8 +119,8 @@ import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
 import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
 import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
 import ShopfloorStation from '../models/entities/ShopfloorStation';
-import SvcPrinter from '../models/entities/SvcPrinter';
 import SvcPrintTask from '../models/entities/SvcPrintTask';
+import SvcPrinter from '../models/entities/SvcPrinter';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
@@ -162,6 +163,7 @@ export default [
   autoConfigureRapidEntity(FinBusinessCategory),
   autoConfigureRapidEntity(FinExpenseCategory),
   autoConfigureRapidEntity(FinTransaction),
+  autoConfigureRapidEntity(KisConfig),
   autoConfigureRapidEntity(MetaDataDictionary),
   autoConfigureRapidEntity(MetaDataDictionaryEntry),
   autoConfigureRapidEntity(MetaModel),
@@ -243,8 +245,8 @@ export default [
   autoConfigureRapidEntity(ShopfloorAppVersion),
   autoConfigureRapidEntity(ShopfloorDisplayDevice),
   autoConfigureRapidEntity(ShopfloorStation),
-  autoConfigureRapidEntity(SvcPrinter),
   autoConfigureRapidEntity(SvcPrintTask),
+  autoConfigureRapidEntity(SvcPrinter),
   autoConfigureRapidEntity(SysAction),
   autoConfigureRapidEntity(SysActionGroup),
   autoConfigureRapidEntity(SysWebhook),

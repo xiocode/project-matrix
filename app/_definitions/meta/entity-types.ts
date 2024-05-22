@@ -261,6 +261,10 @@ export interface BaseEmployee {
    */
   state?: EmployeeState;
   /**
+   * 外部编号
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -612,6 +616,10 @@ export interface BaseMaterial {
    */
   qualityGuaranteePeriod?: string;
   /**
+   * 外部编号
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -674,6 +682,10 @@ export interface BaseMaterialCategory {
    * 物料
    */
   materials?: any;
+  /**
+   * 外部编号
+   */
+  externalCode?: string;
   /**
    * 创建时间
    */
@@ -1008,6 +1020,10 @@ export interface BaseUnit {
    * 单位分组
    */
   category: Partial<BaseUnitCategory>;
+  /**
+   * 外部编号
+   */
+  externalCode?: string;
   /**
    * 创建时间
    */
@@ -2397,6 +2413,101 @@ export interface FinTransaction {
  * 转账
  */
 export type SaveFinTransactionInput = Omit<FinTransaction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * KisConfig
+ */
+export interface KisConfig {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * API Endpoint
+   */
+  api_endpoint: string;
+  /**
+   * client_id
+   */
+  client_id: string;
+  /**
+   * client_secret
+   */
+  client_secret?: string;
+  /**
+   * uid
+   */
+  uid: number;
+  /**
+   * session_id
+   */
+  session_id: string;
+  /**
+   * access_token
+   */
+  access_token?: string;
+  /**
+   * auth_data
+   */
+  auth_data: string;
+  /**
+   * refresh_auth_data_token
+   */
+  refresh_auth_data_token: string;
+  /**
+   * auth_data
+   */
+  auth_data: string;
+  /**
+   * gateway_router_addr
+   */
+  gateway_router_addr: string;
+  /**
+   * session_id_expire_in
+   */
+  session_id_expire_in: number;
+  /**
+   * access_token_expire_in
+   */
+  access_token_expire_in: number;
+  /**
+   * refresh_auth_data_token_expire_in
+   */
+  refresh_auth_data_token_expire_in: number;
+  /**
+   * updated_at
+   */
+  updated_at: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * KisConfig
+ */
+export type SaveKisConfigInput = Omit<KisConfig, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 数据字典
@@ -6348,6 +6459,10 @@ export interface MomWarehouse {
    */
   state?: EnabledDisabledState;
   /**
+   * 外部编号
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -6885,6 +7000,10 @@ export interface OcDepartment {
    * 用户
    */
   users?: any;
+  /**
+   * 外部编号
+   */
+  externalCode?: string;
   /**
    * 创建时间
    */
@@ -7906,61 +8025,6 @@ export interface ShopfloorStation {
 export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
- * 打印机
- */
-export interface SvcPrinter {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 网络状态
-   */
-  networkState: PrinterNetworkState;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 打印机
- */
-export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
  * 打印任务
  */
 export interface SvcPrintTask {
@@ -8018,6 +8082,61 @@ export interface SvcPrintTask {
  * 打印任务
  */
 export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印机
+ */
+export interface SvcPrinter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 网络状态
+   */
+  networkState: PrinterNetworkState;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印机
+ */
+export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 系统操作

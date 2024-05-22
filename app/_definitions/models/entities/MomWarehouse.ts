@@ -44,6 +44,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "option",
       dataDictionary: "EnabledDisabledState",
     },
+    {
+      code: "externalCode",
+      name: "外部编号",
+      type: "text",
+    },
   ],
 };
 
