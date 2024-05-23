@@ -1,4 +1,6 @@
 import type { RapidPage as TRapidPage } from '@ruiapp/rapid-extension';
+import account$AccountChangePasswordPage from '../models/pages/account/AccountChangePasswordPage';
+import account$AccountProfilePage from '../models/pages/account/AccountProfilePage';
 import AppNavItemListPage from '../models/pages/AppNavItemListPage';
 import BaseEmployeeListPage from '../models/pages/BaseEmployeeListPage';
 import BaseFormFieldListPage from '../models/pages/BaseFormFieldListPage';
@@ -66,10 +68,10 @@ import ShopfloorStationListPage from '../models/pages/ShopfloorStationListPage';
 import SysActionListPage from '../models/pages/SysActionListPage';
 import SysSubSystemListPage from '../models/pages/SysSubSystemListPage';
 import SysWebhookListPage from '../models/pages/SysWebhookListPage';
-import account$AccountChangePasswordPage from '../models/pages/account/AccountChangePasswordPage';
-import account$AccountProfilePage from '../models/pages/account/AccountProfilePage';
 
 export default [
+  account$AccountChangePasswordPage,
+  account$AccountProfilePage,
   AppNavItemListPage,
   BaseEmployeeListPage,
   BaseFormFieldListPage,
@@ -137,6 +139,4 @@ export default [
   SysActionListPage,
   SysSubSystemListPage,
   SysWebhookListPage,
-  account$AccountChangePasswordPage,
-  account$AccountProfilePage,
 ] as TRapidPage[];

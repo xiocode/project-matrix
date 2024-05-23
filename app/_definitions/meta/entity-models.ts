@@ -119,8 +119,8 @@ import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
 import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
 import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
 import ShopfloorStation from '../models/entities/ShopfloorStation';
-import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SvcPrinter from '../models/entities/SvcPrinter';
+import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
@@ -245,8 +245,8 @@ export default [
   autoConfigureRapidEntity(ShopfloorAppVersion),
   autoConfigureRapidEntity(ShopfloorDisplayDevice),
   autoConfigureRapidEntity(ShopfloorStation),
-  autoConfigureRapidEntity(SvcPrintTask),
   autoConfigureRapidEntity(SvcPrinter),
+  autoConfigureRapidEntity(SvcPrintTask),
   autoConfigureRapidEntity(SysAction),
   autoConfigureRapidEntity(SysActionGroup),
   autoConfigureRapidEntity(SysWebhook),
