@@ -4,7 +4,7 @@ import type PrinterService from "rapid-plugins/printerService/PrinterService";
 export default {
   code: "detectOfflinePrinters",
 
-  cronTime: "* */5 * * *",
+  cronTime: "*/2 * * * *",
 
   async handler(ctx: ActionHandlerContext) {
     const {server, logger} = ctx;
