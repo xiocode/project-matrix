@@ -7,6 +7,6 @@ export default {
   level: "app",
   entries: [
     { name: "离线", value: 0 },
-    { name: "在线", value: 1 },
+    { name: "在线", value: 1, color: "green" },
   ],
 } as RapidDataDictionary;

@@ -75,12 +75,14 @@ export default class PrinterService {
       throw new Error(`Print '${input.code}' was not found.`)
     }
 
-    await printerManager.updateEntityById({
-      id: printer.id,
-      entityToSave: {
-        networkState: input.state,
-      } satisfies Partial<SaveSvcPrinterInput>,
-    });
+    if (printer.networkState !== input.state) {
+      await printerManager.updateEntityById({
+        id: printer.id,
+        entityToSave: {
+          networkState: input.state,
+        } satisfies Partial<SaveSvcPrinterInput>,
+      });
+    }
 
     this.#printerBeat(input.code, input.state);
   }
@@ -89,7 +91,6 @@ export default class PrinterService {
     const { code } = input;
 
     const printerManager = this.#server.getEntityManager<SvcPrinter>("svc_printer");
-
     const printer = await printerManager.findEntity({
       filters: [
         { operator: "eq", field: "code", value: input.code },
@@ -127,14 +128,6 @@ export default class PrinterService {
 
   async getNextPendingPrintTask(input: GetNextPendingPrintTaskInput) {
     const { code } = input;
-    let printer = find(this.#printers, { code });
-    if (!printer) {
-      throw new Error(`Print '${input.code}' was not found.`)
-    }
-
-    printer.state = PrinterNetworkState.Online;
-    printer.latestBeat = new Date();
-
     const printTask = first(this.#tasksOfPrinters.get(code) || []);
     return printTask;
   }
@@ -158,17 +151,30 @@ export default class PrinterService {
   }
 
   async detectOfflinePrinters() {
+    const printerManager = this.#server.getEntityManager<SvcPrinter>("svc_printer");
+    const printersInDb = await printerManager.findEntities({});
+
     const now = new Date();
-    for (const printer of this.#printers) {
-      if (printer.state === PrinterNetworkState.Offline) {
-        continue;
+    for (const printerInDb of printersInDb) {
+      let printer: PrinterStatusInfo | undefined = find(this.#printers, { code: printerInDb.code });
+      let printerNetworkState = printerInDb.networkState as PrinterNetworkState;
+      if (!printer) {
+        printerNetworkState = PrinterNetworkState.Offline;
+      } else {
+        if ((now as any) - (printer.latestBeat as any) > OFFLINE_MS) {
+          printerNetworkState = PrinterNetworkState.Offline;
+        } else {
+          printerNetworkState = PrinterNetworkState.Online;
+        }
       }
 
-      if ((now as any) - (printer.latestBeat as any) > OFFLINE_MS) {
-        printer.state = PrinterNetworkState.Offline;
-        await this.updatePrinterState({
-          code: printer.code,
-          state: printer.state,
+
+      if (printerInDb.networkState !== printerNetworkState) {
+        await printerManager.updateEntityById({
+          id: printerInDb.id,
+          entityToSave: {
+            networkState: printerNetworkState,
+          } satisfies Partial<SaveSvcPrinterInput>,
         });
       }
     }

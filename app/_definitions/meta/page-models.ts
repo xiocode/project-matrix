@@ -65,9 +65,10 @@ import ShopfloorAppDetailsPage from '../models/pages/ShopfloorAppDetailsPage';
 import ShopfloorAppListPage from '../models/pages/ShopfloorAppListPage';
 import ShopfloorDisplayDeviceListPage from '../models/pages/ShopfloorDisplayDeviceListPage';
 import ShopfloorStationListPage from '../models/pages/ShopfloorStationListPage';
-import SysActionListPage from '../models/pages/SysActionListPage';
-import SysSubSystemListPage from '../models/pages/SysSubSystemListPage';
-import SysWebhookListPage from '../models/pages/SysWebhookListPage';
+import sys$SysActionListPage from '../models/pages/sys/SysActionListPage';
+import sys$SysPrinterListPage from '../models/pages/sys/SysPrinterListPage';
+import sys$SysSubSystemListPage from '../models/pages/sys/SysSubSystemListPage';
+import sys$SysWebhookListPage from '../models/pages/sys/SysWebhookListPage';
 
 export default [
   account$AccountChangePasswordPage,
@@ -136,7 +137,8 @@ export default [
   ShopfloorAppListPage,
   ShopfloorDisplayDeviceListPage,
   ShopfloorStationListPage,
-  SysActionListPage,
-  SysSubSystemListPage,
-  SysWebhookListPage,
+  sys$SysActionListPage,
+  sys$SysPrinterListPage,
+  sys$SysSubSystemListPage,
+  sys$SysWebhookListPage,
 ] as TRapidPage[];

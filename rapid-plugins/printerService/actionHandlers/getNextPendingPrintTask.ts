@@ -3,7 +3,7 @@ import type PrinterPlugin from "../PrinterPlugin";
 import type { GetNextPendingPrintTaskInput } from "../PrinterPluginTypes";
 
 
-const cometWaitingSeconds = 30;
+const cometWaitingSeconds = 15;
 const COMET_WAITING_MS = cometWaitingSeconds * 1000;
 
 
@@ -18,6 +18,10 @@ export async function handler(
   config: GetNextPendingPrintTaskActionHandlerConfig,
 ) {
   const input: GetNextPendingPrintTaskInput = ctx.input;
+
+  await plugin.printerService.registerPrinter({
+    code: input.code,
+  });
 
   return new Promise((resolve, reject) => {
     let beginTime = new Date();
