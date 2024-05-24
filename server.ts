@@ -29,6 +29,7 @@ import entityWatchers from "./app/_definitions/meta/entity-watchers";
 import cronJobs from "./app/_definitions/meta/cron-jobs";
 
 import "dotenv/config";
+import PrinterPlugin from "rapid-plugins/printerService/PrinterPlugin";
 
 const isDevelopmentEnv = process.env.NODE_ENV === "development";
 
@@ -145,6 +146,7 @@ export async function startServer() {
       new CronJobPlugin({
         jobs: cronJobs,
       }),
+      new PrinterPlugin(),
     ],
   });
   await rapidServer.start();
