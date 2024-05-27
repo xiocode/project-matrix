@@ -454,6 +454,10 @@ export interface BaseLocation {
    */
   orderNum: number;
   /**
+   * 外部编码
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -902,6 +906,10 @@ export interface BasePartner {
    * 分类
    */
   categories?: any;
+  /**
+   * 外部编号
+   */
+  externalCode?: string;
   /**
    * 创建时间
    */
@@ -3382,6 +3390,113 @@ export interface MomGoodLocation {
 export type SaveMomGoodLocationInput = Omit<MomGoodLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 物品上架记录
+ */
+export interface MomGoodShelve {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 操作记录
+   */
+  operation?: Partial<MomInventoryOperation>;
+  /**
+   * 货品移动记录
+   */
+  good_transfer?: Partial<MomGoodTransfer>;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 跟踪码
+   */
+  trackingCode?: string;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 托盘号
+   */
+  palletNum?: string;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 打印状态
+   */
+  printStatus?: boolean;
+  /**
+   * 数量
+   */
+  quantity: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 转出位置
+   */
+  from?: Partial<BaseLocation>;
+  /**
+   * 转入位置
+   */
+  to?: Partial<BaseLocation>;
+  /**
+   * 转移时间
+   */
+  transferTime?: string;
+  /**
+   * 打印时间
+   */
+  printTime?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 物品上架记录
+ */
+export type SaveMomGoodShelveInput = Omit<MomGoodShelve, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 物品转移记录
  */
 export interface MomGoodTransfer {
@@ -3445,6 +3560,18 @@ export interface MomGoodTransfer {
    * 转移时间
    */
   transferTime?: string;
+  /**
+   * 入库托数
+   */
+  palletNum?: number;
+  /**
+   * 包数
+   */
+  packageNum?: string;
+  /**
+   * 生产日期
+   */
+  productionDate?: string;
   /**
    * 创建时间
    */
@@ -4380,6 +4507,14 @@ export interface MomInventoryApplication {
    */
   extra?: Record<string, any>;
   /**
+   * 合同号
+   */
+  contractNum?: string;
+  /**
+   * 供应商
+   */
+  supplier?: Partial<BasePartner>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4639,6 +4774,18 @@ export interface MomInventoryOperation {
    * 变更明细
    */
   transfers?: any;
+  /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
+   * 合同号
+   */
+  contractNum?: string;
+  /**
+   * 供应商
+   */
+  supplier?: Partial<BasePartner>;
   /**
    * 创建时间
    */
@@ -8033,61 +8180,6 @@ export interface ShopfloorStation {
 export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
- * 打印机
- */
-export interface SvcPrinter {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 网络状态
-   */
-  networkState: PrinterNetworkState;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 打印机
- */
-export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
  * 打印任务
  */
 export interface SvcPrintTask {
@@ -8145,6 +8237,61 @@ export interface SvcPrintTask {
  * 打印任务
  */
 export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印机
+ */
+export interface SvcPrinter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 网络状态
+   */
+  networkState: PrinterNetworkState;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  detetedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印机
+ */
+export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 系统操作

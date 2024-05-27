@@ -9,7 +9,7 @@ export default {
   async handler(ctx: ActionHandlerContext) {
     const {server, logger} = ctx;
     // handle kis config
-    await refreshKisTokens(server);
+    await refreshKisTokens(ctx, server);
 
     logger.info("Finished kis update tokens job...");
   },
@@ -17,7 +17,7 @@ export default {
 
 
 // handle kis config
-async function refreshKisTokens(server: IRpdServer) {
+async function refreshKisTokens(ctx: ActionHandlerContext, server: IRpdServer) {
   const kisConfigManager = server.getEntityManager("kis_config");
 
   const ksc = await kisConfigManager.findEntity({});
@@ -56,5 +56,5 @@ async function refreshKisTokens(server: IRpdServer) {
     }
   })
 
-  console.log(result)
+  console.log("Kis config updated:", result)
 }
