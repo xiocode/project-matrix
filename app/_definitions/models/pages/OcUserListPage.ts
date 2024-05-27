@@ -123,7 +123,45 @@ const page: RapidPage = {
           width: "150px",
         },
       ],
+      actionsColumnWidth: "200px",
       actions: [
+        {
+          $type: "rapidFormModalRecordAction",
+          code: "resetPassword",
+          actionText: "重置密码",
+          modalTitle: "重置密码",
+          form: {
+            $type: "rapidForm",
+            items: [
+              {
+                type: "password",
+                code: "password",
+                label: "新密码",
+                required: true,
+                rules: [
+                  // eslint-disable-next-line no-template-curly-in-string
+                  { required: true, message: "请输入${label}" },
+                ],
+              },
+            ],
+          },
+          onModalOk: [
+            {
+              $action: "sendHttpRequest",
+              url: `/api/resetPassword`,
+              method: "POST",
+              data: { password: "" },
+              $exps: {
+                data: "$event.args[0]"
+              },
+            },
+          ],
+          successMessage: "密码重置成功。",
+          errorMessage: "密码重置失败。",
+          $exps: {
+            "form.fixedFields.userId": "$slot.record.id",
+          },
+        },
         {
           $type: "sonicRecordActionEditEntity",
           code: "edit",
