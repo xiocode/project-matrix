@@ -52,6 +52,18 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "其它信息",
       type: "json",
     },
+    {
+      code: "contractNum",
+      name: "合同号",
+      type: "text",
+    },
+    {
+      code: "supplier",
+      name: "供应商",
+      type: "relation",
+      targetSingularCode: "base_partner",
+      targetIdColumnName: "partner_id",
+    },
   ],
 };
 

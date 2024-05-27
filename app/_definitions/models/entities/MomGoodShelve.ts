@@ -4,9 +4,9 @@ import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
-  code: "MomGoodTransfer",
-  name: "物品转移记录",
-  description: "物品移动的历史记录",
+  code: "MomGoodShelve",
+  name: "物品上架记录",
+  description: "物品上架的历史记录",
   fields: [
     {
       code: "operation",
@@ -16,11 +16,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "operation_id",
     },
     {
-      code: "orderNum",
-      name: "排序号",
-      type: "integer",
-      required: true,
-      defaultValue: "0",
+      code: "good_transfer",
+      name: "货品移动记录",
+      type: "relation",
+      targetSingularCode: "mom_good_transfer",
+      targetIdColumnName: "good_transfer_id",
     },
     {
       code: "good",
@@ -42,6 +42,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "material_id",
     },
     {
+      code: "palletNum",
+      name: "托盘号",
+      type: "text",
+    },
+    {
       code: "lotNum",
       name: "批号",
       type: "text",
@@ -60,6 +65,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "tags",
       name: "标签",
       type: "text",
+    },
+    {
+      code: "printStatus",
+      name: "打印状态",
+      type: "boolean",
     },
     {
       code: "quantity",
@@ -94,18 +104,8 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "datetime",
     },
     {
-      code: "palletNum",
-      name: "入库托数",
-      type: "integer",
-    },
-    {
-      code: "packageNum",
-      name: "包数",
-      type: "text",
-    },
-    {
-      code: "productionDate",
-      name: "生产日期",
+      code: "printTime",
+      name: "打印时间",
       type: "datetime",
     },
   ],
