@@ -11,6 +11,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "code",
       name: "仪器编号",
       type: "text",
+      required: true,
     },
     {
       code: "category",

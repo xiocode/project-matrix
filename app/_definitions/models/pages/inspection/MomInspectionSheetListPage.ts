@@ -24,6 +24,30 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "serialNum",
     },
     {
+      code: "sampleCount",
+      type: "auto",
+    },
+    {
+      code: "workOrder",
+      type: "auto",
+    },
+    {
+      code: "workTrack",
+      type: "auto",
+    },
+    {
+      code: "workTask",
+      type: "auto",
+    },
+    {
+      code: "rule",
+      type: "auto",
+    },
+    {
+      code: "routeProcess",
+      type: "auto",
+    },
+    {
       type: "auto",
       code: "sender",
     },

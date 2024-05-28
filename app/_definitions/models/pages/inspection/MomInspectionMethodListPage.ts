@@ -15,14 +15,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-    code: "mom_inspection_characteristic_category_list",
-    name: "检验特征类型",
-    title: "检验特征类型",
+    code: "mom_inspection_method_list",
+    name: "检验方法",
+    title: "检验方法",
     permissionCheck: { any: [] },
     view: [
         {
             $type: "sonicEntityList",
-            entityCode: "MomInspectionCharacteristicCategory",
+            entityCode: "MomInspectionMethod",
             viewMode: "table",
             orderBy: [
                 {
@@ -73,13 +73,13 @@ const page: RapidPage = {
                     actionType: "delete",
                     actionText: "删除",
                     dataSourceCode: "list",
-                    entityCode: "MomInspectionCharacteristicCategory",
+                    entityCode: "MomInspectionMethod",
                 },
             ],
             newForm: cloneDeep(formConfig),
             editForm: cloneDeep(formConfig),
             searchForm: {
-                entityCode: "MomInspectionCharacteristicCategory",
+                entityCode: "MomInspectionMethod",
                 items: [
                     {
                         type: "auto",
