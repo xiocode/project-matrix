@@ -12,6 +12,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "name",
       name: "名称",
       type: "text",
+      required: true,
     },
     {
       code: "description",

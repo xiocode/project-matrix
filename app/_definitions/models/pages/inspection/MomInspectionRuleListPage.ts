@@ -4,31 +4,34 @@ import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 const formConfig: Partial<RapidEntityFormConfig> = {
     items: [
         {
-            code: "name",
             type: "auto",
+            code: "category",
         },
         {
-            code: "description",
             type: "auto",
-        }
+            code: "material",
+        },
+        {
+            type: "auto",
+            code: "routeProcess",
+        },
+        {
+            type: "auto",
+            code: "config",
+        },
     ],
 };
 
 const page: RapidPage = {
-    code: "mom_inspection_characteristic_category_list",
-    name: "检验特征类型",
-    title: "检验特征类型",
+    code: "mom_inspection_rule_list",
+    name: "检验规则",
+    title: "检验规则",
     permissionCheck: { any: [] },
     view: [
         {
             $type: "sonicEntityList",
-            entityCode: "MomInspectionCharacteristicCategory",
+            entityCode: "MomInspectionRule",
             viewMode: "table",
-            orderBy: [
-                {
-                    field: "name",
-                },
-            ],
             listActions: [
                 {
                     $type: "sonicToolbarNewEntityButton",
@@ -44,21 +47,46 @@ const page: RapidPage = {
                     placeholder: "Search",
                     actionEventName: "onSearch",
                     filterMode: "contains",
-                    filterFields: ["name","description"],
+                    filterFields: ["code"],
                 },
             ],
-            columns: [
+            orderBy: [
+                {
+                    field: "material",
+                },
+            ],
+            pageSize: 20,
+            columns: [            
                 {
                     type: "auto",
-                    code: "name",
-                    width: "120px",
-                    fixed: "left",
+                    code: "category",
+                    rendererProps: {
+                        format: "{{name}}",
+                    },
                 },
                 {
                     type: "auto",
-                    code: "description",                    
-                    fixed: "left",
-                }
+                    code: "material",
+                    rendererProps: {
+                        format: "{{name}}",
+                    },
+                },
+                {
+                    type: "auto",
+                    code: "routeProcess",
+                    rendererProps: {
+                        format: "{{aliasName}}",
+                    },
+                },
+                {
+                    type: "auto",
+                    code: "config",
+                },
+                {
+                    type: "auto",
+                    code: "createdAt",
+                    width: "150px",
+                },
             ],
             actions: [
                 {
@@ -73,26 +101,11 @@ const page: RapidPage = {
                     actionType: "delete",
                     actionText: "删除",
                     dataSourceCode: "list",
-                    entityCode: "MomInspectionCharacteristicCategory",
+                    entityCode: "MomInspectionRule",
                 },
             ],
             newForm: cloneDeep(formConfig),
             editForm: cloneDeep(formConfig),
-            searchForm: {
-                entityCode: "MomInspectionCharacteristicCategory",
-                items: [
-                    {
-                        type: "auto",
-                        code: "name",
-                        filterMode: "contains",
-                    },
-                    {
-                        type: "auto",
-                        code: "description",
-                        filterMode: "contains",
-                    },
-                ],
-            },
         },
     ],
 };

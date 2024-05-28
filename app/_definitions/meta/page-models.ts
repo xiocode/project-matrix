@@ -1,4 +1,6 @@
 import type { RapidPage as TRapidPage } from '@ruiapp/rapid-extension';
+import account$AccountChangePasswordPage from '../models/pages/account/AccountChangePasswordPage';
+import account$AccountProfilePage from '../models/pages/account/AccountProfilePage';
 import AppNavItemListPage from '../models/pages/AppNavItemListPage';
 import BaseEmployeeListPage from '../models/pages/BaseEmployeeListPage';
 import BaseFormFieldListPage from '../models/pages/BaseFormFieldListPage';
@@ -23,12 +25,23 @@ import FinAccountListPage from '../models/pages/FinAccountListPage';
 import FinBusinessCategoryListPage from '../models/pages/FinBusinessCategoryListPage';
 import FinExpenseCategoryListPage from '../models/pages/FinExpenseCategoryListPage';
 import FinTransactionListPage from '../models/pages/FinTransactionListPage';
+import inspection$MomInspectionCategoryListPage from '../models/pages/inspection/MomInspectionCategoryListPage';
+import inspection$MomInspectionCharacteristicCategoryListPage from '../models/pages/inspection/MomInspectionCharacteristicCategoryListPage';
+import inspection$MomInspectionCharacteristicListPage from '../models/pages/inspection/MomInspectionCharacteristicListPage';
+import inspection$MomInspectionDefectCategoryListPage from '../models/pages/inspection/MomInspectionDefectCategoryListPage';
+import inspection$MomInspectionDefectListPage from '../models/pages/inspection/MomInspectionDefectListPage';
+import inspection$MomInspectionInstrumentCategoryListPage from '../models/pages/inspection/MomInspectionInstrumentCategoryListPage';
+import inspection$MomInspectionInstrumentListPage from '../models/pages/inspection/MomInspectionInstrumentListPage';
+import inspection$MomInspectionMethodListPage from '../models/pages/inspection/MomInspectionMethodListPage';
+import inspection$MomInspectionRuleListPage from '../models/pages/inspection/MomInspectionRuleListPage';
+import inspection$MomInspectionSheetDetailsPage from '../models/pages/inspection/MomInspectionSheetDetailsPage';
+import inspection$MomInspectionSheetListPage from '../models/pages/inspection/MomInspectionSheetListPage';
+import inspection$MomInspectionSheetListPage1 from '../models/pages/inspection/MomInspectionSheetListPage1';
 import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
-import MomInspectionSheetListPage from '../models/pages/MomInspectionSheetListPage';
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
@@ -63,18 +76,14 @@ import ShopfloorAppDetailsPage from '../models/pages/ShopfloorAppDetailsPage';
 import ShopfloorAppListPage from '../models/pages/ShopfloorAppListPage';
 import ShopfloorDisplayDeviceListPage from '../models/pages/ShopfloorDisplayDeviceListPage';
 import ShopfloorStationListPage from '../models/pages/ShopfloorStationListPage';
-import account$AccountChangePasswordPage from '../models/pages/account/AccountChangePasswordPage';
-import account$AccountProfilePage from '../models/pages/account/AccountProfilePage';
-import inspection$MomInspectionCategoryListPage from '../models/pages/inspection/MomInspectionCategoryListPage';
-import inspection$MomInspectionCharacteristicCategoryListPage from '../models/pages/inspection/MomInspectionCharacteristicCategoryListPage';
-import inspection$MomInspectionDefectCategoryListPage from '../models/pages/inspection/MomInspectionDefectCategoryListPage';
-import inspection$MomInspectionDefectListPage from '../models/pages/inspection/MomInspectionDefectListPage';
 import sys$SysActionListPage from '../models/pages/sys/SysActionListPage';
 import sys$SysPrinterListPage from '../models/pages/sys/SysPrinterListPage';
 import sys$SysSubSystemListPage from '../models/pages/sys/SysSubSystemListPage';
 import sys$SysWebhookListPage from '../models/pages/sys/SysWebhookListPage';
 
 export default [
+  account$AccountChangePasswordPage,
+  account$AccountProfilePage,
   AppNavItemListPage,
   BaseEmployeeListPage,
   BaseFormFieldListPage,
@@ -99,12 +108,23 @@ export default [
   FinBusinessCategoryListPage,
   FinExpenseCategoryListPage,
   FinTransactionListPage,
+  inspection$MomInspectionCategoryListPage,
+  inspection$MomInspectionCharacteristicCategoryListPage,
+  inspection$MomInspectionCharacteristicListPage,
+  inspection$MomInspectionDefectCategoryListPage,
+  inspection$MomInspectionDefectListPage,
+  inspection$MomInspectionInstrumentCategoryListPage,
+  inspection$MomInspectionInstrumentListPage,
+  inspection$MomInspectionMethodListPage,
+  inspection$MomInspectionRuleListPage,
+  inspection$MomInspectionSheetDetailsPage,
+  inspection$MomInspectionSheetListPage,
+  inspection$MomInspectionSheetListPage1,
   MetaModelDetailsPage,
   MetaModelListPage,
   MetaRouteListPage,
   MomGoodListPage,
   MomGoodLocationListPage,
-  MomInspectionSheetListPage,
   MomInventoryApplicationDetailsPage,
   MomInventoryApplicationListPage,
   MomInventoryBusinessTypeListPage,
@@ -139,12 +159,6 @@ export default [
   ShopfloorAppListPage,
   ShopfloorDisplayDeviceListPage,
   ShopfloorStationListPage,
-  account$AccountChangePasswordPage,
-  account$AccountProfilePage,
-  inspection$MomInspectionCategoryListPage,
-  inspection$MomInspectionCharacteristicCategoryListPage,
-  inspection$MomInspectionDefectCategoryListPage,
-  inspection$MomInspectionDefectListPage,
   sys$SysActionListPage,
   sys$SysPrinterListPage,
   sys$SysSubSystemListPage,
