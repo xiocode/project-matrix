@@ -7,6 +7,27 @@ import rapidAppDefinition from "~/rapidAppDefinition";
 import { generateRockConfigOfError, RapidEntity } from "@ruiapp/rapid-extension";
 
 export default {
+  onReceiveMessage(message, state, props) {
+    if (message.name === "submit") {
+      message.page.sendComponentMessage(`${props.$id}-rapidEntityForm-rapidForm`, {
+        name: "submit",
+      });
+    } else if (message.name === "setFieldsValue") {
+      message.page.sendComponentMessage(`${props.$id}-rapidEntityForm-rapidForm`, {
+        name: "setFieldsValue",
+        payload: message.payload,
+      });
+    } else if (message.name === "resetFields") {
+      message.page.sendComponentMessage(`${props.$id}-rapidEntityForm-rapidForm`, {
+        name: "resetFields",
+      });
+    } else if (message.name === "refreshView") {
+      message.page.sendComponentMessage(`${props.$id}-rapidEntityForm-rapidForm`, {
+        name: "refreshView",
+      });
+    }
+  },
+
   Renderer(context, props: SfEntityFormRockConfig) {
     const { items = [], column = 1, actions = [], entityConfig } = props;
 

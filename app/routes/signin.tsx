@@ -8,6 +8,7 @@ import styles from "antd/dist/antd.css";
 import RapidExtension, { RapidFormRockConfig } from "@ruiapp/rapid-extension";
 import { message } from "antd";
 import { RuiLoggerProvider } from "rui-logger";
+import { redirectOriginPath } from "~/utils/navigate";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -80,6 +81,7 @@ const initialPageConfig: PageConfig = {
                   });
 
                   message.success("登录成功");
+                  redirectOriginPath();
                 } catch (err: any) {
                   console.error("Signin failed.", err);
                   const errorMessage = err?.response?.data?.error?.message || err.message;
@@ -88,10 +90,10 @@ const initialPageConfig: PageConfig = {
                 }
               },
             },
-            {
-              $action: "goToPage",
-              pageCode: "home",
-            },
+            // {
+            //   $action: "goToPage",
+            //   pageCode: "home",
+            // },
           ],
         } as RapidFormRockConfig,
       ],

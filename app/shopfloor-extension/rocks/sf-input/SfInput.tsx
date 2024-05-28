@@ -28,7 +28,7 @@ export default {
     if (showScanner) {
       suffix = (
         <span
-          style={{ lineHeight: 1, fontSize: Math.floor(height * 0.6) }}
+          style={{ lineHeight: 1, fontSize: Math.floor(height * 0.8) }}
           onClick={(e) => {
             e.stopPropagation();
             scan(context, {
@@ -45,7 +45,7 @@ export default {
       );
     }
 
-    return <Input style={wrapStyle} value={text} suffix={suffix} />;
+    return <Input style={wrapStyle} value={text} suffix={suffix} {...eventHandlers} />;
   },
 
   ...SfInputMeta,
