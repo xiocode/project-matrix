@@ -117,6 +117,7 @@ export default function Begin() {
 
   const shopfloorAppConfigCache = LFStorage.get(SHOPFLOOR_APP_CONFIG_CACHE_KEY);
   const [currentAppId, setCurrentAppId] = useState<any>(shopfloorAppConfigCache?.appId);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   framework.registerExpressionVar("me", {
     profile: myProfile,
@@ -147,16 +148,17 @@ export default function Begin() {
       return new Page(framework, ruiPageConfig);
     }
 
-    const currentApp = shopfloorApps.find((app) => `${app.id}` === currentAppId);
+    const currentApp = shopfloorApps.find((app) => `${app.id}` === `${currentAppId}`);
     if (!currentApp) {
       return null;
     }
 
     ruiPageConfig = {
-      $id: `beginPage-${currentAppId}`,
+      $id: `beginPage-${currentAppId}_${modalOpen}`,
       view: [
         {
           $type: "htmlElement",
+          $id: "page_container",
           htmlTag: "div",
           attributes: {
             className: "rui-fullscreen rui-col-around",
@@ -168,6 +170,7 @@ export default function Begin() {
           children: [
             {
               $type: "htmlElement",
+              $id: "display-app-name",
               htmlTag: "div",
               attributes: {
                 className: "rui-row-mid",
@@ -175,41 +178,84 @@ export default function Begin() {
               style: { cursor: "pointer" },
               children: [
                 {
-                  $type: "antdDropdown",
-                  menu: {
-                    items: (shopfloorApps || []).map((app) => ({ key: `${app.id}`, label: app.name })),
-                    selectedKeys: currentApp ? [`${currentApp.id}`] : [],
-                    onClick: (e: any) => {
-                      setCurrentAppId(e.key);
-                      LFStorage.set(SHOPFLOOR_APP_CONFIG_CACHE_KEY, { ...(shopfloorAppConfigCache || {}), appId: e.key });
-                    },
+                  $id: "switch-app-btn",
+                  $type: "htmlElement",
+                  htmlTag: "span",
+                  attributes: {
+                    className: "rui-row-mid",
                   },
-                  children: {
-                    $type: "htmlElement",
-                    htmlTag: "span",
-                    attributes: {
-                      className: "rui-row-mid",
-                    },
-                    children: [
-                      {
-                        $type: "antdIcon",
-                        size: 56,
-                        name: "BarsOutlined",
+                  onClick: [
+                    {
+                      $action: "script",
+                      script: () => {
+                        setModalOpen(true);
                       },
-                      {
-                        $type: "htmlElement",
-                        htmlTag: "span",
-                        style: {
-                          fontSize: 36,
-                          marginLeft: 16,
-                        },
+                    },
+                  ],
+                  children: [
+                    {
+                      $type: "antdIcon",
+                      size: 56,
+                      name: "BarsOutlined",
+                    },
+                    {
+                      $type: "htmlElement",
+                      htmlTag: "span",
+                      style: {
+                        fontSize: 36,
+                        marginLeft: 16,
+                      },
+                      children: {
+                        $type: "text",
+                        text: `${currentApp?.name}`,
+                      },
+                    },
+                  ],
+                },
+                {
+                  $id: "switch-app-modal",
+                  $type: "antdModal",
+                  title: "切换应用",
+                  footer: false,
+                  open: modalOpen,
+                  children: [
+                    {
+                      $id: "apps-container",
+                      $type: "antdRow",
+                      gutter: [16, 16],
+                      children: (shopfloorApps || []).map((app) => ({
+                        $id: app.id,
+                        $type: "antdCol",
+                        span: 6,
                         children: {
-                          $type: "text",
-                          text: `${currentApp?.name}`,
+                          $type: "antdButton",
+                          $id: `${app.id}_button`,
+                          type: currentApp?.id === app.id ? "primary" : "",
+                          style: { width: "100%", height: "100%" },
+                          onClick: {
+                            $action: "script",
+                            script: () => {
+                              setCurrentAppId(app.id);
+                              LFStorage.set(SHOPFLOOR_APP_CONFIG_CACHE_KEY, { ...(shopfloorAppConfigCache || {}), appId: app.id });
+                              setModalOpen(false);
+                            },
+                          },
+                          children: {
+                            $type: "text",
+                            text: `${app.name}`,
+                          },
                         },
+                      })),
+                    },
+                  ],
+                  onCancel: [
+                    {
+                      $action: "script",
+                      script: () => {
+                        setModalOpen(false);
                       },
-                    ],
-                  },
+                    },
+                  ],
                 },
               ],
             },
@@ -272,7 +318,7 @@ export default function Begin() {
     } as any;
 
     return new Page(framework, ruiPageConfig);
-  }, [shopfloorApps, pageAccessAllowed, currentAppId]);
+  }, [shopfloorApps, pageAccessAllowed, currentAppId, modalOpen]);
 
   if (!page) {
     return <div></div>;
