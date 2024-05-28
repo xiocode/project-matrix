@@ -27,6 +27,7 @@ import type { MenuProps } from "antd";
 import { ExportOutlined, KeyOutlined, ProfileOutlined, UserOutlined } from "@ant-design/icons";
 import { isAccessAllowed } from "~/utils/access-control-utility";
 import { RuiLoggerProvider } from "rui-logger";
+import { redirectToSignin } from "~/utils/navigate";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -121,7 +122,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ).data?.user;
 
   if (!myProfile) {
-    return redirect("/signin");
+    return redirectToSignin(request.url);
   }
 
   const pageCode = params.code;
@@ -194,12 +195,12 @@ export default function Index() {
     {
       key: "profile",
       label: <a href="/account/profile">个人信息</a>,
-      icon: <ProfileOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+      icon: <ProfileOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />,
     },
     {
       key: "change_password",
       label: <a href="/account/change_password">修改密码</a>,
-      icon: <KeyOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+      icon: <KeyOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />,
     },
     {
       key: "signout",

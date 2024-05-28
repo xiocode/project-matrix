@@ -23,6 +23,7 @@ import rapidService from "~/rapidService";
 
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
 import { LFStorage } from "~/utils/storage-utils";
+import { redirectToSignin } from "~/utils/navigate";
 
 export function links() {
   return [antdStyles, indexStyles, customizeStyles, flexStyles].map((styles) => {
@@ -77,7 +78,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ).data?.user;
 
   if (!myProfile) {
-    return redirect("/signin");
+    return redirectToSignin(request.url);
   }
 
   const myAllowedActions = (

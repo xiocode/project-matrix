@@ -29,6 +29,7 @@ import rapidService from "~/rapidService";
 
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
 import { RuiLoggerProvider } from "rui-logger";
+import { redirectToSignin } from "~/utils/navigate";
 
 export function links() {
   return [antdStyles, indexStyles, customizeStyles, linkshopBuilderStyles, flexStyles].map((styles) => {
@@ -88,7 +89,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ).data?.user;
 
   if (!myProfile) {
-    return redirect("/signin");
+    return redirectToSignin(request.url);
   }
 
   return {
