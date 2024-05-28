@@ -36,7 +36,6 @@ import inspection$MomInspectionMethodListPage from '../models/pages/inspection/M
 import inspection$MomInspectionRuleListPage from '../models/pages/inspection/MomInspectionRuleListPage';
 import inspection$MomInspectionSheetDetailsPage from '../models/pages/inspection/MomInspectionSheetDetailsPage';
 import inspection$MomInspectionSheetListPage from '../models/pages/inspection/MomInspectionSheetListPage';
-import inspection$MomInspectionSheetListPage1 from '../models/pages/inspection/MomInspectionSheetListPage1';
 import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
@@ -119,7 +118,6 @@ export default [
   inspection$MomInspectionRuleListPage,
   inspection$MomInspectionSheetDetailsPage,
   inspection$MomInspectionSheetListPage,
-  inspection$MomInspectionSheetListPage1,
   MetaModelDetailsPage,
   MetaModelListPage,
   MetaRouteListPage,
