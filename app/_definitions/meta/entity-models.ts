@@ -50,7 +50,6 @@ import MomEquipmentCategory from '../models/entities/MomEquipmentCategory';
 import MomGood from '../models/entities/MomGood';
 import MomGoodLabel from '../models/entities/MomGoodLabel';
 import MomGoodLocation from '../models/entities/MomGoodLocation';
-import MomGoodShelve from '../models/entities/MomGoodShelve';
 import MomGoodTransfer from '../models/entities/MomGoodTransfer';
 import MomInspectionCategory from '../models/entities/MomInspectionCategory';
 import MomInspectionCharacteristic from '../models/entities/MomInspectionCharacteristic';
@@ -120,8 +119,8 @@ import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
 import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
 import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
 import ShopfloorStation from '../models/entities/ShopfloorStation';
-import SvcPrinter from '../models/entities/SvcPrinter';
 import SvcPrintTask from '../models/entities/SvcPrintTask';
+import SvcPrinter from '../models/entities/SvcPrinter';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
@@ -177,7 +176,6 @@ export default [
   autoConfigureRapidEntity(MomGood),
   autoConfigureRapidEntity(MomGoodLabel),
   autoConfigureRapidEntity(MomGoodLocation),
-  autoConfigureRapidEntity(MomGoodShelve),
   autoConfigureRapidEntity(MomGoodTransfer),
   autoConfigureRapidEntity(MomInspectionCategory),
   autoConfigureRapidEntity(MomInspectionCharacteristic),
@@ -247,8 +245,8 @@ export default [
   autoConfigureRapidEntity(ShopfloorAppVersion),
   autoConfigureRapidEntity(ShopfloorDisplayDevice),
   autoConfigureRapidEntity(ShopfloorStation),
-  autoConfigureRapidEntity(SvcPrinter),
   autoConfigureRapidEntity(SvcPrintTask),
+  autoConfigureRapidEntity(SvcPrinter),
   autoConfigureRapidEntity(SysAction),
   autoConfigureRapidEntity(SysActionGroup),
   autoConfigureRapidEntity(SysWebhook),

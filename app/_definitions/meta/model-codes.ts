@@ -49,7 +49,6 @@ export const entitySingularCodes = [
   'mom_good',
   'mom_good_label',
   'mom_good_location',
-  'mom_good_shelve',
   'mom_good_transfer',
   'mom_inspection_category',
   'mom_inspection_characteristic',
@@ -119,8 +118,8 @@ export const entitySingularCodes = [
   'shopfloor_app_version',
   'shopfloor_display_device',
   'shopfloor_station',
-  'svc_printer',
   'svc_print_task',
+  'svc_printer',
   'sys_action',
   'sys_action_group',
   'webhook',
@@ -139,7 +138,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'AppNavItem': [
     'id',
@@ -157,7 +156,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseBuilding': [
     'id',
@@ -170,7 +169,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseEmployee': [
     'id',
@@ -184,7 +183,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseFormField': [
     'id',
@@ -201,7 +200,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseGate': [
     'id',
@@ -214,7 +213,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseLocation': [
     'id',
@@ -230,7 +229,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseLot': [
     'id',
@@ -245,7 +244,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseMaterial': [
     'id',
@@ -270,7 +269,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseMaterialCategory': [
     'id',
@@ -286,7 +285,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseMaterialDocument': [
     'id',
@@ -298,7 +297,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseMaterialType': [
     'id',
@@ -311,7 +310,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseOffice': [
     'id',
@@ -325,7 +324,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BasePartner': [
     'id',
@@ -338,7 +337,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BasePartnerCategory': [
     'id',
@@ -350,7 +349,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseUnit': [
     'id',
@@ -367,7 +366,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BaseUnitCategory': [
     'id',
@@ -379,7 +378,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BpmActivity': [
     'id',
@@ -394,7 +393,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BpmApplication': [
     'id',
@@ -411,7 +410,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BpmTask': [
     'id',
@@ -424,7 +423,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BpmProcess': [
     'id',
@@ -443,7 +442,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BpmProcessCategory': [
     'id',
@@ -454,7 +453,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'BpmProcessRevision': [
     'id',
@@ -470,7 +469,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsContract': [
     'id',
@@ -489,7 +488,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsContractFile': [
     'id',
@@ -504,7 +503,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsContractFundingBudget': [
     'id',
@@ -521,7 +520,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsContractRelation': [
     'id',
@@ -533,7 +532,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsContractRelationKind': [
     'id',
@@ -546,7 +545,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsOrder': [
     'id',
@@ -567,7 +566,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'CbsOrderItem': [
     'id',
@@ -587,7 +586,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'EcmDocument': [
     'id',
@@ -606,7 +605,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'EcmRevision': [
     'id',
@@ -619,7 +618,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'EcmStorageObject': [
     'id',
@@ -631,7 +630,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'FinAccount': [
     'id',
@@ -646,7 +645,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'FinBusinessCategory': [
     'id',
@@ -659,7 +658,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'FinExpenseCategory': [
     'id',
@@ -672,7 +671,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'FinTransaction': [
     'id',
@@ -691,7 +690,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'KisConfig': [
     'id',
@@ -714,7 +713,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'DataDictionary': [
     'id',
@@ -733,7 +732,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'DataDictionaryEntry': [
     'id',
@@ -750,7 +749,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'Model': [
     'id',
@@ -765,7 +764,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'Property': [
     'id',
@@ -793,7 +792,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'Route': [
     'id',
@@ -810,7 +809,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomAssemblyMain': [
     'id',
@@ -829,7 +828,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomAssemblyPart': [
     'id',
@@ -843,7 +842,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomEquipment': [
     'id',
@@ -860,7 +859,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomEquipmentCategory': [
     'id',
@@ -873,7 +872,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomGood': [
     'id',
@@ -897,7 +896,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomGoodLabel': [
     'id',
@@ -910,7 +909,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomGoodLocation': [
     'id',
@@ -923,33 +922,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
-  ],
-  'MomGoodShelve': [
-    'id',
-    'operation',
-    'good_transfer',
-    'good',
-    'trackingCode',
-    'material',
-    'palletNum',
-    'lotNum',
-    'binNum',
-    'serialNum',
-    'tags',
-    'printStatus',
-    'quantity',
-    'unit',
-    'from',
-    'to',
-    'transferTime',
-    'printTime',
-    'createdAt',
-    'createdBy',
-    'updatedAt',
-    'updatedBy',
-    'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomGoodTransfer': [
     'id',
@@ -967,15 +940,14 @@ const entityFieldCodes = {
     'from',
     'to',
     'transferTime',
-    'palletNum',
     'packageNum',
-    'productionDate',
+    'manufactureDate',
     'createdAt',
     'createdBy',
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionCategory': [
     'id',
@@ -988,7 +960,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionCharacteristic': [
     'id',
@@ -1011,7 +983,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionCharacteristicCategory': [
     'id',
@@ -1022,7 +994,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionDefect': [
     'id',
@@ -1035,7 +1007,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionDefectCategory': [
     'id',
@@ -1049,7 +1021,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionDefectStat': [
     'id',
@@ -1062,7 +1034,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionInstrument': [
     'id',
@@ -1073,7 +1045,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionInstrumentCategory': [
     'id',
@@ -1084,7 +1056,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionMeasurement': [
     'id',
@@ -1102,7 +1074,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionMethod': [
     'id',
@@ -1113,7 +1085,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionRule': [
     'id',
@@ -1126,7 +1098,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInspectionSheet': [
     'id',
@@ -1153,7 +1125,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventory': [
     'id',
@@ -1182,7 +1154,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryApplication': [
     'id',
@@ -1195,12 +1167,13 @@ const entityFieldCodes = {
     'extra',
     'contractNum',
     'supplier',
+    'operationState',
     'createdAt',
     'createdBy',
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryApplicationItem': [
     'id',
@@ -1215,12 +1188,15 @@ const entityFieldCodes = {
     'tags',
     'quantity',
     'unit',
+    'shelfLife',
+    'manufactureDate',
+    'inspectState',
     'createdAt',
     'createdBy',
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryBusinessType': [
     'id',
@@ -1232,7 +1208,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryLabel': [
     'id',
@@ -1245,7 +1221,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryOperation': [
     'id',
@@ -1265,7 +1241,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryStatTable': [
     'id',
@@ -1276,7 +1252,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomInventoryStatTrigger': [
     'id',
@@ -1287,7 +1263,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomLab': [
     'id',
@@ -1301,7 +1277,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomLine': [
     'id',
@@ -1314,7 +1290,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomManufacturingResourcePlan': [
     'id',
@@ -1329,7 +1305,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMasterProductionSchedule': [
     'id',
@@ -1352,7 +1328,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMasterProductionScheduleItem': [
     'id',
@@ -1365,7 +1341,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialBreakdown': [
     'id',
@@ -1380,7 +1356,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialBreakdownPart': [
     'id',
@@ -1395,7 +1371,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialInventoryBalance': [
     'id',
@@ -1415,7 +1391,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialInventoryLog': [
     'id',
@@ -1444,7 +1420,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialLotWarehouseInventoryBalance': [
     'id',
@@ -1459,7 +1435,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialLotWarehouseInventoryLog': [
     'id',
@@ -1476,7 +1452,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialWarehouseInventoryBalance': [
     'id',
@@ -1492,7 +1468,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomMaterialWarehouseInventoryLog': [
     'id',
@@ -1512,7 +1488,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomPackage': [
     'id',
@@ -1523,7 +1499,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomPackageGood': [
     'id',
@@ -1535,7 +1511,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomProcess': [
     'id',
@@ -1549,7 +1525,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomProcessCategory': [
     'id',
@@ -1561,7 +1537,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomRoute': [
     'id',
@@ -1575,7 +1551,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomRouteProcess': [
     'id',
@@ -1592,7 +1568,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomRouteProcessInput': [
     'id',
@@ -1606,7 +1582,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomRouteProcessOutput': [
     'id',
@@ -1620,7 +1596,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomRouteTemplate': [
     'id',
@@ -1631,7 +1607,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomRouteTemplateProcess': [
     'id',
@@ -1643,7 +1619,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomShift': [
     'id',
@@ -1655,7 +1631,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomShop': [
     'id',
@@ -1669,7 +1645,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomStation': [
     'id',
@@ -1685,7 +1661,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomWarehouse': [
     'id',
@@ -1701,7 +1677,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomWorkOrder': [
     'id',
@@ -1726,7 +1702,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomWorkReport': [
     'id',
@@ -1749,7 +1725,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomWorkTask': [
     'id',
@@ -1780,7 +1756,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomWorkTeam': [
     'id',
@@ -1795,7 +1771,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'MomWorkTrack': [
     'id',
@@ -1817,7 +1793,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'OcDepartment': [
     'id',
@@ -1832,7 +1808,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'OcRole': [
     'id',
@@ -1847,7 +1823,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'OcUser': [
     'id',
@@ -1864,7 +1840,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmMilestone': [
     'id',
@@ -1880,7 +1856,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmPhase': [
     'id',
@@ -1897,7 +1873,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmProject': [
     'id',
@@ -1920,7 +1896,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmProjectBudget': [
     'id',
@@ -1942,7 +1918,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmProjectCategory': [
     'id',
@@ -1954,7 +1930,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmProjectCostBudget': [
     'id',
@@ -1968,7 +1944,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmProjectCostCategory': [
     'id',
@@ -1981,7 +1957,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'PmProjectEvent': [
     'id',
@@ -1993,7 +1969,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'ShopfloorApp': [
     'id',
@@ -2011,7 +1987,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'ShopfloorAppStep': [
     'id',
@@ -2027,7 +2003,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'ShopfloorAppVersion': [
     'id',
@@ -2040,7 +2016,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'ShopfloorDisplayDevice': [
     'id',
@@ -2054,7 +2030,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'ShopfloorStation': [
     'id',
@@ -2068,20 +2044,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
-  ],
-  'SvcPrinter': [
-    'id',
-    'code',
-    'description',
-    'networkState',
-    'orderNum',
-    'createdAt',
-    'createdBy',
-    'updatedAt',
-    'updatedBy',
-    'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'SvcPrintTask': [
     'id',
@@ -2095,7 +2058,20 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
+  ],
+  'SvcPrinter': [
+    'id',
+    'code',
+    'description',
+    'networkState',
+    'orderNum',
+    'createdAt',
+    'createdBy',
+    'updatedAt',
+    'updatedBy',
+    'deletedAt',
+    'deletedBy',
   ],
   'SysAction': [
     'id',
@@ -2109,7 +2085,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'SysActionGroup': [
     'id',
@@ -2121,7 +2097,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
   'Webhook': [
     'id',
@@ -2137,7 +2113,7 @@ const entityFieldCodes = {
     'updatedAt',
     'updatedBy',
     'deletedAt',
-    'detetedBy',
+    'deletedBy',
   ],
 } as const;
 export type TEntityFieldCodes = typeof entityFieldCodes;

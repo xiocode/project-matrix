@@ -23,6 +23,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "state",
     },
+    {
+      type: "auto",
+      code: "operationState",
+    },
   ],
 };
 
@@ -91,6 +95,11 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "state",
+          width: "150px",
+        },
+        {
+          type: "auto",
+          code: "operationState",
           width: "150px",
         },
       ],

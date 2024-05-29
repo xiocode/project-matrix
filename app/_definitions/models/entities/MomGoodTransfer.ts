@@ -94,17 +94,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "datetime",
     },
     {
-      code: "palletNum",
-      name: "入库托数",
-      type: "integer",
-    },
-    {
       code: "packageNum",
       name: "包数",
       type: "text",
     },
     {
-      code: "productionDate",
+      code: "manufactureDate",
       name: "生产日期",
       type: "datetime",
     },

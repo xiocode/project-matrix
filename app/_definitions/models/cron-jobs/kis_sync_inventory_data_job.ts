@@ -10,7 +10,7 @@ export default {
     const {server, logger} = ctx;
     logger.info("Executing kis inventory data sync job...");
 
-    await syncKisInventoryData(ctx, server);
+    // await syncKisInventoryData(ctx, server);
 
     logger.info("Finished kis inventory data sync job...");
   },
