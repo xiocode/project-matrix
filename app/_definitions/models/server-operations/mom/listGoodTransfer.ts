@@ -59,7 +59,7 @@ async function listGoodTransfers(server: IRpdServer, input: QueryGoodTransferInp
                         and operation_id = $1
                       group by operation_id, material_id, lot_num)
       select r.*,
-             case when bm.is_inspection_free then 'qualified' else coalesce(mis.result, 'uninspected') end as inspect_state,
+             case when bm.is_inspection_free then 'inspectFree' else coalesce(mis.result, 'uninspected') end as inspect_state,
              jsonb_build_object('id', bm.id, 'code', bm.code, 'name', bm.name, 'specification', bm.specification,
                                 'qualityGuaranteePeriod', bm.quality_guarantee_period,
                                 'defaultUnit', to_jsonb(bu.*))                                             AS material
