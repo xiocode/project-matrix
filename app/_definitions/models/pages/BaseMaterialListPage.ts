@@ -49,6 +49,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "isInspectionFree",
+    },
+    {
+      type: "auto",
       code: "state",
     },
   ],

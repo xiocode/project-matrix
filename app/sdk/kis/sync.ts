@@ -498,8 +498,6 @@ class KisDataSync {
               quantity: entry.Fauxqty,
               unit: { id: material?.defaultUnit?.id },
               trackingCode: entry.FKFPeriod,
-              shelfLife: entry.FKFPeriod,
-              manufactureDate: entry.FKFDate,
             } as SaveMomInventoryApplicationItemInput;
           });
 

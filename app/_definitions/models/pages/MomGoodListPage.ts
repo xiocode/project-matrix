@@ -17,7 +17,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "serialNum",
+      code: "binNum",
+      label: "托盘号",
     },
     {
       type: "auto",
@@ -92,7 +93,8 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "serialNum",
+          code: "binNum",
+          title: "托盘号",
           width: "200px",
         },
         {
