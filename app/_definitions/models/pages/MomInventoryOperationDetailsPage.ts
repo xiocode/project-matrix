@@ -211,21 +211,6 @@ const page: RapidPage = {
                 format: "{{name}}",
               },
             },
-            {
-              type: "auto",
-              code: "shelfLife",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "manufactureDate",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "inspectState",
-              width: "100px",
-            },
           ],
           $exps: {
             "fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
@@ -326,6 +311,14 @@ const page: RapidPage = {
                   width: "80px",
                   rendererProps: {
                     format: "{{name}}",
+                  },
+                },
+                {
+                  type: "auto",
+                  code: "material",
+                  title: "保质期",
+                  rendererProps: {
+                    format: "{{qualityGuaranteePeriod}}",
                   },
                 },
                 {

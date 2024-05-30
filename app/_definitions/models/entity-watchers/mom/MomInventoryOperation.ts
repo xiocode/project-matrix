@@ -86,21 +86,23 @@ export default [
             });
           }
 
-          const materialLotsToInspect = uniqWith(
-            map(transfers, (item) => {
-              return {material_id: (item as any).material_id, lot_num: item.lotNum};
-            }),
-            (item1, item2) => {
-              return item1.material_id === item2.material_id && item1.lot_num === item2.lot_num;
-            },
-          );
+          if (businessType?.name === "采购入库") {
+            const materialLotsToInspect = uniqWith(
+              map(transfers, (item) => {
+                return {material_id: (item as any).material_id, lot_num: item.lotNum};
+              }),
+              (item1, item2) => {
+                return item1.material_id === item2.material_id && item1.lot_num === item2.lot_num;
+              },
+            );
 
-          for (const materialLot of materialLotsToInspect) {
-            await saveInspectionSheet(server, {
-              lotNum: materialLot.lot_num,
-              material: {id: materialLot.material_id},
-              state: "pending",
-            });
+            for (const materialLot of materialLotsToInspect) {
+              await saveInspectionSheet(server, {
+                lotNum: materialLot.lot_num,
+                material: {id: materialLot.material_id},
+                state: "pending",
+              });
+            }
           }
         }
 

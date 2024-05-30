@@ -4491,18 +4491,6 @@ export interface MomInventoryApplicationItem {
    */
   unit?: Partial<BaseUnit>;
   /**
-   * 保质期
-   */
-  shelfLife?: number;
-  /**
-   * 生产日期
-   */
-  manufactureDate?: string;
-  /**
-   * 检验状态
-   */
-  inspectState?: QualificationState;
-  /**
    * 创建时间
    */
   createdAt?: string;

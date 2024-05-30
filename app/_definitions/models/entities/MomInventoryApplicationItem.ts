@@ -73,22 +73,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_unit",
       targetIdColumnName: "unit_id",
     },
-    {
-      code: "shelfLife",
-      name: "保质期",
-      type: "integer",
-    },
-    {
-      code: "manufactureDate",
-      name: "生产日期",
-      type: "datetime",
-    },
-    {
-      code: "inspectState",
-      name: "检验状态",
-      type: "option",
-      dataDictionary: "QualificationState",
-    },
   ],
 };
 
