@@ -186,6 +186,7 @@ export type InspectionDetermineType =
  * 检验结果
  */
 export type InspectionResult =
+  | 'inspectFree'
   | 'uninspected'
   | 'qualified'
   | 'unqualified'
@@ -493,6 +494,7 @@ export type PublishState =
  * 质量状态
  */
 export type QualificationState =
+  | 'inspectFree'
   | 'uninspected'
   | 'qualified'
   | 'unqualified'
