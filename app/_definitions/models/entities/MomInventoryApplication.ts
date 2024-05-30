@@ -1,6 +1,7 @@
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
+import {BusinessTaskState} from "~/_definitions/meta/data-dictionary-types";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
@@ -63,6 +64,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "base_partner",
       targetIdColumnName: "partner_id",
+    },
+    {
+      code: "operationState",
+      name: "库存操作状态",
+      type: "option",
+      dataDictionary: "MomInventoryOperationState",
     },
   ],
 };

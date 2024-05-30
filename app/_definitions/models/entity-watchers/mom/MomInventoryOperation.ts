@@ -1,26 +1,71 @@
-import type { EntityWatchHandlerContext, EntityWatcher, IRpdServer } from "@ruiapp/rapid-core";
-import { every, map, uniqWith } from "lodash";
-import { MomInventoryOperationType } from "~/_definitions/meta/data-dictionary-types";
+import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
+import {map, uniqWith} from "lodash";
+import {MomInventoryOperationType} from "~/_definitions/meta/data-dictionary-types";
 import {
-  type MomInventoryBusinessType,
   type BaseLot,
-  type MomInventory,
+  MomGood,
+  MomGoodTransfer,
+  type MomInspectionSheet,
+  type MomInventoryBusinessType,
   type MomInventoryOperation,
+  MomInventoryStatTable,
+  MomInventoryStatTrigger,
   type SaveBaseLotInput,
   type SaveMomInspectionSheetInput,
-  type MomInspectionSheet,
-  MomInventoryStatTrigger,
-  MomInventoryStatTable,
-  MomGoodTransfer,
 } from "~/_definitions/meta/entity-types";
-import InventoryStatService, { StatTableConfig } from "~/services/InventoryStatService";
+import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 
 export default [
+  {
+    eventName: "entity.create",
+    modelSingularCode: "mom_inventory_operation",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
+      const {server, payload} = ctx;
+      const changes = payload.after;
+      try {
+        if (changes?.application_id) {
+          const applicationManager = server.getEntityManager<MomGood>("mom_inventory_application");
+          await applicationManager.updateEntityById({
+            id: changes.application_id,
+            entityToSave: {
+              operationState: "processing",
+            },
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
+  {
+    eventName: "entity.delete",
+    modelSingularCode: "mom_good_transfer",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+      const {server, payload} = ctx;
+      const changes = payload.before;
+      try {
+        const momInventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findById(changes.operation_id);
+
+        if (momInventoryOperation?.operationType === "in") {
+          if (changes.good_id) {
+            const goodManager = server.getEntityManager<MomGood>("mom_good");
+            const good = await goodManager.findById(changes.good_id);
+
+            if (good) {
+              await goodManager.deleteById(good.id);
+            }
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
   {
     eventName: "entity.update",
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
-      const { server, payload } = ctx;
+      const {server, payload} = ctx;
       const changes: Partial<MomInventoryOperation> = payload.changes;
       const after = payload.after;
       if (after.operationType === "in") {
@@ -34,7 +79,7 @@ export default [
             // 生成批次信息
             await saveMaterialLotInfo(server, {
               lotNum: transfer.lotNum,
-              material: { id: (transfer as any).material_id },
+              material: {id: (transfer as any).material_id},
               sourceType: businessType?.config?.defaultSourceType || null,
               qualificationState: businessType?.config?.defaultQualificationState || "qualified",
               isAOD: false,
@@ -43,7 +88,7 @@ export default [
 
           const materialLotsToInspect = uniqWith(
             map(transfers, (item) => {
-              return { material_id: (item as any).material_id, lot_num: item.lotNum };
+              return {material_id: (item as any).material_id, lot_num: item.lotNum};
             }),
             (item1, item2) => {
               return item1.material_id === item2.material_id && item1.lot_num === item2.lot_num;
@@ -53,7 +98,7 @@ export default [
           for (const materialLot of materialLotsToInspect) {
             await saveInspectionSheet(server, {
               lotNum: materialLot.lot_num,
-              material: { id: materialLot.material_id },
+              material: {id: materialLot.material_id},
               state: "pending",
             });
           }

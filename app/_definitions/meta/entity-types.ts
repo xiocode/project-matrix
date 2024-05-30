@@ -98,7 +98,7 @@ export interface AppClient {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -173,7 +173,7 @@ export interface AppNavItem {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -228,7 +228,7 @@ export interface BaseBuilding {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -287,7 +287,7 @@ export interface BaseEmployee {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -358,7 +358,7 @@ export interface BaseFormField {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -413,7 +413,7 @@ export interface BaseGate {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -480,7 +480,7 @@ export interface BaseLocation {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -543,7 +543,7 @@ export interface BaseLot {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -646,7 +646,7 @@ export interface BaseMaterial {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -713,7 +713,7 @@ export interface BaseMaterialCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -764,7 +764,7 @@ export interface BaseMaterialDocument {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -819,7 +819,7 @@ export interface BaseMaterialType {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -878,7 +878,7 @@ export interface BaseOffice {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -933,7 +933,7 @@ export interface BasePartner {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -984,7 +984,7 @@ export interface BasePartnerCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1055,7 +1055,7 @@ export interface BaseUnit {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1106,7 +1106,7 @@ export interface BaseUnitCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1169,7 +1169,7 @@ export interface BpmActivity {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1240,7 +1240,7 @@ export interface BpmApplication {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1295,7 +1295,7 @@ export interface BpmTask {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1374,7 +1374,7 @@ export interface BpmProcess {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1421,7 +1421,7 @@ export interface BpmProcessCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1488,7 +1488,7 @@ export interface BpmProcessRevision {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1567,7 +1567,7 @@ export interface CbsContract {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1630,7 +1630,7 @@ export interface CbsContractFile {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1701,7 +1701,7 @@ export interface CbsContractFundingBudget {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1752,7 +1752,7 @@ export interface CbsContractRelation {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1807,7 +1807,7 @@ export interface CbsContractRelationKind {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1894,7 +1894,7 @@ export interface CbsOrder {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -1977,7 +1977,7 @@ export interface CbsOrderItem {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2056,7 +2056,7 @@ export interface EcmDocument {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2111,7 +2111,7 @@ export interface EcmRevision {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2162,7 +2162,7 @@ export interface EcmStorageObject {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2225,7 +2225,7 @@ export interface FinAccount {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2280,7 +2280,7 @@ export interface FinBusinessCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2335,7 +2335,7 @@ export interface FinExpenseCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2414,7 +2414,7 @@ export interface FinTransaction {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2509,7 +2509,7 @@ export interface KisConfig {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2588,7 +2588,7 @@ export interface DataDictionary {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2659,7 +2659,7 @@ export interface DataDictionaryEntry {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2722,7 +2722,7 @@ export interface Model {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2837,7 +2837,7 @@ export interface Property {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2908,7 +2908,7 @@ export interface Route {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -2987,7 +2987,7 @@ export interface MomAssemblyMain {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3046,7 +3046,7 @@ export interface MomAssemblyPart {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3117,7 +3117,7 @@ export interface MomEquipment {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3172,7 +3172,7 @@ export interface MomEquipmentCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3271,7 +3271,7 @@ export interface MomGood {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3326,7 +3326,7 @@ export interface MomGoodLabel {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3381,120 +3381,13 @@ export interface MomGoodLocation {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
  * 物品位置
  */
 export type SaveMomGoodLocationInput = Omit<MomGoodLocation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 物品上架记录
- */
-export interface MomGoodShelve {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 操作记录
-   */
-  operation?: Partial<MomInventoryOperation>;
-  /**
-   * 货品移动记录
-   */
-  good_transfer?: Partial<MomGoodTransfer>;
-  /**
-   * 物品
-   */
-  good?: Partial<MomGood>;
-  /**
-   * 跟踪码
-   */
-  trackingCode?: string;
-  /**
-   * 物品
-   */
-  material?: Partial<BaseMaterial>;
-  /**
-   * 托盘号
-   */
-  palletNum?: string;
-  /**
-   * 批号
-   */
-  lotNum?: string;
-  /**
-   * 箱号
-   */
-  binNum?: string;
-  /**
-   * 序列号
-   */
-  serialNum?: string;
-  /**
-   * 标签
-   */
-  tags?: string;
-  /**
-   * 打印状态
-   */
-  printStatus?: boolean;
-  /**
-   * 数量
-   */
-  quantity: number;
-  /**
-   * 单位
-   */
-  unit?: Partial<BaseUnit>;
-  /**
-   * 转出位置
-   */
-  from?: Partial<BaseLocation>;
-  /**
-   * 转入位置
-   */
-  to?: Partial<BaseLocation>;
-  /**
-   * 转移时间
-   */
-  transferTime?: string;
-  /**
-   * 打印时间
-   */
-  printTime?: string;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 物品上架记录
- */
-export type SaveMomGoodShelveInput = Omit<MomGoodShelve, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 物品转移记录
@@ -3561,17 +3454,13 @@ export interface MomGoodTransfer {
    */
   transferTime?: string;
   /**
-   * 入库托数
-   */
-  palletNum?: number;
-  /**
    * 包数
    */
   packageNum?: string;
   /**
    * 生产日期
    */
-  productionDate?: string;
+  manufactureDate?: string;
   /**
    * 创建时间
    */
@@ -3595,7 +3484,7 @@ export interface MomGoodTransfer {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3650,7 +3539,7 @@ export interface MomInspectionCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3745,7 +3634,7 @@ export interface MomInspectionCharacteristic {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3792,7 +3681,7 @@ export interface MomInspectionCharacteristicCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3847,7 +3736,7 @@ export interface MomInspectionDefect {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3906,7 +3795,7 @@ export interface MomInspectionDefectCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -3961,7 +3850,7 @@ export interface MomInspectionDefectStat {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4008,7 +3897,7 @@ export interface MomInspectionInstrument {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4055,7 +3944,7 @@ export interface MomInspectionInstrumentCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4130,7 +4019,7 @@ export interface MomInspectionMeasurement {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4177,7 +4066,7 @@ export interface MomInspectionMethod {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4232,7 +4121,7 @@ export interface MomInspectionRule {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4343,7 +4232,7 @@ export interface MomInspectionSheet {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4462,7 +4351,7 @@ export interface MomInventory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4515,6 +4404,10 @@ export interface MomInventoryApplication {
    */
   supplier?: Partial<BasePartner>;
   /**
+   * 库存操作状态
+   */
+  operationState?: MomInventoryOperationState;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4537,7 +4430,7 @@ export interface MomInventoryApplication {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4598,6 +4491,18 @@ export interface MomInventoryApplicationItem {
    */
   unit?: Partial<BaseUnit>;
   /**
+   * 保质期
+   */
+  shelfLife?: number;
+  /**
+   * 生产日期
+   */
+  manufactureDate?: string;
+  /**
+   * 检验状态
+   */
+  inspectState?: QualificationState;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4620,7 +4525,7 @@ export interface MomInventoryApplicationItem {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4671,7 +4576,7 @@ export interface MomInventoryBusinessType {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4726,7 +4631,7 @@ export interface MomInventoryLabel {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4809,7 +4714,7 @@ export interface MomInventoryOperation {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4856,7 +4761,7 @@ export interface MomInventoryStatTable {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4903,7 +4808,7 @@ export interface MomInventoryStatTrigger {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -4962,7 +4867,7 @@ export interface MomLab {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5017,7 +4922,7 @@ export interface MomLine {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5080,7 +4985,7 @@ export interface MomManufacturingResourcePlan {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5175,7 +5080,7 @@ export interface MomMasterProductionSchedule {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5230,7 +5135,7 @@ export interface MomMasterProductionScheduleItem {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5293,7 +5198,7 @@ export interface MomMaterialBreakdown {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5356,7 +5261,7 @@ export interface MomMaterialBreakdownPart {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5439,7 +5344,7 @@ export interface MomMaterialInventoryBalance {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5558,7 +5463,7 @@ export interface MomMaterialInventoryLog {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5621,7 +5526,7 @@ export interface MomMaterialLotWarehouseInventoryBalance {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5692,7 +5597,7 @@ export interface MomMaterialLotWarehouseInventoryLog {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5759,7 +5664,7 @@ export interface MomMaterialWarehouseInventoryBalance {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5842,7 +5747,7 @@ export interface MomMaterialWarehouseInventoryLog {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5889,7 +5794,7 @@ export interface MomPackage {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5940,7 +5845,7 @@ export interface MomPackageGood {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -5999,7 +5904,7 @@ export interface MomProcess {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6050,7 +5955,7 @@ export interface MomProcessCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6109,7 +6014,7 @@ export interface MomRoute {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6180,7 +6085,7 @@ export interface MomRouteProcess {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6239,7 +6144,7 @@ export interface MomRouteProcessInput {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6298,7 +6203,7 @@ export interface MomRouteProcessOutput {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6345,7 +6250,7 @@ export interface MomRouteTemplate {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6396,7 +6301,7 @@ export interface MomRouteTemplateProcess {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6447,7 +6352,7 @@ export interface MomShift {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6506,7 +6411,7 @@ export interface MomShop {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6573,7 +6478,7 @@ export interface MomStation {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6640,7 +6545,7 @@ export interface MomWarehouse {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6743,7 +6648,7 @@ export interface MomWorkOrder {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6838,7 +6743,7 @@ export interface MomWorkReport {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -6965,7 +6870,7 @@ export interface MomWorkTask {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7028,7 +6933,7 @@ export interface MomWorkTeam {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7119,7 +7024,7 @@ export interface MomWorkTrack {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7182,7 +7087,7 @@ export interface OcDepartment {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7245,7 +7150,7 @@ export interface OcRole {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7316,7 +7221,7 @@ export interface OcUser {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7383,7 +7288,7 @@ export interface PmMilestone {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7454,7 +7359,7 @@ export interface PmPhase {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7549,7 +7454,7 @@ export interface PmProject {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7640,7 +7545,7 @@ export interface PmProjectBudget {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7691,7 +7596,7 @@ export interface PmProjectCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7750,7 +7655,7 @@ export interface PmProjectCostBudget {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7805,7 +7710,7 @@ export interface PmProjectCostCategory {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7856,7 +7761,7 @@ export interface PmProjectEvent {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7931,7 +7836,7 @@ export interface ShopfloorApp {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -7998,7 +7903,7 @@ export interface ShopfloorAppStep {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -8053,7 +7958,7 @@ export interface ShopfloorAppVersion {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -8112,7 +8017,7 @@ export interface ShopfloorDisplayDevice {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -8171,68 +8076,13 @@ export interface ShopfloorStation {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
  * 车间配置系统-工位
  */
 export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 打印机
- */
-export interface SvcPrinter {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 网络状态
-   */
-  networkState: PrinterNetworkState;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  detetedBy?: Partial<OcUser>;
-}
-
-/**
- * 打印机
- */
-export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 打印任务
@@ -8285,13 +8135,68 @@ export interface SvcPrintTask {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
  * 打印任务
  */
 export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印机
+ */
+export interface SvcPrinter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 网络状态
+   */
+  networkState: PrinterNetworkState;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印机
+ */
+export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 系统操作
@@ -8344,7 +8249,7 @@ export interface SysAction {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -8395,7 +8300,7 @@ export interface SysActionGroup {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**
@@ -8462,7 +8367,7 @@ export interface Webhook {
   /**
    * 删除人
    */
-  detetedBy?: Partial<OcUser>;
+  deletedBy?: Partial<OcUser>;
 }
 
 /**

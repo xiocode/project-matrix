@@ -5,6 +5,18 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: "auto",
+      code: "good",
+      label: "货品",
+      listDataFindOptions: {
+        properties: ["id", "material", "lotNum", "binNum", "serialNum", "trackingCode", "tags", "quantity", "unit", "location"],
+      },
+      formControlProps: {
+        listTextFormat: "{{material.code}}-{{material.name}}-{{lotNum}}",
+        listFilterFields: ["label"],
+      },
+    },
+    {
+      type: "auto",
       code: "material",
       listDataFindOptions: {
         properties: ["id", "code", "name", "defaultUnit"],
@@ -21,18 +33,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "binNum",
-    },
-    {
-      type: "auto",
-      code: "serialNum",
-    },
-    {
-      type: "auto",
-      code: "trackingCode",
-    },
-    {
-      type: "auto",
-      code: "tags",
+      label: "托盘号"
     },
     {
       type: "auto",
@@ -41,14 +42,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "unit",
-    },
-    {
-      type: "treeSelect",
-      code: "from",
-      formControlProps: {
-        listDataSourceCode: "locations",
-        listParentField: "parent.id",
-      },
     },
     {
       type: "treeSelect",
@@ -207,26 +200,6 @@ const page: RapidPage = {
             },
             {
               type: "auto",
-              code: "binNum",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "serialNum",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "trackingCode",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "tags",
-              width: "100px",
-            },
-            {
-              type: "auto",
               code: "quantity",
               width: "100px",
             },
@@ -237,6 +210,21 @@ const page: RapidPage = {
               rendererProps: {
                 format: "{{name}}",
               },
+            },
+            {
+              type: "auto",
+              code: "shelfLife",
+              width: "100px",
+            },
+            {
+              type: "auto",
+              code: "manufactureDate",
+              width: "100px",
+            },
+            {
+              type: "auto",
+              code: "inspectState",
+              width: "100px",
             },
           ],
           $exps: {
@@ -300,14 +288,6 @@ const page: RapidPage = {
                 },
               ],
               columns: [
-                // {
-                //   type: 'auto',
-                //   code: 'good',
-                //   width: '100px',
-                //   rendererProps: {
-                //     format: "{{lotNum}} / {{serialNum}}",
-                //   },
-                // },
                 {
                   type: "auto",
                   code: "material",
@@ -333,26 +313,7 @@ const page: RapidPage = {
                   type: "auto",
                   code: "binNum",
                   width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "serialNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "trackingCode",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "tags",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "palletNum",
-                  width: "100px",
+                  title: "托盘号",
                 },
                 {
                   type: "auto",
@@ -366,11 +327,6 @@ const page: RapidPage = {
                   rendererProps: {
                     format: "{{name}}",
                   },
-                },
-                {
-                  type: "auto",
-                  code: "from",
-                  width: "150px",
                 },
                 {
                   type: "auto",
@@ -398,177 +354,6 @@ const page: RapidPage = {
                   actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomGoodTransfer",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-                  },
-                },
-              ],
-              newForm: cloneDeep(formConfig),
-              editForm: cloneDeep(formConfig),
-              stores: [
-                {
-                  type: "entityStore",
-                  name: "locations",
-                  entityCode: "BaseLocation",
-                  properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-                  filters: [],
-                  orderBy: [
-                    {
-                      field: "orderNum",
-                    },
-                  ],
-                },
-              ],
-              $exps: {
-                "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
-              },
-            },
-          ],
-        },
-        {
-          key: "items",
-          label: "库存上架明细",
-          children: [
-            {
-              $id: "goodShelveList",
-              $type: "sonicEntityList",
-              entityCode: "MomGoodShelve",
-              viewMode: "table",
-              fixedFilters: [
-                {
-                  field: "operation",
-                  operator: "exists",
-                  filters: [
-                    {
-                      field: "id",
-                      operator: "eq",
-                      value: "",
-                    },
-                  ],
-                },
-              ],
-              listActions: [
-                {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-                  },
-                },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
-              pageSize: -1,
-              orderBy: [
-                {
-                  field: "createdAt",
-                },
-              ],
-              columns: [
-                // {
-                //   type: 'auto',
-                //   code: 'good',
-                //   width: '100px',
-                //   rendererProps: {
-                //     format: "{{lotNum}} / {{serialNum}}",
-                //   },
-                // },
-                {
-                  type: "auto",
-                  code: "material",
-                  rendererType: "anchor",
-                  rendererProps: {
-                    children: {
-                      $type: "materialLabelRenderer",
-                      $exps: {
-                        value: "$slot.value",
-                      },
-                    },
-                    $exps: {
-                      href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
-                    },
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "lotNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "binNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "serialNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "trackingCode",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "tags",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "palletNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "quantity",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "unit",
-                  width: "80px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "from",
-                  width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "to",
-                  width: "150px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-              ],
-              actions: [
-                {
-                  $type: "sonicRecordActionEditEntity",
-                  code: "edit",
-                  actionType: "edit",
-                  actionText: "修改",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-                  },
-                },
-                {
-                  $type: "sonicRecordActionDeleteEntity",
-                  code: "delete",
-                  actionType: "delete",
-                  actionText: "删除",
-                  dataSourceCode: "list",
-                  entityCode: "MomGoodShelve",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },

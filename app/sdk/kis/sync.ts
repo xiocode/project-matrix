@@ -13,7 +13,7 @@ import {
   SaveBaseMaterialInput,
   SaveBasePartnerInput,
   SaveBaseUnitInput,
-  SaveMomGoodTransferInput, SaveMomInventoryApplicationInput,
+  SaveMomGoodTransferInput, SaveMomInventoryApplicationInput, SaveMomInventoryApplicationItemInput,
   SaveMomInventoryOperationInput,
   SaveMomWarehouseInput,
 } from "~/_definitions/meta/entity-types";
@@ -24,6 +24,7 @@ interface SyncOptions {
   mapToEntity: (item: any) => Promise<any>;
   filter?: (item: any) => boolean;
   payload?: any;
+  syncAll?: boolean | true;
 }
 
 class KisDataSync {
@@ -120,9 +121,10 @@ class KisDataSync {
           results.push(...data.List);
         }
 
-        const totalPage = data?.TotalPage || data?.TotalPages || 1;
-
-        if (page >= totalPage) break;
+        if (options.syncAll) {
+          const totalPage = data?.TotalPage || data?.TotalPages || 1;
+          if (page >= totalPage) break;
+        }
 
         await this.sleep(500);
 
@@ -422,7 +424,8 @@ class KisDataSync {
             unit: {id: material?.defaultUnit?.id},
             to: {id: warehouseLocations.find(location => location.externalCode === warehouse.externalCode)?.id},
           } as SaveMomGoodTransferInput),
-          payload: {Data: {GItemID: material.externalCode, GStockID: warehouse.externalCode}}
+          payload: {Data: {GItemID: material.externalCode, GStockID: warehouse.externalCode}},
+          syncAll: false,
         })
       )
     );
@@ -464,44 +467,71 @@ class KisDataSync {
       throw new Error("API client is not initialized");
     }
 
-    const employees: BaseEmployee[] = await this.server.getEntityManager("base_employee").findEntities({
-      filters: [{operator: "notNull", field: "externalCode"}],
-    });
+    const [materials, employees, partners] = await Promise.all([
+      this.server.getEntityManager("base_material").findEntities({
+        filters: [{ operator: "notNull", field: "externalCode" }],
+        properties: ["id", "externalCode", "defaultUnit"],
+      }),
+      this.server.getEntityManager("base_employee").findEntities({
+        filters: [{ operator: "notNull", field: "externalCode" }],
+      }),
+      this.server.getEntityManager("base_partner").findEntities({
+        filters: [{ operator: "notNull", field: "externalCode" }],
+      }),
+    ]);
 
-    const partners: BasePartner[] = await this.server.getEntityManager("base_partner").findEntities({
-      filters: [{operator: "notNull", field: "externalCode"}],
-    });
+    const materialMap = new Map(materials.map(material => [material.externalCode, material]));
+    const employeeMap = new Map(employees.map(employee => [employee.externalCode, employee]));
+    const partnerMap = new Map(partners.map(partner => [partner.externalCode, partner]));
 
     const syncFunctions = [
-      // 采购入库通知单
       this.createListSyncFunction({
         url: "/koas/app007140/api/materialreceiptnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
+          const { Entry, Head } = item;
+          const entities = Entry.map((entry: any) => {
+            const material = materialMap.get(String(entry.FItemID));
+            return {
+              material,
+              lotNum: entry.FBatchNo,
+              quantity: entry.Fauxqty,
+              unit: { id: material?.defaultUnit?.id },
+              trackingCode: entry.FKFPeriod,
+              shelfLife: entry.FKFPeriod,
+              manufactureDate: entry.FKFDate,
+            } as SaveMomInventoryApplicationItemInput;
+          });
+
+          const items = entities.map((entity: SaveMomInventoryApplicationItemInput) => ({
+            ...entity,
+          }));
 
           return {
-            code: item.Head.FBillNo,
-            contractNum: item.Head.FHeadSelfP0338,
-            supplier: {id: partners.find(partner => partner.externalCode === String(item.Head.FSupplyID))?.id},
-            applicant: {id: employees.find(employee => employee.externalCode === String(item.Head.FEmpID))?.id},
+            code: Head.FBillNo,
+            contractNum: Head.FHeadSelfP0338,
+            businessType: 1, // 采购入库
+            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
             operationType: 'in',
             state: 'processing',
-          } as SaveMomInventoryApplicationInput
+            items,
+          } as SaveMomInventoryApplicationInput;
         },
         payload: {
           OrderBy: {
             Property: "Fdate",
-            Type: "Desc"
-          }
-        }
+            Type: "Desc",
+          },
+        },
       }),
-    ]
+    ];
 
-
-    for (const syncListFunction of syncFunctions) {
-      await syncListFunction();
+    try {
+      await Promise.all(syncFunctions.map(syncFunc => syncFunc()));
+    } catch (error) {
+      console.error("Error during inventory sync:", error);
     }
-
   }
 }
 
