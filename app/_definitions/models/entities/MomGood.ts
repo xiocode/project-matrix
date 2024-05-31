@@ -96,6 +96,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "扩展信息",
       type: "json",
     },
+    {
+      code: "manufactureDate",
+      name: "生产日期",
+      type: "datetime",
+    },
+    {
+      code: "validityDate",
+      name: "有效期至",
+      type: "datetime",
+    },
   ],
 };
 
