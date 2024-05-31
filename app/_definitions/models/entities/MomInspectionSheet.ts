@@ -1,6 +1,7 @@
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
+import type {PropertySequenceConfig} from "@ruiapp/rapid-core";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
@@ -12,6 +13,39 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "code",
       name: "检验单号",
       type: "text",
+      config: {
+        sequence: {
+          enabled: true,
+          config: {
+            segments: [
+              {
+                type: "literal",
+                content: "IS-"
+              },
+              {
+                type: "year",
+                length: 4,
+              },
+              {
+                type: "month",
+                length: 2,
+                padding: "0",
+              },
+              {
+                type: "dayOfMonth",
+                length: 2,
+                padding: "0",
+              },
+              {
+                type: "autoIncrement",
+                scope: "",
+                period: "day",
+                length: 3,
+              },
+            ],
+          },
+        } satisfies PropertySequenceConfig,
+      },
     },
     {
       code: "state",
@@ -73,6 +107,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_work_task",
       targetIdColumnName: "work_task_id",
+    },
+    {
+      code: "inventoryOperation",
+      name: "库存操作单",
+      type: "relation",
+      targetSingularCode: "mom_inventory_operation",
+      targetIdColumnName: "inventory_operation_id",
     },
     {
       code: "rule",

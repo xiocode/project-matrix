@@ -4194,6 +4194,10 @@ export interface MomInspectionSheet {
    */
   workTask?: Partial<MomWorkTask>;
   /**
+   * 库存操作单
+   */
+  inventoryOperation?: Partial<MomInventoryOperation>;
+  /**
    * 检验规则
    */
   rule?: Partial<MomInspectionRule>;
