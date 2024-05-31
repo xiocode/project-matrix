@@ -103,6 +103,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "生产日期",
       type: "datetime",
     },
+    {
+      code: "validityDate",
+      name: "有效期至",
+      type: "datetime",
+    },
   ],
 };
 

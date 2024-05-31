@@ -84,6 +84,8 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         quantity: transfer.palletWeight,
         unit: {id: unit?.id},
         state: "normal",
+        manufactureDate: input.manufactureDate,
+        validityDate: dayjs(input.manufactureDate).add(parseInt(material?.qualityGuaranteePeriod || '0', 10), 'day').format('YYYY-MM-DD'),
       } as SaveMomGoodInput
       goods.push(good);
 

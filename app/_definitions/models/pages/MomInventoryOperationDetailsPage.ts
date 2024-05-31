@@ -5,18 +5,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: "auto",
-      code: "good",
-      label: "货品",
-      listDataFindOptions: {
-        properties: ["id", "material", "lotNum", "binNum", "serialNum", "trackingCode", "tags", "quantity", "unit", "location"],
-      },
-      formControlProps: {
-        listTextFormat: "{{material.code}}-{{material.name}}-{{lotNum}}",
-        listFilterFields: ["label"],
-      },
-    },
-    {
-      type: "auto",
       code: "material",
       listDataFindOptions: {
         properties: ["id", "code", "name", "defaultUnit"],
@@ -54,6 +42,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "transferTime",
+    },
+    {
+      type: "auto",
+      code: "packageNum",
     },
   ],
   onValuesChange: [
@@ -320,6 +312,20 @@ const page: RapidPage = {
                   rendererProps: {
                     format: "{{qualityGuaranteePeriod}}",
                   },
+                },
+                {
+                  type: "auto",
+                  code: "good",
+                  title: "生产日期",
+                  fieldName: "good.manufactureDate",
+                  fieldType: "date",
+                },
+                {
+                  type: "auto",
+                  code: "good",
+                  title: "有效期至",
+                  fieldName: "good.validityDate",
+                  fieldType: "date",
                 },
                 {
                   type: "auto",

@@ -3249,6 +3249,14 @@ export interface MomGood {
    */
   extra?: Record<string, any>;
   /**
+   * 生产日期
+   */
+  manufactureDate?: string;
+  /**
+   * 有效期至
+   */
+  validityDate?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3461,6 +3469,10 @@ export interface MomGoodTransfer {
    * 生产日期
    */
   manufactureDate?: string;
+  /**
+   * 有效期至
+   */
+  validityDate?: string;
   /**
    * 创建时间
    */
