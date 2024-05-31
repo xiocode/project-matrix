@@ -48,14 +48,19 @@ importers:
         specifier: ~0.1.28
         version: 0.1.28(lodash@4.17.21)
       '@ruiapp/rapid-core':
-        specifier: ~0.1.41
-        version: 0.1.41(winston@3.11.0)
+        specifier: ~0.1.42
+        version: 0.1.42(winston@3.11.0)
       '@ruiapp/rapid-express':
-        specifier: ~0.1.41
-        version: 0.1.41(express@4.18.3)(winston@3.11.0)
+        specifier: ~0.1.42
+        version: 0.1.42(express@4.18.3)(winston@3.11.0)
       '@ruiapp/rapid-extension':
+<<<<<<< HEAD
         specifier: ~0.1.6
         version: 0.1.6(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@ruiapp/move-style@0.1.28(lodash@4.17.21))(@ruiapp/react-renderer@0.1.28(@ruiapp/move-style@0.1.28(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+=======
+        specifier: ~0.1.5
+        version: 0.1.5(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@ruiapp/move-style@0.1.28(lodash@4.17.21))(@ruiapp/react-renderer@0.1.28(@ruiapp/move-style@0.1.28(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+>>>>>>> 09fd838 (增加工作项相关模型)
       '@ruiapp/react-renderer':
         specifier: ~0.1.28
         version: 0.1.28(@ruiapp/move-style@0.1.28(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1838,13 +1843,13 @@ packages:
       lodash: ^4.17.21
       tough-cookie: ^4.1.3
 
-  '@ruiapp/rapid-core@0.1.41':
-    resolution: {integrity: sha512-QYyPbWB9zoW/wIorg8nVV6vnMqphUbVED1mbhRFAO14ykHC0N89/c73gdvLmtyfmwb5qpji7urfOT2ugJBwk2g==}
+  '@ruiapp/rapid-core@0.1.42':
+    resolution: {integrity: sha512-QBoPlgOHp9HpbvUPYFLyE2wn3dvdIe4MmlNfaWiTcgl6y02dClpTpxjN+Xt1joQe3q7amfNfcrGtaQianC0IWA==}
     peerDependencies:
       winston: ^3.11.0
 
-  '@ruiapp/rapid-express@0.1.41':
-    resolution: {integrity: sha512-TUjGM32YXRWWmdNcbgthBtUY7xIgNfT4gk0ifW4I837UwSVPVMWRsB6QoEDP/k16yPraTXkOmT+XtQ1+UoDOkw==}
+  '@ruiapp/rapid-express@0.1.42':
+    resolution: {integrity: sha512-lJX7AsnxvI01TrsRqi4baajW7nMKvd+emp41ES4KboNNjNZslyKe9l1RqfVmRO8UmGynvNXaG08pgobDSGzgPQ==}
     peerDependencies:
       express: ^4.18.2
 
@@ -2571,6 +2576,7 @@ packages:
   are-we-there-yet@2.0.0:
     resolution: {integrity: sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw==}
     engines: {node: '>=10'}
+    deprecated: This package is no longer supported.
 
   arg@4.1.3:
     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
@@ -3925,6 +3931,7 @@ packages:
   gauge@3.0.2:
     resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}
     engines: {node: '>=10'}
+    deprecated: This package is no longer supported.
 
   generic-names@4.0.0:
     resolution: {integrity: sha512-ySFolZQfw9FoDb3ed9d80Cm9f0+r7qj+HJkWjeD9RBfpxEVTlVhol+gvaQB/78WbwYfbnNh8nWHHBSlg072y6A==}
@@ -9536,7 +9543,7 @@ snapshots:
       lodash: 4.17.21
       tough-cookie: 4.1.4
 
-  '@ruiapp/rapid-core@0.1.41(winston@3.11.0)':
+  '@ruiapp/rapid-core@0.1.42(winston@3.11.0)':
     dependencies:
       bcrypt: 5.1.1
       cron: 3.1.7
@@ -9552,9 +9559,9 @@ snapshots:
       - encoding
       - supports-color
 
-  '@ruiapp/rapid-express@0.1.41(express@4.18.3)(winston@3.11.0)':
+  '@ruiapp/rapid-express@0.1.42(express@4.18.3)(winston@3.11.0)':
     dependencies:
-      '@ruiapp/rapid-core': 0.1.41(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.42(winston@3.11.0)
       express: 4.18.3
     transitivePeerDependencies:
       - encoding

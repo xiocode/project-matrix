@@ -1,17 +1,12 @@
-import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
-import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { TDictionaryCodes } from "../../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "app",
-  code: "PmProjectCostCategory",
-  name: "项目成本类型",
+  code: "PmWorkItemResolution",
+  name: "工作项关闭决定",
   fields: [
-    {
-      code: "code",
-      name: "Code",
-      type: "text",
-    },
     {
       code: "name",
       name: "名称",
@@ -25,10 +20,18 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: "orderNum",
-      name: "排序号",
+      name: "排序",
       type: "integer",
       required: true,
       defaultValue: "0",
+    },
+    {
+      code: "state",
+      name: "状态",
+      required: true,
+      type: "option",
+      dataDictionary: "EnabledDisabledState",
+      defaultValue: "'enabled'",
     },
   ],
 };
