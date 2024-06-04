@@ -5,7 +5,7 @@ import {
   type BaseLot,
   MomGood,
   MomGoodTransfer,
-  type MomInspectionSheet,
+  type MomInspectionSheet, MomInventoryApplication,
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   MomInventoryStatTable,
@@ -90,6 +90,13 @@ export default [
             }
 
           }
+
+          await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
+            id: after.application_id,
+            entityToSave: {
+              operationState: "done",
+            },
+          });
 
           if (businessType?.name === "采购入库") {
             const materialLotsToInspect = uniqWith(
