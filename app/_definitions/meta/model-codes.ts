@@ -1116,6 +1116,7 @@ const entityFieldCodes = {
     'workOrder',
     'workTrack',
     'workTask',
+    'inventoryOperation',
     'rule',
     'routeProcess',
     'sender',

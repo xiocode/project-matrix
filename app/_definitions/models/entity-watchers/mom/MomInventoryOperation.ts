@@ -77,13 +77,18 @@ export default [
 
           for (const transfer of transfers) {
             // 生成批次信息
-            await saveMaterialLotInfo(server, {
-              lotNum: transfer.lotNum,
-              material: {id: (transfer as any).material_id},
-              sourceType: businessType?.config?.defaultSourceType || null,
-              qualificationState: businessType?.config?.defaultQualificationState || "qualified",
-              isAOD: false,
-            });
+            try {
+              await saveMaterialLotInfo(server, {
+                lotNum: transfer.lotNum,
+                material: {id: (transfer as any).material_id},
+                sourceType: businessType?.config?.defaultSourceType || null,
+                qualificationState: businessType?.config?.defaultQualificationState || "qualified",
+                isAOD: false,
+              });
+            } catch (e) {
+              console.error(e);
+            }
+
           }
 
           if (businessType?.name === "采购入库") {
@@ -98,6 +103,7 @@ export default [
 
             for (const materialLot of materialLotsToInspect) {
               await saveInspectionSheet(server, {
+                inventoryOperation: {id: after.id},
                 lotNum: materialLot.lot_num,
                 material: {id: materialLot.material_id},
                 state: "pending",

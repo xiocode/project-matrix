@@ -2,11 +2,11 @@ import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/ra
 import type {BaseMaterial,} from "~/_definitions/meta/entity-types";
 import type {InspectionResult} from "~/_definitions/meta/data-dictionary-types";
 
-export type QueryGoodTransferInput = {
+export type QueryGoodInTransferInput = {
   operationId: number;
 };
 
-export type QueryGoodTransferOutput = {
+export type QueryGoodInTransferOutput = {
   operationId: number;
   material: Partial<BaseMaterial>;
   lotNum: string;
@@ -25,19 +25,19 @@ export type QueryGoodTransferOutput = {
 
 
 export default {
-  code: "listGoodTransfers",
+  code: "listGoodInTransfers",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
     const {server} = ctx;
-    const input: QueryGoodTransferInput = ctx.input;
+    const input: QueryGoodInTransferInput = ctx.input;
 
-    const transferOutputs = await listGoodTransfers(server, input);
+    const transferOutputs = await listGoodInTransfers(server, input);
 
     ctx.output = transferOutputs;
   },
 } satisfies ServerOperation;
 
-async function listGoodTransfers(server: IRpdServer, input: QueryGoodTransferInput) {
+async function listGoodInTransfers(server: IRpdServer, input: QueryGoodInTransferInput) {
 
   const transfers = await server.queryDatabaseObject(
     `
@@ -66,7 +66,8 @@ async function listGoodTransfers(server: IRpdServer, input: QueryGoodTransferInp
       from result r
              inner join base_materials bm on r.material_id = bm.id
              inner join base_units bu on bm.default_unit_id = bu.id
-             left join mom_inspection_sheets mis on r.material_id = mis.material_id and r.lot_num = mis.lot_num;`,
+             left join mom_inspection_sheets mis on r.material_id = mis.material_id and r.lot_num = mis.lot_num;
+`,
     [input.operationId],
   );
 
@@ -82,7 +83,7 @@ async function listGoodTransfers(server: IRpdServer, input: QueryGoodTransferInp
       waitingPalletAmount: item.waiting_pallet_amount,
       shelves: item.shelves,
       inspectState: item.inspect_state,
-    } as QueryGoodTransferOutput;
+    } as QueryGoodInTransferOutput;
   });
 
   return transferOutputs;

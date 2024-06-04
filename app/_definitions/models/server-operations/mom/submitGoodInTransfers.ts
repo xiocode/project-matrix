@@ -1,5 +1,6 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
+  MomGood,
   MomGoodLocation,
   MomGoodTransfer, SaveMomGoodInput,
   SaveMomGoodLocationInput,
@@ -24,7 +25,7 @@ export default {
     const {server} = ctx;
     const input: CreateGoodTransferInput = ctx.input;
 
-    await submitGoodTransfers(server, input);
+    await submitGoodInTransfers(server, input);
 
     ctx.output = {
       result: ctx.input,
@@ -32,8 +33,8 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function submitGoodTransfers(server: IRpdServer, input: CreateGoodTransferInput) {
-  const goodManager = server.getEntityManager<MomGoodLocation>("mom_good");
+async function submitGoodInTransfers(server: IRpdServer, input: CreateGoodTransferInput) {
+  const goodManager = server.getEntityManager<MomGood>("mom_good");
   const goodLocationManager = server.getEntityManager<MomGoodLocation>("mom_good_location");
   const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
 
