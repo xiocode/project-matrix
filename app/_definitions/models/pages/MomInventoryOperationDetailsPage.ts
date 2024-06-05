@@ -1,6 +1,111 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
+const createFormConfig: Partial<RapidEntityFormConfig> = {
+  items: [
+    {
+      type: "auto",
+      code: "material",
+      listDataFindOptions: {
+        properties: ["id", "code", "name", "defaultUnit"],
+      },
+      formControlProps: {
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["label"],
+      },
+    },
+    {
+      type: "auto",
+      code: "lotNum",
+    },
+    // {
+    //   type: "auto",
+    //   code: "binNum",
+    //   label: "托盘号",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "quantity",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "unit",
+    // },
+    // {
+    //   type: "treeSelect",
+    //   code: "to",
+    //   formControlProps: {
+    //     listDataSourceCode: "locations",
+    //     listParentField: "parent.id",
+    //   },
+    // },
+    {
+      type: "datetime",
+      code: "manufactureDate",
+    },
+    {
+      type: "auto",
+      code: "packageNum",
+    },
+    {
+      type: "auto",
+      code: "transfers",
+      formControlType: "editableTable",
+      formControlProps: {
+        width: "100%",
+        columns: [
+          {
+            name: "index",
+            title: "序号",
+            width: 50,
+            fixed: "left",
+            control: `
+              function(r, index){
+                return index + 1;
+              }
+            `,
+          },
+          {
+            name: "palletWeight",
+            title: "数量",
+            control: "number",
+            width: 100,
+          },
+          {
+            name: "unit",
+            title: "单位",
+            width: 60,
+          },
+        ],
+      },
+    },
+  ],
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `
+        const changedValues = event.args[0] || {};
+        if(changedValues.hasOwnProperty('material')) {
+          const _ = event.framework.getExpressionVars()._;
+          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
+          const material = _.find(materials, function (item) { return item.id == changedValues.material });
+          const unitId = _.get(material, 'defaultUnit.id');
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              unit: unitId,
+            }
+          });
+        }
+      `,
+    },
+  ],
+  customRequest: {
+    method: "post",
+    url: "/app/createGoodTransfers",
+  },
+};
+
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
@@ -21,7 +126,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "binNum",
-      label: "托盘号"
+      label: "托盘号",
     },
     {
       type: "auto",
@@ -358,7 +463,7 @@ const page: RapidPage = {
                   },
                 },
               ],
-              newForm: cloneDeep(formConfig),
+              newForm: cloneDeep(createFormConfig),
               editForm: cloneDeep(formConfig),
               stores: [
                 {
@@ -377,6 +482,7 @@ const page: RapidPage = {
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
+                "newForm.fixedFields.operationId": "$rui.parseQuery().id",
               },
             },
           ],
