@@ -19,7 +19,7 @@ export type CreateGoodTransferInput = {
 
 // PDA入库操作接口
 export default {
-  code: "submitGoodTransfers",
+  code: "submitGoodInTransfers",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
     const {server} = ctx;
