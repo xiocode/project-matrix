@@ -3474,6 +3474,10 @@ export interface MomGoodTransfer {
    */
   validityDate?: string;
   /**
+   * 打印时间
+   */
+  printTime?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;

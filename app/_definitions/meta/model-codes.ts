@@ -946,6 +946,7 @@ const entityFieldCodes = {
     'packageNum',
     'manufactureDate',
     'validityDate',
+    'printTime',
     'createdAt',
     'createdBy',
     'updatedAt',

@@ -142,6 +142,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "有效期至",
       type: "datetime",
     },
+    {
+      code: "printTime",
+      name: "打印时间",
+      type: "datetime",
+    },
   ],
 };
 
