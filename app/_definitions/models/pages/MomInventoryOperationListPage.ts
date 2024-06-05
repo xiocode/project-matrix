@@ -3,10 +3,10 @@ import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "code",
-    },
+    // {
+    //   type: "auto",
+    //   code: "code",
+    // },
     {
       type: "auto",
       code: "application",

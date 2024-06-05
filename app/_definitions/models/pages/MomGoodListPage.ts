@@ -123,6 +123,12 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
+        {
+          type: "auto",
+          code: "id",
+          title: "检验状态",
+          width: "100px",
+        },
       ],
       actions: [
         {

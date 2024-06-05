@@ -42,18 +42,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "unit",
     },
-    {
-      code: "shelfLife",
-      type: "auto",
-    },
-    {
-      code: "manufactureDate",
-      type: "auto",
-    },
-    {
-      code: "inspectState",
-      type: "auto",
-    },
   ],
   onValuesChange: [
     {
@@ -223,21 +211,6 @@ const page: RapidPage = {
                   rendererProps: {
                     format: "{{name}}",
                   },
-                },
-                {
-                  code: "shelfLife",
-                  type: "auto",
-                  width: "100px",
-                },
-                {
-                  code: "manufactureDate",
-                  type: "auto",
-                  width: "100px",
-                },
-                {
-                  code: "inspectState",
-                  type: "auto",
-                  width: "100px",
                 },
               ],
               actions: [

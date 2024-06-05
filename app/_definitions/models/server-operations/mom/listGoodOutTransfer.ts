@@ -16,6 +16,7 @@ export type QueryGoodOutTransferOutput = {
     id: number;
     binNum: string;
     quantity: number;
+    cumulativeQuantity: number;
     location: {
       id: number;
       code: string;
@@ -69,13 +70,14 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                                 miai.material_id,
                                                 miai.lot_num),
            inventory_operation_goods_cte AS (SELECT ioc.operation_id,
-                                                    mg.*
+                                                    mg.*,
+                                                    SUM(mg.quantity) OVER (PARTITION BY mg.material_id,
+                                                      mg.lot_num ORDER BY mg.validity_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_quantity
                                              FROM mom_goods mg
                                                     INNER JOIN inventory_operation_cte ioc
                                                                ON mg.material_id = ioc.material_id
                                                                  AND mg.lot_num = ioc.lot_num
-                                             ORDER BY mg.validity_date DESC
-                                             LIMIT 10),
+                                             ORDER BY mg.validity_date DESC),
            inventory_operation_goods_agg_cte AS (SELECT iogc.operation_id,
                                                         iogc.material_id,
                                                         iogc.lot_num,
@@ -85,6 +87,10 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                                                                      iogc.bin_num,
                                                                                      'validityDate',
                                                                                      iogc.validity_date,
+                                                                                     'quantity',
+                                                                                     iogc.quantity,
+                                                                                     'cumulativeQuantity',
+                                                                                     iogc.cumulative_quantity,
                                                                                      'location',
                                                                                      to_jsonb(bl.*))) AS goods
                                                  FROM inventory_operation_goods_cte iogc
