@@ -86,6 +86,7 @@ import MomMaterialWarehouseInventoryBalance from '../models/entities/MomMaterial
 import MomMaterialWarehouseInventoryLog from '../models/entities/MomMaterialWarehouseInventoryLog';
 import MomPackage from '../models/entities/MomPackage';
 import MomPackageGood from '../models/entities/MomPackageGood';
+import MomPrintTemplate from '../models/entities/MomPrintTemplate';
 import MomProcess from '../models/entities/MomProcess';
 import MomProcessCategory from '../models/entities/MomProcessCategory';
 import MomRoute from '../models/entities/MomRoute';
@@ -212,6 +213,7 @@ export default [
   autoConfigureRapidEntity(MomMaterialWarehouseInventoryLog),
   autoConfigureRapidEntity(MomPackage),
   autoConfigureRapidEntity(MomPackageGood),
+  autoConfigureRapidEntity(MomPrintTemplate),
   autoConfigureRapidEntity(MomProcess),
   autoConfigureRapidEntity(MomProcessCategory),
   autoConfigureRapidEntity(MomRoute),

@@ -5858,6 +5858,57 @@ export interface MomPackageGood {
 export type SaveMomPackageGoodInput = Omit<MomPackageGood, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 打印模版
+ */
+export interface MomPrintTemplate {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 模版名称
+   */
+  name: string;
+  /**
+   * 模版编码
+   */
+  code: string;
+  /**
+   * 模版内容
+   */
+  content?: string;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印模版
+ */
+export type SaveMomPrintTemplateInput = Omit<MomPrintTemplate, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 工序
  */
 export interface MomProcess {
