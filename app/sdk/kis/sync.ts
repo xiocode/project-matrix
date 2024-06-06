@@ -78,7 +78,7 @@ class KisDataSync {
   }
 
   // Retry mechanism for API requests
-  private async retryApiRequest(url: string, payload: any, retries: number = 3): Promise<any> {
+  private async retryApiRequest(url: string, payload: object, retries: number = 3): Promise<any> {
     let attempts = 0;
     while (attempts < retries) {
       const response = await this.api.PostResourceRequest(url, payload);
@@ -469,14 +469,14 @@ class KisDataSync {
 
     const [materials, employees, partners] = await Promise.all([
       this.server.getEntityManager("base_material").findEntities({
-        filters: [{ operator: "notNull", field: "externalCode" }],
+        filters: [{operator: "notNull", field: "externalCode"}],
         properties: ["id", "externalCode", "defaultUnit"],
       }),
       this.server.getEntityManager("base_employee").findEntities({
-        filters: [{ operator: "notNull", field: "externalCode" }],
+        filters: [{operator: "notNull", field: "externalCode"}],
       }),
       this.server.getEntityManager("base_partner").findEntities({
-        filters: [{ operator: "notNull", field: "externalCode" }],
+        filters: [{operator: "notNull", field: "externalCode"}],
       }),
     ]);
 
@@ -489,14 +489,14 @@ class KisDataSync {
         url: "/koas/app007140/api/materialreceiptnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
-          const { Entry, Head } = item;
+          const {Entry, Head} = item;
           const entities = Entry.map((entry: any) => {
             const material = materialMap.get(String(entry.FItemID));
             return {
               material,
               lotNum: entry.FBatchNo,
               quantity: entry.Fauxqty,
-              unit: { id: material?.defaultUnit?.id },
+              unit: {id: material?.defaultUnit?.id},
               trackingCode: entry.FKFPeriod,
             } as SaveMomInventoryApplicationItemInput;
           });
@@ -509,8 +509,8 @@ class KisDataSync {
             code: Head.FBillNo,
             contractNum: Head.FHeadSelfP0338,
             businessType: 1, // 采购入库
-            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
-            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
+            supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
+            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
             operationType: 'in',
             state: 'processing',
             items,
@@ -530,6 +530,20 @@ class KisDataSync {
     } catch (error) {
       console.error("Error during inventory sync:", error);
     }
+  }
+
+
+  public async syncKisAuditStatus() {
+
+    // const inventoryOperationManager = this.server.getEntityManager("mom_inventory_operation")
+    //
+    // const operations = await inventoryOperationManager.findEntities({
+    //   filters: [{operator: "eq", field: "approval_state", value: "uninitiated"}],
+    //   properties: ["id", "operationType", "businessType"],
+    // })
+    //
+    // const operationIds = operations.map((operation: any) => operation.id);
+
   }
 }
 

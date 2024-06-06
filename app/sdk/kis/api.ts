@@ -144,11 +144,7 @@ class KingdeeSDK {
 
   }
 
-  public async PostResourceRequest(resourceUrl: string, payload: object = {
-    CurrentPage: 1,
-    ItemsOfPage: 100,
-    Data: {}
-  }): Promise<AxiosResponse<any>> {
+  public async PostResourceRequest(resourceUrl: string, payload: object): Promise<AxiosResponse<any>> {
     const config: AxiosRequestConfig = {
       url: `${resourceUrl}?access_token=${this.accessToken}`,
       method: 'POST',

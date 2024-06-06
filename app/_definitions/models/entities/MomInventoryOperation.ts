@@ -111,6 +111,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_partner",
       targetIdColumnName: "partner_id",
     },
+    {
+      code: "externalCode",
+      name: "外部编号",
+      type: "text",
+    },
   ],
 };
 

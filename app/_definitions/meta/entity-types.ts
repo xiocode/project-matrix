@@ -4700,6 +4700,10 @@ export interface MomInventoryOperation {
    */
   supplier?: Partial<BasePartner>;
   /**
+   * 外部编号
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
