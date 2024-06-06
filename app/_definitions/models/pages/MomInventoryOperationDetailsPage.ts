@@ -443,6 +443,29 @@ const page: RapidPage = {
               ],
               actions: [
                 {
+                  $type: "sonicRecordActionPrintEntity",
+                  code: "print",
+                  actionType: "print",
+                  actionText: "打印",
+                  dataSourceAdapter: `function(data, utils){
+                    return utils.lodash.map(data, function(item){
+                      const createdAt = utils.lodash.get(item, "good.createdAt");
+                      const validityDate = utils.lodash.get(item, "good.validityDate");
+                      return utils.lodash.merge({}, item, {
+                        materialName: utils.lodash.get(item, "material.name"),
+                        materialCode: utils.lodash.get(item, "material.code"),
+                        materialSpecification: utils.lodash.get(item, "material.specification"),
+                        createdAt: createdAt && utils.dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        validityDate: validityDate && utils.dayjs(validityDate).format("YYYY-MM-DD"),
+                        currentTime: utils.dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                      })
+                    });
+                  }`,
+                  $exps: {
+                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+                  },
+                },
+                {
                   $type: "sonicRecordActionEditEntity",
                   code: "edit",
                   actionType: "edit",
