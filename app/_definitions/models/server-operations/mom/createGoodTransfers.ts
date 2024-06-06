@@ -4,7 +4,6 @@ import type {
   BaseUnit,
   MomGood,
   MomGoodTransfer,
-  MomInspectionSheet,
   MomInventoryOperation,
   SaveMomGoodInput,
   SaveMomGoodTransferInput,
@@ -23,6 +22,7 @@ export type CreateGoodTransferInput = {
   transfers: {
     palletWeight?: number;
   }[];
+  print?: boolean;
 };
 
 export default {
@@ -74,7 +74,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
 
   for (const goodInput of goods) {
     const good = await findOrCreateGood(goodManager, goodInput);
-    await createGoodTransfer(goodTransferManager, input.operationId, good);
+    await createGoodTransfer(goodTransferManager, input.operationId, good, input?.print);
   }
 
   if (inventoryOperation?.businessType?.name === "采购入库") {
@@ -123,7 +123,7 @@ async function findOrCreateGood(goodManager: any, input: SaveMomGoodInput) {
   return good;
 }
 
-async function createGoodTransfer(goodTransferManager: any, operationId: number, good: MomGood) {
+async function createGoodTransfer(goodTransferManager: any, operationId: number, good: MomGood, print: boolean = false) {
   await goodTransferManager.createEntity({
     entity: {
       operation: {id: operationId},
@@ -134,6 +134,7 @@ async function createGoodTransfer(goodTransferManager: any, operationId: number,
       quantity: good.quantity,
       unit: {id: good.unit?.id},
       transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+      printTime: print ? dayjs().format("YYYY-MM-DD HH:mm:ss") : null,
     } as SaveMomGoodTransferInput,
   });
 }
