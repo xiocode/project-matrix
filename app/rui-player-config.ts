@@ -4,7 +4,7 @@ declare const window: Window & {
   ENV: Record<string, any>;
 };
 
-if (window && window.ENV) {
+if (typeof window !== "undefined" && window.ENV) {
   env = window.ENV;
 }
 
