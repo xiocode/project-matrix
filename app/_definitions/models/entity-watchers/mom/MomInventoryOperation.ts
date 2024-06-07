@@ -125,26 +125,26 @@ export default [
           }
 
           // TODO: 生成KIS入库单
-          switch (businessType?.name) {
-            case "采购入库":
-              await kisOperationApi.createProductReceipt({
-                Object: {
-                  Head: {},
-                  Entry: [{}],
-                },
-              } as WarehouseInPayload)
-              break;
-            case "生产入库":
-              await kisOperationApi.createPickingList({
-                Object: {
-                  Head: {},
-                  Entry: [{}],
-                },
-              } as WarehouseOutPayload)
-              break;
-            default:
-              break;
-          }
+          // switch (businessType?.name) {
+          //   case "采购入库":
+          //     await kisOperationApi.createProductReceipt({
+          //       Object: {
+          //         Head: {},
+          //         Entry: [{}],
+          //       },
+          //     } as WarehouseInPayload)
+          //     break;
+          //   case "生产入库":
+          //     await kisOperationApi.createPickingList({
+          //       Object: {
+          //         Head: {},
+          //         Entry: [{}],
+          //       },
+          //     } as WarehouseOutPayload)
+          //     break;
+          //   default:
+          //     break;
+          // }
         }
 
         if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
