@@ -35,7 +35,7 @@
     "@ruiapp/move-style": "~0.1.28",
     "@ruiapp/rapid-core": "~0.1.41",
     "@ruiapp/rapid-express": "~0.1.41",
-    "@ruiapp/rapid-extension": "file:../rapid/packages/rapid-extension",
+    "@ruiapp/rapid-extension": "~0.1.6",
     "@ruiapp/react-renderer": "~0.1.28",
     "@ruiapp/react-rocks": "~0.1.29",
     "@types/jest": "^29.5.12",
