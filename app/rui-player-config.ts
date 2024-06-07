@@ -1,7 +1,11 @@
 let env: Record<string, any> = {};
 
-if (global.process) {
-  env = global.process.env;
+declare const window: Window & {
+  ENV: Record<string, any>;
+};
+
+if (window && window.ENV) {
+  env = window.ENV;
 }
 
 export default {
