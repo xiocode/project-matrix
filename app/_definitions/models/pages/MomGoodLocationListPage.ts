@@ -76,7 +76,7 @@ const page: RapidPage = {
           type: "auto",
           code: "good",
           rendererProps: {
-            format: "{{lotNum}} / {{serialNum}}",
+            format: "{{lotNum}} / {{binNum}}",
           },
         },
         {

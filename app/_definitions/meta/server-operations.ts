@@ -4,6 +4,8 @@ import mom$createGoodTransfers from '../models/server-operations/mom/createGoodT
 import mom$createInventoryOperation from '../models/server-operations/mom/createInventoryOperation';
 import mom$listGoodInTransfer from '../models/server-operations/mom/listGoodInTransfer';
 import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOutTransfer';
+import mom$mergeGoods from '../models/server-operations/mom/mergeGoods';
+import mom$splitGoods from '../models/server-operations/mom/splitGoods';
 import mom$submitGoodInTransfers from '../models/server-operations/mom/submitGoodInTransfers';
 import mom$submitGoodOutTransfers from '../models/server-operations/mom/submitGoodOutTransfers';
 import mom$submitMrpResult from '../models/server-operations/mom/submitMrpResult';
@@ -15,6 +17,8 @@ export default [
   mom$createInventoryOperation,
   mom$listGoodInTransfer,
   mom$listGoodOutTransfer,
+  mom$mergeGoods,
+  mom$splitGoods,
   mom$submitGoodInTransfers,
   mom$submitGoodOutTransfers,
   mom$submitMrpResult,

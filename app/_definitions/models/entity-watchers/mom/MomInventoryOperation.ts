@@ -14,6 +14,8 @@ import {
   type SaveMomInspectionSheetInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
+import KisHelper from "~/sdk/kis/helper";
+import KisInventoryOperationAPI, {WarehouseInPayload, WarehouseOutPayload} from "~/sdk/kis/inventory";
 
 export default [
   {
@@ -66,6 +68,10 @@ export default [
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const {server, payload} = ctx;
+      const kisApi = await new KisHelper(server).NewAPIClient();
+      const kisOperationApi = new KisInventoryOperationAPI(kisApi);
+
+
       const changes: Partial<MomInventoryOperation> = payload.changes;
       const after = payload.after;
       if (after.operationType === "in") {
@@ -117,6 +123,28 @@ export default [
               });
             }
           }
+
+          // TODO: 生成KIS入库单
+          switch (businessType?.name) {
+            case "采购入库":
+              await kisOperationApi.createProductReceipt({
+                Object: {
+                  Head: {},
+                  Entry: [{}],
+                },
+              } as WarehouseInPayload)
+              break;
+            case "生产入库":
+              await kisOperationApi.createPickingList({
+                Object: {
+                  Head: {},
+                  Entry: [{}],
+                },
+              } as WarehouseOutPayload)
+              break;
+            default:
+              break;
+          }
         }
 
         if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
@@ -128,7 +156,9 @@ export default [
 
       if (after.operationType === "out") {
         if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
-          const transfers = await server.queryDatabaseObject(`select * from mom_good_transfers where operation_id=$1;`, [after.id]);
+          const transfers = await server.queryDatabaseObject(`select *
+                                                              from mom_good_transfers
+                                                              where operation_id = $1;`, [after.id]);
 
           await updateInventoryStats(server, after.business_id, after.operationType, transfers);
         }

@@ -1239,6 +1239,7 @@ const entityFieldCodes = {
     'warehouse',
     'contractNum',
     'supplier',
+    'externalCode',
     'createdAt',
     'createdBy',
     'updatedAt',
