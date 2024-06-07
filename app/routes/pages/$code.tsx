@@ -18,6 +18,7 @@ import entityModels from "~/_definitions/meta/entity-models";
 import pageModels from "~/_definitions/meta/page-models";
 
 import AppExtension from "~/app-extension/mod";
+import ProExtension from "~/pro-extension/mod";
 
 import styles from "antd/dist/antd.css";
 import rapidService from "~/rapidService";
@@ -56,6 +57,7 @@ framework.loadExtension(MonacoExtension);
 framework.loadExtension(DesignerExtension);
 framework.loadExtension(RapidExtension);
 framework.loadExtension(AppExtension);
+framework.loadExtension(ProExtension);
 
 RapidExtensionSetting.setDefaultRendererPropsOfRendererType("rapidCurrencyRenderer", {
   usingThousandSeparator: true,
