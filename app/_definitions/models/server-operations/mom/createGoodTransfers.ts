@@ -1,10 +1,11 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
+  BaseLot,
   BaseMaterial,
   BaseUnit,
   MomGood,
   MomGoodTransfer,
-  MomInventoryOperation,
+  MomInventoryOperation, SaveBaseLotInput,
   SaveMomGoodInput,
   SaveMomGoodTransferInput,
   SaveMomInspectionSheetInput,
@@ -15,6 +16,7 @@ export type CreateGoodTransferInput = {
   operationId: number;
   material?: number;
   lotNum: string;
+  lotId?: number;
   manufactureDate: string;
   palletCount?: number;
   palletWeight: number;
@@ -62,6 +64,18 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
     throw new Error("Material not found");
   }
 
+  // 生成批次信息
+  const lotInfo = await saveMaterialLotInfo(server, {
+    lotNum: input.lotNum,
+    material: {id: input.material},
+    sourceType: inventoryOperation?.businessType?.config?.defaultSourceType || null,
+    qualificationState: inventoryOperation?.businessType?.config?.defaultQualificationState || "qualified",
+    isAOD: false,
+  });
+
+  input.lotId = lotInfo?.id
+
+
   const unit = await unitManager.findById(material.defaultUnit?.id);
   const binNumBase = dayjs().format("YYYYMMDDHHmmss");
   let goods: SaveMomGoodInput[] = [];
@@ -93,13 +107,14 @@ function createGoodInput(material: BaseMaterial, unit: BaseUnit | null, input: C
     material: {id: material.id},
     materialCode: material.code,
     lotNum: input.lotNum,
+    lot: {id: input.lotId},
     binNum: binNum,
     quantity: palletWeight,
     unit: {id: unit?.id},
     state: "normal",
     manufactureDate: input.manufactureDate,
     validityDate,
-  };
+  } as SaveMomGoodInput;
 }
 
 async function findOrCreateGood(goodManager: any, input: SaveMomGoodInput) {
@@ -109,14 +124,14 @@ async function findOrCreateGood(goodManager: any, input: SaveMomGoodInput) {
       {operator: "eq", field: "lot_num", value: input.lotNum},
       {operator: "eq", field: "bin_num", value: input.binNum},
     ],
-    properties: ["id", "material", "lotNum", "binNum", "quantity", "unit"],
+    properties: ["id", "material", "lotNum", "binNum", "quantity", "unit", "lot"],
   });
 
   if (!good) {
     good = await goodManager.createEntity({entity: input});
     good = await goodManager.findEntity({
       filters: [{operator: "eq", field: "id", value: good.id}],
-      properties: ["id", "material", "lotNum", "binNum", "quantity", "unit"],
+      properties: ["id", "material", "lotNum", "binNum", "quantity", "unit", "lot"],
     })
   }
 
@@ -130,6 +145,7 @@ async function createGoodTransfer(goodTransferManager: any, operationId: number,
       good: {id: good.id},
       material: {id: good.material?.id},
       lotNum: good.lotNum,
+      lot:{id: good?.lot?.id},
       binNum: good.binNum,
       quantity: good.quantity,
       unit: {id: good.unit?.id},
@@ -154,6 +170,37 @@ async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionS
 
   if (!lotInDb) {
     return await inspectionSheetManager.createEntity({entity: sheet});
+  }
+
+  return lotInDb;
+}
+
+
+async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
+  if (!lot.lotNum || !lot.material || !lot.material.id) {
+    throw new Error("lotNum and material are required when saving lot info.");
+  }
+
+  const baseLotManager = server.getEntityManager<BaseLot>("base_lot");
+  const lotInDb = await baseLotManager.findEntity({
+    filters: [
+      {
+        operator: "eq",
+        field: "lot_num",
+        value: lot.lotNum,
+      },
+      {
+        operator: "eq",
+        field: "material_id",
+        value: lot.material.id,
+      },
+    ],
+  });
+
+  if (!lotInDb) {
+    return await baseLotManager.createEntity({
+      entity: lot,
+    });
   }
 
   return lotInDb;

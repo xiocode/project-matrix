@@ -28,6 +28,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "operationState",
     },
   ],
+  defaultFormFields: {
+    state: "approved",
+    operationState: "pending",
+  },
 };
 
 const page: RapidPage = {
@@ -121,6 +125,10 @@ const page: RapidPage = {
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      $exps: {
+        "newForm.fixedFields.state": "'approved'",
+        "newForm.fixedFields.operationState": "'pending'",
+      },
     },
   ],
 };
