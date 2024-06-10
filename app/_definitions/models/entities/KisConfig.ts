@@ -58,12 +58,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
-      code: "auth_data",
-      name: "auth_data",
-      type: "text",
-      required: true,
-    },
-    {
       code: "gateway_router_addr",
       name: "gateway_router_addr",
       type: "text",
