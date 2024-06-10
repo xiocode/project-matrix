@@ -12,6 +12,7 @@ import type {
   ConfirmationState,
   DataDictionaryLevel,
   DataDictionaryValueType,
+  DocumentType,
   EmployeeState,
   EnabledDisabledState,
   FinTransactionType,
@@ -41,6 +42,8 @@ import type {
   PmPhaseState,
   PmProjectStage,
   PmProjectState,
+  PmWorkItemState,
+  PmWorkItemStepState,
   PrintTaskState,
   PrinterNetworkState,
   PropertyType,
@@ -1994,9 +1997,13 @@ export interface EcmDocument {
    */
   id: number;
   /**
+   * 类型
+   */
+  type: DocumentType;
+  /**
    * Code
    */
-  code: string;
+  code?: string;
   /**
    * 名称
    */
@@ -2029,6 +2036,10 @@ export interface EcmDocument {
    * 父文档
    */
   parent?: Partial<EcmDocument>;
+  /**
+   * 上级文档id
+   */
+  ancestorIdPath?: string;
   /**
    * 状态
    */
@@ -7455,6 +7466,10 @@ export interface PmProject {
    */
   category?: Partial<PmProjectCategory>;
   /**
+   * 事项编号前缀
+   */
+  workItemCodePrefix?: string;
+  /**
    * 客户
    */
   customer?: Partial<BasePartner>;
@@ -7494,6 +7509,10 @@ export interface PmProject {
    * 相关订单
    */
   orders?: any;
+  /**
+   * 工作项类型
+   */
+  workItemTypes?: any;
   /**
    * 创建时间
    */
@@ -7536,7 +7555,7 @@ export interface PmProjectBudget {
   /**
    * 项目
    */
-  project?: Partial<PmProject>;
+  project: Partial<PmProject>;
   /**
    * 排序号
    */
@@ -7678,7 +7697,7 @@ export interface PmProjectCostBudget {
   /**
    * 项目
    */
-  project?: Partial<PmProject>;
+  project: Partial<PmProject>;
   /**
    * 标题
    */
@@ -7792,7 +7811,7 @@ export interface PmProjectEvent {
   /**
    * 项目
    */
-  project?: Partial<PmProject>;
+  project: Partial<PmProject>;
   /**
    * 标题
    */
@@ -7831,6 +7850,558 @@ export interface PmProjectEvent {
  * 项目事件
  */
 export type SavePmProjectEventInput = Omit<PmProjectEvent, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目角色
+ */
+export interface PmProjectRole {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project: Partial<PmProject>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序
+   */
+  orderNum: number;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 用户
+   */
+  users?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目角色
+ */
+export type SavePmProjectRoleInput = Omit<PmProjectRole, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目工作项步骤角色
+ */
+export interface PmProjectWorkItemStepRole {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 工作项类型
+   */
+  workItemType?: Partial<PmWorkItemType>;
+  /**
+   * 工作项步骤
+   */
+  workItemTypeStep?: Partial<PmWorkItemTypeStep>;
+  /**
+   * 项目角色
+   */
+  projectRole?: Partial<PmProjectRole>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目工作项步骤角色
+ */
+export type SavePmProjectWorkItemStepRoleInput = Omit<PmProjectWorkItemStepRole, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 项目工作项类型
+ */
+export interface PmProjectWorkItemType {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 工作项类型
+   */
+  workItemType?: Partial<PmWorkItemType>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 项目工作项类型
+ */
+export type SavePmProjectWorkItemTypeInput = Omit<PmProjectWorkItemType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工作项
+ */
+export interface PmWorkItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工作项类型
+   */
+  workItemType?: Partial<PmWorkItemType>;
+  /**
+   * 项目
+   */
+  project?: Partial<PmProject>;
+  /**
+   * 里程碑
+   */
+  milestone?: Partial<PmMilestone>;
+  /**
+   * 编号
+   */
+  code: string;
+  /**
+   * 标题
+   */
+  title: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 父工作项
+   */
+  parent?: Partial<PmWorkItem>;
+  /**
+   * 子工作项
+   */
+  subItems?: Partial<PmWorkItem>;
+  /**
+   * 责任人
+   */
+  assignee?: Partial<OcUser>;
+  /**
+   * 分配人
+   */
+  assigner?: Partial<OcUser>;
+  /**
+   * 计划开始时间
+   */
+  scheduledStartTime?: string;
+  /**
+   * 计划完成时间
+   */
+  scheduledCompleteTime?: string;
+  /**
+   * 实际开始时间
+   */
+  actualStartTime?: string;
+  /**
+   * 实际完成时间
+   */
+  actualCompleteTime?: string;
+  /**
+   * 当前步骤
+   */
+  currentStep?: Partial<PmWorkItemTypeStep>;
+  /**
+   * 当前步骤责任人
+   */
+  currentStepAssignee?: Partial<OcUser>;
+  /**
+   * 步骤
+   */
+  steps?: any;
+  /**
+   * 预计工作量
+   */
+  estimate?: string;
+  /**
+   * 进度
+   */
+  progress: number;
+  /**
+   * 进度权重
+   */
+  progressCoefficient: number;
+  /**
+   * 状态
+   */
+  state: PmWorkItemState;
+  /**
+   * 关闭决定
+   */
+  resolution?: Partial<OcUser>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工作项
+ */
+export type SavePmWorkItemInput = Omit<PmWorkItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工作项关闭决定
+ */
+export interface PmWorkItemResolution {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序
+   */
+  orderNum: number;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工作项关闭决定
+ */
+export type SavePmWorkItemResolutionInput = Omit<PmWorkItemResolution, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工作项步骤记录
+ */
+export interface PmWorkItemStep {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工作项
+   */
+  workItem?: Partial<PmWorkItem>;
+  /**
+   * 步骤
+   */
+  workItemTypeStep?: Partial<PmWorkItemTypeStep>;
+  /**
+   * 责任人
+   */
+  assignee?: Partial<OcUser>;
+  /**
+   * 分配人
+   */
+  assigner?: Partial<OcUser>;
+  /**
+   * 计划开始时间
+   */
+  scheduledStartTime?: string;
+  /**
+   * 计划完成时间
+   */
+  scheduledCompleteTime?: string;
+  /**
+   * 实际开始时间
+   */
+  actualStartTime?: string;
+  /**
+   * 实际完成时间
+   */
+  actualCompleteTime?: string;
+  /**
+   * 状态
+   */
+  state: PmWorkItemStepState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工作项步骤记录
+ */
+export type SavePmWorkItemStepInput = Omit<PmWorkItemStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工作项类型
+ */
+export interface PmWorkItemType {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序
+   */
+  orderNum: number;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 项目
+   */
+  projects?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工作项类型
+ */
+export type SavePmWorkItemTypeInput = Omit<PmWorkItemType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 工作项类型步骤
+ */
+export interface PmWorkItemTypeStep {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工作项类型
+   */
+  workItemType?: Partial<PmWorkItemType>;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序
+   */
+  orderNum: number;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 状态
+   */
+  state: EnabledDisabledState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工作项类型步骤
+ */
+export type SavePmWorkItemTypeStepInput = Omit<PmWorkItemTypeStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 车间配置系统-应用
@@ -8148,6 +8719,61 @@ export interface ShopfloorStation {
 export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 打印机
+ */
+export interface SvcPrinter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 网络状态
+   */
+  networkState: PrinterNetworkState;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印机
+ */
+export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 打印任务
  */
 export interface SvcPrintTask {
@@ -8205,61 +8831,6 @@ export interface SvcPrintTask {
  * 打印任务
  */
 export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 打印机
- */
-export interface SvcPrinter {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 网络状态
-   */
-  networkState: PrinterNetworkState;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 打印机
- */
-export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 系统操作

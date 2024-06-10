@@ -107,21 +107,29 @@ import MomWorkTrack from '../models/entities/MomWorkTrack';
 import OcDepartment from '../models/entities/OcDepartment';
 import OcRole from '../models/entities/OcRole';
 import OcUser from '../models/entities/OcUser';
-import PmMilestone from '../models/entities/PmMilestone';
-import PmPhase from '../models/entities/PmPhase';
-import PmProject from '../models/entities/PmProject';
-import PmProjectBudget from '../models/entities/PmProjectBudget';
-import PmProjectCategory from '../models/entities/PmProjectCategory';
-import PmProjectCost from '../models/entities/PmProjectCost';
-import PmProjectCostCategory from '../models/entities/PmProjectCostCategory';
-import PmProjectEvent from '../models/entities/PmProjectEvent';
+import pm$PmMilestone from '../models/entities/pm/PmMilestone';
+import pm$PmPhase from '../models/entities/pm/PmPhase';
+import pm$PmProject from '../models/entities/pm/PmProject';
+import pm$PmProjectBudget from '../models/entities/pm/PmProjectBudget';
+import pm$PmProjectCategory from '../models/entities/pm/PmProjectCategory';
+import pm$PmProjectCost from '../models/entities/pm/PmProjectCost';
+import pm$PmProjectCostCategory from '../models/entities/pm/PmProjectCostCategory';
+import pm$PmProjectEvent from '../models/entities/pm/PmProjectEvent';
+import pm$PmProjectRole from '../models/entities/pm/PmProjectRole';
+import pm$PmProjectWorkItemStepRole from '../models/entities/pm/PmProjectWorkItemStepRole';
+import pm$PmProjectWorkItemType from '../models/entities/pm/PmProjectWorkItemType';
+import pm$PmWorkItem from '../models/entities/pm/PmWorkItem';
+import pm$PmWorkItemResolution from '../models/entities/pm/PmWorkItemResolution';
+import pm$PmWorkItemStep from '../models/entities/pm/PmWorkItemStep';
+import pm$PmWorkItemType from '../models/entities/pm/PmWorkItemType';
+import pm$PmWorkItemTypeStep from '../models/entities/pm/PmWorkItemTypeStep';
 import ShopfloorApp from '../models/entities/ShopfloorApp';
 import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
 import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
 import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
 import ShopfloorStation from '../models/entities/ShopfloorStation';
-import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SvcPrinter from '../models/entities/SvcPrinter';
+import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
@@ -234,21 +242,29 @@ export default [
   autoConfigureRapidEntity(OcDepartment),
   autoConfigureRapidEntity(OcRole),
   autoConfigureRapidEntity(OcUser),
-  autoConfigureRapidEntity(PmMilestone),
-  autoConfigureRapidEntity(PmPhase),
-  autoConfigureRapidEntity(PmProject),
-  autoConfigureRapidEntity(PmProjectBudget),
-  autoConfigureRapidEntity(PmProjectCategory),
-  autoConfigureRapidEntity(PmProjectCost),
-  autoConfigureRapidEntity(PmProjectCostCategory),
-  autoConfigureRapidEntity(PmProjectEvent),
+  autoConfigureRapidEntity(pm$PmMilestone),
+  autoConfigureRapidEntity(pm$PmPhase),
+  autoConfigureRapidEntity(pm$PmProject),
+  autoConfigureRapidEntity(pm$PmProjectBudget),
+  autoConfigureRapidEntity(pm$PmProjectCategory),
+  autoConfigureRapidEntity(pm$PmProjectCost),
+  autoConfigureRapidEntity(pm$PmProjectCostCategory),
+  autoConfigureRapidEntity(pm$PmProjectEvent),
+  autoConfigureRapidEntity(pm$PmProjectRole),
+  autoConfigureRapidEntity(pm$PmProjectWorkItemStepRole),
+  autoConfigureRapidEntity(pm$PmProjectWorkItemType),
+  autoConfigureRapidEntity(pm$PmWorkItem),
+  autoConfigureRapidEntity(pm$PmWorkItemResolution),
+  autoConfigureRapidEntity(pm$PmWorkItemStep),
+  autoConfigureRapidEntity(pm$PmWorkItemType),
+  autoConfigureRapidEntity(pm$PmWorkItemTypeStep),
   autoConfigureRapidEntity(ShopfloorApp),
   autoConfigureRapidEntity(ShopfloorAppStep),
   autoConfigureRapidEntity(ShopfloorAppVersion),
   autoConfigureRapidEntity(ShopfloorDisplayDevice),
   autoConfigureRapidEntity(ShopfloorStation),
-  autoConfigureRapidEntity(SvcPrintTask),
   autoConfigureRapidEntity(SvcPrinter),
+  autoConfigureRapidEntity(SvcPrintTask),
   autoConfigureRapidEntity(SysAction),
   autoConfigureRapidEntity(SysActionGroup),
   autoConfigureRapidEntity(SysWebhook),

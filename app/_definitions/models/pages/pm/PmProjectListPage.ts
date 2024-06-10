@@ -6,6 +6,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "code",
+      required: false,
     },
     {
       type: "auto",
@@ -18,6 +19,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "category",
+    },
+    {
+      type: "auto",
+      code: "workItemCodePrefix",
     },
     {
       type: "auto",
@@ -158,6 +163,15 @@ const page: RapidPage = {
         },
       ],
       actions: [
+        {
+          $type: "rapidRecordActionLink",
+          code: "setting",
+          actionText: "配置",
+          $permissionCheck: "pmProject.setting",
+          $exps: {
+            to: `"/pages/pm_project_settings?id=" + $slot.record.id`
+          }
+        },
         {
           $type: "sonicRecordActionEditEntity",
           code: "edit",

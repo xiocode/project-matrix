@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, orderBy } from "lodash";
 import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
 const actionFormConfig: Partial<RapidEntityFormRockConfig> = {
@@ -83,6 +83,14 @@ const page: RapidPage = {
                   text: "刷新",
                   icon: "ReloadOutlined",
                 },
+              ],
+              orderBy: [
+                {
+                  field: "group",
+                },
+                {
+                  field: "orderNum",
+                }
               ],
               pageSize: -1,
               columns: [

@@ -8,10 +8,17 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   name: "文档",
   fields: [
     {
+      code: "type",
+      name: "类型",
+      type: "option",
+      dataDictionary: "DocumentType",
+      required: true,
+      defaultValue: "'file'",
+    },
+    {
       code: "code",
       name: "Code",
       type: "text",
-      required: true,
     },
     {
       code: "name",
@@ -65,6 +72,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "ecm_document",
       targetIdColumnName: "parent_id",
+    },
+    {
+      code: "ancestorIdPath",
+      name: "上级文档id",
+      description: "以斜杠分隔的上级文档id",
+      type: "text",
     },
     {
       code: "publishState",

@@ -1,12 +1,17 @@
-import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
-import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { TDictionaryCodes } from "../../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "app",
-  code: "OcRole",
-  name: "角色",
+  code: "PmWorkItemType",
+  name: "工作项类型",
   fields: [
+    {
+      code: "code",
+      name: "Code",
+      type: "text",
+    },
     {
       code: "name",
       name: "名称",
@@ -23,6 +28,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "排序",
       type: "integer",
       required: true,
+      defaultValue: "0",
+    },
+    {
+      code: "config",
+      name: "配置",
+      type: "json",
     },
     {
       code: "state",
@@ -33,22 +44,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       defaultValue: "'enabled'",
     },
     {
-      code: "users",
-      name: "用户",
+      code: "projects",
+      name: "项目",
       type: "relation[]",
-      targetSingularCode: "oc_user",
-      linkTableName: "oc_role_user_links",
-      targetIdColumnName: "user_id",
-      selfIdColumnName: "role_id",
-    },
-    {
-      code: "actions",
-      name: "操作",
-      type: "relation[]",
-      targetSingularCode: "sys_action",
-      linkTableName: "oc_role_sys_action_links",
-      targetIdColumnName: "action_id",
-      selfIdColumnName: "role_id",
+      targetSingularCode: "pm_project",
+      linkTableName: "pm_project_work_item_types",
+      targetIdColumnName: "project_id",
+      selfIdColumnName: "work_item_type_id",
     },
   ],
 };

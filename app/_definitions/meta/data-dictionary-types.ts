@@ -463,12 +463,22 @@ export type PmProjectState =
   ;
 
 /**
- * 打印任务状态
+ * 工作项状态
  */
-export type PrintTaskState =
-  | '0'
-  | '1'
-  | '2'
+export type PmWorkItemState =
+  | 'pending'
+  | 'wip'
+  | 'completed'
+  | 'closed'
+  ;
+
+/**
+ * 工作项步骤状态
+ */
+export type PmWorkItemStepState =
+  | 'pending'
+  | 'wip'
+  | 'completed'
   ;
 
 /**
@@ -477,6 +487,15 @@ export type PrintTaskState =
 export type PrinterNetworkState =
   | '0'
   | '1'
+  ;
+
+/**
+ * 打印任务状态
+ */
+export type PrintTaskState =
+  | '0'
+  | '1'
+  | '2'
   ;
 
 /**

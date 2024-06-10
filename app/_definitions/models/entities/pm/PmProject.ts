@@ -1,5 +1,6 @@
-import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
-import type { TEntitySingularCodes } from "../../meta/model-codes";
+import { PropertySequenceConfig } from "@ruiapp/rapid-core";
+import type { TDictionaryCodes } from "../../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
@@ -12,6 +13,25 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "编号",
       type: "text",
       required: true,
+      config: {
+        sequence: {
+          enabled: true,
+          config: {
+            segments: [
+              {
+                type: "literal",
+                content: "P"
+              },
+              {
+                type: "autoIncrement",
+                scope: "",
+                period: "forever",
+                length: 4,
+              },
+            ],
+          },
+        } satisfies PropertySequenceConfig,
+      },
     },
     {
       code: "name",
@@ -30,6 +50,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "pm_project_category",
       targetIdColumnName: "category_id",
+    },
+    {
+      code: "workItemCodePrefix",
+      name: "事项编号前缀",
+      type: "text",
+      defaultValue: "'TASK'",
     },
     {
       code: "customer",
@@ -101,6 +127,15 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "cbs_order",
       linkTableName: "cbs_contracts_projects",
       targetIdColumnName: "order_id",
+      selfIdColumnName: "project_id",
+    },
+    {
+      code: "workItemTypes",
+      name: "工作项类型",
+      type: "relation[]",
+      targetSingularCode: "pm_work_item_type",
+      linkTableName: "pm_project_work_item_types",
+      targetIdColumnName: "work_item_type_id",
       selfIdColumnName: "project_id",
     },
   ],

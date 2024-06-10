@@ -1,5 +1,5 @@
-import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
-import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { TDictionaryCodes } from "../../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
@@ -13,6 +13,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "pm_project",
       targetIdColumnName: "project_id",
+      required: true,
     },
     {
       code: "title",
