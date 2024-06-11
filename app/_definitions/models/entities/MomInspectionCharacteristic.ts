@@ -54,6 +54,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "instrument_id",
     },
     {
+      code: "kind",
+      name: "检验类型",
+      type: "option",
+      dataDictionary: "InspectionKind",
+    },
+    {
       code: "determineType",
       name: "合格判定方式",
       type: "option",

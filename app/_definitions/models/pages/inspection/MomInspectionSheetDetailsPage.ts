@@ -211,30 +211,37 @@ const page: RapidPage = {
           code: "lotNum",
           type: "auto",
         },
+        // {
+        //   code: "serialNum",
+        //   type: "auto",
+        // },
+        // {
+        //   code: "sampleCount",
+        //   type: "auto",
+        // },
+        // {
+        //   code: "workOrder",
+        //   type: "auto",
+        //   rendererProps: {
+        //     format: "{{code}}",
+        //   },
+        // },
+        // {
+        //   code: "workTrack",
+        //   type: "auto",
+        //   rendererProps: {
+        //     format: "{{code}}",
+        //   },
+        // },
+        // {
+        //   code: "workTask",
+        //   type: "auto",
+        //   rendererProps: {
+        //     format: "{{code}}",
+        //   },
+        // },
         {
-          code: "serialNum",
-          type: "auto",
-        },
-        {
-          code: "sampleCount",
-          type: "auto",
-        },
-        {
-          code: "workOrder",
-          type: "auto",
-          rendererProps: {
-            format: "{{code}}",
-          },
-        },
-        {
-          code: "workTrack",
-          type: "auto",
-          rendererProps: {
-            format: "{{code}}",
-          },
-        },
-        {
-          code: "workTask",
+          code: "inventoryOperation",
           type: "auto",
           rendererProps: {
             format: "{{code}}",
@@ -244,10 +251,10 @@ const page: RapidPage = {
           code: "rule",
           type: "auto",
         },
-        {
-          code: "routeProcess",
-          type: "auto",
-        },
+        // {
+        //   code: "routeProcess",
+        //   type: "auto",
+        // },
         {
           code: "sender",
           type: "auto",

@@ -33,6 +33,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "kind",
+    },
+    {
+      type: "auto",
       code: "determineType",
     },
     {
@@ -127,6 +131,10 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "determineType",
+        },
+        {
+          type: "auto",
+          code: "kind",
         },
         {
           type: "auto",

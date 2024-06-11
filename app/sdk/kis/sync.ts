@@ -2,18 +2,20 @@ import KingdeeSDK from "~/sdk/kis/api";
 import {ActionHandlerContext, IRpdServer, UpdateEntityByIdOptions} from "@ruiapp/rapid-core";
 import KisHelper from "~/sdk/kis/helper";
 import {
-  BaseEmployee,
   BaseLocation,
   BaseMaterial,
-  BaseMaterialCategory, BasePartner,
+  BaseMaterialCategory,
   BasePartnerCategory,
   BaseUnit,
-  SaveBaseEmployeeInput, SaveBaseLocationInput,
+  SaveBaseEmployeeInput,
+  SaveBaseLocationInput,
   SaveBaseMaterialCategoryInput,
   SaveBaseMaterialInput,
   SaveBasePartnerInput,
   SaveBaseUnitInput,
-  SaveMomGoodTransferInput, SaveMomInventoryApplicationInput, SaveMomInventoryApplicationItemInput,
+  SaveMomGoodTransferInput,
+  SaveMomInventoryApplicationInput,
+  SaveMomInventoryApplicationItemInput,
   SaveMomInventoryOperationInput,
   SaveMomWarehouseInput,
 } from "~/_definitions/meta/entity-types";
@@ -24,7 +26,7 @@ interface SyncOptions {
   mapToEntity: (item: any) => Promise<any>;
   filter?: (item: any) => boolean;
   payload?: any;
-  syncAll?: boolean | true;
+  syncAll?: boolean;
 }
 
 class KisDataSync {
@@ -85,7 +87,7 @@ class KisDataSync {
       if (response.data.errcode === 0) {
         return response;
       }
-      console.error(`API request failed (attempt ${attempts + 1}):`, response.data);
+      console.error(`API ${url} request failed (attempt ${attempts + 1}):`, url, response.data);
       attempts += 1;
       await this.sleep(2000); // Wait before retrying
     }
@@ -97,6 +99,9 @@ class KisDataSync {
     const results: any[] = [];
     let page = 1;
     const pageSize = 100;
+    if (options.syncAll === undefined) {
+      options.syncAll = true
+    }
 
     if (!options.payload) {
       options.payload = {}
@@ -112,7 +117,7 @@ class KisDataSync {
 
         const data = response.data.data;
 
-        console.log(`URL: ${options.url}, Payload: ${JSON.stringify(options.payload, null, 2)}, Current Page: ${page} Current Page: ${data?.TotalItems}, Page Size: ${pageSize}, Total Pages: ${data?.TotalPage || data?.TotalPages || 1}`);
+        console.log(`URL: ${options.url}, Payload: ${JSON.stringify(options.payload, null, 2)}, Current Page: ${page} Total Items: ${data?.TotalItems}, Page Size: ${pageSize}, Total Pages: ${data?.TotalPage || data?.TotalPages || 1}, "syncAll: ${options.syncAll}"`);
 
         if (data?.GoodItemStocks?.length) {
           results.push(...data.GoodItemStocks);
@@ -229,7 +234,7 @@ class KisDataSync {
           type: 'others',
           orderNum: 1,
           category: {id: 1}
-        } as SaveBaseUnitInput)
+        } as SaveBaseUnitInput),
       }),
       // 同步物料分类
       this.createListSyncFunction({

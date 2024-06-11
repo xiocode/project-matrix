@@ -62,6 +62,7 @@ import MomInspectionInstrumentCategory from '../models/entities/MomInspectionIns
 import MomInspectionMeasurement from '../models/entities/MomInspectionMeasurement';
 import MomInspectionMethod from '../models/entities/MomInspectionMethod';
 import MomInspectionRule from '../models/entities/MomInspectionRule';
+import MomInspectionRuleItem from '../models/entities/MomInspectionRuleItem';
 import MomInspectionSheet from '../models/entities/MomInspectionSheet';
 import MomInventory from '../models/entities/MomInventory';
 import MomInventoryApplication from '../models/entities/MomInventoryApplication';
@@ -107,6 +108,16 @@ import MomWorkTrack from '../models/entities/MomWorkTrack';
 import OcDepartment from '../models/entities/OcDepartment';
 import OcRole from '../models/entities/OcRole';
 import OcUser from '../models/entities/OcUser';
+import ShopfloorApp from '../models/entities/ShopfloorApp';
+import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
+import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
+import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
+import ShopfloorStation from '../models/entities/ShopfloorStation';
+import SvcPrintTask from '../models/entities/SvcPrintTask';
+import SvcPrinter from '../models/entities/SvcPrinter';
+import SysAction from '../models/entities/SysAction';
+import SysActionGroup from '../models/entities/SysActionGroup';
+import SysWebhook from '../models/entities/SysWebhook';
 import pm$PmMilestone from '../models/entities/pm/PmMilestone';
 import pm$PmPhase from '../models/entities/pm/PmPhase';
 import pm$PmProject from '../models/entities/pm/PmProject';
@@ -123,16 +134,6 @@ import pm$PmWorkItemResolution from '../models/entities/pm/PmWorkItemResolution'
 import pm$PmWorkItemStep from '../models/entities/pm/PmWorkItemStep';
 import pm$PmWorkItemType from '../models/entities/pm/PmWorkItemType';
 import pm$PmWorkItemTypeStep from '../models/entities/pm/PmWorkItemTypeStep';
-import ShopfloorApp from '../models/entities/ShopfloorApp';
-import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
-import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
-import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
-import ShopfloorStation from '../models/entities/ShopfloorStation';
-import SvcPrinter from '../models/entities/SvcPrinter';
-import SvcPrintTask from '../models/entities/SvcPrintTask';
-import SysAction from '../models/entities/SysAction';
-import SysActionGroup from '../models/entities/SysActionGroup';
-import SysWebhook from '../models/entities/SysWebhook';
 
 const entityDefinitions = [
   AppClient,
@@ -197,6 +198,7 @@ const entityDefinitions = [
   MomInspectionMeasurement,
   MomInspectionMethod,
   MomInspectionRule,
+  MomInspectionRuleItem,
   MomInspectionSheet,
   MomInventory,
   MomInventoryApplication,
@@ -242,6 +244,16 @@ const entityDefinitions = [
   OcDepartment,
   OcRole,
   OcUser,
+  ShopfloorApp,
+  ShopfloorAppStep,
+  ShopfloorAppVersion,
+  ShopfloorDisplayDevice,
+  ShopfloorStation,
+  SvcPrintTask,
+  SvcPrinter,
+  SysAction,
+  SysActionGroup,
+  SysWebhook,
   pm$PmMilestone,
   pm$PmPhase,
   pm$PmProject,
@@ -258,16 +270,6 @@ const entityDefinitions = [
   pm$PmWorkItemStep,
   pm$PmWorkItemType,
   pm$PmWorkItemTypeStep,
-  ShopfloorApp,
-  ShopfloorAppStep,
-  ShopfloorAppVersion,
-  ShopfloorDisplayDevice,
-  ShopfloorStation,
-  SvcPrinter,
-  SvcPrintTask,
-  SysAction,
-  SysActionGroup,
-  SysWebhook,
 ];
 const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(AppClient, entityDefinitions),
@@ -332,6 +334,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomInspectionMeasurement, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionMethod, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionRule, entityDefinitions),
+  autoConfigureRapidEntity(MomInspectionRuleItem, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionSheet, entityDefinitions),
   autoConfigureRapidEntity(MomInventory, entityDefinitions),
   autoConfigureRapidEntity(MomInventoryApplication, entityDefinitions),
@@ -377,6 +380,16 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(OcDepartment, entityDefinitions),
   autoConfigureRapidEntity(OcRole, entityDefinitions),
   autoConfigureRapidEntity(OcUser, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorApp, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorAppStep, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorAppVersion, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorDisplayDevice, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorStation, entityDefinitions),
+  autoConfigureRapidEntity(SvcPrintTask, entityDefinitions),
+  autoConfigureRapidEntity(SvcPrinter, entityDefinitions),
+  autoConfigureRapidEntity(SysAction, entityDefinitions),
+  autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
+  autoConfigureRapidEntity(SysWebhook, entityDefinitions),
   autoConfigureRapidEntity(pm$PmMilestone, entityDefinitions),
   autoConfigureRapidEntity(pm$PmPhase, entityDefinitions),
   autoConfigureRapidEntity(pm$PmProject, entityDefinitions),
@@ -393,15 +406,5 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(pm$PmWorkItemStep, entityDefinitions),
   autoConfigureRapidEntity(pm$PmWorkItemType, entityDefinitions),
   autoConfigureRapidEntity(pm$PmWorkItemTypeStep, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorApp, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorAppStep, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorAppVersion, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorDisplayDevice, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorStation, entityDefinitions),
-  autoConfigureRapidEntity(SvcPrinter, entityDefinitions),
-  autoConfigureRapidEntity(SvcPrintTask, entityDefinitions),
-  autoConfigureRapidEntity(SysAction, entityDefinitions),
-  autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
-  autoConfigureRapidEntity(SysWebhook, entityDefinitions),
 ];
 export default configuredEntities;
