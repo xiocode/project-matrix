@@ -3268,6 +3268,10 @@ export interface MomGood {
    */
   validityDate?: string;
   /**
+   * 批次信息
+   */
+  lot?: Partial<BaseLot>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3488,6 +3492,10 @@ export interface MomGoodTransfer {
    * 打印时间
    */
   printTime?: string;
+  /**
+   * 批次信息
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 创建时间
    */

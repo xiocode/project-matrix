@@ -106,6 +106,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "有效期至",
       type: "datetime",
     },
+    {
+      code: "lot",
+      name: "批次信息",
+      type: "relation",
+      targetSingularCode: "base_lot",
+      targetIdColumnName: "lot_id",
+    },
   ],
 };
 

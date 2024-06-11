@@ -81,22 +81,6 @@ export default [
           const businessTypeManager = server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type");
           const businessType = await businessTypeManager.findById(after.business_id);
 
-          for (const transfer of transfers) {
-            // 生成批次信息
-            try {
-              await saveMaterialLotInfo(server, {
-                lotNum: transfer.lotNum,
-                material: {id: (transfer as any).material_id},
-                sourceType: businessType?.config?.defaultSourceType || null,
-                qualificationState: businessType?.config?.defaultQualificationState || "qualified",
-                isAOD: false,
-              });
-            } catch (e) {
-              console.error(e);
-            }
-
-          }
-
           await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
             id: after.application_id,
             entityToSave: {
@@ -241,36 +225,6 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
       });
     }
   }
-}
-
-async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
-  if (!lot.lotNum || !lot.material || !lot.material.id) {
-    throw new Error("lotNum and material are required when saving lot info.");
-  }
-
-  const baseLotManager = server.getEntityManager<BaseLot>("base_lot");
-  const lotInDb = await baseLotManager.findEntity({
-    filters: [
-      {
-        operator: "eq",
-        field: "lot_num",
-        value: lot.lotNum,
-      },
-      {
-        operator: "eq",
-        field: "material_id",
-        value: lot.material.id,
-      },
-    ],
-  });
-
-  if (!lotInDb) {
-    return await baseLotManager.createEntity({
-      entity: lot,
-    });
-  }
-
-  return lotInDb;
 }
 
 async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionSheetInput) {
