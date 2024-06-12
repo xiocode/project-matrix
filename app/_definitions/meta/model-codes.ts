@@ -1107,7 +1107,6 @@ const entityFieldCodes = {
   ],
   'MomInspectionRule': [
     'id',
-    'name',
     'category',
     'material',
     'routeProcess',
