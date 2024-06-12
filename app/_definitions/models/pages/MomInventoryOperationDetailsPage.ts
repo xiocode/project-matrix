@@ -2,6 +2,7 @@ import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const createFormConfig: Partial<RapidEntityFormConfig> = {
+  defaultFormFields: { outMethod: "batch" },
   items: [
     {
       type: "auto",
@@ -16,29 +17,15 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "unit",
+      formControlProps: {
+        disabled: true,
+      },
+    },
+    {
+      type: "auto",
       code: "lotNum",
     },
-    // {
-    //   type: "auto",
-    //   code: "binNum",
-    //   label: "托盘号",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "quantity",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "unit",
-    // },
-    // {
-    //   type: "treeSelect",
-    //   code: "to",
-    //   formControlProps: {
-    //     listDataSourceCode: "locations",
-    //     listParentField: "parent.id",
-    //   },
-    // },
     {
       type: "datetime",
       code: "manufactureDate",
@@ -49,7 +36,59 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "outMethod",
+      label: "收货方式",
+      formControlType: "rapidRadioListFormInput",
+      formControlProps: {
+        optionType: "button",
+        listTextFieldName: "label",
+        listValueFieldName: "value",
+        listDataSource: {
+          data: {
+            list: [
+              {
+                label: "批量收货",
+                value: "batch",
+              },
+              {
+                label: "单托收货",
+                value: "single",
+              },
+            ],
+          },
+        },
+      },
+    },
+    {
+      type: "auto",
+      label: "单托数量",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
+      },
+      code: "palletWeight",
+      formControlType: "antdInputNumber",
+      formControlProps: {
+        min: 0,
+      },
+    },
+    {
+      type: "auto",
+      label: "托数",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
+      },
+      code: "palletCount",
+      formControlType: "antdInputNumber",
+      formControlProps: {
+        min: 0,
+      },
+    },
+    {
+      type: "auto",
       code: "transfers",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('outMethod') !== 'single'",
+      },
       formControlType: "editableTable",
       formControlProps: {
         width: "100%",
@@ -71,11 +110,6 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
             control: "number",
             width: 100,
           },
-          {
-            name: "unit",
-            title: "单位",
-            width: 60,
-          },
         ],
       },
     },
@@ -89,11 +123,11 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
           const _ = event.framework.getExpressionVars()._;
           const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
           const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitId = _.get(material, 'defaultUnit.id');
+          const unitName = _.get(material, 'defaultUnit.name');
           event.page.sendComponentMessage(event.sender.$id, {
             name: "setFieldsValue",
             payload: {
-              unit: unitId,
+              unit: unitName,
             }
           });
         }
