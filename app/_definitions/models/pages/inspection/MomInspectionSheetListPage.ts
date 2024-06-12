@@ -3,10 +3,10 @@ import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "code",
-    },
+    // {
+    //   type: "auto",
+    //   code: "code",
+    // },
     {
       type: "auto",
       code: "material",
@@ -19,34 +19,42 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "lotNum",
     },
-    {
-      type: "auto",
-      code: "serialNum",
-    },
+    // {
+    //   type: "auto",
+    //   code: "serialNum",
+    // },
     {
       code: "sampleCount",
       type: "auto",
     },
     {
-      code: "workOrder",
+      code: "inventoryOperation",
       type: "auto",
+      formControlProps: {
+        listTextFormat: "{{code}}",
+        listFilterFields: ["label"],
+      },
     },
-    {
-      code: "workTrack",
-      type: "auto",
-    },
-    {
-      code: "workTask",
-      type: "auto",
-    },
+    // {
+    //   code: "workOrder",
+    //   type: "auto",
+    // },
+    // {
+    //   code: "workTrack",
+    //   type: "auto",
+    // },
+    // {
+    //   code: "workTask",
+    //   type: "auto",
+    // },
     {
       code: "rule",
       type: "auto",
     },
-    {
-      code: "routeProcess",
-      type: "auto",
-    },
+    // {
+    //   code: "routeProcess",
+    //   type: "auto",
+    // },
     {
       type: "auto",
       code: "sender",
@@ -54,6 +62,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "state",
+    },
+    {
+      type: "auto",
+      code: "result",
     },
   ],
 };
@@ -131,7 +143,15 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "serialNum",
+          code: "inventoryOperation",
+          width: "150px",
+          rendererProps: {
+            format: "{{code}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "result",
           width: "150px",
         },
         {

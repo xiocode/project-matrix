@@ -95,6 +95,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
     await saveInspectionSheet(server, {
       inventoryOperation: {id: input.operationId},
       lotNum: input.lotNum,
+      lot: {id: lotInfo.id},
       material: {id: input.material},
       state: "pending",
     });
@@ -161,18 +162,8 @@ async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionS
   }
 
   const inspectionSheetManager = server.getEntityManager("mom_inspection_sheet");
-  const lotInDb = await inspectionSheetManager.findEntity({
-    filters: [
-      {operator: "eq", field: "lot_num", value: sheet.lotNum},
-      {operator: "eq", field: "material_id", value: sheet.material.id},
-    ],
-  });
 
-  if (!lotInDb) {
-    return await inspectionSheetManager.createEntity({entity: sheet});
-  }
-
-  return lotInDb;
+  return await inspectionSheetManager.createEntity({entity: sheet});
 }
 
 

@@ -18,6 +18,7 @@ import EnabledDisabledState from '../models/data-dictionaries/EnabledDisabledSta
 import FinTransactionType from '../models/data-dictionaries/FinTransactionType';
 import FormFieldType from '../models/data-dictionaries/FormFieldType';
 import InspectionDetermineType from '../models/data-dictionaries/InspectionDetermineType';
+import InspectionKind from '../models/data-dictionaries/InspectionKind';
 import InspectionResult from '../models/data-dictionaries/InspectionResult';
 import MaterialSourceType from '../models/data-dictionaries/MaterialSourceType';
 import MetaDataDictionaryLevel from '../models/data-dictionaries/MetaDataDictionaryLevel';
@@ -48,8 +49,8 @@ import PmProjectStage from '../models/data-dictionaries/PmProjectStage';
 import PmProjectState from '../models/data-dictionaries/PmProjectState';
 import PmWorkItemState from '../models/data-dictionaries/PmWorkItemState';
 import PmWorkItemStepState from '../models/data-dictionaries/PmWorkItemStepState';
-import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
+import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
 import QuantityType from '../models/data-dictionaries/QuantityType';
@@ -77,6 +78,7 @@ export default [
   FinTransactionType,
   FormFieldType,
   InspectionDetermineType,
+  InspectionKind,
   InspectionResult,
   MaterialSourceType,
   MetaDataDictionaryLevel,
@@ -107,8 +109,8 @@ export default [
   PmProjectState,
   PmWorkItemState,
   PmWorkItemStepState,
-  PrinterNetworkState,
   PrintTaskState,
+  PrinterNetworkState,
   PublishState,
   QualificationState,
   QuantityType,

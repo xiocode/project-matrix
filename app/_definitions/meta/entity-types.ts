@@ -18,6 +18,7 @@ import type {
   FinTransactionType,
   FormFieldType,
   InspectionDetermineType,
+  InspectionKind,
   InspectionResult,
   MaterialSourceType,
   MomEquipmentPowerState,
@@ -3615,6 +3616,10 @@ export interface MomInspectionCharacteristic {
    */
   instrument?: Partial<MomInspectionInstrument>;
   /**
+   * 检验类型
+   */
+  kind?: InspectionKind;
+  /**
    * 合格判定方式
    */
   determineType?: InspectionDetermineType;
@@ -4161,6 +4166,65 @@ export interface MomInspectionRule {
 export type SaveMomInspectionRuleInput = Omit<MomInspectionRule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 检验规则
+ */
+export interface MomInspectionRuleItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 检验规则
+   */
+  rule?: Partial<MomInspectionRule>;
+  /**
+   * 是否必检
+   */
+  required?: boolean;
+  /**
+   * 检验方法
+   */
+  method?: Partial<MomInspectionMethod>;
+  /**
+   * 检验方法
+   */
+  method?: Partial<MomInspectionMethod>;
+  /**
+   * 条件
+   */
+  condition?: InspectionDetermineType;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验规则
+ */
+export type SaveMomInspectionRuleItemInput = Omit<MomInspectionRuleItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 检验单
  */
 export interface MomInspectionSheet {
@@ -4244,6 +4308,10 @@ export interface MomInspectionSheet {
    * 缺陷统计
    */
   defectStats?: any;
+  /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 创建时间
    */
@@ -7308,6 +7376,612 @@ export interface OcUser {
 export type SaveOcUserInput = Omit<OcUser, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 车间配置系统-应用
+ */
+export interface ShopfloorApp {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 图标地址
+   */
+  icon?: string;
+  /**
+   * 当前生效版本
+   */
+  version?: string;
+  /**
+   * 权限
+   */
+  permissions?: Record<string, any>;
+  /**
+   * 内容
+   */
+  content?: Record<string, any>;
+  /**
+   * 发布时间
+   */
+  publishedAt?: string;
+  /**
+   * 发布人
+   */
+  publishedBy?: Partial<OcUser>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用
+ */
+export type SaveShopfloorAppInput = Omit<ShopfloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-应用-步骤
+ */
+export interface ShopfloorAppStep {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 应用
+   */
+  app: Partial<ShopfloorApp>;
+  /**
+   * 编码
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 类型
+   */
+  kind?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 触发器
+   */
+  triggers?: Record<string, any>;
+  /**
+   * 结构
+   */
+  schema?: Record<string, any>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用-步骤
+ */
+export type SaveShopfloorAppStepInput = Omit<ShopfloorAppStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-应用
+ */
+export interface ShopfloorAppVersion {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 应用
+   */
+  app: Partial<ShopfloorApp>;
+  /**
+   * 版本
+   */
+  version?: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 内容
+   */
+  content?: Record<string, any>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-应用
+ */
+export type SaveShopfloorAppVersionInput = Omit<ShopfloorAppVersion, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-显示设备
+ */
+export interface ShopfloorDisplayDevice {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 关联工位
+   */
+  stations?: any;
+  /**
+   * 是否删除
+   */
+  deleted?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-显示设备
+ */
+export type SaveShopfloorDisplayDeviceInput = Omit<ShopfloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-工位
+ */
+export interface ShopfloorStation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 关联应用
+   */
+  apps?: any;
+  /**
+   * 是否删除
+   */
+  deleted?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-工位
+ */
+export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印任务
+ */
+export interface SvcPrintTask {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 打印机
+   */
+  printer?: Partial<SvcPrinter>;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 类型
+   */
+  type?: string;
+  /**
+   * 打印数据
+   */
+  data?: string;
+  /**
+   * 状态
+   */
+  state: PrintTaskState;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印任务
+ */
+export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 打印机
+ */
+export interface SvcPrinter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 网络状态
+   */
+  networkState: PrinterNetworkState;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 打印机
+ */
+export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 系统操作
+ */
+export interface SysAction {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 分组
+   */
+  group: Partial<SysActionGroup>;
+  /**
+   * Code
+   */
+  code: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 描述
+   */
+  description?: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 系统操作
+ */
+export type SaveSysActionInput = Omit<SysAction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 系统操作分组
+ */
+export interface SysActionGroup {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * Code
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 系统操作分组
+ */
+export type SaveSysActionGroupInput = Omit<SysActionGroup, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * Webhook
+ */
+export interface Webhook {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 名称
+   */
+  name: string;
+  /**
+   * URL
+   */
+  url: string;
+  /**
+   * 密钥
+   */
+  secret?: string;
+  /**
+   * namespace
+   */
+  namespace: string;
+  /**
+   * 模型Code
+   */
+  modelSingularCode: string;
+  /**
+   * 事件
+   */
+  events?: Record<string, any>;
+  /**
+   * 是否启用
+   */
+  enabled: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * Webhook
+ */
+export type SaveWebhookInput = Omit<Webhook, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 里程碑
  */
 export interface PmMilestone {
@@ -8406,609 +9080,3 @@ export interface PmWorkItemTypeStep {
  * 工作项类型步骤
  */
 export type SavePmWorkItemTypeStepInput = Omit<PmWorkItemTypeStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 车间配置系统-应用
- */
-export interface ShopfloorApp {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code?: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 图标地址
-   */
-  icon?: string;
-  /**
-   * 当前生效版本
-   */
-  version?: string;
-  /**
-   * 权限
-   */
-  permissions?: Record<string, any>;
-  /**
-   * 内容
-   */
-  content?: Record<string, any>;
-  /**
-   * 发布时间
-   */
-  publishedAt?: string;
-  /**
-   * 发布人
-   */
-  publishedBy?: Partial<OcUser>;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 车间配置系统-应用
- */
-export type SaveShopfloorAppInput = Omit<ShopfloorApp, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 车间配置系统-应用-步骤
- */
-export interface ShopfloorAppStep {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 应用
-   */
-  app: Partial<ShopfloorApp>;
-  /**
-   * 编码
-   */
-  code?: string;
-  /**
-   * 名称
-   */
-  name?: string;
-  /**
-   * 类型
-   */
-  kind?: string;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 触发器
-   */
-  triggers?: Record<string, any>;
-  /**
-   * 结构
-   */
-  schema?: Record<string, any>;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 车间配置系统-应用-步骤
- */
-export type SaveShopfloorAppStepInput = Omit<ShopfloorAppStep, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 车间配置系统-应用
- */
-export interface ShopfloorAppVersion {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 应用
-   */
-  app: Partial<ShopfloorApp>;
-  /**
-   * 版本
-   */
-  version?: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 内容
-   */
-  content?: Record<string, any>;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 车间配置系统-应用
- */
-export type SaveShopfloorAppVersionInput = Omit<ShopfloorAppVersion, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 车间配置系统-显示设备
- */
-export interface ShopfloorDisplayDevice {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code?: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 关联工位
-   */
-  stations?: any;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 车间配置系统-显示设备
- */
-export type SaveShopfloorDisplayDeviceInput = Omit<ShopfloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 车间配置系统-工位
- */
-export interface ShopfloorStation {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code?: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 关联应用
-   */
-  apps?: any;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 车间配置系统-工位
- */
-export type SaveShopfloorStationInput = Omit<ShopfloorStation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 打印机
- */
-export interface SvcPrinter {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 网络状态
-   */
-  networkState: PrinterNetworkState;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 打印机
- */
-export type SaveSvcPrinterInput = Omit<SvcPrinter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 打印任务
- */
-export interface SvcPrintTask {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 打印机
-   */
-  printer?: Partial<SvcPrinter>;
-  /**
-   * 名称
-   */
-  name?: string;
-  /**
-   * 类型
-   */
-  type?: string;
-  /**
-   * 打印数据
-   */
-  data?: string;
-  /**
-   * 状态
-   */
-  state: PrintTaskState;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 打印任务
- */
-export type SaveSvcPrintTaskInput = Omit<SvcPrintTask, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 系统操作
- */
-export interface SysAction {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 分组
-   */
-  group: Partial<SysActionGroup>;
-  /**
-   * Code
-   */
-  code: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 描述
-   */
-  description?: string;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 系统操作
- */
-export type SaveSysActionInput = Omit<SysAction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 系统操作分组
- */
-export interface SysActionGroup {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * Code
-   */
-  code?: string;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * 排序号
-   */
-  orderNum: number;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 系统操作分组
- */
-export type SaveSysActionGroupInput = Omit<SysActionGroup, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * Webhook
- */
-export interface Webhook {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 名称
-   */
-  name: string;
-  /**
-   * URL
-   */
-  url: string;
-  /**
-   * 密钥
-   */
-  secret?: string;
-  /**
-   * namespace
-   */
-  namespace: string;
-  /**
-   * 模型Code
-   */
-  modelSingularCode: string;
-  /**
-   * 事件
-   */
-  events?: Record<string, any>;
-  /**
-   * 是否启用
-   */
-  enabled: boolean;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * Webhook
- */
-export type SaveWebhookInput = Omit<Webhook, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
