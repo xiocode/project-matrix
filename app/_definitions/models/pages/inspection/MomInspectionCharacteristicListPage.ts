@@ -104,6 +104,9 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "rule",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           type: "auto",
@@ -119,14 +122,23 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "method",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           type: "auto",
           code: "instrumentCategory",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           type: "auto",
           code: "instrument",
+          rendererProps: {
+            format: "{{code}}",
+          },
         },
         {
           type: "auto",

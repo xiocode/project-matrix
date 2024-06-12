@@ -4,6 +4,10 @@ import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 const formConfig: Partial<RapidEntityFormConfig> = {
     items: [
         {
+          type: "auto",
+          code: "name",
+        },
+        {
             type: "auto",
             code: "category",
         },
@@ -56,7 +60,11 @@ const page: RapidPage = {
                 },
             ],
             pageSize: 20,
-            columns: [            
+            columns: [
+                {
+                  type: "auto",
+                  code: "name",
+                },
                 {
                     type: "auto",
                     code: "category",

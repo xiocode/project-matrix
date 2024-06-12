@@ -162,16 +162,40 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
       },
     },
     {
-      type: "auto",
       code: "sampleCode",
+      type: "text",
     },
     {
+      code: "characteristic",
       type: "auto",
+    },
+    {
+      code: "instrumentCategory",
+      type: "auto",
+    },
+    {
+      code: "instrument",
+      type: "auto",
+    },
+    {
+      code: "inspector",
+      type: "auto",
+    },
+    {
+      code: "inspectedAt",
+      type: "auto",
+    },
+    {
       code: "qualitativeValue",
+      type: "auto",
     },
     {
-      type: "auto",
       code: "quantitativeValue",
+      type: "auto",
+    },
+    {
+      code: "isQualified",
+      type: "auto",
     },
   ],
 };
@@ -305,30 +329,53 @@ const page: RapidPage = {
                 },
               ],
               columns: [
-                // {
-                //     type: "auto",
-                //     code: "state",
-                //     width: "100px",
-                // },
                 {
-                  type: "auto",
                   code: "sampleCode",
-                  width: "150px",
+                  type: "text",
                 },
                 {
+                  code: "characteristic",
                   type: "auto",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
+                {
+                  code: "instrumentCategory",
+                  type: "auto",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
+                {
+                  code: "instrument",
+                  type: "auto",
+                  rendererProps: {
+                    format: "{{code}}",
+                  },
+                },
+                {
+                  code: "inspector",
+                  type: "auto",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
+                {
+                  code: "inspectedAt",
+                  type: "auto",
+                },
+                {
                   code: "qualitativeValue",
-                  width: "150px",
+                  type: "auto",
                 },
                 {
-                  type: "auto",
                   code: "quantitativeValue",
-                  width: "150px",
+                  type: "auto",
                 },
                 {
+                  code: "isQualified",
                   type: "auto",
-                  code: "createdAt",
-                  width: "150px",
                 },
               ],
               actions: [

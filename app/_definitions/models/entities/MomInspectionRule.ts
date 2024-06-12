@@ -9,6 +9,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   description: "设置被检物品在不同检验类型/场景下需要检验哪些特征，各个特征的理论值、合格条件等。",
   fields: [
     {
+      code: "name",
+      name: "规则名称",
+      type: "text",
+    },
+    {
       code: "category",
       name: "检验类型",
       type: "relation",

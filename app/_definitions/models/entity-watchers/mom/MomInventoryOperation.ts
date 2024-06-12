@@ -2,20 +2,19 @@ import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp
 import {map, uniqWith} from "lodash";
 import {MomInventoryOperationType} from "~/_definitions/meta/data-dictionary-types";
 import {
-  type BaseLot,
   MomGood,
   MomGoodTransfer,
-  type MomInspectionSheet, MomInventoryApplication,
+  type MomInspectionSheet,
+  MomInventoryApplication,
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   MomInventoryStatTable,
   MomInventoryStatTrigger,
-  type SaveBaseLotInput,
   type SaveMomInspectionSheetInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
-import KisInventoryOperationAPI, {WarehouseInPayload, WarehouseOutPayload} from "~/sdk/kis/inventory";
+import KisInventoryOperationAPI from "~/sdk/kis/inventory";
 
 export default [
   {
