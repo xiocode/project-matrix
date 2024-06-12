@@ -229,7 +229,7 @@ const page: RapidPage = {
                   actionType: "delete",
                   actionText: "删除",
                   dataSourceCode: "list",
-                  entityCode: "MomInventoryApplicationItem",
+                  entityCode: "MomInspectionCharacteristic",
                 },
               ],
               newForm: cloneDeep(formConfig),

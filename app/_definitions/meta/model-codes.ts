@@ -1111,6 +1111,7 @@ const entityFieldCodes = {
     'material',
     'routeProcess',
     'config',
+    'isDefault',
     'createdAt',
     'createdBy',
     'updatedAt',
