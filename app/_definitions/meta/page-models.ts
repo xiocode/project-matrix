@@ -69,6 +69,7 @@ import inspection$MomInspectionDefectListPage from '../models/pages/inspection/M
 import inspection$MomInspectionInstrumentCategoryListPage from '../models/pages/inspection/MomInspectionInstrumentCategoryListPage';
 import inspection$MomInspectionInstrumentListPage from '../models/pages/inspection/MomInspectionInstrumentListPage';
 import inspection$MomInspectionMethodListPage from '../models/pages/inspection/MomInspectionMethodListPage';
+import inspection$MomInspectionRuleDetailPage from '../models/pages/inspection/MomInspectionRuleDetailPage';
 import inspection$MomInspectionRuleListPage from '../models/pages/inspection/MomInspectionRuleListPage';
 import inspection$MomInspectionSheetDetailsPage from '../models/pages/inspection/MomInspectionSheetDetailsPage';
 import inspection$MomInspectionSheetListPage from '../models/pages/inspection/MomInspectionSheetListPage';
@@ -159,6 +160,7 @@ export default [
   inspection$MomInspectionInstrumentCategoryListPage,
   inspection$MomInspectionInstrumentListPage,
   inspection$MomInspectionMethodListPage,
+  inspection$MomInspectionRuleDetailPage,
   inspection$MomInspectionRuleListPage,
   inspection$MomInspectionSheetDetailsPage,
   inspection$MomInspectionSheetListPage,

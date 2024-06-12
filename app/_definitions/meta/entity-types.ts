@@ -4123,10 +4123,6 @@ export interface MomInspectionRule {
    */
   id: number;
   /**
-   * 规则名称
-   */
-  name?: string;
-  /**
    * 检验类型
    */
   category?: Partial<MomInspectionCategory>;
