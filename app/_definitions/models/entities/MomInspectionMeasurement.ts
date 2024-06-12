@@ -63,6 +63,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "定量检验值",
       type: "double",
     },
+    {
+      code: "isQualified",
+      name: "是否合格",
+      type: "boolean",
+      required: true,
+    },
   ],
 };
 

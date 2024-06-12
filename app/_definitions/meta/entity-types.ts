@@ -4033,6 +4033,10 @@ export interface MomInspectionMeasurement {
    */
   quantitativeValue?: number;
   /**
+   * 是否合格
+   */
+  isQualified: boolean;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4119,6 +4123,10 @@ export interface MomInspectionRule {
    */
   id: number;
   /**
+   * 规则名称
+   */
+  name?: string;
+  /**
    * 检验类型
    */
   category?: Partial<MomInspectionCategory>;
@@ -4164,65 +4172,6 @@ export interface MomInspectionRule {
  * 检验规则
  */
 export type SaveMomInspectionRuleInput = Omit<MomInspectionRule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 检验规则
- */
-export interface MomInspectionRuleItem {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 检验规则
-   */
-  rule?: Partial<MomInspectionRule>;
-  /**
-   * 是否必检
-   */
-  required?: boolean;
-  /**
-   * 检验方法
-   */
-  method?: Partial<MomInspectionMethod>;
-  /**
-   * 检验方法
-   */
-  method?: Partial<MomInspectionMethod>;
-  /**
-   * 条件
-   */
-  condition?: InspectionDetermineType;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 检验规则
- */
-export type SaveMomInspectionRuleItemInput = Omit<MomInspectionRuleItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 检验单
