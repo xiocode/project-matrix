@@ -19,7 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "config",
     },
+    {
+      type: "auto",
+      code: "isDefault",
+    },
   ],
+  defaultFormFields: {
+    isDefault: "false",
+  },
 };
 
 const page: RapidPage = {
@@ -52,7 +59,7 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
-          field: "material",
+          field: "id",
         },
       ],
       pageSize: 20,
@@ -91,6 +98,10 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "config",
+        },
+        {
+          type: "auto",
+          code: "isDefault",
         },
         {
           type: "auto",

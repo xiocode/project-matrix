@@ -45,6 +45,7 @@ export default {
 async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransferInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
   const materialManager = server.getEntityManager<BaseMaterial>("base_material");
+  const inspectRuleManager = server.getEntityManager<BaseMaterial>("mom_inspection_rule");
   const unitManager = server.getEntityManager<BaseUnit>("base_unit");
   const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
   const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
@@ -96,6 +97,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
       inventoryOperation: {id: input.operationId},
       lotNum: input.lotNum,
       lot: {id: lotInfo.id},
+      rule: {id: 1},
       material: {id: input.material},
       state: "pending",
     });

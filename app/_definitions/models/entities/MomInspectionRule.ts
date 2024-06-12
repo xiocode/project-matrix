@@ -1,6 +1,6 @@
-import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
-import type { TEntitySingularCodes } from "../../meta/model-codes";
-import type { RapidEntity } from "@ruiapp/rapid-extension";
+import type {TDictionaryCodes} from "../../meta/data-dictionary-codes";
+import type {TEntitySingularCodes} from "../../meta/model-codes";
+import type {RapidEntity} from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
@@ -33,6 +33,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "config",
       name: "配置",
       type: "json",
+    },
+    {
+      code: "isDefault",
+      name: "是否默认",
+      type: "boolean",
     },
   ],
 };

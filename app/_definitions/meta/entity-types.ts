@@ -4139,6 +4139,10 @@ export interface MomInspectionRule {
    */
   config?: Record<string, any>;
   /**
+   * 是否默认
+   */
+  isDefault?: boolean;
+  /**
    * 创建时间
    */
   createdAt?: string;
