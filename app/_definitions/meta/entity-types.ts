@@ -50,6 +50,7 @@ import type {
   PropertyType,
   PublishState,
   QualificationState,
+  QualitativeInspectionDetermineType,
   RouteHttpMethod,
   RouteType,
   UndeletedDeletedState,
@@ -3620,9 +3621,13 @@ export interface MomInspectionCharacteristic {
    */
   kind?: InspectionKind;
   /**
-   * 合格判定方式
+   * 定量合格判定方式
    */
   determineType?: InspectionDetermineType;
+  /**
+   * 定性合格判定方式
+   */
+  qualitativeDetermineType?: QualitativeInspectionDetermineType;
   /**
    * 标准值
    */

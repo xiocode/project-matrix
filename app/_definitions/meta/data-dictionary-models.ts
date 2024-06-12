@@ -53,6 +53,7 @@ import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
 import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
+import QualitativeInspectionDetermineType from '../models/data-dictionaries/QualitativeInspectionDetermineType';
 import QuantityType from '../models/data-dictionaries/QuantityType';
 import UndeletedDeletedState from '../models/data-dictionaries/UndeletedDeletedState';
 import UnitType from '../models/data-dictionaries/UnitType';
@@ -113,6 +114,7 @@ export default [
   PrinterNetworkState,
   PublishState,
   QualificationState,
+  QualitativeInspectionDetermineType,
   QuantityType,
   UndeletedDeletedState,
   UnitType,

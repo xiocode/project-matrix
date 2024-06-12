@@ -53,6 +53,7 @@ const dictionaryCodes = [
   'PrinterNetworkState',
   'PublishState',
   'QualificationState',
+  'QualitativeInspectionDetermineType',
   'QuantityType',
   'UndeletedDeletedState',
   'UnitType',

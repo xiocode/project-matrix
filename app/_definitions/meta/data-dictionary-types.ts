@@ -528,6 +528,17 @@ export type QualificationState =
   ;
 
 /**
+ * 判定方式
+ */
+export type QualitativeInspectionDetermineType =
+  | 'qualified'
+  | 'yes'
+  | 'done'
+  | 'ok'
+  | 'have'
+  ;
+
+/**
  * 物理量类型
  */
 export type QuantityType =

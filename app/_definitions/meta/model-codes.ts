@@ -989,6 +989,7 @@ const entityFieldCodes = {
     'instrument',
     'kind',
     'determineType',
+    'qualitativeDetermineType',
     'norminal',
     'upperTol',
     'lowerTol',
