@@ -2474,10 +2474,6 @@ export interface KisConfig {
    */
   refresh_auth_data_token: string;
   /**
-   * auth_data
-   */
-  auth_data: string;
-  /**
    * gateway_router_addr
    */
   gateway_router_addr: string;

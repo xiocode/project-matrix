@@ -713,7 +713,6 @@ const entityFieldCodes = {
     'access_token',
     'auth_data',
     'refresh_auth_data_token',
-    'auth_data',
     'gateway_router_addr',
     'session_id_expire_in',
     'access_token_expire_in',
