@@ -61,9 +61,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: "determineType",
-      name: "合格判定方式",
+      name: "定量合格判定方式",
       type: "option",
       dataDictionary: "InspectionDetermineType",
+      defaultValue: "'inTolerance'",
+    },
+    {
+      code: "qualitativeDetermineType",
+      name: "定性合格判定方式",
+      type: "option",
+      dataDictionary: "QualitativeInspectionDetermineType",
       defaultValue: "'inTolerance'",
     },
     {
