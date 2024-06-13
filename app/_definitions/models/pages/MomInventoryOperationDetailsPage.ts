@@ -496,7 +496,7 @@ const page: RapidPage = {
                     });
                   }`,
                   $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'",
                   },
                 },
                 {
