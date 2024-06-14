@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -34,6 +34,17 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "determineType",
+      formControlType: "rapidSelect",
+      formControlProps: {
+        listDataSource: {
+          data: {
+            list: [],
+          },
+        },
+      },
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'qualitative'",
+      },
     },
     {
       type: "auto",
@@ -42,22 +53,59 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "norminal",
+      formControlType: "rapidSelect",
+      formControlProps: {
+        listDataSource: {
+          data: {
+            list: [],
+          },
+        },
+      },
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'qualitative'",
+      },
+    },
+    {
+      type: "auto",
+      code: "determineType",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+      },
+    },
+    {
+      type: "auto",
+      code: "norminal",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+      },
     },
     {
       type: "auto",
       code: "upperTol",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+      },
     },
     {
       type: "auto",
       code: "lowerTol",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+      },
     },
     {
       type: "auto",
       code: "upperLimit",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+      },
     },
     {
       type: "auto",
       code: "lowerLimit",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+      },
     },
   ],
 };
