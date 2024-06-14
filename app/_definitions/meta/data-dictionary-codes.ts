@@ -58,5 +58,6 @@ const dictionaryCodes = [
   'UndeletedDeletedState',
   'UnitType',
   'UserSecretLevel',
+  'WarehouseStrategy',
 ] as const;
 export type TDictionaryCodes = typeof dictionaryCodes[number];

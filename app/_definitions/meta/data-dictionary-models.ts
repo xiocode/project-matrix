@@ -58,6 +58,7 @@ import QuantityType from '../models/data-dictionaries/QuantityType';
 import UndeletedDeletedState from '../models/data-dictionaries/UndeletedDeletedState';
 import UnitType from '../models/data-dictionaries/UnitType';
 import UserSecretLevel from '../models/data-dictionaries/UserSecretLevel';
+import WarehouseStrategy from '../models/data-dictionaries/WarehouseStrategy';
 
 export default [
   ActiveInactiveState,
@@ -119,4 +120,5 @@ export default [
   UndeletedDeletedState,
   UnitType,
   UserSecretLevel,
+  WarehouseStrategy,
 ] as TRapidDataDictionary[];
