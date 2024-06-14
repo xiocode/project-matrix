@@ -198,6 +198,9 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
     },
   ],
+  defaultFormFields: {
+    isQualified: "true",
+  },
 };
 
 const page: RapidPage = {

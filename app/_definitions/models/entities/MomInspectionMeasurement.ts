@@ -67,7 +67,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "isQualified",
       name: "是否合格",
       type: "boolean",
-      required: true,
     },
   ],
 };

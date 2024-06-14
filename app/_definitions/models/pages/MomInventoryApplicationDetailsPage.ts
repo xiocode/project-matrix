@@ -18,22 +18,22 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "lotNum",
     },
-    {
-      type: "auto",
-      code: "binNum",
-    },
-    {
-      type: "auto",
-      code: "serialNum",
-    },
-    {
-      type: "auto",
-      code: "trackingCode",
-    },
-    {
-      type: "auto",
-      code: "tags",
-    },
+    // {
+    //   type: "auto",
+    //   code: "binNum",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "serialNum",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "trackingCode",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "tags",
+    // },
     {
       type: "auto",
       code: "quantity",
@@ -179,26 +179,26 @@ const page: RapidPage = {
                   code: "lotNum",
                   width: "100px",
                 },
-                {
-                  type: "auto",
-                  code: "binNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "serialNum",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "trackingCode",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "tags",
-                  width: "100px",
-                },
+                // {
+                //   type: "auto",
+                //   code: "binNum",
+                //   width: "100px",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "serialNum",
+                //   width: "100px",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "trackingCode",
+                //   width: "100px",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "tags",
+                //   width: "100px",
+                // },
                 {
                   type: "auto",
                   code: "quantity",

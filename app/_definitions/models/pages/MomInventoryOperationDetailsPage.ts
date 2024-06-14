@@ -27,7 +27,7 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       code: "lotNum",
     },
     {
-      type: "datetime",
+      type: "date",
       code: "manufactureDate",
     },
     {
