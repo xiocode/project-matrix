@@ -99,6 +99,7 @@ import MomShift from '../models/entities/MomShift';
 import MomShop from '../models/entities/MomShop';
 import MomStation from '../models/entities/MomStation';
 import MomWarehouse from '../models/entities/MomWarehouse';
+import MomWarehouseStrategy from '../models/entities/MomWarehouseStrategy';
 import MomWorkOrder from '../models/entities/MomWorkOrder';
 import MomWorkReport from '../models/entities/MomWorkReport';
 import MomWorkTask from '../models/entities/MomWorkTask';
@@ -234,6 +235,7 @@ const entityDefinitions = [
   MomShop,
   MomStation,
   MomWarehouse,
+  MomWarehouseStrategy,
   MomWorkOrder,
   MomWorkReport,
   MomWorkTask,
@@ -369,6 +371,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomShop, entityDefinitions),
   autoConfigureRapidEntity(MomStation, entityDefinitions),
   autoConfigureRapidEntity(MomWarehouse, entityDefinitions),
+  autoConfigureRapidEntity(MomWarehouseStrategy, entityDefinitions),
   autoConfigureRapidEntity(MomWorkOrder, entityDefinitions),
   autoConfigureRapidEntity(MomWorkReport, entityDefinitions),
   autoConfigureRapidEntity(MomWorkTask, entityDefinitions),

@@ -576,3 +576,13 @@ export type UserSecretLevel =
   | '3'
   | '4'
   ;
+
+/**
+ * 仓库策略
+ */
+export type WarehouseStrategy =
+  | 'fifo'
+  | 'fdfo'
+  | 'qualified'
+  | 'validity'
+  ;

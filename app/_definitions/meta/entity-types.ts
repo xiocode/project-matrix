@@ -55,6 +55,7 @@ import type {
   RouteType,
   UndeletedDeletedState,
   UnitType,
+  WarehouseStrategy,
 } from "./data-dictionary-types";
 /**
  * 客户端
@@ -6652,6 +6653,69 @@ export interface MomWarehouse {
  * 仓库
  */
 export type SaveMomWarehouseInput = Omit<MomWarehouse, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 仓库出入库策略
+ */
+export interface MomWarehouseStrategy {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料类型
+   */
+  materialCategory?: Partial<BaseMaterialCategory>;
+  /**
+   * 仓库
+   */
+  warehouse?: Partial<MomWarehouse>;
+  /**
+   * 操作类型
+   */
+  businessType?: Partial<MomInventoryBusinessType>;
+  /**
+   * 策略
+   */
+  strategy?: WarehouseStrategy;
+  /**
+   * 优先级
+   */
+  priority?: number;
+  /**
+   * 启用
+   */
+  enabled?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 仓库出入库策略
+ */
+export type SaveMomWarehouseStrategyInput = Omit<MomWarehouseStrategy, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 生产工单

@@ -115,14 +115,26 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
       }
     )
 
-    await saveInspectionSheet(server, {
-      inventoryOperation: {id: input.operationId},
-      lotNum: input.lotNum,
-      lot: {id: lotInfo.id},
-      rule: {id: inspectRule?.id},
-      material: {id: input.material},
-      state: "pending",
-    });
+    if (inspectRule) {
+      await saveInspectionSheet(server, {
+        inventoryOperation: {id: input.operationId},
+        lotNum: input.lotNum,
+        lot: {id: lotInfo.id},
+        rule: {id: inspectRule?.id},
+        material: {id: input.material},
+        state: "pending",
+      });
+    } else {
+      await saveInspectionSheet(server, {
+        inventoryOperation: {id: input.operationId},
+        lotNum: input.lotNum,
+        lot: {id: lotInfo.id},
+        material: {id: input.material},
+        state: "pending",
+      });
+    }
+
+
   }
 }
 
