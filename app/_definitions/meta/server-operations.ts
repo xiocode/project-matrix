@@ -1,6 +1,7 @@
 import type { ServerOperation as TServerOperation } from '@ruiapp/rapid-core';
 import mom$calcMaterialRequirements from '../models/server-operations/mom/calcMaterialRequirements';
 import mom$createGoodTransfers from '../models/server-operations/mom/createGoodTransfers';
+import mom$createInventoryApplicationItems from '../models/server-operations/mom/createInventoryApplicationItems';
 import mom$createInventoryOperation from '../models/server-operations/mom/createInventoryOperation';
 import mom$listGoodInTransfer from '../models/server-operations/mom/listGoodInTransfer';
 import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOutTransfer';
@@ -14,6 +15,7 @@ import sys$listMyAllowedSysActions from '../models/server-operations/sys/listMyA
 export default [
   mom$calcMaterialRequirements,
   mom$createGoodTransfers,
+  mom$createInventoryApplicationItems,
   mom$createInventoryOperation,
   mom$listGoodInTransfer,
   mom$listGoodOutTransfer,

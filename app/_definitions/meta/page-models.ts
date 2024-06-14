@@ -28,7 +28,6 @@ import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
-import MomIWarehouseStrategyListPage from '../models/pages/MomIWarehouseStrategyListPage';
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
@@ -50,6 +49,7 @@ import MomProcessListPage from '../models/pages/MomProcessListPage';
 import MomProdTaskDetailsPage from '../models/pages/MomProdTaskDetailsPage';
 import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
 import MomWarehouseListPage from '../models/pages/MomWarehouseListPage';
+import MomWarehouseStrategyListPage from '../models/pages/MomWarehouseStrategyListPage';
 import MomWorkOrderDetailsPage from '../models/pages/MomWorkOrderDetailsPage';
 import MomWorkOrderListPage from '../models/pages/MomWorkOrderListPage';
 import OcDepartmentListPage from '../models/pages/OcDepartmentListPage';
@@ -120,7 +120,6 @@ export default [
   MetaRouteListPage,
   MomGoodListPage,
   MomGoodLocationListPage,
-  MomIWarehouseStrategyListPage,
   MomInventoryApplicationDetailsPage,
   MomInventoryApplicationListPage,
   MomInventoryBusinessTypeListPage,
@@ -142,6 +141,7 @@ export default [
   MomProdTaskDetailsPage,
   MomProdTaskListPage,
   MomWarehouseListPage,
+  MomWarehouseStrategyListPage,
   MomWorkOrderDetailsPage,
   MomWorkOrderListPage,
   OcDepartmentListPage,
