@@ -48,11 +48,11 @@ importers:
         specifier: ~0.1.28
         version: 0.1.28(lodash@4.17.21)
       '@ruiapp/rapid-core':
-        specifier: ~0.1.47
-        version: 0.1.47(winston@3.11.0)
+        specifier: ~0.1.51
+        version: 0.1.51(winston@3.11.0)
       '@ruiapp/rapid-express':
-        specifier: ~0.1.47
-        version: 0.1.47(express@4.18.3)(winston@3.11.0)
+        specifier: ~0.1.51
+        version: 0.1.51(express@4.18.3)(winston@3.11.0)
       '@ruiapp/rapid-extension':
         specifier: ~0.1.9
         version: 0.1.9(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@ruiapp/move-style@0.1.28(lodash@4.17.21))(@ruiapp/react-renderer@0.1.28(@ruiapp/move-style@0.1.28(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1838,13 +1838,13 @@ packages:
       lodash: ^4.17.21
       tough-cookie: ^4.1.3
 
-  '@ruiapp/rapid-core@0.1.47':
-    resolution: {integrity: sha512-rFI0eXSObQo6ik0rG+DSCc/6M1SMXjAgxaJrFwgSvh+gOkzss+X5VwyNZG1Ll3fH7OpUPDTb1PoM4jzhFPch+A==}
+  '@ruiapp/rapid-core@0.1.51':
+    resolution: {integrity: sha512-5Dn+QHxBj8YBOrVAc8Mqz625RzYjddO41LNIxjz4SkzKfvJBSYRX+vcddjcPbFrGCBj5m5hN6NKZ6qJGIK2mxw==}
     peerDependencies:
       winston: ^3.11.0
 
-  '@ruiapp/rapid-express@0.1.47':
-    resolution: {integrity: sha512-OFzqs4cJeEenNF7EgXZQhond9PTXSbV1Rb+qHmQV+6Mb8frXWadSRpE/ZQWHLX+DiesDTpwwYAwyY8YuTB+AGw==}
+  '@ruiapp/rapid-express@0.1.51':
+    resolution: {integrity: sha512-iekYOlNODjl7A6yzZbgwIa82nDdtjRHVRX4pOUagipdg/bezh3eIiRPj2F7a3K18/W6/wCv5DZ2AZZ7z3xQ6yA==}
     peerDependencies:
       express: ^4.18.2
 
@@ -9538,7 +9538,7 @@ snapshots:
       lodash: 4.17.21
       tough-cookie: 4.1.4
 
-  '@ruiapp/rapid-core@0.1.47(winston@3.11.0)':
+  '@ruiapp/rapid-core@0.1.51(winston@3.11.0)':
     dependencies:
       bcrypt: 5.1.1
       cron: 3.1.7
@@ -9554,9 +9554,9 @@ snapshots:
       - encoding
       - supports-color
 
-  '@ruiapp/rapid-express@0.1.47(express@4.18.3)(winston@3.11.0)':
+  '@ruiapp/rapid-express@0.1.51(express@4.18.3)(winston@3.11.0)':
     dependencies:
-      '@ruiapp/rapid-core': 0.1.47(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.51(winston@3.11.0)
       express: 4.18.3
     transitivePeerDependencies:
       - encoding

@@ -1,13 +1,13 @@
 import type { RapidPage } from "@ruiapp/rapid-extension";
 
 const page: RapidPage = {
-  code: "bpm_my_pending_approval_list",
-  name: "待处理审批",
-  title: "待处理审批",
+  code: "bpm_my_initiated_application_list",
+  name: "我发起的审批",
+  title: "我发起的审批",
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "BpmApplication",
+      entityCode: "BpmInstance",
       viewMode: "table",
       extraProperties: ["process"],
       columns: [

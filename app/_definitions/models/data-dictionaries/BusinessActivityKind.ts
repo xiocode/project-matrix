@@ -7,7 +7,7 @@ export default {
   level: "app",
   entries: [
     { name: "审批", value: "approval" },
-    { name: "抄送", value: "cc" },
+    { name: "提交表单", value: "form" },
     { name: "评论", value: "comment" },
   ],
 } as RapidDataDictionary;

@@ -5,6 +5,8 @@ import BaseLocationType from '../models/data-dictionaries/BaseLocationType';
 import BusinessActivityKind from '../models/data-dictionaries/BusinessActivityKind';
 import BusinessActivityState from '../models/data-dictionaries/BusinessActivityState';
 import BusinessApplicationState from '../models/data-dictionaries/BusinessApplicationState';
+import BusinessInstanceState from '../models/data-dictionaries/BusinessInstanceState';
+import BusinessProcessState from '../models/data-dictionaries/BusinessProcessState';
 import BusinessTaskState from '../models/data-dictionaries/BusinessTaskState';
 import CbsContractKind from '../models/data-dictionaries/CbsContractKind';
 import CbsContractState from '../models/data-dictionaries/CbsContractState';
@@ -49,8 +51,8 @@ import PmProjectStage from '../models/data-dictionaries/PmProjectStage';
 import PmProjectState from '../models/data-dictionaries/PmProjectState';
 import PmWorkItemState from '../models/data-dictionaries/PmWorkItemState';
 import PmWorkItemStepState from '../models/data-dictionaries/PmWorkItemStepState';
-import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
 import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
+import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
 import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
 import QualitativeInspectionDetermineType from '../models/data-dictionaries/QualitativeInspectionDetermineType';
@@ -67,6 +69,8 @@ export default [
   BusinessActivityKind,
   BusinessActivityState,
   BusinessApplicationState,
+  BusinessInstanceState,
+  BusinessProcessState,
   BusinessTaskState,
   CbsContractKind,
   CbsContractState,
@@ -111,8 +115,8 @@ export default [
   PmProjectState,
   PmWorkItemState,
   PmWorkItemStepState,
-  PrintTaskState,
   PrinterNetworkState,
+  PrintTaskState,
   PublishState,
   QualificationState,
   QualitativeInspectionDetermineType,
