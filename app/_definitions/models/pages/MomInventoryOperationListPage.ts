@@ -22,14 +22,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "operationType",
     },
-    {
-      type: "auto",
-      code: "state",
-    },
-    {
-      type: "auto",
-      code: "approvalState",
-    },
+    // {
+    //   type: "auto",
+    //   code: "state",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "approvalState",
+    // },
   ],
   defaultFormFields: {
     state: "pending",

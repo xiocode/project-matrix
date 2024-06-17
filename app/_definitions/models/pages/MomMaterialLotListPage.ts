@@ -20,8 +20,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "sourceType",
     },
     {
-      type: "auto",
-      code: "expireTime",
+      type: "date",
+      code: "manufactureDate",
     },
     {
       type: "auto",
@@ -102,8 +102,15 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "manufactureDate",
+          width: "100px",
+          fieldType: "date",
+        },
+        {
+          type: "auto",
           code: "expireTime",
           width: "150px",
+          fieldType: "date",
         },
         {
           type: "auto",

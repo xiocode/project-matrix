@@ -19,14 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "applicant",
     },
-    {
-      type: "auto",
-      code: "state",
-    },
-    {
-      type: "auto",
-      code: "operationState",
-    },
+    // {
+    //   type: "auto",
+    //   code: "state",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "operationState",
+    // },
   ],
   defaultFormFields: {
     state: "approved",
@@ -93,14 +93,22 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "createdAt",
+          code: "applicant",
           width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           type: "auto",
-          code: "state",
+          code: "createdAt",
           width: "150px",
         },
+        // {
+        //   type: "auto",
+        //   code: "state",
+        //   width: "150px",
+        // },
         {
           type: "auto",
           code: "operationState",

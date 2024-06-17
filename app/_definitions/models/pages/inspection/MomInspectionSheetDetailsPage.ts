@@ -277,6 +277,9 @@ const page: RapidPage = {
         {
           code: "rule",
           type: "auto",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         // {
         //   code: "routeProcess",
