@@ -11,7 +11,7 @@ export default [
 
       const before = payload.before;
 
-      if (before.material_id && before.manufactureDate) {
+      if (before.material_id && before.manufactureDate && before.expireTime === undefined) {
         const materialManager = server.getEntityManager<BaseMaterial>("base_material");
         const material = await materialManager.findById(before.material_id);
 
