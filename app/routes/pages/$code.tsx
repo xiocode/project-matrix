@@ -37,6 +37,7 @@ export function links() {
 const framework = new Framework();
 framework.setLoggerProvider(new RuiLoggerProvider());
 
+framework.registerExpressionVar("rapidAppDefinition", rapidAppDefinition);
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 

@@ -76,9 +76,12 @@ const page: RapidPage = {
         {
           type: "link",
           code: "code",
-          // rendererType: 'rapidLinkRenderer',
+          // rendererType: "rapidLinkRenderer",
           rendererProps: {
             url: "/pages/mom_inventory_operation_details?id={{id}}",
+            $exps: {
+              href: "(_.get($slot.record, 'operationType') === 'out' ? '/pages/mom_inventory_out_operation_details?id=' : '/pages/mom_inventory_in_operation_details?id=') + _.get($slot.record, 'id')",
+            },
           },
         },
         {

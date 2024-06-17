@@ -27,91 +27,12 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       code: "lotNum",
     },
     {
-      type: "date",
-      code: "manufactureDate",
+      type: "auto",
+      code: "quantity",
     },
     {
       type: "auto",
       code: "packageNum",
-    },
-    {
-      type: "auto",
-      code: "outMethod",
-      label: "收货方式",
-      formControlType: "rapidRadioListFormInput",
-      formControlProps: {
-        optionType: "button",
-        listTextFieldName: "label",
-        listValueFieldName: "value",
-        listDataSource: {
-          data: {
-            list: [
-              {
-                label: "批量收货",
-                value: "batch",
-              },
-              {
-                label: "单托收货",
-                value: "single",
-              },
-            ],
-          },
-        },
-      },
-    },
-    {
-      type: "auto",
-      label: "单托数量",
-      $exps: {
-        _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
-      },
-      code: "palletWeight",
-      formControlType: "antdInputNumber",
-      formControlProps: {
-        min: 0,
-      },
-    },
-    {
-      type: "auto",
-      label: "托数",
-      $exps: {
-        _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
-      },
-      code: "palletCount",
-      formControlType: "antdInputNumber",
-      formControlProps: {
-        min: 0,
-      },
-    },
-    {
-      type: "auto",
-      code: "transfers",
-      $exps: {
-        _hidden: "$self.form.getFieldValue('outMethod') !== 'single'",
-      },
-      formControlType: "editableTable",
-      formControlProps: {
-        width: "100%",
-        columns: [
-          {
-            name: "index",
-            title: "序号",
-            width: 50,
-            fixed: "left",
-            control: `
-              function(r, index){
-                return index + 1;
-              }
-            `,
-          },
-          {
-            name: "palletWeight",
-            title: "数量",
-            control: "number",
-            width: 100,
-          },
-        ],
-      },
     },
   ],
   onValuesChange: [
@@ -155,32 +76,18 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "lotNum",
-    },
-    {
-      type: "auto",
-      code: "binNum",
-      label: "托盘号",
-    },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
       code: "unit",
-    },
-    {
-      type: "treeSelect",
-      code: "to",
       formControlProps: {
-        listDataSourceCode: "locations",
-        listParentField: "parent.id",
+        disabled: true,
       },
     },
     {
       type: "auto",
-      code: "transferTime",
+      code: "lotNum",
+    },
+    {
+      type: "auto",
+      code: "quantity",
     },
     {
       type: "auto",
@@ -196,11 +103,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
           const _ = event.framework.getExpressionVars()._;
           const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
           const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitId = _.get(material, 'defaultUnit.id');
+          const unitName = _.get(material, 'defaultUnit.name');
           event.page.sendComponentMessage(event.sender.$id, {
             name: "setFieldsValue",
             payload: {
-              unit: unitId,
+              unit: unitName,
             }
           });
         }
@@ -210,9 +117,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_inventory_operation_details",
-  name: "库存操作详情",
-  title: "库存操作详情",
+  code: "mom_inventory_out_operation_details",
+  name: "出库操作详情",
+  title: "出库操作详情",
   // permissionCheck: {any: []},
   view: [
     {
@@ -481,6 +388,8 @@ const page: RapidPage = {
                   code: "print",
                   actionType: "print",
                   actionText: "打印",
+                  printerCode: "DB5-4SA-NS6",
+                  printTemplateCode: "test",
                   dataSourceAdapter: `function(data, utils){
                     return utils.lodash.map(data, function(item){
                       const createdAt = utils.lodash.get(item, "good.createdAt");

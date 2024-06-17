@@ -33,22 +33,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "determineType",
-      formControlType: "rapidSelect",
-      formControlProps: {
-        listDataSource: {
-          data: {
-            list: [],
-          },
-        },
-      },
+      code: "qualitativeDetermineType",
       $exps: {
         _hidden: "$self.form.getFieldValue('kind') !== 'qualitative'",
       },
-    },
-    {
-      type: "auto",
-      code: "qualitativeDetermineType",
     },
     {
       type: "auto",
@@ -62,6 +50,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         },
       },
       $exps: {
+        "formControlProps.listDataSource.data.list": "$self.form.getFieldValue('qualitativeNorminalValues') || []",
         _hidden: "$self.form.getFieldValue('kind') !== 'qualitative'",
       },
     },
@@ -106,6 +95,42 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       $exps: {
         _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
       },
+    },
+  ],
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `
+        const changedValues = event.args[0] || {};
+        if(changedValues.hasOwnProperty('qualitativeDetermineType')) {
+          const _ = event.framework.getExpressionVars()._;
+          const rapidAppDefinition = event.framework.getExpressionVars().rapidAppDefinition;
+          const dictionary = _.find(rapidAppDefinition.getDataDictionaries(), function(d) { return d.code === 'QualitativeInspectionDetermineType'; });
+          const item = _.find(_.get(dictionary, 'entries'), function(item) { return item.value === changedValues.qualitativeDetermineType; });
+          const values = _.map(_.split(_.get(item, 'name'), '-'), function(v) { return { name: v, id: v } });
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              norminal: '',
+              qualitativeNorminalValues: values || [],
+            }
+          });
+        }else if(changedValues.hasOwnProperty('kind')){
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              norminal: undefined,
+              qualitativeDetermineType: undefined,
+              determineType: undefined,
+              upperTol: undefined,
+              lowerTol: undefined,
+              upperLimit: undefined,
+              lowerLimit: undefined,
+              qualitativeNorminalValues: [],
+            }
+          });
+        }
+      `,
     },
   ],
 };
