@@ -246,6 +246,7 @@ const entityFieldCodes = {
     'material',
     'lotNum',
     'sourceType',
+    'manufactureDate',
     'expireTime',
     'qualificationState',
     'isAOD',
@@ -1109,6 +1110,7 @@ const entityFieldCodes = {
   ],
   'MomInspectionRule': [
     'id',
+    'name',
     'category',
     'material',
     'routeProcess',

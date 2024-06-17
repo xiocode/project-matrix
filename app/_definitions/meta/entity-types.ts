@@ -515,6 +515,10 @@ export interface BaseLot {
    */
   sourceType?: MaterialSourceType;
   /**
+   * 生产时间
+   */
+  manufactureDate?: string;
+  /**
    * 失效时间
    */
   expireTime?: string;
@@ -4041,7 +4045,7 @@ export interface MomInspectionMeasurement {
   /**
    * 是否合格
    */
-  isQualified: boolean;
+  isQualified?: boolean;
   /**
    * 创建时间
    */
@@ -4128,6 +4132,10 @@ export interface MomInspectionRule {
    * id
    */
   id: number;
+  /**
+   * 名称
+   */
+  name: string;
   /**
    * 检验类型
    */

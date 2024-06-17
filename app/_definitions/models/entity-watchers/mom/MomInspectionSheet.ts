@@ -1,5 +1,5 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {type MomInspectionSheet,} from "~/_definitions/meta/entity-types";
+import {BaseLot, type MomInspectionSheet,} from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -11,7 +11,7 @@ export default [
       const after = payload.after;
 
       if (after.lotNum && after.material_id) {
-        const lotManager = server.getEntityManager<MomInspectionSheet>("base_lot");
+        const lotManager = server.getEntityManager<BaseLot>("base_lot");
         const lot = await lotManager.findEntity({
           filters: [
             {operator: "eq", field: "lotNum", value: after.lotNum},

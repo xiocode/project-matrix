@@ -27,6 +27,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       dataDictionary: "MaterialSourceType",
     },
     {
+      code: "manufactureDate",
+      name: "生产时间",
+      type: "datetime",
+    },
+    {
       code: "expireTime",
       name: "失效时间",
       type: "datetime",
