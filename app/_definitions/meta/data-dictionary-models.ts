@@ -51,8 +51,8 @@ import PmProjectStage from '../models/data-dictionaries/PmProjectStage';
 import PmProjectState from '../models/data-dictionaries/PmProjectState';
 import PmWorkItemState from '../models/data-dictionaries/PmWorkItemState';
 import PmWorkItemStepState from '../models/data-dictionaries/PmWorkItemStepState';
-import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
+import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
 import QualitativeInspectionDetermineType from '../models/data-dictionaries/QualitativeInspectionDetermineType';
@@ -115,8 +115,8 @@ export default [
   PmProjectState,
   PmWorkItemState,
   PmWorkItemStepState,
-  PrinterNetworkState,
   PrintTaskState,
+  PrinterNetworkState,
   PublishState,
   QualificationState,
   QualitativeInspectionDetermineType,

@@ -131,7 +131,7 @@ function createGoodInput(material: BaseMaterial, unit: BaseUnit | null, input: C
     binNum: binNum,
     quantity: palletWeight,
     unit: { id: unit?.id },
-    state: "normal",
+    state: "pending",
     manufactureDate: input.manufactureDate,
     validityDate,
   } as SaveMomGoodInput;
