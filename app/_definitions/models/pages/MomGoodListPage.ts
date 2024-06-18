@@ -65,6 +65,12 @@ const page: RapidPage = {
           value: "normal",
         },
       ],
+      orderBy: [
+        {
+          field: "createdAt",
+          desc: true,
+        },
+      ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
