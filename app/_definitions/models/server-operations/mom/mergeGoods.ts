@@ -1,10 +1,10 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
-import type {MomGood, SaveMomGoodInput,} from "~/_definitions/meta/entity-types";
+import type {MomGood, SaveMomGoodInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 
 export type MergeGoodsInput = {
   goodIds: number[];
-  toLocationId: number;
+  locationId: number;
 };
 
 // 标识卡拆分操作接口
@@ -28,7 +28,7 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
 
   const goods = await goodManager.findEntities({
     filters: [{operator: "in", field: "id", value: input.goodIds}],
-    properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime"],
+    properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
   });
 
   // Check if all goods exist and lotNum and material should be matched
@@ -41,20 +41,28 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
     throw new Error("标识卡批次号或物料不一致");
   }
 
-//   create new good and update old goods state to merged
-  const newGood = await goodManager.createEntity({
-    entity: {
-      material: originGood.material,
-      location: {id: input.toLocationId},
-      quantity: goods.reduce((acc, curr) => acc + (curr?.quantity || 0), 0),
-      manufactureDate: dayjs().format("YYYY-MM-DD"),
-      putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-      unit: originGood.unit,
-      lotNum: originGood.lotNum,
-      binNum: `${originGood.binNum}-MERGED`,
-      validityDate: originGood.validityDate,
-      state: 'normal'
-    } as SaveMomGoodInput,
+  let newGood: MomGood;
+
+  let saveGoodInput: SaveMomGoodInput = {
+    material: originGood.material,
+    location: {id: input.locationId},
+    quantity: goods.reduce((acc, curr) => acc + (curr?.quantity || 0), 0),
+    manufactureDate: dayjs().format("YYYY-MM-DD"),
+    putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    unit: originGood.unit,
+    lotNum: originGood.lotNum,
+    binNum: `${originGood.binNum}-MERGED`,
+    validityDate: originGood.validityDate,
+    state: 'normal'
+  }
+
+  if (originGood.lot) {
+    //   create new good and update old goods state to merged
+    saveGoodInput.lot = originGood.lot
+  }
+
+  newGood = await goodManager.createEntity({
+    entity: saveGoodInput,
   });
 
   await Promise.all(goods.map(async good => {
@@ -66,5 +74,4 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
       } as SaveMomGoodInput,
     });
   }));
-
 }
