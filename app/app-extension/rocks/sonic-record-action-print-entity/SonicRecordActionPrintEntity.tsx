@@ -39,6 +39,8 @@ export default {
         $type: "printTrigger",
         $id: `${props.$id}_${props.recordId}_trigger`,
         dataSource,
+        printerCode: props.printerCode,
+        printTemplateCode: props.printTemplateCode,
       },
     ];
 

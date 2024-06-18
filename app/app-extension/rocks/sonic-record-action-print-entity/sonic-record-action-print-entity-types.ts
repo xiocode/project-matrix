@@ -3,4 +3,6 @@ import { RapidTableActionConfig } from "@ruiapp/rapid-extension";
 
 export interface SonicRecordActionPrintEntityRockConfig extends SimpleRockConfig, RapidTableActionConfig {
   dataSourceAdapter?: string | ((...args: any[]) => any);
+  printerCode?: string;
+  printTemplateCode?: string;
 }
