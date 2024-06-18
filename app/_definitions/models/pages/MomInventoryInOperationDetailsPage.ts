@@ -7,13 +7,32 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
-      },
+      formControlType: "tableSingleSelector",
       formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+        labelFormat: "{{name}}({{code}})",
+        requestConfig: {
+          url: "/app/base_materials/operations/find",
+        },
+        columns: [
+          {
+            title: "物料编号",
+            code: "code",
+            width: 120,
+          },
+          {
+            title: "物料名称",
+            code: "name",
+            width: 120,
+          },
+        ],
       },
+      // listDataFindOptions: {
+      //   properties: ["id", "code", "name", "defaultUnit"],
+      // },
+      // formControlProps: {
+      //   listTextFormat: "{{code}} {{name}}",
+      //   listFilterFields: ["label"],
+      // },
     },
     {
       type: "auto",
@@ -500,6 +519,13 @@ const page: RapidPage = {
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'",
                   },
+                },
+                {
+                  $type: "inspectionPrintRecordAction",
+                  actionType: "print",
+                  actionText: "送检",
+                  printerCode: "DB5-4SA-NS6",
+                  printTemplateCode: "test",
                 },
                 {
                   $type: "sonicRecordActionEditEntity",
