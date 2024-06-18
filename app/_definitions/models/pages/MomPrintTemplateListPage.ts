@@ -12,7 +12,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "name",
     },
     {
-      type: "auto",
+      type: "textarea",
       code: "content",
     },
   ],

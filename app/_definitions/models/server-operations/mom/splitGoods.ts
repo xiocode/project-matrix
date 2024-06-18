@@ -1,4 +1,4 @@
-import type { ActionHandlerContext, IRpdServer, ServerOperation } from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
   MomGood,
   MomGoodLocation,
@@ -21,7 +21,7 @@ export default {
   code: "splitGoods",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const { server } = ctx;
+    const {server} = ctx;
     const input: SplitGoodsInput = ctx.input;
 
     await splitGoods(server, input);
@@ -36,7 +36,7 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
   const originGood = await goodManager.findEntity({
-    filters: [{ operator: "eq", field: "id", value: input.originGoodId }],
+    filters: [{operator: "eq", field: "id", value: input.originGoodId}],
     properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
   });
 
@@ -60,8 +60,11 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
     lotNum: originGood.lotNum,
     source: originGood,
     state: "normal",
-    lot: originGood.lot,
   };
+
+  if (originGood.lot) {
+    saveGoodInputBase.lot = originGood.lot
+  }
 
   await Promise.all(input.shelves.map(async (shelve, index) => {
     const saveGoodInput = {
@@ -70,11 +73,11 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
       quantity: shelve.weight,
     };
 
-    await goodManager.createEntity({ entity: saveGoodInput });
+    await goodManager.createEntity({entity: saveGoodInput});
   }));
 
   await goodManager.updateEntityById({
     id: originGood.id,
-    entityToSave: { state: "splitted" } as SaveMomGoodInput,
+    entityToSave: {state: "splitted"} as SaveMomGoodInput,
   });
 }
