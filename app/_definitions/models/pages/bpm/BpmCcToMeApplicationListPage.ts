@@ -7,7 +7,7 @@ const page: RapidPage = {
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "BpmApplication",
+      entityCode: "BpmInstance",
       viewMode: "table",
       extraProperties: ["process"],
       columns: [

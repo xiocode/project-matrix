@@ -1,7 +1,6 @@
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
-import {BusinessTaskState} from "~/_definitions/meta/data-dictionary-types";
 import type {PropertySequenceConfig} from "@ruiapp/rapid-core";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
@@ -104,6 +103,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "库存操作状态",
       type: "option",
       dataDictionary: "MomInventoryOperationState",
+    },
+    {
+      code: "processInstance",
+      name: "流程实例",
+      type: "relation",
+      targetSingularCode: "bpm_instance",
+      targetIdColumnName: "process_instance_id",
     },
   ],
 };

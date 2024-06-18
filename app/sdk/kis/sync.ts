@@ -517,7 +517,7 @@ class KisDataSync {
             supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
             applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
             operationType: 'in',
-            state: 'processing',
+            state: 'approving',
             items,
           } as SaveMomInventoryApplicationInput;
         },

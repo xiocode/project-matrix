@@ -1,11 +1,12 @@
-import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
-import type { TEntitySingularCodes } from "../../meta/model-codes";
+import type { TDictionaryCodes } from "../../../meta/data-dictionary-codes";
+import type { TEntitySingularCodes } from "../../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "app",
   code: "BpmProcess",
-  name: "业务流程",
+  name: "流程定义",
+  description: "管理业务流程配置信息，包括流程表单、审批配置、列表配置等。",
   fields: [
     {
       code: "category",
@@ -24,7 +25,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "description",
       name: "描述",
       type: "text",
-      required: true,
     },
     {
       code: "formConfig",
@@ -54,14 +54,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "state",
       name: "状态",
       type: "option",
-      dataDictionary: "EnabledDisabledState",
-      required: true,
-    },
-    {
-      code: "publishState",
-      name: "状态",
-      type: "option",
-      dataDictionary: "PublishState",
+      dataDictionary: "BusinessProcessState",
       required: true,
     },
     {

@@ -37,7 +37,7 @@ export type BaseLocationType =
  */
 export type BusinessActivityKind =
   | 'approval'
-  | 'cc'
+  | 'form'
   | 'comment'
   ;
 
@@ -47,17 +47,40 @@ export type BusinessActivityKind =
 export type BusinessActivityState =
   | 'pending'
   | 'finished'
+  | 'canceled'
   ;
 
 /**
- * 流程申请单状态
+ * 业务申请状态
  */
 export type BusinessApplicationState =
   | 'draft'
+  | 'approving'
+  | 'approved'
+  | 'rejected'
+  | 'canceled'
+  ;
+
+/**
+ * 流程实例状态
+ */
+export type BusinessInstanceState =
+  | 'draft'
   | 'processing'
   | 'approved'
-  | 'refused'
-  | 'withdrawed'
+  | 'rejected'
+  | 'canceled'
+  ;
+
+/**
+ * 流程定义状态
+ */
+export type BusinessProcessState =
+  | 'draft'
+  | 'approving'
+  | 'published'
+  | 'disabled'
+  | 'archived'
   ;
 
 /**
@@ -66,6 +89,7 @@ export type BusinessApplicationState =
 export type BusinessTaskState =
   | 'pending'
   | 'finished'
+  | 'canceled'
   ;
 
 /**
@@ -490,20 +514,20 @@ export type PmWorkItemStepState =
   ;
 
 /**
+ * 打印机网络状态
+ */
+export type PrinterNetworkState =
+  | '0'
+  | '1'
+  ;
+
+/**
  * 打印任务状态
  */
 export type PrintTaskState =
   | '0'
   | '1'
   | '2'
-  ;
-
-/**
- * 打印机网络状态
- */
-export type PrinterNetworkState =
-  | '0'
-  | '1'
   ;
 
 /**
