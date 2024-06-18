@@ -11,5 +11,6 @@ export default {
     { name: "已合并", value: "merged" },
     { name: "已转移", value: "transferred" },
     { name: "已销毁", value: "destroied" },
+    { name: "待处理", value: "pending" },
   ],
 } as RapidDataDictionary;

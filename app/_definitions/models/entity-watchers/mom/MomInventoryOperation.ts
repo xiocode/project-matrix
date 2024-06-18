@@ -1,16 +1,13 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
-import {map, uniqWith} from "lodash";
 import {MomInventoryOperationType} from "~/_definitions/meta/data-dictionary-types";
 import {
   MomGood,
   MomGoodTransfer,
-  type MomInspectionSheet,
   MomInventoryApplication,
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   MomInventoryStatTable,
-  MomInventoryStatTrigger,
-  type SaveMomInspectionSheetInput,
+  MomInventoryStatTrigger, MomWarehouse,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
@@ -39,30 +36,6 @@ export default [
     },
   },
   {
-    eventName: "entity.delete",
-    modelSingularCode: "mom_good_transfer",
-    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
-      const {server, payload} = ctx;
-      const changes = payload.before;
-      try {
-        const momInventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findById(changes.operation_id);
-
-        if (momInventoryOperation?.operationType === "in") {
-          if (changes.good_id) {
-            const goodManager = server.getEntityManager<MomGood>("mom_good");
-            const good = await goodManager.findById(changes.good_id);
-
-            if (good) {
-              await goodManager.deleteById(good.id);
-            }
-          }
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  },
-  {
     eventName: "entity.update",
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
@@ -75,11 +48,6 @@ export default [
       const after = payload.after;
       if (after.operationType === "in") {
         if (changes.hasOwnProperty("state") && changes.state === "done") {
-          const transfers = await listTransfersOfOperation(server, after.id);
-
-          const businessTypeManager = server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type");
-          const businessType = await businessTypeManager.findById(after.business_id);
-
           await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
             id: after.application_id,
             entityToSave: {
@@ -87,25 +55,6 @@ export default [
             },
           });
 
-          if (businessType?.name === "采购入库") {
-            const materialLotsToInspect = uniqWith(
-              map(transfers, (item) => {
-                return {material_id: (item as any).material_id, lot_num: item.lotNum};
-              }),
-              (item1, item2) => {
-                return item1.material_id === item2.material_id && item1.lot_num === item2.lot_num;
-              },
-            );
-
-            for (const materialLot of materialLotsToInspect) {
-              await saveInspectionSheet(server, {
-                inventoryOperation: {id: after.id},
-                lotNum: materialLot.lot_num,
-                material: {id: materialLot.material_id},
-                state: "pending",
-              });
-            }
-          }
 
           // TODO: 生成KIS入库单
           // switch (businessType?.name) {
@@ -129,22 +78,12 @@ export default [
           //     break;
           // }
         }
-
-        if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
-          const transfers = await listTransfersOfOperation(server, after.id);
-
-          await updateInventoryStats(server, after.business_id, after.operationType, transfers);
-        }
       }
 
-      if (after.operationType === "out") {
-        if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
-          const transfers = await server.queryDatabaseObject(`select *
-                                                              from mom_good_transfers
-                                                              where operation_id = $1;`, [after.id]);
+      if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
+        const transfers = await listTransfersOfOperation(server, after.id);
 
-          await updateInventoryStats(server, after.business_id, after.operationType, transfers);
-        }
+        await updateInventoryStats(server, after.business_id, after.operationType, transfers);
       }
     },
   },
@@ -197,6 +136,41 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
   const statTables = await statTableManager.findEntities({});
 
   const inventoryStatService = new InventoryStatService(server);
+
+  // TODO: get to_location_id from transfers and get warehouse by location_id
+  for (const transfer of transfers) {
+    if (transfer?.to_location_id) {
+      const warehouseManager = server.getEntityManager<MomWarehouse>("mom_warehouse");
+      const warehouse = await warehouseManager.findEntity({
+        filters: [
+          {
+            operator: "eq",
+            field: "location_id",
+            value: transfer.to_location_id,
+          },
+        ],
+      })
+      if (warehouse) {
+        transfer['warehouse_id'] = warehouse?.id;
+      }
+    }
+    if (transfer?.from_location_id) {
+      const warehouseManager = server.getEntityManager<MomWarehouse>("mom_warehouse");
+      const warehouse = await warehouseManager.findEntity({
+        filters: [
+          {
+            operator: "eq",
+            field: "location_id",
+            value: transfer.from_location_id,
+          },
+        ],
+      })
+      if (warehouse) {
+        transfer['warehouse_id'] = warehouse?.id;
+      }
+    }
+  }
+
   for (const transfer of transfers) {
     for (const statTable of statTables) {
       const statTableConfig: StatTableConfig = statTable.config as any;
@@ -224,34 +198,4 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
       });
     }
   }
-}
-
-async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionSheetInput) {
-  if (!sheet.lotNum || !sheet.material || !sheet.material.id) {
-    throw new Error("lotNum and material are required when saving lot info.");
-  }
-
-  const inspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
-  const lotInDb = await inspectionSheetManager.findEntity({
-    filters: [
-      {
-        operator: "eq",
-        field: "lot_num",
-        value: sheet.lotNum,
-      },
-      {
-        operator: "eq",
-        field: "material_id",
-        value: sheet.material.id,
-      },
-    ],
-  });
-
-  if (!lotInDb) {
-    return await inspectionSheetManager.createEntity({
-      entity: sheet,
-    });
-  }
-
-  return lotInDb;
 }

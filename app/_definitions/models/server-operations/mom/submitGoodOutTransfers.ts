@@ -1,9 +1,8 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
   MomGood,
-  MomGoodLocation,
-  MomGoodTransfer, MomInventoryOperation, SaveMomGoodInput,
-  SaveMomGoodLocationInput,
+  MomGoodTransfer,
+  MomInventoryOperation, SaveMomGoodInput, SaveMomGoodLocationInput,
   SaveMomGoodTransferInput,
 } from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
@@ -45,12 +44,9 @@ async function submitGoodOutTransfers(server: IRpdServer, input: CreateGoodOutTr
       for (const good of goods) {
         // validateGoodForOutTransfer(server, inventory, good);
 
-        // await Promise.all([
-        //   goodManager.deleteById(good.id),
-        //   deleteGoodLocation(goodLocationManager, good.id, good.location?.id)
-        // ]);
-
         await createGoodTransfer(server, input.operationId, good);
+
+        await handleGood(server, good.id, good.location?.id);
 
       }
     }
@@ -111,15 +107,31 @@ async function createGoodTransfer(server: IRpdServer, operationId: number, good:
       binNum: good.binNum,
       quantity: good.quantity,
       unit: {id: good.unit?.id},
-      transferType: "out",
+      from: {id: good.location?.id},
       transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       orderNum: 1,
     } as SaveMomGoodTransferInput,
   });
 }
 
-async function deleteGoodLocation(goodLocationManager: any, goodId: number, locationId: number | undefined) {
+async function handleGood(server: IRpdServer, goodId: number, locationId: number | undefined) {
+  // 处理货品状态和位置信息
+
   if (!locationId) return;
+
+  const good = await server.getEntityManager<MomGood>("mom_good").findById(goodId);
+
+  if (good) {
+    await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+      id: goodId,
+      entityToSave: {
+        state: "transferred",
+      } as SaveMomGoodInput,
+    });
+  }
+
+
+  const goodLocationManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
 
   const goodLocation = await goodLocationManager.findEntity({
     filters: [
@@ -139,6 +151,11 @@ async function deleteGoodLocation(goodLocationManager: any, goodId: number, loca
   });
 
   if (goodLocation) {
-    await goodLocationManager.deleteById(goodLocation.id);
+    await goodLocationManager.updateEntityById({
+      id: goodLocation.id,
+      entityToSave: {
+        takeOutTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+      } as SaveMomGoodLocationInput,
+    });
   }
 }

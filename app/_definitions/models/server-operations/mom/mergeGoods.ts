@@ -1,11 +1,5 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
-import type {
-  MomGood,
-  MomGoodLocation,
-  MomGoodTransfer, SaveMomGoodInput,
-  SaveMomGoodLocationInput,
-  SaveMomGoodTransferInput,
-} from "~/_definitions/meta/entity-types";
+import type {MomGood, SaveMomGoodInput,} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 
 export type MergeGoodsInput = {
@@ -31,8 +25,6 @@ export default {
 
 async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
-  const goodLocationManager = server.getEntityManager<MomGoodLocation>("mom_good_location");
-  const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
 
   const goods = await goodManager.findEntities({
     filters: [{operator: "in", field: "id", value: input.goodIds}],

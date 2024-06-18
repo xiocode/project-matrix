@@ -13,16 +13,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "lotNum",
-    },
-    {
-      type: "auto",
-      code: "binNum",
-      label: "托盘号",
-    },
-    {
-      type: "auto",
-      code: "quantity",
+      code: "warehouse",
     },
     {
       type: "auto",
@@ -30,25 +21,28 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "state",
-      formControlProps: {
-        listSearchable: true,
-        listTextFormat: "{{name}} {{value}}",
-        listFilterFields: ["label"],
-      },
+      code: "allocableQuantity",
+    },
+    {
+      type: "auto",
+      code: "onHandQuantity",
+    },
+    {
+      type: "auto",
+      code: "allocatedQuantity",
     },
   ],
 };
 
 const page: RapidPage = {
-  code: "mom_good_list",
-  name: "物品列表",
-  title: "物品列表",
-  // permissionCheck: {any: []},
+  code: "mom_material_warehouse_inventory_balance_list",
+  name: "库存查询",
+  title: "库存查询",
+  permissionCheck: { any: [] },
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomGood",
+      entityCode: "MomMaterialWarehouseInventoryBalance",
       viewMode: "table",
       listActions: [
         {
@@ -57,12 +51,10 @@ const page: RapidPage = {
           icon: "PlusOutlined",
           actionStyle: "primary",
         },
-      ],
-      fixedFilters: [
         {
-          field: "state",
-          operator: "eq",
-          value: "normal",
+          $type: "sonicToolbarRefreshButton",
+          text: "刷新",
+          icon: "ReloadOutlined",
         },
       ],
       extraActions: [
@@ -72,7 +64,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["materialCode", "lotNum", "serialNum"],
+          filterFields: ["material"],
         },
       ],
       pageSize: 20,
@@ -95,51 +87,33 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "lotNum",
-          width: "200px",
-        },
-        {
-          type: "auto",
-          code: "binNum",
-          title: "托盘号",
-          width: "200px",
-        },
-        {
-          type: "auto",
-          code: "quantity",
-          width: "100px",
+          code: "warehouse",
+          rendererProps: {
+            format: "{{code}}-{{name}}",
+          },
         },
         {
           type: "auto",
           code: "unit",
-          width: "100px",
+          width: "50px",
           rendererProps: {
             format: "{{name}}",
           },
         },
         {
           type: "auto",
-          code: "state",
-          width: "100px",
+          code: "allocableQuantity",
         },
         {
           type: "auto",
-          code: "location",
-          width: "100px",
-          rendererProps: {
-            format: "{{name}}",
-          },
+          code: "onHandQuantity",
         },
         {
           type: "auto",
-          code: "lot",
-          title: "检验状态",
-          width: "100px",
-          rendererProps: {
-            format: "{{qualificationState}}",
-          },
+          code: "allocatedQuantity",
         },
       ],
+      actionsColumnWidth: "80px",
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
@@ -153,11 +127,11 @@ const page: RapidPage = {
           actionType: "delete",
           actionText: "删除",
           dataSourceCode: "list",
-          entityCode: "MomGood",
+          entityCode: "MomMaterialWarehouseInventoryBalance",
         },
       ],
-      newForm: cloneDeep(formConfig),
-      editForm: cloneDeep(formConfig),
+      newForm: cloneDeep(formConfig) as RapidEntityFormConfig,
+      editForm: cloneDeep(formConfig) as RapidEntityFormConfig,
     },
   ],
 };
