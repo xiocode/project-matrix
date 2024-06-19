@@ -57,6 +57,9 @@ const page: RapidPage = {
           icon: "PlusOutlined",
           actionStyle: "primary",
         },
+        {
+          $type: "mergeBinNumAction",
+        },
       ],
       fixedFilters: [
         {
@@ -161,9 +164,24 @@ const page: RapidPage = {
           dataSourceCode: "list",
           entityCode: "MomGood",
         },
+        {
+          $type: "splitBinNumAction",
+          code: "split",
+          actionType: "split",
+          actionText: "拆分",
+        },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      onSelectedIdsChange: [
+        {
+          $action: "setVars",
+          $exps: {
+            "vars.selectedIds": "$event.args[0].selectedIds",
+            "vars.selectedRecords": "$event.args[0].selectedRecords",
+          },
+        },
+      ],
     },
   ],
 };

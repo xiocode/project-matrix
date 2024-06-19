@@ -41,9 +41,16 @@ export default {
         setVisible(false);
       },
       async print(formData: { code: string; content: string }, page?: IPage) {
+        let dataSource: Record<string, any>[] = [];
+        if (typeof props.dataSource === "function") {
+          dataSource = props.dataSource();
+        } else {
+          dataSource = props.dataSource;
+        }
+
         try {
           await rapidApi.post(`/svc/printer/printers/${formData.code}/tasks`, {
-            tasks: (props.dataSource || []).map((record) => {
+            tasks: (dataSource || []).map((record) => {
               return {
                 type: "zpl-label",
                 name: "标签打印",
