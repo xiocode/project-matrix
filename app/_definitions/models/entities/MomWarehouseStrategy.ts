@@ -41,6 +41,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "integer",
     },
     {
+      code: "qualifiedFilter",
+      name: "合格状态校验",
+      type: "boolean",
+    },
+    {
+      code: "validityFilter",
+      name: "有效期校验",
+      type: "boolean",
+    },
+    {
       code: "enabled",
       name: "启用",
       type: "boolean",

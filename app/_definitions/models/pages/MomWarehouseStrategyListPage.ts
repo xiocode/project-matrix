@@ -7,10 +7,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "materialCategory",
       type: "auto",
     },
-    {
-      code: "warehouse",
-      type: "auto",
-    },
+    // {
+    //   code: "warehouse",
+    //   type: "auto",
+    // },
     {
       code: "businessType",
       type: "auto",
@@ -23,6 +23,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   code: "priority",
     //   type: "auto",
     // },
+    {
+      code: "qualifiedFilter",
+      type: "auto",
+    },
+    {
+      code: "validityFilter",
+      type: "auto",
+    },
     {
       code: "enabled",
       type: "auto",
@@ -72,14 +80,14 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        {
-          code: "warehouse",
-          width: "100px",
-          type: "auto",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
+        // {
+        //   code: "warehouse",
+        //   width: "100px",
+        //   type: "auto",
+        //   rendererProps: {
+        //     format: "{{name}}",
+        //   },
+        // },
         {
           code: "businessType",
           width: "100px",
@@ -98,6 +106,16 @@ const page: RapidPage = {
         //   width: "100px",
         //   type: "auto",
         // },
+        {
+          code: "qualifiedFilter",
+          width: "100px",
+          type: "auto",
+        },
+        {
+          code: "validityFilter",
+          width: "100px",
+          type: "auto",
+        },
         {
           code: "enabled",
           width: "100px",

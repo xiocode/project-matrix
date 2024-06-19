@@ -2,6 +2,7 @@ import type { RapidDataDictionary as TRapidDataDictionary } from '@ruiapp/rapid-
 import ActiveInactiveState from '../models/data-dictionaries/ActiveInactiveState';
 import ApprovalState from '../models/data-dictionaries/ApprovalState';
 import BaseLocationType from '../models/data-dictionaries/BaseLocationType';
+import BaseLotState from '../models/data-dictionaries/BaseLotState';
 import BusinessActivityKind from '../models/data-dictionaries/BusinessActivityKind';
 import BusinessActivityState from '../models/data-dictionaries/BusinessActivityState';
 import BusinessApplicationState from '../models/data-dictionaries/BusinessApplicationState';
@@ -66,6 +67,7 @@ export default [
   ActiveInactiveState,
   ApprovalState,
   BaseLocationType,
+  BaseLotState,
   BusinessActivityKind,
   BusinessActivityState,
   BusinessApplicationState,

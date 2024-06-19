@@ -71,6 +71,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
     sourceType: inventoryOperation?.businessType?.config?.defaultSourceType || null,
     qualificationState: inventoryOperation?.businessType?.config?.defaultQualificationState || "qualified",
     isAOD: false,
+    state: "pending",
   });
 
   input.lotId = lotInfo?.id;

@@ -49,6 +49,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
       defaultValue: "false",
     },
+    {
+      code: "state",
+      name: "状态",
+      type: "option",
+      dataDictionary: "BaseLotState",
+    },
   ],
 };
 

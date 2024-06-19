@@ -7,7 +7,7 @@ import {
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   MomInventoryStatTable,
-  MomInventoryStatTrigger, MomWarehouse,
+  MomInventoryStatTrigger, MomWarehouse, SaveBaseLotInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
@@ -153,6 +153,17 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
       if (warehouse) {
         transfer['warehouse_id'] = warehouse?.id;
       }
+
+      if (transfer.lot_id) {
+        const lotManager = server.getEntityManager<MomWarehouse>("base_lot");
+        await lotManager.updateEntityById({
+          id: transfer.lot_id,
+          entityToSave: {
+            state: "normal",
+          } as SaveBaseLotInput,
+        });
+      }
+
     }
     if (transfer?.from_location_id) {
       const warehouseManager = server.getEntityManager<MomWarehouse>("mom_warehouse");
