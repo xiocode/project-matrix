@@ -7,9 +7,9 @@ import type {
 } from "~/_definitions/meta/entity-types";
 
 export type CreateInventoryApplicationItemInput = {
-  applicationId: number;
-  materialId?: number;
-  unitId?: number;
+  application: number;
+  material: number;
+  unit: number;
   lotNum?: string;
   quantity?: number;
 };
@@ -35,7 +35,7 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
   const materialManager = server.getEntityManager<BaseMaterial>("base_material");
 
   const material = await materialManager.findEntity({
-    filters: [{field: "id", operator: "eq", value: input.materialId}],
+    filters: [{field: "id", operator: "eq", value: input.material}],
     properties: ["id", "name", "code", "category", "defaultUnit"],
   });
 
@@ -83,7 +83,7 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
     for (const good of goods) {
       await inventoryApplicationItemManager.createEntity({
         entity: {
-          application: {id: input.applicationId},
+          application: {id: input.application},
           material: {id: material.id},
           unit: {id: material.defaultUnit?.id},
           lot_num: good.lot_num,
@@ -96,7 +96,7 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
     if (input.lotNum) {
       await inventoryApplicationItemManager.createEntity({
         entity: {
-          application: {id: input.applicationId},
+          application: {id: input.application},
           material: {id: material.id},
           unit: {id: material.defaultUnit?.id},
           lot_num: input.lotNum,
