@@ -4,6 +4,7 @@ import BusinessTableMeta from "./BusinessTableMeta";
 import type { BusinessTableRockConfig, BusinessTableState } from "./business-table-types";
 import { filter, findIndex, forEach, map, reject, set, uniq } from "lodash";
 import { EntityStore, EntityStoreConfig, RapidExtensionSetting, RapidToolbarRockConfig } from "@ruiapp/rapid-extension";
+import { BusinessStoreConfig } from "~/app-extension/stores/business-store";
 
 export default {
   onResolveState(props, state) {
@@ -26,9 +27,12 @@ export default {
           ...(props.extraProperties || []),
         ],
       );
-      const listDataStoreConfig: EntityStoreConfig = {
-        type: "entityStore",
+      const listDataStoreConfig: BusinessStoreConfig = {
+        type: "businessStore",
         name: dataSourceCode,
+        requestParamsAdapter: props.requestParamsAdapter,
+        responseDataAdapter: props.responseDataAdapter,
+        url: props.requestConfig.url,
         fixedFilters: props.fixedFilters,
         properties,
         orderBy: props.orderBy || [

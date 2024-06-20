@@ -1,39 +1,74 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
+const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
+  type: "auto",
+  label: "物品",
+  code: "material",
+  formControlType: "tableSingleSelector",
+  formControlProps: {
+    labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
+    valueKey: "material.id",
+    columns: [
+      {
+        title: "物品",
+        code: "material",
+        format: "{{material.code}} {{material.name}}（{{material.specification}}）",
+        width: 260,
+      },
+      {
+        title: "批次号",
+        code: "lotNum",
+        width: 120,
+      },
+    ],
+    requestConfig: {
+      url: `/mom/mom_inventory_application_items/operations/find`,
+      params: {
+        fixedFilters: [
+          {
+            field: "application",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: "",
+              },
+            ],
+          },
+        ],
+        properties: ["id", "material", "lotNum", "unit"],
+      },
+    },
+    onSelectedRecord: [
+      {
+        $action: "script",
+        script: `
+        const info = event.args[0] || {};
+        if(info) {
+          const _ = event.framework.getExpressionVars()._;
+          event.page.sendComponentMessage('goodTransferList-newForm-rapidForm', {
+            name: "setFieldsValue",
+            payload: {
+              unit: _.get(info, 'unit.name'),
+              lotNum: _.get(info, 'lotNum')
+            }
+          });
+        }
+      `,
+      },
+    ],
+  },
+  $exps: {
+    "formControlProps.requestConfig.params.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
+  },
+};
+
 const createFormConfig: Partial<RapidEntityFormConfig> = {
   defaultFormFields: { outMethod: "batch" },
   items: [
-    {
-      type: "auto",
-      code: "material",
-      formControlType: "tableSingleSelector",
-      formControlProps: {
-        labelFormat: "{{name}}({{code}})",
-        requestConfig: {
-          url: "/app/base_materials/operations/find",
-        },
-        columns: [
-          {
-            title: "物料编号",
-            code: "code",
-            width: 120,
-          },
-          {
-            title: "物料名称",
-            code: "name",
-            width: 120,
-          },
-        ],
-      },
-      // listDataFindOptions: {
-      //   properties: ["id", "code", "name", "defaultUnit"],
-      // },
-      // formControlProps: {
-      //   listTextFormat: "{{code}} {{name}}",
-      //   listFilterFields: ["label"],
-      // },
-    },
+    materialFormItemConfig,
     {
       type: "auto",
       code: "unit",
@@ -133,26 +168,6 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       },
     },
   ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitName = _.get(material, 'defaultUnit.name');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitName,
-            }
-          });
-        }
-      `,
-    },
-  ],
   customRequest: {
     method: "post",
     url: "/app/createGoodTransfers",
@@ -161,15 +176,12 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
+    materialFormItemConfig,
     {
       type: "auto",
-      code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
-      },
+      code: "unit",
       formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+        disabled: true,
       },
     },
     {
@@ -186,10 +198,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "quantity",
     },
     {
-      type: "auto",
-      code: "unit",
-    },
-    {
       type: "treeSelect",
       code: "to",
       formControlProps: {
@@ -204,26 +212,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "packageNum",
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitId = _.get(material, 'defaultUnit.id');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitId,
-            }
-          });
-        }
-      `,
     },
   ],
 };
@@ -572,6 +560,98 @@ const page: RapidPage = {
             },
           ],
         },
+        {
+          key: "groups",
+          label: "收货明细",
+          children: [
+            {
+              $id: "goodTransferGroupList",
+              $type: "businessTable",
+              dataSourceCode: "goodTransferGroupList",
+              requestConfig: {
+                url: "/api/app/listGoodInTransfers",
+              },
+              $exps: {
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+              },
+              fixedFilters: [
+                {
+                  field: "operationId",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              requestParamsAdapter: `
+                return {
+                  operationId: _.get(params, "filters[0]filters[0]value"),
+                  limit: 1000
+                }
+              `,
+              responseDataAdapter: `
+                return {
+                  list: data || []
+                }
+              `,
+              columns: [
+                {
+                  title: "物料编码",
+                  type: "auto",
+                  code: "material.code",
+                },
+                {
+                  title: "物料名称",
+                  type: "auto",
+                  code: "material.name",
+                },
+                {
+                  title: "规格型号",
+                  type: "auto",
+                  code: "material.specification",
+                },
+                {
+                  title: "单位",
+                  type: "auto",
+                  code: "material.defaultUnit.name",
+                },
+                {
+                  title: "入库数量",
+                  type: "auto",
+                  code: "completedAmount",
+                },
+                {
+                  title: "入库托数",
+                  type: "auto",
+                  code: "completedPalletAmount",
+                },
+                {
+                  title: "批号",
+                  type: "auto",
+                  code: "lotNum",
+                },
+                // {
+                //   title: "保质期（天）",
+                //   type: "auto",
+                //   code: "material.specification",
+                // },
+                // {
+                //   title: "生产日期",
+                //   type: "auto",
+                //   code: "material.specification",
+                // },
+                // {
+                //   title: "有效期至",
+                //   type: "auto",
+                //   code: "material.specification",
+                // },
+                {
+                  title: "检验状态",
+                  type: "auto",
+                  code: "inspectState",
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -581,25 +661,25 @@ const page: RapidPage = {
     {
       $type: "rapidToolbar",
       items: [
-        {
-          $type: "rapidToolbarButton",
-          text: "确认提交",
-          actionStyle: "primary",
-          size: "large",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              data: { state: "done", approvalState: "approving" },
-              $exps: {
-                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              },
-            },
-          ],
-          $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-          },
-        },
+        // {
+        //   $type: "rapidToolbarButton",
+        //   text: "确认提交",
+        //   actionStyle: "primary",
+        //   size: "large",
+        //   onAction: [
+        //     {
+        //       $action: "sendHttpRequest",
+        //       method: "PATCH",
+        //       data: { state: "done", approvalState: "approving" },
+        //       $exps: {
+        //         url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+        //       },
+        //     },
+        //   ],
+        //   $exps: {
+        //     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+        //   },
+        // },
         {
           $type: "rapidToolbarButton",
           text: "批准",

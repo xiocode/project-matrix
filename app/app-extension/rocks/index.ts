@@ -14,6 +14,7 @@ import MergeBinNumAction from "./merge-bin-num-action/MergeBinNumAction";
 import SplitBinNumAction from "./split-bin-num-action/SplitBinNumAction";
 import BusinessForm from "./business-form/BusinessForm";
 import BusinessTable from "./business-table/BusinessTable";
+import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSelector";
 
 export default [
   Link,
@@ -32,4 +33,5 @@ export default [
   SplitBinNumAction,
   BusinessForm,
   BusinessTable,
+  MaterialLotNumSelector,
 ];

@@ -7,7 +7,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "material",
       listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
+        properties: ["id", "code", "name", "defaultUnit", "category"],
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
@@ -17,6 +17,21 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "lotNum",
+      $exps: {
+        _hidden: "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'out'",
+      },
+    },
+    {
+      type: "auto",
+      code: "lotNum",
+      formControlType: "materialLotNumSelector",
+      formControlProps: {},
+      $exps: {
+        _hidden: "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'in'",
+        "formControlProps.materialId": "$self.form.getFieldValue('material')",
+        "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
+        "formControlProps.businessTypeId": "_.get($page.scope.stores, 'detail.data.list[0].businessType.id')",
+      },
     },
     // {
     //   type: "auto",
@@ -52,17 +67,22 @@ const formConfig: Partial<RapidEntityFormConfig> = {
           const _ = event.framework.getExpressionVars()._;
           const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
           const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitId = _.get(material, 'defaultUnit.id');
           event.page.sendComponentMessage(event.sender.$id, {
             name: "setFieldsValue",
             payload: {
-              unit: unitId,
+              materialCategoryId: _.get(material, 'categoryId'),
+              unit: _.get(material, 'defaultUnit.id'),
+              lotNum: ''
             }
           });
         }
       `,
     },
   ],
+  customRequest: {
+    method: "post",
+    url: "/app/createInventoryApplicationItems",
+  },
 };
 
 const page: RapidPage = {

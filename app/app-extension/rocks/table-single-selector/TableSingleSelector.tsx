@@ -1,9 +1,9 @@
 import type { Rock } from "@ruiapp/move-style";
 import TableSingleSelectorMeta from "./TableSingleSelectorMeta";
 import type { TableSingleSelectorRockConfig } from "./table-single-selector-types";
-import { convertToEventHandlers } from "@ruiapp/react-renderer";
+import { convertToEventHandler, convertToEventHandlers } from "@ruiapp/react-renderer";
 import { Table, Select, Input, TableProps } from "antd";
-import { get } from "lodash";
+import { get, isFunction, isString } from "lodash";
 import { useSetState } from "ahooks";
 import rapidApi from "~/rapidApi";
 import { useEffect } from "react";
@@ -18,7 +18,7 @@ interface ICurrentState {
 
 export default {
   Renderer(context, props: TableSingleSelectorRockConfig) {
-    const { valueKey = "id", labelKey = "name", labelFormat, value, pageSize = 20, columns } = props;
+    const { valueKey = "id", labelKey = "name", labelFormat, value, pageSize = 20, columns, searchFields, allowClear, placeholder } = props;
 
     const [currentState, setCurrentState] = useSetState<ICurrentState>({ offset: 0 });
 
@@ -33,22 +33,11 @@ export default {
         },
       };
 
-      if (currentState.keyword) {
+      if (currentState.keyword && searchFields?.length) {
         params.filters = [
           {
             operator: "or",
-            filters: [
-              {
-                field: "name",
-                operator: "contains",
-                value: currentState.keyword,
-              },
-              {
-                field: "code",
-                operator: "contains",
-                value: currentState.keyword,
-              },
-            ],
+            filters: searchFields.map((field) => ({ field, operator: "contains", value: currentState.keyword })),
           },
         ];
       }
@@ -71,7 +60,18 @@ export default {
         dataIndex: col.code,
         width: col.width,
         render: (text: any, record: any) => {
-          return get(record, col.code);
+          if (isFunction(col.render)) {
+            return col.render(record);
+          }
+
+          if (isString(col.render)) {
+            return context.page.interpreteExpression(col.render, {
+              record,
+              $scope: context.scope,
+            });
+          }
+
+          return col.format ? replaceLabel(col.format, record) : get(record, col.code);
         },
       });
     });
@@ -86,9 +86,14 @@ export default {
 
     return (
       <Select
-        {...eventHandlers}
+        allowClear={allowClear}
+        placeholder={placeholder}
         value={value}
         open={currentState.visible}
+        onChange={() => {
+          eventHandlers.onChange?.(undefined);
+          eventHandlers.onSelectedRecord?.(undefined);
+        }}
         onDropdownVisibleChange={(v) => {
           setCurrentState({ visible: v });
         }}
@@ -97,21 +102,23 @@ export default {
         dropdownRender={(menu) => {
           return (
             <div className="pm-table-single-selector">
-              <div className="pm-table-single-selector--toolbar">
-                <Search
-                  enterButton
-                  allowClear
-                  loading={apiIns.loading}
-                  value={currentState.keyword}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    setCurrentState({ keyword: v, offset: 0 });
-                  }}
-                  onSearch={() => {
-                    loadData();
-                  }}
-                />
-              </div>
+              {searchFields?.length ? (
+                <div className="pm-table-single-selector--toolbar">
+                  <Search
+                    enterButton
+                    allowClear
+                    loading={apiIns.loading}
+                    value={currentState.keyword}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setCurrentState({ keyword: v, offset: 0 });
+                    }}
+                    onSearch={() => {
+                      loadData();
+                    }}
+                  />
+                </div>
+              ) : null}
               <Table
                 size="small"
                 rowKey="id"
@@ -119,12 +126,13 @@ export default {
                 scroll={{ x: tableWidth, y: 200 }}
                 columns={tableColumns}
                 dataSource={apiIns.records || []}
-                rowClassName={(record) => (record[valueKey] === value ? "pm-table-row-pointer--selected" : `pm-table-row-pointer`)}
+                rowClassName={(record) => (get(record, valueKey) === value ? "pm-table-row-pointer--selected" : `pm-table-row-pointer`)}
                 onRow={(record) => {
                   return {
                     onClick: () => {
                       setCurrentState({ selectedRecord: record, visible: false });
-                      eventHandlers.onChange?.(record[valueKey], record);
+                      eventHandlers.onChange?.(get(record, valueKey));
+                      eventHandlers.onSelectedRecord?.(record);
                     },
                   };
                 }}
@@ -170,7 +178,11 @@ function useRequest(config: TableSingleSelectorRockConfig["requestConfig"]) {
     }
 
     setState({ loading: true });
-    rapidApi[config.method || "post"](`${config.baseUrl || ""}${config.url || ""}`, params)
+    rapidApi[config.method || "post"](`${config.baseUrl || ""}${config.url || ""}`, {
+      ...(config.params || {}),
+      ...params,
+      filters: [...(config.params?.fixedFilters || []), ...params.filters],
+    })
       .then((res) => {
         let records = res.data?.list || [];
         let total = res.data?.total || 0;
@@ -190,6 +202,6 @@ function useRequest(config: TableSingleSelectorRockConfig["requestConfig"]) {
 
 function replaceLabel(formatTpl: string, record: Record<string, any>) {
   return formatTpl.replace(/\{\{(\S+?)\}\}/g, (match, key) => {
-    return get(record, key);
+    return get(record, key) || "";
   });
 }
