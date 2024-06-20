@@ -1,9 +1,9 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
   BaseMaterial,
-  MomGoodTransfer,
-  MomInventoryApplication,
-  MomInventoryApplicationItem, SaveMomInventoryApplicationItemInput
+  MomInventoryApplicationItem,
+  MomWarehouseStrategy,
+  SaveMomInventoryApplicationItemInput
 } from "~/_definitions/meta/entity-types";
 
 export type CreateInventoryApplicationItemInput = {
@@ -11,7 +11,7 @@ export type CreateInventoryApplicationItemInput = {
   materialId?: number;
   unitId?: number;
   lotNum?: string;
-  amount?: number;
+  quantity?: number;
 };
 
 export default {
@@ -29,22 +29,13 @@ export default {
   },
 } satisfies ServerOperation;
 
-
 export async function createInventoryApplicationItems(server: IRpdServer, input: CreateInventoryApplicationItemInput) {
-  const inventoryApplicationManager = server.getEntityManager<MomInventoryApplication>("mom_inventory_application");
   const inventoryApplicationItemManager = server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item");
-  const warehouseStrategyManager = server.getEntityManager<MomGoodTransfer>("mom_warehouse_strategy");
-  const goodManager = server.getEntityManager<MomGoodTransfer>("mom_good");
+  const warehouseStrategyManager = server.getEntityManager<MomWarehouseStrategy>("mom_warehouse_strategy");
   const materialManager = server.getEntityManager<BaseMaterial>("base_material");
 
   const material = await materialManager.findEntity({
-    filters: [
-      {
-        field: "id",
-        operator: "eq",
-        value: input.materialId,
-      },
-    ],
+    filters: [{field: "id", operator: "eq", value: input.materialId}],
     properties: ["id", "name", "code", "category", "defaultUnit"],
   });
 
@@ -52,50 +43,74 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
     throw new Error("Material not found.");
   }
 
-
   const warehouseStrategy = await warehouseStrategyManager.findEntity({
     filters: [
-      {
-        field: "material_category_id",
-        operator: "eq",
-        value: material?.category?.id,
-      },
-      {
-        field: "enabled",
-        operator: "eq",
-        value: true,
-      },
+      {field: "material_category_id", operator: "eq", value: material.category?.id},
+      {field: "enabled", operator: "eq", value: true},
     ],
   });
 
-  const goods = await server.queryDatabaseObject(
-    `
-      WITH good_moving_sum_cte AS (SELECT mg.*,
-                                          SUM(mg.quantity)
-                                          OVER (PARTITION BY mg.material_id ORDER BY mg.validity_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) -
-                                          mg.quantity AS moving_sum
-                                   FROM mom_goods mg
-                                   WHERE material_id = $1
-                                     AND lot_num NOTNULL)
-      SELECT *
-      FROM good_moving_sum_cte
-      WHERE moving_sum <= $2;
-    `,
-    [material.id, input.amount],
-  );
-
-
-  for (const good of goods) {
-    await inventoryApplicationItemManager.createEntity({
-      entity: {
-        application: {id: input.applicationId},
-        material: {id: material.id},
-        unit: {id: material?.defaultUnit?.id},
-        lot_num: good.lot_num,
-        quantity: good.quantity,
-        orderNum: 1,
-      } as SaveMomInventoryApplicationItemInput,
-    });
+  if (!warehouseStrategy) {
+    throw new Error("No warehouse strategy found.");
   }
-  
+
+  if (warehouseStrategy.strategy === "fifo" || warehouseStrategy.strategy === "fdfo") {
+    const warehouseStrategyStmt = getWarehouseStrategyStatement(warehouseStrategy.strategy);
+
+    const goods = await server.queryDatabaseObject(
+      `
+        WITH good_moving_sum_cte AS (SELECT mg.*,
+                                            SUM(mg.quantity)
+                                            OVER (PARTITION BY mg.material_id ${warehouseStrategyStmt} ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) -
+                                            mg.quantity AS moving_sum
+                                     FROM mom_goods mg
+                                     WHERE material_id = $1
+                                       AND lot_num IS NOT NULL)
+        SELECT *
+        FROM good_moving_sum_cte
+        WHERE moving_sum <= $2;
+      `,
+      [material.id, input.quantity]
+    );
+
+    for (const good of goods) {
+      await inventoryApplicationItemManager.createEntity({
+        entity: {
+          application: {id: input.applicationId},
+          material: {id: material.id},
+          unit: {id: material.defaultUnit?.id},
+          lot_num: good.lot_num,
+          quantity: good.quantity,
+          orderNum: 1,
+        } as SaveMomInventoryApplicationItemInput,
+      });
+    }
+  } else {
+    if (input.lotNum) {
+      await inventoryApplicationItemManager.createEntity({
+        entity: {
+          application: {id: input.applicationId},
+          material: {id: material.id},
+          unit: {id: material.defaultUnit?.id},
+          lot_num: input.lotNum,
+          quantity: input.quantity,
+          orderNum: 1,
+        } as SaveMomInventoryApplicationItemInput,
+      });
+    } else {
+      throw new Error("Lot number is required.");
+    }
+  }
+
+}
+
+function getWarehouseStrategyStatement(strategy?: string): string {
+  switch (strategy) {
+    case "fifo":
+      return "ORDER BY mg.created_at ASC";
+    case "fdfo":
+      return "ORDER BY mg.validity_date ASC";
+    default:
+      throw new Error("Unknown warehouse strategy.");
+  }
 }

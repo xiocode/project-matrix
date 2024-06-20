@@ -1,6 +1,7 @@
 import type {
   ApprovalState,
   BaseLocationType,
+  BaseLotState,
   BusinessActivityKind,
   BusinessActivityState,
   BusinessApplicationState,
@@ -532,6 +533,10 @@ export interface BaseLot {
    * 是否让步接收
    */
   isAOD: boolean;
+  /**
+   * 状态
+   */
+  state?: BaseLotState;
   /**
    * 创建时间
    */
@@ -6314,6 +6319,14 @@ export interface MomWarehouseStrategy {
    * 优先级
    */
   priority?: number;
+  /**
+   * 合格状态校验
+   */
+  qualifiedFilter?: boolean;
+  /**
+   * 有效期校验
+   */
+  validityFilter?: boolean;
   /**
    * 启用
    */

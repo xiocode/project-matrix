@@ -1,5 +1,5 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
-import type {BaseMaterial,} from "~/_definitions/meta/entity-types";
+import type {BaseLot, BaseMaterial,} from "~/_definitions/meta/entity-types";
 import type {InspectionResult} from "~/_definitions/meta/data-dictionary-types";
 
 export type QueryGoodOutTransferInput = {
@@ -12,6 +12,7 @@ export type QueryGoodOutTransferOutput = {
   lotNum: string;
   waitingAmount?: number;
   completedAmount?: number;
+  lot?: Partial<BaseLot>;
   goods: {
     id: number;
     binNum: string;
@@ -43,6 +44,36 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
 
   const transfers = await server.queryDatabaseObject(
     `
+      with result AS (select operation_id,
+                             material_id,
+                             lot_num,
+                             lot_id,
+                             count(*)                                                               as shelve_amount,
+                             coalesce(sum(quantity) filter ( where to_location_id is null ), 0)     as waiting_amount,
+                             count(*) filter ( where to_location_id is null )                       as waiting_pallet_amount,
+                             coalesce(sum(quantity) filter ( where to_location_id is not null ), 0) as completed_amount,
+                             count(*) filter ( where to_location_id is not null )                   as completed_pallet_amount,
+                             jsonb_agg(jsonb_build_object('bin_num', bin_num, 'quantity', quantity, 'to_location_id',
+                                                          to_location_id))                             shelves
+                      from mom_good_transfers mdt
+                      where lot_num notnull
+                        and lot_num <> ''
+                        and bin_num notnull
+                        and bin_num <> ''
+                        and operation_id = 149
+                      group by operation_id, material_id, lot_num, lot_id)
+      select r.*,
+             jsonb_build_object('id', bl.id, 'state', bl.state, 'lotNum', bl.lot_num, 'sourceType', bl.source_type, 'manufactureDate', bl.manufacture_date, 'expireTime', bl.expire_time, 'qualificationState', bl.qualification_state) AS lot,
+             case when bm.is_inspection_free then 'inspectFree' else coalesce(mis.result, 'uninspected') end as inspect_state,
+             jsonb_build_object('id', bm.id, 'code', bm.code, 'name', bm.name, 'specification', bm.specification,
+                                'qualityGuaranteePeriod', bm.quality_guarantee_period,
+                                'defaultUnit', to_jsonb(bu.*))                                             AS material
+      from result r
+             inner join base_materials bm on r.material_id = bm.id
+             inner join base_units bu on bm.default_unit_id = bu.id
+             left join base_lots bl on r.lot_id = bl.id
+             left join mom_inspection_sheets mis on r.material_id = mis.material_id and r.lot_num = mis.lot_num;
+
       WITH inventory_good_transfers_cte AS (SELECT operation_id,
                                                    material_id,
                                                    lot_num,
@@ -55,6 +86,7 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
            inventory_operation_cte AS (SELECT mio.id                    AS operation_id,
                                               miai.material_id,
                                               miai.lot_num,
+                                              miai.lot_id,
                                               sum(coalesce(miai.quantity,
                                                            0))          AS total_amount,
                                               sum(mgt.completed_amount) AS completed_amount
@@ -68,7 +100,8 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                          AND mio.id = $1
                                        GROUP BY mio.id,
                                                 miai.material_id,
-                                                miai.lot_num),
+                                                miai.lot_num,
+                                                miai.lot_id),
            inventory_operation_goods_cte AS (SELECT ioc.operation_id,
                                                     mg.*,
                                                     SUM(mg.quantity) OVER (PARTITION BY mg.material_id,
@@ -81,6 +114,7 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
            inventory_operation_goods_agg_cte AS (SELECT iogc.operation_id,
                                                         iogc.material_id,
                                                         iogc.lot_num,
+                                                        iogc.lot_id,
                                                         jsonb_agg(jsonb_build_object('id',
                                                                                      iogc.id,
                                                                                      'binNum',
@@ -97,8 +131,10 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                                         INNER JOIN base_locations bl ON iogc.location_id = bl.id
                                                  GROUP BY iogc.operation_id,
                                                           iogc.material_id,
-                                                          iogc.lot_num),
+                                                          iogc.lot_num,
+                                                          iogc.lot_id),
            result AS (SELECT ioc.*,
+                             jsonb_build_object('id', bl.id, 'state', bl.state, 'lotNum', bl.lot_num, 'sourceType', bl.source_type, 'manufactureDate', bl.manufacture_date, 'expireTime', bl.expire_time, 'qualificationState', bl.qualification_state) AS lot,
                              greatest(ioc.total_amount - ioc.completed_amount,
                                       0)                                       AS waiting_amount,
                              iogc.goods,
@@ -111,9 +147,11 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                       FROM inventory_operation_cte ioc
                              INNER JOIN base_materials bm ON ioc.material_id = bm.id
                              INNER JOIN base_units bu ON bm.default_unit_id = bu.id
+                             LEFT JOIN base_lots bl ON ioc.lot_id = bl.id
                              LEFT JOIN inventory_operation_goods_agg_cte iogc ON ioc.operation_id = iogc.operation_id
                         AND ioc.material_id = iogc.material_id
-                        AND ioc.lot_num = iogc.lot_num)
+                        AND ioc.lot_num = iogc.lot_num
+                        AND ioc.lot_id = iogc.lot_id)
       SELECT r.*
       FROM result r;
     `,
@@ -130,6 +168,7 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
       lotNum: item.lot_num,
       completedAmount: item.completed_amount,
       waitingAmount: item.waiting_amount,
+      log: item.lot,
       goods: item.goods,
     } as QueryGoodOutTransferOutput;
   });

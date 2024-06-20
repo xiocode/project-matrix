@@ -33,6 +33,15 @@ export type BaseLocationType =
   ;
 
 /**
+ * 物品状态
+ */
+export type BaseLotState =
+  | 'normal'
+  | 'destroyed'
+  | 'pending'
+  ;
+
+/**
  * 业务活动类型
  */
 export type BusinessActivityKind =
@@ -608,6 +617,5 @@ export type UserSecretLevel =
 export type WarehouseStrategy =
   | 'fifo'
   | 'fdfo'
-  | 'qualified'
-  | 'validity'
+  | 'manual'
   ;

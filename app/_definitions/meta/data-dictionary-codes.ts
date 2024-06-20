@@ -2,6 +2,7 @@ const dictionaryCodes = [
   'ActiveInactiveState',
   'ApprovalState',
   'BaseLocationType',
+  'BaseLotState',
   'BusinessActivityKind',
   'BusinessActivityState',
   'BusinessApplicationState',
