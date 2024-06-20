@@ -81,7 +81,7 @@ export default [
       }
 
       if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
-        const transfers = await listTransfersOfOperation(server, after.id);
+        let transfers = await listTransfersOfOperation(server, after.id);
 
         await updateInventoryStats(server, after.business_id, after.operationType, transfers);
       }

@@ -73,6 +73,7 @@ export default class InventoryStatService {
     }
 
     if (balanceRecord) {
+
       const statChanges: Record<string, number> = {};
       for (const quantityFieldToChange of quantityFieldsToIncrease) {
         if (!quantityBalanceFields.includes(quantityFieldToChange)) {

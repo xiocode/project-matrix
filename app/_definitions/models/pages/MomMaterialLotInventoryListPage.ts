@@ -11,10 +11,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         listFilterFields: ["label"],
       },
     },
-    {
-      type: "auto",
-      code: "tags",
-    },
+    // {
+    //   type: "auto",
+    //   code: "tags",
+    // },
     {
       type: "auto",
       code: "unit",
@@ -75,18 +75,10 @@ const page: RapidPage = {
             },
           },
         },
-        {
-          type: "auto",
-          code: "tags",
-        },
-        {
-          type: "auto",
-          code: "unit",
-          width: "50px",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
+        // {
+        //   type: "auto",
+        //   code: "tags",
+        // },
         {
           type: "auto",
           code: "lotNum",
@@ -97,6 +89,14 @@ const page: RapidPage = {
           code: "onHandQuantity",
           width: "100px",
         },
+        // {
+        //   type: "auto",
+        //   code: "unit",
+        //   width: "50px",
+        //   rendererProps: {
+        //     format: "{{name}}",
+        //   },
+        // },
       ],
     },
   ],
