@@ -57,6 +57,14 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
   if (warehouseStrategy.strategy === "fifo" || warehouseStrategy.strategy === "fdfo") {
     const warehouseStrategyStmt = getWarehouseStrategyStatement(warehouseStrategy.strategy);
 
+    let strategyFilter = "";
+    if (warehouseStrategy.qualifiedFilter) {
+      strategyFilter += " AND mg.qualified = true";
+    }
+    if (warehouseStrategy.validityFilter) {
+      strategyFilter += " AND mg.validity_date >= now()";
+    }
+
     const goods = await server.queryDatabaseObject(
       `
         WITH good_moving_sum_cte AS (SELECT mg.*,
@@ -64,8 +72,7 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
                                             OVER (PARTITION BY mg.material_id ${warehouseStrategyStmt} ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) -
                                             mg.quantity AS moving_sum
                                      FROM mom_goods mg
-                                     WHERE material_id = $1
-                                       AND lot_num IS NOT NULL)
+                                     WHERE mg.material_id = $1 AND mg.quantity > 0 AND lot_num IS NOT NULL ${strategyFilter})
         SELECT *
         FROM good_moving_sum_cte
         WHERE moving_sum <= $2;
