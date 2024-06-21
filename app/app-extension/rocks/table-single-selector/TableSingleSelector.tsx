@@ -107,6 +107,7 @@ export default {
                   <Search
                     enterButton
                     allowClear
+                    placeholder={props.searchPlaceholder}
                     loading={apiIns.loading}
                     value={currentState.keyword}
                     onChange={(e) => {

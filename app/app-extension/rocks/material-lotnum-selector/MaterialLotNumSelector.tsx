@@ -44,7 +44,7 @@ export default {
     const warehouseStrategies = get(context.scope.getStore("momWarehouseStrategyList"), "data.list") || [];
     const currentStrategy = find(warehouseStrategies, (s) => s.businessType?.id === businessTypeId && s.materialCategory?.id === materialCategoryId);
     if (currentStrategy?.strategy && currentStrategy?.strategy !== "manual") {
-      return <span style={{ color: "#eee" }}>当前策略下，批次号默认</span>;
+      return <span style={{ color: "#eee" }}>当前策略下，批次号按策略出库</span>;
     } else {
       if (currentStrategy?.qualifiedFilter) {
         fixedFilters.push({
@@ -64,7 +64,7 @@ export default {
     }
 
     const rockConfig: RockConfig = {
-      $id: `${props.$id}_lot_list`,
+      $id: `${props.$id}_${materialId}_lot_list`,
       $type: "tableSingleSelector",
       labelKey: "lotNum",
       valueKey: "lotNum",

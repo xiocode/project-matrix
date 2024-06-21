@@ -2,8 +2,7 @@ import { MoveStyleUtils, RockChildrenConfig, type Rock } from "@ruiapp/move-styl
 import { renderRock, renderRockChildren } from "@ruiapp/react-renderer";
 import SonicRecordActionPrintEntityMeta from "./SonicRecordActionPrintEntityMeta";
 import type { SonicRecordActionPrintEntityRockConfig } from "./sonic-record-action-print-entity-types";
-import lodash from "lodash";
-import dayjs from "dayjs";
+import { parseRockExpressionFunc } from "~/utils/func-util";
 
 export default {
   onInit(context, props) {},
@@ -13,13 +12,10 @@ export default {
   Renderer(context, props) {
     let dataSource = props.record ? [props.record] : [];
     if (typeof props.dataSourceAdapter === "string") {
-      const adapter = props.dataSourceAdapter.trim();
-      if (adapter.indexOf("function") === 0) {
-        // TODO: ruiUtils: lodash、dayjs
-        dataSource = new Function(`return ${adapter}`)()(dataSource, { dayjs, lodash });
-      }
+      const adapter = parseRockExpressionFunc(props.dataSourceAdapter, { data: dataSource }, context);
+      dataSource = adapter();
     } else if (typeof props.dataSourceAdapter === "function") {
-      dataSource = props.dataSourceAdapter(dataSource, { lodash, dayjs });
+      dataSource = props.dataSourceAdapter({ data: dataSource, ...context.framework.getExpressionVars() });
     }
 
     const rockChildrenConfig: RockChildrenConfig = [
@@ -39,7 +35,6 @@ export default {
         $type: "printTrigger",
         $id: `${props.$id}_${props.recordId}_trigger`,
         dataSource,
-        printerCode: props.printerCode,
         printTemplateCode: props.printTemplateCode,
       },
     ];

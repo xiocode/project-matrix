@@ -8,6 +8,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "material",
       listDataFindOptions: {
         properties: ["id", "code", "name", "defaultUnit", "category"],
+        keepNonPropertyFields: true,
       },
       formControlProps: {
         listTextFormat: "{{code}} {{name}}",
@@ -70,7 +71,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
           event.page.sendComponentMessage(event.sender.$id, {
             name: "setFieldsValue",
             payload: {
-              materialCategoryId: _.get(material, 'categoryId'),
+              materialCategoryId: _.get(material, 'category.id'),
               unit: _.get(material, 'defaultUnit.id'),
               lotNum: ''
             }
@@ -253,7 +254,7 @@ const page: RapidPage = {
               editForm: cloneDeep(formConfig),
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
+                "newForm.fixedFields.application": "$rui.parseQuery().id",
               },
             },
           ],

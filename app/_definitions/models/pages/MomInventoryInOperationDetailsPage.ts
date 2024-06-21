@@ -429,8 +429,12 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "lotNum",
+                  code: "lot",
+                  title: "批号",
                   width: "100px",
+                  rendererProps: {
+                    format: "{{lotNum}}",
+                  },
                 },
                 {
                   type: "auto",
@@ -488,22 +492,28 @@ const page: RapidPage = {
                   code: "print",
                   actionType: "print",
                   actionText: "打印",
-                  printerCode: "DB5-4SA-NS6",
-                  printTemplateCode: "test",
-                  dataSourceAdapter: `function(data, utils){
-                    return utils.lodash.map(data, function(item){
-                      const createdAt = utils.lodash.get(item, "good.createdAt");
-                      const validityDate = utils.lodash.get(item, "good.validityDate");
-                      return utils.lodash.merge({}, item, {
-                        materialName: utils.lodash.get(item, "material.name"),
-                        materialCode: utils.lodash.get(item, "material.code"),
-                        materialSpecification: utils.lodash.get(item, "material.specification"),
-                        createdAt: createdAt && utils.dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        validityDate: validityDate && utils.dayjs(validityDate).format("YYYY-MM-DD"),
-                        currentTime: utils.dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                  printTemplateCode: "rawMaterialIdentificationCard",
+                  dataSourceAdapter: `
+                    return _.map(data, function(item){
+                      const createdAt = _.get(item, "good.createdAt");
+                      const validityDate = _.get(item, "good.validityDate");
+                      const dictionaries = rapidAppDefinition.getDataDictionaries();
+                      const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
+                      const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(item, "lot.qualificationState") });
+
+                      return _.merge({}, item, {
+                        materialName: _.get(item, "material.name"),
+                        materialCode: _.get(item, "material.code"),
+                        materialSpecification: _.get(item, "material.specification"),
+                        lotNum: _.get(item, 'lot.lotNum'),
+                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        unit: _.get(item, "unit.name"),
+                        qualificationState: _.get(qualificationStateInfo, 'name')
                       })
                     });
-                  }`,
+                  `,
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'",
                   },
@@ -512,8 +522,27 @@ const page: RapidPage = {
                   $type: "inspectionPrintRecordAction",
                   actionType: "print",
                   actionText: "送检",
-                  printerCode: "DB5-4SA-NS6",
-                  printTemplateCode: "test",
+                  printTemplateCode: "rawMaterialInspectionIdentificationCard",
+                  dataSourceAdapter: `
+                    return _.map(data, function(item){
+                      const createdAt = _.get(item, "good.createdAt");
+
+                      return _.merge({}, item, {
+                        materialName: _.get(item, "material.name"),
+                        materialCode: _.get(item, "material.code"),
+                        materialSpecification: _.get(item, "material.specification"),
+                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        lotNum: _.get(item, 'lot.lotNum'),
+                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        sampleCode: _.get(item, 'sampleNo'),
+                        inspectDate: dayjs().format("YYYY-MM-DD"),
+                        remark: _.get(item, 'remark')
+                      })
+                    });
+                  `,
+                  $exps: {
+                    operationId: "$rui.parseQuery().id",
+                  },
                 },
                 {
                   $type: "sonicRecordActionEditEntity",

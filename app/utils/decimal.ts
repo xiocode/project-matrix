@@ -36,7 +36,6 @@ export function getNumPlaces(num: number | string) {
 
 /** 求和 */
 export function decimalSum(...args: number[]): number {
-  console.log(1212219999, args);
   let sum: number = 0;
   args.forEach((num, index) => {
     num = +num;

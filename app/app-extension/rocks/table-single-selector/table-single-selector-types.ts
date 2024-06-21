@@ -12,6 +12,7 @@ export interface TableSelectorColumn {
 }
 
 export interface TableSingleSelectorRockConfig extends SimpleRockConfig {
+  searchPlaceholder?: string;
   placeholder?: string;
   allowClear?: boolean;
   pageSize?: number;

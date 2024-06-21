@@ -8,12 +8,6 @@ import { get } from "lodash";
 import { message } from "antd";
 import rapidApi from "~/rapidApi";
 
-interface IFormData {
-  sampleCount?: number;
-  printSamples?: string[];
-  remark?: string;
-}
-
 export default {
   Renderer(context, props) {
     const [currentState, setCurrentState] = useSetState<Record<string, any>>({});
