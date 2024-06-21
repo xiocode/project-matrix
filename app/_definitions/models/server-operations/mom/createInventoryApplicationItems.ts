@@ -1,6 +1,6 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
-  BaseMaterial,
+  BaseMaterial, MomInventoryApplication,
   MomInventoryApplicationItem,
   MomWarehouseStrategy,
   SaveMomInventoryApplicationItemInput
@@ -30,9 +30,15 @@ export default {
 } satisfies ServerOperation;
 
 export async function createInventoryApplicationItems(server: IRpdServer, input: CreateInventoryApplicationItemInput) {
+  const inventoryApplicationManager = server.getEntityManager<MomInventoryApplication>("mom_inventory_application");
   const inventoryApplicationItemManager = server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item");
   const warehouseStrategyManager = server.getEntityManager<MomWarehouseStrategy>("mom_warehouse_strategy");
   const materialManager = server.getEntityManager<BaseMaterial>("base_material");
+
+  const inventoryApplication = await inventoryApplicationManager.findEntity({
+    filters: [{field: "id", operator: "eq", value: input.application}],
+    properties: ["id", "status", "operationType", "businessType"],
+  });
 
   const material = await materialManager.findEntity({
     filters: [{field: "id", operator: "eq", value: input.material}],
@@ -46,6 +52,7 @@ export async function createInventoryApplicationItems(server: IRpdServer, input:
   const warehouseStrategy = await warehouseStrategyManager.findEntity({
     filters: [
       {field: "material_category_id", operator: "eq", value: material.category?.id},
+      {field: "business_type_id", operator: "eq", value: inventoryApplication?.businessType?.id},
       {field: "enabled", operator: "eq", value: true},
     ],
   });
