@@ -321,7 +321,6 @@ export type MomInspectionSheetState =
   | 'pending'
   | 'inspecting'
   | 'inspected'
-  | 'reviewed'
   ;
 
 /**

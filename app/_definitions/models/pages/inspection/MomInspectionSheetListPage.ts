@@ -61,11 +61,15 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "result",
+    },
+    {
+      type: "auto",
       code: "state",
     },
     {
       type: "auto",
-      code: "result",
+      code: "approvalState",
     },
   ],
 };
@@ -106,7 +110,14 @@ const page: RapidPage = {
       columns: [
         {
           type: "auto",
+          fixed: "left",
           code: "state",
+          width: "100px",
+        },
+        {
+          type: "auto",
+          fixed: "left",
+          code: "approvalState",
           width: "100px",
         },
         {

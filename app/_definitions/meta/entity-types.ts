@@ -3654,7 +3654,7 @@ export interface MomInspectionMeasurement {
   /**
    * 检验员
    */
-  inspector?: Partial<BaseEmployee>;
+  inspector?: Partial<OcUser>;
   /**
    * 检验时间
    */
@@ -3825,6 +3825,10 @@ export interface MomInspectionSheet {
    */
   code?: string;
   /**
+   * 审批状态
+   */
+  approvalState?: ApprovalState;
+  /**
    * 检验单状态
    */
   state?: MomInspectionSheetState;
@@ -3879,15 +3883,15 @@ export interface MomInspectionSheet {
   /**
    * 送检人
    */
-  sender?: Partial<BaseEmployee>;
+  sender?: Partial<OcUser>;
   /**
    * 检验员
    */
-  inspector?: Partial<BaseEmployee>;
+  inspector?: Partial<OcUser>;
   /**
    * 审核人
    */
-  reviewer?: Partial<BaseEmployee>;
+  reviewer?: Partial<OcUser>;
   /**
    * 检验记录
    */

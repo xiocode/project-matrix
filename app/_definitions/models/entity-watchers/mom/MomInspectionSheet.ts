@@ -1,7 +1,21 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {BaseLot, type MomInspectionSheet,} from "~/_definitions/meta/entity-types";
+import {BaseLot,} from "~/_definitions/meta/entity-types";
 
 export default [
+  {
+    eventName: "entity.beforeUpdate",
+    modelSingularCode: "mom_inspection_sheet",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeUpdate">) => {
+      const {server, payload, routerContext} = ctx;
+
+      const before = payload.before
+      const changes = payload.changes
+
+      if (before.approvalState !== changes.approvalState) {
+        changes.reviewer_id = routerContext?.state.userId
+      }
+    },
+  },
   {
     eventName: "entity.update",
     modelSingularCode: "mom_inspection_sheet",
