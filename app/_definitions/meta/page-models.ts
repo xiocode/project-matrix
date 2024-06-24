@@ -78,6 +78,7 @@ import inspection$MomInspectionRuleDetailPage from '../models/pages/inspection/M
 import inspection$MomInspectionRuleListPage from '../models/pages/inspection/MomInspectionRuleListPage';
 import inspection$MomInspectionSheetDetailsPage from '../models/pages/inspection/MomInspectionSheetDetailsPage';
 import inspection$MomInspectionSheetListPage from '../models/pages/inspection/MomInspectionSheetListPage';
+import inspection$MomInspectionInputPage from "../models/pages/inspection/MomInspectionInputPage";
 import pm$PmProjectCategoryListPage from '../models/pages/pm/PmProjectCategoryListPage';
 import pm$PmProjectDetailsPage from '../models/pages/pm/PmProjectDetailsPage';
 import pm$PmProjectEventListPage from '../models/pages/pm/PmProjectEventListPage';
@@ -174,6 +175,7 @@ export default [
   inspection$MomInspectionRuleListPage,
   inspection$MomInspectionSheetDetailsPage,
   inspection$MomInspectionSheetListPage,
+  inspection$MomInspectionInputPage,
   pm$PmProjectCategoryListPage,
   pm$PmProjectDetailsPage,
   pm$PmProjectEventListPage,

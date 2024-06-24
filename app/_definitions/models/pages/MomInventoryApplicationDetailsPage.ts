@@ -19,7 +19,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "lotNum",
       $exps: {
-        _hidden: "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'out'",
+        _hidden:
+          "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'out' ||  _.get($page.scope.stores, 'detail.data.list[0].operationType') === 'transfer'",
       },
     },
     {
