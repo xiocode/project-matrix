@@ -1,39 +1,74 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
+const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
+  type: "auto",
+  label: "物品",
+  code: "material",
+  formControlType: "tableSingleSelector",
+  formControlProps: {
+    labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
+    valueKey: "material.id",
+    columns: [
+      {
+        title: "物品",
+        code: "material",
+        format: "{{material.code}} {{material.name}}（{{material.specification}}）",
+        width: 260,
+      },
+      {
+        title: "批次号",
+        code: "lotNum",
+        width: 120,
+      },
+    ],
+    requestConfig: {
+      url: `/mom/mom_inventory_application_items/operations/find`,
+      params: {
+        fixedFilters: [
+          {
+            field: "application",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: "",
+              },
+            ],
+          },
+        ],
+        properties: ["id", "material", "lotNum", "unit"],
+      },
+    },
+    onSelectedRecord: [
+      {
+        $action: "script",
+        script: `
+        const info = event.args[0] || {};
+        if(info) {
+          const _ = event.framework.getExpressionVars()._;
+          event.page.sendComponentMessage('goodTransferList-newForm-rapidForm', {
+            name: "setFieldsValue",
+            payload: {
+              unit: _.get(info, 'unit.name'),
+              lotNum: _.get(info, 'lotNum')
+            }
+          });
+        }
+      `,
+      },
+    ],
+  },
+  $exps: {
+    "formControlProps.requestConfig.params.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
+  },
+};
+
 const createFormConfig: Partial<RapidEntityFormConfig> = {
   defaultFormFields: { outMethod: "batch" },
   items: [
-    {
-      type: "auto",
-      code: "material",
-      formControlType: "tableSingleSelector",
-      formControlProps: {
-        labelFormat: "{{name}}({{code}})",
-        requestConfig: {
-          url: "/app/base_materials/operations/find",
-        },
-        columns: [
-          {
-            title: "物料编号",
-            code: "code",
-            width: 120,
-          },
-          {
-            title: "物料名称",
-            code: "name",
-            width: 120,
-          },
-        ],
-      },
-      // listDataFindOptions: {
-      //   properties: ["id", "code", "name", "defaultUnit"],
-      // },
-      // formControlProps: {
-      //   listTextFormat: "{{code}} {{name}}",
-      //   listFilterFields: ["label"],
-      // },
-    },
+    materialFormItemConfig,
     {
       type: "auto",
       code: "unit",
@@ -133,26 +168,6 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       },
     },
   ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitName = _.get(material, 'defaultUnit.name');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitName,
-            }
-          });
-        }
-      `,
-    },
-  ],
   customRequest: {
     method: "post",
     url: "/app/createGoodTransfers",
@@ -161,15 +176,12 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
+    materialFormItemConfig,
     {
       type: "auto",
-      code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
-      },
+      code: "unit",
       formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+        disabled: true,
       },
     },
     {
@@ -186,10 +198,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "quantity",
     },
     {
-      type: "auto",
-      code: "unit",
-    },
-    {
       type: "treeSelect",
       code: "to",
       formControlProps: {
@@ -204,26 +212,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "packageNum",
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitId = _.get(material, 'defaultUnit.id');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitId,
-            }
-          });
-        }
-      `,
     },
   ],
 };
@@ -441,8 +429,12 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "lotNum",
+                  code: "lot",
+                  title: "批号",
                   width: "100px",
+                  rendererProps: {
+                    format: "{{lotNum}}",
+                  },
                 },
                 {
                   type: "auto",
@@ -500,22 +492,28 @@ const page: RapidPage = {
                   code: "print",
                   actionType: "print",
                   actionText: "打印",
-                  printerCode: "DB5-4SA-NS6",
-                  printTemplateCode: "test",
-                  dataSourceAdapter: `function(data, utils){
-                    return utils.lodash.map(data, function(item){
-                      const createdAt = utils.lodash.get(item, "good.createdAt");
-                      const validityDate = utils.lodash.get(item, "good.validityDate");
-                      return utils.lodash.merge({}, item, {
-                        materialName: utils.lodash.get(item, "material.name"),
-                        materialCode: utils.lodash.get(item, "material.code"),
-                        materialSpecification: utils.lodash.get(item, "material.specification"),
-                        createdAt: createdAt && utils.dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        validityDate: validityDate && utils.dayjs(validityDate).format("YYYY-MM-DD"),
-                        currentTime: utils.dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                  printTemplateCode: "rawMaterialIdentificationCard",
+                  dataSourceAdapter: `
+                    return _.map(data, function(item){
+                      const createdAt = _.get(item, "good.createdAt");
+                      const validityDate = _.get(item, "good.validityDate");
+                      const dictionaries = rapidAppDefinition.getDataDictionaries();
+                      const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
+                      const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(item, "lot.qualificationState") });
+
+                      return _.merge({}, item, {
+                        materialName: _.get(item, "material.name"),
+                        materialCode: _.get(item, "material.code"),
+                        materialSpecification: _.get(item, "material.specification"),
+                        lotNum: _.get(item, 'lot.lotNum'),
+                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        unit: _.get(item, "unit.name"),
+                        qualificationState: _.get(qualificationStateInfo, 'name')
                       })
                     });
-                  }`,
+                  `,
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'",
                   },
@@ -524,8 +522,27 @@ const page: RapidPage = {
                   $type: "inspectionPrintRecordAction",
                   actionType: "print",
                   actionText: "送检",
-                  printerCode: "DB5-4SA-NS6",
-                  printTemplateCode: "test",
+                  printTemplateCode: "rawMaterialInspectionIdentificationCard",
+                  dataSourceAdapter: `
+                    return _.map(data, function(item){
+                      const createdAt = _.get(item, "good.createdAt");
+
+                      return _.merge({}, item, {
+                        materialName: _.get(item, "material.name"),
+                        materialCode: _.get(item, "material.code"),
+                        materialSpecification: _.get(item, "material.specification"),
+                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        lotNum: _.get(item, 'lot.lotNum'),
+                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        sampleCode: _.get(item, 'sampleNo'),
+                        inspectDate: dayjs().format("YYYY-MM-DD"),
+                        remark: _.get(item, 'remark')
+                      })
+                    });
+                  `,
+                  $exps: {
+                    operationId: "$rui.parseQuery().id",
+                  },
                 },
                 {
                   $type: "sonicRecordActionEditEntity",
@@ -572,6 +589,98 @@ const page: RapidPage = {
             },
           ],
         },
+        {
+          key: "groups",
+          label: "收货明细",
+          children: [
+            {
+              $id: "goodTransferGroupList",
+              $type: "businessTable",
+              dataSourceCode: "goodTransferGroupList",
+              requestConfig: {
+                url: "/api/app/listGoodInTransfers",
+              },
+              $exps: {
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+              },
+              fixedFilters: [
+                {
+                  field: "operationId",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              requestParamsAdapter: `
+                return {
+                  operationId: _.get(params, "filters[0]filters[0]value"),
+                  limit: 1000
+                }
+              `,
+              responseDataAdapter: `
+                return {
+                  list: data || []
+                }
+              `,
+              columns: [
+                {
+                  title: "物料编码",
+                  type: "auto",
+                  code: "material.code",
+                },
+                {
+                  title: "物料名称",
+                  type: "auto",
+                  code: "material.name",
+                },
+                {
+                  title: "规格型号",
+                  type: "auto",
+                  code: "material.specification",
+                },
+                {
+                  title: "单位",
+                  type: "auto",
+                  code: "material.defaultUnit.name",
+                },
+                {
+                  title: "入库数量",
+                  type: "auto",
+                  code: "completedAmount",
+                },
+                {
+                  title: "入库托数",
+                  type: "auto",
+                  code: "completedPalletAmount",
+                },
+                {
+                  title: "批号",
+                  type: "auto",
+                  code: "lotNum",
+                },
+                // {
+                //   title: "保质期（天）",
+                //   type: "auto",
+                //   code: "material.specification",
+                // },
+                // {
+                //   title: "生产日期",
+                //   type: "auto",
+                //   code: "material.specification",
+                // },
+                // {
+                //   title: "有效期至",
+                //   type: "auto",
+                //   code: "material.specification",
+                // },
+                {
+                  title: "检验状态",
+                  type: "auto",
+                  code: "inspectState",
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -581,25 +690,25 @@ const page: RapidPage = {
     {
       $type: "rapidToolbar",
       items: [
-        {
-          $type: "rapidToolbarButton",
-          text: "确认提交",
-          actionStyle: "primary",
-          size: "large",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              data: { state: "done", approvalState: "approving" },
-              $exps: {
-                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              },
-            },
-          ],
-          $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-          },
-        },
+        // {
+        //   $type: "rapidToolbarButton",
+        //   text: "确认提交",
+        //   actionStyle: "primary",
+        //   size: "large",
+        //   onAction: [
+        //     {
+        //       $action: "sendHttpRequest",
+        //       method: "PATCH",
+        //       data: { state: "done", approvalState: "approving" },
+        //       $exps: {
+        //         url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+        //       },
+        //     },
+        //   ],
+        //   $exps: {
+        //     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+        //   },
+        // },
         {
           $type: "rapidToolbarButton",
           text: "批准",

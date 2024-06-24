@@ -1,79 +1,73 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
-const createFormConfig: Partial<RapidEntityFormConfig> = {
-  defaultFormFields: { outMethod: "batch" },
-  items: [
-    {
-      type: "auto",
-      code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
+const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
+  type: "auto",
+  label: "物品",
+  code: "material",
+  formControlType: "tableSingleSelector",
+  formControlProps: {
+    labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
+    valueKey: "material.id",
+    columns: [
+      {
+        title: "物品",
+        code: "material",
+        format: "{{material.code}} {{material.name}}（{{material.specification}}）",
+        width: 260,
       },
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+      {
+        title: "批次号",
+        code: "lotNum",
+        width: 120,
+      },
+    ],
+    requestConfig: {
+      url: `/mom/mom_inventory_application_items/operations/find`,
+      params: {
+        fixedFilters: [
+          {
+            field: "application",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: "",
+              },
+            ],
+          },
+        ],
+        properties: ["id", "material", "lotNum", "unit"],
       },
     },
-    {
-      type: "auto",
-      code: "unit",
-      formControlProps: {
-        disabled: true,
-      },
-    },
-    {
-      type: "auto",
-      code: "lotNum",
-    },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "packageNum",
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
+    onSelectedRecord: [
+      {
+        $action: "script",
+        script: `
+        const info = event.args[0] || {};
+        if(info) {
           const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitName = _.get(material, 'defaultUnit.name');
-          event.page.sendComponentMessage(event.sender.$id, {
+          event.page.sendComponentMessage(event.sender.$id.replace('-item-material-input', ''), {
             name: "setFieldsValue",
             payload: {
-              unit: unitName,
+              unit: _.get(info, 'unit.name'),
+              lotNum: _.get(info, 'lotNum')
             }
           });
         }
       `,
-    },
-  ],
-  customRequest: {
-    method: "post",
-    url: "/app/createGoodTransfers",
+      },
+    ],
+  },
+  $exps: {
+    "formControlProps.requestConfig.params.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
   },
 };
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
-      },
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
-      },
-    },
+    materialFormItemConfig,
     {
       type: "auto",
       code: "unit",
@@ -92,26 +86,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "packageNum",
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitName = _.get(material, 'defaultUnit.name');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitName,
-            }
-          });
-        }
-      `,
     },
   ],
 };
@@ -290,15 +264,6 @@ const page: RapidPage = {
               ],
               listActions: [
                 {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-                  },
-                },
-                {
                   $type: "sonicToolbarRefreshButton",
                   text: "刷新",
                   icon: "ReloadOutlined",
@@ -384,31 +349,6 @@ const page: RapidPage = {
               ],
               actions: [
                 {
-                  $type: "sonicRecordActionPrintEntity",
-                  code: "print",
-                  actionType: "print",
-                  actionText: "打印",
-                  printerCode: "DB5-4SA-NS6",
-                  printTemplateCode: "test",
-                  dataSourceAdapter: `function(data, utils){
-                    return utils.lodash.map(data, function(item){
-                      const createdAt = utils.lodash.get(item, "good.createdAt");
-                      const validityDate = utils.lodash.get(item, "good.validityDate");
-                      return utils.lodash.merge({}, item, {
-                        materialName: utils.lodash.get(item, "material.name"),
-                        materialCode: utils.lodash.get(item, "material.code"),
-                        materialSpecification: utils.lodash.get(item, "material.specification"),
-                        createdAt: createdAt && utils.dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        validityDate: validityDate && utils.dayjs(validityDate).format("YYYY-MM-DD"),
-                        currentTime: utils.dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                      })
-                    });
-                  }`,
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'",
-                  },
-                },
-                {
                   $type: "sonicRecordActionEditEntity",
                   code: "edit",
                   actionType: "edit",
@@ -429,7 +369,6 @@ const page: RapidPage = {
                   },
                 },
               ],
-              newForm: cloneDeep(createFormConfig),
               editForm: cloneDeep(formConfig),
               stores: [
                 {
@@ -462,25 +401,6 @@ const page: RapidPage = {
     {
       $type: "rapidToolbar",
       items: [
-        {
-          $type: "rapidToolbarButton",
-          text: "确认提交",
-          actionStyle: "primary",
-          size: "large",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              data: { state: "done", approvalState: "approving" },
-              $exps: {
-                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              },
-            },
-          ],
-          $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-          },
-        },
         {
           $type: "rapidToolbarButton",
           text: "批准",

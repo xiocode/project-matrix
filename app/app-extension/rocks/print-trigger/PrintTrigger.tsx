@@ -74,23 +74,44 @@ export default {
 
   onReceiveMessage(m, state, props) {
     if (m.name === "print") {
-      if (props.printerCode && props.printTemplateCode) {
-        const printerStoreData = state.scope.getStore("printerList")?.data?.list || [];
-        const printTemplateStoreData = state.scope.getStore("printTemplateList")?.data?.list || [];
-        const printer = find(printerStoreData, (item) => item.code === props.printerCode);
-        const printTemplate = find(printTemplateStoreData, (item) => item.code === props.printTemplateCode);
-        if (printer && printTemplate) {
-          state.print({ code: printer.code, content: printTemplate.content });
-        } else {
-          message.error(!printer ? `编号为：“${props.printerCode}”的打印设备未找到` : `编号为：“${props.printTemplateCode}”的打印模板不存在`);
-        }
-      } else {
-        state.open();
-      }
+      state.open();
     }
   },
 
   Renderer(context, props, state) {
+    let formItems = [
+      {
+        type: "select",
+        code: "code",
+        label: "打印机",
+        formControlProps: {
+          listDataSourceCode: "printerList",
+          listTextFieldName: "code",
+          listValueFieldName: "code",
+        },
+        required: true,
+        rules: [{ required: true, message: "打印机必选" }],
+      },
+      {
+        type: "select",
+        label: "打印模板",
+        code: "content",
+        formControlProps: {
+          listDataSourceCode: "printTemplateList",
+          listTextFieldName: "name",
+          listValueFieldName: "content",
+        },
+        required: true,
+        rules: [{ required: true, message: "打印模板机必选" }],
+      },
+    ];
+
+    const printTemplateStoreData = state.scope.getStore("printTemplateList")?.data?.list || [];
+    const printTemplate = props.printTemplateCode && find(printTemplateStoreData, (item) => item.code === props.printTemplateCode);
+    if (printTemplate) {
+      formItems = formItems.filter((item) => item.code !== "content");
+    }
+
     const rockConfig: RockConfig = {
       $id: `${props.$id}_print_modal`,
       $type: "antdModal",
@@ -100,37 +121,16 @@ export default {
         {
           $id: `${props.$id}_print_modal_form`,
           $type: "rapidForm",
-          items: [
-            {
-              type: "select",
-              code: "code",
-              label: "打印机",
-              formControlProps: {
-                listDataSourceCode: "printerList",
-                listTextFieldName: "code",
-                listValueFieldName: "code",
-              },
-              required: true,
-              rules: [{ required: true, message: "打印机必选" }],
-            },
-            {
-              type: "select",
-              label: "打印模板",
-              code: "content",
-              formControlProps: {
-                listDataSourceCode: "printTemplateList",
-                listTextFieldName: "name",
-                listValueFieldName: "content",
-              },
-              required: true,
-              rules: [{ required: true, message: "打印模板机必选" }],
-            },
-          ],
+          items: formItems,
           onFinish: [
             {
               $action: "script",
               script: async (event: RuiEvent) => {
-                const formData = await event.sender.form.validateFields();
+                let formData = await event.sender.form.validateFields();
+                if (!formData.content) {
+                  formData.content = printTemplate?.content;
+                }
+
                 state.print(formData, context.page);
               },
             },

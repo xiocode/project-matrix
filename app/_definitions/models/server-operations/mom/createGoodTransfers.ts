@@ -4,8 +4,10 @@ import type {
   BaseMaterial,
   BaseUnit,
   MomGood,
-  MomGoodTransfer, MomInspectionRule,
-  MomInventoryOperation, SaveBaseLotInput,
+  MomGoodTransfer,
+  MomInspectionRule,
+  MomInventoryOperation,
+  SaveBaseLotInput,
   SaveMomGoodInput,
   SaveMomGoodTransferInput,
   SaveMomInspectionSheetInput,
@@ -58,7 +60,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
     materialManager.findEntity({
       filters: [{ operator: "eq", field: "id", value: input?.material }],
       properties: ["id", "code", "defaultUnit", "qualityGuaranteePeriod"],
-    })
+    }),
   ]);
 
   if (!material) {
@@ -76,7 +78,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
 
   input.lotId = lotInfo?.id;
 
-  const unit = await unitManager.findById(material.defaultUnit?.id);
+  const unit = await unitManager.findById({ id: material.defaultUnit?.id });
   const binNumBase = dayjs().format("YYYYMMDDHHmmss");
   const goods: SaveMomGoodInput[] = input.palletCount
     ? Array.from({ length: input.palletCount }, (_, i) => createGoodInput(material, unit, input, `${binNumBase}-${i + 1}`, input.palletWeight))
@@ -103,27 +105,35 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
 
     if (inspectRule) {
       await saveInspectionSheet(server, {
-        inventoryOperation: {id: input.operationId},
+        inventoryOperation: { id: input.operationId },
         lotNum: input.lotNum,
-        lot: {id: lotInfo.id},
-        rule: {id: inspectRule?.id},
-        material: {id: input.material},
+        lot: { id: lotInfo.id },
+        rule: { id: inspectRule?.id },
+        material: { id: input.material },
         state: "pending",
       });
     } else {
       await saveInspectionSheet(server, {
-        inventoryOperation: {id: input.operationId},
+        inventoryOperation: { id: input.operationId },
         lotNum: input.lotNum,
-        lot: {id: lotInfo.id},
-        material: {id: input.material},
+        lot: { id: lotInfo.id },
+        material: { id: input.material },
         state: "pending",
       });
     }
   }
 }
 
-function createGoodInput(material: BaseMaterial, unit: BaseUnit | null, input: CreateGoodTransferInput, binNum: string, palletWeight?: number): SaveMomGoodInput {
-  const validityDate = dayjs(input.manufactureDate).add(parseInt(material.qualityGuaranteePeriod || '0', 10), 'day').format('YYYY-MM-DD');
+function createGoodInput(
+  material: BaseMaterial,
+  unit: BaseUnit | null,
+  input: CreateGoodTransferInput,
+  binNum: string,
+  palletWeight?: number,
+): SaveMomGoodInput {
+  const validityDate = dayjs(input.manufactureDate)
+    .add(parseInt(material.qualityGuaranteePeriod || "0", 10), "day")
+    .format("YYYY-MM-DD");
   return {
     material: { id: material.id },
     materialCode: material.code,
@@ -185,9 +195,9 @@ async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionS
 
   const inspectionSheet = await inspectionSheetManager.findEntity({
     filters: [
-      {operator: "eq", field: "lot_num", value: sheet.lotNum},
-      {operator: "eq", field: "material_id", value: sheet.material.id},
-      {operator: "eq", field: "inventory_operation_id", value: sheet.inventoryOperation?.id}
+      { operator: "eq", field: "lot_num", value: sheet.lotNum },
+      { operator: "eq", field: "material_id", value: sheet.material.id },
+      { operator: "eq", field: "inventory_operation_id", value: sheet.inventoryOperation?.id },
     ],
   });
 
@@ -211,5 +221,5 @@ async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
     ],
   });
 
-  return lotInDb || await baseLotManager.createEntity({ entity: lot });
+  return lotInDb || (await baseLotManager.createEntity({ entity: lot }));
 }

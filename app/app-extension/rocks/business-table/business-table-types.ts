@@ -7,6 +7,16 @@ export interface BusinessTableConfig {
    */
   viewMode: "table";
 
+  requestConfig: {
+    url: string;
+  };
+
+  // 请求数据适配器
+  requestParamsAdapter?: string;
+
+  // 响应数据适配器
+  responseDataAdapter?: string;
+
   /**
    * 数据源编号
    */
