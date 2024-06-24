@@ -45,7 +45,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "inspector",
       name: "检验员",
       type: "relation",
-      targetSingularCode: "base_employee",
+      targetSingularCode: "oc_user",
       targetIdColumnName: "inspector_id",
     },
     {

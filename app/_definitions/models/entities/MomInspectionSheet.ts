@@ -48,6 +48,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       },
     },
     {
+      code: "approvalState",
+      name: "审批状态",
+      type: "option",
+      dataDictionary: "ApprovalState",
+    },
+    {
       code: "state",
       name: "检验单状态",
       type: "option",
@@ -133,21 +139,21 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "sender",
       name: "送检人",
       type: "relation",
-      targetSingularCode: "base_employee",
+      targetSingularCode: "oc_user",
       targetIdColumnName: "sender_id",
     },
     {
       code: "inspector",
       name: "检验员",
       type: "relation",
-      targetSingularCode: "base_employee",
+      targetSingularCode: "oc_user",
       targetIdColumnName: "inspector_id",
     },
     {
       code: "reviewer",
       name: "审核人",
       type: "relation",
-      targetSingularCode: "base_employee",
+      targetSingularCode: "oc_user",
       targetIdColumnName: "reviewer_id",
     },
     {

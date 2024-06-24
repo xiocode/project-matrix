@@ -1036,6 +1036,7 @@ const entityFieldCodes = {
   'MomInspectionSheet': [
     'id',
     'code',
+    'approvalState',
     'state',
     'result',
     'material',
