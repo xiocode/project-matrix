@@ -11,8 +11,8 @@ export default [
       const before = payload.before
       const changes = payload.changes
 
-      if (before.approvalState !== changes.approvalState) {
-        changes.reviewer_id = routerContext?.state.userId
+      if (changes.hasOwnProperty('approvalState') && changes.approvalState !== before.approvalState) {
+        changes.reviewer_id = routerContext?.state.userId;
       }
     },
   },
