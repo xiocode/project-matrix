@@ -110,6 +110,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         lot: { id: lotInfo.id },
         rule: { id: inspectRule?.id },
         material: { id: input.material },
+        approvalState: "approving",
         state: "pending",
       });
     } else {
@@ -118,6 +119,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         lotNum: input.lotNum,
         lot: { id: lotInfo.id },
         material: { id: input.material },
+        approvalState: "approving",
         state: "pending",
       });
     }

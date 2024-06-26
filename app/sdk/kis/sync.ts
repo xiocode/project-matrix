@@ -319,20 +319,20 @@ class KisDataSync {
           } as SaveBasePartnerInput;
         },
       }),
-      // 同步仓库
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/Stock/List",
-        singularCode: "mom_warehouse",
-        mapToEntity: async (item: any) => {
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FItemID,
-            orderNum: 1,
-            state: 'enabled',
-          } as SaveMomWarehouseInput;
-        },
-      }),
+      // // 同步仓库
+      // this.createListSyncFunction({
+      //   url: "/koas/APP006992/api/Stock/List",
+      //   singularCode: "mom_warehouse",
+      //   mapToEntity: async (item: any) => {
+      //     return {
+      //       code: item.FNumber,
+      //       name: item.FName,
+      //       externalCode: item.FItemID,
+      //       orderNum: 1,
+      //       state: 'enabled',
+      //     } as SaveMomWarehouseInput;
+      //   },
+      // }),
       this.createListSyncFunction({
         url: "/koas/APP006992/api/Stock/List",
         singularCode: "base_location",

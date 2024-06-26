@@ -83,6 +83,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomInspectionSheet",
       viewMode: "table",
+      permissionCheck: { any: ["inspection.manage"] },
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -201,6 +202,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "inspection.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -209,6 +211,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionSheet",
+          $permissionCheck: "inspection.manage",
         },
       ],
       newForm: cloneDeep(formConfig),

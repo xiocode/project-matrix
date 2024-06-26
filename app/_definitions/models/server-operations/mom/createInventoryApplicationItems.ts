@@ -1,9 +1,16 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
-  BaseMaterial, MomInventoryApplication,
+  ActionHandlerContext,
+  IRpdServer,
+  ServerOperation,
+} from "@ruiapp/rapid-core";
+import type {
+  BaseLot,
+  BaseMaterial,
+  MomInventoryApplication,
   MomInventoryApplicationItem,
   MomWarehouseStrategy,
-  SaveMomInventoryApplicationItemInput
+  SaveBaseLotInput,
+  SaveMomInventoryApplicationItemInput,
 } from "~/_definitions/meta/entity-types";
 
 export type CreateInventoryApplicationItemInput = {
@@ -29,93 +36,125 @@ export default {
   },
 } satisfies ServerOperation;
 
-export async function createInventoryApplicationItems(server: IRpdServer, input: CreateInventoryApplicationItemInput) {
-  const inventoryApplicationManager = server.getEntityManager<MomInventoryApplication>("mom_inventory_application");
-  const inventoryApplicationItemManager = server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item");
-  const warehouseStrategyManager = server.getEntityManager<MomWarehouseStrategy>("mom_warehouse_strategy");
-  const materialManager = server.getEntityManager<BaseMaterial>("base_material");
-
-  const inventoryApplication = await inventoryApplicationManager.findEntity({
-    filters: [{field: "id", operator: "eq", value: input.application}],
-    properties: ["id", "status", "operationType", "businessType"],
-  });
-
-  const material = await materialManager.findEntity({
-    filters: [{field: "id", operator: "eq", value: input.material}],
-    properties: ["id", "name", "code", "category", "defaultUnit"],
-  });
+export async function createInventoryApplicationItems(
+  server: IRpdServer,
+  input: CreateInventoryApplicationItemInput
+) {
+  const inventoryApplication = await getInventoryApplication(server, input.application);
+  const material = await getMaterial(server, input.material);
 
   if (!material) {
     throw new Error("Material not found.");
   }
 
-  const warehouseStrategy = await warehouseStrategyManager.findEntity({
+  if (!inventoryApplication) {
+    throw new Error("Inventory application not found.");
+  }
+
+  const warehouseStrategy = await getWarehouseStrategy(
+    server,
+    material.category?.id,
+    inventoryApplication?.businessType?.id
+  );
+
+  if (warehouseStrategy?.strategy === "fifo" || warehouseStrategy?.strategy === "fdfo") {
+    await handleFifoFdfoStrategy(server, input, material, warehouseStrategy);
+  } else {
+    await handleOtherStrategies(server, input, inventoryApplication, material);
+  }
+}
+
+async function getInventoryApplication(server: IRpdServer, applicationId: number) {
+  const inventoryApplicationManager = server.getEntityManager<MomInventoryApplication>("mom_inventory_application");
+  return await inventoryApplicationManager.findEntity({
+    filters: [{field: "id", operator: "eq", value: applicationId}],
+    properties: ["id", "status", "operationType", "businessType"],
+  });
+}
+
+async function getMaterial(server: IRpdServer, materialId: number) {
+  const materialManager = server.getEntityManager<BaseMaterial>("base_material");
+  return await materialManager.findEntity({
+    filters: [{field: "id", operator: "eq", value: materialId}],
+    properties: ["id", "name", "code", "category", "defaultUnit"],
+  });
+}
+
+async function getWarehouseStrategy(
+  server: IRpdServer,
+  materialCategoryId?: number,
+  businessTypeId?: number
+) {
+  const warehouseStrategyManager = server.getEntityManager<MomWarehouseStrategy>("mom_warehouse_strategy");
+  return await warehouseStrategyManager.findEntity({
     filters: [
-      {field: "material_category_id", operator: "eq", value: material.category?.id},
-      {field: "business_type_id", operator: "eq", value: inventoryApplication?.businessType?.id},
+      {field: "material_category_id", operator: "eq", value: materialCategoryId},
+      {field: "business_type_id", operator: "eq", value: businessTypeId},
       {field: "enabled", operator: "eq", value: true},
     ],
   });
+}
 
-  if (!warehouseStrategy) {
-    throw new Error("No warehouse strategy found.");
+async function handleFifoFdfoStrategy(
+  server: IRpdServer,
+  input: CreateInventoryApplicationItemInput,
+  material: BaseMaterial,
+  warehouseStrategy: MomWarehouseStrategy
+) {
+  const warehouseStrategyStmt = getWarehouseStrategyStatement(warehouseStrategy.strategy);
+  const strategyFilter = getStrategyFilter(warehouseStrategy);
+
+  const goods = await server.queryDatabaseObject(
+    `
+      WITH good_moving_sum_cte AS (SELECT mg.*,
+                                          SUM(mg.quantity) OVER (
+                                            PARTITION BY mg.material_id
+                                              ${warehouseStrategyStmt}
+                                            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                                            ) - mg.quantity AS moving_sum
+                                   FROM mom_goods mg
+                                   WHERE mg.material_id = $1
+                                     AND mg.quantity > 0
+                                     AND lot_num IS NOT NULL
+                                     ${strategyFilter})
+      SELECT *
+      FROM good_moving_sum_cte
+      WHERE moving_sum <= $2;
+    `,
+    [material.id, input.quantity]
+  );
+
+  for (const good of goods) {
+    const entitySave = createEntitySaveObject(input, material, good);
+    await saveInventoryApplicationItem(server, entitySave);
+  }
+}
+
+async function handleOtherStrategies(
+  server: IRpdServer,
+  input: CreateInventoryApplicationItemInput,
+  inventoryApplication: MomInventoryApplication,
+  material: BaseMaterial
+) {
+  if (!input.lotNum) {
+    throw new Error("Lot number is required.");
   }
 
-  if (warehouseStrategy.strategy === "fifo" || warehouseStrategy.strategy === "fdfo") {
-    const warehouseStrategyStmt = getWarehouseStrategyStatement(warehouseStrategy.strategy);
+  const lotInfo = await saveMaterialLotInfo(server, {
+    lotNum: input.lotNum,
+    material: {id: input.material},
+    sourceType: inventoryApplication?.businessType?.config?.defaultSourceType || null,
+    qualificationState: inventoryApplication?.businessType?.config?.defaultQualificationState || "qualified",
+    isAOD: false,
+    state: "pending",
+  });
 
-    let strategyFilter = "";
-    if (warehouseStrategy.qualifiedFilter) {
-      strategyFilter += " AND mg.qualified = true";
-    }
-    if (warehouseStrategy.validityFilter) {
-      strategyFilter += " AND mg.validity_date >= now()";
-    }
-
-    const goods = await server.queryDatabaseObject(
-      `
-        WITH good_moving_sum_cte AS (SELECT mg.*,
-                                            SUM(mg.quantity)
-                                            OVER (PARTITION BY mg.material_id ${warehouseStrategyStmt} ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) -
-                                            mg.quantity AS moving_sum
-                                     FROM mom_goods mg
-                                     WHERE mg.material_id = $1 AND mg.quantity > 0 AND lot_num IS NOT NULL ${strategyFilter})
-        SELECT *
-        FROM good_moving_sum_cte
-        WHERE moving_sum <= $2;
-      `,
-      [material.id, input.quantity]
-    );
-
-    for (const good of goods) {
-      await inventoryApplicationItemManager.createEntity({
-        entity: {
-          application: {id: input.application},
-          material: {id: material.id},
-          unit: {id: material.defaultUnit?.id},
-          lot_num: good.lot_num,
-          quantity: good.quantity,
-          orderNum: 1,
-        } as SaveMomInventoryApplicationItemInput,
-      });
-    }
-  } else {
-    if (input.lotNum) {
-      await inventoryApplicationItemManager.createEntity({
-        entity: {
-          application: {id: input.application},
-          material: {id: material.id},
-          unit: {id: material.defaultUnit?.id},
-          lot_num: input.lotNum,
-          quantity: input.quantity,
-          orderNum: 1,
-        } as SaveMomInventoryApplicationItemInput,
-      });
-    } else {
-      throw new Error("Lot number is required.");
-    }
-  }
-
+  const entitySave = createEntitySaveObject(input, material, {
+    lot_num: input.lotNum,
+    quantity: input.quantity,
+    lot_id: lotInfo.id
+  });
+  await saveInventoryApplicationItem(server, entitySave);
 }
 
 function getWarehouseStrategyStatement(strategy?: string): string {
@@ -127,4 +166,57 @@ function getWarehouseStrategyStatement(strategy?: string): string {
     default:
       throw new Error("Unknown warehouse strategy.");
   }
+}
+
+function getStrategyFilter(warehouseStrategy: MomWarehouseStrategy): string {
+  let strategyFilter = "";
+  if (warehouseStrategy?.qualifiedFilter) {
+    strategyFilter += " AND mg.qualified = true";
+  }
+  if (warehouseStrategy?.validityFilter) {
+    strategyFilter += " AND mg.validity_date >= now()";
+  }
+  return strategyFilter;
+}
+
+function createEntitySaveObject(
+  input: CreateInventoryApplicationItemInput,
+  material: BaseMaterial,
+  good: any
+): SaveMomInventoryApplicationItemInput {
+  return {
+    application: {id: input.application},
+    material: {id: material.id},
+    unit: {id: material.defaultUnit?.id},
+    lotNum: good.lot_num,
+    quantity: good.quantity,
+    orderNum: 1,
+    lot: good.lot_id ? {id: good.lot_id} : undefined,
+  };
+}
+
+async function saveInventoryApplicationItem(
+  server: IRpdServer,
+  entitySave: SaveMomInventoryApplicationItemInput
+) {
+  const inventoryApplicationItemManager = server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item");
+  await inventoryApplicationItemManager.createEntity({
+    entity: entitySave,
+  });
+}
+
+async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
+  if (!lot.lotNum || !lot.material || !lot.material.id) {
+    throw new Error("lotNum and material are required when saving lot info.");
+  }
+
+  const baseLotManager = server.getEntityManager<BaseLot>("base_lot");
+  const lotInDb = await baseLotManager.findEntity({
+    filters: [
+      {operator: "eq", field: "lot_num", value: lot.lotNum},
+      {operator: "eq", field: "material_id", value: lot.material.id},
+    ],
+  });
+
+  return lotInDb || (await baseLotManager.createEntity({entity: lot}));
 }

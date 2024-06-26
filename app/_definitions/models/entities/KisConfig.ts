@@ -13,25 +13,21 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "api_endpoint",
       name: "API Endpoint",
       type: "text",
-      required: true,
     },
     {
       code: "client_id",
       name: "client_id",
       type: "text",
-      required: true,
     },
     {
       code: "client_secret",
       name: "client_secret",
       type: "text",
-      required: false,
     },
     {
       code: "uid",
       name: "uid",
       type: "integer",
-      required: true,
     },
     {
       code: "session_id",
@@ -79,12 +75,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "refresh_auth_data_token_expire_in",
       name: "refresh_auth_data_token_expire_in",
       type: "integer",
-      required: true,
-    },
-    {
-      code: "updated_at",
-      name: "updated_at",
-      type: "datetime",
       required: true,
     },
   ],

@@ -16,6 +16,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "sheet_id",
     },
     {
+      code: "sample",
+      name: "检验样本",
+      type: "relation",
+      targetSingularCode: "mom_inspection_sheet_sample",
+      targetIdColumnName: "sample_id",
+    },
+    {
       code: "sampleCode",
       name: "样本号",
       type: "text",

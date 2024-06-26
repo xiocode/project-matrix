@@ -1,5 +1,6 @@
 import type {ActionHandlerContext, CronJobConfiguration, IRpdServer} from "@ruiapp/rapid-core";
 import KingdeeSDK from "~/sdk/kis/api";
+import {SaveKisConfigInput} from "~/_definitions/meta/entity-types";
 
 export default {
   code: "kis-update-tokens-job",
@@ -53,7 +54,7 @@ async function refreshKisTokens(ctx: ActionHandlerContext, server: IRpdServer) {
       session_id: kis.sessionId,
       session_id_expire_in: kis.sessionIdExpireIn,
       gateway_router_addr: kis.gatewayRouterAddr,
-    }
+    } as SaveKisConfigInput
   })
 
   console.log("Kis config updated:", result)
