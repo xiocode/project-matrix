@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import {cloneDeep} from "lodash";
+import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -38,7 +38,7 @@ const page: RapidPage = {
   code: "mom_inventory_application_list",
   name: "库存业务申请",
   title: "库存业务申请",
-  permissionCheck: { any: [] },
+  permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
@@ -130,6 +130,34 @@ const page: RapidPage = {
           dataSourceCode: "list",
           entityCode: "MomInventoryApplication",
         },
+        // {
+        //   $type: "rapidTableAction",
+        //   code: "dispatch",
+        //   actionText: "下发",
+        //   $exps: {
+        //     _hidden: "$slot.record.operationState !== 'pending'",
+        //   },
+        //   onAction: [
+        //     {
+        //       $action: "sendHttpRequest",
+        //       method: "POST",
+        //       url: "/api/mom/mom_inventory_operations",
+        //       data: {
+        //         state: "processing",
+        //         approveState: "uninitiated"
+        //       },
+        //       $exps: {
+        //         "data.application": "$slot.record.id",
+        //         "data.businessType": "$slot.record.businessType.id",
+        //         "data.operationType": "$slot.record.businessType.operationType",
+        //       },
+        //     },
+        //     {
+        //       $action: "loadStoreData",
+        //       storeName: "list",
+        //     },
+        //   ],
+        // },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),

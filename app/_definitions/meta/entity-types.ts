@@ -3257,7 +3257,7 @@ export interface MomInspectionCharacteristic {
   /**
    * 标准值
    */
-  norminal?: number;
+  norminal?: string;
   /**
    * 上公差
    */
