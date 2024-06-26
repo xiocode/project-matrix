@@ -76,7 +76,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: "norminal",
       name: "标准值",
-      type: "double",
+      type: "text",
     },
     {
       code: "upperTol",
