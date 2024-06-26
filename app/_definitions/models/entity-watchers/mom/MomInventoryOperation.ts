@@ -7,7 +7,7 @@ import {
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   MomInventoryStatTable,
-  MomInventoryStatTrigger, MomWarehouse, SaveBaseLotInput,
+  MomInventoryStatTrigger, MomWarehouse, SaveBaseLotInput, SaveMomInventoryOperationInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
@@ -80,6 +80,34 @@ export default [
         }
       }
 
+      // if (after.operationType === "out") {
+      //   if (changes.hasOwnProperty("state") && changes.state === "done") {
+      //
+      //     const inventoryApplication = await server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type").findEntity({
+      //       filters: [
+      //         {
+      //           operator: "eq",
+      //           field: "id",
+      //           value: after.application_id,
+      //         },
+      //       ],
+      //       properties: ["id", "operationState"],
+      //     });
+      //
+      //     await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").createEntity({
+      //       entity: {
+      //         application_id: after.application_id,
+      //         operationType: "in",
+      //         state: "processing",
+      //         business_id: after.business_id,
+      //         warehouse_id: after.warehouse_id,
+      //       } as SaveMomInventoryOperationInput
+      //     })
+      //
+      //
+      //   }
+      // }
+
       if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
         let transfers = await listTransfersOfOperation(server, after.id);
 
@@ -140,19 +168,16 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
   // TODO: get to_location_id from transfers and get warehouse by location_id
   for (const transfer of transfers) {
     if (transfer?.to_location_id) {
-      const warehouseManager = server.getEntityManager<MomWarehouse>("mom_warehouse");
-      const warehouse = await warehouseManager.findEntity({
-        filters: [
-          {
-            operator: "eq",
-            field: "location_id",
-            value: transfer.to_location_id,
-          },
-        ],
-      })
-      if (warehouse) {
-        transfer['warehouse_id'] = warehouse?.id;
-      }
+
+      const warehouseId = await server.queryDatabaseObject(
+        `
+        SELECT get_root_location_id($1) AS id;
+      `,
+        [transfer.to_location_id]
+      );
+
+      transfer['warehouse_id'] = warehouseId[0]?.id;
+
 
       if (transfer.lot_id) {
         const lotManager = server.getEntityManager<MomWarehouse>("base_lot");
@@ -166,19 +191,14 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
 
     }
     if (transfer?.from_location_id) {
-      const warehouseManager = server.getEntityManager<MomWarehouse>("mom_warehouse");
-      const warehouse = await warehouseManager.findEntity({
-        filters: [
-          {
-            operator: "eq",
-            field: "location_id",
-            value: transfer.from_location_id,
-          },
-        ],
-      })
-      if (warehouse) {
-        transfer['warehouse_id'] = warehouse?.id;
-      }
+      const warehouseId = await server.queryDatabaseObject(
+        `
+        SELECT get_root_location_id($1) AS id;
+      `,
+        [transfer.from_location_id]
+      );
+
+      transfer['warehouse_id'] = warehouseId[0]?.id;
     }
   }
 

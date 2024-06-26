@@ -2076,11 +2076,11 @@ export interface KisConfig {
   /**
    * API Endpoint
    */
-  api_endpoint: string;
+  api_endpoint?: string;
   /**
    * client_id
    */
-  client_id: string;
+  client_id?: string;
   /**
    * client_secret
    */
@@ -2088,7 +2088,7 @@ export interface KisConfig {
   /**
    * uid
    */
-  uid: number;
+  uid?: number;
   /**
    * session_id
    */
@@ -2121,10 +2121,6 @@ export interface KisConfig {
    * refresh_auth_data_token_expire_in
    */
   refresh_auth_data_token_expire_in: number;
-  /**
-   * updated_at
-   */
-  updated_at: string;
   /**
    * 创建时间
    */
@@ -3636,6 +3632,10 @@ export interface MomInspectionMeasurement {
    */
   sheet?: Partial<MomInspectionSheet>;
   /**
+   * 检验样本
+   */
+  sample?: Partial<MomInspectionSheetSample>;
+  /**
    * 样本号
    */
   sampleCode?: string;
@@ -3936,6 +3936,57 @@ export interface MomInspectionSheet {
 export type SaveMomInspectionSheetInput = Omit<MomInspectionSheet, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 检验样本
+ */
+export interface MomInspectionSheetSample {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 样本号
+   */
+  code: string;
+  /**
+   * 检验单
+   */
+  sheet?: Partial<MomInspectionSheet>;
+  /**
+   * 检验记录
+   */
+  measurements?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验样本
+ */
+export type SaveMomInspectionSheetSampleInput = Omit<MomInspectionSheetSample, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 物品库存
  */
 export interface MomInventory {
@@ -3950,7 +4001,7 @@ export interface MomInventory {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 可用数量
    */
@@ -4095,6 +4146,14 @@ export interface MomInventoryApplication {
    */
   contractNum?: string;
   /**
+   * 转出仓库
+   */
+  from?: Partial<BaseLocation>;
+  /**
+   * 转入仓库
+   */
+  to?: Partial<BaseLocation>;
+  /**
    * 供应商
    */
   supplier?: Partial<BasePartner>;
@@ -4189,6 +4248,10 @@ export interface MomInventoryApplicationItem {
    * 单位
    */
   unit?: Partial<BaseUnit>;
+  /**
+   * 批号
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 创建时间
    */
@@ -4369,7 +4432,7 @@ export interface MomInventoryOperation {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 合同号
    */
@@ -5185,7 +5248,7 @@ export interface MomMaterialLotWarehouseInventoryBalance {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 单位
    */
@@ -5252,7 +5315,7 @@ export interface MomMaterialLotWarehouseInventoryLog {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 单位
    */
@@ -5315,7 +5378,7 @@ export interface MomMaterialWarehouseInventoryBalance {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 单位
    */
@@ -5386,7 +5449,7 @@ export interface MomMaterialWarehouseInventoryLog {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 单位
    */
@@ -6310,7 +6373,7 @@ export interface MomWarehouseStrategy {
   /**
    * 仓库
    */
-  warehouse?: Partial<MomWarehouse>;
+  warehouse?: Partial<BaseLocation>;
   /**
    * 操作类型
    */

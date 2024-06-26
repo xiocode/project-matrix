@@ -92,6 +92,20 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "from",
+      name: "转出仓库",
+      type: "relation",
+      targetSingularCode: "base_location",
+      targetIdColumnName: "from_warehouse_id",
+    },
+    {
+      code: "to",
+      name: "转入仓库",
+      type: "relation",
+      targetSingularCode: "base_location",
+      targetIdColumnName: "to_warehouse_id",
+    },
+    {
       code: "supplier",
       name: "供应商",
       type: "relation",

@@ -73,6 +73,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_unit",
       targetIdColumnName: "unit_id",
     },
+    {
+      code: "lot",
+      name: "批号",
+      type: "relation",
+      targetSingularCode: "base_lot",
+      targetIdColumnName: "lot_id",
+    },
   ],
 };
 
