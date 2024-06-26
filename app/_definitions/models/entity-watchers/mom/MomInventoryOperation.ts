@@ -22,10 +22,10 @@ export default [
       const {server, payload} = ctx;
       const changes = payload.after;
       try {
-        if (changes?.application_id) {
+        if (changes?.application) {
           const applicationManager = server.getEntityManager<MomGood>("mom_inventory_application");
           await applicationManager.updateEntityById({
-            id: changes.application_id,
+            id: changes.application.id,
             entityToSave: {
               operationState: "processing",
             },
