@@ -23,6 +23,7 @@ export default {
     const { loadInspectionInfo, loading, inspectionInfo } = useInspectionInfo(props);
 
     const closeModal = () => {
+      setCurrentState({ visible: false });
       context.page.sendComponentMessage(`${props.$id}_${props.recordId}_form`, { name: "resetFields" });
     };
 
@@ -157,7 +158,6 @@ export default {
           {
             $action: "script",
             script: () => {
-              setCurrentState({ visible: false });
               closeModal();
             },
           },

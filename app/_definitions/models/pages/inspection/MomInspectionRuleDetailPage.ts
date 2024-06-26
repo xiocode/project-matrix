@@ -26,6 +26,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "instrument",
+      formControlProps: {
+        listTextFieldName: "code",
+      },
     },
     {
       type: "auto",
