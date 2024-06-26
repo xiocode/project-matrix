@@ -9,6 +9,28 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "code",
+      required: false,
+    },
+    {
+      type: "auto",
+      code: "type",
+      formControlType: "rapidSelect",
+      formControlProps: {
+        listTextFieldName: "name",
+        listValueFieldName: "value",
+        listDataSource: {
+          data: {
+            list: [
+              { name: "updateEntityApproval", value: "updateEntityApproval" },
+              { name: "operationApproval", value: "operationApproval" },
+            ],
+          },
+        },
+      }
+    },
+    {
+      type: "auto",
       code: "name",
     },
     {
@@ -18,6 +40,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "state",
+    },
+    {
+      type: "auto",
+      code: "typeConfig",
     },
     {
       type: "auto",
@@ -75,12 +101,21 @@ const page: RapidPage = {
       columns: [
         {
           type: "auto",
-          code: "name",
-          width: "100px",
+          code: "type",
+          width: "200px",
         },
         {
           type: "auto",
-          width: "200px",
+          code: "code",
+          width: "250px",
+        },
+        {
+          type: "auto",
+          code: "name",
+          width: "150px",
+        },
+        {
+          type: "auto",
           code: "description",
         },
         {

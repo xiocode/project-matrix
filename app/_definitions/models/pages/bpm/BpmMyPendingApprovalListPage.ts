@@ -1,4 +1,4 @@
-import type { RapidPage } from "@ruiapp/rapid-extension";
+import type { RapidPage, SonicEntityListRockConfig } from "@ruiapp/rapid-extension";
 
 const page: RapidPage = {
   code: "bpm_my_pending_approval_list",
@@ -9,11 +9,47 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BpmInstance",
       viewMode: "table",
-      extraProperties: ["code", "process", 'currentActivity'],
+      extraProperties: ["code", "process", 'currentJob'],
+      fixedFilters: [
+        {
+          operator: "eq",
+          field: "state",
+          value: "processing",
+        },
+        {
+          operator: "exists",
+          field: "currentJob",
+          filters: [
+            {
+              operator: "exists",
+              field: "tasks",
+              filters: [
+                {
+                  operator: "eq",
+                  field: "assignee_id",
+                  value: "",
+                },
+                {
+                  operator: "eq",
+                  field: "state",
+                  value: "pending",
+                }
+              ]
+            }
+          ]
+        }
+      ],
       orderBy: [
         {
           field: "id",
           desc: true,
+        },
+      ],
+      listActions: [
+        {
+          $type: "sonicToolbarRefreshButton",
+          text: "刷新",
+          icon: "ReloadOutlined",
         },
       ],
       columns: [
@@ -32,7 +68,7 @@ const page: RapidPage = {
               },
               $exps: {
                 "title.children": "$slot.record.title",
-                "title.href": "'/pages/bpm_instance_details?id=' + $slot.record.id + '&currentActivityId=' + _.get($slot.record, 'currentActivity.id', '')",
+                "title.href": "'/pages/bpm_instance_details?id=' + $slot.record.id + '&currentJobId=' + _.get($slot.record, 'currentJob.id', '')",
                 description: "'流程编号：' + $slot.record.code",
               },
             },
@@ -70,7 +106,10 @@ const page: RapidPage = {
           width: "150px",
         },
       ],
-    },
+      $exps: {
+        "fixedFilters[1].filters[0].filters[0].value": "_.get(me, 'profile.id')",
+      }
+    } as SonicEntityListRockConfig,
   ],
 };
 

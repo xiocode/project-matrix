@@ -1,3 +1,4 @@
+import { PropertySequenceConfig } from "@ruiapp/rapid-core";
 import type { TDictionaryCodes } from "../../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
@@ -16,6 +17,36 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "category_id",
     },
     {
+      code: "type",
+      name: "类型",
+      description: "用于对流程进行分类，开发人员可根据类型信息进行流程启动前后、流程完成前后的扩展开发。",
+      type: "text",
+    },
+    {
+      code: "code",
+      name: "Code",
+      type: "text",
+      required: true,
+      config: {
+        sequence: {
+          enabled: true,
+          config: {
+            segments: [
+              {
+                type: "literal",
+                content: "PROCESS-"
+              },
+              {
+                type: "autoIncrement",
+                scope: "",
+                period: "forever",
+              },
+            ],
+          },
+        } satisfies PropertySequenceConfig,
+      },
+    },
+    {
       code: "name",
       name: "名称",
       type: "text",
@@ -25,6 +56,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "description",
       name: "描述",
       type: "text",
+    },
+    {
+      code: "typeConfig",
+      name: "类型设置",
+      type: "json",
+      required: false,
     },
     {
       code: "formConfig",

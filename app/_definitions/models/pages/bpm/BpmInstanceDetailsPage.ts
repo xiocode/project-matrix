@@ -11,7 +11,7 @@ const page: RapidPage = {
       entityCode: "BpmInstance",
       mode: "view",
       column: 3,
-      extraProperties: ["activities", "currentActivity"],
+      extraProperties: ["jobs", "currentJob"],
       items: [
         {
           type: "auto",
@@ -45,13 +45,13 @@ const page: RapidPage = {
       $type: "antdTabs",
       items: [
         {
-          key: "activities",
+          key: "jobs",
           label: "审批活动",
           children: [
             {
               $id: "activityList",
               $type: "sonicEntityList",
-              entityCode: "BpmActivity",
+              entityCode: "BpmJob",
               viewMode: "table",
               fixedFilters: [
                 {
@@ -122,7 +122,7 @@ const page: RapidPage = {
             {
               $type: "rapidEntityForm",
               $id: "approveForm",
-              entityCode: "BpmTask",
+              entityCode: "BpmManualTask",
               mode: "edit",
               layout: "vertical",
               items: [
@@ -133,6 +133,8 @@ const page: RapidPage = {
                 },
               ],
               $exps: {
+                "fixedFields.$operation.type": "'approve'",
+                "fixedFields.$stateProperties": "['state']",
                 "fixedFields.state": "'finished'",
                 "fixedFields.resolution": "'approved'",
                 "entityId": "_.get($page.getStore('pendingTasks'), 'data.list[0].id')",
@@ -187,7 +189,7 @@ const page: RapidPage = {
             {
               $type: "rapidEntityForm",
               $id: "approveForm",
-              entityCode: "BpmTask",
+              entityCode: "BpmManualTask",
               mode: "edit",
               layout: "vertical",
               items: [
@@ -198,6 +200,8 @@ const page: RapidPage = {
                 },
               ],
               $exps: {
+                "fixedFields.$operation.type": "'approve'",
+                "fixedFields.$stateProperties": "['state']",
                 "fixedFields.state": "'finished'",
                 "fixedFields.resolution": "'rejected'",
                 "entityId": "_.get($page.getStore('pendingTasks'), 'data.list[0].id')",
@@ -248,12 +252,12 @@ const page: RapidPage = {
     {
       type: "entityStore",
       name: "pendingTasks",
-      entityCode: "BpmTask",
-      properties: ["id", "activity", "assignee", "state"],
+      entityCode: "BpmManualTask",
+      properties: ["id", "job", "assignee", "state"],
       filters: [
         {
           operator: "eq",
-          field: "activity_id",
+          field: "job_id",
           value: "",
         },
         {
@@ -274,7 +278,7 @@ const page: RapidPage = {
         },
       ],
       $exps: {
-        "filters[0].value": "$rui.parseQuery().currentActivityId",
+        "filters[0].value": "$rui.parseQuery().currentJobId || 0",
         "filters[1].value": "_.get(me, 'profile.id')",
       }
     },

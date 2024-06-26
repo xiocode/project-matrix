@@ -14,7 +14,7 @@ export type ApprovalState =
   | 'approving'
   | 'approved'
   | 'rejected'
-  | 'revoked'
+  | 'canceled'
   ;
 
 /**
@@ -76,8 +76,7 @@ export type BusinessApplicationState =
 export type BusinessInstanceState =
   | 'draft'
   | 'processing'
-  | 'approved'
-  | 'rejected'
+  | 'finished'
   | 'canceled'
   ;
 
@@ -523,20 +522,20 @@ export type PmWorkItemStepState =
   ;
 
 /**
+ * 打印机网络状态
+ */
+export type PrinterNetworkState =
+  | '0'
+  | '1'
+  ;
+
+/**
  * 打印任务状态
  */
 export type PrintTaskState =
   | '0'
   | '1'
   | '2'
-  ;
-
-/**
- * 打印机网络状态
- */
-export type PrinterNetworkState =
-  | '0'
-  | '1'
   ;
 
 /**

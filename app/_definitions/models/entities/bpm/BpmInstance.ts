@@ -53,6 +53,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
+      code: "entityCode",
+      name: "entityCode",
+      type: "text",
+    },
+    {
+      code: "entityId",
+      name: "entityId",
+      type: "integer",
+    },
+    {
       code: "formData",
       name: "表单数据",
       type: "json",
@@ -92,18 +102,18 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
-      code: "activities",
+      code: "jobs",
       name: "活动",
       type: "relation[]",
-      targetSingularCode: "bpm_activity",
+      targetSingularCode: "bpm_job",
       selfIdColumnName: "instance_id",
     },
     {
-      code: "currentActivity",
+      code: "currentJob",
       name: "当前步骤",
       type: "relation",
-      targetSingularCode: "bpm_activity",
-      targetIdColumnName: "current_activity_id",
+      targetSingularCode: "bpm_job",
+      targetIdColumnName: "current_job_id",
     },
   ],
 };

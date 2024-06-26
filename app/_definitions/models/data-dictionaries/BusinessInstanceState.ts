@@ -8,8 +8,7 @@ export default {
   entries: [
     { name: "草稿", value: "draft" },
     { name: "进行中", value: "processing", color: "orange" },
-    { name: "已批准", value: "approved", color: "green" },
-    { name: "已拒绝", value: "rejected", color: "red" },
-    { name: "已撤回", value: "canceled", color: "gray" },
+    { name: "已完成", value: "finished", color: "green" },
+    { name: "已取消", value: "canceled", color: "gray" },
   ],
 } as RapidDataDictionary;

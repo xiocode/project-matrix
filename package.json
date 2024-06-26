@@ -33,9 +33,9 @@
     "@ruiapp/echarts-extension": "~0.1.28",
     "@ruiapp/monaco-extension": "~0.1.28",
     "@ruiapp/move-style": "~0.1.28",
-    "@ruiapp/rapid-core": "~0.1.56",
-    "@ruiapp/rapid-express": "~0.1.55",
-    "@ruiapp/rapid-extension": "~0.1.10",
+    "@ruiapp/rapid-core": "~0.1.57",
+    "@ruiapp/rapid-express": "~0.1.57",
+    "@ruiapp/rapid-extension": "~0.1.13",
     "@ruiapp/react-renderer": "~0.1.28",
     "@ruiapp/react-rocks": "~0.1.29",
     "@types/jest": "^29.5.12",
@@ -71,6 +71,7 @@
     "tough-cookie": "~4.1.4",
     "triple-beam": "~1.4.1",
     "ts-jest": "^29.1.3",
+    "uuid": "^10.0.0",
     "winston": "~3.11.0"
   },
   "devDependencies": {

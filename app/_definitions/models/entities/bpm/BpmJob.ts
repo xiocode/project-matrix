@@ -4,9 +4,9 @@ import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "app",
-  code: "BpmActivity",
-  name: "流程活动",
-  description: "管理流程活动。如果是审批或者表单活动，则可能会关联多个任务。",
+  code: "BpmJob",
+  name: "流程任务",
+  description: "管理流程任务。如果是审批或者表单任务，则可能会关联多个任务。",
   fields: [
     {
       code: "instance",
@@ -27,7 +27,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "类型",
       type: "option",
       dataDictionary: "BusinessActivityKind",
-      required: true,
     },
     {
       code: "flowNodeId",
@@ -35,11 +34,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "activityType",
+      name: "活动类型",
+      type: "text",
+    },
+    {
       code: "tasks",
       name: "任务",
       type: "relation[]",
-      targetSingularCode: "bpm_task",
-      selfIdColumnName: "activity_id",
+      targetSingularCode: "bpm_manual_task",
+      selfIdColumnName: "job_id",
     },
     {
       code: "state",
