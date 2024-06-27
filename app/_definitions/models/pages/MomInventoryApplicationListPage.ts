@@ -130,34 +130,39 @@ const page: RapidPage = {
           dataSourceCode: "list",
           entityCode: "MomInventoryApplication",
         },
-        // {
-        //   $type: "rapidTableAction",
-        //   code: "dispatch",
-        //   actionText: "下发",
-        //   $exps: {
-        //     _hidden: "$slot.record.operationState !== 'pending'",
-        //   },
-        //   onAction: [
-        //     {
-        //       $action: "sendHttpRequest",
-        //       method: "POST",
-        //       url: "/api/mom/mom_inventory_operations",
-        //       data: {
-        //         state: "processing",
-        //         approveState: "uninitiated"
-        //       },
-        //       $exps: {
-        //         "data.application": "$slot.record.id",
-        //         "data.businessType": "$slot.record.businessType.id",
-        //         "data.operationType": "$slot.record.businessType.operationType",
-        //       },
-        //     },
-        //     {
-        //       $action: "loadStoreData",
-        //       storeName: "list",
-        //     },
-        //   ],
-        // },
+        {
+          $type: "rapidTableAction",
+          code: "dispatch",
+          actionText: "下发",
+          $exps: {
+            _hidden: "$slot.record.operationState !== 'pending'",
+          },
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "POST",
+              url: "/api/mom/mom_inventory_operations",
+              data: {
+                state: "processing",
+                approveState: "uninitiated"
+              },
+              $exps: {
+                "data.application": "$event.args[0].id",
+                "data.businessType": "$event.args[0].businessType.id",
+                "data.operationType": "$event.args[0].businessType.operationType",
+              },
+            },
+            {
+              $action: "antdMessage",
+              title: "单据下发成功。",
+              onClose: [
+                {
+                  $action: "loadScopeData",
+                },
+              ],
+            },
+          ],
+        },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
