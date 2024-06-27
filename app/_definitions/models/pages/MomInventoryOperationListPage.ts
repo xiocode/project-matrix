@@ -10,6 +10,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "application",
+      listDataFindOptions: {
+        properties: ["id", "operationType", "businessType", "code"],
+      },
       formControlProps: {
         listTextFormat: "{{code}}",
       },
@@ -22,14 +25,37 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "operationType",
     },
-    // {
-    //   type: "auto",
-    //   code: "state",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "approvalState",
-    // },
+  ],
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `
+        const changedValues = event.args[0] || {};
+        const _ = event.framework.getExpressionVars()._;
+        if(changedValues.hasOwnProperty('application')) {
+          const applicationItems = _.get(event.scope.stores['dataFormItemList-application'], 'data.list');
+          const applicationItem = _.find(applicationItems, function (item) { return item.id == changedValues.application });
+
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              businessType: _.get(applicationItem, "businessType.id"),
+              operationType: _.get(applicationItem, "operationType"),
+            }
+          });
+        }else if(changedValues.hasOwnProperty('businessType')){
+          const businessTypeItems = _.get(event.scope.stores['dataFormItemList-businessType'], 'data.list');
+          const businessTypeItem = _.find(businessTypeItems, function (item) { return item.id == changedValues.businessType });
+
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              operationType: _.get(businessTypeItem, "operationType"),
+            }
+          });
+        }
+      `,
+    },
   ],
   defaultFormFields: {
     state: "pending",

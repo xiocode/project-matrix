@@ -283,42 +283,52 @@ function useCreateInspectionRecords(options: { scanInfo: Record<string, any>; in
       return;
     }
 
-    try {
-      setSubmitting(true);
-      const creationPromises = (options.inspection?.items || []).map((item: any) => {
-        let measureInfo: Record<string, any> = { isQualified: false };
-        switch (item.kind) {
-          case "quantitative":
-            measureInfo.isQualified =
-              item.measuredValue != null
-                ? item.measuredValue >= decimalSum(item.norminal, item.lowerTol) && item.measuredValue <= decimalSum(item.norminal, item.upperTol)
-                : false;
-            measureInfo.quantitativeValue = item.measuredValue;
-            break;
-          case "qualitative":
-            measureInfo.isQualified = item.measuredValue ? item.measuredValue === item.norminal : false;
-            measureInfo.qualitativeValue = item.measuredValue;
-            break;
-        }
+    setSubmitting(true);
+    const measurements = (options.inspection?.items || []).map((item: any) => {
+      let measureInfo: Record<string, any> = { isQualified: false };
+      switch (item.kind) {
+        case "quantitative":
+          measureInfo.isQualified =
+            item.measuredValue != null
+              ? item.measuredValue >= decimalSum(item.norminal, item.lowerTol) && item.measuredValue <= decimalSum(item.norminal, item.upperTol)
+              : false;
+          measureInfo.quantitativeValue = item.measuredValue;
+          break;
+        case "qualitative":
+          measureInfo.isQualified = item.measuredValue ? item.measuredValue === item.norminal : false;
+          measureInfo.qualitativeValue = item.measuredValue;
+          break;
+      }
 
-        return rapidApi.post("/mom/mom_inspection_measurements", {
-          characteristic: get(item, "id"),
-          inspectedAt: dayjs().format(),
-          instrument: get(item, "instrument.id"),
-          instrumentCategory: get(item, "instrumentCategory.id"),
-          sampleCode: get(options.scanInfo, "sample"),
-          sheet_id: get(options.inspection, "id"),
-          ...measureInfo,
-        });
+      return {
+        characteristic: get(item, "id"),
+        inspectedAt: dayjs().format(),
+        instrument: get(item, "instrument.id"),
+        instrumentCategory: get(item, "instrumentCategory.id"),
+        ...measureInfo,
+        sheet_id: get(options.inspection, "id"),
+      };
+    });
+
+    await rapidApi
+      .post("/mom/mom_inspection_sheet_samples", {
+        code: get(options.scanInfo, "sample"),
+        sheet_id: get(options.inspection, "id"),
+        measurements,
+      })
+      .then((res) => {
+        if (res.status >= 200 && res.status < 400) {
+          options.onSuccess?.();
+          message.success("检验录入成功");
+        } else {
+          message.error("检验录入失败");
+        }
+        setSubmitting(false);
+      })
+      .catch(() => {
+        message.error("检验录入失败");
+        setSubmitting(false);
       });
-      await Promise.all(creationPromises);
-      setSubmitting(false);
-      options.onSuccess?.();
-      message.success("检验录入成功");
-    } catch (e) {
-      setSubmitting(false);
-      message.error("检验录入失败");
-    }
   };
 
   const submitFn = useDebounceFn(submitInspectionRecords, { wait: 300 });
