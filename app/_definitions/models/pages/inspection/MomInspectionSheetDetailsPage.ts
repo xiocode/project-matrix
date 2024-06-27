@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormRockConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
 const flowFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
@@ -137,7 +137,7 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
           maxCount: 1,
         },
         onUploaded: [
-          {$action: "printToConsole"},
+          { $action: "printToConsole" },
           {
             $action: "script",
             script: `
@@ -207,7 +207,7 @@ const page: RapidPage = {
   code: "mom_inspection_sheet_details",
   name: "检验单详情",
   title: "检验单详情",
-  permissionCheck: {any: []},
+  permissionCheck: { any: [] },
   view: [
     {
       $type: "rapidEntityForm",
@@ -288,14 +288,23 @@ const page: RapidPage = {
         {
           code: "sender",
           type: "auto",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           code: "inspector",
           type: "auto",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           code: "reviewer",
           type: "auto",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
       ],
       $exps: {

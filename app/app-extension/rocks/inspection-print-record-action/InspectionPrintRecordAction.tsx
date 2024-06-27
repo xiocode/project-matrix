@@ -105,7 +105,7 @@ export default {
                     if(changedValues.hasOwnProperty('sampleCount')) {
                       const _ = event.framework.getExpressionVars()._;
                       const checkableTagOptions = _.range(changedValues.sampleCount).map(function (i) {
-                        return { label: (i + 1) + '号', value: i }
+                        return { label: (i + 1) + '号', value: i + 1 }
                       }) || [];
                       event.page.sendComponentMessage(event.sender.$id, {
                         name: "setFieldsValue",

@@ -518,32 +518,32 @@ const page: RapidPage = {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'",
                   },
                 },
-                {
-                  $type: "inspectionPrintRecordAction",
-                  actionType: "print",
-                  actionText: "送检",
-                  printTemplateCode: "rawMaterialInspectionIdentificationCard",
-                  dataSourceAdapter: `
-                    return _.map(data, function(item){
-                      const createdAt = _.get(item, "good.createdAt");
+                // {
+                //   $type: "inspectionPrintRecordAction",
+                //   actionType: "print",
+                //   actionText: "送检",
+                //   printTemplateCode: "rawMaterialInspectionIdentificationCard",
+                //   dataSourceAdapter: `
+                //     return _.map(data, function(item){
+                //       const createdAt = _.get(item, "good.createdAt");
 
-                      return _.merge({}, item, {
-                        materialName: _.get(item, "material.name"),
-                        materialCode: _.get(item, "material.code"),
-                        materialSpecification: _.get(item, "material.specification"),
-                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        lotNum: _.get(item, 'lot.lotNum'),
-                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        sampleCode: _.get(item, 'sampleNo'),
-                        inspectDate: dayjs().format("YYYY-MM-DD"),
-                        remark: _.get(item, 'remark')
-                      })
-                    });
-                  `,
-                  $exps: {
-                    operationId: "$rui.parseQuery().id",
-                  },
-                },
+                //       return _.merge({}, item, {
+                //         materialName: _.get(item, "material.name"),
+                //         materialCode: _.get(item, "material.code"),
+                //         materialSpecification: _.get(item, "material.specification"),
+                //         createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                //         lotNum: _.get(item, 'lot.lotNum'),
+                //         currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                //         sampleCode: _.get(item, 'sampleNo'),
+                //         inspectDate: dayjs().format("YYYY-MM-DD"),
+                //         remark: _.get(item, 'remark')
+                //       })
+                //     });
+                //   `,
+                //   $exps: {
+                //     operationId: "$rui.parseQuery().id",
+                //   },
+                // },
                 {
                   $type: "sonicRecordActionEditEntity",
                   code: "edit",
@@ -596,6 +596,7 @@ const page: RapidPage = {
             {
               $id: "goodTransferGroupList",
               $type: "businessTable",
+              selectionMode: "none",
               dataSourceCode: "goodTransferGroupList",
               requestConfig: {
                 url: "/api/app/listGoodInTransfers",
@@ -676,6 +677,38 @@ const page: RapidPage = {
                   title: "检验状态",
                   type: "auto",
                   code: "inspectState",
+                  rendererType: "rapidOptionFieldRenderer",
+                  rendererProps: {
+                    dictionaryCode: "QualificationState",
+                  },
+                },
+              ],
+              actions: [
+                {
+                  $type: "inspectionPrintRecordAction",
+                  actionType: "print",
+                  actionText: "送检",
+                  printTemplateCode: "rawMaterialInspectionIdentificationCard",
+                  dataSourceAdapter: `
+                  return _.map(data, function(item){
+                    const createdAt = _.get(item, "good.createdAt");
+
+                    return _.merge({}, item, {
+                      materialName: _.get(item, "material.name"),
+                      materialCode: _.get(item, "material.code"),
+                      materialSpecification: _.get(item, "material.specification"),
+                      createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                      lotNum: _.get(item, 'lot.lotNum'),
+                      currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                      sampleCode: _.get(item, 'sampleNo'),
+                      inspectDate: dayjs().format("YYYY-MM-DD"),
+                      remark: _.get(item, 'remark')
+                    })
+                  });
+                `,
+                  $exps: {
+                    operationId: "$rui.parseQuery().id",
+                  },
                 },
               ],
             },
