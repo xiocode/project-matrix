@@ -26,7 +26,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "检验记录",
       type: "relation[]",
       targetSingularCode: "mom_inspection_measurement",
-      selfIdColumnName: "sheet_id",
+      selfIdColumnName: "sample_id",
     },
   ],
 };
