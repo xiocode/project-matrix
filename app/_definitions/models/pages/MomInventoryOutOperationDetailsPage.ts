@@ -369,6 +369,7 @@ const page: RapidPage = {
                   },
                 },
               ],
+              newForm: cloneDeep(formConfig),
               editForm: cloneDeep(formConfig),
               stores: [
                 {

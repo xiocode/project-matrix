@@ -15,6 +15,7 @@ import SplitBinNumAction from "./split-bin-num-action/SplitBinNumAction";
 import BusinessForm from "./business-form/BusinessForm";
 import BusinessTable from "./business-table/BusinessTable";
 import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSelector";
+import InspectionInputSection from "./inspection-input-section/InspectionInputSection";
 
 export default [
   Link,
@@ -34,4 +35,5 @@ export default [
   BusinessForm,
   BusinessTable,
   MaterialLotNumSelector,
+  InspectionInputSection,
 ];
