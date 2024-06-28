@@ -109,6 +109,7 @@ const page: RapidPage = {
               href: "(_.get($slot.record, 'operationType') === 'out' ? '/pages/mom_inventory_out_operation_details?id=' : '/pages/mom_inventory_in_operation_details?id=') + _.get($slot.record, 'id')",
             },
           },
+          width: "150px",
         },
         {
           type: "auto",
@@ -123,12 +124,12 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "operationType",
-          width: "100px",
+          width: "150px",
         },
         {
           type: "auto",
           code: "businessType",
-          width: "200px",
+          width: "150px",
           rendererProps: {
             format: "{{name}}",
           },
@@ -169,7 +170,7 @@ const page: RapidPage = {
       editForm: cloneDeep(formConfig),
       $exps: {
         "newForm.fixedFields.state": "'processing'",
-        "newForm.fixedFields.approveState": "'uninitiated'",
+        "newForm.fixedFields.approvalState": "'uninitiated'",
       },
     },
   ],
