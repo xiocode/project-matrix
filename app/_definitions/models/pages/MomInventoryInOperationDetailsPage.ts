@@ -142,6 +142,7 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       code: "transfers",
       $exps: {
         _hidden: "$self.form.getFieldValue('outMethod') !== 'single'",
+        wrapperCol: JSON.stringify({ offset: 0 }),
       },
       formControlType: "editableTable",
       formControlProps: {
@@ -591,7 +592,7 @@ const page: RapidPage = {
         },
         {
           key: "groups",
-          label: "收货明细",
+          label: "物品明细",
           children: [
             {
               $id: "goodTransferGroupList",
