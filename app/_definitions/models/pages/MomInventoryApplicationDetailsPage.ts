@@ -116,6 +116,20 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "from",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "to",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
           code: "state",
         },
         {
