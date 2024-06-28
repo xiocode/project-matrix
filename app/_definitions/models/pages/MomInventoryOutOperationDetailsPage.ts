@@ -340,7 +340,7 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "to",
+                  code: "from",
                   width: "150px",
                   rendererProps: {
                     format: "{{name}}",
@@ -390,6 +390,79 @@ const page: RapidPage = {
                 "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
                 "newForm.fixedFields.operationId": "$rui.parseQuery().id",
               },
+            },
+          ],
+        },
+        {
+          key: "groups",
+          label: "物品明细",
+          children: [
+            {
+              $id: "goodTransferGroupList",
+              $type: "businessTable",
+              selectionMode: "none",
+              dataSourceCode: "goodTransferGroupList",
+              requestConfig: {
+                url: "/api/app/listGoodInTransfers",
+              },
+              $exps: {
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+              },
+              fixedFilters: [
+                {
+                  field: "operationId",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              requestParamsAdapter: `
+                return {
+                  operationId: _.get(params, "filters[0]filters[0]value"),
+                  limit: 1000
+                }
+              `,
+              responseDataAdapter: `
+                return {
+                  list: data || []
+                }
+              `,
+              columns: [
+                {
+                  title: "物料编码",
+                  type: "auto",
+                  code: "material.code",
+                },
+                {
+                  title: "物料名称",
+                  type: "auto",
+                  code: "material.name",
+                },
+                {
+                  title: "规格型号",
+                  type: "auto",
+                  code: "material.specification",
+                },
+                {
+                  title: "单位",
+                  type: "auto",
+                  code: "material.defaultUnit.name",
+                },
+                {
+                  title: "出库数量",
+                  type: "auto",
+                  code: "completedAmount",
+                },
+                {
+                  title: "出库托数",
+                  type: "auto",
+                  code: "completedPalletAmount",
+                },
+                {
+                  title: "批号",
+                  type: "auto",
+                  code: "lotNum",
+                },
+              ],
             },
           ],
         },
