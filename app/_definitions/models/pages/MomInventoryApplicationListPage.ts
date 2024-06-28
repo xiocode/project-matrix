@@ -19,10 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "applicant",
     },
-    // {
-    //   type: "auto",
-    //   code: "state",
-    // },
+    {
+      type: "auto",
+      code: "from",
+    },
+    {
+      type: "auto",
+      code: "to",
+    },
     // {
     //   type: "auto",
     //   code: "operationState",
@@ -77,16 +81,33 @@ const page: RapidPage = {
           rendererProps: {
             url: "/pages/mom_inventory_application_details?id={{id}}",
           },
+          width: "200px",
         },
         {
           type: "auto",
           code: "operationType",
-          width: "100px",
+          width: "150px",
         },
         {
           type: "auto",
           code: "businessType",
-          width: "200px",
+          width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "from",
+          width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "to",
+          width: "150px",
           rendererProps: {
             format: "{{name}}",
           },
@@ -135,7 +156,7 @@ const page: RapidPage = {
           code: "dispatch",
           actionText: "下发",
           $exps: {
-            _hidden: "$slot.record.operationState !== 'pending'",
+            _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType === 'out'",
           },
           onAction: [
             {
@@ -144,7 +165,7 @@ const page: RapidPage = {
               url: "/api/mom/mom_inventory_operations",
               data: {
                 state: "processing",
-                approveState: "uninitiated"
+                approvalState: "uninitiated"
               },
               $exps: {
                 "data.application": "$event.args[0].id",
