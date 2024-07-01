@@ -69,6 +69,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "material_id",
     },
     {
+      code: "tags",
+      name: "标签",
+      type: "text",
+    },
+    {
       code: "route",
       name: "工艺路线",
       type: "relation",
@@ -81,6 +86,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_route_process",
       targetIdColumnName: "route_process_id",
+    },
+    {
+      code: "process",
+      name: "工序",
+      type: "relation",
+      targetSingularCode: "mom_process",
+      targetIdColumnName: "process_id",
     },
     {
       code: "scheduledStartDate",
