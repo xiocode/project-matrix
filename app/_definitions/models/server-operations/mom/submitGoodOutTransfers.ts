@@ -69,7 +69,7 @@ async function findGoods(server: IRpdServer, input: CreateGoodOutTransferInput, 
       {operator: "eq", field: "lot_num", value: input.lotNum},
       {operator: "eq", field: "bin_num", value: binNum},
     ],
-    properties: ["id", "material", "unit", "location", "quantity", "lotNum", "binNum", "validityDate"],
+    properties: ["id", "material", "unit", "location", "quantity", "lotNum", "binNum", "validityDate", "lot"],
   });
 }
 
