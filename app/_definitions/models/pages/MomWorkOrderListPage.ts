@@ -3,14 +3,15 @@ import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "code",
-    },
+    // {
+    //   type: "auto",
+    //   code: "code",
+    // },
     {
       type: "auto",
       code: "material",
       listDataFindOptions: {
+        properties: ["id", "code", "name", "defaultUnit"],
         fixedFilters: [
           {
             operator: "eq",
@@ -30,8 +31,29 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "route",
+      listDataFindOptions: {
+        fixedFilters: [
+          {
+            field: "material",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: "",
+              },
+            ],
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
+        },
+      },
       formControlProps: {
         listTextFieldName: "version",
+        $exps: {
+          disabled: "!$self.form.getFieldValue('material')",
+        },
       },
     },
     {
@@ -57,6 +79,55 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "executionState",
+    },
+  ],
+  onFormRefresh: [
+    {
+      $action: "script",
+      script: `
+        let material = event.args[0].form.getFieldValue("material");
+        const materialId = material && material.id || material;
+        event.scope.setVars({
+          active_material_id: materialId,
+        }, true);
+        event.scope.loadStoreData('dataFormItemList-route');
+
+        const _ = event.framework.getExpressionVars()._;
+        const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
+        material = _.find(materials, function (item) { return item.id == materialId });
+        const unitId = _.get(material, 'defaultUnit.id');
+        event.page.sendComponentMessage(event.sender.$id, {
+          name: "setFieldsValue",
+          payload: {
+            unit: unitId,
+          }
+        });
+      `,
+    },
+  ],
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `
+        const changedValues = event.args[0] || {};
+        if(changedValues.hasOwnProperty('material')) {
+          event.scope.setVars({
+            active_material_id: changedValues.material,
+          }, true);
+          const _ = event.framework.getExpressionVars()._;
+          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
+          const material = _.find(materials, function (item) { return item.id == changedValues.material });
+          const unitId = _.get(material, 'defaultUnit.id');
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              unit: unitId,
+              route: null,
+            }
+          });
+          event.scope.loadStoreData('dataFormItemList-route');
+        }
+      `,
     },
   ],
 };

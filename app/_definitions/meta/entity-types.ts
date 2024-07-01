@@ -6565,6 +6565,14 @@ export interface MomWorkReport {
    */
   routeProcess?: Partial<MomRouteProcess>;
   /**
+   * 工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
    * 数量
    */
   quantity?: number;
@@ -6652,6 +6660,10 @@ export interface MomWorkTask {
    */
   material?: Partial<BaseMaterial>;
   /**
+   * 标签
+   */
+  tags?: string;
+  /**
    * 工艺路线
    */
   route?: Partial<MomRoute>;
@@ -6659,6 +6671,10 @@ export interface MomWorkTask {
    * 生产工序
    */
   routeProcess?: Partial<MomRouteProcess>;
+  /**
+   * 工序
+   */
+  process?: Partial<MomProcess>;
   /**
    * 计划开始日期
    */

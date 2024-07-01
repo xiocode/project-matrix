@@ -99,18 +99,29 @@ async function findInspectionSheet(server: IRpdServer, lotNum?: string, material
 
 async function createGoodTransfer(server: IRpdServer, operationId: number, good: MomGood) {
   const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
-  await goodTransferManager.createEntity({
-    entity: {
+
+  let savedGoodTransfer = {
       operation: {id: operationId},
       material: {id: good.material?.id},
       lotNum: good.lotNum,
       binNum: good.binNum,
+      good: {id: good.id},
       quantity: good.quantity,
       unit: {id: good.unit?.id},
       from: {id: good.location?.id},
       transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       orderNum: 1,
-    } as SaveMomGoodTransferInput,
+    } as SaveMomGoodTransferInput
+
+  if (good.lot) {
+    savedGoodTransfer = {
+      ...savedGoodTransfer,
+      lot: {id: good.lot.id},
+    };
+  }
+
+  await goodTransferManager.createEntity({
+    entity: savedGoodTransfer,
   });
 }
 

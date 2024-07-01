@@ -9,6 +9,7 @@ export type QueryGoodOutTransferOutput = {
   operationId: number;
   material: Partial<BaseMaterial>;
   lotNum: string;
+  totalAmount?: number;
   waitingAmount?: number;
   completedAmount?: number;
   lot?: Partial<BaseLot>;
@@ -141,6 +142,7 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
       operationId: item.operation_id,
       material: item.material,
       lotNum: item.lot_num,
+      totalAmount: item.total_amount,
       completedAmount: item.completed_amount,
       waitingAmount: item.waiting_amount,
       lot: item.lot,
