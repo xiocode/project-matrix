@@ -75,10 +75,10 @@ const page: RapidPage = {
             },
           },
         },
-        // {
-        //   type: "auto",
-        //   code: "tags",
-        // },
+        {
+          type: "auto",
+          code: "tags",
+        },
         {
           type: "auto",
           code: "lotNum",

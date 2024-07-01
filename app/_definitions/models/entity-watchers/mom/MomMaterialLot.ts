@@ -9,7 +9,7 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
       const {server, payload} = ctx;
 
-      const before = payload.before;
+      let before = payload.before;
 
       if (before.material_id && before.manufactureDate && before.expireTime === undefined) {
         const materialManager = server.getEntityManager<BaseMaterial>("base_material");

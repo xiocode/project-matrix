@@ -1,6 +1,7 @@
 import Link from "./link/Link";
 import MaterialLabelRenderer from "./material-label-renderer/MaterialLabelRenderer";
 import MrpSandTable from "./mrp-sand-table/MrpSandTable";
+import MrpWorkOrderSandTable from "./mrp-work-order-sand-table/MrpWorkOrderSandTable";
 import RapidRecordActionLink from "./rapid-record-action-link/RapidRecordActionLink";
 import SectionSeparator from "./section-separator/SectionSeparator";
 import ShopfloorAppBuilder from "./shopfloor-app-builder/ShopfloorAppBuilder";
@@ -20,6 +21,7 @@ export default [
   Link,
   MaterialLabelRenderer,
   MrpSandTable,
+  MrpWorkOrderSandTable,
   PrintTrigger,
   RapidRecordActionLink,
   TestComponent,
