@@ -720,18 +720,18 @@ const page: RapidPage = {
             },
           ],
         },
-        {
-          key: "sandTable",
-          label: "规划详情",
-          children: [
-            {
-              $type: "mrpSandTable",
-              $exps: {
-                mrpId: "$rui.parseQuery().id",
-              },
-            },
-          ],
-        },
+        // {
+        //   key: "sandTable",
+        //   label: "规划详情",
+        //   children: [
+        //     {
+        //       $type: "mrpSandTable",
+        //       $exps: {
+        //         mrpId: "$rui.parseQuery().id",
+        //       },
+        //     },
+        //   ],
+        // },
       ],
     },
   ],

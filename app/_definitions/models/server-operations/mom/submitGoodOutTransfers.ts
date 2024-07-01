@@ -1,6 +1,6 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
-  MomGood,
+  MomGood, MomGoodLocation,
   MomGoodTransfer,
   MomInventoryOperation, SaveMomGoodInput, SaveMomGoodLocationInput,
   SaveMomGoodTransferInput,
@@ -142,7 +142,7 @@ async function handleGood(server: IRpdServer, goodId: number, locationId: number
   }
 
 
-  const goodLocationManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
+  const goodLocationManager = server.getEntityManager<MomGoodLocation>("mom_good_location");
 
   const goodLocation = await goodLocationManager.findEntity({
     filters: [
