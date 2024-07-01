@@ -61,7 +61,7 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                               miai.lot_id,
                                               sum(coalesce(miai.quantity,
                                                            0))          AS total_amount,
-                                              sum(mgt.completed_amount) AS completed_amount
+                                              sum(coalesce(mgt.completed_amount, 0)) AS completed_amount
                                        FROM mom_inventory_operations mio
                                               INNER JOIN mom_inventory_application_items miai
                                                          ON mio.application_id = miai.operation_id
