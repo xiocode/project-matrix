@@ -53,6 +53,7 @@ const page: RapidPage = {
                     listTextFieldName: "name",
                     groupsDataSourceCode: "sysActionGroups",
                     groupByFieldName: "group.id",
+                    direction: "horizontal",
                   } satisfies RapidCheckboxListFormInputConfig,
                 },
               ],

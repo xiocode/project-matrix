@@ -2,6 +2,7 @@ import type { PropertySequenceConfig, PropertyStateMachineConfig } from "@ruiapp
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
+import type { PropertyBusinessProcessConfig } from "rapid-plugins/bpm/BpmPluginTypes";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
@@ -84,6 +85,92 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "base_unit",
       targetIdColumnName: "unit_id",
+    },
+    {
+      code: "approvalState",
+      name: "审批状态",
+      type: "option",
+      dataDictionary: "ApprovalState",
+      defaultValue: "'uninitiated'",
+      config: {
+        businessProcess: {
+          enabled: true,
+          initiateValue: "approving",
+          type: "approval",
+          name: "生产工单",
+          flowConfig: {
+            nodes: [
+              {
+                nodeId: "approval",
+                nodeType: "activity",
+                nodeTitle: "审批",
+                transfers: [
+                  {
+                    operation: "approve",
+                    nextNodeId: "updateApprovalState",
+                  },
+                  {
+                    operation: "reject",
+                    nextNodeId: "updateApprovalState",
+                  },
+                ],
+                activityType: "approval",
+                activityConfig: {
+                  approvalType: "manual",
+                  approverType: "specifiedRole",
+                  approverRange: {
+                    roleCodes: ["PMC"],
+                  },
+                  approvalResultVarName: "approvalResult",
+                  groupDecisionPolicy: "everyone",
+                }
+              },
+              {
+                nodeId: "updateApprovalState",
+                nodeType: "activity",
+                nodeTitle: "更新审批状态",
+                transfers: [
+                  {
+                    "operation": "done",
+                    "nextNodeId": "end"
+                  }
+                ],
+                activityType: "updateEntity",
+                activityConfig: {
+                  "$exps": {
+                    "entitySingularCode": "$processInstance.entityCode",
+                    "entityId": "$processInstance.entityId",
+                    "entityToSave.state": "$processInstance.variables.approvalResult",
+                  },
+                }
+              },
+              {
+                nodeId: "end",
+                nodeType: "endEvent",
+                nodeTitle: "结束"
+              },
+            ],
+          },
+          listConfig: {
+            listSummaryColumnRenderProps: {
+              items: [
+                {
+                  code: "code",
+                  label: "工单号",
+                },
+                {
+                  code: "material",
+                  label: "物料",
+                },
+                {
+                  code: "quantity",
+                  label: "数量",
+                },
+              ],
+            },
+          },
+        } satisfies PropertyBusinessProcessConfig,
+      },
     },
     {
       code: "assignmentState",

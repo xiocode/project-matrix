@@ -1,8 +1,10 @@
 import type { IRpdServer } from "@ruiapp/rapid-core";
-import type { CreateProcessInstanceInput, FlowConfig, StartProcessInstanceInput } from "./BpmPluginTypes";
-import { BpmTask, type BpmActivity, type BpmInstance, type BpmProcess, type SaveBpmActivityInput, type SaveBpmTaskInput } from "~/_definitions/meta/entity-types";
+import type { ActivityFlowNode, ActivityJobOperation, ActivityJobResolution, ApprovalActivityFlowNode, ApprovalJobOperation, ApprovalJobResolution, CreateProcessInstanceInput, FlowConfig, StartProcessInstanceInput, UpdateProcessInstanceOptions } from "./BpmPluginTypes";
+import type { BpmManualTask, BpmJob, BpmInstance, BpmProcess, SaveBpmJobInput, SaveBpmManualTaskInput } from "~/_definitions/meta/entity-types";
 import { getNowStringWithTimezone } from "~/utils/time-utils";
-import { filter, first, map } from "lodash";
+import { countBy, filter, find, first, map } from "lodash";
+import ApprovalActivityWorker from "./activityWorkers/approvalActivityWorker";
+import { createActivityWorker } from "./ActivityWorkerFactory";
 
 export default class BpmService {
   #server: IRpdServer;
@@ -12,20 +14,36 @@ export default class BpmService {
   }
 
   async createProcessInstance(input: CreateProcessInstanceInput) {
+    const processManager = this.#server.getEntityManager<BpmProcess>("bpm_process");
+    const process = await processManager.findEntity({
+      filters: [
+        {
+          operator: "eq",
+          field: "code",
+          value: input.processCode,
+        },
+      ],
+    });
+    if (!process) {
+      throw new Error(`Process with code '${input.processCode}' was not found.`);
+    }
+
     const instanceManager = this.#server.getEntityManager<BpmInstance>("bpm_instance");
     const processInstance = await instanceManager.createEntity({
       entity: {
         title: input.title,
-        process: input.process,
+        process: process.id,
         initiator: input.initiator,
+        entityCode: input.entityCode,
+        entityId: input.entityId,
         formData: input.formData,
         variables: input.variables,
         initiatedAt: getNowStringWithTimezone(),
         state: "processing",
-      }
+      } as Partial<BpmInstance>
     });
 
-    await this.#startProcessInstance({
+    await this.#startProcessInstance(processInstance, {
       instanceId: processInstance.id,
       processId: processInstance.process.id!,
     });
@@ -33,75 +51,231 @@ export default class BpmService {
     return processInstance;
   }
 
-  async #startProcessInstance(input: StartProcessInstanceInput) {
+  async #startProcessInstance(processInstance: BpmInstance, input: StartProcessInstanceInput) {
     const processManager = this.#server.getEntityManager<BpmProcess>("bpm_process");
     const process = await processManager.findById(input.processId);
     const flowConfig: FlowConfig = process?.flowConfig || {};
 
     const flowNodes = flowConfig.nodes || [];
-    const activityNode = first(flowNodes);
+    // TODO: should find startEvent node.
+    const activityNode = first(flowNodes) as ActivityFlowNode;
     if (!activityNode) {
       return;
     }
 
-    const activityManager = this.#server.getEntityManager<BpmActivity>("bpm_activity");
-
-    if (activityNode.nodeType === "activity") {
-      if (activityNode.activityType === "approval") {
-        const { activityConfig } = activityNode;
-        if (activityConfig.approvalType === "manual") {
-          let tasks: Partial<SaveBpmTaskInput>[] = [];
-          if (activityConfig.approverType === "specifiedUser") {
-            const userIds = activityConfig.approverRange.users;
-            tasks = map(userIds, (userId) => {
-              return {
-                state: "pending",
-                assignee: { id: userId },
-              } satisfies Partial<SaveBpmTaskInput>;
-            });
-          }
-
-          await activityManager.createEntity({
-            entity: {
-              instance: { id: input.instanceId },
-              kind: "approval",
-              name: activityNode.nodeTitle || activityNode.activityType || activityNode.nodeType,
-              state: "pending",
-              startedAt: getNowStringWithTimezone(),
-              tasks,
-            } satisfies SaveBpmActivityInput,
-          });
-        }
-      }
-    }
+    await this.startActivityJob(processInstance, activityNode);
   }
 
-  async checkActivityState(activityId: number) {
-    const taskManager = this.#server.getEntityManager<BpmTask>("bpm_task");
+  async checkApprovalJobState(jobId: number) {
+    const taskManager = this.#server.getEntityManager<BpmManualTask>("bpm_manual_task");
     const tasks = await taskManager.findEntities({
       filters: [
         {
           operator: "eq",
-          field: "activity_id",
-          value: activityId,
+          field: "job_id",
+          value: jobId,
         },
       ],
     });
 
-    // TODO: decide resolution.
-    const activityResolution = "approved";
-
-    const pendingTasks = filter(tasks, (task: BpmTask) => task.state === "pending");
-    if (pendingTasks.length === 0) {
-      const activityManager = this.#server.getEntityManager<BpmActivity>("bpm_activity");
-      activityManager.updateEntityById({
-        id: activityId,
-        entityToSave: {
-          state: "finished",
-          completedAt: getNowStringWithTimezone(),
-          resolution: activityResolution,
-        } satisfies Partial<BpmActivity>
-      });
+    const jobManager = this.#server.getEntityManager<BpmJob>("bpm_job");
+    const job = await jobManager.findById({
+      id: jobId,
+      keepNonPropertyFields: true,
+    });
+    if (!job) {
+      return;
     }
+
+    const instanceManager = this.#server.getEntityManager<BpmInstance>("bpm_instance");
+    const processInstance = await instanceManager.findById({
+      id: (job.instance?.id) || (job as any).instance_id,
+      keepNonPropertyFields: true,
+    });
+    if (!processInstance) {
+      return;
+    }
+
+    const processManager = this.#server.getEntityManager<BpmProcess>("bpm_process");
+    const process = await processManager.findById({
+      id: (processInstance.process?.id) || (processInstance as any).process_id,
+      keepNonPropertyFields: true,
+    });
+    if (!process) {
+      return;
+    }
+
+    const flowConfig: FlowConfig = process.flowConfig || {};
+    const activityNodeConfig = find(flowConfig.nodes, { nodeId: job.flowNodeId }) as ApprovalActivityFlowNode | null;
+    if (!activityNodeConfig) {
+      throw new Error("job.flowNodeId is invalid.");
+    }
+
+    let canFinishJob = false;
+    let jobOperation: ApprovalJobOperation = "approve";
+    let jobResolution: ApprovalJobResolution = "approved";
+
+    const pendingTasks = filter(tasks, (task: BpmManualTask) => task.state === "pending");
+    const groupDecisionPolicy = activityNodeConfig.activityConfig.groupDecisionPolicy;
+    if (groupDecisionPolicy === "anyone") {
+      // 或签审批。任意一个人通过，或者所有人都拒绝时，可以结束审批任务。
+      if (pendingTasks.length === 0) {
+        canFinishJob = true;
+        const approvedTask = find(tasks, { resolution: "approved" });
+        if (approvedTask) {
+          jobOperation = "approve";
+          jobResolution = "approved";
+        } else {
+          jobOperation = "reject";
+          jobResolution = "rejected";
+        }
+      } else {
+        const approvedTask = find(tasks, { resolution: "approved" });
+        if (approvedTask) {
+          jobOperation = "approve";
+          jobResolution = "approved";
+          canFinishJob = true;
+        } else {
+          jobOperation = "reject";
+          jobResolution = "rejected";
+        }
+      }
+
+    } else if (groupDecisionPolicy === "everyone") {
+      // 会签审批。需要所有人都提交后，才可以结束审批任务。
+      if (pendingTasks.length === 0) {
+        const approvedTasks = filter(tasks, { resolution: "approved" });
+        if (approvedTasks.length === tasks.length) {
+          jobOperation = "approve";
+          jobResolution = "approved";
+        } else {
+          jobOperation = "reject";
+          jobResolution = "rejected";
+        }
+      }
+    } else {
+      // TODO: decide resolution when `groupDecisionPolicy === "sequence"`.
+    }
+
+
+    if (canFinishJob) {
+      await this.finishActivityJob(job, jobOperation, jobResolution);
+    }
+  }
+
+  async startActivityJob(processInstance: BpmInstance, activityNode: ActivityFlowNode) {
+    const jobManager = this.#server.getEntityManager<BpmJob>("bpm_job");
+    if (activityNode.nodeType === "activity") {
+      const job = await jobManager.createEntity({
+        entity: {
+          instance: { id: processInstance.id },
+          activityType: activityNode.activityType,
+          name: activityNode.nodeTitle || activityNode.activityType,
+          flowNodeId: activityNode.nodeId,
+          state: "pending",
+          startedAt: getNowStringWithTimezone(),
+        } satisfies SaveBpmJobInput,
+      });
+
+      const activityWorker = createActivityWorker(activityNode.activityType, this.#server, this);
+      await activityWorker.startJob({
+        activityNodeConfig: activityNode,
+        job: job,
+        processInstance: processInstance,
+      });
+
+      processInstance.currentJob = { id: job.id };
+      await this.updateProcessInstance(processInstance)
+    }
+  }
+
+  async finishActivityJob(job: BpmJob, jobOperation: ActivityJobOperation, jobResolution: ActivityJobResolution) {
+    const instanceManager = this.#server.getEntityManager<BpmInstance>("bpm_instance");
+    const processInstance = await instanceManager.findById({
+      id: (job.instance?.id) || (job as any).instance_id,
+      keepNonPropertyFields: true,
+    });
+    if (!processInstance) {
+      return;
+    }
+
+    const processManager = this.#server.getEntityManager<BpmProcess>("bpm_process");
+    const process = await processManager.findById({
+      id: (processInstance.process?.id) || (processInstance as any).process_id,
+      keepNonPropertyFields: true,
+    });
+    if (!process) {
+      return;
+    }
+
+    const flowConfig: FlowConfig = process.flowConfig || {};
+    const activityNodeConfig = find(flowConfig.nodes, { nodeId: job.flowNodeId }) as ActivityFlowNode | null;
+    if (!activityNodeConfig) {
+      throw new Error("job.flowNodeId is invalid.");
+    }
+
+    const transferConfig = find(activityNodeConfig.transfers, { operation: jobOperation });
+    if (!transferConfig) {
+      throw new Error("job resolution is invalid.");
+    }
+
+    const nextActivityNodeConfig = find(flowConfig.nodes, { nodeId: transferConfig.nextNodeId });
+    if (!nextActivityNodeConfig) {
+      throw new Error("transfers[].nextNodeId is invalid.");
+    }
+
+    const activityWorker = createActivityWorker(activityNodeConfig.activityType, this.#server, this);
+    await activityWorker.finishJob({
+      job,
+      processInstance,
+      activityNodeConfig,
+      jobResolution: jobResolution,
+    });
+
+    const jobManager = this.#server.getEntityManager<BpmJob>("bpm_job");
+    await jobManager.updateEntityById({
+      id: job.id,
+      entityToSave: {
+        state: "finished",
+        completedAt: getNowStringWithTimezone(),
+        resolution: jobResolution,
+      } satisfies Partial<BpmJob>
+    });
+
+    if (nextActivityNodeConfig.nodeType === "activity") {
+      await this.startActivityJob(processInstance, nextActivityNodeConfig);
+    } else if (nextActivityNodeConfig.nodeType === "endEvent") {
+      await this.finishProcessInstance(processInstance);
+    }
+  }
+
+  async updateProcessInstance(options: UpdateProcessInstanceOptions) {
+    const instanceManager = this.#server.getEntityManager<BpmInstance>("bpm_instance");
+    const entityToSave: Partial<BpmInstance> = {};
+    if (options.formData) {
+      entityToSave.formData = options.formData;
+    }
+    if (options.variables) {
+      entityToSave.variables = options.variables;
+    }
+    if (options.currentJob) {
+      entityToSave.currentJob = options.currentJob;
+    }
+
+    await instanceManager.updateEntityById({
+      id: options.id,
+      entityToSave,
+    });
+  }
+
+  async finishProcessInstance(instance: BpmInstance) {
+    const instanceManager = this.#server.getEntityManager<BpmInstance>("bpm_instance");
+    await instanceManager.updateEntityById({
+      id: instance.id,
+      entityToSave: {
+        state: "finished",
+        completedAt: getNowStringWithTimezone(),
+      } satisfies Partial<BpmInstance>
+    });
   }
 }

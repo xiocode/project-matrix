@@ -10,6 +10,6 @@ export default {
     { name: "审批中", value: "approving", color: "orange" },
     { name: "已批准", value: "approved", color: "green" },
     { name: "已拒绝", value: "rejected", color: "red" },
-    { name: "已撤销", value: "revoked" },
+    { name: "已撤销", value: "canceled" },
   ],
 } as RapidDataDictionary;
