@@ -13,10 +13,10 @@ import styles from "~/styles/index.css";
 import { isAccessAllowed } from "~/utils/access-control-utility";
 
 import zhCN from "antd/lib/locale/zh_CN";
-// import moment from 'moment';
-// import 'moment/locale/zh-cn';
+import moment from "moment";
+import "moment/locale/zh-cn";
 
-// moment.locale('en');
+moment.locale("zh-cn");
 
 export function links() {
   return [
@@ -66,7 +66,7 @@ export default function Index() {
     <ConfigProvider locale={zhCN}>
       <Layout style={{ minHeight: "100vh" }} hasSider>
         <Sider className="rui-player-left-sider">
-          <h1 className="branch-title">Project Matrix</h1>
+          <h1 className="branch-title">麒祥WMS</h1>
           <AppLeftNav navItems={viewModel.navItems} />
         </Sider>
         <Layout>

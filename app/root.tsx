@@ -15,7 +15,7 @@ export async function loader() {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Project Matrix",
+  title: "麒祥WMS",
   viewport: "width=device-width,initial-scale=1",
 });
 

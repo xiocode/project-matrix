@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { Layout } from "antd";
+import { Layout, ConfigProvider } from "antd";
 
 import antdStyles from "antd/dist/antd.css";
 import { Content } from "antd/lib/layout/layout";
@@ -12,6 +12,12 @@ import indexStyles from "~/styles/index.css";
 import customizeStyles from "~/styles/customize.css";
 import { filter } from "lodash";
 import { isAccessAllowed } from "~/utils/access-control-utility";
+
+import zhCN from "antd/lib/locale/zh_CN";
+import moment from "moment";
+import "moment/locale/zh-cn";
+
+moment.locale("zh-cn");
 
 export function links() {
   return [antdStyles, indexStyles, customizeStyles].map((styles) => {
@@ -73,10 +79,10 @@ export default function Index() {
   const viewModel = useLoaderData();
 
   return (
-    <>
+    <ConfigProvider locale={zhCN}>
       <Layout style={{ minHeight: "100vh" }} hasSider>
         <Sider className="rui-player-left-sider">
-          <h1 className="branch-title">Project Matrix</h1>
+          <h1 className="branch-title">麒祥WMS</h1>
           <AppLeftNav navItems={viewModel.navItems} />
         </Sider>
         <Layout>
@@ -85,6 +91,6 @@ export default function Index() {
           </Content>
         </Layout>
       </Layout>
-    </>
+    </ConfigProvider>
   );
 }
