@@ -33,6 +33,7 @@ import MomInventoryNormalOperationDetailsPage from '../models/pages/MomInventory
 import MomInventoryNormalOperationListPage from '../models/pages/MomInventoryNormalOperationListPage';
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
 import MomInventoryOutOperationDetailsPage from '../models/pages/MomInventoryOutOperationDetailsPage';
+import MomInventorySearchListPage from '../models/pages/MomInventorySearchListPage';
 import MomInventoryStatTableListPage from '../models/pages/MomInventoryStatTableListPage';
 import MomInventoryStatTriggerListPage from '../models/pages/MomInventoryStatTriggerListPage';
 import MomMaterialInventoryBalanceListPage from '../models/pages/MomMaterialInventoryBalanceListPage';
@@ -51,7 +52,6 @@ import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
 import MomWarehouseListPage from '../models/pages/MomWarehouseListPage';
 import MomWarehouseStrategyListPage from '../models/pages/MomWarehouseStrategyListPage';
 import MomWorkOrderDetailsPage from '../models/pages/MomWorkOrderDetailsPage';
-import MomInventorySearchListPage from "../models/pages/MomInventorySearchListPage";
 import MomWorkOrderListPage from '../models/pages/MomWorkOrderListPage';
 import OcDepartmentListPage from '../models/pages/OcDepartmentListPage';
 import OcRoleDetailsPage from '../models/pages/OcRoleDetailsPage';
@@ -133,13 +133,13 @@ export default [
   MomInventoryNormalOperationListPage,
   MomInventoryOperationListPage,
   MomInventoryOutOperationDetailsPage,
+  MomInventorySearchListPage,
   MomInventoryStatTableListPage,
   MomInventoryStatTriggerListPage,
   MomMaterialInventoryBalanceListPage,
   MomMaterialInventoryListPage,
   MomMaterialLotInventoryListPage,
   MomMaterialLotListPage,
-  MomInventorySearchListPage,
   MomMpsDetailsPage,
   MomMpsListPage,
   MomMrpDetailsPage,

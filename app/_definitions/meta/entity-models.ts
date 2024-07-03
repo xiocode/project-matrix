@@ -75,10 +75,14 @@ import MomMaterialBreakdown from '../models/entities/MomMaterialBreakdown';
 import MomMaterialBreakdownPart from '../models/entities/MomMaterialBreakdownPart';
 import MomMaterialInventoryBalance from '../models/entities/MomMaterialInventoryBalance';
 import MomMaterialInventoryLog from '../models/entities/MomMaterialInventoryLog';
+import MomMaterialLotInventoryBalance from '../models/entities/MomMaterialLotInventoryBalance';
+import MomMaterialLotInventoryLog from '../models/entities/MomMaterialLotInventoryLog';
 import MomMaterialLotWarehouseInventoryBalance from '../models/entities/MomMaterialLotWarehouseInventoryBalance';
 import MomMaterialLotWarehouseInventoryLog from '../models/entities/MomMaterialLotWarehouseInventoryLog';
 import MomMaterialWarehouseInventoryBalance from '../models/entities/MomMaterialWarehouseInventoryBalance';
 import MomMaterialWarehouseInventoryLog from '../models/entities/MomMaterialWarehouseInventoryLog';
+import MomMaterialWarehouseLocationInventoryBalance from '../models/entities/MomMaterialWarehouseLocationInventoryBalance';
+import MomMaterialWarehouseLocationInventoryLog from '../models/entities/MomMaterialWarehouseLocationInventoryLog';
 import MomPackage from '../models/entities/MomPackage';
 import MomPackageGood from '../models/entities/MomPackageGood';
 import MomPrintTemplate from '../models/entities/MomPrintTemplate';
@@ -212,10 +216,14 @@ const entityDefinitions = [
   MomMaterialBreakdownPart,
   MomMaterialInventoryBalance,
   MomMaterialInventoryLog,
+  MomMaterialLotInventoryBalance,
+  MomMaterialLotInventoryLog,
   MomMaterialLotWarehouseInventoryBalance,
   MomMaterialLotWarehouseInventoryLog,
   MomMaterialWarehouseInventoryBalance,
   MomMaterialWarehouseInventoryLog,
+  MomMaterialWarehouseLocationInventoryBalance,
+  MomMaterialWarehouseLocationInventoryLog,
   MomPackage,
   MomPackageGood,
   MomPrintTemplate,
@@ -349,10 +357,14 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomMaterialBreakdownPart, entityDefinitions),
   autoConfigureRapidEntity(MomMaterialInventoryBalance, entityDefinitions),
   autoConfigureRapidEntity(MomMaterialInventoryLog, entityDefinitions),
+  autoConfigureRapidEntity(MomMaterialLotInventoryBalance, entityDefinitions),
+  autoConfigureRapidEntity(MomMaterialLotInventoryLog, entityDefinitions),
   autoConfigureRapidEntity(MomMaterialLotWarehouseInventoryBalance, entityDefinitions),
   autoConfigureRapidEntity(MomMaterialLotWarehouseInventoryLog, entityDefinitions),
   autoConfigureRapidEntity(MomMaterialWarehouseInventoryBalance, entityDefinitions),
   autoConfigureRapidEntity(MomMaterialWarehouseInventoryLog, entityDefinitions),
+  autoConfigureRapidEntity(MomMaterialWarehouseLocationInventoryBalance, entityDefinitions),
+  autoConfigureRapidEntity(MomMaterialWarehouseLocationInventoryLog, entityDefinitions),
   autoConfigureRapidEntity(MomPackage, entityDefinitions),
   autoConfigureRapidEntity(MomPackageGood, entityDefinitions),
   autoConfigureRapidEntity(MomPrintTemplate, entityDefinitions),
