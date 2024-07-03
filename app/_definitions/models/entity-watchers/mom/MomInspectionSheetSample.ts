@@ -7,7 +7,7 @@ export default [
     modelSingularCode: "mom_inspection_sheet_sample",
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
       const { payload } = ctx;
-      const before = payload.before;
+      let before = payload.before;
 
       if (before.measurements && Array.isArray(before.measurements)) {
         before.measurements.forEach((measurement: any) => {

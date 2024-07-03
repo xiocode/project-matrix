@@ -11,6 +11,7 @@ import mom$splitGoods from '../models/server-operations/mom/splitGoods';
 import mom$submitGoodInTransfers from '../models/server-operations/mom/submitGoodInTransfers';
 import mom$submitGoodOutTransfers from '../models/server-operations/mom/submitGoodOutTransfers';
 import mom$submitMrpResult from '../models/server-operations/mom/submitMrpResult';
+import mom$submitWorkOrderMrpResult from '../models/server-operations/mom/submitWorkOrderMrpResult';
 import sys$listMyAllowedSysActions from '../models/server-operations/sys/listMyAllowedSysActions';
 
 export default [
@@ -26,5 +27,6 @@ export default [
   mom$submitGoodInTransfers,
   mom$submitGoodOutTransfers,
   mom$submitMrpResult,
+  mom$submitWorkOrderMrpResult,
   sys$listMyAllowedSysActions,
 ] as TServerOperation[];

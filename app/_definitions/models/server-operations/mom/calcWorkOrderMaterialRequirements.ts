@@ -29,7 +29,7 @@ export default {
       breakdowns.map((item) => item.id),
     ]);
 
-    const inventories = await server.queryDatabaseObject(`select * from mom_inventories;`, []);
+    const inventories = await server.queryDatabaseObject(`select * from mom_material_inventory_balances;`, []);
 
     const mrpBreakdowns: MaterialBreakdown[] = [];
     materials.forEach((material) => {
@@ -82,9 +82,16 @@ export default {
     };
     const mrpOutput = performMRP(mrpInput);
 
+    // exclude the materials that are in the demand list
+    const materialsInDemands = map(mrpInput.demands, (item) => item.code);
+    mrpOutput.requirements = filter(mrpOutput.requirements, (item) => {
+      return !materialsInDemands.includes(item.code);
+    });
+
     ctx.output = {
       materials: map(materials, (item) => {
         return {
+          id: item.id,
           code: item.code,
           name: item.name,
           specification: item.specification,

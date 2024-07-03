@@ -96,22 +96,22 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        {
-          type: "auto",
-          code: "from",
-          width: "150px",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
-        {
-          type: "auto",
-          code: "to",
-          width: "150px",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
+        // {
+        //   type: "auto",
+        //   code: "from",
+        //   width: "150px",
+        //   rendererProps: {
+        //     format: "{{name}}",
+        //   },
+        // },
+        // {
+        //   type: "auto",
+        //   code: "to",
+        //   width: "150px",
+        //   rendererProps: {
+        //     format: "{{name}}",
+        //   },
+        // },
         {
           type: "auto",
           code: "applicant",
@@ -156,7 +156,7 @@ const page: RapidPage = {
           code: "dispatch",
           actionText: "下发",
           $exps: {
-            _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType === 'out'",
+            _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType !== 'in'",
           },
           onAction: [
             {

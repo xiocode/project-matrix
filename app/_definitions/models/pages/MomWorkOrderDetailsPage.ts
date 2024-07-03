@@ -316,39 +316,39 @@ const page: RapidPage = {
           },
         },
 
-        {
-          $type: "rapidToolbarButton",
-          text: "下发工单",
-          actionStyle: "primary",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              url: "",
-              data: {
-                $operation: {
-                  type: "issueOrder",
-                },
-                $stateProperties: ["assignmentState"],
-              },
-              $exps: {
-                url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
-              },
-            },
-            {
-              $action: "antdMessage",
-              title: "工单下发成功。",
-              onClose: [
-                {
-                  $action: "loadScopeData",
-                },
-              ],
-            },
-          ],
-          $exps: {
-            _hidden: "!($stores.detail?.data?.list[0]?.assignmentState == 'assigning')",
-          },
-        },
+        // {
+        //   $type: "rapidToolbarButton",
+        //   text: "下发工单",
+        //   actionStyle: "primary",
+        //   onAction: [
+        //     {
+        //       $action: "sendHttpRequest",
+        //       method: "PATCH",
+        //       url: "",
+        //       data: {
+        //         $operation: {
+        //           type: "issueOrder"
+        //         },
+        //         $stateProperties: ["assignmentState"],
+        //       },
+        //       $exps: {
+        //         "url": "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
+        //       },
+        //     },
+        //     {
+        //       $action: "antdMessage",
+        //       title: "工单下发成功。",
+        //       onClose: [
+        //         {
+        //           $action: "loadScopeData",
+        //         },
+        //       ],
+        //     },
+        //   ],
+        //   $exps: {
+        //     _hidden: "!($stores.detail?.data?.list[0]?.assignmentState == 'assigning')",
+        //   },
+        // },
 
         {
           $type: "rapidToolbarButton",
@@ -380,7 +380,7 @@ const page: RapidPage = {
             },
           ],
           $exps: {
-            _hidden: "!($stores.detail?.data?.list[0]?.executionState == 'processing')",
+            _hidden: "!($stores.detail?.data?.list[0]?.executionState == 'pending' || $stores.detail?.data?.list[0]?.executionState == 'processing')",
           },
         },
 

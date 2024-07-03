@@ -29,7 +29,7 @@ export default {
       breakdowns.map((item) => item.id),
     ]);
 
-    const inventories = await server.queryDatabaseObject(`select * from mom_inventories;`, []);
+    const inventories = await server.queryDatabaseObject(`select * from mom_material_inventory_balances;`, []);
 
     const mrpBreakdowns: MaterialBreakdown[] = [];
     materials.forEach((material) => {
