@@ -66,7 +66,7 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
   defaultFormFields: {
     unqualifiedQuantity: 0,
     scrapQuantity: 0,
-  }
+  },
 };
 
 const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
@@ -275,6 +275,8 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
 
 const page: RapidPage = {
   code: "mom_work_order_details",
+  //@ts-ignore
+  parentCode: "mom_work_order_list",
   name: "工单详情",
   title: "工单详情",
   view: [
@@ -291,12 +293,12 @@ const page: RapidPage = {
               url: "",
               data: {
                 $operation: {
-                  type: "cancelOrder"
+                  type: "cancelOrder",
                 },
                 $stateProperties: ["executionState"],
               },
               $exps: {
-                "url": "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
+                url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
               },
             },
             {
@@ -325,12 +327,12 @@ const page: RapidPage = {
               url: "",
               data: {
                 $operation: {
-                  type: "issueOrder"
+                  type: "issueOrder",
                 },
                 $stateProperties: ["assignmentState"],
               },
               $exps: {
-                "url": "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
+                url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
               },
             },
             {
@@ -359,12 +361,12 @@ const page: RapidPage = {
               url: "",
               data: {
                 $operation: {
-                  type: "completeOrder"
+                  type: "completeOrder",
                 },
                 $stateProperties: ["executionState"],
               },
               $exps: {
-                "url": "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
+                url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
               },
             },
             {
@@ -392,12 +394,12 @@ const page: RapidPage = {
               url: "",
               data: {
                 $operation: {
-                  type: "reopenOrder"
+                  type: "reopenOrder",
                 },
                 $stateProperties: ["executionState"],
               },
               $exps: {
-                "url": "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
+                url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
               },
             },
             {

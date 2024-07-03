@@ -7,6 +7,8 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
 
 const page: RapidPage = {
   code: "mom_mrp_details",
+  //@ts-ignore
+  parentCode: "mom_mrp_list",
   name: "物料需求计划详情",
   title: "物料需求计划详情",
   view: [

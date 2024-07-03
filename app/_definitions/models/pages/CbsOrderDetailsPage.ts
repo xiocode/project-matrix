@@ -73,6 +73,8 @@ const orderItemFormConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "cbs_order_details",
+  //@ts-ignore
+  parentCode: "cbs_order_list",
   name: "订单详情",
   title: "订单详情",
   permissionCheck: { any: ["cbsOrder.view", "cbsOrder.manage"] },

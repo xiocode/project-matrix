@@ -94,6 +94,8 @@ const relatedContractFormConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "cbs_contract_details",
+  //@ts-ignore
+  parentCode: "cbs_contract_list",
   name: "合同详情",
   title: "合同详情",
   permissionCheck: { any: ["cbsContract.view", "cbsContract.manage"] },

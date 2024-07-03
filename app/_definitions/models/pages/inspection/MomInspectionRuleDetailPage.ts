@@ -140,6 +140,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_inspection_rule_details",
+  //@ts-ignore
+  parentCode: "mom_inspection_rule_list",
   name: "检验规则详情",
   title: "检验规则详情",
   // permissionCheck: {any: []},

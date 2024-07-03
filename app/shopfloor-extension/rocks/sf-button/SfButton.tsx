@@ -13,6 +13,7 @@ export default {
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
     wrapStyle.position = "absolute";
     wrapStyle.backgroundColor = props.backgroundColor;
+    wrapStyle.color = props.color;
 
     const eventHandlers = convertToEventHandlers({ context, rockConfig: props });
 

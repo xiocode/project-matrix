@@ -162,6 +162,8 @@ const projectBudgetFormConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "pm_project_details",
+  //@ts-ignore
+  parentCode: "pm_project_list",
   name: "项目详情",
   title: "项目详情",
   permissionCheck: { any: ["pmProject.view", "pmProject.manage"] },

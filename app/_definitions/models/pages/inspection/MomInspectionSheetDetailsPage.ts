@@ -205,6 +205,8 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
 
 const page: RapidPage = {
   code: "mom_inspection_sheet_details",
+  //@ts-ignore
+  parentCode: "mom_inspection_sheet_list",
   name: "检验单详情",
   title: "检验单详情",
   permissionCheck: { any: [] },

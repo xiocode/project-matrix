@@ -2,6 +2,8 @@ import type { RapidCheckboxListFormInputConfig, RapidPage } from "@ruiapp/rapid-
 
 const page: RapidPage = {
   code: "oc_role_details",
+  //@ts-ignore
+  parentCode: "system_role",
   name: "角色详情",
   title: "角色详情",
   permissionCheck: { any: ["sysRole.manage"] },

@@ -137,7 +137,7 @@ const page: RapidPage = {
                 "fixedFields.$stateProperties": "['state']",
                 "fixedFields.state": "'finished'",
                 "fixedFields.resolution": "'approved'",
-                "entityId": "_.get($page.getStore('pendingTasks'), 'data.list[0].id')",
+                entityId: "_.get($page.getStore('pendingTasks'), 'data.list[0].id')",
               },
               onSaveSuccess: [
                 {
@@ -204,7 +204,7 @@ const page: RapidPage = {
                 "fixedFields.$stateProperties": "['state']",
                 "fixedFields.state": "'finished'",
                 "fixedFields.resolution": "'rejected'",
-                "entityId": "_.get($page.getStore('pendingTasks'), 'data.list[0].id')",
+                entityId: "_.get($page.getStore('pendingTasks'), 'data.list[0].id')",
               },
               onSaveSuccess: [
                 {
@@ -280,7 +280,7 @@ const page: RapidPage = {
       $exps: {
         "filters[0].value": "$rui.parseQuery().currentJobId || 0",
         "filters[1].value": "_.get(me, 'profile.id')",
-      }
+      },
     },
   ],
 };

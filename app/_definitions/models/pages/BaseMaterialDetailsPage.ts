@@ -170,6 +170,8 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
 
 const page: RapidPage = {
   code: "base_material_details",
+  //@ts-ignore
+  parentCode: "base_material_list",
   name: "物料详情",
   title: "物料详情",
   permissionCheck: { any: ["baseMaterial.manage"] },

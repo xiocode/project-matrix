@@ -24,6 +24,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_prod_task_details",
+  //@ts-ignore
+  parentCode: "mom_work_order_list",
   name: "任务详情",
   title: "任务详情",
   view: [

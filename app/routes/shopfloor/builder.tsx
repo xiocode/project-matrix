@@ -1,7 +1,7 @@
 import { Framework, Page } from "@ruiapp/move-style";
 import type { PageConfig, RockConfig, RockEvent } from "@ruiapp/move-style";
 import { Rui } from "@ruiapp/react-renderer";
-import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
+import ReactRocks from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import BlocklyExtension from "@ruiapp/blockly-extension";
@@ -24,8 +24,7 @@ import ShopfloorExtension from "~/shopfloor-extension/mod";
 
 import styles from "antd/dist/antd.css";
 import linkshopBuilderStyles from "~/styles/linkshop-builder.css";
-import customizeStyles from "~/styles/customize.css";
-import flexStyles from "~/styles/flex.css";
+import indexStyles from "~/styles/index.css";
 import rapidService from "~/rapidService";
 
 import { Avatar, Dropdown, PageHeader } from "antd";
@@ -40,8 +39,7 @@ export function links() {
   return [
     { rel: "stylesheet", href: styles },
     { rel: "stylesheet", href: linkshopBuilderStyles },
-    { rel: "stylesheet", href: customizeStyles },
-    { rel: "stylesheet", href: flexStyles },
+    { rel: "stylesheet", href: indexStyles },
   ];
 }
 
@@ -54,18 +52,7 @@ framework.registerExpressionVar("hud", {
   hudItemsFromRockChildrenConfig,
 });
 
-framework.registerComponent(RuiRock);
-framework.registerComponent(ErrorBoundary);
-framework.registerComponent(Show);
-framework.registerComponent(HtmlElement);
-framework.registerComponent(Scope);
-framework.registerComponent(Text);
-
-framework.registerComponent(Anchor);
-framework.registerComponent(Box);
-framework.registerComponent(Label);
-framework.registerComponent(List);
-
+framework.loadExtension(ReactRocks);
 framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);
 framework.loadExtension(BlocklyExtension);
@@ -459,7 +446,7 @@ export default function Index() {
     {
       key: "signout",
       label: <a href="/api/signout">登出</a>,
-      icon: <ExportOutlined rev={undefined} />,
+      icon: <ExportOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />,
     },
   ];
 
@@ -471,7 +458,7 @@ export default function Index() {
           <div>
             <Dropdown menu={{ items: profileMenuItems }}>
               <div className="rui-current-user-indicator">
-                <Avatar icon={<UserOutlined rev={undefined} />} />
+                <Avatar icon={<UserOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />} />
                 {"" + myProfile?.name}
               </div>
             </Dropdown>

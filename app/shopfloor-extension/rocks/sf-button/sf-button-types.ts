@@ -6,4 +6,5 @@ export interface SfButtonRockConfig extends LinkshopWidgetRockConfig {
   icon?: string;
 
   backgroundColor?: string;
+  color?: string;
 }

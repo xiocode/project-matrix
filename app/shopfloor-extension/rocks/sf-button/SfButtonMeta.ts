@@ -51,6 +51,16 @@ export default {
           label: "图标",
           propName: "icon",
         },
+        {
+          $type: "colorPropSetter",
+          label: "字体颜色",
+          propName: "color",
+        },
+        {
+          $type: "colorPropSetter",
+          label: "背景颜色",
+          propName: "backgroundColor",
+        },
       ],
     },
     { $type: "positionPropPanel" },
