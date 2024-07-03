@@ -70,6 +70,7 @@ import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
 import MomWarehouseListPage from '../models/pages/MomWarehouseListPage';
 import MomWarehouseStrategyListPage from '../models/pages/MomWarehouseStrategyListPage';
 import MomWorkOrderDetailsPage from '../models/pages/MomWorkOrderDetailsPage';
+import MomInventorySearchListPage from "../models/pages/MomInventorySearchListPage";
 import MomWorkOrderListPage from '../models/pages/MomWorkOrderListPage';
 import OcDepartmentListPage from '../models/pages/OcDepartmentListPage';
 import OcRoleDetailsPage from '../models/pages/OcRoleDetailsPage';
@@ -155,6 +156,7 @@ export default [
   MomMaterialInventoryListPage,
   MomMaterialLotInventoryListPage,
   MomMaterialLotListPage,
+  MomInventorySearchListPage,
   MomMpsDetailsPage,
   MomMpsListPage,
   MomMrpDetailsPage,

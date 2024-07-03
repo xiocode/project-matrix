@@ -27,6 +27,8 @@ const stepFormConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "pm_work_item_type_details",
+  //@ts-ignore
+  parentCode: "pm_work_item_type_list",
   name: "工作项类型详情",
   title: "工作项类型详情",
   permissionCheck: { any: ["pmSettings.manage"] },

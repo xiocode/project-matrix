@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 
 export function useScannerByGun(onSuccess: (code: string) => void) {
   const codeRef = useRef<string>("");
-  const flagRef = useRef<any>(null);
 
   const scanner = useDebounceFn(
     (v) => {
@@ -35,11 +34,6 @@ export function useScannerByGun(onSuccess: (code: string) => void) {
 
     return () => {
       window.removeEventListener("keypress", keypressHandler);
-
-      if (flagRef.current != null) {
-        clearTimeout(flagRef.current);
-        flagRef.current = null;
-      }
     };
   }, []);
 }

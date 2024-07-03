@@ -219,6 +219,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_inventory_in_operation_details",
+  //@ts-ignore
+  parentCode: "mom_inventory_operation_list",
   name: "入库操作详情",
   title: "入库操作详情",
   // permissionCheck: {any: []},

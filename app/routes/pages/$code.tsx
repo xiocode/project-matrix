@@ -1,7 +1,7 @@
 import { Framework, Page } from "@ruiapp/move-style";
 import type { PageConfig, RockConfig } from "@ruiapp/move-style";
 import { Rui } from "@ruiapp/react-renderer";
-import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
+import ReactRocks from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
@@ -18,8 +18,8 @@ import entityModels from "~/_definitions/meta/entity-models";
 import pageModels from "~/_definitions/meta/page-models";
 
 import AppExtension from "~/app-extension/mod";
-import ProExtension from "~/pro-extension/mod";
 
+import indexStyles from "~/styles/index.css";
 import styles from "antd/dist/antd.css";
 import rapidService from "~/rapidService";
 
@@ -32,7 +32,10 @@ import { redirectToSignin } from "~/utils/navigate";
 import dayjs from "dayjs";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: indexStyles },
+  ];
 }
 
 const framework = new Framework();
@@ -43,24 +46,12 @@ framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 framework.registerExpressionVar("dayjs", dayjs);
 
-framework.registerComponent(RuiRock);
-framework.registerComponent(ErrorBoundary);
-framework.registerComponent(Show);
-framework.registerComponent(HtmlElement);
-framework.registerComponent(Scope);
-framework.registerComponent(Text);
-
-framework.registerComponent(Anchor);
-framework.registerComponent(Box);
-framework.registerComponent(Label);
-framework.registerComponent(List);
-
+framework.loadExtension(ReactRocks);
 framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);
 framework.loadExtension(DesignerExtension);
 framework.loadExtension(RapidExtension);
 framework.loadExtension(AppExtension);
-framework.loadExtension(ProExtension);
 
 RapidExtensionSetting.setDefaultRendererPropsOfRendererType("rapidCurrencyRenderer", {
   usingThousandSeparator: true,
@@ -222,7 +213,7 @@ export default function Index() {
           <div>
             <Dropdown menu={{ items: profileMenuItems }}>
               <div className="rui-current-user-indicator">
-                <Avatar icon={<UserOutlined rev={undefined} />} />
+                <Avatar icon={<UserOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />} />
                 {"" + myProfile?.name}
               </div>
             </Dropdown>

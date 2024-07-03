@@ -1,7 +1,7 @@
 import { Framework, Page } from "@ruiapp/move-style";
 import type { PageConfig } from "@ruiapp/move-style";
 import { Rui } from "@ruiapp/react-renderer";
-import { Rui as RuiRock, ErrorBoundary, Show, HtmlElement, Anchor, Box, Label, List, Scope, Text } from "@ruiapp/react-rocks";
+import ReactRocks from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
@@ -22,9 +22,7 @@ import ShopfloorExtension from "~/shopfloor-extension/mod";
 
 import antdStyles from "antd/dist/antd.css";
 import indexStyles from "~/styles/index.css";
-import customizeStyles from "~/styles/customize.css";
 import linkshopBuilderStyles from "~/styles/linkshop-builder.css";
-import flexStyles from "~/styles/flex.css";
 import rapidService from "~/rapidService";
 
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
@@ -32,7 +30,7 @@ import { RuiLoggerProvider } from "rui-logger";
 import { redirectToSignin } from "~/utils/navigate";
 
 export function links() {
-  return [antdStyles, indexStyles, customizeStyles, linkshopBuilderStyles, flexStyles].map((styles) => {
+  return [antdStyles, indexStyles, linkshopBuilderStyles].map((styles) => {
     return { rel: "stylesheet", href: styles };
   });
 }
@@ -43,18 +41,7 @@ framework.setLoggerProvider(new RuiLoggerProvider());
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 
-framework.registerComponent(RuiRock);
-framework.registerComponent(ErrorBoundary);
-framework.registerComponent(Show);
-framework.registerComponent(HtmlElement);
-framework.registerComponent(Scope);
-framework.registerComponent(Text);
-
-framework.registerComponent(Anchor);
-framework.registerComponent(Box);
-framework.registerComponent(Label);
-framework.registerComponent(List);
-
+framework.loadExtension(ReactRocks);
 framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);
 framework.loadExtension(RapidExtension);
