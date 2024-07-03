@@ -164,6 +164,7 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
         });
       }
 
+      transfer['location_id'] = transfer.to_location_id;
     }
     if (transfer?.from_location_id) {
       const warehouseId = await server.queryDatabaseObject(
@@ -174,6 +175,8 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
       );
 
       transfer['warehouse_id'] = warehouseId[0]?.id;
+
+      transfer['location_id'] = transfer.from_location_id;
     }
   }
 
