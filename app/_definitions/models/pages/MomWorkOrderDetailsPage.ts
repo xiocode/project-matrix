@@ -380,7 +380,7 @@ const page: RapidPage = {
             },
           ],
           $exps: {
-            _hidden: "!($stores.detail?.data?.list[0]?.executionState == 'pending' || $stores.detail?.data?.list[0]?.executionState == 'processing')",
+            _hidden: "!($stores.detail?.data?.list[0]?.executionState == 'processing')",
           },
         },
 

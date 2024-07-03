@@ -107,6 +107,7 @@ export default [
               manufactureDate: workOrder.createdAt,
               validityDate: validityDate,
               lot: {id: lotInfo?.id},
+              tags: workOrder.tags,
               orderNum: 1,
             } as MomGoodTransfer);
           }
