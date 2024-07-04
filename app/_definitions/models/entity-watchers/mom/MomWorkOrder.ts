@@ -79,7 +79,8 @@ export default [
 
           let inventoryOperationInput = {
             operationType: inventoryBusinessType?.operationType,
-            state: "processing",
+            state: "done",
+            approvalState: "approved",
             businessType: {id: inventoryBusinessType?.id},
           } as SaveMomInventoryOperationInput
 
@@ -94,9 +95,9 @@ export default [
               lotNum: workOrder.code,
               material: {id: workOrder.material?.id},
               sourceType: "selfMade",
-              qualificationState: "uninspected",
+              qualificationState: "qualified",
               isAOD: false,
-              state: "pending",
+              state: "normal",
             });
 
             transfers.push({
