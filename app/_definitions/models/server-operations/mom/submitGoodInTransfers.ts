@@ -2,7 +2,8 @@ import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/ra
 import type {
   MomGood,
   MomGoodLocation,
-  MomGoodTransfer, SaveMomGoodInput,
+  MomGoodTransfer,
+  SaveMomGoodInput,
   SaveMomGoodLocationInput,
   SaveMomGoodTransferInput,
 } from "~/_definitions/meta/entity-types";

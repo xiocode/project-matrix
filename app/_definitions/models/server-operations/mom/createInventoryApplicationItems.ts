@@ -1,8 +1,4 @@
-import type {
-  ActionHandlerContext,
-  IRpdServer,
-  ServerOperation,
-} from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, ServerOperation,} from "@ruiapp/rapid-core";
 import type {
   BaseLot,
   BaseMaterial,

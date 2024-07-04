@@ -1,7 +1,13 @@
-import type { ActionHandlerContext, ServerOperation } from "@ruiapp/rapid-core";
-import type { MRPInput, MRPOutput } from "@linkfactory/algorithm-mrp";
-import type { MomWorkOrder, BaseMaterial, MomManufacturingResourcePlan, CbsOrder, CbsOrderItem } from "~/_definitions/meta/entity-types";
-import { find } from "lodash";
+import type {ActionHandlerContext, ServerOperation} from "@ruiapp/rapid-core";
+import type {MRPInput, MRPOutput} from "@linkfactory/algorithm-mrp";
+import type {
+  BaseMaterial,
+  CbsOrder,
+  CbsOrderItem,
+  MomManufacturingResourcePlan,
+  MomWorkOrder
+} from "~/_definitions/meta/entity-types";
+import {find} from "lodash";
 
 type MrpResult = {
   demands: MRPInput["demands"];
@@ -19,7 +25,7 @@ export default {
   method: "POST",
 
   async handler(ctx: ActionHandlerContext) {
-    const { server, input } = ctx;
+    const {server, input} = ctx;
     const mrpId = parseInt(input.mrpId, 10);
     const mrpResult: MrpResult = {
       demands: input.demands,
@@ -54,11 +60,11 @@ export default {
     const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
     const productionOrderItems = mrpResult.actions.productionOrderItems || [];
     for (const productionOrderItem of productionOrderItems) {
-      const material = find(materials, { code: productionOrderItem.code });
+      const material = find(materials, {code: productionOrderItem.code});
       if (!material) {
         continue;
       }
-      const unit = find(units, { name: productionOrderItem.unit });
+      const unit = find(units, {name: productionOrderItem.unit});
 
       const workOrder = await workOrderManager.findEntity({
         filters: [
@@ -80,10 +86,10 @@ export default {
         await workOrderManager.createEntity({
           entity: {
             code: woCode,
-            material: { id: material.id },
+            material: {id: material.id},
             quantity: productionOrderItem.quantity,
             unit,
-            mrp: { id: mrpId },
+            mrp: {id: mrpId},
             assignmentState: "unassigned",
             executionState: "pending",
           } as Partial<MomWorkOrder>,
@@ -96,11 +102,11 @@ export default {
     const cbsOrderItemManager = server.getEntityManager<CbsOrderItem>("cbs_order_item");
     const purchaseOrderItems = mrpResult.actions.purchaseOrderItems || [];
     for (const purchaseOrderItem of purchaseOrderItems) {
-      const material = find(materials, { code: purchaseOrderItem.code });
+      const material = find(materials, {code: purchaseOrderItem.code});
       if (!material) {
         continue;
       }
-      const unit = find(units, { name: purchaseOrderItem.unit });
+      const unit = find(units, {name: purchaseOrderItem.unit});
 
       const cbsOrderItem = await cbsOrderItemManager.findEntity({
         filters: [
@@ -125,17 +131,17 @@ export default {
             name: poCode,
             kind: "purchase",
             state: "unsigned",
-            mrp: { id: mrpId },
+            mrp: {id: mrpId},
           } as Partial<CbsOrder>,
         });
 
         await cbsOrderItemManager.createEntity({
           entity: {
             orderNum: 1,
-            order: { id: cbsOrder.id },
-            mrp: { id: mrpId },
+            order: {id: cbsOrder.id},
+            mrp: {id: mrpId},
             name: material.name,
-            subject: { id: material.id },
+            subject: {id: material.id},
             quantity: purchaseOrderItem.quantity,
             unit,
             price: 0,

@@ -1,6 +1,5 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {BaseLot, BaseMaterial,} from "~/_definitions/meta/entity-types";
-import type {InspectionResult} from "~/_definitions/meta/data-dictionary-types";
 
 export type QueryGoodInTransferInput = {
   operationId: number;

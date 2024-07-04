@@ -1,13 +1,6 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
-import type {
-  MomGood,
-  MomGoodLocation,
-  MomGoodTransfer,
-  SaveMomGoodInput,
-  SaveMomGoodLocationInput,
-  SaveMomGoodTransferInput,
-} from "~/_definitions/meta/entity-types";
-import dayjs from "dayjs";
+import type {MomGood, SaveMomGoodInput,} from "~/_definitions/meta/entity-types";
+import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
 
 export type SplitGoodsInput = {
   originGoodId: number;
@@ -33,6 +26,8 @@ export default {
 } satisfies ServerOperation;
 
 async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
+  const sequenceService = server.getService<SequenceService>("sequenceService");
+
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
   const originGood = await goodManager.findEntity({
@@ -66,10 +61,15 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
     saveGoodInputBase.lot = originGood.lot
   }
 
+  const binNums = await sequenceService.generateSn(server, {
+    ruleCode: "binNum",
+    amount: input.shelves.length
+  } as GenerateSequenceNumbersInput)
+
   await Promise.all(input.shelves.map(async (shelve, index) => {
     const saveGoodInput = {
       ...saveGoodInputBase,
-      binNum: `${originGood.binNum}-${index + 1}`,
+      binNum: binNums[index],
       quantity: shelve.weight,
     };
 

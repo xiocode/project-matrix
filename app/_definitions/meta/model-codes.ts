@@ -253,6 +253,7 @@ const entityFieldCodes = {
     'sourceType',
     'manufactureDate',
     'expireTime',
+    'validityDate',
     'qualificationState',
     'isAOD',
     'state',
