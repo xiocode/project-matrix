@@ -5725,7 +5725,7 @@ export type SaveMomMaterialWarehouseLocationInventoryBalanceInput = Omit<MomMate
 /**
  * 库存量变更记录-按物品和仓库分组
  */
-export interface MomMaterialWarehouseInventoryLog {
+export interface MomMaterialWarehouseLocationInventoryLog {
   /**
    * id
    */
@@ -5807,7 +5807,7 @@ export interface MomMaterialWarehouseInventoryLog {
 /**
  * 库存量变更记录-按物品和仓库分组
  */
-export type SaveMomMaterialWarehouseInventoryLogInput = Omit<MomMaterialWarehouseInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomMaterialWarehouseLocationInventoryLogInput = Omit<MomMaterialWarehouseLocationInventoryLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 物品包

@@ -81,7 +81,7 @@ export const entitySingularCodes = [
   'mom_material_warehouse_inventory_balance',
   'mom_material_warehouse_inventory_log',
   'mom_material_warehouse_location_inventory_balance',
-  'mom_material_warehouse_inventory_log',
+  'mom_material_warehouse_location_inventory_log',
   'mom_package',
   'mom_package_good',
   'mom_print_template',
@@ -1496,7 +1496,7 @@ const entityFieldCodes = {
     'deletedAt',
     'deletedBy',
   ],
-  'MomMaterialWarehouseInventoryLog': [
+  'MomMaterialWarehouseLocationInventoryLog': [
     'id',
     'balanceRecord',
     'material',
