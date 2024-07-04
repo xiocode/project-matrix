@@ -1,7 +1,7 @@
 import type {ActionHandlerContext, ServerOperation} from "@ruiapp/rapid-core";
 import {filter, find, get, map} from "lodash";
+import type {MaterialBreakdown, MaterialInventory, MaterialItem, MRPInput} from "@linkfactory/algorithm-mrp";
 import {performMRP} from "@linkfactory/algorithm-mrp";
-import type {MRPInput, MaterialBreakdown, MaterialInventory, MaterialItem} from "@linkfactory/algorithm-mrp";
 
 export default {
   code: "calcWorkOrderMaterialRequirements",

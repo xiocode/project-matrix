@@ -1,7 +1,7 @@
-import type { ActionHandlerContext, ServerOperation } from "@ruiapp/rapid-core";
-import { filter, find, get, map } from "lodash";
-import { performMRP } from "@linkfactory/algorithm-mrp";
-import type { MRPInput, MaterialBreakdown, MaterialInventory, MaterialItem } from "@linkfactory/algorithm-mrp";
+import type {ActionHandlerContext, ServerOperation} from "@ruiapp/rapid-core";
+import {filter, find, get, map} from "lodash";
+import type {MaterialBreakdown, MaterialInventory, MaterialItem, MRPInput} from "@linkfactory/algorithm-mrp";
+import {performMRP} from "@linkfactory/algorithm-mrp";
 
 export default {
   code: "calcMaterialRequirements",
@@ -9,7 +9,7 @@ export default {
   method: "POST",
 
   async handler(ctx: ActionHandlerContext) {
-    const { logger, server, input } = ctx;
+    const {logger, server, input} = ctx;
     const mrpId = parseInt(ctx.input.mrpId, 10);
     const decisions = ctx.input.decisions || [];
 
@@ -33,23 +33,23 @@ export default {
 
     const mrpBreakdowns: MaterialBreakdown[] = [];
     materials.forEach((material) => {
-      const breakdown = find(breakdowns, { material_id: material.id });
+      const breakdown = find(breakdowns, {material_id: material.id});
       if (!breakdown) {
         return;
       }
 
-      const parts = filter(breakdownParts, { breakdown_id: breakdown.id });
+      const parts = filter(breakdownParts, {breakdown_id: breakdown.id});
       mrpBreakdowns.push({
         code: get(material, "code"),
         tags: "",
         quantity: breakdown.quantity,
-        unit: get(find(units, { id: breakdown.unit_id }), "name"),
+        unit: get(find(units, {id: breakdown.unit_id}), "name"),
         parts: parts.map((item) => {
           return {
-            code: get(find(materials, { id: item.sub_material_id }), "code"),
+            code: get(find(materials, {id: item.sub_material_id}), "code"),
             matchTags: item.match_tags,
             quantity: item.quantity,
-            unit: get(find(units, { id: item.unit_id }), "name"),
+            unit: get(find(units, {id: item.unit_id}), "name"),
           };
         }),
       });
@@ -58,16 +58,16 @@ export default {
     const mrpInput: MRPInput = {
       demands: map(scheduleItems, (item) => {
         return {
-          code: get(find(materials, { id: item.material_id }), "code"),
+          code: get(find(materials, {id: item.material_id}), "code"),
           tags: item.tags,
           quantity: item.quantity,
-          unit: get(find(units, { id: item.unit_id }), "name"),
+          unit: get(find(units, {id: item.unit_id}), "name"),
         } satisfies MaterialItem;
       }),
       breakdowns: mrpBreakdowns,
       inventories: map(inventories, (item) => {
         return {
-          code: get(find(materials, { id: item.material_id }), "code"),
+          code: get(find(materials, {id: item.material_id}), "code"),
           tags: item.tags,
           quantities: {
             available: item.allocable_quantity,
@@ -75,7 +75,7 @@ export default {
             allocated: item.allocated_quantity,
             reserved: item.reserved_quantity,
           },
-          unit: get(find(units, { id: item.unit_id }), "name"),
+          unit: get(find(units, {id: item.unit_id}), "name"),
         } satisfies MaterialInventory;
       }),
       decisions: decisions,

@@ -1,14 +1,14 @@
-import type { ActionHandlerContext, IRpdServer, ServerOperation } from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {
-  BaseMaterial,
-  MomInventoryOperation,
-  MomGoodTransfer,
-  SaveMomInventoryOperationInput,
   BaseLocation,
+  BaseMaterial,
   BaseUnit,
   MomGood,
+  MomGoodTransfer,
+  MomInventoryOperation,
   SaveMomGoodInput,
   SaveMomGoodTransferInput,
+  SaveMomInventoryOperationInput,
 } from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 
@@ -61,7 +61,7 @@ export default {
   method: "POST",
 
   async handler(ctx: ActionHandlerContext) {
-    const { server } = ctx;
+    const {server} = ctx;
     const input: CreateInventoryOperationInput = ctx.input;
 
     await createInventoryOperation(server, input);
@@ -105,13 +105,13 @@ export async function createInventoryOperation(server: IRpdServer, input: Create
     if (!good) {
       good = await goodManager.createEntity({
         entity: {
-          material: { id: transfer.material?.id },
+          material: {id: transfer.material?.id},
           materialCode: transfer.material?.code,
           lotNum: transfer.lotNum,
           binNum: transfer.binNum,
           serialNum: transfer.serialNum,
           quantity: transfer.quantity,
-          unit: { id: transfer.unit?.id },
+          unit: {id: transfer.unit?.id},
           state: "normal",
         } as SaveMomGoodInput,
       });
@@ -119,15 +119,15 @@ export async function createInventoryOperation(server: IRpdServer, input: Create
 
     await goodTransferManager.createEntity({
       entity: {
-        operation: { id: inventoryOperation.id },
-        good: { id: good.id },
-        material: { id: transfer.material?.id },
+        operation: {id: inventoryOperation.id},
+        good: {id: good.id},
+        material: {id: transfer.material?.id},
         lotNum: transfer.lotNum,
         binNum: transfer.binNum,
         serialNum: transfer.serialNum,
         quantity: transfer.quantity,
-        unit: { id: transfer.unit?.id },
-        to: { id: 1 },
+        unit: {id: transfer.unit?.id},
+        to: {id: 1},
         transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       } as SaveMomGoodTransferInput,
     });

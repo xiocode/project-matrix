@@ -1,6 +1,7 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {MomGood, SaveMomGoodInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
+import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
 
 export type MergeGoodsInput = {
   goodIds: number[];
@@ -26,6 +27,8 @@ export default {
 async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
+  const sequenceService = server.getService<SequenceService>("sequenceService");
+
   const goods = await goodManager.findEntities({
     filters: [{operator: "in", field: "id", value: input.goodIds}],
     properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
@@ -43,6 +46,11 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
 
   let newGood: MomGood;
 
+  const binNums = await sequenceService.generateSn(server, {
+    ruleCode: "binNum",
+    amount: 1
+  } as GenerateSequenceNumbersInput)
+
   let saveGoodInput: SaveMomGoodInput = {
     material: originGood.material,
     location: {id: input.locationId},
@@ -51,7 +59,7 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
     putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     unit: originGood.unit,
     lotNum: originGood.lotNum,
-    binNum: `${originGood.binNum}-MERGED`,
+    binNum: binNums[0],
     validityDate: originGood.validityDate,
     state: 'normal'
   }

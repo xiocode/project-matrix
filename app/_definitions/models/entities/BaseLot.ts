@@ -37,6 +37,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "datetime",
     },
     {
+      code: "validityDate",
+      name: "有效期至",
+      type: "datetime",
+    },
+    {
       code: "qualificationState",
       name: "合格证状态",
       type: "option",

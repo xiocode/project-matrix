@@ -526,6 +526,10 @@ export interface BaseLot {
    */
   expireTime?: string;
   /**
+   * 有效期至
+   */
+  validityDate?: string;
+  /**
    * 合格证状态
    */
   qualificationState?: QualificationState;

@@ -1,4 +1,4 @@
-import type { ActionHandlerContext, ServerOperation } from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, ServerOperation} from "@ruiapp/rapid-core";
 
 export default {
   code: "listMyAllowedSysActions",
@@ -6,7 +6,7 @@ export default {
   method: "GET",
 
   async handler(ctx: ActionHandlerContext) {
-    const { server } = ctx;
+    const {server} = ctx;
     const currentUserId = ctx.routerContext.state.userId;
 
     const actions = await server.queryDatabaseObject(
