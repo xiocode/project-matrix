@@ -138,6 +138,7 @@ export const entitySingularCodes = [
   'sys_action',
   'sys_action_group',
   'webhook',
+  'notification',
 ] as const;
 export type TEntitySingularCodes = typeof entitySingularCodes[number];
 
@@ -2409,6 +2410,20 @@ const entityFieldCodes = {
     'modelSingularCode',
     'events',
     'enabled',
+    'createdAt',
+    'createdBy',
+    'updatedAt',
+    'updatedBy',
+    'deletedAt',
+    'deletedBy',
+  ],
+  'Notification': [
+    'id',
+    'title',
+    'content',
+    'read',
+    'details',
+    'user',
     'createdAt',
     'createdBy',
     'updatedAt',

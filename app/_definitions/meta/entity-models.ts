@@ -139,6 +139,7 @@ import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysWebhook from '../models/entities/SysWebhook';
+import utility$Notification from '../models/entities/utility/Notification';
 
 const entityDefinitions = [
   AppClient,
@@ -280,6 +281,7 @@ const entityDefinitions = [
   SysAction,
   SysActionGroup,
   SysWebhook,
+  utility$Notification,
 ];
 const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(AppClient, entityDefinitions),
@@ -421,5 +423,6 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(SysAction, entityDefinitions),
   autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
   autoConfigureRapidEntity(SysWebhook, entityDefinitions),
+  autoConfigureRapidEntity(utility$Notification, entityDefinitions),
 ];
 export default configuredEntities;

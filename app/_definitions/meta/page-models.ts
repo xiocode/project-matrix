@@ -1,5 +1,6 @@
 import type { RapidPage as TRapidPage } from '@ruiapp/rapid-extension';
 import account$AccountChangePasswordPage from '../models/pages/account/AccountChangePasswordPage';
+import account$AccountNotificationListPage from '../models/pages/account/AccountNotificationListPage';
 import account$AccountProfilePage from '../models/pages/account/AccountProfilePage';
 import AppNavItemListPage from '../models/pages/AppNavItemListPage';
 import BaseEmployeeListPage from '../models/pages/BaseEmployeeListPage';
@@ -103,6 +104,7 @@ import sys$SysWebhookListPage from '../models/pages/sys/SysWebhookListPage';
 
 export default [
   account$AccountChangePasswordPage,
+  account$AccountNotificationListPage,
   account$AccountProfilePage,
   AppNavItemListPage,
   BaseEmployeeListPage,

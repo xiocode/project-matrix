@@ -9572,3 +9572,62 @@ export interface Webhook {
  * Webhook
  */
 export type SaveWebhookInput = Omit<Webhook, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 通知
+ */
+export interface Notification {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 标题
+   */
+  title: string;
+  /**
+   * 内容
+   */
+  content?: string;
+  /**
+   * 已读
+   */
+  read?: boolean;
+  /**
+   * 详细信息
+   */
+  details?: Record<string, any>;
+  /**
+   * 用户
+   */
+  user?: Partial<OcUser>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 通知
+ */
+export type SaveNotificationInput = Omit<Notification, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;

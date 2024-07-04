@@ -9,7 +9,7 @@ import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from "@ruia
 import { useMemo } from "react";
 import _, { find } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
 import qs from "qs";
 
@@ -23,9 +23,9 @@ import indexStyles from "~/styles/index.css";
 import styles from "antd/dist/antd.css";
 import rapidService from "~/rapidService";
 
-import { Avatar, Dropdown, PageHeader } from "antd";
+import { Avatar, Badge, Dropdown, PageHeader, Space } from "antd";
 import type { MenuProps } from "antd";
-import { ExportOutlined, KeyOutlined, ProfileOutlined, UserOutlined } from "@ant-design/icons";
+import { BellOutlined, ExportOutlined, KeyOutlined, ProfileOutlined, UserOutlined } from "@ant-design/icons";
 import { isAccessAllowed } from "~/utils/access-control-utility";
 import { RuiLoggerProvider } from "rui-logger";
 import { redirectToSignin } from "~/utils/navigate";
@@ -98,6 +98,7 @@ export type Params = {
 type ViewModel = {
   myProfile: any;
   myAllowedActions: string[];
+  myUnreadNotificationCount?: number;
   pageCode: string;
   pageAccessAllowed: boolean;
   sdPage: RapidPage;
@@ -134,9 +135,35 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     pageAccessAllowed = isAccessAllowed(permissionCheckPolicy, myAllowedActions || []);
   }
 
+  const myUnreadNotificationCount = (
+    await rapidService.post(
+      `app/notifications/operations/count`,
+      {
+        filters: [
+          {
+            operator: "eq",
+            field: "read",
+            value: false,
+          },
+          {
+            operator: "eq",
+            field: "user_id",
+            value: myProfile.id,
+          },
+        ],
+      },
+      {
+        headers: {
+          Cookie: request.headers.get("Cookie"),
+        },
+      },
+    )
+  ).data?.count;
+
   return {
     myProfile,
     myAllowedActions,
+    myUnreadNotificationCount,
     pageCode,
     pageAccessAllowed,
     sdPage,
@@ -147,7 +174,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function Index() {
   const viewModel = useLoaderData<ViewModel>();
-  const { myProfile, myAllowedActions, pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed } = viewModel;
+  const { myProfile, myAllowedActions, myUnreadNotificationCount, pageCode, sdPage, entities, dataDictionaries, pageAccessAllowed } = viewModel;
 
   framework.registerExpressionVar("me", {
     profile: myProfile,
@@ -207,14 +234,26 @@ export default function Index() {
       <PageHeader
         title={sdPage?.title || sdPage?.name || pageCode}
         extra={
-          <div>
+          <Space>
+            {myUnreadNotificationCount ? (
+              <Link to="/account/my_notifications">
+                <Badge count={myUnreadNotificationCount}>
+                  <BellOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} style={{ fontSize: "24px", color: "#666" }} />
+                </Badge>
+              </Link>
+            ) : (
+              <Link to="/account/my_notifications">
+                <BellOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} style={{ fontSize: "24px", color: "#666" }} />
+              </Link>
+            )}
+            <div style={{ width: "20px", height: "20px" }}></div>
             <Dropdown menu={{ items: profileMenuItems }}>
               <div className="rui-current-user-indicator">
                 <Avatar icon={<UserOutlined rev={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />} />
                 {"" + myProfile?.name}
               </div>
             </Dropdown>
-          </div>
+          </Space>
         }
       ></PageHeader>
       <div className="rui-play-main-container-body">
