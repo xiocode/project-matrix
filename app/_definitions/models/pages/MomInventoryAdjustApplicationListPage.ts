@@ -19,14 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "applicant",
     },
-    {
-      type: "auto",
-      code: "from",
-    },
-    {
-      type: "auto",
-      code: "to",
-    },
+    // {
+    //   type: "auto",
+    //   code: "from",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "to",
+    // },
     // {
     //   type: "auto",
     //   code: "operationState",
@@ -39,9 +39,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_inventory_application_list",
-  name: "库存业务申请",
-  title: "库存业务申请",
+  code: "mom_inventory_adjust_application_list",
+  name: "库存盘点申请",
+  title: "库存盘点申请",
   permissionCheck: {any: []},
   view: [
     {
@@ -68,19 +68,9 @@ const page: RapidPage = {
       ],
       fixedFilters: [
         {
-          operator: "or",
-          filters: [
-            {
-              operator: "eq",
-              field: "operationType",
-              value: "in",
-            },
-            {
-              operator: "eq",
-              field: "operationType",
-              value: "out",
-            },
-          ],
+          operator: "eq",
+          field: "operationType",
+          value: "adjust",
         },
       ],
       orderBy: [
