@@ -4,7 +4,7 @@ import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
-  code: "MomMaterialWarehouseInventoryLog",
+  code: "MomMaterialWarehouseLocationInventoryLog",
   name: "库存量变更记录-按物品和仓库分组",
   fields: [
     {
