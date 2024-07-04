@@ -5246,6 +5246,10 @@ export interface MomMaterialLotInventoryBalance {
    */
   lotNum?: string;
   /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
+  /**
    * 单位
    */
   unit?: Partial<BaseUnit>;
@@ -5309,6 +5313,10 @@ export interface MomMaterialLotInventoryLog {
    */
   lotNum?: string;
   /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
+  /**
    * 单位
    */
   unit?: Partial<BaseUnit>;
@@ -5371,6 +5379,10 @@ export interface MomMaterialLotWarehouseInventoryBalance {
    * 批号
    */
   lotNum?: string;
+  /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 仓库
    */
@@ -5438,6 +5450,10 @@ export interface MomMaterialLotWarehouseInventoryLog {
    * 批号
    */
   lotNum?: string;
+  /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 仓库
    */
