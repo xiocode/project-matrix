@@ -47,7 +47,7 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
   let newGood: MomGood;
 
   const binNums = await sequenceService.generateSn(server, {
-    ruleCode: "binNum",
+    ruleCode: "qixiang.binNum",
     amount: 1
   } as GenerateSequenceNumbersInput)
 

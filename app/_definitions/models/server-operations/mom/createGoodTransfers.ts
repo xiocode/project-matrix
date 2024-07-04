@@ -88,7 +88,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
 
   const unit = await unitManager.findById({id: material.defaultUnit?.id});
   const binNums = await sequenceService.generateSn(server, {
-    ruleCode: "binNum",
+    ruleCode: "qixiang.binNum",
     amount: 1
   } as GenerateSequenceNumbersInput)
 

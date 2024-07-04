@@ -108,23 +108,6 @@ const page: RapidPage = {
           filterFields: ["material"],
         },
       ],
-      fixedFilters: [
-        {
-          operator: "or",
-          filters: [
-            {
-              operator: "eq",
-              field: "operationType",
-              value: "in",
-            },
-            {
-              operator: "eq",
-              field: "operationType",
-              value: "out",
-            },
-          ],
-        },
-      ],
       orderBy: [
         {
           field: "createdAt",
