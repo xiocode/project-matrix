@@ -81,6 +81,23 @@ const page: RapidPage = {
           actionStyle: "primary",
         },
       ],
+      fixedFilters: [
+        {
+          operator: "or",
+          filters: [
+            {
+              field: "operationType",
+              operator: "eq",
+              value: "in",
+            },
+            {
+              field: "operationType",
+              operator: "eq",
+              value: "out",
+            },
+          ],
+        },
+      ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",

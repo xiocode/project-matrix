@@ -35,6 +35,7 @@ import MomInventoryNormalOperationListPage from '../models/pages/MomInventoryNor
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
 import MomInventoryOutOperationDetailsPage from '../models/pages/MomInventoryOutOperationDetailsPage';
 import MomInventorySearchListPage from '../models/pages/MomInventorySearchListPage';
+import MomInventoryOrganizeOperationListPage from "../models/pages/MomInventoryOrganizeOperationListPage"
 import MomInventoryStatTableListPage from '../models/pages/MomInventoryStatTableListPage';
 import MomInventoryStatTriggerListPage from '../models/pages/MomInventoryStatTriggerListPage';
 import MomInventoryTransferApplicationListPage from '../models/pages/MomInventoryTransferApplicationListPage';
@@ -137,6 +138,7 @@ export default [
   MomInventoryOperationListPage,
   MomInventoryOutOperationDetailsPage,
   MomInventorySearchListPage,
+  MomInventoryOrganizeOperationListPage,
   MomInventoryStatTableListPage,
   MomInventoryStatTriggerListPage,
   MomInventoryTransferApplicationListPage,

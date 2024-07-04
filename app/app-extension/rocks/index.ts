@@ -16,6 +16,8 @@ import BusinessForm from "./business-form/BusinessForm";
 import BusinessTable from "./business-table/BusinessTable";
 import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSelector";
 import InspectionInputSection from "./inspection-input-section/InspectionInputSection";
+import MaterialBatchPrintAction from "./material-batch-print-action/MaterialBatchPrintAction";
+import InventoryDetailViewer from "./inventory-detail-viewer";
 
 export default [
   Link,
@@ -36,4 +38,6 @@ export default [
   BusinessTable,
   MaterialLotNumSelector,
   InspectionInputSection,
+  MaterialBatchPrintAction,
+  InventoryDetailViewer,
 ];

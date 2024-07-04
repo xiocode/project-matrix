@@ -50,6 +50,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomGood",
       viewMode: "table",
+      extraProperties: ["manufactureDate", "validityDate", "createdAt"],
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -59,6 +60,9 @@ const page: RapidPage = {
         },
         {
           $type: "mergeBinNumAction",
+        },
+        {
+          $type: "materialBatchPrintAction",
         },
       ],
       fixedFilters: [

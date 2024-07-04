@@ -24,7 +24,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: "code",
-      name: "Code",
+      name: "编码",
       type: "text",
       required: true,
       config: {
@@ -34,7 +34,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             segments: [
               {
                 type: "literal",
-                content: "PROCESS-"
+                content: "PROCESS-",
               },
               {
                 type: "autoIncrement",

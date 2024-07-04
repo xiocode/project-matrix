@@ -1,0 +1,32 @@
+.rui-signin-page {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 720px;
+  background-image: url("../assets/images/login-bg-img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #f6f7fc;
+  overflow: auto;
+}
+
+.rui-signin-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 360px;
+  padding: 54px 24px;
+  border-radius: 16px;
+  box-shadow: 0 0 4px 0 #eee;
+  background-color: #fff;
+  transform: translate(150px, -200px);
+}
+
+.rui-signin-form--title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  margin-bottom: 32px;
+}
