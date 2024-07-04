@@ -1,7 +1,7 @@
 import { RockChildrenConfig, RockEvent, type Rock } from "@ruiapp/move-style";
 import { renderRockChildren } from "@ruiapp/react-renderer";
 import MergeBinNumActionMeta from "./MergeBinNumActionMeta";
-import type { SplitBinNumActionRockConfig } from "./merge-bin-num-action-types";
+import type { MergeBinNumActionRockConfig } from "./merge-bin-num-action-types";
 import { useSetState } from "ahooks";
 import { useEffect, useMemo, useState } from "react";
 import { get } from "lodash";
@@ -154,7 +154,7 @@ export default {
   },
 
   ...MergeBinNumActionMeta,
-} as Rock<SplitBinNumActionRockConfig>;
+} as Rock<MergeBinNumActionRockConfig>;
 
 function useMergeBinNum(onSuccess: () => void) {
   const [merging, setMerging] = useState<boolean>(false);

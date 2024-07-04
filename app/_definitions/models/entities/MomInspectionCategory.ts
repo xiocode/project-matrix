@@ -10,7 +10,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   fields: [
     {
       code: "code",
-      name: "编号",
+      name: "编码",
       type: "text",
       required: true,
     },

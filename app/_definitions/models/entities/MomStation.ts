@@ -37,7 +37,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     },
     {
       code: "code",
-      name: "Code",
+      name: "编码",
       type: "text",
     },
     {

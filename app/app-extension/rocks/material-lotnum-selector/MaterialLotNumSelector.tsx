@@ -43,24 +43,28 @@ export default {
 
     const warehouseStrategies = get(context.scope.getStore("momWarehouseStrategyList"), "data.list") || [];
     const currentStrategy = find(warehouseStrategies, (s) => s.businessType?.id === businessTypeId && s.materialCategory?.id === materialCategoryId);
-    if (currentStrategy?.strategy && currentStrategy?.strategy !== "manual") {
-      return <span style={{ color: "#eee" }}>当前策略下，批次号按策略出库</span>;
-    } else {
-      if (currentStrategy?.qualifiedFilter) {
-        fixedFilters.push({
-          field: "qualificationState",
-          operator: "eq",
-          value: "qualified",
-        });
-      }
 
-      if (currentStrategy?.validityFilter) {
-        fixedFilters.push({
-          field: "expireTime",
-          operator: "gte",
-          value: dayjs().endOf("day").format(),
-        });
-      }
+    if (currentStrategy?.qualifiedFilter) {
+      fixedFilters.push({
+        field: "qualificationState",
+        operator: "eq",
+        value: "qualified",
+      });
+    }
+
+    if (currentStrategy?.validityFilter) {
+      fixedFilters.push({
+        field: "expireTime",
+        operator: "gte",
+        value: dayjs().endOf("day").format(),
+      });
+    }
+
+    let orderBy: { field: string; desc?: boolean }[] = [];
+    if (currentStrategy?.strategy === "fifo") {
+      orderBy = [{ field: "createdAt", desc: true }];
+    } else if (currentStrategy?.strategy === "fdfo") {
+      orderBy = [{ field: "validityDate", desc: true }];
     }
 
     const rockConfig: RockConfig = {
@@ -108,6 +112,7 @@ export default {
         url: `/app/base_lots/operations/find`,
         params: {
           fixedFilters,
+          orderBy,
           properties: ["id", "lotNum", "material", "createdAt", "sourceType", "manufactureDate", "expireTime", "qualificationState"],
         },
       },
