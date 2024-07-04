@@ -1,5 +1,5 @@
-import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
-import {find, min} from "lodash";
+import type { EntityWatcher, EntityWatchHandlerContext, IRpdServer } from "@ruiapp/rapid-core";
+import { find, min } from "lodash";
 import {
   type BaseLot,
   MomGoodTransfer,
@@ -18,16 +18,17 @@ export default [
     eventName: "entity.update",
     modelSingularCode: "mom_work_order",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
-      const {server, payload} = ctx;
-      const {changes, after} = payload;
+      const { server, payload } = ctx;
+      const { changes, after } = payload;
 
       try {
         if (changes.assignmentState === "assigned") {
-          await handleAssignedWorkOrder(server, after.id);
+          await handleWorkOrderMaterialRequirements(server, after.id, true);
         }
 
         if (changes.executionState === "completed") {
           await handleCompletedWorkOrder(server, after.id);
+          await handleWorkOrderMaterialRequirements(server, after.id, false);
         }
       } catch (error) {
         console.error(`Error updating inventory for work order ID ${after.id}:`, error);
@@ -36,30 +37,32 @@ export default [
   },
 ] satisfies EntityWatcher<any>[];
 
-async function handleAssignedWorkOrder(server: IRpdServer, workOrderId: string) {
+async function handleWorkOrderMaterialRequirements(server: IRpdServer, workOrderId: string, isAssign: boolean) {
   const res = await rapidApi.post(`app/calcWorkOrderMaterialRequirements?workOrderId=${workOrderId}`);
-  const {materials, output: mrpOutput} = res.data;
+  const { materials, output: mrpOutput } = res.data;
 
   const inventoryManager = server.getEntityManager<MomMaterialInventoryBalance>("mom_material_inventory_balance");
 
   for (const item of mrpOutput.requirements) {
-    const {demand, available} = item.quantities;
+    const { demand, available } = item.quantities;
     const allocated = min([demand, available])!;
-    const material = find(materials, {code: item.code})!;
+    const material = find(materials, { code: item.code })!;
     const tags = item.tags;
-
     const inventory = await inventoryManager.findEntity({
       filters: [
-        {operator: "eq", field: "material_id", value: material.id},
-        {operator: "eq", field: "tags", value: tags || ""},
+        { operator: "eq", field: "material_id", value: material.id },
+        { operator: "eq", field: "tags", value: tags || "" },
       ],
     });
 
     if (inventory) {
+      const updatedAllocatedQuantity = isAssign
+        ? inventory?.allocatedQuantity + allocated
+        : inventory?.allocatedQuantity || 0 - allocated;
       await inventoryManager.updateEntityById({
         id: inventory.id,
         entityToSave: {
-          allocatedQuantity: inventory.allocatedQuantity + allocated,
+          allocatedQuantity: updatedAllocatedQuantity,
         } as Partial<MomMaterialInventoryBalance>,
       });
     } else {
@@ -94,14 +97,14 @@ async function handleCompletedWorkOrder(server: IRpdServer, workOrderId: string)
 
 async function fetchWorkOrderDetails(server: IRpdServer, workOrderId: string) {
   return server.getEntityManager<MomWorkOrder>("mom_work_order").findEntity({
-    filters: [{operator: "eq", field: "id", value: workOrderId}],
+    filters: [{ operator: "eq", field: "id", value: workOrderId }],
     properties: ["id", "material", "unit", "quantity", "tags", "code", "operationType", "workReports"],
   });
 }
 
 async function fetchInventoryBusinessType(server: IRpdServer, name: string) {
   return server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type").findEntity({
-    filters: [{operator: "eq", field: "name", value: name}],
+    filters: [{ operator: "eq", field: "name", value: name }],
     properties: ["id", "operationType"],
   });
 }
@@ -113,7 +116,7 @@ async function generateTransfers(server: IRpdServer, workOrder: MomWorkOrder) {
 
   const lotInfo = await saveMaterialLotInfo(server, {
     lotNum: workOrder.code,
-    material: {id: workOrder.material?.id},
+    material: { id: workOrder.material?.id },
     sourceType: "selfMade",
     qualificationState: "qualified",
     isAOD: false,
@@ -123,13 +126,13 @@ async function generateTransfers(server: IRpdServer, workOrder: MomWorkOrder) {
   const qualifiedQuantity = workOrder.workReports.reduce((total: number, report: any) => total + (report?.qualifiedQuantity || 0), 0);
 
   return [{
-    material: {id: workOrder.material?.id},
-    unit: {id: workOrder.unit?.id},
+    material: { id: workOrder.material?.id },
+    unit: { id: workOrder.unit?.id },
     quantity: qualifiedQuantity,
     lotNum: workOrder.code,
     manufactureDate: workOrder.createdAt,
     validityDate: validityDate,
-    lot: {id: lotInfo?.id},
+    lot: { id: lotInfo?.id },
     tags: workOrder.tags,
     orderNum: 1,
   }] as MomGoodTransfer[];
@@ -140,7 +143,7 @@ function createInventoryOperationInput(inventoryBusinessType: MomInventoryBusine
     operationType: inventoryBusinessType.operationType,
     state: "processing",
     approvalState: "uninitiated",
-    businessType: {id: inventoryBusinessType.id},
+    businessType: { id: inventoryBusinessType.id },
     transfers,
   } as SaveMomInventoryOperationInput;
 }
@@ -153,10 +156,10 @@ async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
   const baseLotManager = server.getEntityManager<BaseLot>("base_lot");
   const lotInDb = await baseLotManager.findEntity({
     filters: [
-      {operator: "eq", field: "lot_num", value: lot.lotNum},
-      {operator: "eq", field: "material_id", value: lot.material.id},
+      { operator: "eq", field: "lot_num", value: lot.lotNum },
+      { operator: "eq", field: "material_id", value: lot.material.id },
     ],
   });
 
-  return lotInDb || (await baseLotManager.createEntity({entity: lot}));
+  return lotInDb || (await baseLotManager.createEntity({ entity: lot }));
 }
