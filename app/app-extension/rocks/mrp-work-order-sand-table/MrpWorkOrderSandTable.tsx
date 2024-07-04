@@ -203,56 +203,50 @@ export default {
         },
       },
       {
-        title: "标签",
+        title: "精度",
         dataIndex: "tags",
         key: "tags",
         width: "50px",
       },
-      {
-        title: "d",
-        dataIndex: "tags",
-        key: "d",
-        width: "50px",
-        render: (value, record, index) => {
-          if (!value) {
-            return "";
-          }
-
-          return (qs.parse(value).d || "") as string;
-        },
-      },
-      {
-        title: "D",
-        dataIndex: "tags",
-        key: "D",
-        width: "50px",
-        render: (value, record, index) => {
-          if (!value) {
-            return "";
-          }
-
-          return (qs.parse(value).D || "") as string;
-        },
-      },
-      {
-        title: "b",
-        dataIndex: "tags",
-        key: "b",
-        width: "50px",
-        render: (value, record, index) => {
-          if (!value) {
-            return "";
-          }
-
-          return (qs.parse(value).b || "") as string;
-        },
-      },
-      {
-        title: "单位",
-        dataIndex: "unit",
-        key: "unit",
-        width: "50px",
-      },
+      // {
+      //   title: "d",
+      //   dataIndex: "tags",
+      //   key: "d",
+      //   width: "50px",
+      //   render: (value, record, index) => {
+      //     if (!value) {
+      //       return "";
+      //     }
+      //
+      //     return (qs.parse(value).d || "") as string;
+      //   },
+      // },
+      // {
+      //   title: "D",
+      //   dataIndex: "tags",
+      //   key: "D",
+      //   width: "50px",
+      //   render: (value, record, index) => {
+      //     if (!value) {
+      //       return "";
+      //     }
+      //
+      //     return (qs.parse(value).D || "") as string;
+      //   },
+      // },
+      // {
+      //   title: "b",
+      //   dataIndex: "tags",
+      //   key: "b",
+      //   width: "50px",
+      //   render: (value, record, index) => {
+      //     if (!value) {
+      //       return "";
+      //     }
+      //
+      //     return (qs.parse(value).b || "") as string;
+      //   },
+      // },
       // {
       //   title: <Tooltip title="主计划中的数量">计划数</Tooltip>,
       //   dataIndex: "quantities.scheduled".split("."),
@@ -293,56 +287,56 @@ export default {
         dataIndex: "decisionQuantities.produce".split("."),
         key: "decisionQuantities.produce",
         width: "100px",
-        render: (value, record, index) => {
-          const material = find(materials, {code: record.code})!;
-          if (!material.canProduce) {
-            return null;
-          }
-
-          return (
-            <InputNumber
-              size="small"
-              min={0}
-              value={value || 0}
-              onChange={(value) =>
-                updateDecisionQuantity({
-                  quantityField: "produce",
-                  code: record.code,
-                  tags: record.tags,
-                  quantity: value,
-                })
-              }
-            />
-          );
-        },
+        // render: (value, record, index) => {
+        //   const material = find(materials, {code: record.code})!;
+        //   if (!material.canProduce) {
+        //     return null;
+        //   }
+        //
+        //   return (
+        //     <InputNumber
+        //       size="small"
+        //       min={0}
+        //       value={value || 0}
+        //       onChange={(value) =>
+        //         updateDecisionQuantity({
+        //           quantityField: "produce",
+        //           code: record.code,
+        //           tags: record.tags,
+        //           quantity: value,
+        //         })
+        //       }
+        //     />
+        //   );
+        // },
       },
       {
         title: "采购数",
         dataIndex: "decisionQuantities.purchase".split("."),
         key: "decisionQuantities.purchase",
         width: "100px",
-        render: (value, record, index) => {
-          const material = find(materials, {code: record.code})!;
-          if (!material.canPurchase) {
-            return null;
-          }
-
-          return (
-            <InputNumber
-              size="small"
-              min={0}
-              value={value || 0}
-              onChange={(value) =>
-                updateDecisionQuantity({
-                  quantityField: "purchase",
-                  code: record.code,
-                  tags: record.tags,
-                  quantity: value,
-                })
-              }
-            />
-          );
-        },
+        // render: (value, record, index) => {
+        //   const material = find(materials, {code: record.code})!;
+        //   if (!material.canPurchase) {
+        //     return null;
+        //   }
+        //
+        //   return (
+        //     <InputNumber
+        //       size="small"
+        //       min={0}
+        //       value={value || 0}
+        //       onChange={(value) =>
+        //         updateDecisionQuantity({
+        //           quantityField: "purchase",
+        //           code: record.code,
+        //           tags: record.tags,
+        //           quantity: value,
+        //         })
+        //       }
+        //     />
+        //   );
+        // },
       },
       {
         title: <Tooltip title="净需求 - (生产数 + 采购数)">短缺数量</Tooltip>,
@@ -350,6 +344,12 @@ export default {
         key: "quantities.shortage",
         width: "100px",
         align: "right",
+      },
+      {
+        title: "单位",
+        dataIndex: "unit",
+        key: "unit",
+        width: "50px",
       },
     ];
 
@@ -379,8 +379,8 @@ export default {
             />
             <div style={{padding: "10px 0", textAlign: "right"}}>
               <Space>
-                <Button onClick={autoPlan}>自动规划</Button>
-                <Button onClick={refresh}>重新计算</Button>
+                {/*<Button onClick={autoPlan}>自动规划</Button>*/}
+                {/*<Button onClick={refresh}>重新计算</Button>*/}
                 <Button type="primary" disabled={!canSubmit} onClick={submitMrp}>
                   下发工单
                 </Button>

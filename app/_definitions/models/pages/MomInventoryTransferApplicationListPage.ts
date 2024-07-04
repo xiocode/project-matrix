@@ -39,9 +39,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_inventory_application_list",
-  name: "库存业务申请",
-  title: "库存业务申请",
+  code: "mom_inventory_transfer_application_list",
+  name: "库存调拨申请",
+  title: "库存调拨申请",
   permissionCheck: {any: []},
   view: [
     {
@@ -68,19 +68,9 @@ const page: RapidPage = {
       ],
       fixedFilters: [
         {
-          operator: "or",
-          filters: [
-            {
-              operator: "eq",
-              field: "operationType",
-              value: "in",
-            },
-            {
-              operator: "eq",
-              field: "operationType",
-              value: "out",
-            },
-          ],
+          operator: "eq",
+          field: "operationType",
+          value: "transfer",
         },
       ],
       orderBy: [
@@ -113,22 +103,22 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        // {
-        //   type: "auto",
-        //   code: "from",
-        //   width: "150px",
-        //   rendererProps: {
-        //     format: "{{name}}",
-        //   },
-        // },
-        // {
-        //   type: "auto",
-        //   code: "to",
-        //   width: "150px",
-        //   rendererProps: {
-        //     format: "{{name}}",
-        //   },
-        // },
+        {
+          type: "auto",
+          code: "from",
+          width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "to",
+          width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
         {
           type: "auto",
           code: "applicant",

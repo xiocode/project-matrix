@@ -24,6 +24,7 @@ import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
+import MomInventoryAdjustApplicationListPage from '../models/pages/MomInventoryAdjustApplicationListPage';
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
@@ -36,6 +37,7 @@ import MomInventoryOutOperationDetailsPage from '../models/pages/MomInventoryOut
 import MomInventorySearchListPage from '../models/pages/MomInventorySearchListPage';
 import MomInventoryStatTableListPage from '../models/pages/MomInventoryStatTableListPage';
 import MomInventoryStatTriggerListPage from '../models/pages/MomInventoryStatTriggerListPage';
+import MomInventoryTransferApplicationListPage from '../models/pages/MomInventoryTransferApplicationListPage';
 import MomMaterialInventoryBalanceListPage from '../models/pages/MomMaterialInventoryBalanceListPage';
 import MomMaterialInventoryListPage from '../models/pages/MomMaterialInventoryListPage';
 import MomMaterialLotInventoryListPage from '../models/pages/MomMaterialLotInventoryListPage';
@@ -124,6 +126,7 @@ export default [
   MetaRouteListPage,
   MomGoodListPage,
   MomGoodLocationListPage,
+  MomInventoryAdjustApplicationListPage,
   MomInventoryApplicationDetailsPage,
   MomInventoryApplicationListPage,
   MomInventoryBusinessTypeListPage,
@@ -136,6 +139,7 @@ export default [
   MomInventorySearchListPage,
   MomInventoryStatTableListPage,
   MomInventoryStatTriggerListPage,
+  MomInventoryTransferApplicationListPage,
   MomMaterialInventoryBalanceListPage,
   MomMaterialInventoryListPage,
   MomMaterialLotInventoryListPage,
