@@ -62,7 +62,7 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
   }
 
   const binNums = await sequenceService.generateSn(server, {
-    ruleCode: "binNum",
+    ruleCode: "qixiang.binNum",
     amount: input.shelves.length
   } as GenerateSequenceNumbersInput)
 
