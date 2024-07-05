@@ -17,6 +17,7 @@ import {BaseMaterial} from "~/_definitions/meta/entity-types";
 import {renderMaterial} from "../material-label-renderer/MaterialLabelRenderer";
 import qs from "qs";
 import MrpWorkOrderSandTableMeta from "./MrpWorkOrderSandTableMeta";
+import {reload} from "vite-node/hmr";
 
 type PerformMrpResult = {
   materials: BaseMaterial[];
@@ -153,6 +154,9 @@ export default {
         if (item.quantities.shortage) {
           result = false;
         }
+        if (item.quantities.stockUp && item.quantities.demand === item.quantities.stockUp) {
+          result = false;
+        }
       });
       return result;
     }, [mrpInput, mrpOutput]);
@@ -182,13 +186,11 @@ export default {
 
     const submitMrp = () => {
       const payload = {
-        operation: {
-          type: "issueOrder"
-        },
-        stateProperties: ["assignmentState"],
+        assignmentState: 'assigned',
       };
 
       rapidApi.patch("mom/mom_work_orders/" + workOrderId, payload);
+
     };
 
     const columns: ColumnsType<MrpTableItem> = [
@@ -208,45 +210,45 @@ export default {
         key: "tags",
         width: "50px",
       },
-      // {
-      //   title: "d",
-      //   dataIndex: "tags",
-      //   key: "d",
-      //   width: "50px",
-      //   render: (value, record, index) => {
-      //     if (!value) {
-      //       return "";
-      //     }
-      //
-      //     return (qs.parse(value).d || "") as string;
-      //   },
-      // },
-      // {
-      //   title: "D",
-      //   dataIndex: "tags",
-      //   key: "D",
-      //   width: "50px",
-      //   render: (value, record, index) => {
-      //     if (!value) {
-      //       return "";
-      //     }
-      //
-      //     return (qs.parse(value).D || "") as string;
-      //   },
-      // },
-      // {
-      //   title: "b",
-      //   dataIndex: "tags",
-      //   key: "b",
-      //   width: "50px",
-      //   render: (value, record, index) => {
-      //     if (!value) {
-      //       return "";
-      //     }
-      //
-      //     return (qs.parse(value).b || "") as string;
-      //   },
-      // },
+      {
+        title: "d",
+        dataIndex: "tags",
+        key: "d",
+        width: "50px",
+        render: (value, record, index) => {
+          if (!value) {
+            return "";
+          }
+
+          return (qs.parse(value).d || "") as string;
+        },
+      },
+      {
+        title: "D",
+        dataIndex: "tags",
+        key: "D",
+        width: "50px",
+        render: (value, record, index) => {
+          if (!value) {
+            return "";
+          }
+
+          return (qs.parse(value).D || "") as string;
+        },
+      },
+      {
+        title: "b",
+        dataIndex: "tags",
+        key: "b",
+        width: "50px",
+        render: (value, record, index) => {
+          if (!value) {
+            return "";
+          }
+
+          return (qs.parse(value).b || "") as string;
+        },
+      },
       // {
       //   title: <Tooltip title="主计划中的数量">计划数</Tooltip>,
       //   dataIndex: "quantities.scheduled".split("."),
@@ -279,6 +281,13 @@ export default {
         title: <Tooltip title="需求量 - 可用量">净需求</Tooltip>,
         dataIndex: "quantities.netDemand".split("."),
         key: "quantities.netDemand",
+        width: "100px",
+        align: "right",
+      },
+      {
+        title: <Tooltip title="已分配数量">已分配</Tooltip>,
+        dataIndex: "quantities.stockUp".split("."),
+        key: "quantities.stockUp",
         width: "100px",
         align: "right",
       },

@@ -28,7 +28,7 @@ export default {
     const breakdowns = await server.queryDatabaseObject(`select *
                                                          from mom_material_breakdowns
                                                          where material_id = ANY ($1::int[])`, [
-      materials.map((item) => item.id),
+      scheduleItems.map((item) => item.material_id),
     ]);
 
     const breakdownParts = await server.queryDatabaseObject(`select *
@@ -89,12 +89,21 @@ export default {
       }),
       decisions: decisions,
     };
-    const mrpOutput = performMRP(mrpInput);
+    let mrpOutput = performMRP(mrpInput);
 
     // exclude the materials that are in the demand list
     const materialsInDemands = map(mrpInput.demands, (item) => item.code);
     mrpOutput.requirements = filter(mrpOutput.requirements, (item) => {
       return !materialsInDemands.includes(item.code);
+    });
+
+    // if scheduleItems's assignmentState = assigned, updated mrpOutput.requirements.stockUp to demand amount
+    scheduleItems.forEach((item) => {
+      if (item.assignment_state === "assigned") {
+        mrpOutput.requirements.forEach((material) => {
+          material.quantities.stockUp = material.quantities.demand
+        })
+      }
     });
 
     ctx.output = {

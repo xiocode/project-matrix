@@ -514,11 +514,11 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "routeProcess",
+                  code: "workTask",
                   width: "150px",
                   fixed: "left",
                   rendererProps: {
-                    format: "{{aliasName}}",
+                    format: "{{code}}",
                   },
                 },
                 {
@@ -627,11 +627,11 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "routeProcess",
+                  code: "process",
                   width: "150px",
                   fixed: "left",
                   rendererProps: {
-                    format: "{{aliasName}}",
+                    format: "{{name}}",
                   },
                 },
                 {
