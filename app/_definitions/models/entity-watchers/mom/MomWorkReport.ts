@@ -28,20 +28,18 @@ export default [
     modelSingularCode: "mom_work_report",
     handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
       const { server, payload } = ctx;
-      const after: MomWorkTask = payload.after;
+      const after = payload.after;
 
-      if (!(after as any).work_order_id) {
+      if (!after.work_order_id) {
         return;
       }
 
       const workOrderEntityManager = server.getEntityManager("mom_work_order");
       await workOrderEntityManager.updateEntityById({
-        id: (after as any).work_order_id,
-        entityToSave: {},
-        operation: {
-          type: "startProcess"
+        id: after.work_order_id,
+        entityToSave: {
+          executionState: 'processing',
         },
-        stateProperties: ["executionState"],
       });
     }
   },
