@@ -84,14 +84,14 @@ const page: RapidPage = {
       entityCode: "MomInspectionSheet",
       viewMode: "table",
       permissionCheck: { any: ["inspection.manage"] },
-      listActions: [
-        {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
-        },
-      ],
+      // listActions: [
+      //   {
+      //     $type: "sonicToolbarNewEntityButton",
+      //     text: "新建",
+      //     icon: "PlusOutlined",
+      //     actionStyle: "primary",
+      //   },
+      // ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -196,28 +196,29 @@ const page: RapidPage = {
           width: "150px",
         },
       ],
-      actions: [
-        {
-          $type: "sonicRecordActionEditEntity",
-          code: "edit",
-          actionType: "edit",
-          actionText: "修改",
-          $permissionCheck: "inspection.manage",
-        },
-        {
-          $type: "sonicRecordActionDeleteEntity",
-          code: "delete",
-          actionType: "delete",
-          actionText: "删除",
-          dataSourceCode: "list",
-          entityCode: "MomInspectionSheet",
-          $permissionCheck: "inspection.manage",
-        },
-      ],
+      // actions: [
+      //   {
+      //     $type: "sonicRecordActionEditEntity",
+      //     code: "edit",
+      //     actionType: "edit",
+      //     actionText: "修改",
+      //     $permissionCheck: "inspection.manage",
+      //   },
+      //   {
+      //     $type: "sonicRecordActionDeleteEntity",
+      //     code: "delete",
+      //     actionType: "delete",
+      //     actionText: "删除",
+      //     dataSourceCode: "list",
+      //     entityCode: "MomInspectionSheet",
+      //     $permissionCheck: "inspection.manage",
+      //   },
+      // ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       $exps: {
         "newForm.fixedFields.state": '"pending"',
+        "newForm.fixedFields.approvalState": '"approving"',
       },
     },
   ],

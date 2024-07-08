@@ -136,16 +136,16 @@ const page: RapidPage = {
           code: "createdAt",
           width: "150px",
         },
-        {
-          type: "auto",
-          code: "state",
-          width: "100px",
-        },
-        {
-          type: "auto",
-          code: "approvalState",
-          width: "100px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "state",
+        //   width: "100px",
+        // },
+        // {
+        //   type: "auto",
+        //   code: "approvalState",
+        //   width: "100px",
+        // },
       ],
       actions: [
         {

@@ -123,44 +123,44 @@ const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
 
 const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "document",
-      label: "文件",
-      valueFieldType: "json",
-      formControlType: "rapidDocumentFormControl",
-      formControlProps: {
-        uploadProps: {
-          name: "files",
-          action: "/api/upload",
-          headers: {},
-          maxCount: 1,
-        },
-        onUploaded: [
-          { $action: "printToConsole" },
-          {
-            $action: "script",
-            script: `
-              var fileInfo = event.args[0];
-              event.sender.form.setFieldsValue({
-                name: fileInfo.name,
-                size: fileInfo.size,
-                document: {
-                  code: "",
-                  name: fileInfo.name,
-                  size: fileInfo.size,
-                  storageObject: {
-                    size: fileInfo.size,
-                    key: fileInfo.key,
-                  },
-                  publishState: "published",
-                },
-              });
-            `,
-          },
-        ],
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "document",
+    //   label: "文件",
+    //   valueFieldType: "json",
+    //   formControlType: "rapidDocumentFormControl",
+    //   formControlProps: {
+    //     uploadProps: {
+    //       name: "files",
+    //       action: "/api/upload",
+    //       headers: {},
+    //       maxCount: 1,
+    //     },
+    //     onUploaded: [
+    //       { $action: "printToConsole" },
+    //       {
+    //         $action: "script",
+    //         script: `
+    //           var fileInfo = event.args[0];
+    //           event.sender.form.setFieldsValue({
+    //             name: fileInfo.name,
+    //             size: fileInfo.size,
+    //             document: {
+    //               code: "",
+    //               name: fileInfo.name,
+    //               size: fileInfo.size,
+    //               storageObject: {
+    //                 size: fileInfo.size,
+    //                 key: fileInfo.key,
+    //               },
+    //               publishState: "published",
+    //             },
+    //           });
+    //         `,
+    //       },
+    //     ],
+    //   },
+    // },
     {
       code: "sampleCode",
       type: "text",
@@ -224,6 +224,10 @@ const page: RapidPage = {
         {
           code: "state",
           type: "auto",
+        },
+        {
+          type: "auto",
+          code: "approvalState",
         },
         {
           code: "result",
@@ -413,80 +417,70 @@ const page: RapidPage = {
             },
           ],
         },
+      ],
+    },
+    {
+      $type: "sectionSeparator",
+      showLine: false,
+    },
+    {
+      $type: "rapidToolbar",
+      items: [
         {
-          key: "defectStats",
-          label: "缺陷统计",
-          children: [
+          $type: "rapidToolbarButton",
+          text: "批准",
+          actionStyle: "primary",
+          size: "large",
+          onAction: [
             {
-              $id: "userList",
-              $type: "sonicEntityList",
-              entityCode: "MomInspectionDefectStat",
-              viewMode: "table",
-              fixedFilters: [
-                {
-                  field: "sheet_id",
-                  operator: "eq",
-                  value: "",
-                },
-              ],
-              listActions: [
-                {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
-              // extraProperties: ["document", "createdBy"],
-              columns: [
-                // {
-                //   type: "auto",
-                //   code: "state",
-                //   width: "100px",
-                // },
-                {
-                  type: "auto",
-                  code: "sampleCode",
-                  width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "qualitativeValue",
-                  width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "quantitativeValue",
-                  width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "createdAt",
-                  width: "150px",
-                },
-              ],
-              actions: [
-                {
-                  $type: "sonicRecordActionDeleteEntity",
-                  code: "delete",
-                  actionType: "delete",
-                  actionText: "删除",
-                  dataSourceCode: "list",
-                  entityCode: "MomInspectionMeasurement",
-                },
-              ],
-              newForm: cloneDeep(materialDocumentFormConfig),
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: { approvalState: "approved" },
               $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.sheet_id": "$rui.parseQuery().id",
+                url: `"/api/mom/mom_inspection_sheets/" + $rui.parseQuery().id`,
               },
             },
+            {
+              $action: "antdMessage",
+              title: "审核成功",
+              onClose: [
+                {
+                  $action: "reloadPage",
+                },
+              ],
+            },
           ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+          },
+        },
+        {
+          $type: "rapidToolbarButton",
+          text: "拒绝",
+          danger: true,
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: { approvalState: "rejected" },
+              $exps: {
+                url: `"/api/mom/mom_inspection_sheets/" + $rui.parseQuery().id`,
+              },
+            },
+            {
+              $action: "antdMessage",
+              title: "审核成功",
+              onClose: [
+                {
+                  $action: "reloadPage",
+                },
+              ],
+            },
+          ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+          },
         },
       ],
     },

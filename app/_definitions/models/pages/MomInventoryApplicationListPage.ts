@@ -142,11 +142,11 @@ const page: RapidPage = {
           code: "createdAt",
           width: "150px",
         },
-        {
-          type: "auto",
-          code: "state",
-          width: "150px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "state",
+        //   width: "150px",
+        // },
         {
           type: "auto",
           code: "operationState",
