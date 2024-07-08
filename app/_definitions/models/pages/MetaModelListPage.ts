@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import type { RapidPage, RapidEntityFormConfig, SonicEntityListRockConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -22,6 +22,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "textarea",
       code: "description",
+    },
+    {
+      type: "auto",
+      code: "permissionPolicies",
     },
   ],
 };
@@ -54,6 +58,7 @@ const page: RapidPage = {
           filterFields: ["plural_code", "name"],
         },
       ],
+      extraProperties: ["permissionPolicies"],
       orderBy: [
         {
           field: "namespace",
@@ -132,7 +137,7 @@ const page: RapidPage = {
           },
         ],
       },
-    },
+    } as SonicEntityListRockConfig,
   ],
 };
 

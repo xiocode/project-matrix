@@ -688,6 +688,7 @@ const entityFieldCodes = {
     'description',
     'singularCode',
     'pluralCode',
+    'permissionPolicies',
     'properties',
     'createdAt',
     'createdBy',

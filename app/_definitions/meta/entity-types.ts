@@ -2339,6 +2339,10 @@ export interface Model {
    */
   pluralCode: string;
   /**
+   * 权限配置
+   */
+  permissionPolicies?: Record<string, any>;
+  /**
    * 属性
    */
   properties?: any;

@@ -48,11 +48,11 @@ importers:
         specifier: ~0.1.28
         version: 0.1.28(lodash@4.17.21)
       '@ruiapp/rapid-core':
-        specifier: ~0.1.62
-        version: 0.1.62(winston@3.11.0)
+        specifier: ~0.1.65
+        version: 0.1.65(winston@3.11.0)
       '@ruiapp/rapid-express':
         specifier: ~0.1.57
-        version: 0.1.57(@ruiapp/rapid-core@0.1.62(winston@3.11.0))(express@4.18.3)
+        version: 0.1.57(@ruiapp/rapid-core@0.1.65(winston@3.11.0))(express@4.18.3)
       '@ruiapp/rapid-extension':
         specifier: ~0.1.21
         version: 0.1.21(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@ruiapp/move-style@0.1.28(lodash@4.17.21))(@ruiapp/react-renderer@0.1.28(@ruiapp/move-style@0.1.28(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(moment@2.29.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1848,8 +1848,8 @@ packages:
       lodash: ^4.17.21
       tough-cookie: ^4.1.3
 
-  '@ruiapp/rapid-core@0.1.62':
-    resolution: {integrity: sha512-hh1ivwSYUo830qPGn4iq7WISoGIUJ5Mhil4/glFvqvnEO3GjjD8rNApCLI50iMD7Xy0R5us231Gy/yGbYP7LtA==}
+  '@ruiapp/rapid-core@0.1.65':
+    resolution: {integrity: sha512-7wg/gsxPCecdKCjUNP9gHMbt2Tplvkme8+uAMG+gnyJ4pLzoMypzZLS1DYoRvU9OJ4ffd0j1JzJBdjtOH5Jw+w==}
     peerDependencies:
       winston: ^3.11.0
 
@@ -9559,7 +9559,7 @@ snapshots:
       lodash: 4.17.21
       tough-cookie: 4.1.4
 
-  '@ruiapp/rapid-core@0.1.62(winston@3.11.0)':
+  '@ruiapp/rapid-core@0.1.65(winston@3.11.0)':
     dependencies:
       bcrypt: 5.1.1
       cron: 3.1.7
@@ -9575,9 +9575,9 @@ snapshots:
       - encoding
       - supports-color
 
-  '@ruiapp/rapid-express@0.1.57(@ruiapp/rapid-core@0.1.62(winston@3.11.0))(express@4.18.3)':
+  '@ruiapp/rapid-express@0.1.57(@ruiapp/rapid-core@0.1.65(winston@3.11.0))(express@4.18.3)':
     dependencies:
-      '@ruiapp/rapid-core': 0.1.62(winston@3.11.0)
+      '@ruiapp/rapid-core': 0.1.65(winston@3.11.0)
       express: 4.18.3
 
   '@ruiapp/rapid-extension@0.1.21(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@ruiapp/move-style@0.1.28(lodash@4.17.21))(@ruiapp/react-renderer@0.1.28(@ruiapp/move-style@0.1.28(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(axios@1.2.6)(dayjs@1.11.11)(lodash@4.17.21)(moment@2.29.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
