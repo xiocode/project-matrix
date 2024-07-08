@@ -25,14 +25,17 @@ export default [
 
           const lot = await saveMaterialLotInfo(server, {
             lotNum: before.lotNum,
-            material: {id: before.material},
+            material: before.material,
             sourceType: inventoryOperation?.businessType?.config?.defaultSourceType || null,
             qualificationState: inventoryOperation?.businessType?.config?.defaultQualificationState || "qualified",
             isAOD: false,
             state: "pending",
           });
 
-          before.lot_id = lot.id;
+          if (lot) {
+            before.lot_id = lot.id;
+          }
+
         }
 
       } catch (e) {
@@ -163,7 +166,7 @@ export default [
                   orderNum: 1,
                 } as MomGoodTransfer);
               }
-              
+
               inventoryOperationInput.transfers = transfers
 
               await inventoryOperationManager.createEntity({
