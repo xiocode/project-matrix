@@ -35,6 +35,7 @@ class KisDataSync {
   private ctx: ActionHandlerContext;
   private materialCategories: BaseMaterialCategory[] = [];
   private partnerCategories: BasePartnerCategory[] = [];
+  private baseLocations:BaseLocation[] = [];
   private units: BaseUnit[] = [];
 
   constructor(server: IRpdServer, ctx: ActionHandlerContext) {
@@ -49,7 +50,7 @@ class KisDataSync {
 
   // Load base data for categories and units
   private async loadBaseData() {
-    await Promise.all([this.loadMaterialCategories(), this.loadPartnerCategories(), this.loadUnits()]);
+    await Promise.all([this.loadMaterialCategories(), this.loadPartnerCategories(), this.loadUnits(), this.loadBaseLocations()]);
   }
 
   private async loadMaterialCategories() {
@@ -58,6 +59,10 @@ class KisDataSync {
 
   private async loadPartnerCategories() {
     this.partnerCategories = await this.loadEntities("base_partner_category", {});
+  }
+
+  private async loadBaseLocations() {
+    this.baseLocations = await this.loadEntities("base_location", {});
   }
 
   private async loadUnits() {
@@ -319,33 +324,34 @@ class KisDataSync {
           } as SaveBasePartnerInput;
         },
       }),
-      // // 同步仓库
-      // this.createListSyncFunction({
-      //   url: "/koas/APP006992/api/Stock/List",
-      //   singularCode: "mom_warehouse",
-      //   mapToEntity: async (item: any) => {
-      //     return {
-      //       code: item.FNumber,
-      //       name: item.FName,
-      //       externalCode: item.FItemID,
-      //       orderNum: 1,
-      //       state: 'enabled',
-      //     } as SaveMomWarehouseInput;
-      //   },
-      // }),
+      // 同步仓库
       this.createListSyncFunction({
-        url: "/koas/APP006992/api/Stock/List",
+        url: "/koas/APP006992/api/StockPlaceGroup/List",
         singularCode: "base_location",
         mapToEntity: async (item: any) => {
           return {
             code: item.FNumber,
             name: item.FName,
-            externalCode: item.FItemID,
+            externalCode: item.FSPGroupID,
             type: 'warehouse',
 
           } as SaveBaseLocationInput;
         },
-        filter: (item: any) => item.FParentID === 0
+      }),
+      // 同步库位
+      this.createListSyncFunction({
+        url: "/koas/APP006992/api/StockPlace/List",
+        singularCode: "base_location",
+        mapToEntity: async (item: any) => {
+          return {
+            code: item.FNumber,
+            name: item.FName,
+            externalCode: item.FSPID,
+            parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
+            type: 'storageArea',
+
+          } as SaveBaseLocationInput;
+        },
       }),
     ];
 
@@ -392,10 +398,6 @@ class KisDataSync {
       properties: ["id", "externalCode", "defaultUnit"],
     });
 
-    const warehouses: BaseLocation[] = await this.server.getEntityManager("mom_warehouse").findEntities({
-      filters: [{operator: "notNull", field: "externalCode"}],
-    });
-
     const warehouseLocations: BaseLocation[] = await this.server.getEntityManager("base_location").findEntities({
       filters: [{operator: "notNull", field: "externalCode"}],
     });
@@ -409,55 +411,36 @@ class KisDataSync {
           approvalState: 'uninitiated',
           approveState: 'uninitiated',
           businessType: 3,
-          code: `KIS-${new Date().getTime()}`,
           operationType: 'in',
           state: 'processing',
         } as SaveMomInventoryOperationInput
       }
     )
 
-    const syncFunctions = materials.flatMap(material =>
-      warehouses.map(warehouse =>
-        this.createListSyncFunction({
-          url: "/koas/APP002112/uereport/UEStockController/GetItemStockInfors",
-          singularCode: "mom_good_transfer",
-          mapToEntity: async (item: any) => ({
+    const syncFunctions = [
+      this.createListSyncFunction({
+        url: "/koas/APP007104/api/ICInventory/List",
+        singularCode: "mom_good_transfer",
+        mapToEntity: async (item: any) => {
+          const material = materials.find(material => material.externalCode === String(item.FMaterialID));
+          if (!material) {
+            console.log(`Material not found for item ${item.FMaterialNumber}`)
+
+            return null;
+          }
+
+          return {
             operation: {id: result.id},
             material: {id: material?.id},
-            lotNum: item.GBatchNo,
-            quantity: item.GAvailableNum,
+            lotNum: item.FBatchNo,
+            quantity: item.FBUQty,
             unit: {id: material?.defaultUnit?.id},
-            to: {id: warehouseLocations.find(location => location.externalCode === warehouse.externalCode)?.id},
-          } as SaveMomGoodTransferInput),
-          payload: {Data: {GItemID: material.externalCode, GStockID: warehouse.externalCode}},
-          syncAll: false,
-        })
-      )
-    );
-
-    // const syncFunctions = [
-    //   this.createListSyncFunction({
-    //     url: "/koas/APP002112/uereport/UEStockController/GetItemStockInfors",
-    //     singularCode: "mom_good_transfer",
-    //     mapToEntity: async (item: any) => {
-    //       const material = materials.find(material => material.externalCode === String(item.GItemID));
-    //       if (!material) {
-    //         console.log(`Material not found for item ${item.GItemID}`)
-    //         return null;
-    //       }
-    //
-    //       return {
-    //         operation: {id: result.id},
-    //         material: {id: material?.id},
-    //         lotNum: item.GBatchNo,
-    //         quantity: item.GAvailableNum,
-    //         unit: {id: material?.defaultUnit?.id},
-    //         to: {id: warehouseLocations.find(location => location.externalCode === String(item.FStockID))?.id},
-    //       } as SaveMomGoodTransferInput
-    //     },
-    //     payload: {Data: {}}
-    //   }),
-    // ]
+            to: {id: warehouseLocations.find(location => location.externalCode === String(item.FSPID))?.id},
+          } as SaveMomGoodTransferInput
+        },
+        payload: {Data: {}}
+      }),
+    ]
 
 
     for (const syncListFunction of syncFunctions) {
