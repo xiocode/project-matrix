@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -42,12 +42,13 @@ const page: RapidPage = {
   code: "mom_inventory_application_list",
   name: "库存业务申请",
   title: "库存业务申请",
-  permissionCheck: {any: []},
+  permissionCheck: { any: [] },
   view: [
     {
       $type: "sonicEntityList",
       entityCode: "MomInventoryApplication",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -186,7 +187,7 @@ const page: RapidPage = {
               url: "/api/mom/mom_inventory_operations",
               data: {
                 state: "processing",
-                approvalState: "uninitiated"
+                approvalState: "uninitiated",
               },
               $exps: {
                 "data.application": "$event.args[0].id",

@@ -52,19 +52,40 @@ const page: RapidPage = {
       viewMode: "table",
       extraProperties: ["manufactureDate", "validityDate", "createdAt"],
       listActions: [
-        {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
-          $permissionCheck: "inventoryTag.manage",
-        },
+        // {
+        //   $type: "sonicToolbarNewEntityButton",
+        //   text: "新建",
+        //   icon: "PlusOutlined",
+        //   actionStyle: "primary",
+        //   $permissionCheck: "inventoryTag.manage",
+        // },
         {
           $type: "mergeBinNumAction",
           $permissionCheck: "inventoryTag.manage",
         },
         {
-          $type: "materialBatchPrintAction",
+          $type: "batchPrintAction",
+          title: "批量打印",
+          printTemplateCode: "materialIdentificationCard",
+          dataSourceAdapter: `
+            const createdAt = _.get(record, "createdAt");
+            const validityDate = _.get(record, "validityDate");
+            const dictionaries = rapidAppDefinition.getDataDictionaries();
+            const dictionary = _.find(dictionaries, function(d) { return d.code === "QualificationState" });
+            const qualificationStateInfo = _.find(_.get(dictionary, "entries"), function(e) { return e.value === _.get(record, "lot.qualificationState") });
+
+            return _.merge({}, record, {
+              materialName: _.get(record, "material.name"),
+              materialCode: _.get(record, "material.code"),
+              materialSpecification: _.get(record, "material.specification"),
+              lotNum: _.get(record, "lot.lotNum"),
+              createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+              validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+              currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+              unit: _.get(record, "unit.name"),
+              qualificationState: _.get(qualificationStateInfo, "name"),
+            });
+          `,
           $permissionCheck: "inventoryTag.manage",
         },
       ],
@@ -160,23 +181,24 @@ const page: RapidPage = {
           },
         },
       ],
+      actionsColumnWidth: "80px",
       actions: [
-        {
-          $type: "sonicRecordActionEditEntity",
-          code: "edit",
-          actionType: "edit",
-          actionText: "修改",
-          $permissionCheck: "inventoryTag.manage",
-        },
-        {
-          $type: "sonicRecordActionDeleteEntity",
-          code: "delete",
-          actionType: "delete",
-          actionText: "删除",
-          dataSourceCode: "list",
-          entityCode: "MomGood",
-          $permissionCheck: "inventoryTag.manage",
-        },
+        // {
+        //   $type: "sonicRecordActionEditEntity",
+        //   code: "edit",
+        //   actionType: "edit",
+        //   actionText: "修改",
+        //   $permissionCheck: "inventoryTag.manage",
+        // },
+        // {
+        //   $type: "sonicRecordActionDeleteEntity",
+        //   code: "delete",
+        //   actionType: "delete",
+        //   actionText: "删除",
+        //   dataSourceCode: "list",
+        //   entityCode: "MomGood",
+        //   $permissionCheck: "inventoryTag.manage",
+        // },
         {
           $type: "splitBinNumAction",
           code: "split",
