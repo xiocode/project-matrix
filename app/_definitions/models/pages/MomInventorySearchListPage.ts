@@ -27,6 +27,11 @@ const page: RapidPage = {
         },
       ],
       pageSize: 20,
+      relations: {
+        material: {
+          properties: ["id", "code", "name", "specification", "category"],
+        },
+      },
       columns: [
         {
           type: "auto",
@@ -50,6 +55,14 @@ const page: RapidPage = {
           title: "规格",
           rendererProps: {
             format: "{{specification}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "material",
+          title: "物料类型",
+          rendererProps: {
+            format: "{{category.name}}",
           },
         },
         {

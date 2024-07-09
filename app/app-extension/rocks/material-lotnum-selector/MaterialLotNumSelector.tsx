@@ -73,6 +73,7 @@ export default {
       labelKey: "lotNum",
       valueKey: "lotNum",
       searchFields: ["lotNum"],
+      dropdownMatchSelectWidth: 600,
       columns: [
         {
           title: "批次号",

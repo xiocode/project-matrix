@@ -75,28 +75,28 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "upperTol",
       $exps: {
-        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative' || $self.form.getFieldValue('determineType') !== 'inTolerance'",
       },
     },
     {
       type: "auto",
       code: "lowerTol",
       $exps: {
-        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative' || $self.form.getFieldValue('determineType') !== 'inTolerance'",
       },
     },
     {
       type: "auto",
       code: "upperLimit",
       $exps: {
-        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative' || $self.form.getFieldValue('determineType') !== 'inLimit'",
       },
     },
     {
       type: "auto",
       code: "lowerLimit",
       $exps: {
-        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative'",
+        _hidden: "$self.form.getFieldValue('kind') !== 'quantitative' || $self.form.getFieldValue('determineType') !== 'inLimit'",
       },
     },
   ],
