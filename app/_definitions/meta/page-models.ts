@@ -28,6 +28,8 @@ import MomInventoryAdjustApplicationListPage from '../models/pages/MomInventoryA
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
+import MomInventoryCheckOperationDetailsPage from '../models/pages/MomInventoryCheckOperationDetailsPage';
+import MomInventoryCheckOperationListPage from '../models/pages/MomInventoryCheckOperationListPage';
 import MomInventoryInOperationDetailsPage from '../models/pages/MomInventoryInOperationDetailsPage';
 import MomInventoryListPage from '../models/pages/MomInventoryListPage';
 import MomInventoryNormalOperationDetailsPage from '../models/pages/MomInventoryNormalOperationDetailsPage';
@@ -132,6 +134,8 @@ export default [
   MomInventoryApplicationDetailsPage,
   MomInventoryApplicationListPage,
   MomInventoryBusinessTypeListPage,
+  MomInventoryCheckOperationDetailsPage,
+  MomInventoryCheckOperationListPage,
   MomInventoryInOperationDetailsPage,
   MomInventoryListPage,
   MomInventoryNormalOperationDetailsPage,
