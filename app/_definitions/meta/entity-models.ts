@@ -62,6 +62,7 @@ import MomInventory from '../models/entities/MomInventory';
 import MomInventoryApplication from '../models/entities/MomInventoryApplication';
 import MomInventoryApplicationItem from '../models/entities/MomInventoryApplicationItem';
 import MomInventoryBusinessType from '../models/entities/MomInventoryBusinessType';
+import MomInventoryCheckRecord from '../models/entities/MomInventoryCheckRecord';
 import MomInventoryLabel from '../models/entities/MomInventoryLabel';
 import MomInventoryOperation from '../models/entities/MomInventoryOperation';
 import MomInventoryStatTable from '../models/entities/MomInventoryStatTable';
@@ -204,6 +205,7 @@ const entityDefinitions = [
   MomInventoryApplication,
   MomInventoryApplicationItem,
   MomInventoryBusinessType,
+  MomInventoryCheckRecord,
   MomInventoryLabel,
   MomInventoryOperation,
   MomInventoryStatTable,
@@ -346,6 +348,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomInventoryApplication, entityDefinitions),
   autoConfigureRapidEntity(MomInventoryApplicationItem, entityDefinitions),
   autoConfigureRapidEntity(MomInventoryBusinessType, entityDefinitions),
+  autoConfigureRapidEntity(MomInventoryCheckRecord, entityDefinitions),
   autoConfigureRapidEntity(MomInventoryLabel, entityDefinitions),
   autoConfigureRapidEntity(MomInventoryOperation, entityDefinitions),
   autoConfigureRapidEntity(MomInventoryStatTable, entityDefinitions),
