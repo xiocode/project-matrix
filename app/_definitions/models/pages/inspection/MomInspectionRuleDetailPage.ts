@@ -166,13 +166,13 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        {
-          type: "auto",
-          code: "routeProcess",
-          rendererProps: {
-            format: "{{aliasName}}",
-          },
-        },
+        // {
+        //   type: "auto",
+        //   code: "routeProcess",
+        //   rendererProps: {
+        //     format: "{{aliasName}}",
+        //   },
+        // },
         {
           type: "auto",
           code: "createdAt",
