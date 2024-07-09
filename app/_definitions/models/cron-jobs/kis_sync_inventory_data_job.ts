@@ -20,5 +20,4 @@ async function syncKisInventoryData(ctx: ActionHandlerContext, server: IRpdServe
   const dataSync = new KisDataSync(server, ctx);
   await dataSync.initialize();
   await dataSync.syncInventoryData();
-
 }

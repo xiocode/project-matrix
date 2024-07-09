@@ -4339,6 +4339,109 @@ export interface MomInventoryBusinessType {
 export type SaveMomInventoryBusinessTypeInput = Omit<MomInventoryBusinessType, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 库存盘点记录
+ */
+export interface MomInventoryCheckRecord {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 操作记录
+   */
+  operation?: Partial<MomInventoryOperation>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 物品
+   */
+  good?: Partial<MomGood>;
+  /**
+   * 跟踪码
+   */
+  trackingCode?: string;
+  /**
+   * 物品
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
+  /**
+   * 标签
+   */
+  tags?: string;
+  /**
+   * 数量
+   */
+  quantity: number;
+  /**
+   * 单位
+   */
+  unit?: Partial<BaseUnit>;
+  /**
+   * 位置
+   */
+  location?: Partial<BaseLocation>;
+  /**
+   * 包数
+   */
+  packageNum?: string;
+  /**
+   * 生产日期
+   */
+  manufactureDate?: string;
+  /**
+   * 有效期至
+   */
+  validityDate?: string;
+  /**
+   * 批次信息
+   */
+  lot?: Partial<BaseLot>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 库存盘点记录
+ */
+export type SaveMomInventoryCheckRecordInput = Omit<MomInventoryCheckRecord, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 库存标签
  */
 export interface MomInventoryLabel {
