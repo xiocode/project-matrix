@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import {cloneDeep} from "lodash";
+import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -83,7 +83,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomInspectionSheet",
       viewMode: "table",
-      permissionCheck: { any: ["inspection.manage"] },
+      // permissionCheck: {any: ["inspection.manage"]},
       // listActions: [
       //   {
       //     $type: "sonicToolbarNewEntityButton",

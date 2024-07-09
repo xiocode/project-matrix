@@ -342,6 +342,7 @@ const page: RapidPage = {
                   text: "新建",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
+                  $permissionCheck: "inspectionSheet.manage",
                 },
                 {
                   $type: "sonicToolbarRefreshButton",
@@ -405,6 +406,7 @@ const page: RapidPage = {
                   code: "delete",
                   actionType: "delete",
                   actionText: "删除",
+                  $permissionCheck: "inspectionSheet.manage",
                   dataSourceCode: "list",
                   entityCode: "MomInspectionMeasurement",
                 },
@@ -431,6 +433,7 @@ const page: RapidPage = {
           text: "批准",
           actionStyle: "primary",
           size: "large",
+          $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -459,6 +462,7 @@ const page: RapidPage = {
           text: "拒绝",
           danger: true,
           size: "large",
+          $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",

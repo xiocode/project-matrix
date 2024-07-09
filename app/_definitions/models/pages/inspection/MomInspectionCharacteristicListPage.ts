@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import {cloneDeep} from "lodash";
+import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -70,7 +70,7 @@ const page: RapidPage = {
   code: "mom_inspection_characteristic_list",
   name: "检验特征",
   title: "检验特征",
-  permissionCheck: { any: [] },
+  permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
@@ -82,6 +82,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
+          $permissionCheck: "inspectionCharacteristic.manage",
         },
       ],
       extraActions: [
@@ -188,6 +189,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "inspectionCharacteristic.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -196,6 +198,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionCharacteristic",
+          $permissionCheck: "inspectionCharacteristic.manage",
         },
       ],
       newForm: cloneDeep(formConfig),

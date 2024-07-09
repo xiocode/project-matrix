@@ -30,6 +30,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
+          $permissionCheck: "inspectionInstrument.manage",
         },
       ],
       extraActions: [
@@ -74,6 +75,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "inspectionInstrument.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -82,6 +84,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionInstrument",
+          $permissionCheck: "inspectionInstrument.manage",
         },
       ],
       newForm: cloneDeep(formConfig),
