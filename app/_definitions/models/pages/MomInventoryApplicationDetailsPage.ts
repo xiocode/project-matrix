@@ -174,7 +174,7 @@ const page: RapidPage = {
                   text: "新建",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
-                  $permissionCheck: "invetoryApplication.manage",
+                  $permissionCheck: "inventoryApplication.manage",
                 },
                 {
                   $type: "sonicToolbarRefreshButton",
@@ -258,7 +258,7 @@ const page: RapidPage = {
                   code: "edit",
                   actionType: "edit",
                   actionText: "修改",
-                  $permissionCheck: "invetoryApplication.manage",
+                  $permissionCheck: "inventoryApplication.manage",
                 },
                 {
                   $type: "sonicRecordActionDeleteEntity",
@@ -267,7 +267,7 @@ const page: RapidPage = {
                   actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomInventoryApplicationItem",
-                  $permissionCheck: "invetoryApplication.manage",
+                  $permissionCheck: "inventoryApplication.manage",
                 },
               ],
               newForm: cloneDeep(formConfig),
