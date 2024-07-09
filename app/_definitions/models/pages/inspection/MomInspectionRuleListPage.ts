@@ -3,10 +3,10 @@ import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    // {
-    //   type: "auto",
-    //   code: "name",
-    // },
+    {
+      type: "auto",
+      code: "name",
+    },
     {
       type: "auto",
       code: "material",
@@ -23,10 +23,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "config",
     },
-    // {
-    //   type: "auto",
-    //   code: "isDefault",
-    // },
+    {
+      type: "auto",
+      code: "isDefault",
+    },
   ],
   defaultFormFields: {
     isDefault: "false",
@@ -37,7 +37,7 @@ const page: RapidPage = {
   code: "mom_inspection_rule_list",
   name: "检验规则",
   title: "检验规则",
-  permissionCheck: { any: [] },
+  permissionCheck: {any: []},
   view: [
     {
       $type: "sonicEntityList",
@@ -49,6 +49,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
+          $permissionCheck: "inspectionRule.manage",
         },
       ],
       extraActions: [
@@ -119,6 +120,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "inspectionRule.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -127,6 +129,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionRule",
+          $permissionCheck: "inspectionRule.manage",
         },
       ],
       newForm: cloneDeep(formConfig),
