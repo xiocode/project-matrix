@@ -44,23 +44,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "treeSelect",
-      code: "from",
+      code: "location",
       formControlProps: {
         listDataSourceCode: "locations",
         listParentField: "parent.id",
       },
-    },
-    {
-      type: "treeSelect",
-      code: "to",
-      formControlProps: {
-        listDataSourceCode: "locations",
-        listParentField: "parent.id",
-      },
-    },
-    {
-      type: "auto",
-      code: "transferTime",
     },
   ],
   onValuesChange: [
