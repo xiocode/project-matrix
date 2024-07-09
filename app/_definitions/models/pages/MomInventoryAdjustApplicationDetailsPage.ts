@@ -15,17 +15,17 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         listFilterFields: ["label"],
       },
     },
-    {
-      type: "auto",
-      code: "lotNum",
-      formControlType: "materialLotNumSelector",
-      formControlProps: {},
-      $exps: {
-        "formControlProps.materialId": "$self.form.getFieldValue('material')",
-        "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
-        "formControlProps.businessTypeId": "_.get($page.scope.stores, 'detail.data.list[0].businessType.id')",
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "lotNum",
+    //   formControlType: "materialLotNumSelector",
+    //   formControlProps: {},
+    //   $exps: {
+    //     "formControlProps.materialId": "$self.form.getFieldValue('material')",
+    //     "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
+    //     "formControlProps.businessTypeId": "_.get($page.scope.stores, 'detail.data.list[0].businessType.id')",
+    //   },
+    // },
     // {
     //   type: "auto",
     //   code: "binNum",
@@ -205,11 +205,11 @@ const page: RapidPage = {
                     },
                   },
                 },
-                {
-                  type: "auto",
-                  code: "lotNum",
-                  width: "100px",
-                },
+                // {
+                //   type: "auto",
+                //   code: "lotNum",
+                //   width: "100px",
+                // },
                 // {
                 //   type: "auto",
                 //   code: "binNum",
