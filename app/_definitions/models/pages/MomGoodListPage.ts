@@ -151,8 +151,12 @@ const page: RapidPage = {
           code: "lot",
           title: "检验状态",
           width: "100px",
+          rendererType: "rapidOptionFieldRenderer",
           rendererProps: {
-            format: "{{qualificationState}}",
+            dictionaryCode: "QualificationState",
+            $exps: {
+              value: "$slot.record.lot && $slot.record.lot.qualificationState",
+            },
           },
         },
       ],

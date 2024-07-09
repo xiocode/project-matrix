@@ -7,6 +7,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   code: "material",
   formControlType: "tableSingleSelector",
   formControlProps: {
+    dropdownMatchSelectWidth: 500,
     labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
     valueKey: "material.id",
     columns: [
