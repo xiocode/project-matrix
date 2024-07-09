@@ -54,6 +54,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
+          $permissionCheck: "inventoryApplication.manage",
         },
       ],
       extraActions: [
@@ -149,6 +150,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "inventoryApplication.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -157,11 +159,13 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInventoryApplication",
+          $permissionCheck: "inventoryApplication.manage",
         },
         {
           $type: "rapidTableAction",
           code: "dispatch",
           actionText: "下发",
+          $permissionCheck: "inventoryApplication.manage",
           $exps: {
             _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType !== 'in'",
           },

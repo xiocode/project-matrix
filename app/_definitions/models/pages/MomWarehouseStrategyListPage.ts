@@ -42,7 +42,7 @@ const page: RapidPage = {
   code: "mom_warehouse_strategy_list",
   name: "仓库策略列表",
   title: "仓库策略列表",
-  permissionCheck: {any: []},
+  // permissionCheck: {any: ["warehouseStrategy.manage"]},
   view: [
     {
       $type: "sonicEntityList",
@@ -59,6 +59,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
+          $permissionCheck: "warehouseStrategy.manage",
         },
       ],
       extraActions: [
@@ -128,6 +129,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "warehouseStrategy.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -136,6 +138,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomWarehouseStrategy",
+          $permissionCheck: "warehouseStrategy.manage",
         },
       ],
       newForm: cloneDeep(formConfig),
