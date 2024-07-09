@@ -42,9 +42,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_good_list",
-  name: "物品列表",
-  title: "物品列表",
-  // permissionCheck: {any: []},
+  name: "标签列表",
+  title: "标签列表",
+  // permissionCheck: {any: ["inventoryTag.view","inventoryTag.manage"]},
   view: [
     {
       $type: "sonicEntityList",
@@ -57,12 +57,15 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
+          $permissionCheck: "inventoryTag.manage",
         },
         {
           $type: "mergeBinNumAction",
+          $permissionCheck: "inventoryTag.manage",
         },
         {
           $type: "materialBatchPrintAction",
+          $permissionCheck: "inventoryTag.manage",
         },
       ],
       fixedFilters: [
@@ -159,6 +162,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
+          $permissionCheck: "inventoryTag.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -167,12 +171,14 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomGood",
+          $permissionCheck: "inventoryTag.manage",
         },
         {
           $type: "splitBinNumAction",
           code: "split",
           actionType: "split",
           actionText: "拆分",
+          $permissionCheck: "inventoryTag.manage",
         },
       ],
       newForm: cloneDeep(formConfig),

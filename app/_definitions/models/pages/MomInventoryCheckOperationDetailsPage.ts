@@ -271,6 +271,7 @@ const page: RapidPage = {
                   text: "新建",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
+                  $permissionCheck: "inventoryOperation.manage",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
@@ -368,6 +369,7 @@ const page: RapidPage = {
                   code: "edit",
                   actionType: "edit",
                   actionText: "修改",
+                  $permissionCheck: "inventoryOperation.manage",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
@@ -378,7 +380,8 @@ const page: RapidPage = {
                   actionType: "delete",
                   actionText: "删除",
                   dataSourceCode: "list",
-                  entityCode: "MomGoodTransfer",
+                  entityCode: "MomInventoryCheckRecord",
+                  $permissionCheck: "inventoryOperation.manage",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
