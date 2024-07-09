@@ -75,6 +75,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_inventory_check_operation_details",
+  //@ts-ignore
+  parentCode: "mom_inventory_check_operation_list",
   name: "库存盘点详情",
   title: "库存盘点详情",
   // permissionCheck: {any: []},
@@ -208,24 +210,24 @@ const page: RapidPage = {
             //   code: "trackingCode",
             //   width: "100px",
             // },
-            {
-              type: "auto",
-              code: "tags",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "quantity",
-              width: "100px",
-            },
-            {
-              type: "auto",
-              code: "unit",
-              width: "80px",
-              rendererProps: {
-                format: "{{name}}",
-              },
-            },
+            // {
+            //   type: "auto",
+            //   code: "tags",
+            //   width: "100px",
+            // },
+            // {
+            //   type: "auto",
+            //   code: "quantity",
+            //   width: "100px",
+            // },
+            // {
+            //   type: "auto",
+            //   code: "unit",
+            //   width: "80px",
+            //   rendererProps: {
+            //     format: "{{name}}",
+            //   },
+            // },
           ],
           $exps: {
             "fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",

@@ -19,14 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "applicant",
     },
-    // {
-    //   type: "auto",
-    //   code: "from",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "to",
-    // },
+    {
+      type: "treeSelect",
+      code: "to",
+      formControlProps: {
+        listDataSourceCode: "locations",
+        listParentField: "parent.id",
+      },
+    },
     // {
     //   type: "auto",
     //   code: "operationState",
@@ -87,7 +87,7 @@ const page: RapidPage = {
           code: "code",
           // rendererType: 'rapidLinkRenderer',
           rendererProps: {
-            url: "/pages/mom_inventory_application_details?id={{id}}",
+            url: "/pages/mom_inventory_adjust_application_details?id={{id}}",
           },
           width: "200px",
         },
@@ -112,14 +112,15 @@ const page: RapidPage = {
         //     format: "{{name}}",
         //   },
         // },
-        // {
-        //   type: "auto",
-        //   code: "to",
-        //   width: "150px",
-        //   rendererProps: {
-        //     format: "{{name}}",
-        //   },
-        // },
+        {
+          type: "auto",
+          code: "to",
+          title: "仓库",
+          width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
         {
           type: "auto",
           code: "applicant",
@@ -198,6 +199,20 @@ const page: RapidPage = {
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
+      stores: [
+        {
+          type: "entityStore",
+          name: "locations",
+          entityCode: "BaseLocation",
+          properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [],
+          orderBy: [
+            {
+              field: "orderNum",
+            },
+          ],
+        },
+      ],
       $exps: {
         "newForm.fixedFields.state": "'approved'",
         "newForm.fixedFields.operationState": "'pending'",
