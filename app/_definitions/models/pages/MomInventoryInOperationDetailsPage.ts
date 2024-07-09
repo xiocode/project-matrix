@@ -408,6 +408,30 @@ const page: RapidPage = {
                   text: "刷新",
                   icon: "ReloadOutlined",
                 },
+                {
+                  $type: "batchPrintAction",
+                  title: "批量打印",
+                  printTemplateCode: "rawMaterialIdentificationCard",
+                  dataSourceAdapter: `
+                    const createdAt = _.get(record, "good.createdAt");
+                    const validityDate = _.get(record, "good.validityDate");
+                    const dictionaries = rapidAppDefinition.getDataDictionaries();
+                    const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
+                    const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(record, "lot.qualificationState") });
+
+                    return _.merge({}, record, {
+                      materialName: _.get(record, "material.name"),
+                      materialCode: _.get(record, "material.code"),
+                      materialSpecification: _.get(record, "material.specification"),
+                      lotNum: _.get(record, 'lot.lotNum'),
+                      createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                      validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                      currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                      unit: _.get(record, "unit.name"),
+                      qualificationState: _.get(qualificationStateInfo, 'name')
+                    });
+                  `,
+                },
               ],
               pageSize: -1,
               orderBy: [
@@ -574,6 +598,15 @@ const page: RapidPage = {
               ],
               newForm: cloneDeep(createFormConfig),
               editForm: cloneDeep(formConfig),
+              onSelectedIdsChange: [
+                {
+                  $action: "setVars",
+                  $exps: {
+                    "vars.selectedIds": "$event.args[0].selectedIds",
+                    "vars.selectedRecords": "$event.args[0].selectedRecords",
+                  },
+                },
+              ],
               stores: [
                 {
                   type: "entityStore",

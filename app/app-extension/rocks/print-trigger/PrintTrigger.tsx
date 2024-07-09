@@ -25,8 +25,9 @@ export default {
       },
     ];
 
-    (context.scope as any).addStores(stores);
-    (context.scope as any).loadData();
+    stores.forEach((store) => {
+      context.scope.addStore(store);
+    });
   },
 
   onResolveState(props, state) {
