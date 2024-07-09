@@ -4247,7 +4247,7 @@ export interface MomInventoryApplicationItem {
   /**
    * 数量
    */
-  quantity: number;
+  quantity?: number;
   /**
    * 单位
    */

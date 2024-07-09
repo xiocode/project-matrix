@@ -64,7 +64,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "quantity",
       name: "数量",
       type: "double",
-      required: true,
     },
     {
       code: "unit",
