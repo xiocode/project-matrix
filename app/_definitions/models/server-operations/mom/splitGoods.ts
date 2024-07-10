@@ -1,6 +1,7 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import type {MomGood, SaveMomGoodInput,} from "~/_definitions/meta/entity-types";
 import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
+import MomGoodTransfer from "~/_definitions/models/entities/MomGoodTransfer";
 
 export type SplitGoodsInput = {
   originGoodId: number;
@@ -31,12 +32,18 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
   const originGood = await goodManager.findEntity({
-    filters: [{operator: "eq", field: "id", value: input.originGoodId}],
+    filters: [{
+      operator: "and",
+      filters: [
+        {operator: "eq", field: "id", value: input.originGoodId},
+        {operator: "eq", field: "state", value: "normal"},
+      ]
+    }],
     properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
   });
 
   if (!originGood) {
-    throw new Error("原标识卡不存在");
+    throw new Error("原标识卡不存在或已拆分");
   }
 
   const totalWeight = input.shelves.reduce((acc, curr) => acc + curr.weight, 0);
