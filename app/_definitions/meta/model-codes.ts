@@ -300,6 +300,7 @@ const entityFieldCodes = {
     'parent',
     'materials',
     'externalCode',
+    'printTemplate',
     'createdAt',
     'createdBy',
     'updatedAt',

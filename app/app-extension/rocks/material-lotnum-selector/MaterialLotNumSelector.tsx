@@ -26,7 +26,14 @@ export default {
   Renderer(context, props: Record<string, any>) {
     const { materialId, businessTypeId, materialCategoryId } = props;
 
-    let fixedFilters: FindEntityOptions["filters"] = [];
+    let fixedFilters: FindEntityOptions["filters"] = [
+      {
+        field: "onHandQuantity",
+        operator: "gt",
+        value: 0
+      }
+    ];
+
     if (materialId) {
       fixedFilters.push({
         field: "material",
@@ -52,20 +59,22 @@ export default {
       });
     }
 
-    if (currentStrategy?.validityFilter) {
-      fixedFilters.push({
-        field: "expireTime",
-        operator: "gte",
-        value: dayjs().endOf("day").format(),
-      });
-    }
+    // TODO: 关联字段排序
+    // if (currentStrategy?.validityFilter) {
+    //   fixedFilters.push({
+    //     field: "lot.validityDate",
+    //     operator: "gte",
+    //     value: dayjs().endOf("day").format(),
+    //   });
+    // }
 
     let orderBy: { field: string; desc?: boolean }[] = [];
     if (currentStrategy?.strategy === "fifo") {
-      orderBy = [{ field: "createdAt", desc: true }];
-    } else if (currentStrategy?.strategy === "fdfo") {
-      orderBy = [{ field: "validityDate", desc: true }];
+      orderBy = [{field: "createdAt", desc: true}];
     }
+    // } else if (currentStrategy?.strategy === "fdfo") {
+    //   orderBy = [{ field: "lot.validityDate", desc: true }];
+    // }
 
     const rockConfig: RockConfig = {
       $id: `${props.$id}_${materialId}_lot_list`,
@@ -89,10 +98,10 @@ export default {
         },
         {
           title: "检验状态",
-          code: "qualificationState",
+          code: "lot.qualificationState",
           width: 120,
           render: (record: any) => {
-            switch (record.qualificationState) {
+            switch (record.lot.qualificationState) {
               case "uninspected":
                 return "待检";
               case "qualified":
@@ -104,17 +113,17 @@ export default {
         },
         {
           title: "有效期",
-          code: "expireTime",
+          code: "lot.validityDate",
           width: 120,
-          render: `_.get(record, 'expireTime') && dayjs(_.get(record, 'expireTime')).format('YYYY-MM-DD')`,
+          render: `_.get(record, 'lot.validityDate') && dayjs(_.get(record, 'lot.validityDate')).format('YYYY-MM-DD')`,
         },
       ],
       requestConfig: {
-        url: `/app/base_lots/operations/find`,
+        url: `/mom/mom_material_lot_inventory_balances/operations/find`,
         params: {
           fixedFilters,
           orderBy,
-          properties: ["id", "lotNum", "material", "createdAt", "sourceType", "manufactureDate", "expireTime", "qualificationState"],
+          properties: ["id", "lotNum", "material", "createdAt", "lot"],
         },
       },
       value: props.value,

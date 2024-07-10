@@ -30,7 +30,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "orderNum",
       name: "排序号",
       type: "integer",
-      required: true,
     },
     {
       code: "parent",
@@ -50,6 +49,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "externalCode",
       name: "外部编号",
       type: "text",
+    },
+    {
+      code: "printTemplate",
+      name: "打印模版",
+      type: "relation",
+      targetSingularCode: "mom_print_template",
+      targetIdColumnName: "print_template_id",
     },
   ],
 };

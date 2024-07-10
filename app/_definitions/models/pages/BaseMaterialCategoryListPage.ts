@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import {cloneDeep} from "lodash";
+import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -19,13 +19,17 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "name",
     },
+    // {
+    //   type: "auto",
+    //   code: "defaultUnit",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "orderNum",
+    // },
     {
       type: "auto",
-      code: "defaultUnit",
-    },
-    {
-      type: "auto",
-      code: "orderNum",
+      code: "printTemplate",
     },
   ],
 };
@@ -34,7 +38,7 @@ const page: RapidPage = {
   code: "base_material_category_list",
   name: "货品分类",
   title: "货品分类",
-  permissionCheck: { any: ["baseMaterial.manage"] },
+  permissionCheck: {any: ["baseMaterial.manage"]},
   view: [
     {
       $type: "sonicEntityList",
@@ -60,7 +64,7 @@ const page: RapidPage = {
       ],
       orderBy: [
         {
-          field: "orderNum",
+          field: "createdAt",
         },
       ],
       convertListToTree: true,
@@ -77,19 +81,26 @@ const page: RapidPage = {
           type: "auto",
           code: "name",
         },
+        // {
+        //   type: "auto",
+        //   code: "defaultUnit",
+        //   width: "100px",
+        //   rendererProps: {
+        //     format: "{{name}}",
+        //   },
+        // },
         {
           type: "auto",
-          code: "defaultUnit",
-          width: "100px",
+          code: "printTemplate",
           rendererProps: {
             format: "{{name}}",
           },
         },
-        {
-          type: "auto",
-          code: "orderNum",
-          width: "100px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "orderNum",
+        //   width: "100px",
+        // },
         {
           type: "auto",
           code: "createdAt",
