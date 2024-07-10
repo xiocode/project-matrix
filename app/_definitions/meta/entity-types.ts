@@ -698,7 +698,7 @@ export interface BaseMaterialCategory {
   /**
    * 排序号
    */
-  orderNum: number;
+  orderNum?: number;
   /**
    * 上级分类
    */
@@ -711,6 +711,10 @@ export interface BaseMaterialCategory {
    * 外部编号
    */
   externalCode?: string;
+  /**
+   * 打印模版
+   */
+  printTemplate?: Partial<MomPrintTemplate>;
   /**
    * 创建时间
    */
