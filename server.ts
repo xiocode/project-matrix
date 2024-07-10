@@ -21,6 +21,7 @@ import {
   StateMachinePlugin,
   CronJobPlugin,
   EntityAccessControlPlugin,
+  SettingPlugin,
 } from "@ruiapp/rapid-core";
 import { createRapidRequestHandler } from "@ruiapp/rapid-express";
 
@@ -142,6 +143,7 @@ export async function startServer() {
       }),
       new EntityAccessControlPlugin(),
       new StateMachinePlugin(),
+      new SettingPlugin(),
       new CronJobPlugin({
         jobs: cronJobs,
       }),

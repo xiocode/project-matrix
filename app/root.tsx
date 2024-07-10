@@ -1,21 +1,36 @@
-import { json, type MetaFunction } from "@remix-run/node";
+import { json, LoaderFunction, type MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
 
 import { initInWeb } from "@rebirth/mobile-sdk";
+import rapidService from "./rapidService";
 
 initInWeb();
 
-export async function loader() {
+type ViewModel = {
+  systemSettings: Record<string, any>;
+  ENV: Record<string, any>;
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const systemSettings = (
+    await rapidService.get(`svc/systemSettingValues?groupCode=public`, {
+      headers: {
+        Cookie: request.headers.get("Cookie"),
+      },
+    })
+  ).data;
+
   return json({
+    systemSettings,
     ENV: {
       BACKEND_URL: process.env.BACKEND_URL,
     },
   });
-}
+};
 
-export const meta: MetaFunction = () => ({
+export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   charset: "utf-8",
-  title: "麒祥高新材料WMS",
+  title: data.systemSettings.systemName || "麒祥高新材料WMS",
   viewport: "width=device-width,initial-scale=1",
 });
 
