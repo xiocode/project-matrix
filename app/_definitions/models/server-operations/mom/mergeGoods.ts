@@ -30,13 +30,19 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
   const sequenceService = server.getService<SequenceService>("sequenceService");
 
   const goods = await goodManager.findEntities({
-    filters: [{operator: "in", field: "id", value: input.goodIds}],
+    filters: [{
+      operator: "and",
+      filters: [
+        {operator: "in", field: "id", value: input.goodIds},
+        {operator: "eq", field: "state", value: "normal"},
+      ]
+    }],
     properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
   });
 
   // Check if all goods exist and lotNum and material should be matched
   if (goods.length !== input.goodIds.length) {
-    throw new Error("部分标识卡不存在");
+    throw new Error("部分标识卡不存在或已合并");
   }
 
   const originGood = goods[0];

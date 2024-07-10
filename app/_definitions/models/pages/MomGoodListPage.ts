@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import {cloneDeep, filter} from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
@@ -94,6 +94,10 @@ const page: RapidPage = {
           field: "state",
           operator: "eq",
           value: "normal",
+        },
+        {
+          field: "location_id",
+          operator: "notNull",
         },
       ],
       orderBy: [
