@@ -19,6 +19,11 @@ import "moment/locale/zh-cn";
 
 moment.locale("zh-cn");
 
+type ViewModel = {
+  systemSettings: Record<string, any>;
+  navItems: any;
+};
+
 export function links() {
   return [antdStyles, indexStyles, customizeStyles].map((styles) => {
     return { rel: "stylesheet", href: styles };
@@ -26,6 +31,14 @@ export function links() {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const systemSettings = (
+    await rapidService.get(`svc/systemSettingValues?groupCode=public`, {
+      headers: {
+        Cookie: request.headers.get("Cookie"),
+      },
+    })
+  ).data;
+
   const findAppNavItemOption = {
     properties: ["id", "code", "name", "icon", "pageCode", "parent", "config"],
     filters: [
@@ -70,19 +83,21 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     return isAccessAllowed(permissionCheckPolicy, myAllowedActions || []);
   });
+
   return {
+    systemSettings,
     navItems,
   };
 };
 
 export default function Index() {
-  const viewModel = useLoaderData();
+  const viewModel = useLoaderData<ViewModel>();
 
   return (
     <ConfigProvider locale={zhCN}>
       <Layout style={{ minHeight: "100vh" }} hasSider>
         <Sider className="rui-player-left-sider">
-          <h1 className="branch-title">麒祥高新材料WMS</h1>
+          <h1 className="branch-title">{viewModel.systemSettings.systemName || "麒祥高新材料WMS"}</h1>
           <AppLeftNav navItems={viewModel.navItems} />
         </Sider>
         <Layout>

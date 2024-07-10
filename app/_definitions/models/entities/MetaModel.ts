@@ -39,6 +39,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
+      code: "permissionPolicies",
+      name: "权限配置",
+      type: "json",
+    },
+    {
       code: "properties",
       name: "属性",
       type: "relation[]",
