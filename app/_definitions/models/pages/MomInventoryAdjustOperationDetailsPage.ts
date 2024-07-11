@@ -336,11 +336,11 @@ const page: RapidPage = {
                 //   code: "trackingCode",
                 //   width: "100px",
                 // },
-                {
-                  type: "auto",
-                  code: "tags",
-                  width: "100px",
-                },
+                // {
+                //   type: "auto",
+                //   code: "tags",
+                //   width: "100px",
+                // },
                 // {
                 //   type: "auto",
                 //   code: "palletNum",
