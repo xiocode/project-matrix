@@ -47,15 +47,16 @@ export default [
 
       const changes: Partial<MomInventoryOperation> = payload.changes;
       const after = payload.after;
-      if (after.operationType === "in") {
-        if (changes.hasOwnProperty("state") && changes.state === "done") {
-          await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
-            id: after.application_id,
-            entityToSave: {
-              operationState: "done",
-            },
-          });
 
+      if (changes.hasOwnProperty("state") && changes.state === "done") {
+        await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
+          id: after.application_id,
+          entityToSave: {
+            operationState: "done",
+          },
+        });
+
+      if (after.operationType === "in") {
 
           // TODO: 生成KIS入库单
           // switch (businessType?.name) {
