@@ -52,16 +52,16 @@ const dictionaryCodes = [
   'PmProjectState',
   'PmWorkItemState',
   'PmWorkItemStepState',
-  'PrinterNetworkState',
   'PrintTaskState',
+  'PrinterNetworkState',
   'PublishState',
   'QualificationState',
   'QualitativeInspectionDetermineType',
   'QuantityType',
-  'SettingItemType',
   'UndeletedDeletedState',
   'UnitType',
   'UserSecretLevel',
   'WarehouseStrategy',
+  'SettingItemType',
 ] as const;
 export type TDictionaryCodes = typeof dictionaryCodes[number];

@@ -52,17 +52,17 @@ import PmProjectStage from '../models/data-dictionaries/PmProjectStage';
 import PmProjectState from '../models/data-dictionaries/PmProjectState';
 import PmWorkItemState from '../models/data-dictionaries/PmWorkItemState';
 import PmWorkItemStepState from '../models/data-dictionaries/PmWorkItemStepState';
-import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PrintTaskState from '../models/data-dictionaries/PrintTaskState';
+import PrinterNetworkState from '../models/data-dictionaries/PrinterNetworkState';
 import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
 import QualitativeInspectionDetermineType from '../models/data-dictionaries/QualitativeInspectionDetermineType';
 import QuantityType from '../models/data-dictionaries/QuantityType';
-import setting$SettingItemType from '../models/data-dictionaries/setting/SettingItemType';
 import UndeletedDeletedState from '../models/data-dictionaries/UndeletedDeletedState';
 import UnitType from '../models/data-dictionaries/UnitType';
 import UserSecretLevel from '../models/data-dictionaries/UserSecretLevel';
 import WarehouseStrategy from '../models/data-dictionaries/WarehouseStrategy';
+import setting$SettingItemType from '../models/data-dictionaries/setting/SettingItemType';
 
 export default [
   ActiveInactiveState,
@@ -118,15 +118,15 @@ export default [
   PmProjectState,
   PmWorkItemState,
   PmWorkItemStepState,
-  PrinterNetworkState,
   PrintTaskState,
+  PrinterNetworkState,
   PublishState,
   QualificationState,
   QualitativeInspectionDetermineType,
   QuantityType,
-  setting$SettingItemType,
   UndeletedDeletedState,
   UnitType,
   UserSecretLevel,
   WarehouseStrategy,
+  setting$SettingItemType,
 ] as TRapidDataDictionary[];

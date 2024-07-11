@@ -522,20 +522,20 @@ export type PmWorkItemStepState =
   ;
 
 /**
- * 打印机网络状态
- */
-export type PrinterNetworkState =
-  | '0'
-  | '1'
-  ;
-
-/**
  * 打印任务状态
  */
 export type PrintTaskState =
   | '0'
   | '1'
   | '2'
+  ;
+
+/**
+ * 打印机网络状态
+ */
+export type PrinterNetworkState =
+  | '0'
+  | '1'
   ;
 
 /**
@@ -584,15 +584,6 @@ export type QuantityType =
   ;
 
 /**
- * 设置项类型
- */
-export type SettingItemType =
-  | 'text'
-  | 'integer'
-  | 'boolean'
-  ;
-
-/**
  * 未删除/已删除状态
  */
 export type UndeletedDeletedState =
@@ -625,4 +616,13 @@ export type WarehouseStrategy =
   | 'fifo'
   | 'fdfo'
   | 'manual'
+  ;
+
+/**
+ * 设置项类型
+ */
+export type SettingItemType =
+  | 'text'
+  | 'integer'
+  | 'boolean'
   ;
