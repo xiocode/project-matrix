@@ -3,6 +3,5 @@ import { RapidTableActionConfig } from "@ruiapp/rapid-extension";
 
 export interface BatchPrintActionRockConfig extends SimpleRockConfig, RapidTableActionConfig {
   title?: string;
-  printTemplateCode?: string;
   dataSourceAdapter?: string | ((...args: any[]) => any);
 }

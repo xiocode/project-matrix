@@ -164,10 +164,9 @@ export default {
         ],
       },
       {
-        $type: "printTrigger",
+        $type: "multiplePrintTrigger",
         $id: `${props.$id}_${props.recordId}_printer`,
         dataSource: getDataSource,
-        printTemplateCode: props.printTemplateCode,
       },
     ];
 

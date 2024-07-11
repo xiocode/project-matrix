@@ -1,4 +1,4 @@
-import {cloneDeep, filter} from "lodash";
+import { cloneDeep, filter } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
@@ -66,7 +66,6 @@ const page: RapidPage = {
         {
           $type: "batchPrintAction",
           title: "批量打印",
-          printTemplateCode: "materialIdentificationCard",
           dataSourceAdapter: `
             const createdAt = _.get(record, "createdAt");
             const validityDate = _.get(record, "validityDate");
@@ -74,17 +73,20 @@ const page: RapidPage = {
             const dictionary = _.find(dictionaries, function(d) { return d.code === "QualificationState" });
             const qualificationStateInfo = _.find(_.get(dictionary, "entries"), function(e) { return e.value === _.get(record, "lot.qualificationState") });
 
-            return _.merge({}, record, {
-              materialName: _.get(record, "material.name"),
-              materialCode: _.get(record, "material.code"),
-              materialSpecification: _.get(record, "material.specification"),
-              lotNum: _.get(record, "lot.lotNum"),
-              createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-              validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
-              currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-              unit: _.get(record, "unit.name"),
-              qualificationState: _.get(qualificationStateInfo, "name"),
-            });
+            return {
+              templateCode: _.get(record, "material.category.printTemplate.code"),
+              taskData: _.merge({}, record, {
+                materialName: _.get(record, "material.name"),
+                materialCode: _.get(record, "material.code"),
+                materialSpecification: _.get(record, "material.specification"),
+                lotNum: _.get(record, "lot.lotNum"),
+                createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                unit: _.get(record, "unit.name"),
+                qualificationState: _.get(qualificationStateInfo, "name"),
+              })
+            };
           `,
           $permissionCheck: "inventoryTag.manage",
         },
@@ -100,6 +102,16 @@ const page: RapidPage = {
           operator: "notNull",
         },
       ],
+      relations: {
+        material: {
+          properties: ["id", "code", "name", "specification", "category"],
+          relations: {
+            category: {
+              properties: ["id", "code", "name", "printTemplate"],
+            },
+          },
+        },
+      },
       orderBy: [
         {
           field: "createdAt",

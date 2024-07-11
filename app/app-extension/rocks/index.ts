@@ -7,6 +7,7 @@ import SectionSeparator from "./section-separator/SectionSeparator";
 import ShopfloorAppBuilder from "./shopfloor-app-builder/ShopfloorAppBuilder";
 import TestComponent from "./test";
 import PrintTrigger from "./print-trigger/PrintTrigger";
+import MultiplePrintTrigger from "./multiple-print-trigger/MultiplePrintTrigger";
 import SonicRecordActionPrintEntity from "./sonic-record-action-print-entity/SonicRecordActionPrintEntity";
 import CheckableTag from "./checkable-tag/CheckableTag";
 import InspectionPrintRecordAction from "./inspection-print-record-action/InspectionPrintRecordAction";
@@ -18,6 +19,7 @@ import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSel
 import InspectionInputSection from "./inspection-input-section/InspectionInputSection";
 import BatchPrintAction from "./batch-print-action/BatchPrintAction";
 import InventoryDetailViewer from "./inventory-detail-viewer";
+import CheckRecordDetail from "./check-record-detail";
 
 export default [
   Link,
@@ -25,6 +27,7 @@ export default [
   MrpSandTable,
   MrpWorkOrderSandTable,
   PrintTrigger,
+  MultiplePrintTrigger,
   RapidRecordActionLink,
   TestComponent,
   SectionSeparator,
@@ -40,4 +43,5 @@ export default [
   InspectionInputSection,
   BatchPrintAction,
   InventoryDetailViewer,
+  CheckRecordDetail,
 ];

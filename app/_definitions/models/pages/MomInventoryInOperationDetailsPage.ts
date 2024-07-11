@@ -411,7 +411,6 @@ const page: RapidPage = {
                 {
                   $type: "batchPrintAction",
                   title: "批量打印",
-                  printTemplateCode: "rawMaterialIdentificationCard",
                   dataSourceAdapter: `
                     const createdAt = _.get(record, "good.createdAt");
                     const validityDate = _.get(record, "good.validityDate");
@@ -419,17 +418,20 @@ const page: RapidPage = {
                     const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
                     const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(record, "lot.qualificationState") });
 
-                    return _.merge({}, record, {
-                      materialName: _.get(record, "material.name"),
-                      materialCode: _.get(record, "material.code"),
-                      materialSpecification: _.get(record, "material.specification"),
-                      lotNum: _.get(record, 'lot.lotNum'),
-                      createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                      validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
-                      currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                      unit: _.get(record, "unit.name"),
-                      qualificationState: _.get(qualificationStateInfo, 'name')
-                    });
+                    return {
+                      templateCode: _.get(record, "material.category.printTemplate.code"),
+                      taskData: _.merge({}, record, {
+                        materialName: _.get(record, "material.name"),
+                        materialCode: _.get(record, "material.code"),
+                        materialSpecification: _.get(record, "material.specification"),
+                        lotNum: _.get(record, 'lot.lotNum'),
+                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        unit: _.get(record, "unit.name"),
+                        qualificationState: _.get(qualificationStateInfo, 'name')
+                      })
+                    };
                   `,
                 },
               ],
@@ -439,6 +441,16 @@ const page: RapidPage = {
                   field: "createdAt",
                 },
               ],
+              relations: {
+                material: {
+                  properties: ["id", "code", "name", "specification", "category"],
+                  relations: {
+                    category: {
+                      properties: ["id", "code", "name", "printTemplate"],
+                    },
+                  },
+                },
+              },
               columns: [
                 {
                   type: "auto",
@@ -521,7 +533,6 @@ const page: RapidPage = {
                   code: "print",
                   actionType: "print",
                   actionText: "打印",
-                  printTemplateCode: "rawMaterialIdentificationCard",
                   dataSourceAdapter: `
                     return _.map(data, function(item){
                       const createdAt = _.get(item, "good.createdAt");
@@ -530,17 +541,20 @@ const page: RapidPage = {
                       const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
                       const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(item, "lot.qualificationState") });
 
-                      return _.merge({}, item, {
-                        materialName: _.get(item, "material.name"),
-                        materialCode: _.get(item, "material.code"),
-                        materialSpecification: _.get(item, "material.specification"),
-                        lotNum: _.get(item, 'lot.lotNum'),
-                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
-                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        unit: _.get(item, "unit.name"),
-                        qualificationState: _.get(qualificationStateInfo, 'name')
-                      })
+                      return {
+                        templateCode: _.get(item, "material.category.printTemplate.code"),
+                        taskData: _.merge({}, item, {
+                          materialName: _.get(item, "material.name"),
+                          materialCode: _.get(item, "material.code"),
+                          materialSpecification: _.get(item, "material.specification"),
+                          lotNum: _.get(item, 'lot.lotNum'),
+                          createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                          validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                          currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                          unit: _.get(item, "unit.name"),
+                          qualificationState: _.get(qualificationStateInfo, 'name')
+                        })
+                      }
                     });
                   `,
                   $exps: {
@@ -728,22 +742,24 @@ const page: RapidPage = {
                   $type: "inspectionPrintRecordAction",
                   actionType: "print",
                   actionText: "送检",
-                  printTemplateCode: "rawMaterialInspectionIdentificationCard",
                   dataSourceAdapter: `
                   return _.map(data, function(item){
                     const createdAt = _.get(item, "good.createdAt");
 
-                    return _.merge({}, item, {
-                      materialName: _.get(item, "material.name"),
-                      materialCode: _.get(item, "material.code"),
-                      materialSpecification: _.get(item, "material.specification"),
-                      createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                      lotNum: _.get(item, 'lot.lotNum'),
-                      currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                      sampleCode: _.get(item, 'sampleNo'),
-                      inspectDate: dayjs().format("YYYY-MM-DD"),
-                      remark: _.get(item, 'remark')
-                    })
+                    return {
+                      templateCode: "rawMaterialInspectionIdentificationCard",
+                      taskData: _.merge({}, item, {
+                        materialName: _.get(item, "material.name"),
+                        materialCode: _.get(item, "material.code"),
+                        materialSpecification: _.get(item, "material.specification"),
+                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                        lotNum: _.get(item, 'lot.lotNum'),
+                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        sampleCode: _.get(item, 'sampleNo'),
+                        inspectDate: dayjs().format("YYYY-MM-DD"),
+                        remark: _.get(item, 'remark')
+                      })
+                    }
                   });
                 `,
                   $exps: {
