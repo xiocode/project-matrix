@@ -94,7 +94,14 @@ const page: RapidPage = {
           code: "print",
           actionType: "print",
           actionText: "打印",
-          printTemplateCode: "locationIdentificationCard",
+          dataSourceAdapter: `
+            return _.map(data, function(item){
+              return {
+                templateCode: "locationIdentificationCard",
+                taskData: item,
+              }
+            });
+          `,
         },
         {
           $type: "sonicRecordActionEditEntity",

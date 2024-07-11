@@ -32,10 +32,9 @@ export default {
         ],
       },
       {
-        $type: "printTrigger",
+        $type: "multiplePrintTrigger",
         $id: `${props.$id}_${props.recordId}_trigger`,
         dataSource,
-        printTemplateCode: props.printTemplateCode,
       },
     ];
 

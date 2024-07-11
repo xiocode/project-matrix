@@ -41,10 +41,9 @@ export default {
         ],
       },
       {
-        $type: "printTrigger",
+        $type: "multiplePrintTrigger",
         $id: `${props.$id}_batch_print_trigger`,
         dataSource: getDataSource,
-        printTemplateCode: props.printTemplateCode,
       },
     ];
 

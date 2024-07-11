@@ -1,12 +1,13 @@
 import { IPage, RuiEvent, type Rock, type RockConfig } from "@ruiapp/move-style";
 import { renderRock } from "@ruiapp/react-renderer";
-import PrintTriggerMeta from "./PrintTriggerMeta";
-import type { PrintTriggerRockConfig } from "./print-trigger-types";
+import MultiplePrintTriggerMeta from "./MultiplePrintTriggerMeta";
+import type { MultiplePrintTriggerRockConfig } from "./multiple-print-trigger-types";
 import { message } from "antd";
 import rapidApi from "~/rapidApi";
 import rapidAppDefinition from "~/rapidAppDefinition";
 import { useState } from "react";
 import { find } from "lodash";
+import { replaceTemplatePlaceholder } from "../print-trigger/PrintTrigger";
 
 export default {
   onInit(context, props) {
@@ -41,8 +42,11 @@ export default {
       close() {
         setVisible(false);
       },
-      async print(formData: { code: string; content: string }, page?: IPage) {
-        let dataSource: Record<string, any>[] = [];
+      async print(formData: { code: string }, page?: IPage) {
+        let dataSource: {
+          templateCode: string;
+          taskData: Record<string, any>;
+        }[] = [];
         if (typeof props.dataSource === "function") {
           dataSource = props.dataSource();
         } else {
@@ -50,19 +54,24 @@ export default {
         }
 
         try {
+          const printTemplateStoreData = state.scope.getStore("printTemplateList")?.data?.list || [];
           await rapidApi.post(`/svc/printer/printers/${formData.code}/tasks`, {
-            tasks: (dataSource || []).map((record) => {
-              return {
-                type: "zpl-label",
-                name: "标签打印",
-                data: replaceTemplatePlaceholder(formData.content, record),
-              };
-            }),
+            tasks: (dataSource || [])
+              .map((record) => {
+                const templateCode = record.templateCode || "rawMaterialIdentificationCard";
+                const printTemplate = templateCode && find(printTemplateStoreData, (item) => item.code === templateCode);
+                return {
+                  type: "zpl-label",
+                  name: "标签打印",
+                  data: replaceTemplatePlaceholder(printTemplate?.content, record?.taskData),
+                };
+              })
+              .filter((item) => !!item.data),
           });
           setVisible(false);
 
           if (page) {
-            page.sendComponentMessage(`${props.$id}_print_modal_form`, { name: "resetFields" });
+            page.sendComponentMessage(`${props.$id}_multiple_print_modal_form`, { name: "resetFields" });
           }
 
           message.success("已下发打印指令");
@@ -93,34 +102,16 @@ export default {
         required: true,
         rules: [{ required: true, message: "打印机必选" }],
       },
-      {
-        type: "select",
-        label: "打印模板",
-        code: "content",
-        formControlProps: {
-          listDataSourceCode: "printTemplateList",
-          listTextFieldName: "name",
-          listValueFieldName: "content",
-        },
-        required: true,
-        rules: [{ required: true, message: "打印模板机必选" }],
-      },
     ];
 
-    const printTemplateStoreData = state.scope.getStore("printTemplateList")?.data?.list || [];
-    const printTemplate = props.printTemplateCode && find(printTemplateStoreData, (item) => item.code === props.printTemplateCode);
-    if (printTemplate) {
-      formItems = formItems.filter((item) => item.code !== "content");
-    }
-
     const rockConfig: RockConfig = {
-      $id: `${props.$id}_print_modal`,
+      $id: `${props.$id}_multiple_print_modal`,
       $type: "antdModal",
       title: "打印",
       open: state.visible,
       children: [
         {
-          $id: `${props.$id}_print_modal_form`,
+          $id: `${props.$id}_multiple_print_modal_form`,
           $type: "rapidForm",
           items: formItems,
           onFinish: [
@@ -128,9 +119,6 @@ export default {
               $action: "script",
               script: async (event: RuiEvent) => {
                 let formData = await event.sender.form.validateFields();
-                if (!formData.content) {
-                  formData.content = printTemplate?.content;
-                }
 
                 state.print(formData, context.page);
               },
@@ -142,7 +130,7 @@ export default {
         {
           $action: "script",
           script: (event: RuiEvent) => {
-            event.page.sendComponentMessage(`${props.$id}_print_modal_form`, { name: "submit" });
+            event.page.sendComponentMessage(`${props.$id}_multiple_print_modal_form`, { name: "submit" });
           },
         },
       ],
@@ -151,7 +139,7 @@ export default {
           $action: "script",
           script: () => {
             state.close();
-            context.page.sendComponentMessage(`${props.$id}_print_modal_form`, { name: "resetFields" });
+            context.page.sendComponentMessage(`${props.$id}_multiple_print_modal_form`, { name: "resetFields" });
           },
         },
       ],
@@ -160,17 +148,5 @@ export default {
     return renderRock({ context, rockConfig });
   },
 
-  ...PrintTriggerMeta,
-} as Rock<PrintTriggerRockConfig>;
-
-export function replaceTemplatePlaceholder(tpl: string, data: Record<string, any>) {
-  if (!tpl) {
-    return "";
-  }
-
-  let obj = data || {};
-
-  const fields = tpl.match(/\{\{[.\w]+\}\}/g)?.map((c) => c.replace(/[\{\}\.]+/g, ""));
-
-  return fields?.reduce((str, field) => str.replace(`{{.${field}}}`, obj[field] != null ? obj[field] : ""), tpl);
-}
+  ...MultiplePrintTriggerMeta,
+} as Rock<MultiplePrintTriggerRockConfig>;

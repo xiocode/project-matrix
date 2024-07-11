@@ -7,6 +7,7 @@ import SectionSeparator from "./section-separator/SectionSeparator";
 import ShopfloorAppBuilder from "./shopfloor-app-builder/ShopfloorAppBuilder";
 import TestComponent from "./test";
 import PrintTrigger from "./print-trigger/PrintTrigger";
+import MultiplePrintTrigger from "./multiple-print-trigger/MultiplePrintTrigger";
 import SonicRecordActionPrintEntity from "./sonic-record-action-print-entity/SonicRecordActionPrintEntity";
 import CheckableTag from "./checkable-tag/CheckableTag";
 import InspectionPrintRecordAction from "./inspection-print-record-action/InspectionPrintRecordAction";
@@ -25,6 +26,7 @@ export default [
   MrpSandTable,
   MrpWorkOrderSandTable,
   PrintTrigger,
+  MultiplePrintTrigger,
   RapidRecordActionLink,
   TestComponent,
   SectionSeparator,
