@@ -19,6 +19,7 @@ import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSel
 import InspectionInputSection from "./inspection-input-section/InspectionInputSection";
 import BatchPrintAction from "./batch-print-action/BatchPrintAction";
 import InventoryDetailViewer from "./inventory-detail-viewer";
+import CheckRecordDetail from "./check-record-detail";
 
 export default [
   Link,
@@ -42,4 +43,5 @@ export default [
   InspectionInputSection,
   BatchPrintAction,
   InventoryDetailViewer,
+  CheckRecordDetail,
 ];

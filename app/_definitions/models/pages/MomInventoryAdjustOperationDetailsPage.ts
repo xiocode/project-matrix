@@ -251,40 +251,33 @@ const page: RapidPage = {
           children: [
             {
               $id: "inventoryCheckRecordList",
-              $type: "sonicEntityList",
-              entityCode: "MomInventoryCheckRecord",
-              viewMode: "table",
+              $type: "businessTable",
+              selectionMode: "none",
+              // dataSourceCode: "goodTransferGroupList",
+              requestConfig: {
+                url: "/api/app/listInventoryCheckTransfers",
+              },
+              $exps: {
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+              },
               fixedFilters: [
                 {
-                  field: "operation",
-                  operator: "exists",
-                  filters: [
-                    {
-                      field: "id",
-                      operator: "eq",
-                      value: "",
-                    },
-                  ],
+                  field: "operationId",
+                  operator: "eq",
+                  value: "",
                 },
               ],
-              listActions: [
-                {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                  $permissionCheck: "inventoryOperation.manage",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-                  },
-                },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
-              pageSize: -1,
+              requestParamsAdapter: `
+                return {
+                  operationId: _.get(params, "filters[0]filters[0]value"),
+                  limit: 1000
+                }
+              `,
+              responseDataAdapter: `
+                return {
+                  list: data || []
+                }
+              `,
               orderBy: [
                 {
                   field: "createdAt",
@@ -302,6 +295,7 @@ const page: RapidPage = {
                 {
                   type: "auto",
                   code: "material",
+                  title: "物品",
                   width: "100px",
                   rendererType: "anchor",
                   rendererProps: {
@@ -318,168 +312,114 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "lotNum",
-                  width: "100px",
-                },
-                // {
-                //   type: "auto",
-                //   code: "binNum",
-                //   width: "100px",
-                // },
-                // {
-                //   type: "auto",
-                //   code: "serialNum",
-                //   width: "100px",
-                // },
-                // {
-                //   type: "auto",
-                //   code: "trackingCode",
-                //   width: "100px",
-                // },
-                // {
-                //   type: "auto",
-                //   code: "tags",
-                //   width: "100px",
-                // },
-                // {
-                //   type: "auto",
-                //   code: "palletNum",
-                //   width: "100px",
-                // },
-                {
-                  type: "auto",
-                  code: "quantity",
+                  code: "totalAmount",
+                  title: "账面数量",
                   width: "100px",
                 },
                 {
                   type: "auto",
-                  code: "unit",
-                  width: "80px",
+                  code: "checkedAmount",
+                  title: "盘点数量",
+                  width: "100px",
+                },
+                {
+                  type: "auto",
+                  code: "diffAmount",
+                  title: "盘亏数量",
+                  width: "100px",
+                  rendererType: "checkRecordDetail",
                   rendererProps: {
-                    format: "{{name}}",
+                    checkResultMode: "loss",
                   },
                 },
                 {
                   type: "auto",
-                  code: "location",
-                  width: "150px",
-                },
-              ],
-              actions: [
-                {
-                  $type: "sonicRecordActionEditEntity",
-                  code: "edit",
-                  actionType: "edit",
-                  actionText: "修改",
-                  $permissionCheck: "inventoryOperation.manage",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+                  code: "diffAmount",
+                  title: "盘盈数量",
+                  width: "100px",
+                  rendererType: "checkRecordDetail",
+                  rendererProps: {
+                    checkResultMode: "profit",
                   },
                 },
                 {
-                  $type: "sonicRecordActionDeleteEntity",
-                  code: "delete",
-                  actionType: "delete",
-                  actionText: "删除",
-                  dataSourceCode: "list",
-                  entityCode: "MomInventoryCheckRecord",
-                  $permissionCheck: "inventoryOperation.manage",
-                  $exps: {
-                    _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-                  },
+                  type: "auto",
+                  code: "material.defaultUnit.name",
+                  width: "80px",
+                  title: "单位",
                 },
               ],
-              newForm: cloneDeep(formConfig),
-              editForm: cloneDeep(formConfig),
-              stores: [
-                {
-                  type: "entityStore",
-                  name: "locations",
-                  entityCode: "BaseLocation",
-                  properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-                  filters: [],
-                  orderBy: [
-                    {
-                      field: "orderNum",
-                    },
-                  ],
-                },
-              ],
-              $exps: {
-                "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.operation_id": "$rui.parseQuery().id",
-              },
             },
           ],
         },
       ],
     },
-    {
-      $type: "sectionSeparator",
-      showLine: false,
-    },
-    {
-      $type: "rapidToolbar",
-      items: [
-        {
-          $type: "rapidToolbarButton",
-          text: "确认提交",
-          actionStyle: "primary",
-          size: "large",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              data: { state: "done", approvalState: "approving" },
-              $exps: {
-                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              },
-            },
-          ],
-          $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-          },
-        },
-        {
-          $type: "rapidToolbarButton",
-          text: "批准",
-          actionStyle: "primary",
-          size: "large",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              data: { approvalState: "approved" },
-              $exps: {
-                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              },
-            },
-          ],
-          $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
-          },
-        },
-        {
-          $type: "rapidToolbarButton",
-          text: "拒绝",
-          danger: true,
-          size: "large",
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "PATCH",
-              data: { approvalState: "rejected" },
-              $exps: {
-                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-              },
-            },
-          ],
-          $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
-          },
-        },
-      ],
-    },
+    // {
+    //   $type: "sectionSeparator",
+    //   showLine: false,
+    // },
+    // {
+    //   $type: "rapidToolbar",
+    //   items: [
+    //     {
+    //       $type: "rapidToolbarButton",
+    //       text: "确认提交",
+    //       actionStyle: "primary",
+    //       size: "large",
+    //       onAction: [
+    //         {
+    //           $action: "sendHttpRequest",
+    //           method: "PATCH",
+    //           data: { state: "done", approvalState: "approving" },
+    //           $exps: {
+    //             url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+    //           },
+    //         },
+    //       ],
+    //       $exps: {
+    //         _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+    //       },
+    //     },
+    //     {
+    //       $type: "rapidToolbarButton",
+    //       text: "批准",
+    //       actionStyle: "primary",
+    //       size: "large",
+    //       onAction: [
+    //         {
+    //           $action: "sendHttpRequest",
+    //           method: "PATCH",
+    //           data: { approvalState: "approved" },
+    //           $exps: {
+    //             url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+    //           },
+    //         },
+    //       ],
+    //       $exps: {
+    //         _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+    //       },
+    //     },
+    //     {
+    //       $type: "rapidToolbarButton",
+    //       text: "拒绝",
+    //       danger: true,
+    //       size: "large",
+    //       onAction: [
+    //         {
+    //           $action: "sendHttpRequest",
+    //           method: "PATCH",
+    //           data: { approvalState: "rejected" },
+    //           $exps: {
+    //             url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+    //           },
+    //         },
+    //       ],
+    //       $exps: {
+    //         _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+    //       },
+    //     },
+    //   ],
+    // },
   ],
 };
 
