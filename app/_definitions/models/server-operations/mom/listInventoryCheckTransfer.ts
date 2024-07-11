@@ -131,7 +131,7 @@ async function listGoodCheckTransfers(server: IRpdServer, input: QueryGoodOutTra
       totalAmount: item.total_amount,
       totalShelves: item.total_shelves,
       diffAmount: item.diff_amount,
-      checkedAmount: item.checked_shelves,
+      checkedAmount: item.checked_amount,
       checkedShelves: item.checked_shelves,
       lossGoods: item.loss_goods,
       profitGoods: item.profit_goods,
