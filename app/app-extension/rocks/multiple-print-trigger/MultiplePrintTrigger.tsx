@@ -1,35 +1,16 @@
-import { IPage, RuiEvent, type Rock, type RockConfig } from "@ruiapp/move-style";
+import { IPage, Page, RuiEvent, type Rock, type RockConfig } from "@ruiapp/move-style";
 import { renderRock } from "@ruiapp/react-renderer";
 import MultiplePrintTriggerMeta from "./MultiplePrintTriggerMeta";
 import type { MultiplePrintTriggerRockConfig } from "./multiple-print-trigger-types";
 import { message } from "antd";
 import rapidApi from "~/rapidApi";
 import rapidAppDefinition from "~/rapidAppDefinition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { find } from "lodash";
 import { replaceTemplatePlaceholder } from "../print-trigger/PrintTrigger";
 
 export default {
-  onInit(context, props) {
-    const printerEntity = rapidAppDefinition.entities.find((entity) => entity.code === "SvcPrinter");
-    const printTemplateEntity = rapidAppDefinition.entities.find((entity) => entity.code === "MomPrintTemplate");
-    const stores = [
-      {
-        name: "printerList",
-        type: "entityStore",
-        entityModel: printerEntity,
-      },
-      {
-        name: "printTemplateList",
-        type: "entityStore",
-        entityModel: printTemplateEntity,
-      },
-    ];
-
-    stores.forEach((store) => {
-      context.scope.addStore(store);
-    });
-  },
+  onInit(context, props) {},
 
   onResolveState(props, state) {
     const [visible, setVisible] = useState<boolean>(false);
@@ -42,7 +23,7 @@ export default {
       close() {
         setVisible(false);
       },
-      async print(formData: { code: string }, page?: IPage) {
+      async print(formData: { code: string }, page?: Page) {
         let dataSource: {
           templateCode: string;
           taskData: Record<string, any>;
@@ -54,7 +35,7 @@ export default {
         }
 
         try {
-          const printTemplateStoreData = state.scope.getStore("printTemplateList")?.data?.list || [];
+          const printTemplateStoreData = page?.scope?.getStore("printTemplateList")?.data?.list || [];
           await rapidApi.post(`/svc/printer/printers/${formData.code}/tasks`, {
             tasks: (dataSource || [])
               .map((record) => {
@@ -89,13 +70,38 @@ export default {
   },
 
   Renderer(context, props, state) {
+    useEffect(() => {
+      const printerEntity = rapidAppDefinition.entities.find((entity) => entity.code === "SvcPrinter");
+      const printTemplateEntity = rapidAppDefinition.entities.find((entity) => entity.code === "MomPrintTemplate");
+      const stores = [
+        {
+          name: "printerList",
+          type: "entityStore",
+          entityModel: printerEntity,
+        },
+        {
+          name: "printTemplateList",
+          type: "entityStore",
+          entityModel: printTemplateEntity,
+        },
+      ];
+
+      stores.forEach((store) => {
+        const existedStore = context.page.scope.getStore(store.name);
+        if (!existedStore) {
+          context.page.scope.addStore(store);
+          context.page.scope.loadStoreData(store.name, {});
+        }
+      });
+    }, []);
+
     let formItems = [
       {
         type: "select",
         code: "code",
         label: "打印机",
         formControlProps: {
-          listDataSourceCode: "printerList",
+          listDataSource: context.page.scope.getStore("printerList"),
           listTextFieldName: "code",
           listValueFieldName: "code",
         },
