@@ -91,7 +91,6 @@ const page: RapidPage = {
       actions: [
         {
           $type: "sonicRecordActionPrintEntity",
-          code: "print",
           actionType: "print",
           actionText: "打印",
           dataSourceAdapter: `
