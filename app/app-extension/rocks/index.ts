@@ -21,6 +21,10 @@ import BatchPrintAction from "./batch-print-action/BatchPrintAction";
 import InventoryDetailViewer from "./inventory-detail-viewer";
 import CheckRecordDetail from "./check-record-detail";
 
+// inventory
+import InventoryOperationForm from "./inventory-business/operation-form";
+import InventoryApplicationForm from "./inventory-business/application-form";
+
 export default [
   Link,
   MaterialLabelRenderer,
@@ -44,4 +48,8 @@ export default [
   BatchPrintAction,
   InventoryDetailViewer,
   CheckRecordDetail,
+
+  // inventory
+  InventoryOperationForm,
+  InventoryApplicationForm,
 ];

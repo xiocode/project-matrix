@@ -29,12 +29,14 @@ import MomInventoryAdjustApplicationListPage from '../models/pages/MomInventoryA
 import MomInventoryAdjustOperationDetailsPage from '../models/pages/MomInventoryAdjustOperationDetailsPage';
 import MomInventoryAdjustOperationListPage from '../models/pages/MomInventoryAdjustOperationListPage';
 import MomInventoryApplicationDetailsPage from '../models/pages/MomInventoryApplicationDetailsPage';
+import MomInventoryApplicationFormPage from "../models/pages/MomInventoryApplicationFormPage";
 import MomInventoryApplicationListPage from '../models/pages/MomInventoryApplicationListPage';
 import MomInventoryBusinessTypeListPage from '../models/pages/MomInventoryBusinessTypeListPage';
 import MomInventoryInOperationDetailsPage from '../models/pages/MomInventoryInOperationDetailsPage';
 import MomInventoryListPage from '../models/pages/MomInventoryListPage';
 import MomInventoryNormalOperationDetailsPage from '../models/pages/MomInventoryNormalOperationDetailsPage';
 import MomInventoryNormalOperationListPage from '../models/pages/MomInventoryNormalOperationListPage';
+import MomInventoryOperationFormPage from "../models/pages/MomInventoryOperationFormPage";
 import MomInventoryOperationListPage from '../models/pages/MomInventoryOperationListPage';
 import MomInventoryOrganizeOperationListPage from '../models/pages/MomInventoryOrganizeOperationListPage';
 import MomInventoryOutOperationDetailsPage from '../models/pages/MomInventoryOutOperationDetailsPage';
@@ -138,12 +140,14 @@ export default [
   MomInventoryAdjustOperationDetailsPage,
   MomInventoryAdjustOperationListPage,
   MomInventoryApplicationDetailsPage,
+  MomInventoryApplicationFormPage,
   MomInventoryApplicationListPage,
   MomInventoryBusinessTypeListPage,
   MomInventoryInOperationDetailsPage,
   MomInventoryListPage,
   MomInventoryNormalOperationDetailsPage,
   MomInventoryNormalOperationListPage,
+  MomInventoryOperationFormPage,
   MomInventoryOperationListPage,
   MomInventoryOrganizeOperationListPage,
   MomInventoryOutOperationDetailsPage,

@@ -82,6 +82,22 @@ const page: RapidPage = {
           $permissionCheck: "inventoryOperation.manage",
           actionStyle: "primary",
         },
+        // {
+        //   $type: "antdButton",
+        //   icon: {
+        //     $type: "antdIcon",
+        //     name: "PlusOutlined",
+        //   },
+        //   type: "primary",
+        //   href: `/pages/mom_inventory_operation_form`,
+        //   children: [
+        //     {
+        //       $type: "text",
+        //       text: " 新建",
+        //     },
+        //   ],
+        //   $permissionCheck: "inventoryOperation.manage",
+        // },
       ],
       fixedFilters: [
         {
@@ -187,7 +203,18 @@ const page: RapidPage = {
           $permissionCheck: "inventoryOperation.manage",
         },
       ],
-      newForm: cloneDeep(formConfig),
+      newForm: cloneDeep({
+        ...formConfig,
+        onSaveSuccess: [
+          {
+            $action: "script",
+            script: `
+              const data = event.args[0];
+              location.href = location.origin + '/pages/mom_inventory_in_operation_details?id=' + data.id;
+            `,
+          },
+        ],
+      }),
       editForm: cloneDeep(formConfig),
       $exps: {
         "newForm.fixedFields.state": "'processing'",
