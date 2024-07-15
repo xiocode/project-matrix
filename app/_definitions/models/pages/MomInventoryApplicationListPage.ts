@@ -50,11 +50,27 @@ const page: RapidPage = {
       viewMode: "table",
       selectionMode: "none",
       listActions: [
+        // {
+        //   $type: "sonicToolbarNewEntityButton",
+        //   text: "新建",
+        //   icon: "PlusOutlined",
+        //   actionStyle: "primary",
+        //   $permissionCheck: "inventoryApplication.manage",
+        // },
         {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
+          $type: "antdButton",
+          icon: {
+            $type: "antdIcon",
+            name: "PlusOutlined",
+          },
+          type: "primary",
+          href: `/pages/mom_inventory_application_form`,
+          children: [
+            {
+              $type: "text",
+              text: " 新建",
+            },
+          ],
           $permissionCheck: "inventoryApplication.manage",
         },
       ],
