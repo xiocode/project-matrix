@@ -76,6 +76,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "ProductionTask",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

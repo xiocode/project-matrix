@@ -60,6 +60,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomMaterialInventory",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

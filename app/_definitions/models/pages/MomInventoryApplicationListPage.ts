@@ -49,6 +49,23 @@ const page: RapidPage = {
       entityCode: "MomInventoryApplication",
       viewMode: "table",
       selectionMode: "none",
+      // filterForm: {
+      //   column: 3,
+      //   items: [
+      //     {
+      //       type: "auto",
+      //       code: "code",
+      //     },
+      //     {
+      //       type: "auto",
+      //       code: "operationType",
+      //     },
+      //     {
+      //       type: "auto",
+      //       code: "businessType",
+      //     },
+      //   ],
+      // },
       listActions: [
         // {
         //   $type: "sonicToolbarNewEntityButton",

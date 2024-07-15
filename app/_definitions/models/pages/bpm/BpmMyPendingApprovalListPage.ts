@@ -9,7 +9,8 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BpmInstance",
       viewMode: "table",
-      extraProperties: ["code", "process", 'currentJob'],
+      selectionMode: "none",
+      extraProperties: ["code", "process", "currentJob"],
       fixedFilters: [
         {
           operator: "eq",
@@ -33,11 +34,11 @@ const page: RapidPage = {
                   operator: "eq",
                   field: "state",
                   value: "pending",
-                }
-              ]
-            }
-          ]
-        }
+                },
+              ],
+            },
+          ],
+        },
       ],
       orderBy: [
         {
@@ -108,7 +109,7 @@ const page: RapidPage = {
       ],
       $exps: {
         "fixedFilters[1].filters[0].filters[0].value": "_.get(me, 'profile.id')",
-      }
+      },
     } as SonicEntityListRockConfig,
   ],
 };

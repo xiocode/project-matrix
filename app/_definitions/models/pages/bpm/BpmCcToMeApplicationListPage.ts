@@ -9,6 +9,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BpmInstance",
       viewMode: "table",
+      selectionMode: "none",
       extraProperties: ["process"],
       columns: [
         {

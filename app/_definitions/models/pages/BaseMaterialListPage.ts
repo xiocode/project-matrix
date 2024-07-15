@@ -123,6 +123,7 @@ const page: RapidPage = {
           $type: "sonicEntityList",
           entityCode: "BaseMaterial",
           viewMode: "table",
+          selectionMode: "none",
           fixedFilters: [
             {
               field: "category_id",

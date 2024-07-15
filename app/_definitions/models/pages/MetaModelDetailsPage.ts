@@ -72,6 +72,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "Property",
               viewMode: "table",
+              selectionMode: "none",
               pageSize: -1,
               fixedFilters: [
                 {

@@ -65,6 +65,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "PmProject",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -169,8 +170,8 @@ const page: RapidPage = {
           actionText: "配置",
           $permissionCheck: "pmProject.setting",
           $exps: {
-            to: `"/pages/pm_project_settings?id=" + $slot.record.id`
-          }
+            to: `"/pages/pm_project_settings?id=" + $slot.record.id`,
+          },
         },
         {
           $type: "sonicRecordActionEditEntity",

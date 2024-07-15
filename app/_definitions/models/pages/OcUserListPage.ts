@@ -51,6 +51,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "OcUser",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -152,7 +153,7 @@ const page: RapidPage = {
               method: "POST",
               data: { password: "" },
               $exps: {
-                data: "$event.args[0]"
+                data: "$event.args[0]",
               },
             },
           ],

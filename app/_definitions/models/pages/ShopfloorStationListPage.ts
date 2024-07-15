@@ -28,6 +28,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "ShopfloorStation",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

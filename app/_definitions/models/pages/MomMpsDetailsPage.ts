@@ -199,6 +199,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomWorkOrder",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "mps_id",

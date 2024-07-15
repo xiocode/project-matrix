@@ -141,6 +141,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomWorkOrder",
       viewMode: "table",
+      selectionMode: "none",
       orderBy: [
         {
           field: "id",
@@ -276,7 +277,7 @@ const page: RapidPage = {
       $exps: {
         "newForm.fixedFields.assignmentState": "unassigned",
         "newForm.fixedFields.executionState": "pending",
-      }
+      },
     },
   ],
 };

@@ -93,6 +93,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmProjectWorkItemStepRole",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",

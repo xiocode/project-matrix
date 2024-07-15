@@ -19,6 +19,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomManufacturingResourcePlan",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [],
       extraActions: [
         {

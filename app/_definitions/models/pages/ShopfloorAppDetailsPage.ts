@@ -57,6 +57,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "ShopfloorAppStep",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "app_id",
@@ -84,6 +85,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "ShopfloorAppVersion",
               viewMode: "table",
+              selectionMode: "none",
               listActions: [
                 {
                   $type: "sonicToolbarNewEntityButton",

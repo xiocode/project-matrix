@@ -28,6 +28,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "PmProjectEvent",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

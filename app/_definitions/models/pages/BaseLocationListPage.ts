@@ -47,6 +47,16 @@ const page: RapidPage = {
           icon: "PlusOutlined",
           actionStyle: "primary",
         },
+        {
+          $type: "batchPrintAction",
+          title: "批量打印",
+          dataSourceAdapter: `
+            return {
+              templateCode: "locationIdentificationCard",
+              taskData: record,
+            };
+          `,
+        },
       ],
       extraActions: [
         {
@@ -134,6 +144,15 @@ const page: RapidPage = {
           },
         ],
       },
+      onSelectedIdsChange: [
+        {
+          $action: "setVars",
+          $exps: {
+            "vars.selectedIds": "$event.args[0].selectedIds",
+            "vars.selectedRecords": "$event.args[0].selectedRecords",
+          },
+        },
+      ],
       stores: [
         {
           type: "entityStore",

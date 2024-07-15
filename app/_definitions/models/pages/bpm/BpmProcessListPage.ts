@@ -27,7 +27,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             ],
           },
         },
-      }
+      },
     },
     {
       type: "auto",
@@ -74,6 +74,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BpmProcess",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

@@ -62,6 +62,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomMasterProductionSchedule",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "mrp_id",

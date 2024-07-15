@@ -235,6 +235,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmProjectEvent",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",
@@ -326,6 +327,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmPhase",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",
@@ -419,6 +421,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmMilestone",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",
@@ -508,6 +511,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "CbsOrder",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "projects",
@@ -631,6 +635,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "CbsContract",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",
@@ -712,6 +717,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmProjectBudget",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",
