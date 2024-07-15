@@ -1,5 +1,4 @@
-import type { EntityWatchHandlerContext, EntityWatcher } from "@ruiapp/rapid-core";
-import type { MomWorkTask } from "~/_definitions/meta/entity-types";
+import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
 
 export default [
   {

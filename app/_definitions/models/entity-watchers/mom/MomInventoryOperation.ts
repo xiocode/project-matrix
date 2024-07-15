@@ -1,18 +1,20 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import {MomInventoryOperationType} from "~/_definitions/meta/data-dictionary-types";
 import {
+  KisConfig,
   MomGood,
   MomGoodTransfer,
   MomInventoryApplication,
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   MomInventoryStatTable,
-  MomInventoryStatTrigger, MomWarehouse, SaveBaseLotInput, SaveMomGoodInput, SaveMomInventoryOperationInput,
+  MomInventoryStatTrigger,
+  MomWarehouse,
+  SaveBaseLotInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
 import KisInventoryOperationAPI from "~/sdk/kis/inventory";
-import momGoodTransfer from "~/_definitions/models/entities/MomGoodTransfer";
 
 export default [
   {
@@ -44,7 +46,6 @@ export default [
       const kisApi = await new KisHelper(server).NewAPIClient();
       const kisOperationApi = new KisInventoryOperationAPI(kisApi);
 
-
       const changes: Partial<MomInventoryOperation> = payload.changes;
       const after = payload.after;
 
@@ -56,32 +57,38 @@ export default [
           },
         });
 
-      if (after.operationType === "in") {
+        const kisConfig = await server.getEntityManager<KisConfig>("kis_config").findEntity({});
+        if (kisConfig) {
+          if (after.operationType === "in") {
+            // TODO: 生成KIS入库单
+            // switch (businessType?.name) {
+            //   case "采购入库":
+            //     await kisOperationApi.createProductReceipt({
+            //       Object: {
+            //         Head: {},
+            //         Entry: [{}],
+            //       },
+            //     } as WarehouseInPayload)
+            //     break;
+            //   case "生产入库":
+            //     await kisOperationApi.createPickingList({
+            //       Object: {
+            //         Head: {},
+            //         Entry: [{}],
+            //       },
+            //     } as WarehouseOutPayload)
+            //     break;
+            //   default:
+            //     break;
+            // }
+          } else if (after.operationType === "out") {
+            //   TODO: 生成KIS出库单
+          } else if (after.operationType === "transfer") {
+          //   TODO: 生成KIS调拨单
 
-          // TODO: 生成KIS入库单
-          // switch (businessType?.name) {
-          //   case "采购入库":
-          //     await kisOperationApi.createProductReceipt({
-          //       Object: {
-          //         Head: {},
-          //         Entry: [{}],
-          //       },
-          //     } as WarehouseInPayload)
-          //     break;
-          //   case "生产入库":
-          //     await kisOperationApi.createPickingList({
-          //       Object: {
-          //         Head: {},
-          //         Entry: [{}],
-          //       },
-          //     } as WarehouseOutPayload)
-          //     break;
-          //   default:
-          //     break;
-          // }
+          }
         }
       }
-
 
 
       if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
@@ -141,7 +148,6 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
 
   const inventoryStatService = new InventoryStatService(server);
 
-  // TODO: get to_location_id from transfers and get warehouse by location_id
   for (const transfer of transfers) {
     if (transfer?.to_location_id) {
 

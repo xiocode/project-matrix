@@ -17,7 +17,6 @@ import {
   SaveMomInventoryApplicationInput,
   SaveMomInventoryApplicationItemInput,
   SaveMomInventoryOperationInput,
-  SaveMomWarehouseInput,
 } from "~/_definitions/meta/entity-types";
 
 interface SyncOptions {
@@ -360,7 +359,7 @@ class KisDataSync {
     }
 
     const materials = await this.server.getEntityManager("base_material").findEntities({
-      filters: [{operator: "notNull", field: "externalCode"}],
+      filters: [{operator: "and", filters: [{operator: "notNull", field: "externalCode"}, {operator: "notNull", field: "default_unit_id"}]}],
     });
 
     const materialIds = materials.map((material: BaseMaterial) => material.externalCode);
@@ -409,7 +408,6 @@ class KisDataSync {
       {
         entity: {
           approvalState: 'uninitiated',
-          approveState: 'uninitiated',
           businessType: 3,
           operationType: 'in',
           state: 'processing',
@@ -447,6 +445,13 @@ class KisDataSync {
       await syncListFunction();
     }
 
+    await  momInventoryManager.updateEntityById({
+      id: result.id,
+      entityToSave: {
+        approvalState: 'approved',
+        state: 'done',
+      }
+    })
   }
 
 
