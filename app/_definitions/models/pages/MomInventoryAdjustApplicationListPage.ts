@@ -26,6 +26,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         listDataSourceCode: "locations",
         listParentField: "parent.id",
       },
+      label: "仓库",
     },
     // {
     //   type: "auto",
