@@ -25,6 +25,8 @@ import CheckRecordDetail from "./check-record-detail";
 import InventoryOperationForm from "./inventory-business/operation-form";
 import InventoryApplicationForm from "./inventory-business/application-form";
 
+// import RichEditor from "./rich-editor/RichEditor";
+
 export default [
   Link,
   MaterialLabelRenderer,
@@ -52,4 +54,5 @@ export default [
   // inventory
   InventoryOperationForm,
   InventoryApplicationForm,
+  // RichEditor,
 ];
