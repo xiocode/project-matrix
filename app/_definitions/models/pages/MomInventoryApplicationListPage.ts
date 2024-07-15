@@ -19,14 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "applicant",
     },
-    {
-      type: "auto",
-      code: "from",
-    },
-    {
-      type: "auto",
-      code: "to",
-    },
+    // {
+    //   type: "auto",
+    //   code: "from",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "to",
+    // },
     // {
     //   type: "auto",
     //   code: "operationState",

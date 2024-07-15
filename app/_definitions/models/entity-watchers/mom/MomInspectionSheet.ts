@@ -1,5 +1,5 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {BaseLot,} from "~/_definitions/meta/entity-types";
+import {BaseLot} from "~/_definitions/meta/entity-types";
 
 export default [
   {

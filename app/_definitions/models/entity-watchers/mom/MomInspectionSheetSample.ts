@@ -1,5 +1,4 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import { MomInspectionSheetSample, MomInspectionMeasurement } from "~/_definitions/meta/entity-types";
 
 export default [
   {
