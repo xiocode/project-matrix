@@ -32,6 +32,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "OcRole",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

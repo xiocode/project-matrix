@@ -79,6 +79,7 @@ function genListConfig(warehouseCode?: string) {
     $type: "sonicEntityList",
     entityCode: "MomInventory",
     viewMode: "table",
+    selectionMode: "none",
     listActions: [
       {
         $type: "sonicToolbarNewEntityButton",

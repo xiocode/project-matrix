@@ -579,6 +579,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "BaseMaterialDocument",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "material_id",

@@ -146,6 +146,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomInventoryApplicationItem",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "application",

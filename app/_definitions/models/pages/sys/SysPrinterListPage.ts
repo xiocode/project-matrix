@@ -32,6 +32,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "SvcPrinter",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -93,9 +94,9 @@ const page: RapidPage = {
                   {
                     type: "zpl-label",
                     name: "测试标签",
-                    data: "^XA^CFA,30^FO50,30^FDTest Label^FS^XZ"
-                  }
-                ]
+                    data: "^XA^CFA,30^FO50,30^FDTest Label^FS^XZ",
+                  },
+                ],
               },
               onSuccess: [
                 {
@@ -110,12 +111,12 @@ const page: RapidPage = {
                   type: "error",
                   $exps: {
                     content: "$event.args[0].message",
-                  }
-                }
+                  },
+                },
               ],
               $exps: {
                 url: `"/api/svc/printer/printers/" + $event.args[0].code + "/tasks"`,
-                "data.tasks[0].data": `"^XA^CFA,30^FO30,30^FDTest Label^FS^FO30,70^FD" + $event.args[0].code + "^FS^XZ"`
+                "data.tasks[0].data": `"^XA^CFA,30^FO30,30^FDTest Label^FS^FO30,70^FD" + $event.args[0].code + "^FS^XZ"`,
               },
             },
           ],

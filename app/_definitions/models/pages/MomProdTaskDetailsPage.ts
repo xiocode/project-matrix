@@ -115,6 +115,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "ProductionWorkReport",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "work_task_id",

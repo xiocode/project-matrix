@@ -14,7 +14,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "orderNum",
-    }
+    },
   ],
 };
 
@@ -28,6 +28,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BaseLocation",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -40,7 +41,7 @@ const page: RapidPage = {
         {
           field: "type",
           operator: "eq",
-          value: "warehouse"
+          value: "warehouse",
         },
       ],
       extraActions: [

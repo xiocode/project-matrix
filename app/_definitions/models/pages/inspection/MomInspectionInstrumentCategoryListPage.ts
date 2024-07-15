@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -10,7 +10,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       code: "description",
       type: "auto",
-    }
+    },
   ],
 };
 
@@ -18,12 +18,13 @@ const page: RapidPage = {
   code: "mom_inspection_instrument_category_list",
   name: "检验仪器类型",
   title: "检验仪器类型",
-  permissionCheck: {any: []},
+  permissionCheck: { any: [] },
   view: [
     {
       $type: "sonicEntityList",
       entityCode: "MomInspectionInstrumentCategory",
       viewMode: "table",
+      selectionMode: "none",
       orderBy: [
         {
           field: "name",
@@ -59,7 +60,7 @@ const page: RapidPage = {
           type: "auto",
           code: "description",
           fixed: "left",
-        }
+        },
       ],
       actions: [
         {

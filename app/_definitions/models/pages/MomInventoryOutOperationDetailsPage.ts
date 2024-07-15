@@ -252,6 +252,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomGoodTransfer",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "operation",

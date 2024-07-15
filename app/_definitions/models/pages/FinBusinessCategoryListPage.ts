@@ -36,6 +36,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "FinBusinessCategory",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

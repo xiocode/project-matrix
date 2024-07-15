@@ -329,6 +329,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomInspectionMeasurement",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "sheet_id",

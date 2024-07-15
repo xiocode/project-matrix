@@ -36,6 +36,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BaseFormField",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

@@ -40,6 +40,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomGoodLocation",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

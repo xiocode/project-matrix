@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -48,6 +48,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomWarehouseStrategy",
       viewMode: "table",
+      selectionMode: "none",
       orderBy: [
         {
           field: "id",

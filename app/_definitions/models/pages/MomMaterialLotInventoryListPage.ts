@@ -40,6 +40,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomMaterialLotWarehouseInventoryBalance",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarRefreshButton",

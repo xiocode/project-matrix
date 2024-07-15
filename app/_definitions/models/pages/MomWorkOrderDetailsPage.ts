@@ -480,6 +480,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomWorkReport",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "work_order_id",
@@ -594,6 +595,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "MomWorkTask",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "work_order_id",

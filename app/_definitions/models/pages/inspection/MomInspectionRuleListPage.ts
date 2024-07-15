@@ -37,12 +37,13 @@ const page: RapidPage = {
   code: "mom_inspection_rule_list",
   name: "检验规则",
   title: "检验规则",
-  permissionCheck: {any: []},
+  permissionCheck: { any: [] },
   view: [
     {
       $type: "sonicEntityList",
       entityCode: "MomInspectionRule",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

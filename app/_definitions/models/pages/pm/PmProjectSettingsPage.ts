@@ -81,6 +81,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmProjectRole",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "project",
@@ -253,8 +254,8 @@ const page: RapidPage = {
                   rendererProps: {
                     url: "/",
                     $exps: {
-                      href: `"/pages/pm_project_work_item_type_settings?id=" + $slot.record.id + "&projectId=" + $rui.parseQuery().id + "&workItemTypeId=" + $slot.record.workItemType.id`
-                    }
+                      href: `"/pages/pm_project_work_item_type_settings?id=" + $slot.record.id + "&projectId=" + $rui.parseQuery().id + "&workItemTypeId=" + $slot.record.workItemType.id`,
+                    },
                   },
                 },
                 {

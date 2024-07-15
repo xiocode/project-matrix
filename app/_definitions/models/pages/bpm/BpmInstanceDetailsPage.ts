@@ -53,6 +53,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "BpmJob",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   operator: "eq",

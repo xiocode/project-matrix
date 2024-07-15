@@ -60,6 +60,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "FinTransaction",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

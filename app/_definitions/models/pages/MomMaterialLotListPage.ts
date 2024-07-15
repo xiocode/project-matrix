@@ -43,6 +43,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BaseLot",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

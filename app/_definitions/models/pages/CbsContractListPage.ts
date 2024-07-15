@@ -52,6 +52,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "CbsContract",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

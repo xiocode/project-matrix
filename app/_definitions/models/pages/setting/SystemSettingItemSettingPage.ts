@@ -137,6 +137,7 @@ const page: RapidPage = {
           $type: "sonicEntityList",
           entityCode: "SystemSettingItemSetting",
           viewMode: "table",
+          selectionMode: "none",
           fixedFilters: [
             {
               field: "group_id",

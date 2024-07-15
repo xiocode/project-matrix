@@ -122,6 +122,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "CbsOrderItem",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "order",
@@ -277,6 +278,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "PmProject",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "orders",
@@ -384,6 +386,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "CbsContract",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "orders",
@@ -465,6 +468,7 @@ const page: RapidPage = {
               $type: "sonicEntityList",
               entityCode: "FinTransaction",
               viewMode: "table",
+              selectionMode: "none",
               fixedFilters: [
                 {
                   field: "order",

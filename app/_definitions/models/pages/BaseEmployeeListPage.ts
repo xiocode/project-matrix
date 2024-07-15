@@ -35,6 +35,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "BaseEmployee",
       viewMode: "table",
+      selectionMode: "none",
       orderBy: [
         {
           field: "code",

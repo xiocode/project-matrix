@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -38,12 +38,13 @@ const page: RapidPage = {
   code: "base_material_category_list",
   name: "货品分类",
   title: "货品分类",
-  permissionCheck: {any: ["baseMaterial.manage"]},
+  permissionCheck: { any: ["baseMaterial.manage"] },
   view: [
     {
       $type: "sonicEntityList",
       entityCode: "BaseMaterialCategory",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",

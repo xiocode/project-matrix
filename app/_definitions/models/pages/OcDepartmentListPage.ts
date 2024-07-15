@@ -36,6 +36,7 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "OcDepartment",
       viewMode: "table",
+      selectionMode: "none",
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
