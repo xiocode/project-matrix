@@ -62,20 +62,20 @@ export default {
               requestConfig={{ url: "/app/oc_users/operations/find", method: "post" }}
             />
           </Form.Item>
-          <Form.Item label="转出仓库" name="from">
-            <SingleTableSelector
-              placeholder="请选择"
-              columns={[{ title: "名称", code: "name" }]}
-              requestConfig={{ url: "/app/base_locations/operations/find", method: "post" }}
-            />
-          </Form.Item>
-          <Form.Item label="转入仓库" name="to">
-            <SingleTableSelector
-              placeholder="请选择"
-              columns={[{ title: "名称", code: "name" }]}
-              requestConfig={{ url: "/app/base_locations/operations/find", method: "post" }}
-            />
-          </Form.Item>
+          {/*<Form.Item label="转出仓库" name="from">*/}
+          {/*  <SingleTableSelector*/}
+          {/*    placeholder="请选择"*/}
+          {/*    columns={[{ title: "名称", code: "name" }]}*/}
+          {/*    requestConfig={{ url: "/app/base_locations/operations/find", method: "post" }}*/}
+          {/*  />*/}
+          {/*</Form.Item>*/}
+          {/*<Form.Item label="转入仓库" name="to">*/}
+          {/*  <SingleTableSelector*/}
+          {/*    placeholder="请选择"*/}
+          {/*    columns={[{ title: "名称", code: "name" }]}*/}
+          {/*    requestConfig={{ url: "/app/base_locations/operations/find", method: "post" }}*/}
+          {/*  />*/}
+          {/*</Form.Item>*/}
           <Form.Item
             label="物品明细"
             name="items"
