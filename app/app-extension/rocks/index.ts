@@ -25,7 +25,9 @@ import CheckRecordDetail from "./check-record-detail";
 import InventoryOperationForm from "./inventory-business/operation-form";
 import InventoryApplicationForm from "./inventory-business/application-form";
 
-// import RichEditor from "./rich-editor/RichEditor";
+// RichText
+import RichTextEditor from "./rich-text-editor/RichTextEditor";
+import RichTextDisplay from "./rich-text-editor/RichTextDisplay";
 
 export default [
   Link,
@@ -54,5 +56,8 @@ export default [
   // inventory
   InventoryOperationForm,
   InventoryApplicationForm,
-  // RichEditor,
+
+  // RichText
+  RichTextEditor,
+  RichTextDisplay,
 ];

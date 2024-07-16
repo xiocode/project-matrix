@@ -87,10 +87,9 @@ const SingleTableSelector = memo<IProps>((props) => {
     apiIns.request(params);
   };
 
-  const keyword = useDebounce(currentState.keyword, { wait: 600 });
   useEffect(() => {
     loadData();
-  }, [props.requestConfig?.url, keyword, currentState.offset]);
+  }, [props.requestConfig?.url, currentState.offset]);
 
   let tableColumns: TableProps<any>["columns"] = [];
   let tableWidth = 0;

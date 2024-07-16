@@ -5,6 +5,7 @@ import { Button, Form, Input, InputNumber, Modal, Space, Table } from "antd";
 import { useState } from "react";
 import SingleTableSelector from "~/components/SingleTableSelector";
 import rapidApi from "~/rapidApi";
+import { PlusOutlined } from "@ant-design/icons";
 
 export default {
   $type: "inventoryApplicationForm",
@@ -58,6 +59,8 @@ export default {
           <Form.Item label="申请人" name="applicant" rules={[{ required: true, message: "申请人必填" }]}>
             <SingleTableSelector
               placeholder="请选择"
+              searchFields={["name"]}
+              searchPlaceholder="名称搜索"
               columns={[{ title: "名称", code: "name" }]}
               requestConfig={{ url: "/app/oc_users/operations/find", method: "post" }}
             />
@@ -109,6 +112,8 @@ export default {
                         dropdownMatchSelectWidth={500}
                         placeholder="请选择"
                         value={r.material?.id}
+                        searchFields={["name", "code"]}
+                        searchPlaceholder="物品名称和编码搜索"
                         columns={[
                           { title: "名称", code: "name", width: 100 },
                           { title: "编号", code: "code", width: 100 },
@@ -215,6 +220,7 @@ export default {
                 setMaterialItems([...materialItems, {}]);
               }}
             >
+              <PlusOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               添加
             </Button>
           </Form.Item>
