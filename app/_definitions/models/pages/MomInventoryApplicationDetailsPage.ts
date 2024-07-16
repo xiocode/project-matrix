@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
@@ -272,7 +272,7 @@ const page: RapidPage = {
                 },
               ],
               newForm: cloneDeep(formConfig),
-              editForm: cloneDeep(formConfig),
+              editForm: cloneDeep(omit(formConfig, "customRequest")),
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.application": "$rui.parseQuery().id",

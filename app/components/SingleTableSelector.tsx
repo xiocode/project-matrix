@@ -1,4 +1,4 @@
-import { Table, Select, Input, TableProps } from "antd";
+import { Table, Select, Input, TableProps, Empty, Spin } from "antd";
 import { get, isFunction } from "lodash";
 import { memo, ReactNode, useEffect, useMemo } from "react";
 const Search = Input.Search;
@@ -165,34 +165,39 @@ const SingleTableSelector = memo<IProps>((props) => {
                 />
               </div>
             ) : null}
-            <Table
-              size="small"
-              rowKey="id"
-              loading={apiIns.loading}
-              scroll={{ x: tableWidth, y: 200 }}
-              columns={tableColumns}
-              dataSource={apiIns.records || []}
-              rowClassName={(record) => (get(record, valueKey) === value ? "pm-table-row-pointer--selected" : `pm-table-row-pointer`)}
-              onRow={(record) => {
-                return {
-                  onClick: () => {
-                    setCurrentState({ selectedRecord: record, visible: false });
-                    props.onChange?.(get(record, valueKey), record);
-                  },
-                };
-              }}
-              pagination={{
-                size: "small",
-                current: currentState.offset / pageSize + 1,
-                pageSize,
-                total: apiIns.total || 0,
-                hideOnSinglePage: true,
-                showSizeChanger: false,
-                onChange(page) {
-                  setCurrentState({ offset: (page - 1) * pageSize });
-                },
-              }}
-            />
+            <Spin spinning={apiIns.loading || false}>
+              {!apiIns.records?.length ? (
+                <Empty style={{ margin: "24px 0" }} />
+              ) : (
+                <Table
+                  size="small"
+                  rowKey="id"
+                  scroll={{ x: tableWidth, y: 200 }}
+                  columns={tableColumns}
+                  dataSource={apiIns.records || []}
+                  rowClassName={(record) => (get(record, valueKey) === value ? "pm-table-row-pointer--selected" : `pm-table-row-pointer`)}
+                  onRow={(record) => {
+                    return {
+                      onClick: () => {
+                        setCurrentState({ selectedRecord: record, visible: false });
+                        props.onChange?.(get(record, valueKey), record);
+                      },
+                    };
+                  }}
+                  pagination={{
+                    size: "small",
+                    current: currentState.offset / pageSize + 1,
+                    pageSize,
+                    total: apiIns.total || 0,
+                    hideOnSinglePage: true,
+                    showSizeChanger: false,
+                    onChange(page) {
+                      setCurrentState({ offset: (page - 1) * pageSize });
+                    },
+                  }}
+                />
+              )}
+            </Spin>
           </div>
         );
       }}
