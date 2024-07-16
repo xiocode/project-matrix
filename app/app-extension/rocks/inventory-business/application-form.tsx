@@ -1,11 +1,12 @@
 import { useNavigate } from "@remix-run/react";
-import { type Rock } from "@ruiapp/move-style";
+import { RockEvent, type Rock } from "@ruiapp/move-style";
 import { useDebounceFn } from "ahooks";
 import { Button, Form, Input, InputNumber, Modal, Space, Table } from "antd";
 import { useState } from "react";
 import SingleTableSelector from "~/components/SingleTableSelector";
 import rapidApi from "~/rapidApi";
 import { PlusOutlined } from "@ant-design/icons";
+import { renderRock } from "@ruiapp/react-renderer";
 
 export default {
   $type: "inventoryApplicationForm",
@@ -18,6 +19,7 @@ export default {
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
+    const [operationType, setOperationType] = useState<string>();
     const [materialItems, setMaterialItems] = useState<any[]>([]);
 
     const { saveApplication, saving } = useSaveApplication(() => {
@@ -51,6 +53,7 @@ export default {
               columns={[{ title: "名称", code: "name" }]}
               requestConfig={{ url: "/mom/mom_inventory_business_types/operations/find", method: "post" }}
               onChange={(v, item) => {
+                setOperationType(item?.operationType);
                 form.setFieldValue("operationType", item?.operationType);
               }}
             />
@@ -129,7 +132,9 @@ export default {
                         }}
                         onChange={(v, record) => {
                           setMaterialItems((draft) => {
-                            return draft.map((item, index) => (i === index ? { ...item, material: record, unit: record?.defaultUnit } : item));
+                            return draft.map((item, index) =>
+                              i === index ? { ...item, material: record, unit: record?.defaultUnit, lotNum: undefined } : item,
+                            );
                           });
                         }}
                       />
@@ -141,6 +146,31 @@ export default {
                   dataIndex: "lotNum",
                   width: 120,
                   render: (_, r, i) => {
+                    if (operationType === "out" || operationType === "transfer") {
+                      return renderRock({
+                        context,
+                        rockConfig: {
+                          $id: i + "_lotnum",
+                          $type: "materialLotNumSelector",
+                          materialId: r.material?.id,
+                          materialCategoryId: r.material?.category?.id,
+                          businessTypeId: form.getFieldValue("businessType"),
+                          value: r.lotNum,
+                          onChange: [
+                            {
+                              $action: "script",
+                              script: (e: RockEvent) => {
+                                const val = e.args?.[0];
+                                setMaterialItems((draft) => {
+                                  return draft.map((item, index) => (i === index ? { ...item, lotNum: val } : item));
+                                });
+                              },
+                            },
+                          ],
+                        },
+                      });
+                    }
+
                     return (
                       <Input
                         placeholder="请输入"

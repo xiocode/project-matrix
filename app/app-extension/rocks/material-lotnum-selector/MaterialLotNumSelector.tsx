@@ -30,8 +30,8 @@ export default {
       {
         field: "onHandQuantity",
         operator: "gt",
-        value: 0
-      }
+        value: 0,
+      },
     ];
 
     if (materialId) {
@@ -70,7 +70,7 @@ export default {
 
     let orderBy: { field: string; desc?: boolean }[] = [];
     if (currentStrategy?.strategy === "fifo") {
-      orderBy = [{field: "createdAt", desc: true}];
+      orderBy = [{ field: "createdAt", desc: true }];
     }
     // } else if (currentStrategy?.strategy === "fdfo") {
     //   orderBy = [{ field: "lot.validityDate", desc: true }];
@@ -82,6 +82,9 @@ export default {
       labelKey: "lotNum",
       valueKey: "lotNum",
       searchFields: ["lotNum"],
+      placeholder: "请选择",
+      searchPlaceholder: "批次号搜索",
+      allowClear: true,
       dropdownMatchSelectWidth: 600,
       columns: [
         {
