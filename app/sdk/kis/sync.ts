@@ -34,7 +34,7 @@ class KisDataSync {
   private ctx: ActionHandlerContext;
   private materialCategories: BaseMaterialCategory[] = [];
   private partnerCategories: BasePartnerCategory[] = [];
-  private baseLocations:BaseLocation[] = [];
+  private baseLocations: BaseLocation[] = [];
   private units: BaseUnit[] = [];
 
   constructor(server: IRpdServer, ctx: ActionHandlerContext) {
@@ -337,29 +337,33 @@ class KisDataSync {
           } as SaveBaseLocationInput;
         },
       }),
-      // 同步库位
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/StockPlace/List",
-        singularCode: "base_location",
-        mapToEntity: async (item: any) => {
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FSPID,
-            parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
-            type: 'storageArea',
-
-          } as SaveBaseLocationInput;
-        },
-      }),
     ];
 
     for (const syncListFunction of syncFunctions) {
       await syncListFunction();
     }
 
+    await this.loadBaseData();
+
+    this.createListSyncFunction({
+      url: "/koas/APP006992/api/StockPlace/List",
+      singularCode: "base_location",
+      mapToEntity: async (item: any) => {
+        return {
+          code: item.FNumber,
+          name: item.FName,
+          externalCode: item.FSPID,
+          parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
+          type: 'storageArea',
+        } as SaveBaseLocationInput;
+      },
+    })
+
     const materials = await this.server.getEntityManager("base_material").findEntities({
-      filters: [{operator: "and", filters: [{operator: "notNull", field: "externalCode"}, {operator: "notNull", field: "default_unit_id"}]}],
+      filters: [{
+        operator: "and",
+        filters: [{operator: "notNull", field: "externalCode"}, {operator: "notNull", field: "default_unit_id"}]
+      }],
     });
 
     const materialIds = materials.map((material: BaseMaterial) => material.externalCode);
@@ -445,7 +449,7 @@ class KisDataSync {
       await syncListFunction();
     }
 
-    await  momInventoryManager.updateEntityById({
+    await momInventoryManager.updateEntityById({
       id: result.id,
       entityToSave: {
         approvalState: 'approved',

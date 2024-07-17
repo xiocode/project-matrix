@@ -72,7 +72,7 @@ export default [
 
 
           if (inventoryApplication?.businessType && inventoryApplication.businessType.name == "库存调拨") {
-            const inventoryInOperation = await server.getEntityManager<MomInventoryApplication>("mom_inventory_operation").findEntity({
+            const inventoryInOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findEntity({
               filters: [
                 {
                   operator: "eq",
