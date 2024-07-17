@@ -1,9 +1,15 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import {
   type BaseLot,
-  MomGood, MomGoodTransfer, MomInventoryApplication, type MomInventoryBusinessType,
+  type BaseMaterial,
+  MomGood,
+  MomGoodTransfer,
+  MomInventoryApplication,
+  type MomInventoryBusinessType,
   type MomInventoryOperation,
-  type SaveBaseLotInput, SaveMomInventoryOperationInput,
+  type SaveBaseLotInput,
+  type SaveMomGoodInput,
+  SaveMomInventoryOperationInput,
 } from "~/_definitions/meta/entity-types";
 
 export default [
@@ -14,6 +20,8 @@ export default [
       const {server, payload} = ctx;
       let before = payload.before;
       try {
+        const goodManager = server.getEntityManager<MomGood>("mom_good");
+        const materialManager = server.getEntityManager<BaseMaterial>("base_material");
         const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
 
         if (before.hasOwnProperty("lotNum") && before.hasOwnProperty("material")) {
@@ -35,7 +43,28 @@ export default [
           if (lot) {
             before.lot_id = lot.id;
           }
+        }
 
+        if (before.hasOwnProperty("binNum") && before.hasOwnProperty("material") && !before.hasOwnProperty("good")) {
+          const material = await materialManager.findEntity({
+            filters: [{operator: "eq", field: "id", value: before.material.id}],
+            properties: ["id", "code", "defaultUnit", "qualityGuaranteePeriod"],
+          })
+
+          if (material) {
+            const goodInput = {
+              material: {id: material.id},
+              materialCode: material.code,
+              lotNum: before.lotNum,
+              lot: {id: before.lot_id},
+              binNum: before.binNum,
+              quantity: before.quantity,
+              unit: {id: material.defaultUnit?.id},
+              state: "pending",
+            } as SaveMomGoodInput;
+            const good = await findOrCreateGood(goodManager, goodInput);
+            before.good_id = good.id;
+          }
         }
 
       } catch (e) {
@@ -220,4 +249,25 @@ async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
   });
 
   return lotInDb || (await baseLotManager.createEntity({entity: lot}));
+}
+
+async function findOrCreateGood(goodManager: any, input: SaveMomGoodInput) {
+  let good = await goodManager.findEntity({
+    filters: [
+      {operator: "eq", field: "material_id", value: input.material?.id},
+      {operator: "eq", field: "lot_num", value: input.lotNum},
+      {operator: "eq", field: "bin_num", value: input.binNum},
+    ],
+    properties: ["id", "material", "lotNum", "binNum", "quantity", "unit", "lot"],
+  });
+
+  if (!good) {
+    good = await goodManager.createEntity({entity: input});
+    good = await goodManager.findEntity({
+      filters: [{operator: "eq", field: "id", value: good.id}],
+      properties: ["id", "material", "lotNum", "binNum", "quantity", "unit", "lot"],
+    });
+  }
+
+  return good;
 }

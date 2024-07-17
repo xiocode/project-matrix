@@ -500,9 +500,7 @@ const page: RapidPage = {
                   type: "auto",
                   code: "material",
                   title: "保质期",
-                  rendererProps: {
-                    format: "{{qualityGuaranteePeriod}}",
-                  },
+                  fieldName: "material.qualityGuaranteePeriod",
                 },
                 {
                   type: "auto",
@@ -779,25 +777,25 @@ const page: RapidPage = {
     // {
     //   $type: "rapidToolbar",
     //   items: [
-    //     {
-    //       $type: "rapidToolbarButton",
-    //       text: "确认提交",
-    //       actionStyle: "primary",
-    //       size: "large",
-    //       onAction: [
-    //         {
-    //           $action: "sendHttpRequest",
-    //           method: "PATCH",
-    //           data: { state: "done", approvalState: "approving" },
-    //           $exps: {
-    //             url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-    //           },
-    //         },
-    //       ],
-    //       $exps: {
-    //         _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-    //       },
-    //     },
+        // {
+        //   $type: "rapidToolbarButton",
+        //   text: "确认提交",
+        //   actionStyle: "primary",
+        //   size: "large",
+        //   onAction: [
+        //     {
+        //       $action: "sendHttpRequest",
+        //       method: "PATCH",
+        //       data: { state: "done", approvalState: "approving" },
+        //       $exps: {
+        //         url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+        //       },
+        //     },
+        //   ],
+        //   $exps: {
+        //     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+        //   },
+        // },
     //     {
     //       $type: "rapidToolbarButton",
     //       text: "批准",

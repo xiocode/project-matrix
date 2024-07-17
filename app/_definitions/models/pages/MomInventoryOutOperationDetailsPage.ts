@@ -324,9 +324,7 @@ const page: RapidPage = {
                   type: "auto",
                   code: "material",
                   title: "保质期",
-                  rendererProps: {
-                    format: "{{qualityGuaranteePeriod}}",
-                  },
+                  fieldName: "material.qualityGuaranteePeriod",
                 },
                 {
                   type: "auto",
