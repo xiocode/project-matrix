@@ -133,6 +133,8 @@ class KisDataSync {
         if (options.syncAll) {
           const totalPage = data?.TotalPage || data?.TotalPages || 1;
           if (page >= totalPage) break;
+        } else {
+          break;
         }
 
         await this.sleep(500);
@@ -226,20 +228,7 @@ class KisDataSync {
 
     await this.loadBaseData();
 
-    const syncFunctions = [
-      //  同步单位
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/MeasureUnit/List",
-        singularCode: "base_unit",
-        mapToEntity: async (item: any) => ({
-          code: item.FNumber,
-          name: item.FName,
-          externalCode: item.FItemID,
-          type: 'others',
-          orderNum: 1,
-          category: {id: 1}
-        } as SaveBaseUnitInput),
-      }),
+    const syncBaseFunctions = [
       // 同步物料分类
       this.createListSyncFunction({
         url: "/koas/APP006992/api/Material/List",
@@ -247,83 +236,26 @@ class KisDataSync {
         mapToEntity: async (item: any) => {
           const parentId = this.materialCategories.find(cat => cat.externalCode === String(item.FParentID))?.id;
 
+          if (!parentId && item.FParentID !== 0) {
+            console.log(`Parent category not found for item ${item.FName}`)
+            return null;
+          }
+
           let entity = {
             code: item.FNumber,
             name: item.FName,
             externalCode: item.FItemID,
             orderNum: 1,
-          } as SaveBaseMaterialCategoryInput
+          } as SaveBaseMaterialCategoryInput;
 
           if (parentId) {
             entity.parent = {id: parentId};
           }
+
+          return entity;
         },
         payload: {Detail: false},
       }),
-      // 同步物料
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/Material/List",
-        singularCode: "base_material",
-        mapToEntity: async (item: any) => {
-          const category = this.materialCategories.find(cat => cat.externalCode === String(item.FParentID));
-          if (!category) return null;
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FItemID,
-            state: 'enabled',
-            category: {id: category?.id},
-          } as SaveBaseMaterialInput;
-        },
-        payload: {Detail: true},
-        filter: (item: any) => item.FParentID !== 0
-      }),
-      // 同步员工
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/Employee/List",
-        singularCode: "base_employee",
-        mapToEntity: async (item: any) => {
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FItemID,
-            state: 'normal',
-          } as SaveBaseEmployeeInput;
-        },
-      }),
-      // 同步合作伙伴（供应商）
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/Vendor/List",
-        singularCode: "base_partner",
-        mapToEntity: async (item: any) => {
-          const category = this.partnerCategories.find(cat => cat.code === 'supplier');
-          if (!category) return null;
-
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FItemID,
-            categories: category ? [{id: category.id}] : [],
-          } as SaveBasePartnerInput;
-        },
-        filter: (item: any) => item.FParentID !== 0
-      }),
-      // 同步合作伙伴（客户）
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/Customer/List",
-        singularCode: "base_partner",
-        mapToEntity: async (item: any) => {
-          const category = this.partnerCategories.find(cat => cat.code === 'customer');
-          if (!category) return null;
-
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FItemID,
-          } as SaveBasePartnerInput;
-        },
-      }),
-      // 同步仓库
       this.createListSyncFunction({
         url: "/koas/APP006992/api/StockPlaceGroup/List",
         singularCode: "base_location",
@@ -337,57 +269,168 @@ class KisDataSync {
           } as SaveBaseLocationInput;
         },
       }),
-    ];
+      // 同步仓库
+      this.createListSyncFunction({
+        url: "/koas/APP006992/api/StockPlace/List",
+        singularCode: "base_location",
+        mapToEntity: async (item: any) => {
+          return {
+            code: item.FNumber,
+            name: item.FName,
+            externalCode: item.FSPID,
+            parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
+            type: 'storageArea',
+          } as SaveBaseLocationInput;
+        },
+      }),
+      // this.createListSyncFunction({
+      //   url: "/koas/APP006992/api/Stock/List",
+      //   singularCode: "base_location",
+      //   mapToEntity: async (item: any) => {
+      //     return {
+      //       code: item.FNumber,
+      //       name: item.FName,
+      //       externalCode: item.FItemID,
+      //       type: 'warehouse',
+      //
+      //     } as SaveBaseLocationInput;
+      //   },
+      // }),
+    ]
 
-    for (const syncListFunction of syncFunctions) {
+    for (const syncListFunction of syncBaseFunctions) {
       await syncListFunction();
     }
 
-    await this.loadBaseData();
-
-    this.createListSyncFunction({
-      url: "/koas/APP006992/api/StockPlace/List",
-      singularCode: "base_location",
-      mapToEntity: async (item: any) => {
-        return {
-          code: item.FNumber,
-          name: item.FName,
-          externalCode: item.FSPID,
-          parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
-          type: 'storageArea',
-        } as SaveBaseLocationInput;
-      },
-    })
-
-    const materials = await this.server.getEntityManager("base_material").findEntities({
-      filters: [{
-        operator: "and",
-        filters: [{operator: "notNull", field: "externalCode"}, {operator: "notNull", field: "default_unit_id"}]
-      }],
-    });
-
-    const materialIds = materials.map((material: BaseMaterial) => material.externalCode);
-
-    const syncDetailFunctions = [
-      this.createDetailSyncFunction({
-        url: "/koas/APP006992/api/Material/GetListDetails",
-        singularCode: "base_material",
-        mapToEntity: async (item: any) => ({
-          id: materials.find(material => material.externalCode === String(item.FItemID))?.id,
-          entityToSave: {
-            specification: item.FModel,
-            defaultUnit: {
-              id: item.FUnitID ? this.units.find(unit => unit.externalCode === String(item.FUnitID))?.id : null,
-            },
-          },
-        } as UpdateEntityByIdOptions),
-        payload: {ItemIds: materialIds}
-      }),
-    ];
-
-    for (const syncDetailFunction of syncDetailFunctions) {
-      await syncDetailFunction();
-    }
+    // await this.loadBaseData();
+    //
+    // const syncFunctions = [
+    //   //  同步单位
+    //   this.createListSyncFunction({
+    //     url: "/koas/APP006992/api/MeasureUnit/List",
+    //     singularCode: "base_unit",
+    //     mapToEntity: async (item: any) => ({
+    //       code: item.FNumber,
+    //       name: item.FName,
+    //       externalCode: item.FItemID,
+    //       type: 'others',
+    //       orderNum: 1,
+    //       category: {id: 1}
+    //     } as SaveBaseUnitInput),
+    //   }),
+    //   // 同步物料
+    //   this.createListSyncFunction({
+    //     url: "/koas/APP006992/api/Material/List",
+    //     singularCode: "base_material",
+    //     mapToEntity: async (item: any) => {
+    //       const category = this.materialCategories.find(cat => cat.externalCode === String(item.FParentID));
+    //       if (!category) return null;
+    //       return {
+    //         code: item.FNumber,
+    //         name: item.FName,
+    //         externalCode: item.FItemID,
+    //         state: 'enabled',
+    //         category: {id: category?.id},
+    //       } as SaveBaseMaterialInput;
+    //     },
+    //     payload: {Detail: true},
+    //     filter: (item: any) => item.FParentID !== 0
+    //   }),
+    //   // 同步员工
+    //   this.createListSyncFunction({
+    //     url: "/koas/APP006992/api/Employee/List",
+    //     singularCode: "base_employee",
+    //     mapToEntity: async (item: any) => {
+    //       return {
+    //         code: item.FNumber,
+    //         name: item.FName,
+    //         externalCode: item.FItemID,
+    //         state: 'normal',
+    //       } as SaveBaseEmployeeInput;
+    //     },
+    //   }),
+    //   // 同步合作伙伴（供应商）
+    //   this.createListSyncFunction({
+    //     url: "/koas/APP006992/api/Vendor/List",
+    //     singularCode: "base_partner",
+    //     mapToEntity: async (item: any) => {
+    //       const category = this.partnerCategories.find(cat => cat.code === 'supplier');
+    //       if (!category) return null;
+    //
+    //       return {
+    //         code: item.FNumber,
+    //         name: item.FName,
+    //         externalCode: item.FItemID,
+    //         categories: category ? [{id: category.id}] : [],
+    //       } as SaveBasePartnerInput;
+    //     },
+    //     filter: (item: any) => item.FParentID !== 0
+    //   }),
+    //   // 同步合作伙伴（客户）
+    //   this.createListSyncFunction({
+    //     url: "/koas/APP006992/api/Customer/List",
+    //     singularCode: "base_partner",
+    //     mapToEntity: async (item: any) => {
+    //       const category = this.partnerCategories.find(cat => cat.code === 'customer');
+    //       if (!category) return null;
+    //
+    //       return {
+    //         code: item.FNumber,
+    //         name: item.FName,
+    //         externalCode: item.FItemID,
+    //       } as SaveBasePartnerInput;
+    //     },
+    //   }),
+    //   // 同步仓库
+    //   this.createListSyncFunction({
+    //     url: "/koas/APP006992/api/StockPlace/List",
+    //     singularCode: "base_location",
+    //     mapToEntity: async (item: any) => {
+    //       return {
+    //         code: item.FNumber,
+    //         name: item.FName,
+    //         externalCode: item.FSPID,
+    //         parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
+    //         type: 'storageArea',
+    //       } as SaveBaseLocationInput;
+    //     },
+    //   })
+    // ];
+    //
+    // for (const syncListFunction of syncFunctions) {
+    //   await syncListFunction();
+    // }
+    //
+    //
+    // const materials = await this.server.getEntityManager("base_material").findEntities({
+    //   filters: [{
+    //     operator: "and",
+    //     filters: [{operator: "notNull", field: "externalCode"}, {operator: "null", field: "default_unit_id"}]
+    //   }],
+    // });
+    //
+    // const materialIds = materials.map((material: BaseMaterial) => material.externalCode);
+    //
+    // const syncDetailFunctions = [
+    //   this.createDetailSyncFunction({
+    //     url: "/koas/APP006992/api/Material/GetListDetails",
+    //     singularCode: "base_material",
+    //     mapToEntity: async (item: any) => ({
+    //       id: materials.find(material => material.externalCode === String(item.FItemID))?.id,
+    //       entityToSave: {
+    //         specification: item.FModel,
+    //         defaultUnit: {
+    //           id: item.FUnitID ? this.units.find(unit => unit.externalCode === String(item.FUnitID))?.id : null,
+    //         },
+    //       },
+    //     } as UpdateEntityByIdOptions),
+    //     payload: {ItemIds: materialIds}
+    //   }),
+    // ];
+    //
+    // for (const syncDetailFunction of syncDetailFunctions) {
+    //   await syncDetailFunction();
+    // }
   }
 
   public async syncInventoryData() {
@@ -431,16 +474,29 @@ class KisDataSync {
             return null;
           }
 
-          return {
-            operation: {id: result.id},
-            material: {id: material?.id},
-            lotNum: item.FBatchNo,
-            quantity: item.FBUQty,
-            unit: {id: material?.defaultUnit?.id},
-            to: {id: warehouseLocations.find(location => location.externalCode === String(item.FSPID))?.id},
-          } as SaveMomGoodTransferInput
+          if (item.FBatchNo) {
+
+            const stock = warehouseLocations.find(location => location.code === String(item.FStockNumber))?.id
+
+            const location = warehouseLocations.find(location => location.externalCode === String(item.FSPID))?.id
+
+
+            let entity = {
+              operation: {id: result.id},
+              material: {id: material?.id},
+              lotNum: item.FBatchNo,
+              quantity: item.FBUQty,
+              unit: {id: material?.defaultUnit?.id},
+              to: {id: location ? location : stock}
+            } as SaveMomGoodTransferInput
+
+            return entity;
+          }
+
+
         },
-        payload: {Data: {}}
+        payload: {Data: {}},
+        syncAll: false,
       }),
     ]
 

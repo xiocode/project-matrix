@@ -10,7 +10,7 @@ import {
   MomInventoryStatTable,
   MomInventoryStatTrigger,
   MomWarehouse,
-  SaveBaseLotInput, SaveMomInventoryOperationInput,
+  SaveBaseLotInput, SaveMomGoodInput, SaveMomInventoryOperationInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
@@ -44,194 +44,213 @@ export default [
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const {server, payload} = ctx;
-      const kisApi = await new KisHelper(server).NewAPIClient();
-      const kisOperationApi = new KisInventoryOperationAPI(kisApi);
+      // const kisApi = await new KisHelper(server).NewAPIClient();
+      // const kisOperationApi = new KisInventoryOperationAPI(kisApi);
 
-      const changes: Partial<MomInventoryOperation> = payload.changes;
+      const changes = payload.changes;
       const after = payload.after;
 
-      if (changes.hasOwnProperty("state") && changes.state === "done") {
-        await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
-          id: after.application_id,
-          entityToSave: {
-            operationState: "done",
-          },
-        });
+      try {
+        if (changes.hasOwnProperty("state") && changes.state === "done") {
+          if (after?.application_id) {
+            await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
+              id: after.application_id,
+              entityToSave: {
+                operationState: "done",
+              },
+            });
+          }
 
-        const kisConfig = await server.getEntityManager<KisConfig>("kis_config").findEntity({});
-        if (kisConfig) {
-          if (after.operationType === "in") {
-            // TODO: 生成KIS入库单
-            // switch (businessType?.name) {
-            //   case "采购入库":
-            //     await kisOperationApi.createProductReceipt({
-            //       Object: {
-            //         Head: {},
-            //         Entry: [{}],
-            //       },
-            //     } as WarehouseInPayload)
-            //     break;
-            //   case "生产入库":
-            //     await kisOperationApi.createPickingList({
-            //       Object: {
-            //         Head: {},
-            //         Entry: [{}],
-            //       },
-            //     } as WarehouseOutPayload)
-            //     break;
-            //   default:
-            //     break;
-            // }
-          } else if (after.operationType === "out") {
-            //   TODO: 生成KIS出库单
-          } else if (after.operationType === "transfer") {
-            //   TODO: 生成KIS调拨单
+          const kisConfig = await server.getEntityManager<KisConfig>("kis_config").findEntity({});
+          if (kisConfig) {
+            if (after.operationType === "in") {
+              // TODO: 生成KIS入库单
+              // switch (businessType?.name) {
+              //   case "采购入库":
+              //     await kisOperationApi.createProductReceipt({
+              //       Object: {
+              //         Head: {},
+              //         Entry: [{}],
+              //       },
+              //     } as WarehouseInPayload)
+              //     break;
+              //   case "生产入库":
+              //     await kisOperationApi.createPickingList({
+              //       Object: {
+              //         Head: {},
+              //         Entry: [{}],
+              //       },
+              //     } as WarehouseOutPayload)
+              //     break;
+              //   default:
+              //     break;
+              // }
+            } else if (after.operationType === "out") {
+              //   TODO: 生成KIS出库单
+            } else if (after.operationType === "transfer") {
+              //   TODO: 生成KIS调拨单
 
+            }
           }
         }
-      }
 
+        if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
 
-      if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
-
-        const inventoryApplication = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
-          filters: [
-            {
-              operator: "eq",
-              field: "id",
-              value: after.application_id,
-            },
-          ],
-          properties: ["id", "from", "to", "businessType"],
-        });
-
-        // 处理库存盘点
-        if (inventoryApplication?.businessType && inventoryApplication.businessType.name == "库存盘点") {
-
-          const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation")
-
-          const inventoryAdjustOperation = await inventoryOperationManager.findEntity({
+          const inventoryApplication = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
             filters: [
               {
                 operator: "eq",
                 field: "id",
-                value: after?.id,
+                value: after.application_id,
               },
             ],
             properties: ["id", "from", "to", "businessType"],
           });
 
-          const inventoryBusinessTypes = await server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type").findEntities({
-            filters: [
-              {
-                operator: "or",
-                filters: [
-                  {
-                    operator: "eq",
-                    field: "name",
-                    value: "盘盈入库",
-                  },
-                  {
-                    operator: "eq",
-                    field: "name",
-                    value: "盘亏出库",
+          // 处理库存盘点
+          if (inventoryApplication?.businessType && inventoryApplication.businessType.name === "库存盘点") {
+
+            const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation")
+
+            const inventoryAdjustOperation = await inventoryOperationManager.findEntity({
+              filters: [
+                {
+                  operator: "eq",
+                  field: "id",
+                  value: after?.id,
+                },
+              ],
+              properties: ["id", "from", "to", "businessType"],
+            });
+
+            const inventoryBusinessTypes = await server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type").findEntities({
+              filters: [
+                {
+                  operator: "or",
+                  filters: [
+                    {
+                      operator: "eq",
+                      field: "name",
+                      value: "盘盈入库",
+                    },
+                    {
+                      operator: "eq",
+                      field: "name",
+                      value: "盘亏出库",
+                    }
+                  ]
+                }
+              ],
+              properties: ["id", "name", "code", "operationType"],
+            });
+
+            if (inventoryAdjustOperation) {
+
+              const resp = await rapidApi.post("app/listInventoryCheckTransfers", {"operationId": after.id});
+
+              const records = resp.data;
+
+              if (records) {
+                const profitInventoryBusinessType = inventoryBusinessTypes.find(item => item.name === "盘盈入库");
+
+                let profitInventoryOperationInput = {
+                  application_id: inventoryAdjustOperation.application?.id,
+                  operationType: profitInventoryBusinessType?.operationType,
+                  state: "processing",
+                  approvalState: "uninitiated",
+                  businessType: {id: profitInventoryBusinessType?.id},
+                } as SaveMomInventoryOperationInput
+
+                let profitTransfers = [];
+                for (const record of records) {
+                  for (const profitGood of record.profitGoods) {
+                    profitTransfers.push({
+                      good: {id: profitGood.id},
+                      material: {id: record.material?.id},
+                      unit: {id: record.material?.defaultUnit?.id},
+                      quantity: profitGood.quantity,
+                      binNum: profitGood.binNum,
+                      lotNum: profitGood.lotNum,
+                      manufactureDate: profitGood.manufactureDate,
+                      validityDate: profitGood.validityDate,
+                      lot: {id: profitGood.lotId},
+                      orderNum: 1,
+                    } as MomGoodTransfer);
                   }
-                ]
-              }
-            ],
-            properties: ["id", "name", "code", "operationType"],
-          });
-
-          if (inventoryAdjustOperation) {
-
-            const resp = await rapidApi.post("app/listInventoryCheckTransfers", {"operationId": after.id});
-
-            const records = resp.data;
-
-            console.log(records)
-
-            if (records) {
-              const profitInventoryBusinessType = inventoryBusinessTypes.find(item => item.name === "盘盈入库");
-
-              let profitInventoryOperationInput = {
-                application_id: inventoryAdjustOperation.application?.id,
-                operationType: profitInventoryBusinessType?.operationType,
-                state: "processing",
-                approvalState: "uninitiated",
-                businessType: {id: profitInventoryBusinessType?.id},
-              } as SaveMomInventoryOperationInput
-
-              let profitTransfers = [];
-              for (const record of records) {
-                for (const profitGood of record.profitGoods) {
-                  profitTransfers.push({
-                    good: {id: profitGood.id},
-                    material: {id: record.material?.id},
-                    unit: {id: record.material?.defaultUnit?.id},
-                    quantity: profitGood.quantity,
-                    binNum: profitGood.binNum,
-                    lotNum: profitGood.lotNum,
-                    manufactureDate: profitGood.manufactureDate,
-                    validityDate: profitGood.validityDate,
-                    lot: {id: profitGood.lotId},
-                    orderNum: 1,
-                  } as MomGoodTransfer);
                 }
-              }
 
-              profitInventoryOperationInput.transfers = profitTransfers
+                profitInventoryOperationInput.transfers = profitTransfers
 
-              await inventoryOperationManager.createEntity({
-                entity: profitInventoryOperationInput,
-              })
+                await inventoryOperationManager.createEntity({
+                  entity: profitInventoryOperationInput,
+                })
 
-              const lossesInventoryBusinessType = inventoryBusinessTypes.find(item => item.name === "盘亏出库");
+                const lossesInventoryBusinessType = inventoryBusinessTypes.find(item => item.name === "盘亏出库");
 
-              let lossesInventoryOperationInput = {
-                application_id: inventoryAdjustOperation.application?.id,
-                operationType: lossesInventoryBusinessType?.operationType,
-                state: "done",
-                approvalState: "approved",
-                businessType: {id: lossesInventoryBusinessType?.id},
-              } as SaveMomInventoryOperationInput
+                let lossesInventoryOperationInput = {
+                  application_id: inventoryAdjustOperation.application?.id,
+                  operationType: lossesInventoryBusinessType?.operationType,
+                  state: "done",
+                  approvalState: "approved",
+                  businessType: {id: lossesInventoryBusinessType?.id},
+                } as SaveMomInventoryOperationInput
 
-              let lossTransfers = [];
-              for (const record of records) {
-                for (const lossGood of record.lossGoods) {
-                  lossTransfers.push({
-                    good: {id: lossGood.id},
-                    material: {id: record.material?.id},
-                    unit: {id: record.material?.defaultUnit?.id},
-                    quantity: lossGood.quantity,
-                    binNum: lossGood.binNum,
-                    lotNum: lossGood.lotNum,
-                    manufactureDate: lossGood.manufactureDate,
-                    validityDate: lossGood.validityDate,
-                    lot: {id: lossGood.lotId},
-                    orderNum: 1,
-                  } as MomGoodTransfer);
+                let lossTransfers = [];
+                for (const record of records) {
+                  for (const lossGood of record.lossGoods) {
+                    lossTransfers.push({
+                      good: {id: lossGood.id},
+                      material: {id: record.material?.id},
+                      unit: {id: record.material?.defaultUnit?.id},
+                      quantity: lossGood.quantity,
+                      binNum: lossGood.binNum,
+                      lotNum: lossGood.lotNum,
+                      manufactureDate: lossGood.manufactureDate,
+                      validityDate: lossGood.validityDate,
+                      lot: {id: lossGood.lotId},
+                      orderNum: 1,
+                    } as MomGoodTransfer);
+                  }
                 }
+
+                profitInventoryOperationInput.transfers = lossTransfers
+
+                await inventoryOperationManager.createEntity({
+                  entity: lossesInventoryOperationInput,
+                })
               }
-
-              profitInventoryOperationInput.transfers = lossTransfers
-
-              await inventoryOperationManager.createEntity({
-                entity: lossesInventoryOperationInput,
-              })
             }
           } else {
             let transfers = await listTransfersOfOperation(server, after.id);
 
+            console.log(payload)
+
+            if (after.operationType === "in") {
+              for (const transfer of transfers) {
+                console.log(transfer)
+                if (transfer.good_id) {
+                  await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+                    id: transfer.good_id,
+                    entityToSave: {
+                      state: "normal",
+                    } as SaveMomGoodInput,
+                  });
+                }
+              }
+            }
+
             await updateInventoryStats(server, after.business_id, after.operationType, transfers);
           }
         }
+      } catch (e) {
+        console.log(e)
       }
     },
   },
 ] satisfies EntityWatcher<any>[];
 
 async function listTransfersOfOperation(server: IRpdServer, operationId: number) {
-  const transferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
+  const transferManager = server.getEntityManager("mom_good_transfer");
 
   return await transferManager.findEntities({
     filters: [
