@@ -227,12 +227,24 @@ export default [
 
             if (after.operationType === "in") {
               for (const transfer of transfers) {
-                console.log(transfer)
                 if (transfer.good_id) {
                   await server.getEntityManager<MomGood>("mom_good").updateEntityById({
                     id: transfer.good_id,
                     entityToSave: {
                       state: "normal",
+                    } as SaveMomGoodInput,
+                  });
+                }
+              }
+            }
+
+            if (after.operationType === "out") {
+              for (const transfer of transfers) {
+                if (transfer.good_id) {
+                  await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+                    id: transfer.good_id,
+                    entityToSave: {
+                      state: "transferred",
                     } as SaveMomGoodInput,
                   });
                 }
