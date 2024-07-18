@@ -4179,6 +4179,10 @@ export interface MomInventoryApplication {
    */
   processInstance?: Partial<BpmInstance>;
   /**
+   * 外部编号
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -7514,6 +7518,10 @@ export interface OcUser {
    * 角色
    */
   roles?: any;
+  /**
+   * 外部编号
+   */
+  externalCode?: string;
   /**
    * 创建时间
    */
