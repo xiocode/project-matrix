@@ -5,7 +5,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   type: "auto",
   label: "物品",
   code: "material",
-  formControlType: "tableSingleSelector",
+  formControlType: "tableSelector",
   formControlProps: {
     dropdownMatchSelectWidth: 500,
     labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
@@ -47,16 +47,15 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
         $action: "script",
         script: `
         const info = event.args[0] || {};
-        if(info) {
-          const _ = event.framework.getExpressionVars()._;
-          event.page.sendComponentMessage(event.sender.$id.replace('-item-material-input', ''), {
-            name: "setFieldsValue",
-            payload: {
-              unit: _.get(info, 'unit.name'),
-              lotNum: _.get(info, 'lotNum')
-            }
-          });
-        }
+       
+        const _ = event.framework.getExpressionVars()._;
+        event.page.sendComponentMessage(event.sender.$id.replace('-item-material-input', ''), {
+          name: "setFieldsValue",
+          payload: {
+            unit: _.get(info, 'unit.name'),
+            lotNum: _.get(info, 'lotNum')
+          }
+        });
       `,
       },
     ],

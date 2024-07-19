@@ -5,11 +5,12 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   type: "auto",
   label: "物品",
   code: "material",
-  formControlType: "tableSingleSelector",
+  formControlType: "modelTableSelector",
   formControlProps: {
     dropdownMatchSelectWidth: 500,
     labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
     valueKey: "material.id",
+    entityCode: "MomInventoryApplicationItem",
     columns: [
       {
         title: "物品",
@@ -23,46 +24,61 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
         width: 120,
       },
     ],
-    requestConfig: {
-      url: `/mom/mom_inventory_application_items/operations/find`,
-      params: {
-        fixedFilters: [
-          {
-            field: "application",
-            operator: "exists",
-            filters: [
-              {
-                field: "id",
-                operator: "eq",
-                value: "",
-              },
-            ],
-          },
-        ],
-        properties: ["id", "material", "lotNum", "unit"],
-      },
+    requestParams: {
+      fixedFilters: [
+        {
+          field: "application",
+          operator: "exists",
+          filters: [
+            {
+              field: "id",
+              operator: "eq",
+              value: "",
+            },
+          ],
+        },
+      ],
+      properties: ["id", "material", "lotNum", "unit"],
     },
+    // requestConfig: {
+    //   url: `/mom/mom_inventory_application_items/operations/find`,
+    //   params: {
+    //     fixedFilters: [
+    //       {
+    //         field: "application",
+    //         operator: "exists",
+    //         filters: [
+    //           {
+    //             field: "id",
+    //             operator: "eq",
+    //             value: "",
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //     properties: ["id", "material", "lotNum", "unit"],
+    //   },
+    // },
     onSelectedRecord: [
       {
         $action: "script",
         script: `
         const info = event.args[0] || {};
-        if(info) {
-          const _ = event.framework.getExpressionVars()._;
-          event.page.sendComponentMessage('goodTransferList-newForm-rapidForm', {
-            name: "setFieldsValue",
-            payload: {
-              unit: _.get(info, 'unit.name'),
-              lotNum: _.get(info, 'lotNum')
-            }
-          });
-        }
+    
+        const _ = event.framework.getExpressionVars()._;
+        event.page.sendComponentMessage('goodTransferList-newForm-rapidForm', {
+          name: "setFieldsValue",
+          payload: {
+            unit: _.get(info, 'unit.name'),
+            lotNum: _.get(info, 'lotNum')
+          }
+        });
       `,
       },
     ],
   },
   $exps: {
-    "formControlProps.requestConfig.params.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
+    "formControlProps.requestParams.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
   },
 };
 

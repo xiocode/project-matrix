@@ -91,17 +91,17 @@ const page: RapidPage = {
           $permissionCheck: "inventoryTag.manage",
         },
       ],
-      fixedFilters: [
-        {
-          field: "state",
-          operator: "eq",
-          value: "normal",
-        },
-        {
-          field: "location_id",
-          operator: "notNull",
-        },
-      ],
+      // fixedFilters: [
+      //   {
+      //     field: "state",
+      //     operator: "eq",
+      //     value: "normal",
+      //   },
+      //   {
+      //     field: "location_id",
+      //     operator: "notNull",
+      //   },
+      // ],
       relations: {
         material: {
           properties: ["id", "code", "name", "specification", "category"],
@@ -125,9 +125,26 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["materialCode", "lotNum", "serialNum"],
+          filterFields: ["lotNum", "binNum"],
         },
       ],
+      searchForm: {
+        entityCode: "MomGood",
+        items: [
+          {
+            type: "auto",
+            code: "state",
+            filterMode: "in",
+            itemType: "text",
+          },
+          {
+            type: "auto",
+            code: "location",
+            filterMode: "in",
+            filterFields: ["location_id"],
+          },
+        ],
+      },
       pageSize: 20,
       columns: [
         {

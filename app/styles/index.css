@@ -3,7 +3,6 @@
 @import "../app-extension/rocks/index.css";
 @import "@ruiapp/rapid-extension/dist/mod.css";
 @import "@ruiapp/designer-extension/dist/mod.css";
-@import "@wangeditor/editor/dist/css/style.css";
 
 .branch-title {
   color: #fff;

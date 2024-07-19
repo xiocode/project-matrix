@@ -123,9 +123,28 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["material"],
+          filterFields: ["code"],
         },
       ],
+      searchForm: {
+        entityCode: "MomInventoryOperation",
+        items: [
+          {
+            type: "auto",
+            code: "businessType",
+            filterMode: "in",
+            filterFields: ["business_id"],
+          },
+          {
+            type: "dateRange",
+            code: "createdAt",
+            filterMode: "range",
+            filterExtra: {
+              rangeUnit: "day",
+            },
+          },
+        ],
+      },
       orderBy: [
         {
           field: "createdAt",

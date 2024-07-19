@@ -100,9 +100,38 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["code"],
+          filterFields: ["code", "lotNum"],
         },
       ],
+      searchForm: {
+        entityCode: "MomInspectionSheet",
+        items: [
+          {
+            type: "auto",
+            code: "state",
+            filterMode: "in",
+            itemType: "text",
+          },
+          {
+            type: "auto",
+            code: "approvalState",
+            filterMode: "in",
+            itemType: "text",
+          },
+          {
+            type: "auto",
+            code: "result",
+            filterMode: "in",
+            itemType: "text",
+          },
+          {
+            type: "auto",
+            code: "inspector",
+            filterMode: "in",
+            filterFields: ["inspector_id"],
+          },
+        ],
+      },
       orderBy: [
         {
           field: "id",

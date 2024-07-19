@@ -101,6 +101,37 @@ const page: RapidPage = {
           filterFields: ["code"],
         },
       ],
+      searchForm: {
+        entityCode: "MomInventoryApplication",
+        items: [
+          {
+            type: "auto",
+            code: "businessType",
+            filterMode: "in",
+            filterFields: ["business_id"],
+          },
+          {
+            type: "auto",
+            code: "applicant",
+            filterMode: "in",
+            filterFields: ["applicant_id"],
+          },
+          {
+            type: "dateRange",
+            code: "createdAt",
+            filterMode: "range",
+            filterExtra: {
+              rangeUnit: "day",
+            },
+          },
+          {
+            type: "auto",
+            code: "operationState",
+            filterMode: "in",
+            itemType: "text",
+          },
+        ],
+      },
       fixedFilters: [
         {
           operator: "or",
