@@ -680,7 +680,10 @@ class KisDataSync {
     const inventoryOperationManager = this.server.getEntityManager("mom_inventory_operation")
 
     const operations = await inventoryOperationManager.findEntities({
-      filters: [{operator: "eq", field: "approval_state", value: "approving"}],
+      filters: [{operator: "eq", field: "approval_state", value: "approving"}, {
+        operator: "notNull",
+        field: "externalCode"
+      }],
       properties: ["id", "operationType", "businessType", "externalCode"],
     })
 
@@ -725,9 +728,9 @@ class KisDataSync {
             approvalState: 'approved',
           }
         })
-        }
       }
     }
+  }
 }
 
 export default KisDataSync;
