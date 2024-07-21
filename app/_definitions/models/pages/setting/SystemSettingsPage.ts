@@ -44,11 +44,30 @@ const page: RapidPage = {
           $exps: {
             defaultFormFields: `_.get($stores.systemValues, 'data')`,
             items: `_.map(_.get($stores.systemSettingItems, 'data.list'), function (item){
-              return {
+              let defaultFormControlProps = {};
+              if (item.type === 'file') {
+                defaultFormControlProps = {
+                  uploadProps: {
+                    name: 'files',
+                    action: "/api/upload",
+                    headers: {},
+                    maxCount: 1,
+                  },
+                  onUploaded: [
+                    {
+                      $action: 'script',
+                      script: 'var fileInfo = event.args[0];event.sender.form.setFieldsValue({' + item.code + ': event.args[0]})',
+                    }
+                  ]
+                }
+              }
+              const formItemConfig = {
                 type: item.type,
                 code: item.code,
                 label: item.name,
-              }
+                formControlProps: item.config?.formControlProps || defaultFormControlProps,
+              };
+              return formItemConfig;
             })`,
           },
         } as RapidFormRockConfig,
