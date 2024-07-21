@@ -349,7 +349,8 @@ export default function Index() {
                                 $action: "script",
                                 script: (event: any) => {
                                   const page = event.page;
-                                  page.getStore("designerStore").setSelectedComponentTreeNode("", event.args[0]);
+                                  const nodeId = event.args[0]?.$id;
+                                  page.getStore("designerStore").setSelectedComponentTreeNode("", nodeId);
                                 },
                               },
                               onWidgetRectChange: {
@@ -372,7 +373,7 @@ export default function Index() {
                                 },
                               },
                               $exps: {
-                                widgets: "hud.hudItemsFromRockChildrenConfig($stores.designerStore.page.getConfig().view)",
+                                widgets: "$stores.designerStore.page.getConfig().view",
                               },
                             },
                           ],
