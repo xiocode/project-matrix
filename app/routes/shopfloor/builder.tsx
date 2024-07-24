@@ -373,7 +373,7 @@ export default function Index() {
                                 },
                               },
                               $exps: {
-                                widgets: "$stores.designerStore.page.getConfig().view",
+                                widgets: "hud.hudItemsFromRockChildrenConfig($stores.designerStore.page.getConfig().view)",
                               },
                             },
                           ],
