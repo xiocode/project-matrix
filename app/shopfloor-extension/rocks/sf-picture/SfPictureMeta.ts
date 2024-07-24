@@ -8,6 +8,11 @@ export default {
   voidComponent: true,
 
   props: {
+    borderStyle: {
+      valueType: 'string',
+      defaultValue: 'none'
+    },
+
     width: {
       valueType: "string",
       defaultValue: "100px",
@@ -44,6 +49,33 @@ export default {
           $type: "textPropSetter",
           label: "地址",
           propName: "url",
+        },
+        {
+          $type: "selectPropSetter",
+          label: "边框",
+          propName: "borderStyle",
+          options: [
+            {
+              label: "无",
+              value: "none",
+            },
+            {
+              label: "实线",
+              value: "solid",
+            },
+            {
+              label: "虚线",
+              value: "dashed",
+            },
+            {
+              label: "点线",
+              value: "dotted",
+            },
+            {
+              label: "双线",
+              value: "double",
+            },
+          ],
         },
       ],
     },
