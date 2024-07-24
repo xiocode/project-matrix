@@ -7,6 +7,28 @@ export default {
 
   voidComponent: true,
 
+  props: {
+    width: {
+      valueType: "string",
+      defaultValue: "100px",
+    },
+
+    height: {
+      valueType: "string",
+      defaultValue: "100px",
+    },
+
+    left: {
+      valueType: "string",
+      defaultValue: "0px",
+    },
+
+    top: {
+      valueType: "string",
+      defaultValue: "0px",
+    },
+  },
+
   slots: {},
 
   propertyPanels: [

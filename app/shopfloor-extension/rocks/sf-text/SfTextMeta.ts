@@ -12,6 +12,26 @@ export default {
       valueType: "string",
       defaultValue: "文本",
     },
+
+    width: {
+      valueType: "string",
+      defaultValue: "100px",
+    },
+
+    height: {
+      valueType: "string",
+      defaultValue: "30px",
+    },
+
+    left: {
+      valueType: "string",
+      defaultValue: "0px",
+    },
+
+    top: {
+      valueType: "string",
+      defaultValue: "0px",
+    },
   },
 
   slots: {},

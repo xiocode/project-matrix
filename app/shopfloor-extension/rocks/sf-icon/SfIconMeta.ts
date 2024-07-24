@@ -12,6 +12,26 @@ export default {
       valueType: "string",
       defaultValue: "SmileOutlined",
     },
+
+    width: {
+      valueType: "string",
+      defaultValue: "32px",
+    },
+
+    height: {
+      valueType: "string",
+      defaultValue: "32px",
+    },
+
+    left: {
+      valueType: "string",
+      defaultValue: "0px",
+    },
+
+    top: {
+      valueType: "string",
+      defaultValue: "0px",
+    },
   },
 
   slots: {},
@@ -32,7 +52,7 @@ export default {
           defaultValue: "SmileOutlined",
         },
         {
-          $type: "textPropSetter",
+          $type: "colorPropSetter",
           label: "颜色",
           propName: "color",
         },
