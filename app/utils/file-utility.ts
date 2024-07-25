@@ -37,3 +37,30 @@ export function enumFileBaseNamesInDirectory(dirPath: string) {
 
   return fileNames;
 }
+
+export async function selectFiles(options: { accept?: string; multiple?: boolean }) {
+  return new Promise<File[]>((res) => {
+    const input = document.createElement("input");
+
+    input.type = "file";
+    input.multiple = options.multiple || false;
+    if (options.accept) {
+      input.accept = options.accept;
+    }
+
+    input.onchange = (e) => {
+      const files = (e.target as any)?.files || [];
+
+      document.body.removeChild(input);
+      res(files);
+    };
+
+    input.oncancel = (e) => {
+      document.body.removeChild(input);
+      res([]);
+    };
+
+    document.body.appendChild(input);
+    input.click();
+  });
+}

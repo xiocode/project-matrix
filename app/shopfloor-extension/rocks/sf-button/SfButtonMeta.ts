@@ -65,5 +65,6 @@ export default {
     },
     { $type: "positionPropPanel" },
     { $type: "sizePropPanel" },
+    { $type: "borderPropPanel" },
   ],
 } as RockMeta;
