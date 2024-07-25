@@ -3,11 +3,11 @@ import type { LinkshopWidgetRockConfig } from "~/linkshop-extension/mod";
 export interface SfTextRockConfig extends LinkshopWidgetRockConfig {
   text: string;
   color: string;
-  alignItems: string;
   fontSize: string;
   direction: string;
   letterSpacing: string;
-  justifyContent: string;
+  horizontalAlignment: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
+  verticalAlignment: string;
   fontWeightIsBold: boolean;
   fontStyleIsOblique: boolean;
   textDecorationLine: string;

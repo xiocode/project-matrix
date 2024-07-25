@@ -8,27 +8,26 @@ export default {
     const {
       text,
       color,
-      alignItems,
+      verticalAlignment,
       fontSize,
       letterSpacing,
-      justifyContent,
+      horizontalAlignment,
       fontWeightIsBold,
       fontStyleIsOblique,
       textDecorationLine,
       textDecorationStyle,
       textDecorationColor,
     } = props;
-    console.log(props);
 
     const wrapStyle: React.CSSProperties = pick(props, [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames]) as any;
     wrapStyle.position = "absolute";
     wrapStyle.display = "flex";
-    wrapStyle.flexDirection = "row";
+    wrapStyle.flexDirection = "column"
     wrapStyle.color = color;
     wrapStyle.fontSize = fontSize;
     wrapStyle.letterSpacing = letterSpacing;
-    wrapStyle.alignItems = alignItems;
-    wrapStyle.justifyContent = justifyContent;
+    wrapStyle.textAlign = horizontalAlignment;
+    wrapStyle.justifyContent = verticalAlignment;
     wrapStyle.fontWeight = fontWeightIsBold === true ? "bold" : "normal";
     wrapStyle.fontStyle = fontStyleIsOblique === true ? "oblique" : "normal";
     wrapStyle.textDecorationLine = textDecorationLine;

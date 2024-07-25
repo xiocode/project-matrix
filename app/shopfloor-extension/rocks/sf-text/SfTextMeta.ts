@@ -28,14 +28,14 @@ export default {
       defaultValue: 0,
     },
 
-    alignItems: {
+    horizontalAlignment: {
       valueType: "string",
-      defaultValue: "center",
+      defaultValue: "left",
     },
 
-    justifyContent: {
+    verticalAlignment: {
       valueType: "string",
-      defaultValue: "flex-start",
+      defaultValue: "center",
     },
 
     fontWeightIsBold: {
@@ -118,11 +118,11 @@ export default {
         {
           $type: "selectPropSetter",
           label: "左右对齐",
-          propName: "justifyContent",
+          propName: "horizontalAlignment",
           options: [
             {
               label: "局左",
-              value: "flex-start",
+              value: "left",
             },
             {
               label: "居中",
@@ -130,14 +130,14 @@ export default {
             },
             {
               label: "居右",
-              value: "flex-end",
+              value: "right",
             },
           ],
         },
         {
           $type: "selectPropSetter",
           label: "上下对齐",
-          propName: "alignItems",
+          propName: "verticalAlignment",
           options: [
             {
               label: "居上",
