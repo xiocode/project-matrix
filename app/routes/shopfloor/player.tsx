@@ -22,6 +22,8 @@ import ShopfloorExtension from "~/shopfloor-extension/mod";
 import antdStyles from "antd/dist/antd.css";
 import indexStyles from "~/styles/index.css";
 import linkshopBuilderStyles from "~/styles/linkshop-builder.css";
+import shopfloorExtensionStyles from "~/shopfloor-extension/mod.css";
+
 import rapidService from "~/rapidService";
 
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
@@ -29,7 +31,7 @@ import { RuiLoggerProvider } from "rui-logger";
 import { redirectToSignin } from "~/utils/navigate";
 
 export function links() {
-  return [antdStyles, indexStyles, linkshopBuilderStyles].map((styles) => {
+  return [antdStyles, indexStyles, linkshopBuilderStyles, shopfloorExtensionStyles].map((styles) => {
     return { rel: "stylesheet", href: styles };
   });
 }

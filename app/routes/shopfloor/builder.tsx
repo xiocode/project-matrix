@@ -25,6 +25,8 @@ import ShopfloorExtension from "~/shopfloor-extension/mod";
 import styles from "antd/dist/antd.css";
 import linkshopBuilderStyles from "~/styles/linkshop-builder.css";
 import indexStyles from "~/styles/index.css";
+import shopfloorExtensionStyles from "~/shopfloor-extension/mod.css";
+
 import rapidService from "~/rapidService";
 
 import { Avatar, Dropdown, PageHeader } from "antd";
@@ -40,6 +42,7 @@ export function links() {
     { rel: "stylesheet", href: styles },
     { rel: "stylesheet", href: linkshopBuilderStyles },
     { rel: "stylesheet", href: indexStyles },
+    { rel: "stylesheet", href: shopfloorExtensionStyles },
   ];
 }
 

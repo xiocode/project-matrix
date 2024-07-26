@@ -214,6 +214,11 @@ export default {
             key: "sfFileUploader",
             icon: <FileTextOutlined />,
           },
+          {
+            label: "PDF附件",
+            key: "sfPDFViewer",
+            icon: <FileTextOutlined />,
+          },
         ],
       },
       {
