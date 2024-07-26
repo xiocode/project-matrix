@@ -5,11 +5,12 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   type: "auto",
   label: "物品",
   code: "material",
-  formControlType: "tableSelector",
+  formControlType: "rapidTableSelect",
   formControlProps: {
     dropdownMatchSelectWidth: 500,
-    labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
-    valueKey: "material.id",
+    listTextFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
+    listValueFieldName: "material.id",
+    listFilterFields: ["material.name", "lotNum"],
     columns: [
       {
         title: "物品",
