@@ -78,10 +78,10 @@ export default {
 
     const rockConfig: RockConfig = {
       $id: `${props.$id}_${materialId}_lot_list`,
-      $type: "tableSingleSelector",
-      labelKey: "lotNum",
-      valueKey: "lotNum",
-      searchFields: ["lotNum"],
+      $type: "rapidTableSelect",
+      listTextFieldName: "lotNum",
+      listValueFieldName: "lotNum",
+      listFilterFields: ["lotNum"],
       placeholder: "请选择",
       searchPlaceholder: "批次号搜索",
       allowClear: true,

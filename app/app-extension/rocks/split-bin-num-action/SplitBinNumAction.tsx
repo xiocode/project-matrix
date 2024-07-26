@@ -52,7 +52,7 @@ export default {
               {
                 type: "auto",
                 code: "shelves",
-                formControlType: "editableTable",
+                formControlType: "rapidEditableTable",
                 formControlProps: {
                   width: "100%",
                   columns: [

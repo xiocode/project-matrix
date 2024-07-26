@@ -5,12 +5,12 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   type: "auto",
   label: "物品",
   code: "material",
-  formControlType: "modelTableSelector",
+  formControlType: "rapidTableSelect",
   formControlProps: {
     dropdownMatchSelectWidth: 500,
-    labelFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
-    valueKey: "material.id",
-    entityCode: "MomInventoryApplicationItem",
+    listTextFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
+    listValueFieldName: "material.id",
+    listFilterFields: ["material.name", "lotNum"],
     columns: [
       {
         title: "物品",
@@ -24,41 +24,25 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
         width: 120,
       },
     ],
-    requestParams: {
-      fixedFilters: [
-        {
-          field: "application",
-          operator: "exists",
-          filters: [
-            {
-              field: "id",
-              operator: "eq",
-              value: "",
-            },
-          ],
-        },
-      ],
-      properties: ["id", "material", "lotNum", "unit"],
+    requestConfig: {
+      url: `/mom/mom_inventory_application_items/operations/find`,
+      params: {
+        fixedFilters: [
+          {
+            field: "application",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: "",
+              },
+            ],
+          },
+        ],
+        properties: ["id", "material", "lotNum", "unit"],
+      },
     },
-    // requestConfig: {
-    //   url: `/mom/mom_inventory_application_items/operations/find`,
-    //   params: {
-    //     fixedFilters: [
-    //       {
-    //         field: "application",
-    //         operator: "exists",
-    //         filters: [
-    //           {
-    //             field: "id",
-    //             operator: "eq",
-    //             value: "",
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //     properties: ["id", "material", "lotNum", "unit"],
-    //   },
-    // },
     onSelectedRecord: [
       {
         $action: "script",
@@ -78,7 +62,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
     ],
   },
   $exps: {
-    "formControlProps.requestParams.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
+    "formControlProps.requestConfig.params.fixedFilters[0].filters[0].value": "_.get(_.first(_.get($stores.detail, 'data.list')), 'application.id')",
   },
 };
 
@@ -161,7 +145,7 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
         _hidden: "$self.form.getFieldValue('outMethod') !== 'single'",
         wrapperCol: JSON.stringify({ offset: 0 }),
       },
-      formControlType: "editableTable",
+      formControlType: "rapidEditableTable",
       formControlProps: {
         width: "100%",
         columns: [
@@ -793,25 +777,25 @@ const page: RapidPage = {
     // {
     //   $type: "rapidToolbar",
     //   items: [
-        // {
-        //   $type: "rapidToolbarButton",
-        //   text: "确认提交",
-        //   actionStyle: "primary",
-        //   size: "large",
-        //   onAction: [
-        //     {
-        //       $action: "sendHttpRequest",
-        //       method: "PATCH",
-        //       data: { state: "done", approvalState: "approving" },
-        //       $exps: {
-        //         url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-        //       },
-        //     },
-        //   ],
-        //   $exps: {
-        //     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-        //   },
-        // },
+    // {
+    //   $type: "rapidToolbarButton",
+    //   text: "确认提交",
+    //   actionStyle: "primary",
+    //   size: "large",
+    //   onAction: [
+    //     {
+    //       $action: "sendHttpRequest",
+    //       method: "PATCH",
+    //       data: { state: "done", approvalState: "approving" },
+    //       $exps: {
+    //         url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+    //       },
+    //     },
+    //   ],
+    //   $exps: {
+    //     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
+    //   },
+    // },
     //     {
     //       $type: "rapidToolbarButton",
     //       text: "批准",
