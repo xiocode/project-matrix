@@ -13,6 +13,21 @@ export default {
       defaultValue: 'none'
     },
 
+    borderColor: {
+      valueType: 'string',
+      defaultValue: 'none'
+    },
+
+    borderWidth: {
+      valueType: 'number',
+      defaultValue: 2
+    },
+
+    borderRaduis: {
+      valueType: 'number',
+      defaultValue: 0
+    },
+
     width: {
       valueType: "string",
       defaultValue: "100px",
@@ -46,40 +61,15 @@ export default {
           propName: "$name",
         },
         {
-          $type: "textPropSetter",
-          label: "地址",
-          propName: "url",
-        },
-        {
-          $type: "selectPropSetter",
-          label: "边框",
-          propName: "borderStyle",
-          options: [
-            {
-              label: "无",
-              value: "none",
-            },
-            {
-              label: "实线",
-              value: "solid",
-            },
-            {
-              label: "虚线",
-              value: "dashed",
-            },
-            {
-              label: "点线",
-              value: "dotted",
-            },
-            {
-              label: "双线",
-              value: "double",
-            },
-          ],
+          $type: "filePropSetter",
+          label: "图片",
+          propName: "fileObj",
+          accept: ".jpg,.jpeg,.png,.gif,.apng,.bmp,.svg,.webp,.tif",
         },
       ],
     },
     { $type: "positionPropPanel" },
     { $type: "sizePropPanel" },
+    { $type: "borderPropPanel"}
   ],
 } as RockMeta;
