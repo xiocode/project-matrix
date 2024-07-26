@@ -37,7 +37,7 @@
     "@ruiapp/rapid-core": "~0.1.77",
     "@ruiapp/rapid-express": "~0.1.57",
     "@ruiapp/rapid-extension": "~0.1.33",
-    "@ruiapp/react-renderer": "~0.1.28",
+    "@ruiapp/react-renderer": "~0.2.0",
     "@ruiapp/react-rocks": "~0.1.30",
     "@types/jest": "^29.5.12",
     "@types/uuid": "^9.0.8",
