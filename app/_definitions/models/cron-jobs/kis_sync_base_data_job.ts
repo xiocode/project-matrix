@@ -10,7 +10,7 @@ export default {
     const {server, logger} = ctx;
     logger.info("Executing kis base data sync job...");
 
-    // await syncKisData(ctx, server);
+    await syncKisData(ctx, server);
 
     logger.info("Finished kis base data sync job...");
   },
@@ -20,5 +20,4 @@ async function syncKisData(ctx: ActionHandlerContext, server: IRpdServer) {
   const dataSync = new KisDataSync(server, ctx);
   await dataSync.initialize();
   await dataSync.syncBaseData();
-
 }

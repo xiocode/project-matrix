@@ -1,57 +1,52 @@
 import KingdeeSDK from "~/sdk/kis/api";
 
+export interface WarehouseEntry {
+  Famount?: number;
+  FAuxPropID?: number;
+  FAuxPrice?: number;
+  Fauxqty: number;
+  FAuxQtyMust: number;
+  FBatchNo?: string;
+  FDCSPID?: string;
+  FDCStockID?: string;
+  FEntryID?: number;
+  FICMOBillNo?: string;
+  FICMOInterID?: number;
+  FItemID?: string;
+  FKFDate?: string;
+  FKFPeriod?: number;
+  FMTONo?: string;
+  Fnote?: string;
+  FQty: number;
+  FSecQty?: number;
+  FQtyMust?: number;
+  FSecCoefficient?: number;
+  FSourceBillNo?: string;
+  FSourceEntryID?: string;
+  FSourceInterId?: number;
+  FSourceTranType?: number;
+  FUnitID?: string;
+  FDeptID?: number;
+  FPlanMode?:number;
+
+}
+
 export interface WarehouseInPayload {
   Object: {
     Head: {
-      FBillerID: number;
-      FBillNo: string;
-      FCheckDate: string;
-      FCheckerID: number;
+      FBillerID?: number;
+      FBillNo?: string;
+      FPOStyle: number;
+      FSupplyID?: string;
       Fdate: string;
-      FDCStockID: number;
-      FDeptID: number;
-      FFManagerID: number;
-      FManageType: number;
-      FMultiCheckStatus: string;
-      FPosterID: number;
-      FSManagerID: number;
-      FTranType: number;
-      FROB: number;
+      FDCStockID: string;
+      FDeptID?: number;
+      FFManagerID: string;
+      FSManagerID: string;
+      FTranType: number; // 1
+      FROB?: number;
     };
-    Entry: Array<{
-      Famount: number;
-      FAuxPropID: number;
-      Fauxqty: number;
-      FAuxQtyMust: number;
-      FBatchNo: string;
-      FDCSPID: number;
-      FDCStockID: number;
-      FEntryID: number;
-      FICMOBillNo: string;
-      FICMOInterID: number;
-      FItemID: number;
-      FKFDate: string;
-      FKFPeriod: number;
-      FMTONo: string;
-      Fnote: string;
-      FPeriodDate: string;
-      FPlanAmount: number;
-      FPlanMode: number;
-      FPPBomEntryID: number;
-      FQty: number;
-      FQtyMust: number;
-      FSecCoefficient: number;
-      FSecQty: number;
-      FSnList: Array<{
-        FSerialNum: string;
-        FSerialDesc: string;
-      }>;
-      FSourceBillNo: string;
-      FSourceEntryID: number;
-      FSourceInterId: number;
-      FSourceTranType: number;
-      FUnitID: number;
-    }>;
+    Entry: Array<WarehouseEntry>;
   };
 }
 

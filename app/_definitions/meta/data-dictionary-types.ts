@@ -623,6 +623,13 @@ export type WarehouseStrategy =
  */
 export type SettingItemType =
   | 'text'
-  | 'integer'
-  | 'boolean'
+  | 'textarea'
+  | 'number'
+  | 'switch'
+  | 'checkbox'
+  | 'date'
+  | 'time'
+  | 'datetime'
+  | 'file'
+  | 'json'
   ;

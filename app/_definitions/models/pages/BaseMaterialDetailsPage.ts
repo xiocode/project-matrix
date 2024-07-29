@@ -210,460 +210,460 @@ const page: RapidPage = {
         entityId: "$rui.parseQuery().id",
       },
     },
-    {
-      $type: "antdTabs",
-      items: [
-        {
-          key: "flows",
-          label: "工艺路线",
-          children: [
-            {
-              $id: "flowsLayout",
-              $type: "sonicMainSecondaryLayout",
-              mainTitle: "工艺路线",
-              mainColSpan: 8,
-              secondaryTitle: "工序",
-              secondaryColSpan: 16,
-              main: {
-                $type: "sonicEntityList",
-                entityCode: "MomRoute",
-                viewMode: "table",
-                selectionMode: "single",
-                selectOnClickRow: true,
-                listActions: [
-                  {
-                    $type: "sonicToolbarNewEntityButton",
-                    text: "新建",
-                    icon: "PlusOutlined",
-                    actionStyle: "primary",
-                  },
-                ],
-                fixedFilters: [
-                  {
-                    field: "material_id",
-                    operator: "eq",
-                    value: "",
-                  },
-                ],
-                orderBy: [
-                  {
-                    field: "version",
-                  },
-                ],
-                columns: [
-                  {
-                    type: "auto",
-                    code: "version",
-                  },
-                  {
-                    type: "auto",
-                    code: "state",
-                    width: "100px",
-                  },
-                  {
-                    type: "auto",
-                    code: "publishState",
-                    width: "100px",
-                  },
-                ],
-                actions: [
-                  {
-                    $type: "sonicRecordActionEditEntity",
-                    code: "edit",
-                    actionType: "edit",
-                    actionText: "修改",
-                  },
-                  {
-                    $type: "sonicRecordActionDeleteEntity",
-                    code: "delete",
-                    actionType: "delete",
-                    actionText: "删除",
-                    dataSourceCode: "list",
-                    entityCode: "MomRoute",
-                  },
-                ],
-                actionsColumnWidth: "80px",
-                newForm: cloneDeep(flowFormConfig),
-                editForm: cloneDeep(flowFormConfig),
-                $exps: {
-                  "fixedFilters[0].value": "$rui.parseQuery().id",
-                  "newForm.fixedFields.material_id": "$rui.parseQuery().id",
-                },
-              },
-              secondary: [
-                {
-                  $id: "processList",
-                  $type: "sonicEntityList",
-                  entityCode: "MomRouteProcess",
-                  viewMode: "table",
-                  selectionMode: "none",
-                  actionsColumnWidth: "80px",
-                  fixedFilters: [
-                    {
-                      field: "route_id",
-                      operator: "eq",
-                      value: "",
-                    },
-                  ],
-                  orderBy: [
-                    {
-                      field: "orderNum",
-                    },
-                  ],
-                  pageSize: -1,
-                  listActions: [
-                    {
-                      $type: "sonicToolbarNewEntityButton",
-                      text: "新建",
-                      icon: "PlusOutlined",
-                      actionStyle: "primary",
-                      $exps: {
-                        _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
-                      },
-                    },
-                  ],
-                  columns: [
-                    {
-                      type: "auto",
-                      code: "orderNum",
-                      width: "100px",
-                    },
-                    {
-                      type: "auto",
-                      code: "process",
-                      rendererProps: {
-                        format: "{{name}}",
-                      },
-                    },
-                    {
-                      type: "auto",
-                      code: "aliasName",
-                      width: "200px",
-                    },
-                    {
-                      type: "auto",
-                      code: "inputs",
-                    },
-                    {
-                      type: "auto",
-                      code: "outputs",
-                    },
-                    {
-                      type: "auto",
-                      code: "standardCycleTime",
-                      width: "100px",
-                    },
-                  ],
-                  actions: [
-                    {
-                      $type: "sonicRecordActionEditEntity",
-                      code: "edit",
-                      actionType: "edit",
-                      actionText: "修改",
-                      $exps: {
-                        _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
-                      },
-                    },
-                    {
-                      $type: "sonicRecordActionDeleteEntity",
-                      code: "delete",
-                      actionType: "delete",
-                      actionText: "删除",
-                      dataSourceCode: "list",
-                      entityCode: "MomRouteProcess",
-                      $exps: {
-                        _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
-                      },
-                    },
-                  ],
-                  newForm: cloneDeep(flowProcessFormConfig),
-                  editForm: cloneDeep(flowProcessFormConfig),
-                  $exps: {
-                    _hidden: "!$scope.vars.activeId",
-                    "fixedFilters[0].value": "$scope.vars.activeId",
-                    "newForm.fixedFields.route_id": "$scope.vars.activeId",
-                    hideActionsColumn: "$scope.vars.activeRecord?.publishState !== 'draft'",
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          key: "breakdowns",
-          label: "下级物料",
-          children: [
-            {
-              $id: "breakdownsLayout",
-              $type: "sonicMainSecondaryLayout",
-              mainTitle: "BOM版本",
-              mainColSpan: 8,
-              secondaryTitle: "下级物料",
-              secondaryColSpan: 16,
-              main: {
-                $type: "sonicEntityList",
-                entityCode: "MomMaterialBreakdown",
-                viewMode: "table",
-                selectionMode: "single",
-                selectOnClickRow: true,
-                listActions: [
-                  {
-                    $type: "sonicToolbarNewEntityButton",
-                    text: "新建",
-                    icon: "PlusOutlined",
-                    actionStyle: "primary",
-                  },
-                ],
-                fixedFilters: [
-                  {
-                    field: "material_id",
-                    operator: "eq",
-                    value: "",
-                  },
-                ],
-                orderBy: [
-                  {
-                    field: "version",
-                  },
-                ],
-                columns: [
-                  {
-                    type: "auto",
-                    code: "version",
-                  },
-                  {
-                    type: "auto",
-                    code: "quantity",
-                  },
-                  {
-                    type: "auto",
-                    code: "unit",
-                    rendererProps: {
-                      format: "{{name}}",
-                    },
-                  },
-                  {
-                    type: "auto",
-                    code: "state",
-                    width: "100px",
-                  },
-                ],
-                actions: [
-                  {
-                    $type: "sonicRecordActionEditEntity",
-                    code: "edit",
-                    actionType: "edit",
-                    actionText: "修改",
-                  },
-                  {
-                    $type: "sonicRecordActionDeleteEntity",
-                    code: "delete",
-                    actionType: "delete",
-                    actionText: "删除",
-                    dataSourceCode: "list",
-                    entityCode: "MomMaterialBreakdown",
-                  },
-                ],
-                actionsColumnWidth: "80px",
-                newForm: cloneDeep(breakdownFormConfig),
-                editForm: cloneDeep(breakdownFormConfig),
-                $exps: {
-                  "fixedFilters[0].value": "$rui.parseQuery().id",
-                  "newForm.fixedFields.material_id": "$rui.parseQuery().id",
-                },
-              },
-              secondary: [
-                {
-                  $id: "breakdownPartList",
-                  $type: "sonicEntityList",
-                  entityCode: "MomMaterialBreakdownPart",
-                  viewMode: "table",
-                  selectionMode: "none",
-                  actionsColumnWidth: "80px",
-                  fixedFilters: [
-                    {
-                      field: "breakdown_id",
-                      operator: "eq",
-                      value: "",
-                    },
-                  ],
-                  orderBy: [
-                    {
-                      field: "orderNum",
-                    },
-                  ],
-                  pageSize: -1,
-                  listActions: [
-                    {
-                      $type: "sonicToolbarNewEntityButton",
-                      text: "新建",
-                      icon: "PlusOutlined",
-                      actionStyle: "primary",
-                    },
-                  ],
-                  columns: [
-                    {
-                      type: "auto",
-                      code: "orderNum",
-                      width: "100px",
-                    },
-                    {
-                      type: "auto",
-                      code: "subMaterial",
-                      rendererType: "anchor",
-                      rendererProps: {
-                        children: {
-                          $type: "materialLabelRenderer",
-                          $exps: {
-                            value: "$slot.value",
-                          },
-                        },
-                        $exps: {
-                          href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
-                        },
-                      },
-                    },
-                    {
-                      type: "auto",
-                      code: "matchTags",
-                      width: "100px",
-                    },
-                    {
-                      type: "auto",
-                      code: "quantity",
-                      width: "100px",
-                    },
-                    {
-                      type: "auto",
-                      code: "unit",
-                      rendererProps: {
-                        format: "{{name}}",
-                      },
-                      width: "100px",
-                    },
-                  ],
-                  actions: [
-                    {
-                      $type: "sonicRecordActionEditEntity",
-                      code: "edit",
-                      actionType: "edit",
-                      actionText: "修改",
-                    },
-                    {
-                      $type: "sonicRecordActionDeleteEntity",
-                      code: "delete",
-                      actionType: "delete",
-                      actionText: "删除",
-                      dataSourceCode: "list",
-                      entityCode: "MomMaterialBreakdownPart",
-                    },
-                  ],
-                  newForm: cloneDeep(breakdownPartFormConfig),
-                  editForm: cloneDeep(breakdownPartFormConfig),
-                  $exps: {
-                    _hidden: "!$scope.vars.activeId",
-                    "fixedFilters[0].value": "$scope.vars.activeId",
-                    "newForm.fixedFields.breakdown_id": "$scope.vars.activeId",
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          key: "documents",
-          label: "文档",
-          children: [
-            {
-              $id: "userList",
-              $type: "sonicEntityList",
-              entityCode: "BaseMaterialDocument",
-              viewMode: "table",
-              selectionMode: "none",
-              fixedFilters: [
-                {
-                  field: "material_id",
-                  operator: "eq",
-                  value: "",
-                },
-              ],
-              listActions: [
-                {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
-              extraProperties: ["document", "createdBy"],
-              columns: [
-                {
-                  type: "auto",
-                  code: "document",
-                  title: "名称",
-                  fixed: "left",
-                  cell: [
-                    {
-                      $type: "antdListItemMeta",
-                      title: {
-                        $type: "antdSpace",
-                        children: [
-                          {
-                            $type: "text",
-                            text: "",
-                          },
-                          {
-                            $type: "anchor",
-                            href: "",
-                            children: "下载",
-                          },
-                        ],
-                      },
-                      $exps: {
-                        "title.children[0].text": "$slot.value.name",
-                        "title.children[1].href": "'/api/download/document?documentId=' + $slot.value.id",
-                        description:
-                          "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
-                      },
-                    },
-                  ],
-                },
-                {
-                  type: "auto",
-                  code: "state",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "createdAt",
-                  width: "150px",
-                },
-              ],
-              actions: [
-                {
-                  $type: "sonicRecordActionDeleteEntity",
-                  code: "delete",
-                  actionType: "delete",
-                  actionText: "删除",
-                  dataSourceCode: "list",
-                  entityCode: "BaseMaterialDocument",
-                },
-              ],
-              newForm: cloneDeep(materialDocumentFormConfig),
-              $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.material_id": "$rui.parseQuery().id",
-              },
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   $type: "antdTabs",
+    //   items: [
+    //     {
+    //       key: "flows",
+    //       label: "工艺路线",
+    //       children: [
+    //         {
+    //           $id: "flowsLayout",
+    //           $type: "sonicMainSecondaryLayout",
+    //           mainTitle: "工艺路线",
+    //           mainColSpan: 8,
+    //           secondaryTitle: "工序",
+    //           secondaryColSpan: 16,
+    //           main: {
+    //             $type: "sonicEntityList",
+    //             entityCode: "MomRoute",
+    //             viewMode: "table",
+    //             selectionMode: "single",
+    //             selectOnClickRow: true,
+    //             listActions: [
+    //               {
+    //                 $type: "sonicToolbarNewEntityButton",
+    //                 text: "新建",
+    //                 icon: "PlusOutlined",
+    //                 actionStyle: "primary",
+    //               },
+    //             ],
+    //             fixedFilters: [
+    //               {
+    //                 field: "material_id",
+    //                 operator: "eq",
+    //                 value: "",
+    //               },
+    //             ],
+    //             orderBy: [
+    //               {
+    //                 field: "version",
+    //               },
+    //             ],
+    //             columns: [
+    //               {
+    //                 type: "auto",
+    //                 code: "version",
+    //               },
+    //               {
+    //                 type: "auto",
+    //                 code: "state",
+    //                 width: "100px",
+    //               },
+    //               {
+    //                 type: "auto",
+    //                 code: "publishState",
+    //                 width: "100px",
+    //               },
+    //             ],
+    //             actions: [
+    //               {
+    //                 $type: "sonicRecordActionEditEntity",
+    //                 code: "edit",
+    //                 actionType: "edit",
+    //                 actionText: "修改",
+    //               },
+    //               {
+    //                 $type: "sonicRecordActionDeleteEntity",
+    //                 code: "delete",
+    //                 actionType: "delete",
+    //                 actionText: "删除",
+    //                 dataSourceCode: "list",
+    //                 entityCode: "MomRoute",
+    //               },
+    //             ],
+    //             actionsColumnWidth: "80px",
+    //             newForm: cloneDeep(flowFormConfig),
+    //             editForm: cloneDeep(flowFormConfig),
+    //             $exps: {
+    //               "fixedFilters[0].value": "$rui.parseQuery().id",
+    //               "newForm.fixedFields.material_id": "$rui.parseQuery().id",
+    //             },
+    //           },
+    //           secondary: [
+    //             {
+    //               $id: "processList",
+    //               $type: "sonicEntityList",
+    //               entityCode: "MomRouteProcess",
+    //               viewMode: "table",
+    //               selectionMode: "none",
+    //               actionsColumnWidth: "80px",
+    //               fixedFilters: [
+    //                 {
+    //                   field: "route_id",
+    //                   operator: "eq",
+    //                   value: "",
+    //                 },
+    //               ],
+    //               orderBy: [
+    //                 {
+    //                   field: "orderNum",
+    //                 },
+    //               ],
+    //               pageSize: -1,
+    //               listActions: [
+    //                 {
+    //                   $type: "sonicToolbarNewEntityButton",
+    //                   text: "新建",
+    //                   icon: "PlusOutlined",
+    //                   actionStyle: "primary",
+    //                   $exps: {
+    //                     _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
+    //                   },
+    //                 },
+    //               ],
+    //               columns: [
+    //                 {
+    //                   type: "auto",
+    //                   code: "orderNum",
+    //                   width: "100px",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "process",
+    //                   rendererProps: {
+    //                     format: "{{name}}",
+    //                   },
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "aliasName",
+    //                   width: "200px",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "inputs",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "outputs",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "standardCycleTime",
+    //                   width: "100px",
+    //                 },
+    //               ],
+    //               actions: [
+    //                 {
+    //                   $type: "sonicRecordActionEditEntity",
+    //                   code: "edit",
+    //                   actionType: "edit",
+    //                   actionText: "修改",
+    //                   $exps: {
+    //                     _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
+    //                   },
+    //                 },
+    //                 {
+    //                   $type: "sonicRecordActionDeleteEntity",
+    //                   code: "delete",
+    //                   actionType: "delete",
+    //                   actionText: "删除",
+    //                   dataSourceCode: "list",
+    //                   entityCode: "MomRouteProcess",
+    //                   $exps: {
+    //                     _hidden: "$page.getScope('flowsLayout-scope').vars.activeRecord?.publishState !== 'draft'",
+    //                   },
+    //                 },
+    //               ],
+    //               newForm: cloneDeep(flowProcessFormConfig),
+    //               editForm: cloneDeep(flowProcessFormConfig),
+    //               $exps: {
+    //                 _hidden: "!$scope.vars.activeId",
+    //                 "fixedFilters[0].value": "$scope.vars.activeId",
+    //                 "newForm.fixedFields.route_id": "$scope.vars.activeId",
+    //                 hideActionsColumn: "$scope.vars.activeRecord?.publishState !== 'draft'",
+    //               },
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       key: "breakdowns",
+    //       label: "下级物料",
+    //       children: [
+    //         {
+    //           $id: "breakdownsLayout",
+    //           $type: "sonicMainSecondaryLayout",
+    //           mainTitle: "BOM版本",
+    //           mainColSpan: 8,
+    //           secondaryTitle: "下级物料",
+    //           secondaryColSpan: 16,
+    //           main: {
+    //             $type: "sonicEntityList",
+    //             entityCode: "MomMaterialBreakdown",
+    //             viewMode: "table",
+    //             selectionMode: "single",
+    //             selectOnClickRow: true,
+    //             listActions: [
+    //               {
+    //                 $type: "sonicToolbarNewEntityButton",
+    //                 text: "新建",
+    //                 icon: "PlusOutlined",
+    //                 actionStyle: "primary",
+    //               },
+    //             ],
+    //             fixedFilters: [
+    //               {
+    //                 field: "material_id",
+    //                 operator: "eq",
+    //                 value: "",
+    //               },
+    //             ],
+    //             orderBy: [
+    //               {
+    //                 field: "version",
+    //               },
+    //             ],
+    //             columns: [
+    //               {
+    //                 type: "auto",
+    //                 code: "version",
+    //               },
+    //               {
+    //                 type: "auto",
+    //                 code: "quantity",
+    //               },
+    //               {
+    //                 type: "auto",
+    //                 code: "unit",
+    //                 rendererProps: {
+    //                   format: "{{name}}",
+    //                 },
+    //               },
+    //               {
+    //                 type: "auto",
+    //                 code: "state",
+    //                 width: "100px",
+    //               },
+    //             ],
+    //             actions: [
+    //               {
+    //                 $type: "sonicRecordActionEditEntity",
+    //                 code: "edit",
+    //                 actionType: "edit",
+    //                 actionText: "修改",
+    //               },
+    //               {
+    //                 $type: "sonicRecordActionDeleteEntity",
+    //                 code: "delete",
+    //                 actionType: "delete",
+    //                 actionText: "删除",
+    //                 dataSourceCode: "list",
+    //                 entityCode: "MomMaterialBreakdown",
+    //               },
+    //             ],
+    //             actionsColumnWidth: "80px",
+    //             newForm: cloneDeep(breakdownFormConfig),
+    //             editForm: cloneDeep(breakdownFormConfig),
+    //             $exps: {
+    //               "fixedFilters[0].value": "$rui.parseQuery().id",
+    //               "newForm.fixedFields.material_id": "$rui.parseQuery().id",
+    //             },
+    //           },
+    //           secondary: [
+    //             {
+    //               $id: "breakdownPartList",
+    //               $type: "sonicEntityList",
+    //               entityCode: "MomMaterialBreakdownPart",
+    //               viewMode: "table",
+    //               selectionMode: "none",
+    //               actionsColumnWidth: "80px",
+    //               fixedFilters: [
+    //                 {
+    //                   field: "breakdown_id",
+    //                   operator: "eq",
+    //                   value: "",
+    //                 },
+    //               ],
+    //               orderBy: [
+    //                 {
+    //                   field: "orderNum",
+    //                 },
+    //               ],
+    //               pageSize: -1,
+    //               listActions: [
+    //                 {
+    //                   $type: "sonicToolbarNewEntityButton",
+    //                   text: "新建",
+    //                   icon: "PlusOutlined",
+    //                   actionStyle: "primary",
+    //                 },
+    //               ],
+    //               columns: [
+    //                 {
+    //                   type: "auto",
+    //                   code: "orderNum",
+    //                   width: "100px",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "subMaterial",
+    //                   rendererType: "anchor",
+    //                   rendererProps: {
+    //                     children: {
+    //                       $type: "materialLabelRenderer",
+    //                       $exps: {
+    //                         value: "$slot.value",
+    //                       },
+    //                     },
+    //                     $exps: {
+    //                       href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+    //                     },
+    //                   },
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "matchTags",
+    //                   width: "100px",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "quantity",
+    //                   width: "100px",
+    //                 },
+    //                 {
+    //                   type: "auto",
+    //                   code: "unit",
+    //                   rendererProps: {
+    //                     format: "{{name}}",
+    //                   },
+    //                   width: "100px",
+    //                 },
+    //               ],
+    //               actions: [
+    //                 {
+    //                   $type: "sonicRecordActionEditEntity",
+    //                   code: "edit",
+    //                   actionType: "edit",
+    //                   actionText: "修改",
+    //                 },
+    //                 {
+    //                   $type: "sonicRecordActionDeleteEntity",
+    //                   code: "delete",
+    //                   actionType: "delete",
+    //                   actionText: "删除",
+    //                   dataSourceCode: "list",
+    //                   entityCode: "MomMaterialBreakdownPart",
+    //                 },
+    //               ],
+    //               newForm: cloneDeep(breakdownPartFormConfig),
+    //               editForm: cloneDeep(breakdownPartFormConfig),
+    //               $exps: {
+    //                 _hidden: "!$scope.vars.activeId",
+    //                 "fixedFilters[0].value": "$scope.vars.activeId",
+    //                 "newForm.fixedFields.breakdown_id": "$scope.vars.activeId",
+    //               },
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       key: "documents",
+    //       label: "文档",
+    //       children: [
+    //         {
+    //           $id: "userList",
+    //           $type: "sonicEntityList",
+    //           entityCode: "BaseMaterialDocument",
+    //           viewMode: "table",
+    //           selectionMode: "none",
+    //           fixedFilters: [
+    //             {
+    //               field: "material_id",
+    //               operator: "eq",
+    //               value: "",
+    //             },
+    //           ],
+    //           listActions: [
+    //             {
+    //               $type: "sonicToolbarNewEntityButton",
+    //               text: "新建",
+    //               icon: "PlusOutlined",
+    //               actionStyle: "primary",
+    //             },
+    //             {
+    //               $type: "sonicToolbarRefreshButton",
+    //               text: "刷新",
+    //               icon: "ReloadOutlined",
+    //             },
+    //           ],
+    //           extraProperties: ["document", "createdBy"],
+    //           columns: [
+    //             {
+    //               type: "auto",
+    //               code: "document",
+    //               title: "名称",
+    //               fixed: "left",
+    //               cell: [
+    //                 {
+    //                   $type: "antdListItemMeta",
+    //                   title: {
+    //                     $type: "antdSpace",
+    //                     children: [
+    //                       {
+    //                         $type: "text",
+    //                         text: "",
+    //                       },
+    //                       {
+    //                         $type: "anchor",
+    //                         href: "",
+    //                         children: "下载",
+    //                       },
+    //                     ],
+    //                   },
+    //                   $exps: {
+    //                     "title.children[0].text": "$slot.value.name",
+    //                     "title.children[1].href": "'/api/download/document?documentId=' + $slot.value.id",
+    //                     description:
+    //                       "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
+    //                   },
+    //                 },
+    //               ],
+    //             },
+    //             {
+    //               type: "auto",
+    //               code: "state",
+    //               width: "100px",
+    //             },
+    //             {
+    //               type: "auto",
+    //               code: "createdAt",
+    //               width: "150px",
+    //             },
+    //           ],
+    //           actions: [
+    //             {
+    //               $type: "sonicRecordActionDeleteEntity",
+    //               code: "delete",
+    //               actionType: "delete",
+    //               actionText: "删除",
+    //               dataSourceCode: "list",
+    //               entityCode: "BaseMaterialDocument",
+    //             },
+    //           ],
+    //           newForm: cloneDeep(materialDocumentFormConfig),
+    //           $exps: {
+    //             "fixedFilters[0].value": "$rui.parseQuery().id",
+    //             "newForm.fixedFields.material_id": "$rui.parseQuery().id",
+    //           },
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
   ],
 };
 

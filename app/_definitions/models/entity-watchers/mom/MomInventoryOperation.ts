@@ -1,6 +1,7 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import {MomInventoryOperationType} from "~/_definitions/meta/data-dictionary-types";
 import {
+  BaseLocation, BaseLot,
   KisConfig,
   MomGood,
   MomGoodTransfer,
@@ -9,13 +10,16 @@ import {
   type MomInventoryOperation,
   MomInventoryStatTable,
   MomInventoryStatTrigger,
-  MomWarehouse,
+  MomWarehouse, OcUser,
   SaveBaseLotInput, SaveMomGoodInput, SaveMomInventoryOperationInput,
 } from "~/_definitions/meta/entity-types";
 import InventoryStatService, {StatTableConfig} from "~/services/InventoryStatService";
 import KisHelper from "~/sdk/kis/helper";
-import KisInventoryOperationAPI from "~/sdk/kis/inventory";
+import KisInventoryOperationAPI, {WarehouseEntry, WarehouseInPayload, WarehouseOutPayload} from "~/sdk/kis/inventory";
 import rapidApi from "~/rapidApi";
+import {getNowString} from "~/utils/time-utils";
+import moment from "moment";
+import Base = moment.unitOfTime.Base;
 
 export default [
   {
@@ -44,14 +48,27 @@ export default [
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const {server, payload} = ctx;
-      // const kisApi = await new KisHelper(server).NewAPIClient();
-      // const kisOperationApi = new KisInventoryOperationAPI(kisApi);
+      const kisApi = await new KisHelper(server).NewAPIClient();
+      const kisOperationApi = new KisInventoryOperationAPI(kisApi);
 
       const changes = payload.changes;
       const after = payload.after;
 
       try {
-        if (changes.hasOwnProperty("state") && changes.state === "done") {
+        const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
+
+        const inventoryOperation = await inventoryOperationManager.findEntity({
+          filters: [
+            {
+              operator: "eq",
+              field: "id",
+              value: after.id,
+            },
+          ],
+          properties: ["id", "application", "from", "to", "operationType", "businessType", "contractNum", "supplier", "customer", "externalCode"],
+        });
+
+        if (after.hasOwnProperty("state") && after.state === "done") {
           if (after?.application_id) {
             await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
               id: after.application_id,
@@ -62,34 +79,119 @@ export default [
           }
 
           const kisConfig = await server.getEntityManager<KisConfig>("kis_config").findEntity({});
-          if (kisConfig) {
-            if (after.operationType === "in") {
-              // TODO: 生成KIS入库单
-              // switch (businessType?.name) {
-              //   case "采购入库":
-              //     await kisOperationApi.createProductReceipt({
-              //       Object: {
-              //         Head: {},
-              //         Entry: [{}],
-              //       },
-              //     } as WarehouseInPayload)
-              //     break;
-              //   case "生产入库":
-              //     await kisOperationApi.createPickingList({
-              //       Object: {
-              //         Head: {},
-              //         Entry: [{}],
-              //       },
-              //     } as WarehouseOutPayload)
-              //     break;
-              //   default:
-              //     break;
-              // }
-            } else if (after.operationType === "out") {
-              //   TODO: 生成KIS出库单
-            } else if (after.operationType === "transfer") {
-              //   TODO: 生成KIS调拨单
 
+          if (kisConfig && false) {
+            const warehouseLocations = await server.getEntityManager<BaseLocation>("base_location").findEntities({
+              filters: [{operator: "notNull", field: "externalCode"}],
+            });
+
+            // const transfers = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
+            //   filters: [
+            //     {
+            //       operator: "eq",
+            //       field: "operation_id",
+            //       value: after.id,
+            //     },
+            //   ],
+            //   properties: ["id", "good", "quantity", "to", "from", "lot", "material"],
+            // });
+
+            // transfer aggregate, sum quantity by material and lotnum and location
+            const transfers = await server.queryDatabaseObject(
+              `
+                SELECT mgt.material_id,
+                       mgt.lot_num,
+                       bm.external_code                               AS material_external_code,
+                       mgt.lot_id,
+                       coalesce(tbl.id, fbl.id)                       AS location_id,
+                       coalesce(tbl.external_code, fbl.external_code) AS location_external_code,
+                       bu.external_code                               AS unit_external_code,
+                       SUM(mgt.quantity)                              AS quantity
+                FROM mom_good_transfers mgt
+                       inner join base_materials bm on mgt.material_id = bm.id
+                       left join base_locations tbl ON mgt.to_location_id = tbl.id
+                       left join base_locations fbl ON mgt.from_location_id = fbl.id
+                       inner join base_units bu on bm.default_unit_id = bu.id
+                WHERE operation_id = $1
+                GROUP BY mgt.material_id, bm.external_code, mgt.lot_num, mgt.lot_id, tbl.id, tbl.external_code, fbl.id,
+                         fbl.external_code, bu.external_code;
+              `,
+              [after.id]
+            );
+
+            if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
+              if (inventoryOperation?.businessType?.operationType === "in") {
+                // TODO: 生成KIS入库单
+                switch (inventoryOperation?.businessType?.name) {
+                  case "采购入库":
+                    let entries: WarehouseEntry[] = [];
+                    let warehouseId: string = "0";
+                    if (transfers && transfers.length > 0) {
+                      const warehouseIds = await server.queryDatabaseObject(
+                        `
+        SELECT get_root_location_id($1) AS id;
+      `,
+                        [transfers[0]?.location_id]
+                      );
+                      warehouseId = warehouseLocations.find(item => item.id === warehouseIds[0]?.id)?.externalCode || "";
+                    }
+
+                    console.log(transfers)
+
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        // FSourceBillNo: inventoryOperation?.contractNum,
+                        FSourceTranType: 71,
+                        FDeptID: 264,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FPlanMode: 14036,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                      });
+                    }
+
+                    await kisOperationApi.createProductReceipt(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FPOStyle: 252,
+                            FDCStockID: warehouseId,
+                            FFManagerID: "308",
+                            FSManagerID: "308",
+                            FTranType: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "生产入库":
+                    // await kisOperationApi.createPickingList({
+                    //   Object: {
+                    //     Head: {},
+                    //     Entry: [{}],
+                    //   },
+                    // } as WarehouseOutPayload)
+                    break;
+                  default:
+                    break;
+                }
+              } else if (after.operationType === "out") {
+                //   TODO: 生成KIS出库单
+              } else if (after.operationType === "transfer") {
+                //   TODO: 生成KIS调拨单
+
+              }
             }
           }
         }
@@ -104,24 +206,11 @@ export default [
                 value: after.application_id,
               },
             ],
-            properties: ["id", "from", "to", "businessType"],
+            properties: ["id", "businessType"],
           });
 
           // 处理库存盘点
           if (inventoryApplication?.businessType && inventoryApplication.businessType.name === "库存盘点") {
-
-            const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation")
-
-            const inventoryAdjustOperation = await inventoryOperationManager.findEntity({
-              filters: [
-                {
-                  operator: "eq",
-                  field: "id",
-                  value: after?.id,
-                },
-              ],
-              properties: ["id", "from", "to", "businessType"],
-            });
 
             const inventoryBusinessTypes = await server.getEntityManager<MomInventoryBusinessType>("mom_inventory_business_type").findEntities({
               filters: [
@@ -144,7 +233,7 @@ export default [
               properties: ["id", "name", "code", "operationType"],
             });
 
-            if (inventoryAdjustOperation) {
+            if (inventoryOperation) {
 
               const resp = await rapidApi.post("app/listInventoryCheckTransfers", {"operationId": after.id});
 
@@ -154,7 +243,7 @@ export default [
                 const profitInventoryBusinessType = inventoryBusinessTypes.find(item => item.name === "盘盈入库");
 
                 let profitInventoryOperationInput = {
-                  application_id: inventoryAdjustOperation.application?.id,
+                  application_id: inventoryOperation.application?.id,
                   operationType: profitInventoryBusinessType?.operationType,
                   state: "processing",
                   approvalState: "uninitiated",
@@ -188,7 +277,7 @@ export default [
                 const lossesInventoryBusinessType = inventoryBusinessTypes.find(item => item.name === "盘亏出库");
 
                 let lossesInventoryOperationInput = {
-                  application_id: inventoryAdjustOperation.application?.id,
+                  application_id: inventoryOperation.application?.id,
                   operationType: lossesInventoryBusinessType?.operationType,
                   state: "done",
                   approvalState: "approved",
@@ -222,8 +311,6 @@ export default [
             }
           } else {
             let transfers = await listTransfersOfOperation(server, after.id);
-
-            console.log(payload)
 
             if (after.operationType === "in") {
               for (const transfer of transfers) {

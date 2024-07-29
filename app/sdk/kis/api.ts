@@ -40,15 +40,15 @@ class KingdeeSDK {
     });
 
     // 打印请求和响应日志
-    // this.axiosInstance.interceptors.request.use(request => {
-    //   console.log('Starting Request', JSON.stringify(request, null, 2))
-    //   return request
-    // })
+    this.axiosInstance.interceptors.request.use(request => {
+      console.log('Starting Request', JSON.stringify(request, null, 2))
+      return request
+    })
 
-    // this.axiosInstance.interceptors.response.use(response => {
-    //   console.log('Response:', JSON.stringify(response.data, null, 2))
-    //   return response
-    // })
+    this.axiosInstance.interceptors.response.use(response => {
+      console.log('Response:', JSON.stringify(response.data, null, 2))
+      return response
+    })
 
     this.machineId = machineIdSync();
     this.clientId = config.clientId;

@@ -283,19 +283,19 @@ class KisDataSync {
           } as SaveBaseLocationInput;
         },
       }),
-      // this.createListSyncFunction({
-      //   url: "/koas/APP006992/api/Stock/List",
-      //   singularCode: "base_location",
-      //   mapToEntity: async (item: any) => {
-      //     return {
-      //       code: item.FNumber,
-      //       name: item.FName,
-      //       externalCode: item.FItemID,
-      //       type: 'warehouse',
-      //
-      //     } as SaveBaseLocationInput;
-      //   },
-      // }),
+      this.createListSyncFunction({
+        url: "/koas/APP006992/api/Stock/List",
+        singularCode: "base_location",
+        mapToEntity: async (item: any) => {
+          return {
+            code: item.FNumber,
+            name: item.FName,
+            externalCode: item.FItemID,
+            type: 'warehouse',
+
+          } as SaveBaseLocationInput;
+        },
+      }),
     ]
 
     for (const syncListFunction of syncBaseFunctions) {
@@ -348,7 +348,7 @@ class KisDataSync {
             name: item.FName,
             hidden: false,
             state: 'enabled',
-            externalCode: item.FItemID
+            externalCode: item.EmpID
           } as SaveOcUserInput;
         },
       }),
@@ -690,6 +690,12 @@ class KisDataSync {
     let statusApiUrl = ""
     for (const operation of operations) {
       switch (operation.businessType.name) {
+        case "盘盈入库":
+          statusApiUrl = "/koas/app007104/api/inventorygain/getdetail"
+          break;
+        case "盘亏出库":
+          statusApiUrl = "/koas/app007104/api/inventoryloss/getdetail"
+          break;
         case "其他原因入库":
         case "其他原因出库":
           statusApiUrl = "/koas/app007104/api/miscellaneousreceipt/getdetail"
