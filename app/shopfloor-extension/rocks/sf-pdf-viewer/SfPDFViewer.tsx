@@ -2,25 +2,12 @@ import { CommonProps, type Rock } from "@ruiapp/move-style";
 import SfAttachmentMeta from "./SfPDFViewerMeta";
 import type { SfPDFViewerRockConfig } from "./sf-pdf-viewer-types";
 import { pick } from "lodash";
-import { useEffect, useRef, useState } from "react";
-import { ExpandOutlined, FilePdfOutlined } from "@ant-design/icons";
+import { EyeOutlined, FilePdfOutlined } from "@ant-design/icons";
+import { previewPdf } from "~/utils/file-utility";
 
 export default {
   Renderer(context, props: SfPDFViewerRockConfig) {
-    const { src, fileObj } = props;
-
-    const iframeRef = useRef<HTMLIFrameElement>(null);
-    const [open, setOpen] = useState<boolean>(false);
-
-    useEffect(() => {
-      if (!iframeRef.current) {
-        return;
-      }
-
-      iframeRef.current.onfullscreenchange = (e) => {
-        setOpen((draft) => !draft);
-      };
-    }, []);
+    const { src, fileObj, preview = true } = props;
 
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames, ...CommonProps.BorderStylePropNames];
     const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
@@ -29,11 +16,7 @@ export default {
 
     let url = src;
     if (fileObj) {
-      url = `/api/download/file?inline=true&fileKey=${fileObj.fileKey}&fileName=${fileObj.fileName}&open=${open}`;
-    }
-
-    if (!open && url) {
-      url = `${url}#toolbar=0`;
+      url = `/api/download/file?inline=true&fileKey=${fileObj.fileKey}&fileName=${fileObj.fileName}`;
     }
 
     if (!url) {
@@ -49,23 +32,17 @@ export default {
 
     return (
       <div data-component-id={props.$id} style={wrapStyle} className="sf-pdf-viewer">
-        <iframe
-          title={fileObj?.fileName}
-          ref={iframeRef}
-          allow="fullscreen"
-          src={url || "about:blank"}
-          className="sf-pdf-viewer--iframe"
-          width="100%"
-          height="100%"
-        />
-        <span
-          className="sf-pdf-viewer--scale"
-          onClick={() => {
-            iframeRef.current?.requestFullscreen();
-          }}
-        >
-          <ExpandOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-        </span>
+        <iframe title={fileObj?.fileName} src={url ? `${url}#toolbar=0` : "about:blank"} className="sf-pdf-viewer--iframe" width="100%" height="100%" />
+        {preview && (
+          <span
+            className="sf-pdf-viewer--scale"
+            onClick={() => {
+              previewPdf({ url });
+            }}
+          >
+            <EyeOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+          </span>
+        )}
       </div>
     );
   },
