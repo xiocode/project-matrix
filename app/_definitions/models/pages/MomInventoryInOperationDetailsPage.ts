@@ -48,7 +48,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
         $action: "script",
         script: `
         const info = event.args[0] || {};
-    
+
         const _ = event.framework.getExpressionVars()._;
         event.page.sendComponentMessage('goodTransferList-newForm-rapidForm', {
           name: "setFieldsValue",

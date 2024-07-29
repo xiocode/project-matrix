@@ -164,40 +164,40 @@ const page: RapidPage = {
           entityCode: "MomInventoryApplication",
           $permissionCheck: "inventoryApplication.manage",
         },
-        {
-          $type: "rapidTableAction",
-          code: "dispatch",
-          actionText: "下发",
-          $permissionCheck: "inventoryApplication.manage",
-          $exps: {
-            _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType !== 'in'",
-          },
-          onAction: [
-            {
-              $action: "sendHttpRequest",
-              method: "POST",
-              url: "/api/mom/mom_inventory_operations",
-              data: {
-                state: "processing",
-                approvalState: "uninitiated",
-              },
-              $exps: {
-                "data.application": "$event.args[0].id",
-                "data.businessType": "$event.args[0].businessType.id",
-                "data.operationType": "$event.args[0].businessType.operationType",
-              },
-            },
-            {
-              $action: "antdMessage",
-              title: "单据下发成功。",
-              onClose: [
-                {
-                  $action: "loadScopeData",
-                },
-              ],
-            },
-          ],
-        },
+        // {
+        //   $type: "rapidTableAction",
+        //   code: "dispatch",
+        //   actionText: "下发",
+        //   $permissionCheck: "inventoryApplication.manage",
+        //   $exps: {
+        //     _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType !== 'in'",
+        //   },
+        //   onAction: [
+        //     {
+        //       $action: "sendHttpRequest",
+        //       method: "POST",
+        //       url: "/api/mom/mom_inventory_operations",
+        //       data: {
+        //         state: "processing",
+        //         approvalState: "uninitiated",
+        //       },
+        //       $exps: {
+        //         "data.application": "$event.args[0].id",
+        //         "data.businessType": "$event.args[0].businessType.id",
+        //         "data.operationType": "$event.args[0].businessType.operationType",
+        //       },
+        //     },
+        //     {
+        //       $action: "antdMessage",
+        //       title: "单据下发成功。",
+        //       onClose: [
+        //         {
+        //           $action: "loadScopeData",
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
