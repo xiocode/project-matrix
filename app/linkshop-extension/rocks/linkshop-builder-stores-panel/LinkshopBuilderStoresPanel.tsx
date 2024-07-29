@@ -87,6 +87,7 @@ export default {
           })}
         </div>
         <ModelSettingsFormModal
+          context={context}
           visible={state.visible || false}
           storeConfigs={stores as any[]}
           entityStoreConfig={state.entityStoreConfig}
