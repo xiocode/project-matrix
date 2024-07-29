@@ -8,6 +8,7 @@ import mom$listGoodCheckTransfer from '../models/server-operations/mom/listGoodC
 import mom$listGoodInTransfer from '../models/server-operations/mom/listGoodInTransfer';
 import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOutTransfer';
 import mom$listInventoryCheckTransfer from '../models/server-operations/mom/listInventoryCheckTransfer';
+import mom$listInventoryOperationCount from '../models/server-operations/mom/listInventoryOperationCount';
 import mom$mergeGoods from '../models/server-operations/mom/mergeGoods';
 import mom$splitGoods from '../models/server-operations/mom/splitGoods';
 import mom$submitGoodCheckedTransfers from '../models/server-operations/mom/submitGoodCheckedTransfers';
@@ -28,6 +29,7 @@ export default [
   mom$listGoodInTransfer,
   mom$listGoodOutTransfer,
   mom$listInventoryCheckTransfer,
+  mom$listInventoryOperationCount,
   mom$mergeGoods,
   mom$splitGoods,
   mom$submitGoodCheckedTransfers,
