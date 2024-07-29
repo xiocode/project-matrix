@@ -8,4 +8,5 @@ export interface SfPDFViewerRockConfig extends LinkshopWidgetRockConfig {
   borderType?: "solid" | "dashed";
   borderRadius?: number;
   backgroundColor?: string;
+  preview?: boolean; // 默认开启
 }

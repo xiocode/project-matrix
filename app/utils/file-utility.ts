@@ -1,3 +1,4 @@
+import { message } from "antd";
 import fs from "fs";
 import path from "path";
 
@@ -63,4 +64,30 @@ export async function selectFiles(options: { accept?: string; multiple?: boolean
     document.body.appendChild(input);
     input.click();
   });
+}
+
+export function previewPdf(options: { url: string }) {
+  const { url } = options;
+  if (!url) {
+    message.error("PDF 链接不合法");
+    return;
+  }
+
+  const iframe = document.createElement("iframe");
+  iframe.src = url;
+  iframe.allow = "fullscreen";
+  iframe.width = "100%";
+  iframe.height = "100%";
+
+  document.body.appendChild(iframe);
+  iframe.requestFullscreen();
+  iframe.onfullscreenchange = () => {
+    if (!document.fullscreenElement) {
+      document.body.removeChild(iframe);
+    }
+  };
+
+  iframe.onfullscreenerror = () => {
+    document.body.removeChild(iframe);
+  };
 }
