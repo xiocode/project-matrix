@@ -116,6 +116,22 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     this.#emitter.emit("dataChange", null);
   }
 
+  get layouts() {
+    if (!this.appConfig) {
+      return null;
+    }
+
+    return this.appConfig.layouts;
+  }
+
+  get steps() {
+    if (!this.appConfig) {
+      return null;
+    }
+
+    return this.appConfig.steps;
+  }
+
   get currentLayout() {
     if (!this.appConfig) {
       return null;
@@ -148,6 +164,10 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     }
 
     return null;
+  }
+
+  getLayoutById(layoutId: string) {
+    return find(this.appConfig?.layouts, { $id: layoutId });
   }
 
   setPageConfig(value: PageConfig) {
@@ -405,6 +425,47 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
     this.setAppConfig({
       ...this.appConfig,
       layouts: layouts?.map((item) => (item.$id === layout.$id ? { ...item, ...layout } : item)),
+    } as LinkshopAppRockConfig);
+  }
+
+  setLayoutPagePropertyExpression(layoutId: string, propName: string, propExpression: string) {
+    const layouts = this.appConfig?.layouts || [];
+    this.setAppConfig({
+      ...this.appConfig,
+      layouts: layouts?.map((item) => {
+        if (item.$id !== layoutId) {
+          return item;
+        }
+
+        const newExps = { ...item.$exps, [propName]: propExpression };
+        return {
+          ...item,
+          $exps: newExps,
+        };
+      }),
+    } as LinkshopAppRockConfig);
+  }
+
+  removeLayoutPagePropertyExpression(layoutId: string, propName: string) {
+    const layouts = this.appConfig?.layouts || [];
+    this.setAppConfig({
+      ...this.appConfig,
+      layouts: layouts?.map((item) => {
+        if (item.$id !== layoutId) {
+          return item;
+        }
+
+        if (!item.$exps) {
+          return item;
+        }
+
+        const newExps = { ...item.$exps };
+        delete newExps[propName];
+        return {
+          ...item,
+          $exps: newExps,
+        };
+      }),
     } as LinkshopAppRockConfig);
   }
 

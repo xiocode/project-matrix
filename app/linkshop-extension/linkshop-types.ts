@@ -32,6 +32,8 @@ export type LinkshopAppLayoutRockConfig = ContainerRockConfig &
   LinkshopWidgetCommonConfig & {
     $type: "linkshopAppLayout";
 
+    name: string;
+
     /**
      * 背景颜色
      */
@@ -42,10 +44,17 @@ export type LinkshopAppStepRockConfig = ContainerRockConfig &
   LinkshopWidgetCommonConfig & {
     $type: "linkshopAppStep";
 
+    name: string;
+
     /**
      * 背景颜色
      */
     backgroundColor?: string;
+
+    /**
+     * 布局模板Id
+     */
+    layoutId?: string;
   };
 
 export type DesignerPageCommand = PageCommand | DesignerCommandAddStep | DesignerCommandModifyStep | DesignerCommandRemoveStep;
