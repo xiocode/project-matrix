@@ -1,7 +1,10 @@
-import { MoveStyleUtils, PageCommandAddComponent, type Rock, type RockChildrenConfig, type RockEvent } from "@ruiapp/move-style";
+import { MoveStyleUtils } from "@ruiapp/move-style";
+import type { PageCommandAddComponent, type Rock, type RockChildrenConfig, type RockEvent } from "@ruiapp/move-style";
+
 import LinkshopBuilderToolbarMeta from "./LinkshopBuilderToolbarMeta";
 import type { LinkshopBuilderToolbarRockConfig } from "./linkshop-builder-toolbar-types";
-import { Button, Dropdown, MenuProps, Space, message } from "antd";
+import type { MenuProps } from "antd";
+import { Button, Dropdown, Space, message } from "antd";
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -29,13 +32,14 @@ import {
   VerticalAlignMiddleOutlined,
   VerticalAlignTopOutlined,
   ScanOutlined,
+  BorderOuterOutlined,
 } from "@ant-design/icons";
 import { renderRockChildren } from "@ruiapp/react-renderer";
 import { useCallback } from "react";
-import { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
+import type { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
 import { genRandomComponentId, sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
 import CustomizeIcon from "~/shopfloor-extension/rocks/custom-icons";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
+import type { ItemType } from "antd/lib/menu/hooks/useItems";
 
 type ComponentItem = ItemType & {
   props?: {};
@@ -100,6 +104,11 @@ export default {
             label: "图片",
             key: "sfPicture",
             icon: <PictureOutlined />,
+          },
+          {
+            label: "矩形",
+            key: "sfRectangular",
+            icon: <BorderOuterOutlined />,
           },
           {
             label: "按钮",

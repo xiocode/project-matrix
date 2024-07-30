@@ -8,6 +8,7 @@ import SfQRCodeScanner from "./sf-qrcode-scanner/SfQRCodeScanner";
 import SfCodeScanner from "./sf-code-scanner/SfCodeScanner";
 import SfInput from "./sf-input/SfInput";
 import SfPDFViewer from "./sf-pdf-viewer/SfPDFViewer";
+import SfRetangular from "./sf-rectangular/SfRectangular";
 
 // layout entity components
 import SfEntityDetails from "./sf-entity-details/SfEntityDetails";
@@ -25,7 +26,7 @@ export default [
   SfCodeScanner,
   SfInput,
   SfPDFViewer,
-
+  SfRetangular,
   // layout
   SfEntityDetails,
   SfEntityTable,
