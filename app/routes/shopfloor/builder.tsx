@@ -313,6 +313,7 @@ export default function Index() {
                               $id: "stepTitle",
                               htmlTag: "div",
                               style: {
+                                width: "1200px",
                                 height: "30px",
                                 lineHeight: "30px",
                               },
@@ -336,9 +337,8 @@ export default function Index() {
                               },
                               style: {
                                 display: "block",
-                                margin: "0 auto",
-                                width: "100%",
-                                height: "calc(100% - 30px)",
+                                width: "1200px",
+                                height: "900px",
                               },
                             },
                             {
@@ -350,7 +350,7 @@ export default function Index() {
                                 left: "50px",
                               },
                               width: 1200,
-                              height: 800,
+                              height: 900,
                               onWidgetSelected: {
                                 $action: "script",
                                 script: (event: any) => {
