@@ -3240,6 +3240,10 @@ export interface MomInspectionCharacteristic {
    */
   skippable?: boolean;
   /**
+   * 必须合格
+   */
+  mustPass?: boolean;
+  /**
    * 特征类型
    */
   category?: Partial<MomInspectionCharacteristicCategory>;
@@ -3777,11 +3781,11 @@ export interface MomInspectionRule {
   /**
    * 检验类型
    */
-  category?: Partial<MomInspectionCategory>;
+  category: Partial<MomInspectionCategory>;
   /**
    * 物品
    */
-  material?: Partial<BaseMaterial>;
+  material: Partial<BaseMaterial>;
   /**
    * 生产工序
    */
@@ -3824,6 +3828,53 @@ export interface MomInspectionRule {
  * 检验规则
  */
 export type SaveMomInspectionRuleInput = Omit<MomInspectionRule, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验抽样
+ */
+export interface MomInspectionSampling {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 物料类型
+   */
+  materialCategory: Partial<BaseMaterialCategory>;
+  /**
+   * 样本数
+   */
+  samplingCount: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验抽样
+ */
+export type SaveMomInspectionSamplingInput = Omit<MomInspectionSampling, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 检验单
@@ -3917,6 +3968,10 @@ export interface MomInspectionSheet {
    * 批号信息
    */
   lot?: Partial<BaseLot>;
+  /**
+   * 样本记录
+   */
+  samples?: any;
   /**
    * 创建时间
    */
@@ -6814,6 +6869,10 @@ export interface MomWarehouseStrategy {
    * 有效期校验
    */
   validityFilter?: boolean;
+  /**
+   * 是否让步接收
+   */
+  isAOD?: boolean;
   /**
    * 启用
    */

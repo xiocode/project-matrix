@@ -5,7 +5,7 @@ import type {
   MomInventoryApplication,
   MomInventoryApplicationItem,
   MomWarehouseStrategy,
-  SaveBaseLotInput,
+  SaveBaseLotInput, SaveMomInspectionSheetInput,
   SaveMomInventoryApplicationItemInput,
 } from "~/_definitions/meta/entity-types";
 

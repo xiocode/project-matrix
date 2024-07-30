@@ -79,6 +79,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_lot",
       targetIdColumnName: "lot_id",
     },
+    {
+      code: "remark",
+      name: "备注",
+      type: "text",
+    },
   ],
 };
 

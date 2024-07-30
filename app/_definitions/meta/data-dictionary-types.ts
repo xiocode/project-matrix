@@ -39,6 +39,7 @@ export type BaseLotState =
   | 'normal'
   | 'destroyed'
   | 'pending'
+  | 'return'
   ;
 
 /**
