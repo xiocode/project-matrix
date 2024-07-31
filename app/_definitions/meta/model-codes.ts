@@ -1168,6 +1168,7 @@ const entityFieldCodes = {
     'quantity',
     'unit',
     'lot',
+    'remark',
     'createdAt',
     'createdBy',
     'updatedAt',
