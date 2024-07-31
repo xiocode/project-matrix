@@ -1,9 +1,9 @@
 import { useNavigate } from "@remix-run/react";
-import { type Rock } from "@ruiapp/move-style";
+import { RockEvent, type Rock } from "@ruiapp/move-style";
+import { renderRock } from "@ruiapp/react-renderer";
 import { useDebounceFn } from "ahooks";
 import { Button, Form, Input, InputNumber, Modal, Space, Table } from "antd";
 import { useState } from "react";
-import SingleTableSelector from "~/components/SingleTableSelector";
 import rapidApi from "~/rapidApi";
 
 export default {
@@ -45,21 +45,36 @@ export default {
           }}
         >
           <Form.Item required label="业务类型" name="application" rules={[{ required: true, message: "业务类型必填" }]}>
-            <SingleTableSelector
-              placeholder="请选择"
-              columns={[{ title: "名称", code: "name" }]}
-              requestConfig={{ url: "/mom/mom_inventory_applications/operations/find", method: "post" }}
-            />
+            {renderRock({
+              context,
+              rockConfig: {
+                $type: "rapidTableSelect",
+                placeholder: "请选择",
+                listFilterFields: ["code"],
+                columns: [{ title: "申请单号", code: "code" }],
+                requestConfig: { url: "/mom/mom_inventory_applications/operations/find", method: "post" },
+              },
+            })}
           </Form.Item>
           <Form.Item label="转出仓库" name="businessType">
-            <SingleTableSelector
-              placeholder="请选择"
-              columns={[{ title: "名称", code: "name" }]}
-              requestConfig={{ url: "/mom/mom_inventory_business_types/operations/find", method: "post" }}
-              onChange={(v, item) => {
-                form.setFieldValue("operationType", item?.operationType);
-              }}
-            />
+            {renderRock({
+              context,
+              rockConfig: {
+                $type: "rapidTableSelect",
+                placeholder: "请选择",
+                columns: [{ title: "名称", code: "name" }],
+                requestConfig: { url: "/mom/mom_inventory_business_types/operations/find", method: "post" },
+                onSelectedRecord: [
+                  {
+                    $action: "script",
+                    script: (e: RockEvent) => {
+                      const record: any = e.args[0];
+                      form.setFieldValue("operationType", record?.operationType);
+                    },
+                  },
+                ],
+              },
+            })}
           </Form.Item>
           <Form.Item
             label="物品明细"

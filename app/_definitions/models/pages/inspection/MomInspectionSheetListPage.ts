@@ -71,7 +71,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   defaultFormFields: {
     result: "uninspected",
     state: "pending",
-    approvalState: "uninitiated"
+    approvalState: "uninitiated",
   },
 };
 
@@ -86,14 +86,15 @@ const page: RapidPage = {
       viewMode: "table",
       // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
-      listActions: [
-        {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
-        },
-      ],
+      // listActions: [
+      //   {
+      //     $type: "sonicToolbarNewEntityButton",
+      //     text: "新建",
+      //     icon: "PlusOutlined",
+      //     actionStyle: "primary",
+      //   },
+      // ],
+      extraProperties: ["rule"],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",

@@ -1,12 +1,12 @@
 import { useNavigate } from "@remix-run/react";
 import { RockEvent, type Rock } from "@ruiapp/move-style";
 import { useDebounceFn } from "ahooks";
-import { Button, Form, Input, InputNumber, Modal, Space, Table } from "antd";
+import { Button, Form, Input, InputNumber, Space, Table } from "antd";
 import { useState } from "react";
-import SingleTableSelector from "~/components/SingleTableSelector";
 import rapidApi from "~/rapidApi";
 import { PlusOutlined } from "@ant-design/icons";
 import { renderRock } from "@ruiapp/react-renderer";
+import { last, omit, split } from "lodash";
 
 export default {
   $type: "inventoryApplicationForm",
@@ -43,45 +43,48 @@ export default {
                 unit: item.unit?.id,
                 lotNum: item.lotNum,
                 quantity: item.quantity,
+                remark: item.remark,
               })),
             });
           }}
         >
           <Form.Item required label="业务类型" name="businessType" rules={[{ required: true, message: "业务类型必填" }]}>
-            <SingleTableSelector
-              placeholder="请选择"
-              columns={[{ title: "名称", code: "name" }]}
-              requestConfig={{ url: "/mom/mom_inventory_business_types/operations/find", method: "post" }}
-              onChange={(v, item) => {
-                setOperationType(item?.operationType);
-                form.setFieldValue("operationType", item?.operationType);
-              }}
-            />
+            {renderRock({
+              context,
+              rockConfig: {
+                $type: "rapidTableSelect",
+                $id: `${props.$id}_businessType`,
+                placeholder: "请选择",
+                columns: [{ title: "名称", code: "name" }],
+                requestConfig: { url: "/mom/mom_inventory_business_types/operations/find", method: "post" },
+                onSelectedRecord: [
+                  {
+                    $action: "script",
+                    script: (e: RockEvent) => {
+                      const record: any = e.args[0];
+                      setOperationType(record?.operationType);
+                      form.setFieldValue("operationType", record?.operationType);
+                    },
+                  },
+                ],
+              },
+            })}
           </Form.Item>
           <Form.Item hidden name="operationType" />
           <Form.Item label="申请人" name="applicant" rules={[{ required: true, message: "申请人必填" }]}>
-            <SingleTableSelector
-              placeholder="请选择"
-              searchFields={["name"]}
-              searchPlaceholder="名称搜索"
-              columns={[{ title: "名称", code: "name" }]}
-              requestConfig={{ url: "/app/oc_users/operations/find", method: "post" }}
-            />
+            {renderRock({
+              context,
+              rockConfig: {
+                $type: "rapidTableSelect",
+                $id: `${props.$id}_applicant`,
+                placeholder: "请选择",
+                listFilterFields: ["name"],
+                searchPlaceholder: "名称搜索",
+                columns: [{ title: "名称", code: "name" }],
+                requestConfig: { url: "/app/oc_users/operations/find", method: "post", params: { orderBy: [{ field: "name" }] } },
+              },
+            })}
           </Form.Item>
-          {/*<Form.Item label="转出仓库" name="from">*/}
-          {/*  <SingleTableSelector*/}
-          {/*    placeholder="请选择"*/}
-          {/*    columns={[{ title: "名称", code: "name" }]}*/}
-          {/*    requestConfig={{ url: "/app/base_locations/operations/find", method: "post" }}*/}
-          {/*  />*/}
-          {/*</Form.Item>*/}
-          {/*<Form.Item label="转入仓库" name="to">*/}
-          {/*  <SingleTableSelector*/}
-          {/*    placeholder="请选择"*/}
-          {/*    columns={[{ title: "名称", code: "name" }]}*/}
-          {/*    requestConfig={{ url: "/app/base_locations/operations/find", method: "post" }}*/}
-          {/*  />*/}
-          {/*</Form.Item>*/}
           <Form.Item
             label="物品明细"
             name="items"
@@ -104,41 +107,52 @@ export default {
             <Table
               size="middle"
               dataSource={materialItems}
+              scroll={{ x: 740 }}
               columns={[
                 {
                   title: "物品",
                   dataIndex: "material",
-                  width: 200,
+                  width: 180,
                   render: (_, r, i) => {
-                    return (
-                      <SingleTableSelector
-                        dropdownMatchSelectWidth={500}
-                        placeholder="请选择"
-                        value={r.material?.id}
-                        searchFields={["name", "code"]}
-                        searchPlaceholder="物品名称和编码搜索"
-                        columns={[
+                    return renderRock({
+                      context,
+                      rockConfig: {
+                        $type: "rapidTableSelect",
+                        $id: `${i}_material`,
+                        dropdownMatchSelectWidth: 500,
+                        placeholder: "请选择",
+                        listFilterFields: ["name", "code"],
+                        searchPlaceholder: "物品名称和编码搜索",
+                        columns: [
                           { title: "名称", code: "name", width: 100 },
                           { title: "编号", code: "code", width: 100 },
                           { title: "规格", code: "specification", width: 100 },
                           { title: "单位", code: "defaultUnit.name", width: 80 },
-                        ]}
-                        requestConfig={{
+                        ],
+                        requestConfig: {
                           url: "/app/base_materials/operations/find",
                           method: "post",
                           params: {
                             properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
+                            orderBy: [{ field: "code" }],
                           },
-                        }}
-                        onChange={(v, record) => {
-                          setMaterialItems((draft) => {
-                            return draft.map((item, index) =>
-                              i === index ? { ...item, material: record, unit: record?.defaultUnit, lotNum: undefined } : item,
-                            );
-                          });
-                        }}
-                      />
-                    );
+                        },
+                        value: r.material?.id,
+                        onSelectedRecord: [
+                          {
+                            $action: "script",
+                            script: (e: RockEvent) => {
+                              const record: any = e.args[0];
+                              setMaterialItems((draft) => {
+                                return draft.map((item, index) =>
+                                  i === index ? { ...item, material: record, unit: record?.defaultUnit, lotNum: undefined } : item,
+                                );
+                              });
+                            },
+                          },
+                        ],
+                      },
+                    });
                   },
                 },
                 {
@@ -209,16 +223,45 @@ export default {
                   dataIndex: "unit",
                   width: 120,
                   render: (_, r, i) => {
+                    return renderRock({
+                      context,
+                      rockConfig: {
+                        $type: "rapidTableSelect",
+                        $id: `${i}_unit`,
+                        placeholder: "请选择",
+                        pageSize: 1000,
+                        listFilterFields: [],
+                        columns: [{ title: "名称", code: "name" }],
+                        requestConfig: { url: "/app/base_units/operations/find", method: "post" },
+                        value: r.unit?.id,
+                        onSelectedRecord: [
+                          {
+                            $action: "script",
+                            script: (e: RockEvent) => {
+                              const record: any = e.args[0];
+                              setMaterialItems((draft) => {
+                                return draft.map((item, index) => (i === index ? { ...item, unit: record } : item));
+                              });
+                            },
+                          },
+                        ],
+                      },
+                    });
+                  },
+                },
+                {
+                  title: "备注",
+                  dataIndex: "remark",
+                  width: 200,
+                  render: (_, r, i) => {
                     return (
-                      <SingleTableSelector
-                        placeholder="请选择"
-                        pageSize={1000}
-                        value={r.unit?.id}
-                        columns={[{ title: "名称", code: "name" }]}
-                        requestConfig={{ url: "/app/base_units/operations/find", method: "post" }}
-                        onChange={(v, record) => {
+                      <Input
+                        placeholder="请输入"
+                        value={r.remark}
+                        onChange={(e) => {
+                          const val = e.target.value;
                           setMaterialItems((draft) => {
-                            return draft.map((item, index) => (i === index ? { ...item, unit: record } : item));
+                            return draft.map((item, index) => (i === index ? { ...item, remark: val } : item));
                           });
                         }}
                       />
@@ -247,7 +290,8 @@ export default {
               block
               type="dashed"
               onClick={() => {
-                setMaterialItems([...materialItems, {}]);
+                const newRecord = omit(last(materialItems) || {}, ["lotNum", "quantity"]);
+                setMaterialItems([...materialItems, { ...newRecord }]);
               }}
             >
               <PlusOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
@@ -276,11 +320,6 @@ export default {
             </Space>
           </Form.Item>
         </Form>
-        <Modal>
-          <Form>
-            <Form.Item></Form.Item>
-          </Form>
-        </Modal>
       </div>
     );
   },
