@@ -9,5 +9,6 @@ export default {
     { name: "正常", value: "normal" },
     { name: "已销毁", value: "destroyed" },
     { name: "待处理", value: "pending" },
+    { name: "退货", value: "return" },
   ],
 } as RapidDataDictionary;

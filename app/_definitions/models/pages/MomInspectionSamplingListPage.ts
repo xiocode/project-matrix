@@ -7,50 +7,22 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "materialCategory",
       type: "auto",
     },
-    // {
-    //   code: "warehouse",
-    //   type: "auto",
-    // },
     {
-      code: "businessType",
-      type: "auto",
-    },
-    {
-      code: "strategy",
-      type: "auto",
-    },
-    // {
-    //   code: "priority",
-    //   type: "auto",
-    // },
-    {
-      code: "qualifiedFilter",
-      type: "auto",
-    },
-    {
-      code: "validityFilter",
-      type: "auto",
-    },
-    {
-      code: "isAOD",
-      type: "auto",
-    },
-    {
-      code: "enabled",
+      code: "samplingCount",
       type: "auto",
     },
   ],
 };
 
 const page: RapidPage = {
-  code: "mom_warehouse_strategy_list",
-  name: "仓库策略列表",
-  title: "仓库策略列表",
+  code: "mom_inspection_sampling_list",
+  name: "抽样规则列表",
+  title: "抽样规则列表",
   // permissionCheck: {any: ["warehouseStrategy.manage"]},
   view: [
     {
       $type: "sonicEntityList",
-      entityCode: "MomWarehouseStrategy",
+      entityCode: "MomInspectionSampling",
       viewMode: "table",
       selectionMode: "none",
       orderBy: [
@@ -64,7 +36,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-          $permissionCheck: "warehouseStrategy.manage",
+          // $permissionCheck: "warehouseStrategy.manage",
         },
       ],
       extraActions: [
@@ -86,49 +58,8 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        // {
-        //   code: "warehouse",
-        //   width: "100px",
-        //   type: "auto",
-        //   rendererProps: {
-        //     format: "{{name}}",
-        //   },
-        // },
         {
-          code: "businessType",
-          width: "100px",
-          type: "auto",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
-        {
-          code: "strategy",
-          width: "100px",
-          type: "auto",
-        },
-        // {
-        //   code: "priority",
-        //   width: "100px",
-        //   type: "auto",
-        // },
-        {
-          code: "qualifiedFilter",
-          width: "100px",
-          type: "auto",
-        },
-        {
-          code: "validityFilter",
-          width: "100px",
-          type: "auto",
-        },
-        {
-          code: "isAOD",
-          width: "100px",
-          type: "auto",
-        },
-        {
-          code: "enabled",
+          code: "samplingCount",
           width: "100px",
           type: "auto",
         },
@@ -139,7 +70,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
-          $permissionCheck: "warehouseStrategy.manage",
+          // $permissionCheck: "warehouseStrategy.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -147,8 +78,8 @@ const page: RapidPage = {
           actionType: "delete",
           actionText: "删除",
           dataSourceCode: "list",
-          entityCode: "MomWarehouseStrategy",
-          $permissionCheck: "warehouseStrategy.manage",
+          entityCode: "MomInspectionSampling",
+          // $permissionCheck: "warehouseStrategy.manage",
         },
       ],
       newForm: cloneDeep(formConfig),

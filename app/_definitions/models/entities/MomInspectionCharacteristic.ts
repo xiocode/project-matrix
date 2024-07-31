@@ -26,6 +26,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "boolean",
     },
     {
+      code: "mustPass",
+      name: "必须合格",
+      type: "boolean",
+      defaultValue: "true",
+    },
+    {
       code: "category",
       name: "特征类型",
       type: "relation",

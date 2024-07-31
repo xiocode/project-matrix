@@ -13,6 +13,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "mustPass",
+    },
+    {
+      type: "auto",
       code: "category",
     },
     {
@@ -100,6 +104,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
     },
   ],
+  defaultFormFields: {
+    skippable: false,
+    mustPass: true,
+  },
   onValuesChange: [
     {
       $action: "script",
@@ -237,6 +245,10 @@ const page: RapidPage = {
                 {
                   type: "auto",
                   code: "skippable",
+                },
+                {
+                  type: "auto",
+                  code: "mustPass",
                 },
                 {
                   type: "auto",
