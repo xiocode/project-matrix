@@ -52,6 +52,11 @@ export default {
           propName: "icon",
         },
         {
+          $type: "numberPropSetter",
+          label: "文字大小",
+          propName: "fontSize",
+        },
+        {
           $type: "colorPropSetter",
           label: "字体颜色",
           propName: "color",
