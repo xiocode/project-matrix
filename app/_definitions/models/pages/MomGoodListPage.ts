@@ -214,7 +214,7 @@ const page: RapidPage = {
           },
         },
       ],
-      actionsColumnWidth: "80px",
+      actionsColumnWidth: "180px",
       actions: [
         // {
         //   $type: "sonicRecordActionEditEntity",
@@ -232,6 +232,12 @@ const page: RapidPage = {
         //   entityCode: "MomGood",
         //   $permissionCheck: "inventoryTag.manage",
         // },
+        {
+          $type: "viewInspectionRecordAction",
+          code: "view",
+          actionText: "查看指标",
+          $permissionCheck: "inventoryTag.manage",
+        },
         {
           $type: "splitBinNumAction",
           code: "split",

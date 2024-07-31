@@ -1,91 +1,112 @@
 import { cloneDeep, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 
-const formConfig: Partial<RapidEntityFormConfig> = {
-  items: [
-    {
-      type: "auto",
-      code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit", "category"],
-        keepNonPropertyFields: true,
+function getFormConfig(formType: "newForm" | "editForm") {
+  const formConfig: Partial<RapidEntityFormConfig> = {
+    items: [
+      {
+        type: "auto",
+        code: "material",
+        formControlType: "rapidEntityTableSelect",
+        formControlProps: {
+          entityCode: "BaseMaterial",
+          dropdownMatchSelectWidth: 500,
+          listTextFormat: "{{code}} {{name}}（{{specification}}）",
+          listFilterFields: ["name", "code", "specification"],
+          requestParams: {
+            properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
+            keepNonPropertyFields: true,
+          },
+          columns: [
+            {
+              title: "名称",
+              code: "name",
+              width: 120,
+            },
+            {
+              title: "编号",
+              code: "code",
+              width: 120,
+            },
+            {
+              title: "规格",
+              code: "specification",
+              width: 120,
+            },
+          ],
+          onSelectedRecord: [
+            {
+              $action: "script",
+              script: `
+                const info = event.args[0] || {};
+        
+                const _ = event.framework.getExpressionVars()._;
+                event.page.sendComponentMessage('applicationItemList-${formType}-rapidForm', {
+                  name: "setFieldsValue",
+                  payload: {
+                    materialCategoryId: _.get(info, 'category.id'),
+                    unit: _.get(info, 'defaultUnit.id'),
+                    lotNum: ''
+                  }
+                });
+              `,
+            },
+          ],
+        },
       },
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+      {
+        type: "auto",
+        code: "lotNum",
+        $exps: {
+          _hidden:
+            "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'out' ||  _.get($page.scope.stores, 'detail.data.list[0].operationType') === 'transfer'",
+        },
       },
-    },
-    {
-      type: "auto",
-      code: "lotNum",
-      $exps: {
-        _hidden:
-          "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'out' ||  _.get($page.scope.stores, 'detail.data.list[0].operationType') === 'transfer'",
+      {
+        type: "auto",
+        code: "lotNum",
+        formControlType: "materialLotNumSelector",
+        formControlProps: {},
+        $exps: {
+          _hidden: "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'in'",
+          "formControlProps.materialId": "$self.form.getFieldValue('material')",
+          "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
+          "formControlProps.businessTypeId": "_.get($page.scope.stores, 'detail.data.list[0].businessType.id')",
+        },
       },
-    },
-    {
-      type: "auto",
-      code: "lotNum",
-      formControlType: "materialLotNumSelector",
-      formControlProps: {},
-      $exps: {
-        _hidden: "_.get($page.scope.stores, 'detail.data.list[0].operationType') === 'in'",
-        "formControlProps.materialId": "$self.form.getFieldValue('material')",
-        "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
-        "formControlProps.businessTypeId": "_.get($page.scope.stores, 'detail.data.list[0].businessType.id')",
+      // {
+      //   type: "auto",
+      //   code: "binNum",
+      // },
+      // {
+      //   type: "auto",
+      //   code: "serialNum",
+      // },
+      // {
+      //   type: "auto",
+      //   code: "trackingCode",
+      // },
+      // {
+      //   type: "auto",
+      //   code: "tags",
+      // },
+      {
+        type: "auto",
+        code: "quantity",
       },
+      {
+        type: "auto",
+        code: "unit",
+      },
+    ],
+    customRequest: {
+      method: "post",
+      url: "/app/createInventoryApplicationItems",
     },
-    // {
-    //   type: "auto",
-    //   code: "binNum",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "serialNum",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "trackingCode",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "tags",
-    // },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              materialCategoryId: _.get(material, 'category.id'),
-              unit: _.get(material, 'defaultUnit.id'),
-              lotNum: ''
-            }
-          });
-        }
-      `,
-    },
-  ],
-  customRequest: {
-    method: "post",
-    url: "/app/createInventoryApplicationItems",
-  },
-};
+  };
+
+  return formConfig;
+}
 
 const page: RapidPage = {
   code: "mom_inventory_application_details",
@@ -271,8 +292,8 @@ const page: RapidPage = {
                   $permissionCheck: "inventoryApplication.manage",
                 },
               ],
-              newForm: cloneDeep(formConfig),
-              editForm: cloneDeep(omit(formConfig, "customRequest")),
+              newForm: cloneDeep(getFormConfig("newForm")),
+              editForm: cloneDeep(omit(getFormConfig("editForm"), "customRequest")),
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.application": "$rui.parseQuery().id",

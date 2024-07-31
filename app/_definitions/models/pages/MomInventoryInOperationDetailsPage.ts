@@ -10,7 +10,8 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
     dropdownMatchSelectWidth: 500,
     listTextFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
     listValueFieldName: "material.id",
-    listFilterFields: ["material.name", "lotNum"],
+    listFilterFields: ["material.specification", "lotNum"],
+    searchPlaceholder: "搜索物料规格、批次号",
     columns: [
       {
         title: "物品",

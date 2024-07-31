@@ -1,8 +1,11 @@
-import { Table, TableProps } from "antd";
+import { useSetState } from "ahooks";
+import { Modal, Table, TableProps, Tag } from "antd";
 import dayjs from "dayjs";
 import { get } from "lodash";
 import { memo, useEffect, useState } from "react";
 import { rapidApiRequest } from "~/rapidApi";
+import { useInspectionSpecItems } from "../view-inspection-record-action/ViewInspectionRecordAction";
+import { fmtCharacteristicNorminal } from "~/utils/fmt";
 
 interface IProps {
   record: any;
@@ -10,7 +13,10 @@ interface IProps {
 }
 
 const LotNumDetailTable = memo<IProps>((props) => {
+  const [state, setState] = useSetState<{ visible?: boolean }>({});
+
   const { loadDetail, loading, detailItems } = useLotNumDetail();
+  const { loadInspectionSpecItems, loading: inspectionSpecLoading, inspectionSpecItems } = useInspectionSpecItems();
 
   useEffect(() => {
     if (props.show && props.record?.material?.id) {
@@ -42,9 +48,80 @@ const LotNumDetailTable = memo<IProps>((props) => {
       width: 120,
       render: (_, r) => r.lot?.validityDate && dayjs(r.lot?.validityDate).format("YYYY-MM-DD"),
     },
+    {
+      dataIndex: "id",
+      width: 100,
+      render: (_, r) => {
+        return (
+          <a
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+
+              setState({ visible: true });
+              loadInspectionSpecItems({ materialId: props.record?.material?.id, lotNum: r.lotNum });
+            }}
+          >
+            查看指标
+          </a>
+        );
+      },
+    },
   ];
 
-  return <Table rowKey="id" loading={loading} columns={tableColumns} dataSource={detailItems} size="middle" scroll={{ x: 480 }} pagination={false} />;
+  return (
+    <>
+      <Table rowKey="id" loading={loading} columns={tableColumns} dataSource={detailItems} size="middle" scroll={{ x: 580 }} pagination={false} />
+      <Modal
+        title="检验指标"
+        footer={false}
+        open={state.visible}
+        bodyStyle={{ padding: 8 }}
+        onCancel={() => {
+          setState({ visible: false });
+        }}
+      >
+        <Table
+          loading={inspectionSpecLoading}
+          pagination={false}
+          rowKey="id"
+          size="small"
+          dataSource={inspectionSpecItems}
+          columns={[
+            {
+              title: "指标名称",
+              dataIndex: "characteristic",
+              width: 180,
+              render: (c: any, r: any) => {
+                return get(r, "characteristic.name");
+              },
+            },
+            {
+              title: "标准值",
+              dataIndex: "normal",
+              width: 120,
+              render: (_: any, r: any) => {
+                return fmtCharacteristicNorminal(r.characteristic);
+              },
+            },
+            {
+              title: "实测值",
+              dataIndex: "value",
+              width: 120,
+              render: (_: any, r: any) => {
+                switch (r.characteristic?.kind) {
+                  case "qualitative":
+                    return <Tag color={r.isQualified ? "success" : "error"}>{get(r, "qualitativeValue")}</Tag>;
+                  case "quantitative":
+                    return <Tag color={r.isQualified ? "success" : "error"}>{get(r, "quantitativeValue")}</Tag>;
+                }
+              },
+            },
+          ]}
+        />
+      </Modal>
+    </>
+  );
 });
 
 export default LotNumDetailTable;

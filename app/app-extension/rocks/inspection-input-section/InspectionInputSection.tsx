@@ -8,6 +8,8 @@ import { decimalSum } from "~/utils/decimal";
 import rapidAppDefinition from "~/rapidAppDefinition";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { fmtCharacteristicNorminal } from "~/utils/fmt";
+import { calculateInspectionResult } from "~/utils/calculate";
 
 interface ICurrentState {
   inspectionScanInfo?: Record<string, any>;
@@ -57,12 +59,7 @@ export default {
         dataIndex: "norminal",
         width: 120,
         render: (_, r) => {
-          switch (r.kind) {
-            case "quantitative":
-              return `${r.norminal}±${r.upperTol || 0}`;
-            case "qualitative":
-              return r.norminal;
-          }
+          return fmtCharacteristicNorminal(r);
         },
       },
       {
@@ -115,16 +112,7 @@ export default {
         dataIndex: "result",
         width: 80,
         render: (_, r) => {
-          let isOk = null;
-          switch (r.kind) {
-            case "quantitative":
-              isOk =
-                r.measuredValue != null ? r.measuredValue >= decimalSum(r.norminal, r.lowerTol) && r.measuredValue <= decimalSum(r.norminal, r.upperTol) : null;
-              break;
-            case "qualitative":
-              isOk = r.measuredValue ? r.measuredValue === r.norminal : null;
-              break;
-          }
+          const isOk = calculateInspectionResult(r, r.measuredValue);
 
           if (isOk == null) {
             return;
