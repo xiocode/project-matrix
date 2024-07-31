@@ -20,6 +20,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_inspection_category",
       targetIdColumnName: "category_id",
+      required: true,
     },
     {
       code: "material",
@@ -27,6 +28,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "base_material",
       targetIdColumnName: "material_id",
+      required: true,
     },
     {
       code: "routeProcess",
@@ -44,6 +46,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "isDefault",
       name: "是否默认",
       type: "boolean",
+    },
+  ],
+  indexes: [
+    {
+      unique: true,
+      properties: ["category", "material"],
     },
   ],
 };

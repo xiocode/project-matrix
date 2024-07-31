@@ -19,14 +19,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   type: "auto",
     //   code: "routeProcess",
     // },
-    {
-      type: "auto",
-      code: "config",
-    },
-    {
-      type: "auto",
-      code: "isDefault",
-    },
+    // {
+    //   type: "auto",
+    //   code: "config",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "isDefault",
+    // },
   ],
   defaultFormFields: {
     isDefault: "false",
@@ -35,8 +35,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_inspection_rule_list",
-  name: "检验规则",
-  title: "检验规则",
+  name: "检验配置",
+  title: "检验配置",
   permissionCheck: { any: [] },
   view: [
     {
@@ -91,7 +91,7 @@ const page: RapidPage = {
           type: "auto",
           code: "material",
           rendererProps: {
-            format: "{{name}}",
+            format: "{{code}}-{{name}}-{{specification}}",
           },
         },
         // {
@@ -105,10 +105,10 @@ const page: RapidPage = {
         //   type: "auto",
         //   code: "config",
         // },
-        {
-          type: "auto",
-          code: "isDefault",
-        },
+        // {
+        //   type: "auto",
+        //   code: "isDefault",
+        // },
         {
           type: "auto",
           code: "createdAt",

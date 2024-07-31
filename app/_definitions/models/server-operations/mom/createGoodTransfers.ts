@@ -102,19 +102,16 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
     await createGoodTransfer(goodTransferManager, input.operationId, good, input?.print);
   }
 
-  if (inventoryOperation?.businessType?.name === "采购入库") {
+  if (!inventoryOperation?.businessType?.config?.NeedInspection && inventoryOperation?.businessType?.config?.inspectionCategoryId) {
     const inspectRule = await inspectRuleManager.findEntity({
       filters: [
         {operator: "eq", field: "material_id", value: material.id},
-        {operator: "eq", field: "is_default", value: true},
-        {
-          field: "category",
-          operator: "exists",
-          filters: [{field: "name", operator: "eq", value: "来料检验"}],
-        },
+        {operator: "eq", field: "category_id", value: inventoryOperation?.businessType?.config?.inspectionCategoryId},
       ],
       properties: ["id"],
     });
+
+    // TODO: 处理 mom_inspection_sheet_sample
 
     if (inspectRule) {
       await saveInspectionSheet(server, {

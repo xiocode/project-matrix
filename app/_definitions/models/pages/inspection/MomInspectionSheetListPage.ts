@@ -24,10 +24,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   code: "serialNum",
     // },
     {
-      code: "sampleCount",
-      type: "auto",
-    },
-    {
       code: "inventoryOperation",
       type: "auto",
       formControlProps: {
@@ -59,10 +55,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "sender",
     },
-    {
-      type: "auto",
-      code: "result",
-    },
+    // {
+    //   type: "auto",
+    //   code: "result",
+    // },
     {
       type: "auto",
       code: "state",
@@ -72,6 +68,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "approvalState",
     },
   ],
+  defaultFormFields: {
+    result: "uninspected",
+    state: "pending",
+    approvalState: "uninitiated"
+  },
 };
 
 const page: RapidPage = {
@@ -85,14 +86,14 @@ const page: RapidPage = {
       viewMode: "table",
       // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
-      // listActions: [
-      //   {
-      //     $type: "sonicToolbarNewEntityButton",
-      //     text: "新建",
-      //     icon: "PlusOutlined",
-      //     actionStyle: "primary",
-      //   },
-      // ],
+      listActions: [
+        {
+          $type: "sonicToolbarNewEntityButton",
+          text: "新建",
+          icon: "PlusOutlined",
+          actionStyle: "primary",
+        },
+      ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -179,6 +180,13 @@ const page: RapidPage = {
           },
         },
         {
+          code: "rule",
+          type: "auto",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
           type: "auto",
           code: "lotNum",
           width: "150px",
@@ -226,24 +234,24 @@ const page: RapidPage = {
           width: "150px",
         },
       ],
-      // actions: [
-      //   {
-      //     $type: "sonicRecordActionEditEntity",
-      //     code: "edit",
-      //     actionType: "edit",
-      //     actionText: "修改",
-      //     $permissionCheck: "inspection.manage",
-      //   },
-      //   {
-      //     $type: "sonicRecordActionDeleteEntity",
-      //     code: "delete",
-      //     actionType: "delete",
-      //     actionText: "删除",
-      //     dataSourceCode: "list",
-      //     entityCode: "MomInspectionSheet",
-      //     $permissionCheck: "inspection.manage",
-      //   },
-      // ],
+      actions: [
+        {
+          $type: "sonicRecordActionEditEntity",
+          code: "edit",
+          actionType: "edit",
+          actionText: "修改",
+          // $permissionCheck: "inspection.manage",
+        },
+        {
+          $type: "sonicRecordActionDeleteEntity",
+          code: "delete",
+          actionType: "delete",
+          actionText: "删除",
+          dataSourceCode: "list",
+          entityCode: "MomInspectionSheet",
+          // $permissionCheck: "inspection.manage",
+        },
+      ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       $exps: {
