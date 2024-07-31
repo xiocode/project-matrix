@@ -46,7 +46,7 @@ export default {
           propName: "$name",
         },
         {
-          $type: "textPropSetter",
+          $type: "selectIconPropSetter",
           label: "图标",
           propName: "icon",
           defaultValue: "SmileOutlined",
