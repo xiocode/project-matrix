@@ -1,4 +1,5 @@
 import LinkshopApp from "./linkshop-app/LinkshopApp";
+import LinkshopAppLayout from "./linkshop-app-layout/LinkshopAppLayout";
 import LinkshopAppStep from "./linkshop-app-step/LinkshopAppStep";
 import LinkshopBuilderAssetsPanel from "./linkshop-builder-assets-panel/LinkshopBuilderAssetsPanel";
 import LinkshopBuilderComponentsPanel from "./linkshop-builder-components-panel/LinkshopBuilderComponentsPanel";
@@ -25,6 +26,7 @@ import TimePropSetter from "./prop-setters/TimePropSetter";
 
 export default [
   LinkshopApp,
+  LinkshopAppLayout,
   LinkshopAppStep,
   LinkshopBuilderAssetsPanel,
   LinkshopBuilderComponentsPanel,
