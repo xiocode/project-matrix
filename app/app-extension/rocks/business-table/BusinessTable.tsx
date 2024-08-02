@@ -2,9 +2,19 @@ import { handleComponentEvent, type Rock, type RockChildrenConfig, type RockConf
 import { renderRock, renderRockChildren } from "@ruiapp/react-renderer";
 import BusinessTableMeta from "./BusinessTableMeta";
 import type { BusinessTableRockConfig, BusinessTableState } from "./business-table-types";
-import { filter, findIndex, forEach, map, reject, set, uniq } from "lodash";
-import { EntityStore, EntityStoreConfig, RapidExtensionSetting, RapidToolbarRockConfig } from "@ruiapp/rapid-extension";
+import { differenceBy, filter, findIndex, forEach, isArray, isEmpty, keyBy, map, reject, set, uniq } from "lodash";
+import {
+  EntityStore,
+  EntityStoreConfig,
+  RapidEntityListRockConfig,
+  RapidExtensionSetting,
+  RapidExtStorage,
+  RapidTableColumnConfig,
+  RapidToolbarRockConfig,
+} from "@ruiapp/rapid-extension";
 import { BusinessStoreConfig } from "~/app-extension/stores/business-store";
+import { useState } from "react";
+import dayjs from "dayjs";
 
 export default {
   onResolveState(props, state) {
@@ -69,10 +79,60 @@ export default {
     const { pageSize = 20 } = props;
     const { logger } = context;
 
+    const [rerenderKey, setRerenderKey] = useState<string | number>("");
+
     const dataSourceCode = props.dataSourceCode || "list";
     const tableColumnRocks: RockConfig[] = [];
 
-    props.columns.forEach((column) => {
+    const toolboxRockConfig = {
+      $type: "rapidEntityListToolbox",
+      $id: `${props.$id}_toolbox`,
+      columns: props.columns,
+      config: props.toolbox || {
+        columnCacheKey: props.entityCode || props.entityName,
+      },
+      onRerender: [
+        {
+          $action: "script",
+          script: () => {
+            setRerenderKey(dayjs().unix());
+          },
+        },
+      ],
+      onReload: [
+        {
+          $action: "script",
+          script: () => {
+            context.scope.stores[props.dataSourceCode!]?.loadData();
+          },
+        },
+      ],
+    };
+
+    let originColumns = props.columns || [];
+    const cacheColumns = RapidExtStorage.get<any[]>(toolboxRockConfig.config.columnCacheKey);
+    if (isArray(cacheColumns) && !isEmpty(cacheColumns)) {
+      const diffOriginColumns = differenceBy(originColumns, cacheColumns, getColumnUniqueKey);
+      const originByCodeMap = keyBy<RapidTableColumnConfig>(originColumns, getColumnUniqueKey);
+
+      let sortedColumns: RapidEntityListRockConfig["columns"] = [];
+      let showColumns: RapidEntityListRockConfig["columns"] = [];
+      cacheColumns.forEach((col) => {
+        const uniqueKey = getColumnUniqueKey(col as any);
+        const originColumn = originByCodeMap[uniqueKey];
+        if (originColumn) {
+          sortedColumns.push(originColumn);
+          if (!col.hidden) {
+            showColumns.push(originColumn);
+          }
+        }
+      });
+
+      originColumns = [...showColumns, ...diffOriginColumns];
+      toolboxRockConfig.columns = [...sortedColumns, ...diffOriginColumns];
+    }
+
+    originColumns.forEach((column) => {
       let cell: RockConfig | RockConfig[] | null = null;
 
       if (!column.title) {
@@ -261,10 +321,14 @@ export default {
       dataSourceCode: props.dataSourceCode,
     };
 
-    const rockChildrenConfig: RockChildrenConfig = [toolbarRockConfig, tableRockConfig];
+    const rockChildrenConfig: RockChildrenConfig = [toolbarRockConfig, toolboxRockConfig, tableRockConfig];
 
     return renderRockChildren({ context, rockChildrenConfig });
   },
 
   ...BusinessTableMeta,
 } as Rock<BusinessTableRockConfig, BusinessTableState>;
+
+export function getColumnUniqueKey(column: RapidTableColumnConfig): string {
+  return column?.key || column?.code;
+}

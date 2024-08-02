@@ -141,6 +141,7 @@ function genListConfig(warehouseCode?: string) {
       //   code: 'tags',
       // },
       {
+        key: "tags-d",
         type: "auto",
         code: "tags",
         title: "d",
@@ -154,6 +155,7 @@ function genListConfig(warehouseCode?: string) {
         },
       },
       {
+        key: "tags-D",
         type: "auto",
         code: "tags",
         title: "D",
@@ -167,6 +169,7 @@ function genListConfig(warehouseCode?: string) {
         },
       },
       {
+        key: "tags-b",
         type: "auto",
         code: "tags",
         title: "b",

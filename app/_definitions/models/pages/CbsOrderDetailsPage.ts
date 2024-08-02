@@ -204,6 +204,7 @@ const page: RapidPage = {
                   rendererType: "rapidPercentRenderer",
                 },
                 {
+                  key: "price-quantity-taxRate",
                   type: "auto",
                   code: "id",
                   title: "税费",
@@ -217,6 +218,7 @@ const page: RapidPage = {
                   },
                 },
                 {
+                  key: "price-quantity",
                   type: "auto",
                   code: "id",
                   fieldName: "id",

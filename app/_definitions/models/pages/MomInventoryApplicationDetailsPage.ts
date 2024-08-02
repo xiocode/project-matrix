@@ -238,7 +238,7 @@ const page: RapidPage = {
                 {
                   type: "auto",
                   code: "lotNum",
-                  width: "100px",
+                  width: "180px",
                 },
                 // {
                 //   type: "auto",

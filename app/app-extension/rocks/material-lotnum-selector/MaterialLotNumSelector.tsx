@@ -53,10 +53,39 @@ export default {
 
     if (currentStrategy?.qualifiedFilter) {
       fixedFilters.push({
-        field: "qualificationState",
-        operator: "eq",
-        value: "qualified",
+        field: "lot",
+        operator: "exists",
+        filters: [
+          {
+            field: "qualificationState",
+            operator: "eq",
+            value: "qualified",
+          },
+        ],
       });
+    }
+
+    if (currentStrategy?.isAOD) {
+      const lotFilterIndex = fixedFilters.findIndex((f: any) => f.field === "lot");
+      if (lotFilterIndex > -1) {
+        (fixedFilters[lotFilterIndex] as any).filters.push({
+          field: "isAOD",
+          operator: "eq",
+          value: true,
+        });
+      } else {
+        fixedFilters.push({
+          field: "lot",
+          operator: "exists",
+          filters: [
+            {
+              field: "isAOD",
+              operator: "eq",
+              value: true,
+            },
+          ],
+        });
+      }
     }
 
     // TODO: 关联字段排序
@@ -78,7 +107,7 @@ export default {
 
     const rockConfig: RockConfig = {
       $id: `${props.$id}_${materialId}_lot_list`,
-      $type: "rapidTableSelect",
+      $type: "rapidEntityTableSelect",
       listTextFieldName: "lotNum",
       listValueFieldName: "lotNum",
       listFilterFields: ["lotNum"],
@@ -90,13 +119,13 @@ export default {
         {
           title: "批次号",
           code: "lotNum",
-          width: 120,
+          width: 180,
           fixed: "left",
         },
         {
           title: "入库时间",
           code: "createdAt",
-          width: 180,
+          width: 120,
           render: `_.get(record, 'createdAt') && dayjs(_.get(record, 'createdAt')).format('YYYY-MM-DD')`,
         },
         {
@@ -121,13 +150,11 @@ export default {
           render: `_.get(record, 'lot.validityDate') && dayjs(_.get(record, 'lot.validityDate')).format('YYYY-MM-DD')`,
         },
       ],
-      requestConfig: {
-        url: `/mom/mom_material_lot_inventory_balances/operations/find`,
-        params: {
-          fixedFilters,
-          orderBy,
-          properties: ["id", "lotNum", "material", "createdAt", "lot"],
-        },
+      entityCode: "MomMaterialLotInventoryBalance",
+      requestParams: {
+        fixedFilters,
+        orderBy,
+        properties: ["id", "lotNum", "material", "createdAt", "lot"],
       },
       value: props.value,
       onChange: props.onChange,
