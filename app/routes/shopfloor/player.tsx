@@ -29,6 +29,7 @@ import rapidService from "~/rapidService";
 import { ShopfloorApp } from "~/_definitions/meta/entity-types";
 import { RuiLoggerProvider } from "rui-logger";
 import { redirectToSignin } from "~/utils/navigate";
+import axios from "axios";
 
 export function links() {
   return [antdStyles, indexStyles, linkshopBuilderStyles, shopfloorExtensionStyles].map((styles) => {
@@ -39,6 +40,7 @@ export function links() {
 const framework = new Framework();
 framework.setLoggerProvider(new RuiLoggerProvider());
 
+framework.registerExpressionVar("axios", axios);
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 
