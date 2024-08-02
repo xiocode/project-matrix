@@ -35,27 +35,27 @@ const page: RapidPage = {
       columns: [
         {
           type: "auto",
-          code: "material",
+          code: "material.code",
           title: "物料编码",
-          rendererProps: {
-            format: "{{code}}",
-          },
+          // rendererProps: {
+          //   format: "{{code}}",
+          // },
         },
         {
           type: "auto",
-          code: "material",
+          code: "material.name",
           title: "物料名称",
-          rendererProps: {
-            format: "{{name}}",
-          },
+          // rendererProps: {
+          //   format: "{{name}}",
+          // },
         },
         {
           type: "auto",
-          code: "material",
+          code: "material.specification",
           title: "规格",
-          rendererProps: {
-            format: "{{specification}}",
-          },
+          // rendererProps: {
+          //   format: "{{specification}}",
+          // },
         },
         {
           type: "auto",

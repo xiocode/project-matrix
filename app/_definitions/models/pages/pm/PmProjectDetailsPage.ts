@@ -816,6 +816,7 @@ const page: RapidPage = {
                   rendererType: "rapidPercentRenderer",
                 },
                 {
+                  key: "price-quantity-taxRate",
                   type: "auto",
                   code: "id",
                   fieldName: "id",
@@ -830,6 +831,7 @@ const page: RapidPage = {
                   },
                 },
                 {
+                  key: "price-quantity",
                   type: "auto",
                   code: "id",
                   fieldName: "id",

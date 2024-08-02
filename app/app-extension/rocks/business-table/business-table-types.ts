@@ -72,7 +72,9 @@ export interface BusinessTableConfig {
   onSelectedIdsChange?: RockEventHandlerConfig;
 }
 
-export interface BusinessTableRockConfig extends SimpleRockConfig, BusinessTableConfig {}
+export interface BusinessTableRockConfig extends SimpleRockConfig, BusinessTableConfig {
+  toolbox?: any;
+}
 
 export interface BusinessTableState {
   selectedIds?: any[];

@@ -100,6 +100,7 @@ const page: RapidPage = {
                 //   width: '200px',
                 // },
                 {
+                  key: "tags-d",
                   type: "auto",
                   code: "tags",
                   title: "d",
@@ -113,6 +114,7 @@ const page: RapidPage = {
                   },
                 },
                 {
+                  key: "tags-D",
                   type: "auto",
                   code: "tags",
                   title: "D",
@@ -126,6 +128,7 @@ const page: RapidPage = {
                   },
                 },
                 {
+                  key: "tags-b",
                   type: "auto",
                   code: "tags",
                   title: "b",

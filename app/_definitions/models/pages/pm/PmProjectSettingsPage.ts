@@ -241,12 +241,14 @@ const page: RapidPage = {
               ],
               columns: [
                 {
+                  key: "workItemTypeCode",
                   type: "auto",
                   code: "workItemType",
                   fieldName: "workItemType.code",
                   width: "100px",
                 },
                 {
+                  key: "workItemTypeName",
                   type: "link",
                   code: "workItemType",
                   fieldName: "workItemType.name",

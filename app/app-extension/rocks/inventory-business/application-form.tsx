@@ -121,7 +121,7 @@ export default {
                         $id: `${i}_material`,
                         dropdownMatchSelectWidth: 500,
                         placeholder: "请选择",
-                        listFilterFields: ["name", "code"],
+                        listFilterFields: ["name", "code", "specification"],
                         searchPlaceholder: "物品名称和编码搜索",
                         columns: [
                           { title: "名称", code: "name", width: 100 },

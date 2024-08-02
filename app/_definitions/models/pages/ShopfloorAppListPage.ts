@@ -53,6 +53,7 @@ const page: RapidPage = {
       pageSize: 20,
       columns: [
         {
+          key: "name-link",
           type: "link",
           code: "name",
           width: "150px",
@@ -63,6 +64,7 @@ const page: RapidPage = {
           },
         },
         {
+          key: "app-name",
           type: "auto",
           code: "name",
           title: "应用",

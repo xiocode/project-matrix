@@ -300,12 +300,12 @@ const page: RapidPage = {
                 {
                   type: "auto",
                   code: "lotNum",
-                  width: "100px",
+                  width: "160px",
                 },
                 {
                   type: "auto",
                   code: "binNum",
-                  width: "100px",
+                  width: "160px",
                   title: "托盘号",
                 },
                 {
@@ -322,12 +322,14 @@ const page: RapidPage = {
                   },
                 },
                 {
+                  key: "qualityGuaranteePeriod",
                   type: "auto",
                   code: "material",
                   title: "保质期",
                   fieldName: "material.qualityGuaranteePeriod",
                 },
                 {
+                  key: "manufactureDate",
                   type: "auto",
                   code: "good",
                   title: "生产日期",
@@ -335,6 +337,7 @@ const page: RapidPage = {
                   fieldType: "date",
                 },
                 {
+                  key: "validityDate",
                   type: "auto",
                   code: "good",
                   title: "有效期至",
