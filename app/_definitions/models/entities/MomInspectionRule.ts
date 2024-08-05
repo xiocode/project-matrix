@@ -31,6 +31,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
+      code: "customer",
+      name: "客户",
+      type: "relation",
+      targetSingularCode: "base_partner",
+      targetIdColumnName: "customer_id",
+    },
+    {
       code: "routeProcess",
       name: "生产工序",
       type: "relation",
@@ -51,7 +58,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   indexes: [
     {
       unique: true,
-      properties: ["category", "material"],
+      properties: ["category", "material", "customer"],
     },
   ],
 };
