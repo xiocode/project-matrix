@@ -113,6 +113,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "partner_id",
     },
     {
+      code: "customer",
+      name: "客户",
+      type: "relation",
+      targetSingularCode: "base_partner",
+      targetIdColumnName: "customer_id",
+    },
+    {
       code: "operationState",
       name: "库存操作状态",
       type: "option",
