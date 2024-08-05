@@ -46,6 +46,19 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       code: "rule",
       type: "auto",
+      listDataFindOptions: {
+        fixedFilters: [
+          {
+            field: "customer",
+            operator: "null",
+          },
+        ],
+      },
+      formControlProps: {
+        listSearchable: true,
+        listTextFormat: "{{name}}",
+        listFilterFields: ["label"],
+      },
     },
     // {
     //   code: "routeProcess",
@@ -86,14 +99,14 @@ const page: RapidPage = {
       viewMode: "table",
       // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
-      // listActions: [
-      //   {
-      //     $type: "sonicToolbarNewEntityButton",
-      //     text: "新建",
-      //     icon: "PlusOutlined",
-      //     actionStyle: "primary",
-      //   },
-      // ],
+      listActions: [
+        {
+          $type: "sonicToolbarNewEntityButton",
+          text: "新建",
+          icon: "PlusOutlined",
+          actionStyle: "primary",
+        },
+      ],
       extraProperties: ["rule"],
       extraActions: [
         {

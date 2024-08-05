@@ -171,7 +171,7 @@ const page: RapidPage = {
           type: "auto",
           code: "material",
           rendererProps: {
-            format: "{{name}}",
+            format: "{{code}}-{{name}}-{{specification}}"
           },
         },
         // {
