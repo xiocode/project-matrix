@@ -3787,6 +3787,10 @@ export interface MomInspectionRule {
    */
   material: Partial<BaseMaterial>;
   /**
+   * 客户
+   */
+  customer?: Partial<BasePartner>;
+  /**
    * 生产工序
    */
   routeProcess?: Partial<MomRouteProcess>;

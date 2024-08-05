@@ -77,8 +77,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 
 const page: RapidPage = {
   code: "mom_inspection_sheet_list",
-  name: "检验记录列表",
-  title: "检验记录",
+  name: "检验单管理",
+  title: "检验单管理",
   view: [
     {
       $type: "sonicEntityList",

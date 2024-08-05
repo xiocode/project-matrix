@@ -1038,6 +1038,7 @@ const entityFieldCodes = {
     'name',
     'category',
     'material',
+    'customer',
     'routeProcess',
     'config',
     'isDefault',

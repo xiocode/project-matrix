@@ -241,6 +241,10 @@ const page: RapidPage = {
           },
         },
         {
+          type: "auto",
+          code: "customer",
+        },
+        {
           code: "lotNum",
           type: "auto",
         },
