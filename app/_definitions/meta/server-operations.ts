@@ -7,6 +7,7 @@ import mom$createInventoryOperation from '../models/server-operations/mom/create
 import mom$listGoodCheckTransfer from '../models/server-operations/mom/listGoodCheckTransfer';
 import mom$listGoodInTransfer from '../models/server-operations/mom/listGoodInTransfer';
 import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOutTransfer';
+import mom$listGoodsByInspectRule from '../models/server-operations/mom/listGoodsByInspectRule';
 import mom$listInventoryCheckTransfer from '../models/server-operations/mom/listInventoryCheckTransfer';
 import mom$listInventoryOperationCount from '../models/server-operations/mom/listInventoryOperationCount';
 import mom$mergeGoods from '../models/server-operations/mom/mergeGoods';
@@ -28,6 +29,7 @@ export default [
   mom$listGoodCheckTransfer,
   mom$listGoodInTransfer,
   mom$listGoodOutTransfer,
+  mom$listGoodsByInspectRule,
   mom$listInventoryCheckTransfer,
   mom$listInventoryOperationCount,
   mom$mergeGoods,

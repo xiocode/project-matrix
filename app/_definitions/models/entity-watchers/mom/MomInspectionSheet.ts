@@ -11,8 +11,47 @@ export default [
       const before = payload.before
       const changes = payload.changes
 
+      if (before.hasOwnProperty('lotNum')) {
+        const lotManager = server.getEntityManager<BaseLot>("base_lot");
+        const lot = await lotManager.findEntity({
+          filters: [
+            {operator: "eq", field: "lotNum", value: before.lotNum},
+            {
+              operator: "eq",
+              field: "material_id",
+              value: before.material || before.material_id
+            }],
+          properties: ["id"],
+        });
+        changes.lot = lot?.id;
+      }
+
       if (changes.hasOwnProperty('approvalState') && changes.approvalState !== before.approvalState) {
-        changes.reviewer_id = routerContext?.state.userId;
+        changes.reviewer = routerContext?.state.userId;
+      }
+    },
+  },
+  {
+    eventName: "entity.beforeCreate",
+    modelSingularCode: "mom_inspection_sheet",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
+      const {server, payload} = ctx;
+
+      const before = payload.before
+
+      if (before.hasOwnProperty('lotNum')) {
+        const lotManager = server.getEntityManager<BaseLot>("base_lot");
+        const lot = await lotManager.findEntity({
+          filters: [
+            {operator: "eq", field: "lotNum", value: before.lotNum},
+            {
+              operator: "eq",
+              field: "material_id",
+              value: before.material || before.material_id
+            }],
+          properties: ["id"],
+        });
+        before.lot = lot?.id;
       }
     },
   },

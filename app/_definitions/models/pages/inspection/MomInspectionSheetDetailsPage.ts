@@ -1,166 +1,8 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
 
-const flowFormConfig: Partial<RapidEntityFormRockConfig> = {
+const inspectionMeasurementFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "version",
-    },
-    {
-      type: "auto",
-      code: "state",
-    },
-    {
-      type: "auto",
-      code: "publishState",
-    },
-  ],
-};
-
-const flowProcessFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    {
-      type: "auto",
-      code: "orderNum",
-    },
-    {
-      type: "auto",
-      code: "process",
-      formControlProps: {
-        listTextFormat: "{{name}}",
-        listFilterFields: ["label"],
-        listOrderBy: [
-          {
-            field: "code",
-          },
-        ],
-      },
-    },
-    {
-      type: "auto",
-      code: "aliasName",
-    },
-    {
-      type: "auto",
-      code: "standardCycleTime",
-    },
-  ],
-};
-
-const breakdownFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    {
-      type: "auto",
-      code: "version",
-    },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
-    },
-    {
-      type: "auto",
-      code: "state",
-    },
-  ],
-};
-
-const breakdownPartFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    {
-      type: "auto",
-      code: "orderNum",
-    },
-    {
-      type: "auto",
-      code: "subMaterial",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
-      },
-      formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
-      },
-    },
-    {
-      type: "auto",
-      code: "matchTags",
-    },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('subMaterial')) {
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-subMaterial'], 'data.list');
-          const subMaterial = _.find(materials, function (item) { return item.id == changedValues.subMaterial });
-          const unitId = _.get(subMaterial, 'defaultUnit.id');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitId,
-            }
-          });
-        }
-      `,
-    },
-  ],
-};
-
-const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    // {
-    //   type: "auto",
-    //   code: "document",
-    //   label: "文件",
-    //   valueFieldType: "json",
-    //   formControlType: "rapidDocumentFormControl",
-    //   formControlProps: {
-    //     uploadProps: {
-    //       name: "files",
-    //       action: "/api/upload",
-    //       headers: {},
-    //       maxCount: 1,
-    //     },
-    //     onUploaded: [
-    //       { $action: "printToConsole" },
-    //       {
-    //         $action: "script",
-    //         script: `
-    //           var fileInfo = event.args[0];
-    //           event.sender.form.setFieldsValue({
-    //             name: fileInfo.name,
-    //             size: fileInfo.size,
-    //             document: {
-    //               code: "",
-    //               name: fileInfo.name,
-    //               size: fileInfo.size,
-    //               storageObject: {
-    //                 size: fileInfo.size,
-    //                 key: fileInfo.key,
-    //               },
-    //               publishState: "published",
-    //             },
-    //           });
-    //         `,
-    //       },
-    //     ],
-    //   },
-    // },
     {
       code: "sampleCode",
       type: "text",
@@ -168,6 +10,15 @@ const materialDocumentFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       code: "characteristic",
       type: "auto",
+      // listDataFindOptions: {
+      //   fixedFilters: [
+      //     {
+      //       field: "rule",
+      //       operator: "eq",
+      //       value: "",
+      //     },
+      //   ],
+      // },
     },
     {
       code: "instrumentCategory",
@@ -347,7 +198,7 @@ const page: RapidPage = {
                   text: "新建",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
-                  $permissionCheck: "inspectionSheet.manage",
+                  // $permissionCheck: "inspectionSheet.manage",
                 },
                 {
                   $type: "sonicToolbarRefreshButton",
@@ -416,7 +267,7 @@ const page: RapidPage = {
                   entityCode: "MomInspectionMeasurement",
                 },
               ],
-              newForm: cloneDeep(materialDocumentFormConfig),
+              newForm: cloneDeep(inspectionMeasurementFormConfig),
               $exps: {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.sheet_id": "$rui.parseQuery().id",
@@ -438,7 +289,7 @@ const page: RapidPage = {
           text: "批准",
           actionStyle: "primary",
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
+          // $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -467,7 +318,7 @@ const page: RapidPage = {
           text: "拒绝",
           danger: true,
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
+          // $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",
