@@ -4230,6 +4230,10 @@ export interface MomInventoryApplication {
    */
   supplier?: Partial<BasePartner>;
   /**
+   * 客户
+   */
+  customer?: Partial<BasePartner>;
+  /**
    * 库存操作状态
    */
   operationState?: MomInventoryOperationState;
@@ -4624,6 +4628,10 @@ export interface MomInventoryOperation {
    * 供应商
    */
   supplier?: Partial<BasePartner>;
+  /**
+   * 客户
+   */
+  customer?: Partial<BasePartner>;
   /**
    * 外部编号
    */
