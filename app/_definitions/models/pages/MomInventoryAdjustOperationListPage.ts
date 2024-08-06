@@ -15,6 +15,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
       formControlProps: {
         listTextFormat: "{{code}}",
+        listFilterFields: ["code"],
+        columns: [{ code: "code", title: "申请单号" }],
       },
     },
     {
@@ -97,7 +99,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["material"],
+          filterFields: ["code"],
         },
       ],
       orderBy: [

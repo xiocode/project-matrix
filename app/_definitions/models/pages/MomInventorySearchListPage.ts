@@ -36,7 +36,7 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "material.code",
-          title: "物料编码",
+          title: "物料编号",
           // rendererProps: {
           //   format: "{{code}}",
           // },

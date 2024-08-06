@@ -154,10 +154,10 @@ export default {
                       rockConfig: {
                         $type: "rapidTableSelect",
                         $id: `${i}_material`,
-                        dropdownMatchSelectWidth: 500,
                         placeholder: "请选择",
+                        dropdownMatchSelectWidth: 500,
                         listFilterFields: ["name", "code", "specification"],
-                        searchPlaceholder: "物品名称和编码搜索",
+                        searchPlaceholder: "物品信息搜索",
                         columns: [
                           { title: "名称", code: "name", width: 100 },
                           { title: "编号", code: "code", width: 100 },

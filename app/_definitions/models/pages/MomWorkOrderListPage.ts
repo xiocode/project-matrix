@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -11,7 +12,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "material",
       listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
+        properties: ["id", "code", "name", "specification", "defaultUnit"],
         fixedFilters: [
           {
             operator: "eq",
@@ -21,7 +22,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         ],
       },
       formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
+        dropdownMatchSelectWidth: 500,
+        listTextFormat: materialFormatStrTemplate,
+        listFilterFields: ["name", "code", "specification"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+          { code: "specification", title: "规格", width: 120 },
+        ],
       },
     },
     {

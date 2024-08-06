@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const inspectionMeasurementFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
@@ -88,7 +89,17 @@ const page: RapidPage = {
           code: "material",
           type: "auto",
           rendererProps: {
-            format: "{{code}}-{{name}}",
+            format: materialFormatStrTemplate,
+          },
+          formControlProps: {
+            dropdownMatchSelectWidth: 500,
+            listTextFormat: materialFormatStrTemplate,
+            listFilterFields: ["name", "code", "specification"],
+            columns: [
+              { code: "code", title: "编号", width: 120 },
+              { code: "name", title: "名称", width: 120 },
+              { code: "specification", title: "规格", width: 120 },
+            ],
           },
         },
         {
@@ -113,6 +124,11 @@ const page: RapidPage = {
         //   rendererProps: {
         //     format: "{{code}}",
         //   },
+        // formControlProps: {
+        //   listTextFormat: "{{code}}",
+        //   listFilterFields: ["code"],
+        //   columns: [{ code: "code", title: "编号" }],
+        // }
         // },
         // {
         //   code: "workTrack",
@@ -120,6 +136,11 @@ const page: RapidPage = {
         //   rendererProps: {
         //     format: "{{code}}",
         //   },
+        // formControlProps: {
+        //   listTextFormat: "{{code}}",
+        //   listFilterFields: ["code"],
+        //   columns: [{ code: "code", title: "编号" }],
+        // }
         // },
         // {
         //   code: "workTask",
@@ -127,12 +148,22 @@ const page: RapidPage = {
         //   rendererProps: {
         //     format: "{{code}}",
         //   },
+        // formControlProps: {
+        //   listTextFormat: "{{code}}",
+        //   listFilterFields: ["code"],
+        //   columns: [{ code: "code", title: "编号" }],
+        // }
         // },
         {
           code: "inventoryOperation",
           type: "auto",
           rendererProps: {
             format: "{{code}}",
+          },
+          formControlProps: {
+            listTextFormat: "{{code}}",
+            listFilterFields: ["code"],
+            columns: [{ code: "code", title: "操作单号" }],
           },
         },
         {
