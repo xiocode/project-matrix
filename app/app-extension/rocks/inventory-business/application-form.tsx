@@ -1,12 +1,13 @@
 import { useNavigate } from "@remix-run/react";
 import { RockEvent, type Rock } from "@ruiapp/move-style";
-import { useDebounceFn } from "ahooks";
-import { Button, Form, Input, InputNumber, Space, Table } from "antd";
-import { useState } from "react";
-import rapidApi from "~/rapidApi";
+import { useDebounceFn, useSetState } from "ahooks";
+import { Button, Form, Input, InputNumber, Select, Space, Table } from "antd";
+import { memo, useEffect, useMemo, useState } from "react";
+import rapidApi, { rapidApiRequest } from "~/rapidApi";
 import { PlusOutlined } from "@ant-design/icons";
 import { renderRock } from "@ruiapp/react-renderer";
 import { last, omit, split } from "lodash";
+import dayjs from "dayjs";
 
 export default {
   $type: "inventoryApplicationForm",
@@ -19,6 +20,8 @@ export default {
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
+    const [refreshKey, setRefreshKey] = useState<string | number>();
+    const [isSalesOut, setIsSalesOut] = useState<boolean>(false);
     const [operationType, setOperationType] = useState<string>();
     const [materialItems, setMaterialItems] = useState<any[]>([]);
 
@@ -47,6 +50,9 @@ export default {
               })),
             });
           }}
+          onValuesChange={() => {
+            setRefreshKey(dayjs().unix());
+          }}
         >
           <Form.Item required label="业务类型" name="businessType" rules={[{ required: true, message: "业务类型必填" }]}>
             {renderRock({
@@ -62,7 +68,14 @@ export default {
                     $action: "script",
                     script: (e: RockEvent) => {
                       const record: any = e.args[0];
+
+                      const isSalesOut = record?.operationType === "out" && record?.config?.defaultSourceType === "sales";
+
                       setOperationType(record?.operationType);
+                      setIsSalesOut(isSalesOut);
+                      if (!isSalesOut) {
+                        form.setFieldValue("customer", null);
+                      }
                       form.setFieldValue("operationType", record?.operationType);
                     },
                   },
@@ -82,6 +95,28 @@ export default {
                 searchPlaceholder: "名称搜索",
                 columns: [{ title: "名称", code: "name" }],
                 requestConfig: { url: "/app/oc_users/operations/find", method: "post", params: { orderBy: [{ field: "name" }] } },
+              },
+            })}
+          </Form.Item>
+          <Form.Item label="客户" name="customer" hidden={!isSalesOut}>
+            {renderRock({
+              context,
+              rockConfig: {
+                $type: "rapidTableSelect",
+                $id: `${props.$id}_customer`,
+                placeholder: "请选择",
+                listFilterFields: ["name"],
+                searchPlaceholder: "名称搜索",
+                columns: [{ title: "名称", code: "name" }],
+                requestConfig: {
+                  url: "/app/base_partners/operations/find",
+                  method: "post",
+                  params: {
+                    orderBy: [{ field: "name" }],
+                    fixedFilters: [{ field: "categories", operator: "exists", filters: [{ field: "code", operator: "eq", value: "customer" }] }],
+                    properties: ["id", "name", "categories"],
+                  },
+                },
               },
             })}
           </Form.Item>
@@ -160,6 +195,21 @@ export default {
                   dataIndex: "lotNum",
                   width: 120,
                   render: (_, r, i) => {
+                    if (isSalesOut && form.getFieldValue("customer")) {
+                      return (
+                        <CustomerLotSelect
+                          materialId={r.material?.id}
+                          customerId={form.getFieldValue("customer")}
+                          value={r.lotNum}
+                          onChange={(val: string) => {
+                            setMaterialItems((draft) => {
+                              return draft.map((item, index) => (i === index ? { ...item, lotNum: val } : item));
+                            });
+                          }}
+                        />
+                      );
+                    }
+
                     if (operationType === "out" || operationType === "transfer") {
                       return renderRock({
                         context,
@@ -167,6 +217,7 @@ export default {
                           $id: i + "_lotnum",
                           $type: "materialLotNumSelector",
                           materialId: r.material?.id,
+                          customerId: form.getFieldValue("customer"),
                           materialCategoryId: r.material?.category?.id,
                           businessTypeId: form.getFieldValue("businessType"),
                           value: r.lotNum,
@@ -349,4 +400,66 @@ function useSaveApplication(onSuccess: () => void) {
   const save = useDebounceFn(saveApplication, { wait: 300 });
 
   return { saveApplication: save.run, saving };
+}
+
+const CustomerLotSelect = memo((props: any) => {
+  const { loadCustomLots, loading, lots } = useCustomLots();
+
+  useEffect(() => {
+    if (props.materialId && props.customerId) {
+      loadCustomLots({ materialId: props.materialId, customerId: props.customerId });
+    }
+  }, [props.materialId, props.customerId]);
+
+  const options = useMemo(() => (lots || []).map((lot) => ({ label: lot.lotNum, value: lot.lotNum })), [lots]);
+
+  return <Select style={{ width: "100%" }} options={options} loading={loading} value={props.value} onChange={props.onChange} />;
+});
+
+function useCustomLots() {
+  const [state, setState] = useSetState<{ loading?: boolean; lots?: any[] }>({});
+
+  const loadCustomLots = async (params: { materialId: string; customerId: string }) => {
+    setState({ loading: true });
+
+    const { error, result } = await rapidApiRequest({
+      url: "/mom/mom_inspection_rules/operations/find",
+      method: "POST",
+      data: {
+        filters: [
+          {
+            field: "material_id",
+            operator: "eq",
+            value: params.materialId,
+          },
+          {
+            field: "customer_id",
+            operator: "eq",
+            value: params.customerId,
+          },
+        ],
+      },
+    });
+
+    const rule = result?.list?.[0];
+    if (!error && rule) {
+      const { error: lotError, result: lotResult } = await rapidApiRequest({
+        url: "/app/listLotsByInspectRule",
+        method: "POST",
+        data: {
+          inspectRuleId: rule.id,
+          materialId: params.materialId,
+          customerId: params.customerId,
+        },
+      });
+
+      if (!lotError) {
+        setState({ lots: lotResult || [] });
+      }
+    }
+
+    setState({ loading: false });
+  };
+
+  return { loadCustomLots, ...state };
 }
