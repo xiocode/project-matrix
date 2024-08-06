@@ -5,7 +5,7 @@ import type {
   BaseUnit,
   MomGood,
   MomGoodTransfer,
-  MomInspectionRule,
+  MomInspectionRule, MomInspectionSampling,
   MomInventoryOperation,
   SaveBaseLotInput,
   SaveMomGoodInput,
@@ -58,7 +58,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
   const [inventoryOperation, material] = await Promise.all([
     inventoryOperationManager.findEntity({
       filters: [{operator: "eq", field: "id", value: input.operationId}],
-      properties: ["id", "businessType"],
+      properties: ["id", "category", "businessType"],
     }),
     materialManager.findEntity({
       filters: [{operator: "eq", field: "id", value: input?.material}],
@@ -111,7 +111,12 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
       properties: ["id"],
     });
 
-    // TODO: 处理 mom_inspection_sheet_sample
+    const sampleCount = await server.getEntityManager<MomInspectionSampling>("mom_inspection_sampling").findEntity({
+      filters: [
+        {operator: "eq", field: "material_category_id", value: material.category.id},
+      ],
+      properties: ["id", "samplingCount"],
+    })
 
     if (inspectRule) {
       await saveInspectionSheet(server, {
@@ -122,6 +127,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         material: {id: input.material},
         approvalState: "approving",
         state: "pending",
+        sampleCount: sampleCount?.samplingCount,
       });
     } else {
       await saveInspectionSheet(server, {
@@ -131,6 +137,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         material: {id: input.material},
         approvalState: "approving",
         state: "pending",
+        sampleCount: sampleCount?.samplingCount,
       });
     }
   }

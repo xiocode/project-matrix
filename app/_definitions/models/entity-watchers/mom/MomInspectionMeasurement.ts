@@ -15,16 +15,17 @@ export default [
         filters: [
           {operator: "eq", field: "sheet_id", value: after.sheet_id},
         ],
-        properties: ["id", "isQualified"],
+        properties: ["id", "characteristic", "isQualified"],
       });
 
       const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
 
 
-      let result = "unqualified";
-      if (momInspectionMeasurement.every((item) => item.isQualified)) {
-        result = "qualified";
+      let result = "qualified";
+      if (momInspectionMeasurement.every((item) => (item.characteristic?.mustPass || false) && !item.isQualified)) {
+        result = "unqualified";
       }
+
       await momInspectionSheetManager.updateEntityById({
         id: after.sheet_id,
         entityToSave: {
@@ -46,15 +47,15 @@ export default [
         filters: [
           {operator: "eq", field: "sheet_id", value: after.sheet_id},
         ],
-        properties: ["id", "isQualified"],
+        properties: ["id", "characteristic", "isQualified"],
       });
 
       const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
 
 
-      let result = "unqualified";
-      if (momInspectionMeasurement.every((item) => item.isQualified)) {
-        result = "qualified";
+      let result = "qualified";
+      if (momInspectionMeasurement.every((item) => (item.characteristic?.mustPass || false) && !item.isQualified)) {
+        result = "unqualified";
       }
       await momInspectionSheetManager.updateEntityById({
         id: after.sheet_id,
