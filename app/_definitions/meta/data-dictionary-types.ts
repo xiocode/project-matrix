@@ -324,6 +324,14 @@ export type MomInspectionSheetState =
   ;
 
 /**
+ * 检验结果处理方式
+ */
+export type MomInspectionSheetTreatment =
+  | 'special'
+  | 'withdraw'
+  ;
+
+/**
  * 库存操作状态
  */
 export type MomInventoryOperationState =

@@ -28,6 +28,7 @@ import type {
   MomEquipmentProductionState,
   MomGoodState,
   MomInspectionSheetState,
+  MomInspectionSheetTreatment,
   MomInventoryOperationState,
   MomInventoryOperationType,
   MomMpsExecutionState,
@@ -3904,6 +3905,10 @@ export interface MomInspectionSheet {
    * 检验结果
    */
   result?: InspectionResult;
+  /**
+   * 处理方式
+   */
+  treatment?: MomInspectionSheetTreatment;
   /**
    * 物品
    */

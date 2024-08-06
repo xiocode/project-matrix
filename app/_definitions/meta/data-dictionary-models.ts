@@ -32,6 +32,7 @@ import MomEquipmentPowerState from '../models/data-dictionaries/MomEquipmentPowe
 import MomEquipmentProductionState from '../models/data-dictionaries/MomEquipmentProductionState';
 import MomGoodState from '../models/data-dictionaries/MomGoodState';
 import MomInspectionSheetState from '../models/data-dictionaries/MomInspectionSheetState';
+import MomInspectionSheetTreatment from '../models/data-dictionaries/MomInspectionSheetTreatment';
 import MomInventoryOperationState from '../models/data-dictionaries/MomInventoryOperationState';
 import MomInventoryOperationType from '../models/data-dictionaries/MomInventoryOperationType';
 import MomMpsExecutionState from '../models/data-dictionaries/MomMpsExecutionState';
@@ -98,6 +99,7 @@ export default [
   MomEquipmentProductionState,
   MomGoodState,
   MomInspectionSheetState,
+  MomInspectionSheetTreatment,
   MomInventoryOperationState,
   MomInventoryOperationType,
   MomMpsExecutionState,
