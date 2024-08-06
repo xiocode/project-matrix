@@ -77,16 +77,26 @@ const relatedContractFormConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "target",
       formControlProps: {
+        dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
       },
     },
     {
       type: "auto",
       code: "kind",
       formControlProps: {
+        dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
       },
     },
   ],

@@ -19,10 +19,10 @@ export function renderMaterial(value: MaterialLabelRendererRockConfig["value"]) 
   let label = value.name;
 
   if (value.code) {
-    label = `${value.code} ${label}`;
+    label = `${value.code}-${label}`;
   }
   if (value.specification) {
-    label = `${label} (${value.specification})`;
+    label = `${label}（${value.specification}）`;
   }
 
   return label;

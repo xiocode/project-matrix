@@ -1,5 +1,6 @@
 import { cloneDeep, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 function getFormConfig(formType: "newForm" | "editForm") {
   const formConfig: Partial<RapidEntityFormConfig> = {
@@ -11,7 +12,7 @@ function getFormConfig(formType: "newForm" | "editForm") {
         formControlProps: {
           entityCode: "BaseMaterial",
           dropdownMatchSelectWidth: 500,
-          listTextFormat: "{{code}} {{name}}（{{specification}}）",
+          listTextFormat: materialFormatStrTemplate,
           listFilterFields: ["name", "code", "specification"],
           requestParams: {
             properties: ["id", "code", "name", "specification", "defaultUnit", "category"],

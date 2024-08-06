@@ -8,7 +8,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "good",
       formControlProps: {
         listTextFormat: "{{lotNum}} / {{serialNum}}",
-        listFilterFields: ["label"],
+        listFilterFields: ["lotNum", "serialNum"],
+        columns: [
+          { code: "lotNum", title: "批号", width: 160 },
+          { code: "serialNum", title: "序列号", width: 160 },
+        ],
       },
     },
     {

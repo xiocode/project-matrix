@@ -15,6 +15,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
       formControlProps: {
         listTextFormat: "{{code}}",
+        listFilterFields: ["code"],
+        columns: [
+          {
+            code: "code",
+            title: "申请单号",
+          },
+        ],
       },
     },
     {

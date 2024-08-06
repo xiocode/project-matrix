@@ -8,7 +8,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   formControlType: "rapidTableSelect",
   formControlProps: {
     dropdownMatchSelectWidth: 500,
-    listTextFormat: "{{material.code}} {{material.name}}（{{material.specification}}）",
+    listTextFormat: "{{material.code}}-{{material.name}}（{{material.specification}}）",
     listValueFieldName: "material.id",
     listFilterFields: ["material.specification", "lotNum"],
     searchPlaceholder: "搜索物料规格、批次号",
@@ -16,7 +16,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
       {
         title: "物品",
         code: "material",
-        format: "{{material.code}} {{material.name}}（{{material.specification}}）",
+        format: "{{material.code}}-{{material.name}}（{{material.specification}}）",
         width: 260,
       },
       {
@@ -472,7 +472,7 @@ const page: RapidPage = {
               `,
               columns: [
                 {
-                  title: "物料编码",
+                  title: "物料编号",
                   type: "auto",
                   code: "material.code",
                 },

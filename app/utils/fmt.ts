@@ -41,3 +41,5 @@ export function fmtCharacteristicNorminal(characteristic: Record<string, any>) {
       return norminal;
   }
 }
+
+export const materialFormatStrTemplate = "{{code}}-{{name}}（{{specification}}）";

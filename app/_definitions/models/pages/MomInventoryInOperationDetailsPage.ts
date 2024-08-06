@@ -716,7 +716,7 @@ const page: RapidPage = {
               `,
               columns: [
                 {
-                  title: "物料编码",
+                  title: "物料编号",
                   type: "auto",
                   code: "material.code",
                 },

@@ -23,8 +23,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "project",
       formControlProps: {
+        dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["label"],
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
       },
     },
     {

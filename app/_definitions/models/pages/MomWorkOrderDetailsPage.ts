@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash";
 import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
@@ -11,6 +12,12 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
       },
       formControlProps: {
         listTextFormat: "{{code}} {{routeProcess.name}}",
+        dropdownMatchSelectWidth: 300,
+        listFilterFields: ["code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "routeProcess.name", title: "工艺", width: 120 },
+        ],
       },
     },
     {
@@ -37,7 +44,13 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
       code: "equipment",
       formControlProps: {
+        dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
       },
     },
     {
@@ -79,7 +92,7 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
       code: "material",
       listDataFindOptions: {
-        properties: ["id", "code", "name", "defaultUnit"],
+        properties: ["id", "code", "name", "specification", "defaultUnit"],
         fixedFilters: [
           {
             operator: "eq",
@@ -89,7 +102,14 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
         ],
       },
       formControlProps: {
-        listTextFormat: "{{code}} {{name}}",
+        dropdownMatchSelectWidth: 500,
+        listTextFormat: materialFormatStrTemplate,
+        listFilterFields: ["name", "code", "specification"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+          { code: "specification", title: "规格", width: 120 },
+        ],
       },
     },
     {
@@ -155,7 +175,13 @@ const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
       code: "equipment",
       formControlProps: {
+        dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
       },
     },
     {
@@ -433,8 +459,18 @@ const page: RapidPage = {
           code: "material",
           rendererType: "rapidLinkRenderer",
           rendererProps: {
-            text: "{{code}} {{name}}",
+            text: materialFormatStrTemplate,
             url: "/pages/base_material_details?id={{id}}",
+          },
+          formControlProps: {
+            dropdownMatchSelectWidth: 500,
+            listTextFormat: materialFormatStrTemplate,
+            listFilterFields: ["name", "code", "specification"],
+            columns: [
+              { code: "code", title: "编号", width: 120 },
+              { code: "name", title: "名称", width: 120 },
+              { code: "specification", title: "规格", width: 120 },
+            ],
           },
         },
         {
