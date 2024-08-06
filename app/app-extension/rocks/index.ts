@@ -27,6 +27,7 @@ import InventoryApplicationForm from "./inventory-business/application-form";
 
 // inspection
 import ViewInspectionRecordAction from "./view-inspection-record-action/ViewInspectionRecordAction";
+import InspectionConditionRenderer from "./inspection-condition-renderer/InspectionConditionRenderer";
 
 export default [
   Link,
@@ -58,4 +59,5 @@ export default [
 
   // inspection
   ViewInspectionRecordAction,
+  InspectionConditionRenderer,
 ];

@@ -1,5 +1,6 @@
-import {cloneDeep} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -34,10 +35,15 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "sourceType",
+      hidden: true,
+    },
+    {
+      type: "auto",
       code: "productionPlanSn",
-      // $exps: {
-      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
-      // },
+      $exps: {
+        _hidden: "!($self.form.getFieldValue('operationType') === 'out' && $self.form.getFieldValue('sourceType') === 'picking')",
+      },
     },
     {
       type: "treeSelect",
@@ -46,36 +52,44 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         listDataSourceCode: "departments",
         listParentField: "parent.id",
       },
-      // $exps: {
-      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
-      // },
+      $exps: {
+        _hidden:
+          "!(($self.form.getFieldValue('operationType') === 'out' && $self.form.getFieldValue('sourceType') === 'picking') || ($self.form.getFieldValue('operationType') === 'in' && $self.form.getFieldValue('sourceType') === 'selfMade'))",
+      },
     },
     {
       type: "auto",
       code: "warehouse",
       label: "入库仓库",
-      // $exps: {
-      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
-      // },
+      $exps: {
+        _hidden: "!($self.form.getFieldValue('operationType') === 'in' && $self.form.getFieldValue('sourceType') === 'selfMade')",
+      },
     },
     {
       type: "auto",
       code: "shop",
-      // $exps: {
-      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
-      // },
+      $exps: {
+        _hidden:
+          "!(($self.form.getFieldValue('operationType') === 'out' && $self.form.getFieldValue('sourceType') === 'picking') || ($self.form.getFieldValue('operationType') === 'in' && $self.form.getFieldValue('sourceType') === 'selfMade'))",
+      },
     },
     {
       type: "auto",
       code: "finishedMaterial",
       formControlProps: {
         listSearchable: true,
-        listTextFormat: "{{code}}-{{name}}-{{specification}}",
-        listFilterFields: ["label"],
+        dropdownMatchSelectWidth: 500,
+        listTextFormat: materialFormatStrTemplate,
+        listFilterFields: ["name", "code", "specification"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+          { code: "specification", title: "规格", width: 120 },
+        ],
       },
-      // $exps: {
-      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
-      // },
+      $exps: {
+        _hidden: "!($self.form.getFieldValue('operationType') === 'out' && $self.form.getFieldValue('sourceType') === 'picking')",
+      },
     },
   ],
   onValuesChange: [
@@ -92,7 +106,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             name: "setFieldsValue",
             payload: {
               businessType: _.get(applicationItem, "businessType.id"),
+              sourceType: _.get(applicationItem, "businessType.config.defaultSourceType"),
               operationType: _.get(applicationItem, "operationType"),
+              finishedMaterial: undefined,
+              productionPlanSn: undefined,
+              department: undefined,
+              warehouse: undefined,
+              shop: undefined,
             }
           });
         }else if(changedValues.hasOwnProperty('businessType')){
@@ -103,6 +123,12 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             name: "setFieldsValue",
             payload: {
               operationType: _.get(businessTypeItem, "operationType"),
+              sourceType: _.get(businessTypeItem, "config.defaultSourceType"),
+              finishedMaterial: undefined,
+              productionPlanSn: undefined,
+              department: undefined,
+              warehouse: undefined,
+              shop: undefined,
             }
           });
         }

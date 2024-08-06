@@ -5,28 +5,36 @@ export function fmtCharacteristicNorminal(characteristic: Record<string, any>) {
     return;
   }
 
-  const { kind, norminal, upperLimit, lowerLimit, upperTol, lowerTol, determineType } = characteristic;
+  const { kind, upperLimit, lowerLimit, upperTol, lowerTol, determineType } = characteristic;
+
+  const norminal = characteristic.norminal != null ? characteristic.norminal : "";
 
   switch (kind) {
     // 定量
     case "quantitative":
       switch (determineType) {
         case "inLimit":
+          let inLimitInfo: string = "";
           if (isNil(lowerLimit) && isNumber(upperLimit)) {
-            return `/${upperLimit}`;
+            inLimitInfo = `/${upperLimit}`;
           } else if (isNil(upperLimit) && isNumber(lowerLimit)) {
-            return `${lowerLimit}/`;
+            inLimitInfo = `${lowerLimit}/`;
           } else if (isNumber(upperLimit) && isNumber(lowerLimit)) {
-            return lowerLimit !== upperLimit && sum([upperLimit, lowerLimit]) === 0 ? `±${upperLimit}` : `${lowerLimit}/${upperLimit}`;
+            inLimitInfo = lowerLimit !== upperLimit && sum([upperLimit, lowerLimit]) === 0 ? `±${upperLimit}` : `${lowerLimit}/${upperLimit}`;
           }
+
+          return inLimitInfo ? `${norminal}(${inLimitInfo})` : norminal;
         case "inTolerance":
+          let inToleranceInfo: string = "";
           if (isNil(lowerTol) && isNumber(upperTol)) {
-            return `/${upperTol}`;
+            inToleranceInfo = `/${upperTol}`;
           } else if (isNil(upperTol) && isNumber(lowerTol)) {
-            return `${lowerTol}/`;
+            inToleranceInfo = `${lowerTol}/`;
           } else if (isNumber(upperTol) && isNumber(lowerTol)) {
-            return lowerTol !== upperTol && sum([upperTol, lowerTol]) === 0 ? `±${upperTol}` : `${lowerTol}/${upperTol}`;
+            inToleranceInfo = lowerTol !== upperTol && sum([upperTol, lowerTol]) === 0 ? `±${upperTol}` : `${lowerTol}/${upperTol}`;
           }
+
+          return inToleranceInfo ? `${norminal}(${inToleranceInfo})` : norminal;
         case "gt":
           return norminal ? `>${norminal}` : norminal;
         case "ge":
