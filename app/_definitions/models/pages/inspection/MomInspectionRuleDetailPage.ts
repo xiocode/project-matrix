@@ -248,6 +248,7 @@ const page: RapidPage = {
                   field: "id",
                 },
               ],
+              extraProperties: ["determineType", "qualitativeDetermineType", "upperTol", "lowerTol", "upperLimit", "lowerLimit"],
               columns: [
                 {
                   type: "auto",
@@ -289,38 +290,40 @@ const page: RapidPage = {
                     format: "{{code}}",
                   },
                 },
-                {
-                  type: "auto",
-                  code: "determineType",
-                },
-                {
-                  type: "auto",
-                  code: "qualitativeDetermineType",
-                },
+                // {
+                //   type: "auto",
+                //   code: "determineType",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "qualitativeDetermineType",
+                // },
                 {
                   type: "auto",
                   code: "kind",
                 },
                 {
                   type: "auto",
+                  title: "合格条件",
                   code: "norminal",
+                  rendererType: "inspectionConditionRenderer",
                 },
-                {
-                  type: "auto",
-                  code: "upperTol",
-                },
-                {
-                  type: "auto",
-                  code: "lowerTol",
-                },
-                {
-                  type: "auto",
-                  code: "upperLimit",
-                },
-                {
-                  type: "auto",
-                  code: "lowerLimit",
-                },
+                // {
+                //   type: "auto",
+                //   code: "upperTol",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "lowerTol",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "upperLimit",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "lowerLimit",
+                // },
                 {
                   type: "auto",
                   code: "createdAt",
