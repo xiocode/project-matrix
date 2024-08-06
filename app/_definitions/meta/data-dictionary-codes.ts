@@ -32,6 +32,7 @@ const dictionaryCodes = [
   'MomEquipmentProductionState',
   'MomGoodState',
   'MomInspectionSheetState',
+  'MomInspectionSheetTreatment',
   'MomInventoryOperationState',
   'MomInventoryOperationType',
   'MomMpsExecutionState',

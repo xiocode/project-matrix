@@ -66,6 +66,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       dataDictionary: "InspectionResult",
     },
     {
+      code: "treatment",
+      name: "处理方式",
+      type: "option",
+      dataDictionary: "MomInspectionSheetTreatment",
+    },
+    {
       code: "material",
       name: "物品",
       type: "relation",

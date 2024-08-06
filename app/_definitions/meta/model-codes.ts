@@ -1066,6 +1066,7 @@ const entityFieldCodes = {
     'approvalState',
     'state',
     'result',
+    'treatment',
     'material',
     'materialCode',
     'lotNum',
