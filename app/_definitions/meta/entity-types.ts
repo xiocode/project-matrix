@@ -4625,6 +4625,10 @@ export interface MomInventoryOperation {
    */
   contractNum?: string;
   /**
+   * 生产计划单号
+   */
+  productionPlanSn?: string;
+  /**
    * 供应商
    */
   supplier?: Partial<BasePartner>;
@@ -4636,6 +4640,18 @@ export interface MomInventoryOperation {
    * 外部编号
    */
   externalCode?: string;
+  /**
+   * 车间
+   */
+  shop?: string;
+  /**
+   * 部门
+   */
+  department?: Partial<OcDepartment>;
+  /**
+   * 成品物料(用途)
+   */
+  finishedMaterial?: Partial<BaseMaterial>;
   /**
    * 创建时间
    */

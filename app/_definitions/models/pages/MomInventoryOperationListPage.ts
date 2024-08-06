@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import {cloneDeep} from "lodash";
+import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -24,6 +24,51 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "operationType",
+    },
+    {
+      type: "auto",
+      code: "productionPlanSn",
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
+      // },
+    },
+    {
+      type: "treeSelect",
+      code: "department",
+      formControlProps: {
+        listDataSourceCode: "departments",
+        listParentField: "parent.id",
+      },
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
+      // },
+    },
+    {
+      type: "auto",
+      code: "warehouse",
+      label: "入库仓库",
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
+      // },
+    },
+    {
+      type: "auto",
+      code: "shop",
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
+      // },
+    },
+    {
+      type: "auto",
+      code: "finishedMaterial",
+      formControlProps: {
+        listSearchable: true,
+        listTextFormat: "{{code}}-{{name}}-{{specification}}",
+        listFilterFields: ["label"],
+      },
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('businessType') !== 2",
+      // },
     },
   ],
   onValuesChange: [
@@ -239,6 +284,20 @@ const page: RapidPage = {
         "newForm.fixedFields.state": "'processing'",
         "newForm.fixedFields.approvalState": "'uninitiated'",
       },
+      stores: [
+        {
+          type: "entityStore",
+          name: "departments",
+          entityCode: "OcDepartment",
+          properties: ["id", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [],
+          orderBy: [
+            {
+              field: "orderNum",
+            },
+          ],
+        },
+      ],
     },
   ],
 };

@@ -105,6 +105,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "productionPlanSn",
+      name: "生产计划单号",
+      type: "text",
+    },
+    {
       code: "supplier",
       name: "供应商",
       type: "relation",
@@ -122,6 +127,25 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "externalCode",
       name: "外部编号",
       type: "text",
+    },
+    {
+      code: "shop",
+      name: "车间",
+      type: "text",
+    },
+    {
+      code: "department",
+      name: "部门",
+      type: "relation",
+      targetSingularCode: "oc_department",
+      targetIdColumnName: "department_id",
+    },
+    {
+      code: "finishedMaterial",
+      name: "成品物料(用途)",
+      type: "relation",
+      targetSingularCode: "base_material",
+      targetIdColumnName: "finished_material_id",
     },
   ],
 };

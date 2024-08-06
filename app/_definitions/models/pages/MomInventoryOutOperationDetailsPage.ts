@@ -49,7 +49,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
         $action: "script",
         script: `
         const info = event.args[0] || {};
-       
+
         const _ = event.framework.getExpressionVars()._;
         event.page.sendComponentMessage(event.sender.$id.replace('-item-material-input', ''), {
           name: "setFieldsValue",
@@ -144,6 +144,42 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "approvalState",
+        },
+        {
+          type: "auto",
+          code: "productionPlanSn",
+          $exps: {
+            _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '领料出库')",
+          },
+        },
+        {
+          type: "auto",
+          code: "warehouse",
+          label: "入库仓库",
+          $exps: {
+            _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '生产入库')",
+          },
+        },
+        {
+          type: "auto",
+          code: "department",
+          $exps: {
+            _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '领料出库' || $stores.detail?.data?.list[0]?.businessType.name === '生产入库')",
+          },
+        },
+        {
+          type: "auto",
+          code: "shop",
+          $exps: {
+            _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '领料出库' || $stores.detail?.data?.list[0]?.businessType.name === '生产入库')",
+          },
+        },
+        {
+          type: "auto",
+          code: "finishedMaterial",
+          $exps: {
+            _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '领料出库')",
+          },
         },
       ],
       $exps: {
