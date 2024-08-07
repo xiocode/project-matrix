@@ -92,7 +92,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["material"],
+          filterFields: ["code"],
         },
       ],
       orderBy: [

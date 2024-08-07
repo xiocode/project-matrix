@@ -60,7 +60,27 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["good"],
+          filterFields: [
+            {
+              field: "good",
+              operator: "exists",
+              filters: [
+                {
+                  operator: "or",
+                  filters: [
+                    {
+                      field: "lotNum",
+                      operator: "contains",
+                    },
+                    {
+                      field: "binNum",
+                      operator: "contains",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
       fixedFilters: [
