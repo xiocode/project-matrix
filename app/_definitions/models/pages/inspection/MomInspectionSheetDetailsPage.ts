@@ -1,59 +1,5 @@
-import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormRockConfig } from "@ruiapp/rapid-extension";
+import type { RapidPage } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
-
-const inspectionMeasurementFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    {
-      code: "sampleCode",
-      type: "text",
-    },
-    {
-      code: "characteristic",
-      type: "auto",
-      // listDataFindOptions: {
-      //   fixedFilters: [
-      //     {
-      //       field: "rule",
-      //       operator: "eq",
-      //       value: "",
-      //     },
-      //   ],
-      // },
-    },
-    {
-      code: "instrumentCategory",
-      type: "auto",
-    },
-    {
-      code: "instrument",
-      type: "auto",
-    },
-    {
-      code: "inspector",
-      type: "auto",
-    },
-    {
-      code: "inspectedAt",
-      type: "auto",
-    },
-    {
-      code: "qualitativeValue",
-      type: "auto",
-    },
-    {
-      code: "quantitativeValue",
-      type: "auto",
-    },
-    {
-      code: "isQualified",
-      type: "auto",
-    },
-  ],
-  defaultFormFields: {
-    isQualified: "true",
-  },
-};
 
 const page: RapidPage = {
   code: "mom_inspection_sheet_details",
@@ -61,6 +7,7 @@ const page: RapidPage = {
   parentCode: "mom_inspection_sheet_list",
   name: "检验单详情",
   title: "检验单详情",
+
   permissionCheck: { any: [] },
   view: [
     {
@@ -68,6 +15,17 @@ const page: RapidPage = {
       entityCode: "MomInspectionSheet",
       mode: "view",
       column: 3,
+      extraProperties: ["sampleCount"],
+      relations: {
+        material: {
+          properties: ["id", "code", "name", "specification", "category"],
+          relations: {
+            category: {
+              properties: ["id", "code", "name", "printTemplate"],
+            },
+          },
+        },
+      },
       items: [
         {
           code: "code",
@@ -114,10 +72,10 @@ const page: RapidPage = {
         //   code: "serialNum",
         //   type: "auto",
         // },
-        // {
-        //   code: "sampleCount",
-        //   type: "auto",
-        // },
+        {
+          code: "sampleCount",
+          type: "auto",
+        },
         // {
         //   code: "workOrder",
         //   type: "auto",
@@ -298,10 +256,9 @@ const page: RapidPage = {
                   entityCode: "MomInspectionMeasurement",
                 },
               ],
-              newForm: cloneDeep(inspectionMeasurementFormConfig),
+              // newForm: cloneDeep(inspectionMeasurementFormConfig),
               $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.sheet_id": "$rui.parseQuery().id",
+                entityId: "$rui.parseQuery().id",
               },
             },
           ],

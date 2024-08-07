@@ -9,18 +9,20 @@ export default {
   Renderer(context, props: SfButtonRockConfig) {
     const { text, icon, iconPosition } = props;
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames, ...CommonProps.BorderStylePropNames];
-    const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    const iconStyle: React.CSSProperties = pick(props, styleNames) as any;
+    const wrapStyle: React.CSSProperties = pick(props, styleNames);
+    const iconStyle: React.CSSProperties = {};
+    // const contentStyle: React.CSSProperties = {};
     wrapStyle.position = "absolute";
     wrapStyle.backgroundColor = props.backgroundColor;
     wrapStyle.color = props.color;
+    wrapStyle.fontSize = props.fontSize;
+    wrapStyle.width = props.width;
     wrapStyle.display = "flex";
     wrapStyle.justifyContent = "center";
     wrapStyle.alignItems = "center";
     switch (iconPosition) {
       case "top":
         wrapStyle.flexDirection = "column";
-        wrapStyle.alignItems = "center";
         break;
       case "right":
         wrapStyle.flexDirection = "row-reverse";
@@ -44,6 +46,9 @@ export default {
             })}
         </span>
         {text}
+        {/* <div style={contentStyle}>
+          
+        </div> */}
       </Button>
     );
   },
