@@ -1,5 +1,6 @@
 import { type Rock } from "@ruiapp/move-style";
-import { Button, Descriptions, InputNumber, message, Select, Space, Spin, Table, TableProps, Tag } from "antd";
+import type { TableProps } from "antd";
+import { Button, Descriptions, InputNumber, message, Select, Space, Spin, Table, Tag } from "antd";
 import { useDebounceFn, useSetState } from "ahooks";
 import ScannerSection from "./ScannerSection";
 import rapidApi from "~/rapidApi";

@@ -11,6 +11,7 @@ import MultiplePrintTrigger from "./multiple-print-trigger/MultiplePrintTrigger"
 import SonicRecordActionPrintEntity from "./sonic-record-action-print-entity/SonicRecordActionPrintEntity";
 import CheckableTag from "./checkable-tag/CheckableTag";
 import InspectionPrintRecordAction from "./inspection-print-record-action/InspectionPrintRecordAction";
+import InspectionMeasurement from "./inspection-measurement/InspectionMeasurement";
 import MergeBinNumAction from "./merge-bin-num-action/MergeBinNumAction";
 import SplitBinNumAction from "./split-bin-num-action/SplitBinNumAction";
 import BusinessForm from "./business-form/BusinessForm";
@@ -43,6 +44,7 @@ export default [
   SonicRecordActionPrintEntity,
   CheckableTag,
   InspectionPrintRecordAction,
+  InspectionMeasurement,
   MergeBinNumAction,
   SplitBinNumAction,
   BusinessForm,
