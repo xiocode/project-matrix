@@ -57,6 +57,7 @@ import MomInspectionMeasurement from '../models/entities/MomInspectionMeasuremen
 import MomInspectionMethod from '../models/entities/MomInspectionMethod';
 import MomInspectionRule from '../models/entities/MomInspectionRule';
 import MomInspectionSampling from '../models/entities/MomInspectionSampling';
+import MomInspectionSamplingItem from '../models/entities/MomInspectionSamplingItem';
 import MomInspectionSheet from '../models/entities/MomInspectionSheet';
 import MomInspectionSheetSample from '../models/entities/MomInspectionSheetSample';
 import MomInventory from '../models/entities/MomInventory';
@@ -204,6 +205,7 @@ const entityDefinitions = [
   MomInspectionMethod,
   MomInspectionRule,
   MomInspectionSampling,
+  MomInspectionSamplingItem,
   MomInspectionSheet,
   MomInspectionSheetSample,
   MomInventory,
@@ -351,6 +353,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomInspectionMethod, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionRule, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionSampling, entityDefinitions),
+  autoConfigureRapidEntity(MomInspectionSamplingItem, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionSheet, entityDefinitions),
   autoConfigureRapidEntity(MomInspectionSheetSample, entityDefinitions),
   autoConfigureRapidEntity(MomInventory, entityDefinitions),

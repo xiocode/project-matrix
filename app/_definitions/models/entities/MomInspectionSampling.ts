@@ -16,10 +16,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
-      code: "samplingCount",
-      name: "样本数",
-      type: "integer",
-      required: true,
+      code: "items",
+      name: "明细项",
+      type: "relation[]",
+      targetSingularCode: "mom_inspection_sampling_item",
+      selfIdColumnName: "sampling_id",
     },
   ],
 };
