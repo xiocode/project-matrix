@@ -1,4 +1,5 @@
 import type { RapidPage } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const page: RapidPage = {
   code: "mom_inspection_sheet_details",
@@ -255,7 +256,7 @@ const page: RapidPage = {
                   entityCode: "MomInspectionMeasurement",
                 },
               ],
-              newForm: cloneDeep(inspectionMeasurementFormConfig),
+              // newForm: cloneDeep(inspectionMeasurementFormConfig),
               $exps: {
                 entityId: "$rui.parseQuery().id",
               },

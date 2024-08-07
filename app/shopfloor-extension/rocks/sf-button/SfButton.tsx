@@ -2,29 +2,30 @@ import { CommonProps, type Rock } from "@ruiapp/move-style";
 import SfButtonMeta from "./SfButtonMeta";
 import type { SfButtonRockConfig } from "./sf-button-types";
 import { pick } from "lodash";
-import { Button, Space } from "antd";
+import { Button } from "antd";
 import { convertToEventHandlers, renderRock } from "@ruiapp/react-renderer";
 
 export default {
   Renderer(context, props: SfButtonRockConfig) {
     const { text, icon, iconPosition } = props;
     const styleNames = [...CommonProps.PositionStylePropNames, ...CommonProps.SizeStylePropNames, ...CommonProps.BorderStylePropNames];
-    const wrapStyle: React.CSSProperties = pick(props, styleNames) as any;
-    const iconStyle: React.CSSProperties = {} as any;
-    const contentStyle: React.CSSProperties = {} as any;
+    const wrapStyle: React.CSSProperties = pick(props, styleNames);
+    const iconStyle: React.CSSProperties = {};
+    // const contentStyle: React.CSSProperties = {};
     wrapStyle.position = "absolute";
     wrapStyle.backgroundColor = props.backgroundColor;
     wrapStyle.color = props.color;
     wrapStyle.fontSize = props.fontSize;
-    contentStyle.display = "flex";
-    contentStyle.justifyContent = "center";
-    contentStyle.alignItems = "center";
+    wrapStyle.width = props.width;
+    wrapStyle.display = "flex";
+    wrapStyle.justifyContent = "center";
+    wrapStyle.alignItems = "center";
     switch (iconPosition) {
       case "top":
-        contentStyle.flexDirection = "column";
+        wrapStyle.flexDirection = "column";
         break;
       case "right":
-        contentStyle.flexDirection = "row-reverse";
+        wrapStyle.flexDirection = "row-reverse";
         iconStyle.marginLeft = "5px";
         break;
       default:
@@ -34,19 +35,20 @@ export default {
     const eventHandlers = convertToEventHandlers({ context, rockConfig: props });
     return (
       <Button data-component-id={props.$id} style={wrapStyle} {...eventHandlers}>
-        <div style={contentStyle}>
-          <span style={iconStyle}>
-            {icon &&
-              renderRock({
-                context,
-                rockConfig: {
-                  $type: "antdIcon",
-                  name: icon,
-                },
-              })}
-          </span>
-          {text}
-        </div>
+        <span style={iconStyle}>
+          {icon &&
+            renderRock({
+              context,
+              rockConfig: {
+                $type: "antdIcon",
+                name: icon,
+              },
+            })}
+        </span>
+        {text}
+        {/* <div style={contentStyle}>
+          
+        </div> */}
       </Button>
     );
   },
