@@ -3847,6 +3847,61 @@ export interface MomInspectionSampling {
    */
   materialCategory: Partial<BaseMaterialCategory>;
   /**
+   * 明细项
+   */
+  items?: any;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 检验抽样
+ */
+export type SaveMomInspectionSamplingInput = Omit<MomInspectionSampling, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 检验抽样
+ */
+export interface MomInspectionSamplingItem {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 采样规则
+   */
+  sampling?: Partial<MomInspectionSampling>;
+  /**
+   * 起始值
+   */
+  from: any;
+  /**
+   * 截止值
+   */
+  to: any;
+  /**
    * 样本数
    */
   samplingCount: number;
@@ -3879,7 +3934,7 @@ export interface MomInspectionSampling {
 /**
  * 检验抽样
  */
-export type SaveMomInspectionSamplingInput = Omit<MomInspectionSampling, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomInspectionSamplingItemInput = Omit<MomInspectionSamplingItem, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 检验单

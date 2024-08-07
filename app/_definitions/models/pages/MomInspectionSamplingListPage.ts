@@ -7,10 +7,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "materialCategory",
       type: "auto",
     },
-    {
-      code: "samplingCount",
-      type: "auto",
-    },
   ],
 };
 
@@ -51,16 +47,17 @@ const page: RapidPage = {
       ],
       columns: [
         {
+          type: "link",
           code: "materialCategory",
-          width: "100px",
-          type: "auto",
+          rendererType: 'rapidLinkRenderer',
           rendererProps: {
-            format: "{{name}}",
+            text: "{{materialCategory.code}}-{{materialCategory.name}}",
+            url: "/pages/mom_inspection_sampling_details?id={{id}}",
           },
+          width: "200px",
         },
         {
-          code: "samplingCount",
-          width: "100px",
+          code: "createdAt",
           type: "auto",
         },
       ],
