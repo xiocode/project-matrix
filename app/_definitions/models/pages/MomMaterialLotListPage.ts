@@ -66,7 +66,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["lot_num"],
+          filterFields: ["lotNum"],
         },
       ],
       orderBy: [

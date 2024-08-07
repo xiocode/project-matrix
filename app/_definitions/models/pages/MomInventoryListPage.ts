@@ -107,7 +107,31 @@ function genListConfig(warehouseCode?: string) {
         placeholder: "Search",
         actionEventName: "onSearch",
         filterMode: "contains",
-        filterFields: ["material"],
+        filterFields: [
+          {
+            field: "material",
+            operator: "exists",
+            filters: [
+              {
+                operator: "or",
+                filters: [
+                  {
+                    field: "name",
+                    operator: "contains",
+                  },
+                  {
+                    field: "code",
+                    operator: "contains",
+                  },
+                  {
+                    field: "specification",
+                    operator: "contains",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ],
     fixedFilters: warehouseCode
