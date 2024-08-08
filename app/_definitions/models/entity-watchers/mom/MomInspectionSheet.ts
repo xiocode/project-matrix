@@ -64,7 +64,7 @@ export default [
       const after = payload.after;
       const changes = payload.changes;
 
-      if (changes.hasOwnProperty('approvalState') && changes.approvalState === 'approved') {
+      if (changes.hasOwnProperty('state') && changes.state === 'inspected') {
         const measurements = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntities(
           {
             filters: [
