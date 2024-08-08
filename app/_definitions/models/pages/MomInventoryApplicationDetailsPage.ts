@@ -40,7 +40,7 @@ function getFormConfig(formType: "newForm" | "editForm") {
               $action: "script",
               script: `
                 const info = event.args[0] || {};
-        
+
                 const _ = event.framework.getExpressionVars()._;
                 event.page.sendComponentMessage('applicationItemList-${formType}-rapidForm', {
                   name: "setFieldsValue",
@@ -152,10 +152,10 @@ const page: RapidPage = {
         //     format: "{{name}}",
         //   },
         // },
-        {
-          type: "auto",
-          code: "state",
-        },
+        // {
+        //   type: "auto",
+        //   code: "state",
+        // },
         {
           type: "auto",
           code: "createdAt",

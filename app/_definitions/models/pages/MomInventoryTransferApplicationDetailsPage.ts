@@ -137,10 +137,10 @@ const page: RapidPage = {
         //     format: "{{name}}",
         //   },
         // },
-        {
-          type: "auto",
-          code: "state",
-        },
+        // {
+        //   type: "auto",
+        //   code: "state",
+        // },
         {
           type: "auto",
           code: "createdAt",
