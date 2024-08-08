@@ -190,6 +190,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_inspection_sheet_sample",
       selfIdColumnName: "sheet_id",
     },
+    {
+      code: "remark",
+      name: "备注",
+      type: "text",
+    },
   ],
 };
 
