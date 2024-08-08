@@ -59,6 +59,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
       formControlProps: {
         listTextFieldName: "version",
+        listFilterFields: ["version"],
+        columns: [{ code: "version", title: "版本" }],
         $exps: {
           disabled: "!$self.form.getFieldValue('material')",
         },

@@ -48,13 +48,13 @@ const page: RapidPage = {
       entityCode: "MomMaterialLotWarehouseInventoryBalance",
       viewMode: "table",
       selectionMode: "none",
-      listActions: [
-        {
-          $type: "sonicToolbarRefreshButton",
-          text: "刷新",
-          icon: "ReloadOutlined",
-        },
-      ],
+      // listActions: [
+      //   {
+      //     $type: "sonicToolbarRefreshButton",
+      //     text: "刷新",
+      //     icon: "ReloadOutlined",
+      //   },
+      // ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",

@@ -85,11 +85,11 @@ const page: RapidPage = {
             icon: "PlusOutlined",
             actionStyle: "primary",
           },
-          {
-            $type: "sonicToolbarRefreshButton",
-            text: "刷新",
-            icon: "ReloadOutlined",
-          },
+          // {
+          //   $type: "sonicToolbarRefreshButton",
+          //   text: "刷新",
+          //   icon: "ReloadOutlined",
+          // },
         ],
         pageSize: -1,
         columns: [
@@ -147,11 +147,11 @@ const page: RapidPage = {
               icon: "PlusOutlined",
               actionStyle: "primary",
             },
-            {
-              $type: "sonicToolbarRefreshButton",
-              text: "刷新",
-              icon: "ReloadOutlined",
-            },
+            // {
+            //   $type: "sonicToolbarRefreshButton",
+            //   text: "刷新",
+            //   icon: "ReloadOutlined",
+            // },
           ],
           pageSize: -1,
           orderBy: [

@@ -138,11 +138,11 @@ const page: RapidPage = {
                     },
                   ],
                 },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
               ],
               extraActions: [
                 {
@@ -320,13 +320,13 @@ const page: RapidPage = {
               entityCode: "MomMasterProductionSchedule",
               viewMode: "table",
               selectionMode: "multiple",
-              listActions: [
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
+              // listActions: [
+              //   {
+              //     $type: "sonicToolbarRefreshButton",
+              //     text: "刷新",
+              //     icon: "ReloadOutlined",
+              //   },
+              // ],
               extraActions: [
                 {
                   $type: "sonicToolbarFormItem",

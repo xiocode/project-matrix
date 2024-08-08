@@ -46,13 +46,13 @@ const page: RapidPage = {
           desc: true,
         },
       ],
-      listActions: [
-        {
-          $type: "sonicToolbarRefreshButton",
-          text: "刷新",
-          icon: "ReloadOutlined",
-        },
-      ],
+      // listActions: [
+      //   {
+      //     $type: "sonicToolbarRefreshButton",
+      //     text: "刷新",
+      //     icon: "ReloadOutlined",
+      //   },
+      // ],
       columns: [
         {
           type: "auto",

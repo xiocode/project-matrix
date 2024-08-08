@@ -33,6 +33,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "instrument",
       formControlProps: {
         listTextFieldName: "code",
+        listFilterFields: ["code"],
+        columns: [{ code: "code", title: "编号" }],
       },
     },
     {
@@ -236,11 +238,11 @@ const page: RapidPage = {
                   actionStyle: "primary",
                   $permissionCheck: "inspectionRule.manage",
                 },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
               ],
               pageSize: -1,
               orderBy: [
