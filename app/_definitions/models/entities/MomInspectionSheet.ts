@@ -195,6 +195,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "备注",
       type: "text",
     },
+    {
+      code: "round",
+      name: "检验轮次",
+      type: "integer",
+      required: true,
+      defaultValue: "1",
+    },
   ],
 };
 

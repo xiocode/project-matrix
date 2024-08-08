@@ -215,7 +215,7 @@ const page: RapidPage = {
             },
           ],
           $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'inspected'",
           },
         },
         {
@@ -244,7 +244,7 @@ const page: RapidPage = {
             },
           ],
           $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'inspected'",
           },
         },
       ],
