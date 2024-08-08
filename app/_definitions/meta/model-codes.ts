@@ -1099,6 +1099,7 @@ const entityFieldCodes = {
     'defectStats',
     'lot',
     'samples',
+    'remark',
     'createdAt',
     'createdBy',
     'updatedAt',
