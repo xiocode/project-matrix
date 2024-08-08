@@ -143,6 +143,10 @@ const page: RapidPage = {
           },
         },
         {
+          type: "auto",
+          code: "remark",
+        },
+        {
           code: "inspector",
           type: "auto",
           rendererProps: {

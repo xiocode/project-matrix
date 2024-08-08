@@ -76,6 +76,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "sender",
     },
+    {
+      type: "auto",
+      code: "remark",
+    },
     // {
     //   type: "auto",
     //   code: "result",
