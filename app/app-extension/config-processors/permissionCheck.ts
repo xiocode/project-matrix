@@ -1,5 +1,5 @@
 import type { ConfigProcessor } from "@ruiapp/move-style";
-import { isArray, isString, set } from "lodash";
+import { get, isArray, isString, set } from "lodash";
 
 export default {
   beforeRockRender(config) {
@@ -10,7 +10,12 @@ export default {
       } else if (isArray(policy)) {
         policy = { all: policy };
       }
-      set(config, "$exps._hidden", `!$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
+
+      if (get(config, "$exps._hidden")) {
+        set(config, "$exps._hidden", `(${get(config, "$exps._hidden")}) || !$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
+      } else {
+        set(config, "$exps._hidden", `!$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
+      }
     }
   },
 } as ConfigProcessor;
