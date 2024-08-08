@@ -1102,6 +1102,7 @@ const entityFieldCodes = {
     'lot',
     'samples',
     'remark',
+    'round',
     'createdAt',
     'createdBy',
     'updatedAt',

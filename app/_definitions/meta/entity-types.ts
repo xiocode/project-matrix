@@ -4049,6 +4049,10 @@ export interface MomInspectionSheet {
    */
   remark?: string;
   /**
+   * 检验轮次
+   */
+  round: number;
+  /**
    * 创建时间
    */
   createdAt?: string;
