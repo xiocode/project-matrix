@@ -4,6 +4,7 @@ import mom$calcWorkOrderMaterialRequirements from '../models/server-operations/m
 import mom$createGoodTransfers from '../models/server-operations/mom/createGoodTransfers';
 import mom$createInventoryApplicationItems from '../models/server-operations/mom/createInventoryApplicationItems';
 import mom$createInventoryOperation from '../models/server-operations/mom/createInventoryOperation';
+import mom$exportExcel from '../models/server-operations/mom/exportExcel';
 import mom$listGoodCheckTransfer from '../models/server-operations/mom/listGoodCheckTransfer';
 import mom$listGoodInTransfer from '../models/server-operations/mom/listGoodInTransfer';
 import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOutTransfer';
@@ -26,6 +27,7 @@ export default [
   mom$createGoodTransfers,
   mom$createInventoryApplicationItems,
   mom$createInventoryOperation,
+  mom$exportExcel,
   mom$listGoodCheckTransfer,
   mom$listGoodInTransfer,
   mom$listGoodOutTransfer,

@@ -247,11 +247,11 @@ const page: RapidPage = {
                   actionStyle: "primary",
                   $permissionCheck: "inspectionRule.manage",
                 },
-                // {
-                //   $type: "sonicToolbarRefreshButton",
-                //   text: "刷新",
-                //   icon: "ReloadOutlined",
-                // },
+                {
+                  $type: "sonicToolbarRefreshButton",
+                  text: "刷新",
+                  icon: "ReloadOutlined",
+                },
               ],
               pageSize: -1,
               orderBy: [
@@ -272,13 +272,13 @@ const page: RapidPage = {
                   type: "auto",
                   code: "mustPass",
                 },
-                // {
-                //   type: "auto",
-                //   code: "category",
-                //   rendererProps: {
-                //     format: "{{name}}",
-                //   },
-                // },
+                {
+                  type: "auto",
+                  code: "category",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
                 // {
                 //   type: "auto",
                 //   code: "method",
@@ -300,38 +300,40 @@ const page: RapidPage = {
                 //     format: "{{code}}",
                 //   },
                 // },
-                {
-                  type: "auto",
-                  code: "determineType",
-                },
-                {
-                  type: "auto",
-                  code: "qualitativeDetermineType",
-                },
+                // {
+                //   type: "auto",
+                //   code: "determineType",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "qualitativeDetermineType",
+                // },
                 {
                   type: "auto",
                   code: "kind",
                 },
                 {
                   type: "auto",
+                  title: "合格条件",
                   code: "norminal",
+                  rendererType: "inspectionConditionRenderer",
                 },
-                {
-                  type: "auto",
-                  code: "upperTol",
-                },
-                {
-                  type: "auto",
-                  code: "lowerTol",
-                },
-                {
-                  type: "auto",
-                  code: "upperLimit",
-                },
-                {
-                  type: "auto",
-                  code: "lowerLimit",
-                },
+                // {
+                //   type: "auto",
+                //   code: "upperTol",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "lowerTol",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "upperLimit",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "lowerLimit",
+                // },
                 {
                   type: "auto",
                   code: "createdAt",
