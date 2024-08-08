@@ -137,6 +137,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         approvalState: "approving",
         state: "pending",
         sampleCount: samplingRule?.samplingCount,
+        round: 1,
       });
     } else {
       await saveInspectionSheet(server, {
@@ -147,6 +148,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         approvalState: "approving",
         state: "pending",
         sampleCount: samplingRule?.samplingCount,
+        round: 1,
       });
     }
   }
