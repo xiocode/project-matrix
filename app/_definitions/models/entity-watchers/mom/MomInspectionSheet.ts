@@ -1,12 +1,12 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {BaseLot} from "~/_definitions/meta/entity-types";
+import {BaseLot, MomInspectionMeasurement} from "~/_definitions/meta/entity-types";
 
 export default [
   {
     eventName: "entity.beforeUpdate",
     modelSingularCode: "mom_inspection_sheet",
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeUpdate">) => {
-      const {server, payload, routerContext} = ctx;
+      const { server, payload, routerContext } = ctx;
 
       const before = payload.before
       const changes = payload.changes
@@ -15,7 +15,7 @@ export default [
         const lotManager = server.getEntityManager<BaseLot>("base_lot");
         const lot = await lotManager.findEntity({
           filters: [
-            {operator: "eq", field: "lotNum", value: before.lotNum},
+            { operator: "eq", field: "lotNum", value: before.lotNum },
             {
               operator: "eq",
               field: "material_id",
@@ -35,7 +35,7 @@ export default [
     eventName: "entity.beforeCreate",
     modelSingularCode: "mom_inspection_sheet",
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
-      const {server, payload} = ctx;
+      const { server, payload } = ctx;
 
       const before = payload.before
 
@@ -43,7 +43,7 @@ export default [
         const lotManager = server.getEntityManager<BaseLot>("base_lot");
         const lot = await lotManager.findEntity({
           filters: [
-            {operator: "eq", field: "lotNum", value: before.lotNum},
+            { operator: "eq", field: "lotNum", value: before.lotNum },
             {
               operator: "eq",
               field: "material_id",
@@ -59,15 +59,36 @@ export default [
     eventName: "entity.update",
     modelSingularCode: "mom_inspection_sheet",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
-      const {server, payload} = ctx;
+      const { server, payload } = ctx;
 
       const after = payload.after;
+      const changes = payload.changes;
+
+      if (changes.hasOwnProperty('approvalState') && changes.approvalState === 'approved') {
+        const measurements = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntities(
+          {
+            filters: [
+              { operator: "eq", field: "sheet_id", value: after.id },
+            ],
+            properties: ["id"],
+          }
+        );
+
+        for (const measurement of measurements) {
+          await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").updateEntityById({
+            id: measurement.id,
+            entityToSave: {
+              locked: true,
+            }
+          });
+        }
+      }
 
       if (after.lotNum && after.material_id) {
         const lotManager = server.getEntityManager<BaseLot>("base_lot");
         const lot = await lotManager.findEntity({
           filters: [
-            {operator: "eq", field: "lotNum", value: after.lotNum},
+            { operator: "eq", field: "lotNum", value: after.lotNum },
             {
               operator: "eq",
               field: "material_id",
@@ -84,6 +105,6 @@ export default [
           });
         }
       }
-    },
-  },
+    }
+  }
 ] satisfies EntityWatcher<any>[];

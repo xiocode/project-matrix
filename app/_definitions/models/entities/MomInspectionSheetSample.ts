@@ -28,6 +28,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_inspection_measurement",
       selfIdColumnName: "sample_id",
     },
+    {
+      code: "round",
+      name: "检验轮次",
+      type: "integer",
+      required: true,
+      defaultValue: "1",
+    },
   ],
 };
 

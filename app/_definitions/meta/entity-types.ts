@@ -3690,6 +3690,14 @@ export interface MomInspectionMeasurement {
    */
   isQualified?: boolean;
   /**
+   * 检验轮次
+   */
+  round: number;
+  /**
+   * 锁定
+   */
+  locked?: boolean;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4091,6 +4099,10 @@ export interface MomInspectionSheetSample {
    * 检验记录
    */
   measurements?: any;
+  /**
+   * 检验轮次
+   */
+  round: number;
   /**
    * 创建时间
    */
