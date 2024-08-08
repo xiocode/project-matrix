@@ -211,7 +211,7 @@ export default {
       } else {
         await rapidApi
           .patch(`/mom/mom_inspection_sheets/${sheetId}`, {
-            state: "complate",
+            state: "inspected",
           })
           .then(async (res) => {
             if (res.data.result === "qualified") {
