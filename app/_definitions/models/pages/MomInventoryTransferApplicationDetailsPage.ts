@@ -184,11 +184,11 @@ const page: RapidPage = {
                   actionStyle: "primary",
                   $permissionCheck: "inventoryApplication.manage",
                 },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
               ],
               pageSize: -1,
               orderBy: [

@@ -1,5 +1,5 @@
-import {cloneDeep} from "lodash";
-import type {RapidEntityFormConfig, RapidPage} from "@ruiapp/rapid-extension";
+import { cloneDeep } from "lodash";
+import type { RapidEntityFormConfig, RapidPage } from "@ruiapp/rapid-extension";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -14,10 +14,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "samplingCount",
-    }
+    },
   ],
-  defaultFormFields: {
-  },
+  defaultFormFields: {},
 };
 
 const page: RapidPage = {
@@ -85,11 +84,11 @@ const page: RapidPage = {
                   actionStyle: "primary",
                   $permissionCheck: "inspectionRule.manage",
                 },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
               ],
               pageSize: -1,
               orderBy: [

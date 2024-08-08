@@ -16,6 +16,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
       formControlProps: {
         listTextFieldName: "title",
+        listFilterFields: ["title"],
+        columns: [{ code: "title", title: "标题" }],
       },
     },
     {

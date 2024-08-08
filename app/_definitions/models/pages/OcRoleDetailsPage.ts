@@ -131,11 +131,11 @@ const page: RapidPage = {
                     },
                   ],
                 },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
               ],
               columns: [
                 {

@@ -48,6 +48,8 @@ const orderFormConfig: Partial<RapidEntityFormRockConfig> = {
       },
       formControlProps: {
         listTextFieldName: "version",
+        listFilterFields: ["version"],
+        columns: [{ code: "version", title: "版本" }],
         $exps: {
           disabled: "!$self.form.getFieldValue('material')",
         },
@@ -222,11 +224,11 @@ const page: RapidPage = {
                   icon: "PlusOutlined",
                   actionStyle: "primary",
                 },
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
               ],
               columns: [
                 {

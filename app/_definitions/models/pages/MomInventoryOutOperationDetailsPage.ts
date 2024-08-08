@@ -303,13 +303,13 @@ const page: RapidPage = {
                   ],
                 },
               ],
-              listActions: [
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
+              // listActions: [
+              //   {
+              //     $type: "sonicToolbarRefreshButton",
+              //     text: "刷新",
+              //     icon: "ReloadOutlined",
+              //   },
+              // ],
               pageSize: -1,
               orderBy: [
                 {

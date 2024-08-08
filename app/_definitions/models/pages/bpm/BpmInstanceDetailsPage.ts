@@ -63,13 +63,13 @@ const page: RapidPage = {
               ],
               extraProperties: ["tasks"],
               pageSize: -1,
-              listActions: [
-                {
-                  $type: "sonicToolbarRefreshButton",
-                  text: "刷新",
-                  icon: "ReloadOutlined",
-                },
-              ],
+              // listActions: [
+              //   {
+              //     $type: "sonicToolbarRefreshButton",
+              //     text: "刷新",
+              //     icon: "ReloadOutlined",
+              //   },
+              // ],
               columns: [
                 {
                   type: "auto",
