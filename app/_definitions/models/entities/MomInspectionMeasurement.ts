@@ -75,6 +75,18 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "是否合格",
       type: "boolean",
     },
+    {
+      code: "round",
+      name: "检验轮次",
+      type: "integer",
+      required: true,
+      defaultValue: "1",
+    },
+    {
+      code: "locked",
+      name: "锁定",
+      type: "boolean",
+    },
   ],
 };
 

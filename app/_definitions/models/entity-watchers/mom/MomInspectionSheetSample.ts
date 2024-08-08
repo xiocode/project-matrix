@@ -13,6 +13,8 @@ export default [
         before.measurements.forEach((measurement: any) => {
           measurement.sheet_id = before.sheet_id;
           measurement.sampleCode = before.code;
+          measurement.round = before.round;
+          measurement.locked = false;
         });
       }
     },
