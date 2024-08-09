@@ -1,80 +1,293 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import {utils, writeXLSX} from "xlsx";
-import type {MomGoodTransfer, MomInventoryOperation} from "~/_definitions/meta/entity-types";
+import type {
+  MomGoodTransfer,
+  MomInspectionMeasurement,
+  MomInventoryApplicationItem,
+} from "~/_definitions/meta/entity-types";
+import {EntityFilterOptions} from "@ruiapp/rapid-extension/src/types/rapid-entity-types";
 
 export type ExportExcelInput = {
-  text: string;
+  type: string;
   createdAtFrom: string;
   createdAtTo: string;
 };
 
+
 export default {
   code: "exportExcel",
-  method: "POST",
+  method: "GET",
   async handler(ctx: ActionHandlerContext) {
     const { server } = ctx;
     const input: ExportExcelInput = ctx.input;
 
-    ctx.routerContext.response.headers.set("Content-Disposition", `attachment; filename="${ encodeURIComponent('file.xlsx') }"`);
-    ctx.routerContext.response.body = await exportExcel(server, input);
+    const exportExcel = await handleExportByType(server, input);
+
+    ctx.routerContext.response.headers.set(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    ctx.routerContext.response.headers.set(
+      "Content-Disposition",
+      `attachment; filename="${ encodeURIComponent('file.xlsx') }"`
+    );
+    ctx.routerContext.response.body = exportExcel;
   },
 } satisfies ServerOperation;
 
-async function exportExcel(server: IRpdServer, input: ExportExcelInput) {
+async function handleExportByType(server: IRpdServer, input: ExportExcelInput) {
+  switch (input.type) {
+    case "application":
+      return exportApplicationExcel(server, input);
+    case "operation":
+      return exportOperationExcel(server, input);
+    case "inspection":
+      return exportInspectionExcel(server, input);
+    default:
+      throw new Error(`Unsupported type: ${ input.type }`);
+  }
+}
 
-  const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
+async function exportOperationExcel(server: IRpdServer, input: ExportExcelInput) {
+  const goodTransfers = await fetchGoodTransfers(server, input);
 
-  // fetch data from the database
-  const goodTransfers = await goodTransferManager.findEntities({
-    filters: [],
-    properties: ["id", "operation", "lotNum", "binNum", "material", "quantity", "packageNum", "manufactureDate", "validityDate", "from", "to"],
+  const rows = goodTransfers.map(flattenGoodTransfer);
+
+  return createExcelSheet(rows, [
+    "操作单号", "操作类型", "物料", "批号", "托盘号", "数量",
+    "生产日期", "有效期", "入库库位", "合格状态"
+  ]);
+}
+
+async function exportInspectionExcel(server: IRpdServer, input: ExportExcelInput) {
+  const inspectionMeasurements = await fetchInspectionMeasurements(server, input);
+
+  const rows = inspectionMeasurements.map(flattenInspectionMeasurement);
+
+  return createExcelSheet(rows, [
+    "检验单号", "检验单状态", "审核状态", "物料", "检验规则",
+    "批号", "样本号", "检验轮次", "检验特征", "检验仪器",
+    "实测值", "合格状态", "检验时间"
+  ]);
+}
+
+async function exportApplicationExcel(server: IRpdServer, input: ExportExcelInput) {
+  const applicationItems = await fetchApplicationItems(server, input);
+
+  const rows = applicationItems.map(flattenApplicationItem);
+
+  return createExcelSheet(rows, [
+    "申请单号", "操作类型", "物料", "批号", "数量"
+  ]);
+}
+
+// Fetching Functions
+
+async function fetchGoodTransfers(server: IRpdServer, input: ExportExcelInput) {
+  let filters: EntityFilterOptions[] = [{ operator: "notNull", field: "to" }];
+
+  if (input.createdAtFrom) {
+    filters.push({ operator: "gte", field: "createdAt", value: input.createdAtFrom });
+  }
+  if (input.createdAtTo) {
+    filters.push({ operator: "lte", field: "createdAt", value: input.createdAtTo });
+  }
+
+  return server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
+    filters: filters,
+    properties: [
+      "id", "operation", "lotNum", "binNum", "material",
+      "quantity", "packageNum", "manufactureDate",
+      "validityDate", "from", "to"
+    ],
     relations: {
-      operation: { properties: ["id", "code", "businessType", "applicant", "application", "contractNum", "productionPlanSn", "supplier", "customer", "shop", "department", "finishedMaterial"] }
+      operation: {
+        properties: [
+          "id", "code", "businessType", "applicant",
+          "application", "contractNum", "productionPlanSn",
+          "supplier", "customer", "shop", "department",
+          "finishedMaterial"
+        ],
+      },
     },
-  })
-
-  // flatten the data
-  let rows = goodTransfers.map((goodTransfer) => {
-    return {
-      code: goodTransfer.operation?.code,
-      businessType: goodTransfer.operation?.businessType?.name,
-      applicant: goodTransfer.operation?.createdBy?.name,
-      application: goodTransfer.operation?.application?.code,
-      contractNum: goodTransfer.operation?.contractNum,
-      productionPlanSn: goodTransfer.operation?.productionPlanSn,
-      supplier: goodTransfer.operation?.supplier?.name,
-      customer: goodTransfer.operation?.customer?.name,
-      shop: goodTransfer.operation?.shop,
-      department: goodTransfer.operation?.department?.name,
-      finishedMaterial: goodTransfer.operation?.finishedMaterial?.name,
-      material: goodTransfer.material?.name,
-      lotNum: goodTransfer.lotNum,
-      binNum: goodTransfer.binNum,
-      quantity: goodTransfer.quantity,
-      packageNum: goodTransfer.packageNum,
-      manufactureDate: goodTransfer.manufactureDate,
-      validityDate: goodTransfer.validityDate,
-      to: goodTransfer.to?.name,
-      from: goodTransfer.from?.name,
-      qualificationState: goodTransfer.lot?.qualificationState,
-      isAOD: goodTransfer.lot?.isAOD,
-    };
+    orderBy: [{ field: "id", desc: false }],
   });
+}
 
-  // Create a new workbook
+async function fetchInspectionMeasurements(server: IRpdServer, input: ExportExcelInput) {
+  let filters: EntityFilterOptions[] = [
+    {
+      operator: "exists",
+      field: "sheet",
+      filters: [
+        {
+          operator: "notNull",
+          field: "material"
+        },
+        {
+          operator: "notNull",
+          field: "rule"
+        }
+      ]
+    },
+    {
+      operator: "or",
+      filters: [
+        {
+          operator: "notNull",
+          field: "qualitativeValue"
+        },
+        {
+          operator: "notNull",
+          field: "quantitativeValue"
+        }
+      ]
+    }
+  ];
+
+  if (input.createdAtFrom) {
+    filters.push({ operator: "gte", field: "createdAt", value: input.createdAtFrom });
+  }
+  if (input.createdAtTo) {
+    filters.push({ operator: "lte", field: "createdAt", value: input.createdAtTo });
+  }
+
+  return server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntities({
+    filters: filters,
+    properties: [
+      "id", "sheet", "sampleCode", "characteristic",
+      "instrument", "inspector", "createdAt",
+      "qualitativeValue", "quantitativeValue",
+      "isQualified", "round"
+    ],
+    relations: {
+      sheet: {
+        properties: [
+          "id", "code", "state", "approvalState",
+          "material", "rule", "remark", "lotNum"
+        ],
+      },
+    },
+    orderBy: [{ field: "id", desc: false }],
+  });
+}
+
+async function fetchApplicationItems(server: IRpdServer, input: ExportExcelInput) {
+  let filters: EntityFilterOptions[] = [{ operator: "notNull", field: "application" }, {
+    operator: "notNull",
+    field: "material"
+  }];
+
+  if (input.createdAtFrom) {
+    filters.push({ operator: "gte", field: "createdAt", value: input.createdAtFrom });
+  }
+  if (input.createdAtTo) {
+    filters.push({ operator: "lte", field: "createdAt", value: input.createdAtTo });
+  }
+
+  return server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").findEntities({
+    filters: filters,
+    properties: [
+      "id", "application", "lotNum", "binNum",
+      "material", "quantity", "material"
+    ],
+    relations: {
+      application: {
+        properties: ["id", "code", "businessType"]
+      },
+    },
+    orderBy: [{ field: "id", desc: false }],
+  });
+}
+
+// Data Flattening Functions
+
+function flattenGoodTransfer(goodTransfer: MomGoodTransfer) {
+  return {
+    code: goodTransfer.operation?.code,
+    businessType: goodTransfer.operation?.businessType?.name,
+    material: `${ goodTransfer.material?.code }-${ goodTransfer.material?.name }-${ goodTransfer.material?.specification }`,
+    lotNum: goodTransfer.lotNum,
+    binNum: goodTransfer.binNum,
+    quantity: goodTransfer.quantity,
+    manufactureDate: goodTransfer.manufactureDate,
+    validityDate: goodTransfer.validityDate,
+    to: goodTransfer.to?.name,
+    qualificationState: mapQualificationState(goodTransfer.lot?.qualificationState),
+  };
+}
+
+function flattenInspectionMeasurement(measurement: MomInspectionMeasurement) {
+  return {
+    code: measurement.sheet?.code,
+    state: mapInspectionState(measurement.sheet?.state),
+    approvalState: mapApprovalState(measurement.sheet?.approvalState),
+    material: `${ measurement.sheet?.material?.code }-${ measurement.sheet?.material?.name }-${ measurement.sheet?.material?.specification }`,
+    rule: measurement.sheet?.rule?.name,
+    lotNum: measurement.sheet?.lotNum,
+    sampleCode: measurement.sampleCode,
+    round: measurement.round,
+    characteristic: measurement.characteristic?.name,
+    instrument: measurement.instrument?.code,
+    value: measurement.qualitativeValue || measurement.quantitativeValue,
+    isQualified: measurement.isQualified ? "合格" : "不合格",
+    inspectedAt: measurement.createdAt,
+  };
+}
+
+function flattenApplicationItem(item: MomInventoryApplicationItem) {
+  return {
+    code: item.application?.code,
+    businessType: item.application?.businessType?.name,
+    material: `${ item.material?.code }-${ item.material?.name }-${ item.material?.specification }`,
+    lotNum: item.lotNum,
+    quantity: item.quantity,
+  };
+}
+
+// Mapping Functions
+
+function mapQualificationState(state: string | undefined): string {
+  switch (state) {
+    case "qualified":
+      return "合格";
+    case "unqualified":
+      return "不合格";
+    default:
+      return "未检验";
+  }
+}
+
+function mapInspectionState(state: string | undefined): string {
+  switch (state) {
+    case "inspecting":
+      return "检验中";
+    case "inspected":
+      return "检验完成";
+    default:
+      return "待检验";
+  }
+}
+
+function mapApprovalState(state: string | undefined): string {
+  switch (state) {
+    case "approved":
+      return "已审核";
+    case "rejected":
+      return "已驳回";
+    default:
+      return "未审核";
+  }
+}
+
+// Excel Sheet Creation
+
+function createExcelSheet(rows: any[], header: string[]) {
   const worksheet = utils.json_to_sheet(rows);
+  utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
+
   const workbook = utils.book_new();
-
-  // Add the header row
-  utils.sheet_add_aoa(worksheet, [[ "操作单号", "操作类型", "申请人"]], { origin: "A1" });
-
-  // Add the worksheet to the workbook
   utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
-  /* calculate column width */
-  // const max_width = rows.reduce((w, r) => Math.max(w, r?.code.length), 10);
-  // worksheet["!cols"] = [{ wch: max_width }];
-
-  // Return the buffer as the response body
   return writeXLSX(workbook, { type: "buffer", bookType: "xlsx" });
 }

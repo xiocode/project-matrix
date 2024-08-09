@@ -90,6 +90,16 @@ const page: RapidPage = {
           ],
           $permissionCheck: "inventoryApplication.manage",
         },
+        {
+          $type: "antdButton",
+          href: `/api/app/exportExcel?type=application`,
+          children: [
+            {
+              $type: "text",
+              text: " 下载",
+            },
+          ],
+        },
       ],
       extraActions: [
         {
