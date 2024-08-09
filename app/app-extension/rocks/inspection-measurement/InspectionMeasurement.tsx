@@ -200,6 +200,7 @@ export default {
               const v = it.kind === "quantitative" ? it.quantitativeValue : it.qualitativeValue;
               return {
                 parentCode: item.code,
+                round: item.round,
                 isQualified: calculateInspectionResult(it, v),
                 ...it,
               };
