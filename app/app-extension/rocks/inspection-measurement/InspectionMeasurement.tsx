@@ -22,12 +22,22 @@ export default {
     const Info = context?.scope.stores.detail.data?.list[0];
     const [form] = Form.useForm();
     const [unSkippableArr, setUnSkippableArr] = useState<any>([]);
+    const [selected, setSelected] = useState<any>([]);
     const [validateOpen, setValidateOpen] = useState<boolean>(false);
     const [resultState, setResultState] = useState<boolean>(false);
     const { loadInpsectionMeasurement, loading, inspection, setState } = useInpsectionMeasurement({
       ruleId: Info?.rule?.id,
       sheetId: Info?.id,
+      round: Info?.round,
       sampleCount: Info?.sampleCount,
+    });
+
+    const { submitInspectionMeasurement } = useCreateInspectionMeasurement({
+      sheetId: Info?.id,
+      round: Info?.round,
+      onSuccess: () => {
+        history.go(0);
+      },
     });
 
     const { update } = useUpdateInspectionMeasurement({
@@ -35,55 +45,7 @@ export default {
       onSuccess() {},
     });
 
-    const { modal, actionPop } = useConfigForm({ sheetId: Info?.id, onOk: (value) => {} });
-
-    const checkCofigInit = () => {
-      let formItems = [];
-      if (!Info?.rule?.id) {
-        formItems.push({
-          name: "rule",
-          type: "select",
-          label: "检验规则",
-        });
-      }
-      if (!Info?.sampleCount) {
-        formItems.push({
-          name: "sampleCount",
-          type: "number",
-          label: "样本数量",
-        });
-      }
-      if (!Info?.sampleCount || !Info?.rule?.id) {
-        actionPop(true, formItems);
-      }
-    };
-
-    useEffect(() => {
-      if (Info) {
-        checkCofigInit();
-        if (Info?.rule?.id) {
-          loadInpsectionMeasurement();
-        }
-      }
-    }, [Info]);
-
-    const formatTableData = (arr: any) => {
-      const result = inspection?.map((item) => {
-        return {
-          code: item.code,
-          ...item.items[0],
-          items: item.items
-            .map((it: any) => {
-              return {
-                parentCode: item.code,
-                ...it,
-              };
-            })
-            .slice(1, item.items.lenght),
-        };
-      });
-      return orderBy(result, "code");
-    };
+    const { modal, actionPop } = useConfigForm({ sheetId: Info?.id, onOk: () => {} });
 
     const tableColumns: TableProps<any>["columns"] = [
       {
@@ -135,9 +97,9 @@ export default {
                 }),
               };
             });
-
             update({
               id: r.measurementsId,
+              round: r.round,
               isQualified: calculateInspectionResult(r, v),
               qualitativeValue: r.kind === "qualitative" ? v : "",
               quantitativeValue: r.kind === "quantitative" ? v : "",
@@ -152,6 +114,7 @@ export default {
               return (
                 <InputNumber
                   placeholder="请输入"
+                  disabled={r.locked}
                   style={{ width: "100%", maxWidth: 260 }}
                   value={r.measuredValue}
                   onChange={(v) => {
@@ -166,6 +129,7 @@ export default {
               return (
                 <Select
                   options={options}
+                  disabled={r.locked}
                   placeholder="请选择"
                   style={{ width: "100%", maxWidth: 260 }}
                   value={r.measuredValue}
@@ -193,6 +157,60 @@ export default {
       },
     ];
 
+    const checkCofigInit = () => {
+      let formItems = [];
+      if (!Info?.rule?.id) {
+        formItems.push({
+          name: "rule",
+          type: "select",
+          label: "检验规则",
+        });
+      }
+      if (!Info?.sampleCount) {
+        formItems.push({
+          name: "sampleCount",
+          type: "number",
+          label: "样本数量",
+        });
+      }
+      if (!Info?.sampleCount || !Info?.rule?.id) {
+        actionPop(true, formItems);
+      }
+    };
+
+    useEffect(() => {
+      if (Info) {
+        checkCofigInit();
+        if (Info?.rule?.id) {
+          loadInpsectionMeasurement();
+        }
+      }
+    }, [Info]);
+
+    const formatTableData = (arr: any) => {
+      const result = arr?.map((item: any) => {
+        const v = item.items[0]?.kind === "quantitative" ? item.items[0]?.quantitativeValue : item.items[0]?.qualitativeValue;
+        return {
+          code: item.code,
+          ...item.items[0],
+          round: item.round,
+          isQualified: calculateInspectionResult(item.items[0], v),
+          items: item.items
+            .map((it: any) => {
+              const v = it.kind === "quantitative" ? it.quantitativeValue : it.qualitativeValue;
+              return {
+                parentCode: item.code,
+                isQualified: calculateInspectionResult(it, v),
+                ...it,
+              };
+            })
+            .slice(1, item.items.lenght),
+        };
+      });
+
+      return orderBy(result, "code");
+    };
+
     const validateMeasurment = async (sheetId: string) => {
       let isSkippableArr: any[] = [];
       inspection?.map((item) => {
@@ -205,7 +223,6 @@ export default {
         }
       });
       setUnSkippableArr(orderBy(isSkippableArr, "code"));
-      console.log(isSkippableArr, "isSkippableArr");
       if (isSkippableArr.length > 0) {
         setValidateOpen(true);
       } else {
@@ -215,8 +232,10 @@ export default {
           })
           .then(async (res) => {
             if (res.data.result === "qualified") {
-              setValidateOpen(true);
               setResultState(res.data.result === "qualified");
+              history.go(0);
+            } else {
+              setValidateOpen(true);
             }
           });
       }
@@ -305,35 +324,98 @@ export default {
         )}
       </Modal>
     );
-
     return (
-      <div className="pm_inspection-input-section">
+      <div className="pm_inspection-input-sectioN">
         <Spin spinning={loading || false}>
-          <div className="pm_inspection-measurement--footer">
-            <Button
-              type="primary"
-              onClick={() => {
-                validateMeasurment(Info?.id);
-              }}
-            >
-              提交检验记录
-            </Button>
-          </div>
-          <Table
-            size="middle"
-            rowClassName={() => "editable-row"}
-            rowKey={(record, index) => record?.uuid || index}
-            expandable={{
-              expandedRowRender: (record) => (
-                <Table scroll={{ x: 700 }} columns={tableColumns} showHeader={false} dataSource={record.items} pagination={false} />
-              ),
-              defaultExpandedRowKeys: ["0"],
-            }}
-            columns={tableColumns}
-            dataSource={formatTableData(inspection) || []}
-            pagination={false}
-            scroll={{ x: 700 }}
-          />
+          {inspection &&
+            inspection.map((item: any) => {
+              return (
+                <div key={item.id}>
+                  <div className="inspection_measurement--title">{item.roundTitle}:</div>
+                  {item.round === Info?.round && (
+                    <div className="pm_inspection-measurement--footer">
+                      <Space>
+                        <Button
+                          type="primary"
+                          disabled={!(Info?.state !== "inspected")}
+                          onClick={() => {
+                            validateMeasurment(Info?.id);
+                          }}
+                        >
+                          提交检验记录
+                        </Button>
+                        <Button
+                          type="primary"
+                          style={Info.state !== "inspected" ? { display: "none" } : {}}
+                          disabled={Info.state === "inspected" && selected.length <= 0}
+                          onClick={() => {
+                            let res: any[] = [];
+
+                            inspection?.map((item) => {
+                              const filterItem = item.items.filter((it: any) => selected.includes(it.uuid));
+
+                              if (filterItem.length > 0) {
+                                res.push({
+                                  ...item,
+                                  items: filterItem,
+                                });
+                              }
+                            });
+
+                            submitInspectionMeasurement(res, true);
+                          }}
+                        >
+                          复检
+                        </Button>
+                      </Space>
+                    </div>
+                  )}
+
+                  <Table
+                    size="middle"
+                    rowClassName={() => "editable-row"}
+                    rowKey={(record, index) => record?.uuid || index}
+                    rowSelection={{
+                      type: "checkbox",
+                      hideSelectAll: true,
+                      onChange: (selectedRowKeys, selectedRows) => {
+                        setSelected([...selected, selectedRowKeys[0]]);
+                      },
+                      getCheckboxProps: (record) => ({
+                        disabled: record.round === Info.round ? record?.isQualified : record?.locked,
+                      }),
+                    }}
+                    expandable={{
+                      expandedRowRender: (record) => (
+                        <Table
+                          scroll={{ x: 700 }}
+                          rowKey={(record, index) => record?.uuid || index}
+                          columns={tableColumns}
+                          rowSelection={{
+                            type: "checkbox",
+                            onChange: (selectedRowKeys, selectedRows) => {
+                              setSelected([...selected, selectedRowKeys[0]].filter((item) => item));
+                            },
+                            hideSelectAll: true,
+                            getCheckboxProps: (record) => ({
+                              disabled: record.round === Info.round ? record?.isQualified : record?.locked,
+                            }),
+                          }}
+                          showHeader={false}
+                          dataSource={record.items}
+                          pagination={false}
+                        />
+                      ),
+                      defaultExpandedRowKeys: ["0"],
+                    }}
+                    columns={tableColumns}
+                    dataSource={formatTableData([item]) || []}
+                    pagination={false}
+                    scroll={{ x: 700 }}
+                  />
+                </div>
+              );
+            })}
         </Spin>
         {modal}
         {validateErrorModal}
@@ -351,13 +433,12 @@ interface ICheckRuleData {
   checkRules?: any[];
 }
 
-function useInpsectionMeasurement(props: { ruleId: string; sheetId: string; sampleCount: number }) {
-  const { ruleId, sheetId, sampleCount } = props;
+function useInpsectionMeasurement(props: { ruleId: string; round: number; sheetId: string; sampleCount: number }) {
+  const { ruleId, sheetId, sampleCount, round } = props;
   const [state, setState] = useSetState<InpsectionData>({});
-  const [measurementState, setMeasurementState] = useState<boolean>(false);
   const { submitInspectionMeasurement } = useCreateInspectionMeasurement({
     sheetId: sheetId,
-    measurementState,
+    round,
     onSuccess: () => {
       history.go(0);
     },
@@ -378,16 +459,16 @@ function useInpsectionMeasurement(props: { ruleId: string; sheetId: string; samp
           },
         ],
         relations: {
-          measurements: { properties: ["id", "isQualified", "qualitativeValue", "quantitativeValue", "sampleCode", "instrument", "characteristic"] },
+          measurements: {
+            properties: ["id", "isQualified", "qualitativeValue", "quantitativeValue", "sampleCode", "instrument", "characteristic", "locked", "round"],
+          },
         },
         pagination: { limit: 1000, offset: 0 },
-        properties: ["id", "code", "sheet", "measurements"],
+        properties: ["id", "code", "sheet", "measurements", "round"],
       });
       const measurements = res.data.list;
 
       const measurementIsNull = res.data.list.every((item: any) => item.measurements.length <= 0);
-
-      setMeasurementState(measurementIsNull);
 
       if (measurementIsNull) {
         const inpsectionRule = await rapidApi.post("/mom/mom_inspection_characteristics/operations/find", {
@@ -432,6 +513,7 @@ function useInpsectionMeasurement(props: { ruleId: string; sheetId: string; samp
           return {
             code: item,
             sheetId: sheetId,
+            round: item.round,
             items: inspection.map((i: any) => {
               return {
                 ...i,
@@ -441,19 +523,22 @@ function useInpsectionMeasurement(props: { ruleId: string; sheetId: string; samp
           };
         });
 
-        submitInspectionMeasurement(formateArr);
+        submitInspectionMeasurement(formateArr, false);
       } else {
         const formateArr = measurements.map((item: any) => {
           return {
             code: item.code,
             id: item.id,
             sheetId: sheetId,
+            round: item.round,
+            roundTitle: `第${item.round}轮次检验`,
             items: item.measurements.map((i: any) => {
               return {
                 ...i.characteristic,
                 measurementsId: i.id,
                 instrument: i.instrument,
                 uuid: uuidv4(),
+                locked: i.locked,
                 quantitativeValue: i.quantitativeValue,
                 qualitativeValue: i.qualitativeValue,
                 measuredValue: i.characteristic?.kind === "qualitative" ? i.qualitativeValue : i.quantitativeValue,
@@ -470,13 +555,13 @@ function useInpsectionMeasurement(props: { ruleId: string; sheetId: string; samp
     }
   };
 
-  return { loadInpsectionMeasurement, ...state, setState, measurementState };
+  return { loadInpsectionMeasurement, ...state, setState };
 }
 
-function useCreateInspectionMeasurement(options: { sheetId: string; measurementState: boolean; onSuccess: () => void }) {
+function useCreateInspectionMeasurement(options: { sheetId: string; round: number; onSuccess: () => void }) {
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  const submitInspectionMeasurement = async (inspection: any) => {
+  const submitInspectionMeasurement = async (inspection: any, isReCheck?: boolean) => {
     if (submitting) {
       return;
     }
@@ -488,6 +573,7 @@ function useCreateInspectionMeasurement(options: { sheetId: string; measurementS
         return {
           code: item.code,
           sheet_id: options.sheetId,
+          round: isReCheck ? options?.round + 1 : 1,
           measurements: item.items.map((it: any) => {
             return {
               instrument: {
@@ -506,19 +592,26 @@ function useCreateInspectionMeasurement(options: { sheetId: string; measurementS
       }),
     };
 
-    if (options?.measurementState) {
-      await rapidApi
-        .post("/mom/mom_inspection_sheet_samples/operations/create_batch", params)
-        .then((res) => {
-          if (res.status >= 200 && res.status < 400) {
-            options.onSuccess?.();
-          }
-          setSubmitting(false);
-        })
-        .catch(() => {
-          setSubmitting(false);
-        });
+    if (isReCheck) {
+      const params = {
+        state: "pending",
+        approvalState: "approving",
+        round: options?.round + 1,
+      };
+      await rapidApi.patch(`/mom/mom_inspection_sheets/${options?.sheetId}`, params);
     }
+
+    await rapidApi
+      .post("/mom/mom_inspection_sheet_samples/operations/create_batch", params)
+      .then((res) => {
+        if (res.status >= 200 && res.status < 400) {
+          options.onSuccess?.();
+        }
+        setSubmitting(false);
+      })
+      .catch(() => {
+        setSubmitting(false);
+      });
   };
 
   const submitFn = useDebounceFn(submitInspectionMeasurement, { wait: 300 });
@@ -534,12 +627,14 @@ function useUpdateInspectionMeasurement(options: { sheetId: string; onSuccess: (
       return;
     }
     setSubmitting(true);
-    console.log(inspectionItem, "inspectionItem888");
+
     const params = {
       isQualified: inspectionItem.isQualified,
+      round: inspectionItem.round,
       quantitativeValue: inspectionItem.quantitativeValue || null,
       qualitativeValue: inspectionItem.qualitativeValue || null,
     };
+
     await rapidApi
       .patch(`/mom/mom_inspection_measurements/${inspectionItem.id}`, params)
       .then((res) => {

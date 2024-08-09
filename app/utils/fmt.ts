@@ -1,4 +1,4 @@
-import { get, isNil, isNumber, sum } from "lodash";
+import { isNil, isNumber, sum } from "lodash";
 
 export function fmtCharacteristicNorminal(characteristic: Record<string, any>) {
   if (!characteristic) {
