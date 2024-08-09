@@ -118,6 +118,16 @@ const page: RapidPage = {
           icon: "PlusOutlined",
           actionStyle: "primary",
         },
+        {
+          $type: "antdButton",
+          href: `/api/app/exportExcel?type=inspection`,
+          children: [
+            {
+              $type: "text",
+              text: " 下载",
+            },
+          ],
+        },
       ],
       extraProperties: ["rule"],
       extraActions: [

@@ -160,6 +160,16 @@ const page: RapidPage = {
           $permissionCheck: "inventoryOperation.manage",
           actionStyle: "primary",
         },
+        {
+          $type: "antdButton",
+          href: `/api/app/exportExcel?type=operation`,
+          children: [
+            {
+              $type: "text",
+              text: " 下载",
+            },
+          ],
+        },
         // {
         //   $type: "antdButton",
         //   icon: {
