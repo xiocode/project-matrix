@@ -13,7 +13,7 @@ export function calculateInspectionResult(characteristic: Record<string, any>, m
     case "quantitative":
       switch (determineType) {
         case "inLimit":
-          return lowerLimit <= measuredValue && measuredValue <= upperLimit;
+          return norminal - lowerLimit <= measuredValue && measuredValue <= norminal + upperLimit;
         case "inTolerance":
           return decimalSum(lowerTol, norminal) <= measuredValue && measuredValue <= decimalSum(upperTol, norminal);
         case "gt":

@@ -15,7 +15,7 @@ const page: RapidPage = {
       entityCode: "MomInspectionSheet",
       mode: "view",
       column: 3,
-      extraProperties: ["sampleCount"],
+      extraProperties: ["sampleCount", "round"],
       relations: {
         material: {
           properties: ["id", "code", "name", "specification", "category"],
@@ -159,6 +159,10 @@ const page: RapidPage = {
           rendererProps: {
             format: "{{name}}",
           },
+        },
+        {
+          code: "round",
+          type: "auto",
         },
       ],
       $exps: {

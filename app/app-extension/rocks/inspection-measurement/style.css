@@ -3,3 +3,8 @@
   justify-content: end;
   margin-bottom: 24px;
 }
+.inspection_measurement--title {
+  font-size: 18px;
+  margin: 10px 0px;
+  font-weight: 700;
+}

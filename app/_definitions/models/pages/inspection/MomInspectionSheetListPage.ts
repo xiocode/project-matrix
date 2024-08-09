@@ -97,6 +97,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     result: "uninspected",
     state: "pending",
     approvalState: "uninitiated",
+    round: "1",
   },
 };
 
