@@ -5,7 +5,7 @@ import { Alert, Button, Form, InputNumber, message, Modal, Select, Space, Spin, 
 import { useDebounceFn, useSetState } from "ahooks";
 import { v4 as uuidv4 } from "uuid";
 import rapidApi from "~/rapidApi";
-import { find, get, map, orderBy, split } from "lodash";
+import { find, get, map, orderBy, split, uniqBy } from "lodash";
 import rapidAppDefinition from "~/rapidAppDefinition";
 import { useEffect, useState } from "react";
 import { calculateInspectionResult } from "~/utils/calculate";
@@ -22,6 +22,7 @@ export default {
     const Info = context?.scope.stores.detail.data?.list[0];
     const [form] = Form.useForm();
     const [unSkippableArr, setUnSkippableArr] = useState<any>([]);
+    const [unQualifiedArr, setUnQualifiedArr] = useState<any>([]);
     const [selected, setSelected] = useState<any>([]);
     const [validateOpen, setValidateOpen] = useState<boolean>(false);
     const [resultState, setResultState] = useState<boolean>(false);
@@ -97,13 +98,15 @@ export default {
                 }),
               };
             });
-            update({
-              id: r.measurementsId,
-              round: r.round,
-              isQualified: calculateInspectionResult(r, v),
-              qualitativeValue: r.kind === "qualitative" ? v : "",
-              quantitativeValue: r.kind === "quantitative" ? v : "",
-            });
+            if (Info.round === r.round) {
+              update({
+                id: r.measurementsId,
+                round: r.round,
+                isQualified: calculateInspectionResult(r, v),
+                qualitativeValue: r.kind === "qualitative" ? v : "",
+                quantitativeValue: r.kind === "quantitative" ? v : "",
+              });
+            }
             setState({
               inspection: changedInspection,
             });
@@ -181,6 +184,7 @@ export default {
     useEffect(() => {
       if (Info) {
         checkCofigInit();
+        setResultState(Info.result === "qualified");
         if (Info?.rule?.id) {
           loadInpsectionMeasurement();
         }
@@ -212,36 +216,44 @@ export default {
       return orderBy(result, "code");
     };
 
-    const validateMeasurment = async (sheetId: string) => {
+    const validateMeasurment = async (sheetId: string, item: any) => {
       let isSkippableArr: any[] = [];
-      inspection?.map((item) => {
-        const unSkippable = item.items.filter((it: any) => !it.skippable).filter((i: any) => !i.qualitativeValue && !i.quantitativeValue);
-        if (unSkippableArr.length > 0) {
-          isSkippableArr.push({
-            code: item.code,
-            unSkippable,
-          });
-        }
-      });
+      let isUnQualifiedArr: any[] = [];
+      const unSkippable = item.items.filter((it: any) => !it.skippable).filter((i: any) => !i.qualitativeValue && !i.quantitativeValue);
+      if (unSkippable.length > 0) {
+        isSkippableArr.push({
+          code: item.code,
+          unSkippable,
+        });
+      }
+
       setUnSkippableArr(orderBy(isSkippableArr, "code"));
       if (isSkippableArr.length > 0) {
         setValidateOpen(true);
       } else {
-        await rapidApi
-          .patch(`/mom/mom_inspection_sheets/${sheetId}`, {
-            state: "inspected",
-          })
-          .then(async (res) => {
-            if (res.data.result === "qualified") {
-              setResultState(res.data.result === "qualified");
-              history.go(0);
-            } else {
-              setValidateOpen(true);
-            }
+        const isQualified = item.items.filter((it: any) => !it.skippable).every((it: any) => it.isQualified);
+        const unQualifiedArr = item.items.filter((it: any) => !it.skippable).filter((it: any) => !calculateInspectionResult(it, it.measuredValue));
+        if (unQualifiedArr.length > 0) {
+          isUnQualifiedArr.push({
+            code: item.code,
+            unQualifiedArr,
           });
+        }
+        setUnQualifiedArr(orderBy(isUnQualifiedArr, "code"));
+        if (isQualified) {
+          await rapidApi
+            .patch(`/mom/mom_inspection_sheets/${sheetId}`, {
+              state: "inspected",
+            })
+            .then(async (res) => {
+              history.go(0);
+            });
+        } else if (unQualifiedArr.length > 0) {
+          setResultState(false);
+          setValidateOpen(true);
+        }
       }
     };
-
     const validateErrorModal = (
       <Modal
         title="温馨提示"
@@ -258,19 +270,23 @@ export default {
             </Button>
             <Button
               type="primary"
-              disabled={unSkippableArr.length > 0 || !resultState}
+              disabled={unSkippableArr.length > 0}
               onClick={() => {
                 form.validateFields().then(async (res) => {
                   const { treatment } = res;
                   try {
                     await rapidApi
                       .patch(`/mom/mom_inspection_sheets/${Info?.id}`, {
+                        state: "inspected",
+                        approvalState: "approving",
                         treatment,
                       })
                       .then(async (res) => {
-                        setResultState(res.data.result !== "qualified");
+                        history.go(0);
                       });
                   } catch {
+                    setValidateOpen(false);
+                  } finally {
                     setValidateOpen(false);
                   }
                 });
@@ -281,26 +297,7 @@ export default {
           </Space>
         }
       >
-        {resultState ? (
-          <Form form={form}>
-            <Form.Item
-              label="处理结果"
-              name="treatment"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Select
-                options={[
-                  { label: "特采", value: "special", color: "orange" },
-                  { label: "退货", value: "withdraw", color: "red" },
-                ]}
-              />
-            </Form.Item>
-          </Form>
-        ) : (
+        {unSkippableArr.length > 0 ? (
           <>
             <Alert style={{ marginBottom: 10 }} message="检测到当前当前检验单，有以下检验不可跳过。请完成检验！明细如下：" />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -322,51 +319,130 @@ export default {
               })}
             </div>
           </>
+        ) : !resultState ? (
+          <>
+            <Alert style={{ marginBottom: 10 }} message="检测到当前当前检验，有必须合格检验项。请选择处理结果：" />
+            {unQualifiedArr.map((item: any, index: number) => {
+              return (
+                <div key={index} style={{ marginBottom: 5 }}>
+                  <span>样本号：</span>
+                  <span style={{ color: "red" }}>{item.code}</span>
+                  {item?.unQualifiedArr?.map((it: any, index: number) => {
+                    return (
+                      <div key={index}>
+                        <span>检验项：</span>
+                        <span style={{ color: "red" }}>{it.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <Form form={form}>
+              <Form.Item
+                label="处理结果"
+                name="treatment"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Select
+                  options={[
+                    { label: "特采", value: "special", color: "orange" },
+                    { label: "退货", value: "withdraw", color: "red" },
+                  ]}
+                />
+              </Form.Item>
+            </Form>
+          </>
+        ) : (
+          <></>
         )}
       </Modal>
     );
+
+    const checkRecord = (item: any) => {
+      const res = item.items.every((it: any) => it.locked);
+      return res;
+    };
     return (
       <div className="pm_inspection-input-sectioN">
         <Spin spinning={loading || false}>
           {inspection &&
-            inspection.map((item: any) => {
+            inspection.map((item: any, index) => {
               return (
-                <div key={item.id}>
-                  <div className="inspection_measurement--title">{item.roundTitle}:</div>
+                <div key={index}>
+                  <div className="inspection_measurement--title">第{item.round}轮次检验:</div>
                   {item.round === Info?.round && (
                     <div className="pm_inspection-measurement--footer">
                       <Space>
                         <Button
                           type="primary"
-                          disabled={!(Info?.state !== "inspected")}
+                          disabled={!(Info?.state !== "inspected") || checkRecord(item)}
                           onClick={() => {
-                            validateMeasurment(Info?.id);
+                            validateMeasurment(Info?.id, item);
                           }}
                         >
                           提交检验记录
                         </Button>
                         <Button
                           type="primary"
-                          style={Info.state !== "inspected" ? { display: "none" } : {}}
-                          disabled={Info.state === "inspected" && selected.length <= 0}
+                          disabled={Info.state === "pending"}
                           onClick={() => {
                             let res: any[] = [];
 
-                            inspection?.map((item) => {
-                              const filterItem = item.items.filter((it: any) => selected.includes(it.uuid));
+                            if (inspection.length !== Info?.round) {
+                              setState({
+                                inspection: inspection.pop(),
+                              });
+                            }
 
+                            const uuidItem = selected.map((it: any) => it.uuid);
+                            inspection?.map((item) => {
+                              const filterItem = item.items.filter((it: any) => uuidItem.includes(it.uuid));
                               if (filterItem.length > 0) {
                                 res.push({
-                                  ...item,
-                                  items: filterItem,
+                                  code: item.code,
+                                  sheetId: item.sheetId,
+                                  round: item.round + 1,
+                                  items: filterItem.map((it: any) => {
+                                    return {
+                                      ...it,
+                                      locked: false,
+                                      olduuid: it.uuid,
+                                      uuid: uuidv4(),
+                                    };
+                                  }),
                                 });
                               }
                             });
 
-                            submitInspectionMeasurement(res, true);
+                            setState({
+                              inspection: inspection.concat(res),
+                            });
                           }}
                         >
                           复检
+                        </Button>
+                      </Space>
+                    </div>
+                  )}
+                  {item.round === Info?.round + 1 && (
+                    <div className="pm_inspection-measurement--footer">
+                      <Space>
+                        <Button
+                          type="primary"
+                          style={Info.state !== "inspected" ? { display: "none" } : {}}
+                          disabled={Info.state === "inspected" && selected.length <= 0}
+                          onClick={() => {
+                            const res = inspection.filter((item) => item.round === Info.round + 1);
+                            // validateMeasurment(Info?.id, item);
+                            submitInspectionMeasurement(res, true);
+                          }}
+                        >
+                          提交复检记录
                         </Button>
                       </Space>
                     </div>
@@ -379,8 +455,14 @@ export default {
                     rowSelection={{
                       type: "checkbox",
                       hideSelectAll: true,
-                      onChange: (selectedRowKeys, selectedRows) => {
-                        setSelected([...selected, selectedRowKeys[0]]);
+                      onSelect: (record, select, selectedRows: any) => {
+                        if (select) {
+                          const res = uniqBy([...selected, ...selectedRows], "uuid");
+                          setSelected(res);
+                        } else {
+                          const res = selected.filter((item: any) => item.uuid !== record?.uuid);
+                          setSelected(res);
+                        }
                       },
                       getCheckboxProps: (record) => ({
                         disabled: record.round === Info.round ? record?.isQualified : record?.locked,
@@ -394,8 +476,14 @@ export default {
                           columns={tableColumns}
                           rowSelection={{
                             type: "checkbox",
-                            onChange: (selectedRowKeys, selectedRows) => {
-                              setSelected([...selected, selectedRowKeys[0]].filter((item) => item));
+                            onSelect: (record, select, selectedRows: any) => {
+                              if (select) {
+                                const res = uniqBy([...selected, ...selectedRows], "uuid");
+                                setSelected(res);
+                              } else {
+                                const res = selected.filter((item: any) => item.uuid !== record?.uuid);
+                                setSelected(res);
+                              }
                             },
                             hideSelectAll: true,
                             getCheckboxProps: (record) => ({
@@ -532,7 +620,6 @@ function useInpsectionMeasurement(props: { ruleId: string; round: number; sheetI
             id: item.id,
             sheetId: sheetId,
             round: item.round,
-            roundTitle: `第${item.round}轮次检验`,
             items: item.measurements.map((i: any) => {
               return {
                 ...i.characteristic,
@@ -582,6 +669,7 @@ function useCreateInspectionMeasurement(options: { sheetId: string; round: numbe
               },
               isQualified: calculateInspectionResult(it, it.measuredValue),
               sampleCode: item.code,
+              locked: isReCheck ? true : false,
               quantitativeValue: it.quantitativeValue || null,
               qualitativeValue: it.qualitativeValue || null,
               characteristic: {
@@ -595,7 +683,7 @@ function useCreateInspectionMeasurement(options: { sheetId: string; round: numbe
 
     if (isReCheck) {
       const params = {
-        state: "pending",
+        state: "inspected",
         approvalState: "approving",
         round: options?.round + 1,
       };
