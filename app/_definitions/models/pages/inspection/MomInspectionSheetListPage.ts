@@ -293,7 +293,7 @@ const page: RapidPage = {
       editForm: cloneDeep(formConfig),
       $exps: {
         "newForm.fixedFields.state": '"pending"',
-        "newForm.fixedFields.approvalState": '"approving"',
+        "newForm.fixedFields.approvalState": '"uninitiated"',
       },
     },
   ],

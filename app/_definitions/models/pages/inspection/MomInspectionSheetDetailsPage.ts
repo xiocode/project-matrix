@@ -203,7 +203,7 @@ const page: RapidPage = {
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: { approvalState: "approved" },
+              data: { approvalState: "approved", state: "inspected" },
               $exps: {
                 url: `"/api/mom/mom_inspection_sheets/" + $rui.parseQuery().id`,
               },
@@ -232,7 +232,7 @@ const page: RapidPage = {
             {
               $action: "sendHttpRequest",
               method: "PATCH",
-              data: { approvalState: "rejected" },
+              data: { approvalState: "rejected", state: "pending" },
               $exps: {
                 url: `"/api/mom/mom_inspection_sheets/" + $rui.parseQuery().id`,
               },
