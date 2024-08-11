@@ -28,26 +28,45 @@ export default [
       const { server, payload } = ctx;
       let after = payload.after;
 
-      const momInspectionMeasurement = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntities({
+      const momInspectionMeasurementManager = server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement");
+      const momInspectionMeasurement = await momInspectionMeasurementManager.findEntities({
         filters: [
           { operator: "eq", field: "sheet_id", value: after.sheet_id },
         ],
-        properties: ["id", "isQualified", "characteristic"],
+        properties: ["id", "characteristic", "isQualified", "createdAt"],
       });
+
+      // Get the latest measurement for each characteristic.
+      const latestMeasurement = momInspectionMeasurement.reduce((acc, item) => {
+        if (item.characteristic?.id && item.createdAt) {
+          const characteristicId = item.characteristic.id;
+
+          // @ts-ignore
+          if (!acc[characteristicId] || acc[characteristicId].createdAt < item.createdAt) {
+            acc[characteristicId] = item;
+          }
+        }
+
+        return acc;
+      }, {} as Record<string, MomInspectionMeasurement>);
+
 
       const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
 
 
       let result = "qualified";
-      if (momInspectionMeasurement.some((item) => item.characteristic?.mustPass ? !item.isQualified : false)) {
+      // If any of the latest measurements is unqualified, the sheet is unqualified.
+      if (Object.values(latestMeasurement).some((item) => (item.characteristic?.mustPass || false) && !item.isQualified)) {
         result = "unqualified";
       }
+
       await momInspectionSheetManager.updateEntityById({
         id: after.sheet_id,
         entityToSave: {
           result: result,
         },
       });
+
     },
   },
   {
@@ -56,27 +75,49 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const { server, payload } = ctx;
       let after = payload.after;
+      const changes = payload.changes;
 
-      const momInspectionMeasurement = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntities({
-        filters: [
-          { operator: "eq", field: "sheet_id", value: after.sheet_id },
-        ],
-        properties: ["id", "isQualified", "characteristic"],
-      });
+      if (changes.hasOwnProperty('isQualified')) {
+        const momInspectionMeasurementManager = server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement");
+        const momInspectionMeasurement = await momInspectionMeasurementManager.findEntities({
+          filters: [
+            { operator: "eq", field: "sheet_id", value: after.sheet_id },
+          ],
+          properties: ["id", "characteristic", "isQualified", "createdAt"],
+        });
 
-      const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
+        // Get the latest measurement for each characteristic.
+        const latestMeasurement = momInspectionMeasurement.reduce((acc, item) => {
+          if (item.characteristic?.id && item.createdAt) {
+            const characteristicId = item.characteristic.id;
+
+            // @ts-ignore
+            if (!acc[characteristicId] || acc[characteristicId].createdAt < item.createdAt) {
+              acc[characteristicId] = item;
+            }
+          }
+
+          return acc;
+        }, {} as Record<string, MomInspectionMeasurement>);
 
 
-      let result = "qualified";
-      if (momInspectionMeasurement.some((item) => item.characteristic?.mustPass ? !item.isQualified : false)) {
-        result = "unqualified";
+        const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
+
+
+        let result = "qualified";
+        // If any of the latest measurements is unqualified, the sheet is unqualified.
+        if (Object.values(latestMeasurement).some((item) => (item.characteristic?.mustPass || false) && !item.isQualified)) {
+          result = "unqualified";
+        }
+
+        await momInspectionSheetManager.updateEntityById({
+          id: after.sheet_id,
+          entityToSave: {
+            result: result,
+          },
+        });
       }
-      await momInspectionSheetManager.updateEntityById({
-        id: after.sheet_id,
-        entityToSave: {
-          result: result,
-        },
-      });
+
     },
   },
 ] satisfies EntityWatcher<any>[];
