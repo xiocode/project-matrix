@@ -43,6 +43,8 @@ async function handleExportByType(server: IRpdServer, input: ExportExcelInput) {
       return exportOperationExcel(server, input);
     case "inspection":
       return exportInspectionExcel(server, input);
+    case "organize":
+      return exportInspectionExcel(server, input);
     default:
       throw new Error(`Unsupported type: ${ input.type }`);
   }
