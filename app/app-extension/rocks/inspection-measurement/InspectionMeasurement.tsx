@@ -244,6 +244,7 @@ export default {
           await rapidApi
             .patch(`/mom/mom_inspection_sheets/${sheetId}`, {
               state: "inspected",
+              approveState: "approving",
             })
             .then(async (res) => {
               history.go(0);
