@@ -231,7 +231,7 @@ export default {
       if (isSkippableArr.length > 0) {
         setValidateOpen(true);
       } else {
-        const isQualified = item.items.filter((it: any) => !it.skippable).every((it: any) => it.isQualified);
+        const isQualified = item.items.filter((it: any) => !it.skippable).every((it: any) => calculateInspectionResult(it, it.measuredValue));
         const unQualifiedArr = item.items.filter((it: any) => !it.skippable).filter((it: any) => !calculateInspectionResult(it, it.measuredValue));
         if (unQualifiedArr.length > 0) {
           isUnQualifiedArr.push({
