@@ -20,12 +20,14 @@ export default {
 
   Renderer(context, props, state) {
     const Info = context?.scope.stores.detail.data?.list[0];
+
     const [form] = Form.useForm();
     const [unSkippableArr, setUnSkippableArr] = useState<any>([]);
     const [unQualifiedArr, setUnQualifiedArr] = useState<any>([]);
     const [selected, setSelected] = useState<any>([]);
     const [validateOpen, setValidateOpen] = useState<boolean>(false);
     const [resultState, setResultState] = useState<boolean>(false);
+
     const { loadInpsectionMeasurement, loading, inspection, setState } = useInpsectionMeasurement({
       ruleId: Info?.rule?.id,
       sheetId: Info?.id,
@@ -437,10 +439,10 @@ export default {
                           type="primary"
                           style={Info.state !== "inspected" ? { display: "none" } : {}}
                           disabled={Info.state === "inspected" && selected.length <= 0}
-                          onClick={() => {
+                          onClick={async () => {
                             const res = inspection.filter((item) => item.round === Info.round + 1);
-                            // validateMeasurment(Info?.id, item);
-                            submitInspectionMeasurement(res, true);
+                            await submitInspectionMeasurement(res, true);
+                            validateMeasurment(Info?.id, item);
                           }}
                         >
                           提交复检记录
@@ -695,7 +697,9 @@ function useCreateInspectionMeasurement(options: { sheetId: string; round: numbe
       .post("/mom/mom_inspection_sheet_samples/operations/create_batch", params)
       .then((res) => {
         if (res.status >= 200 && res.status < 400) {
-          options.onSuccess?.();
+          if (!isReCheck) {
+            options.onSuccess?.();
+          }
         }
         setSubmitting(false);
       })
