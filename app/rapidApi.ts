@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosError } from "axios";
 import ruiPlayerConfig from "./rui-player-config";
 
 const rapidApi = axios.create({
-  baseURL: ruiPlayerConfig.apiBase,
+  baseURL: "/api",
   validateStatus: null,
 });
 
