@@ -202,6 +202,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
       defaultValue: "1",
     },
+    {
+      code: "inspectedAt",
+      name: "检验完成时间",
+      type: "datetime",
+    },
   ],
 };
 

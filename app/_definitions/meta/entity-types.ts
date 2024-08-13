@@ -4053,6 +4053,10 @@ export interface MomInspectionSheet {
    */
   round: number;
   /**
+   * 检验完成时间
+   */
+  inspectedAt?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4732,6 +4736,10 @@ export interface MomInventoryOperation {
    * 成品物料(用途)
    */
   finishedMaterial?: Partial<BaseMaterial>;
+  /**
+   * 供应商
+   */
+  supplier?: Partial<BasePartner>;
   /**
    * 创建时间
    */

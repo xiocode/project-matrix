@@ -4,7 +4,7 @@ import KisDataSync from "~/sdk/kis/sync";
 export default {
   code: "kis-sync-inventory-data-job",
 
-  cronTime: "18 9 * * *",
+  cronTime: "32 10 * * *",
 
   async handler(ctx: ActionHandlerContext) {
     const {server, logger} = ctx;
@@ -19,6 +19,6 @@ export default {
 async function syncKisInventoryData(ctx: ActionHandlerContext, server: IRpdServer) {
   const dataSync = new KisDataSync(server, ctx);
   await dataSync.initialize();
-
+  // await dataSync.syncBaseData();
   await dataSync.syncInventoryData();
 }

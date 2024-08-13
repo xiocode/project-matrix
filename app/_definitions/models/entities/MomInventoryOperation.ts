@@ -147,6 +147,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_material",
       targetIdColumnName: "finished_material_id",
     },
+    {
+      code: "supplier",
+      name: "供应商",
+      type: "relation",
+      targetSingularCode: "base_partner",
+      targetIdColumnName: "supplier_id",
+    },
   ],
 };
 
