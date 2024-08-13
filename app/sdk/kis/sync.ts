@@ -229,8 +229,22 @@ class KisDataSync {
     await this.loadBaseData();
 
     const syncBaseFunctions = [
-      // 同步物料分类
+      //  同步单位
       this.createListSyncFunction({
+        url: "/koas/APP006992/api/MeasureUnit/List",
+        singularCode: "base_unit",
+        mapToEntity: async (item: any) => ({
+          code: item.FNumber,
+          name: item.FName,
+          externalCode: item.FItemID,
+          type: 'others',
+          orderNum: 1,
+          category: {id: 1}
+        } as SaveBaseUnitInput),
+      }),
+      // 同步物料分类
+      this.createListSyncFunction(
+        {
         url: "/koas/APP006992/api/Material/List",
         singularCode: "base_material_category",
         mapToEntity: async (item: any) => {
@@ -257,33 +271,6 @@ class KisDataSync {
         payload: {Detail: false},
       }),
       this.createListSyncFunction({
-        url: "/koas/APP006992/api/StockPlaceGroup/List",
-        singularCode: "base_location",
-        mapToEntity: async (item: any) => {
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FSPGroupID,
-            type: 'warehouse',
-
-          } as SaveBaseLocationInput;
-        },
-      }),
-      // 同步仓库
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/StockPlace/List",
-        singularCode: "base_location",
-        mapToEntity: async (item: any) => {
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FSPID,
-            parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
-            type: 'storageArea',
-          } as SaveBaseLocationInput;
-        },
-      }),
-      this.createListSyncFunction({
         url: "/koas/APP006992/api/Stock/List",
         singularCode: "base_location",
         mapToEntity: async (item: any) => {
@@ -296,6 +283,33 @@ class KisDataSync {
           } as SaveBaseLocationInput;
         },
       }),
+      // this.createListSyncFunction({
+      //   url: "/koas/APP006992/api/StockPlaceGroup/List",
+      //   singularCode: "base_location",
+      //   mapToEntity: async (item: any) => {
+      //     return {
+      //       code: item.FNumber,
+      //       name: item.FName,
+      //       externalCode: item.FSPGroupID,
+      //       type: 'warehouse',
+      //
+      //     } as SaveBaseLocationInput;
+      //   },
+      // }),
+      // // 同步仓库
+      // this.createListSyncFunction({
+      //   url: "/koas/APP006992/api/StockPlace/List",
+      //   singularCode: "base_location",
+      //   mapToEntity: async (item: any) => {
+      //     return {
+      //       code: item.FNumber,
+      //       name: item.FName,
+      //       externalCode: item.FSPID,
+      //       parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
+      //       type: 'storageArea',
+      //     } as SaveBaseLocationInput;
+      //   },
+      // }),
     ]
 
     for (const syncListFunction of syncBaseFunctions) {
@@ -384,20 +398,20 @@ class KisDataSync {
           } as SaveBasePartnerInput;
         },
       }),
-      // 同步仓库
-      this.createListSyncFunction({
-        url: "/koas/APP006992/api/StockPlace/List",
-        singularCode: "base_location",
-        mapToEntity: async (item: any) => {
-          return {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FSPID,
-            parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
-            type: 'storageArea',
-          } as SaveBaseLocationInput;
-        },
-      })
+      // // 同步仓库
+      // this.createListSyncFunction({
+      //   url: "/koas/APP006992/api/StockPlace/List",
+      //   singularCode: "base_location",
+      //   mapToEntity: async (item: any) => {
+      //     return {
+      //       code: item.FNumber,
+      //       name: item.FName,
+      //       externalCode: item.FSPID,
+      //       parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
+      //       type: 'storageArea',
+      //     } as SaveBaseLocationInput;
+      //   },
+      // })
     ];
 
     for (const syncListFunction of syncFunctions) {
@@ -481,16 +495,13 @@ class KisDataSync {
 
             const stock = warehouseLocations.find(location => location.code === String(item.FStockNumber))?.id
 
-            const location = warehouseLocations.find(location => location.externalCode === String(item.FSPID))?.id
-
-
             let entity = {
               operation: {id: result.id},
               material: {id: material?.id},
               lotNum: item.FBatchNo,
               quantity: item.FBUQty,
               unit: {id: material?.defaultUnit?.id},
-              to: {id: location ? location : stock}
+              to: {id: stock}
             } as SaveMomGoodTransferInput
 
             return entity;

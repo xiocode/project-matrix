@@ -29,6 +29,10 @@ export default [
       if (changes.hasOwnProperty('approvalState') && changes.approvalState !== before.approvalState) {
         changes.reviewer = routerContext?.state.userId;
       }
+
+      if (changes.hasOwnProperty('state') && changes.state === 'inspected') {
+        changes.inspector = routerContext?.state.userId;
+      }
     },
   },
   {

@@ -11,6 +11,7 @@ import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOut
 import mom$listGoodsByInspectRule from '../models/server-operations/mom/listGoodsByInspectRule';
 import mom$listInventoryCheckTransfer from '../models/server-operations/mom/listInventoryCheckTransfer';
 import mom$listInventoryOperationCount from '../models/server-operations/mom/listInventoryOperationCount';
+import mom$listRawMaterialInspections from '../models/server-operations/mom/listRawMaterialInspections';
 import mom$mergeGoods from '../models/server-operations/mom/mergeGoods';
 import mom$splitGoods from '../models/server-operations/mom/splitGoods';
 import mom$submitGoodCheckedTransfers from '../models/server-operations/mom/submitGoodCheckedTransfers';
@@ -34,6 +35,7 @@ export default [
   mom$listGoodsByInspectRule,
   mom$listInventoryCheckTransfer,
   mom$listInventoryOperationCount,
+  mom$listRawMaterialInspections,
   mom$mergeGoods,
   mom$splitGoods,
   mom$submitGoodCheckedTransfers,
