@@ -88,6 +88,8 @@ import inspection$MomInspectionCustomerRuleDetailPage from '../models/pages/insp
 import inspection$MomInspectionCustomerRuleListPage from '../models/pages/inspection/MomInspectionCustomerRuleListPage';
 import inspection$MomInspectionDefectCategoryListPage from '../models/pages/inspection/MomInspectionDefectCategoryListPage';
 import inspection$MomInspectionDefectListPage from '../models/pages/inspection/MomInspectionDefectListPage';
+import inspection$MomInspectionFeedStockList from '../models/pages/inspection/MomInspectionFeedStockList';
+import inspection$MomInspectionFinishedStockList from '../models/pages/inspection/MomInspectionFinishedStockList';
 import inspection$MomInspectionInputPage from '../models/pages/inspection/MomInspectionInputPage';
 import inspection$MomInspectionInstrumentCategoryListPage from '../models/pages/inspection/MomInspectionInstrumentCategoryListPage';
 import inspection$MomInspectionInstrumentListPage from '../models/pages/inspection/MomInspectionInstrumentListPage';
@@ -204,6 +206,8 @@ export default [
   inspection$MomInspectionCustomerRuleListPage,
   inspection$MomInspectionDefectCategoryListPage,
   inspection$MomInspectionDefectListPage,
+  inspection$MomInspectionFeedStockList,
+  inspection$MomInspectionFinishedStockList,
   inspection$MomInspectionInputPage,
   inspection$MomInspectionInstrumentCategoryListPage,
   inspection$MomInspectionInstrumentListPage,
