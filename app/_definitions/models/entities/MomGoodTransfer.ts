@@ -154,7 +154,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_lot",
       targetIdColumnName: "lot_id",
     },
+    {
+      code: "isTankerTransportation",
+      name: "罐车运输",
+      type: "boolean"
+    },
   ],
 };
+
 
 export default entity;

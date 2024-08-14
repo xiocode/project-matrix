@@ -64,6 +64,7 @@ async function listMaterialInspections(server: IRpdServer, input: QueryInput) {
              ou.name                                                           AS inspector,
              to_char(mis.inspected_at, 'YYYY-MM-DD')                           AS inspected_date,
              to_char(mis.inspected_at, 'HH24:MI:SS')                           AS inspected_time,
+             mis.inspected_at,
              mis.remark                                                        AS remark,
              mc.measurements
       FROM mom_inspection_sheets mis

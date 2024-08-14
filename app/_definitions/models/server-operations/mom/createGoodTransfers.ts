@@ -127,6 +127,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
       properties: ["id", "sampling", "samplingCount"],
     })
 
+
     if (inspectRule) {
       await saveInspectionSheet(server, {
         inventoryOperation: { id: input.operationId },

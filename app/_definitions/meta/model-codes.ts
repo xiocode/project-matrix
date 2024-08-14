@@ -884,6 +884,7 @@ const entityFieldCodes = {
     'validityDate',
     'printTime',
     'lot',
+    'isTankerTransportation',
     'createdAt',
     'createdBy',
     'updatedAt',

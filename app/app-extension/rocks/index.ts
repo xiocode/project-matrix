@@ -31,6 +31,7 @@ import InventoryApplicationReceivingAction from "./inventory-application-receivi
 import ViewInspectionRecordAction from "./view-inspection-record-action/ViewInspectionRecordAction";
 import InspectionConditionRenderer from "./inspection-condition-renderer/InspectionConditionRenderer";
 import InspectionFeedStockList from "./inspection-feedstock/InspectionFeedStockList";
+import InspectionFinishedStockList from "./inspection-finishedstock/InspectionFinishedStockList";
 
 export default [
   Link,
@@ -66,4 +67,5 @@ export default [
   ViewInspectionRecordAction,
   InspectionConditionRenderer,
   InspectionFeedStockList,
+  InspectionFinishedStockList,
 ];
