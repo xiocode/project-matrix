@@ -19,7 +19,7 @@ export default [
             {
               operator: "eq",
               field: "material_id",
-              value: before.material || before.material_id
+              value: before.material?.id || before.material_id
             }],
           properties: ["id"],
         });
@@ -51,7 +51,7 @@ export default [
             {
               operator: "eq",
               field: "material_id",
-              value: before.material || before.material_id
+              value: before.material?.id || before.material_id
             }],
           properties: ["id"],
         });

@@ -510,7 +510,7 @@ class KisDataSync {
 
         },
         payload: {Data: {}},
-        syncAll: false,
+        syncAll: true,
       }),
     ]
 

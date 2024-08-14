@@ -116,7 +116,7 @@ function useInspectionFeedStockData() {
     setLoading(true);
 
     await rapidApi
-      .post("/app/listRawMaterialInspections", {})
+      .post("/app/listMaterialInspections", {})
       .then((res) => {
         const data = res.data;
         let obj = {} as any;

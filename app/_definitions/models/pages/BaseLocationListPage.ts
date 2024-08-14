@@ -66,21 +66,7 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: [
-            {
-              operator: "or",
-              filters: [
-                {
-                  field: "name",
-                  operator: "contains",
-                },
-                {
-                  field: "code",
-                  operator: "contains",
-                },
-              ],
-            },
-          ],
+          filterFields: ["code", "name"],
         },
       ],
       orderBy: [

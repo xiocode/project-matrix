@@ -3135,6 +3135,10 @@ export interface MomGoodTransfer {
    */
   lot?: Partial<BaseLot>;
   /**
+   * 罐车运输
+   */
+  isTankerTransportation?: boolean;
+  /**
    * 创建时间
    */
   createdAt?: string;
