@@ -37,6 +37,7 @@ const page: RapidPage = {
   permissionCheck: { any: ["baseLocation.manage"] },
   view: [
     {
+      $id: "baseLocationList",
       $type: "sonicEntityList",
       entityCode: "BaseLocation",
       viewMode: "table",
@@ -65,7 +66,21 @@ const page: RapidPage = {
           placeholder: "Search",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["name"],
+          filterFields: [
+            {
+              operator: "or",
+              filters: [
+                {
+                  field: "name",
+                  operator: "contains",
+                },
+                {
+                  field: "code",
+                  operator: "contains",
+                },
+              ],
+            },
+          ],
         },
       ],
       orderBy: [
@@ -129,21 +144,21 @@ const page: RapidPage = {
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
-      searchForm: {
-        entityCode: "OcUser",
-        items: [
-          {
-            type: "auto",
-            code: "code",
-            filterMode: "contains",
-          },
-          {
-            type: "auto",
-            code: "name",
-            filterMode: "contains",
-          },
-        ],
-      },
+      // searchForm: {
+      //   entityCode: "BaseLocation",
+      //   items: [
+      //     {
+      //       type: "auto",
+      //       code: "code",
+      //       filterMode: "contains",
+      //     },
+      //     {
+      //       type: "auto",
+      //       code: "name",
+      //       filterMode: "contains",
+      //     },
+      //   ],
+      // },
       onSelectedIdsChange: [
         {
           $action: "setVars",
@@ -153,20 +168,23 @@ const page: RapidPage = {
           },
         },
       ],
-      stores: [
-        {
-          type: "entityStore",
-          name: "locations",
-          entityCode: "BaseLocation",
-          properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-          filters: [],
-          orderBy: [
-            {
-              field: "orderNum",
-            },
-          ],
-        },
-      ],
+      // stores: [
+      //   {
+      //     type: "entityStore",
+      //     name: "locations",
+      //     entityCode: "BaseLocation",
+      //     properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
+      //     filters: [],
+      //     orderBy: [
+      //       {
+      //         field: "orderNum",
+      //       },
+      //     ],
+      //   },
+      // ],
+      $exps: {
+        convertListToTree: "!_.get($page.getScope('baseLocationList-scope').getStore('list').getConfig().filters, '[0].filters[0].value')",
+      },
     },
   ],
 };
