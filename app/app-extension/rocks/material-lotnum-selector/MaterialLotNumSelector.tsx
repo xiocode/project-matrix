@@ -133,7 +133,7 @@ export default {
           code: "lot.qualificationState",
           width: 120,
           render: (record: any) => {
-            switch (record.lot.qualificationState) {
+            switch (record.lot?.qualificationState) {
               case "uninspected":
                 return "待检";
               case "qualified":

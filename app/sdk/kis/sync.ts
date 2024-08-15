@@ -635,9 +635,9 @@ class KisDataSync {
         filter: (item: any) => item.Head.FCheckDate !== null,
         pageSize: 10,
       }),
-      // 销售发货通知单
+      // 销售退货入库通知单
       this.createListSyncFunction({
-        url: "/koas/app007099/api/deliverynotice/list",
+        url: "/koas/app007099/api/goodsreturnnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
           const {Entry, Head} = item;
@@ -656,8 +656,90 @@ class KisDataSync {
 
           return {
             code: Head.FBillNo,
-            businessType: {id: 4}, // 销售出库
+            businessType: {id: 7}, // 销售退货入库
             supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
+            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            operationType: 'out',
+            state: 'approved',
+            operationState: 'pending',
+            items: entities,
+            externalCode: Head.FInterID,
+          } as SaveMomInventoryApplicationInput;
+        },
+        payload: {
+          OrderBy: {
+            Property: "FCheckDate",
+            Type: "Desc",
+          },
+        },
+        syncAll: false,
+        filter: (item: any) => item.Head.FCheckDate !== null,
+        pageSize: 10,
+      }),
+      // 销售退货入库通知单
+      this.createListSyncFunction({
+        url: "/koas/app007099/api/goodsreturnnotice/list",
+        singularCode: "mom_inventory_application",
+        mapToEntity: async (item: any) => {
+          const {Entry, Head} = item;
+
+          const mapEntryToEntity = (entry: any) => {
+            const material = materialMap.get(String(entry.FItemID));
+            return {
+              material,
+              lotNum: entry.FBatchNo,
+              quantity: entry.Fauxqty,
+              unit: {id: material?.defaultUnit?.id},
+            } as SaveMomInventoryApplicationItemInput;
+          };
+
+          const entities = Entry.map(mapEntryToEntity);
+
+          return {
+            code: Head.FBillNo,
+            businessType: {id: 7}, // 销售退货入库
+            supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
+            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            operationType: 'out',
+            state: 'approved',
+            operationState: 'pending',
+            items: entities,
+            externalCode: Head.FInterID,
+          } as SaveMomInventoryApplicationInput;
+        },
+        payload: {
+          OrderBy: {
+            Property: "FCheckDate",
+            Type: "Desc",
+          },
+        },
+        syncAll: false,
+        filter: (item: any) => item.Head.FCheckDate !== null,
+        pageSize: 10,
+      }),
+      // 销售订单（当通知单用）
+      this.createListSyncFunction({
+        url: "/koas/app007099/api/salesorder/list",
+        singularCode: "mom_inventory_application",
+        mapToEntity: async (item: any) => {
+          const {Entry, Head} = item;
+
+          const mapEntryToEntity = (entry: any) => {
+            const material = materialMap.get(String(entry.FItemID));
+            return {
+              material,
+              quantity: entry.Fauxqty,
+              unit: {id: material?.defaultUnit?.id},
+              remark: entry?.Fnote
+            } as SaveMomInventoryApplicationItemInput;
+          };
+
+          const entities = Entry.map(mapEntryToEntity);
+
+          return {
+            code: Head.FBillNo,
+            businessType: {id: 4}, // 销售出库
+            customer: {id: partnerMap.get(String(Head.FCustID))?.id},
             applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
             operationType: 'out',
             state: 'approved',

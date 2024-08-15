@@ -38,7 +38,7 @@ async function listInventoryOperationCount(server: IRpdServer, currentUserId: nu
       union all
       select mibt.operation_type,
              mibt.config ->> 'defaultSourceType'                          as source_type,
-             count(*) filter ( where mia.operation_state = 'processing' ) as waiting_count,
+             count(*) filter ( where mia.operation_state = 'processing' or mia.operation_state = 'pending' ) as waiting_count,
              count(*) filter ( where mia.operation_state = 'done' )       as completed_count
       from mom_inventory_applications mia
              inner join mom_inventory_business_types mibt on mia.business_id = mibt.id
@@ -48,7 +48,7 @@ async function listInventoryOperationCount(server: IRpdServer, currentUserId: nu
       union all
       select mibt.operation_type,
              mibt.config ->> 'defaultSourceType'                          as source_type,
-             count(*) filter ( where mia.operation_state = 'processing' ) as waiting_count,
+             count(*) filter ( where mia.operation_state = 'processing' or mia.operation_state = 'pending' ) as waiting_count,
              count(*) filter ( where mia.operation_state = 'done' )       as completed_count
       from mom_inventory_applications mia
              inner join mom_inventory_business_types mibt on mia.business_id = mibt.id
@@ -58,7 +58,7 @@ async function listInventoryOperationCount(server: IRpdServer, currentUserId: nu
       union all
       select mibt.operation_type,
              mibt.config ->> 'defaultSourceType'                          as source_type,
-             count(*) filter ( where mia.operation_state = 'processing' ) as waiting_count,
+             count(*) filter ( where mia.operation_state = 'processing' or mia.operation_state = 'pending' ) as waiting_count,
              count(*) filter ( where mia.operation_state = 'done' )       as completed_count
       from mom_inventory_applications mia
              inner join mom_inventory_business_types mibt on mia.business_id = mibt.id
