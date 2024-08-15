@@ -615,7 +615,7 @@ const page: RapidPage = {
                     {
                       field: "id",
                       operator: "eq",
-                      value: "",
+                      value: "-1",
                     },
                   ],
                 },
@@ -865,7 +865,7 @@ const page: RapidPage = {
                 },
               ],
               $exps: {
-                "fixedFilters[0].filters[0].value": `_.get(${operationDataExp}, 'id')`,
+                "fixedFilters[0].filters[0].value": `_.get(${operationDataExp}, 'id') || -1`,
                 "newForm.fixedFields.operation_id": `_.get(${operationDataExp}, 'id')`,
                 "newForm.fixedFields.operationId": `_.get(${operationDataExp}, 'id')`,
               },
