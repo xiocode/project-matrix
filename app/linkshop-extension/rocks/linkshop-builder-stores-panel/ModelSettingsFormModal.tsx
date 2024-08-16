@@ -87,6 +87,7 @@ const ModelSettingsFormModal = memo<ModelSettingsFormModalProps>((props) => {
                 name: formData.name,
                 entityCode: formData.entityCode,
                 properties: formData.properties || [],
+                pagination: formData.pagination,
                 filters: [],
                 orderBy: [],
               };
