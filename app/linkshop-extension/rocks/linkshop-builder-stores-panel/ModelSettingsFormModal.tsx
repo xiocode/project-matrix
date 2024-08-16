@@ -5,7 +5,7 @@ import rapidAppDefinition from "~/rapidAppDefinition";
 import { EntityStoreConfig, RapidEntity } from "@ruiapp/rapid-extension";
 import { MoveStyleUtils, RockEvent, RockEventHandlerScript, RockInstanceContext } from "@ruiapp/move-style";
 import { renderRock } from "@ruiapp/react-renderer";
-import { isPlainObject } from "lodash";
+import { isPlainObject, omit } from "lodash";
 
 interface ModelSettingsFormModalProps {
   context: RockInstanceContext;
@@ -84,12 +84,7 @@ const ModelSettingsFormModal = memo<ModelSettingsFormModalProps>((props) => {
             if (!props.entityStoreConfig) {
               storeConfig = {
                 type: "entityStore",
-                name: formData.name,
-                entityCode: formData.entityCode,
-                properties: formData.properties || [],
-                pagination: formData.pagination,
-                filters: [],
-                orderBy: [],
+                ...formData,
               };
             }
 
