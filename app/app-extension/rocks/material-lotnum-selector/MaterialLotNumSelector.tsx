@@ -2,7 +2,7 @@ import type { Rock, RockConfig } from "@ruiapp/move-style";
 import { FindEntityOptions } from "@ruiapp/rapid-extension";
 import { renderRock } from "@ruiapp/react-renderer";
 import dayjs from "dayjs";
-import { find, get } from "lodash";
+import { find, get, isPlainObject } from "lodash";
 import rapidAppDefinition from "~/rapidAppDefinition";
 
 export default {
@@ -42,7 +42,7 @@ export default {
           {
             field: "id",
             operator: "eq",
-            value: materialId,
+            value: isPlainObject(materialId) ? get(materialId, "id") : materialId,
           },
         ],
       });
