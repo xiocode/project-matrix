@@ -142,6 +142,7 @@ const ModelSettingsFormModal = memo<ModelSettingsFormModalProps>((props) => {
           </Form.Item>
           <Form.Item name="filters" hidden />
           <Form.Item name="orderBy" hidden />
+          <Form.Item name="pagination" hidden />
           <Form.Item label="json配置">
             <a
               onClick={() => {
