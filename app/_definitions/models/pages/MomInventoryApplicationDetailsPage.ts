@@ -1,4 +1,4 @@
-import { cloneDeep, omit } from "lodash";
+import { cloneDeep, merge, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
 
@@ -251,6 +251,19 @@ const editOperationFormConfig: Partial<RapidEntityFormConfig> = {
 
 function getFormConfig(formType: "newForm" | "editForm") {
   const formConfig: Partial<RapidEntityFormConfig> = {
+    relations: {
+      material: {
+        properties: ["id", "code", "name", "specification", "category"],
+        relations: {
+          category: {
+            properties: ["id", "code", "name", "printTemplate"],
+          },
+        },
+      },
+    },
+    formDataAdapter: `
+      return _.get(data, "material.category.id") ? _.merge(data, { materialCategoryId: _.get(data, "material.category.id") }) : data;
+    `,
     items: [
       {
         type: "auto",
@@ -550,7 +563,7 @@ const page: RapidPage = {
                   $permissionCheck: "inventoryOperation.manage",
                 },
               ],
-              newForm: cloneDeep(getFormConfig("newForm")),
+              newForm: cloneDeep(omit(getFormConfig("newForm"), ["relations", "formDataAdapter"])),
               editForm: cloneDeep(omit(getFormConfig("editForm"), "customRequest")),
               stores: [
                 {
