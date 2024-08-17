@@ -24,10 +24,12 @@ export type CreateGoodTransferInput = {
   palletCount?: number;
   palletWeight: number;
   packageNum: number;
+  isTankerTransportation: boolean;
   transfers: {
     palletWeight?: number;
   }[];
   print?: boolean;
+  locationId?: number;
 };
 
 export default {
@@ -89,23 +91,23 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
   const unit = await unitManager.findById({ id: material.defaultUnit?.id });
   const binNums = await sequenceService.generateSn(server, {
     ruleCode: "qixiang.binNum",
-    amount: 1
+    amount: input.palletCount
   } as GenerateSequenceNumbersInput)
 
 
   const goods: SaveMomGoodInput[] = input.palletCount
-    ? Array.from({ length: input.palletCount }, (_, i) => createGoodInput(material, unit, input, validityDate, `${ binNums[0] }-${ i + 1 }`, input.palletWeight))
-    : input.transfers.map((transfer, idx) => createGoodInput(material, unit, input, validityDate, `${ binNums[0] }-${ idx + 1 }`, transfer.palletWeight));
+    ? Array.from({ length: input.palletCount }, (_, i) => createGoodInput(material, unit, input, validityDate, `${ binNums[i] }`, input.palletWeight))
+    : input.transfers.map((transfer, idx) => createGoodInput(material, unit, input, validityDate, `${ binNums[idx] }`, transfer.palletWeight));
 
   let totalWeight = 0;
 
   for (const goodInput of goods) {
     totalWeight += goodInput.quantity || 0;
     const good = await findOrCreateGood(goodManager, goodInput);
-    await createGoodTransfer(goodTransferManager, input.operationId, good, input?.print);
+    await createGoodTransfer(goodTransferManager, input.operationId, good, input?.print, input.locationId);
   }
 
-  if (!inventoryOperation?.businessType?.config?.NeedInspection && inventoryOperation?.businessType?.config?.inspectionCategoryId) {
+  if (inventoryOperation?.businessType?.config?.inspectionCategoryId && inventoryOperation?.businessType?.config?.inspectionCategoryId > 0) {
     const inspectRule = await inspectRuleManager.findEntity({
       filters: [
         { operator: "eq", field: "material_id", value: material.id },
@@ -137,7 +139,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         material: { id: input.material },
         approvalState: "approving",
         state: "pending",
-        sampleCount: samplingRule?.samplingCount,
+        sampleCount: input.isTankerTransportation ? 2 : samplingRule?.samplingCount,
         round: 1,
       });
     } else {
@@ -148,7 +150,7 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
         material: { id: input.material },
         approvalState: "approving",
         state: "pending",
-        sampleCount: samplingRule?.samplingCount,
+        sampleCount: input.isTankerTransportation ? 2 : samplingRule?.samplingCount,
         round: 1,
       });
     }
@@ -163,7 +165,7 @@ function createGoodInput(
   binNum: string,
   palletWeight?: number,
 ): SaveMomGoodInput {
-  return {
+  let saveInput = {
     material: { id: material.id },
     materialCode: material.code,
     lotNum: input.lotNum,
@@ -175,6 +177,11 @@ function createGoodInput(
     manufactureDate: input.manufactureDate,
     validityDate,
   } as SaveMomGoodInput;
+
+  if (input.locationId && input.locationId > 0) {
+    saveInput.location = { id: input.locationId };
+  }
+  return saveInput;
 }
 
 async function findOrCreateGood(goodManager: any, input: SaveMomGoodInput) {
@@ -198,20 +205,27 @@ async function findOrCreateGood(goodManager: any, input: SaveMomGoodInput) {
   return good;
 }
 
-async function createGoodTransfer(goodTransferManager: any, operationId: number, good: MomGood, print: boolean = false) {
+async function createGoodTransfer(goodTransferManager: any, operationId: number, good: MomGood, print: boolean = false, locationId?: number) {
+
+  let saveInput = {
+    operation: { id: operationId },
+    good: { id: good.id },
+    material: { id: good.material?.id },
+    lotNum: good.lotNum,
+    lot: { id: good?.lot?.id },
+    binNum: good.binNum,
+    quantity: good.quantity,
+    unit: { id: good.unit?.id },
+    transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    printTime: print ? dayjs().format("YYYY-MM-DD HH:mm:ss") : null,
+  } as SaveMomGoodTransferInput
+
+  if (locationId && locationId > 0) {
+    saveInput.to = { id: locationId };
+  }
+
   await goodTransferManager.createEntity({
-    entity: {
-      operation: { id: operationId },
-      good: { id: good.id },
-      material: { id: good.material?.id },
-      lotNum: good.lotNum,
-      lot: { id: good?.lot?.id },
-      binNum: good.binNum,
-      quantity: good.quantity,
-      unit: { id: good.unit?.id },
-      transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-      printTime: print ? dayjs().format("YYYY-MM-DD HH:mm:ss") : null,
-    } as SaveMomGoodTransferInput,
+    entity: saveInput,
   });
 }
 

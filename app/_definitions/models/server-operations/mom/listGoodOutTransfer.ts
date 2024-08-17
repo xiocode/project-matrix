@@ -55,19 +55,18 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                                      material_id,
                                                      lot_num,
                                                      lot_id),
-           inventory_operation_cte AS (SELECT mio.id                    AS operation_id,
+           inventory_operation_cte AS (SELECT mio.id                                 AS operation_id,
                                               miai.material_id,
                                               miai.lot_num,
-                                              miai.lot_id,
                                               sum(coalesce(miai.quantity,
-                                                           0))          AS total_amount,
+                                                           0))                       AS total_amount,
                                               sum(coalesce(mgt.completed_amount, 0)) AS completed_amount
                                        FROM mom_inventory_operations mio
                                               INNER JOIN mom_inventory_application_items miai
                                                          ON mio.application_id = miai.operation_id
                                               LEFT JOIN inventory_good_transfers_cte mgt ON mio.id = mgt.operation_id
                                          AND miai.material_id = mgt.material_id
-                                         AND miai.lot_num = mgt.lot_num AND miai.lot_id = mgt.lot_id
+                                         AND miai.lot_num = mgt.lot_num
                                        WHERE 1 = 1
                                          AND mio.id = $1
                                        GROUP BY mio.id,
@@ -82,7 +81,6 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                                                     INNER JOIN inventory_operation_cte ioc
                                                                ON mg.material_id = ioc.material_id
                                                                  AND mg.lot_num = ioc.lot_num
-                                                                 AND mg.lot_id = ioc.lot_id
                                              ORDER BY mg.validity_date DESC),
            inventory_operation_goods_agg_cte AS (SELECT iogc.operation_id,
                                                         iogc.material_id,
@@ -123,11 +121,10 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
                       FROM inventory_operation_cte ioc
                              INNER JOIN base_materials bm ON ioc.material_id = bm.id
                              INNER JOIN base_units bu ON bm.default_unit_id = bu.id
-                             LEFT JOIN base_lots bl ON ioc.lot_num = bl.lot_num and ioc.lot_id = bl.id
+                             LEFT JOIN base_lots bl ON ioc.lot_num = bl.lot_num and ioc.material_id = bl.material_id
                              LEFT JOIN inventory_operation_goods_agg_cte iogc ON ioc.operation_id = iogc.operation_id
                         AND ioc.material_id = iogc.material_id
-                        AND ioc.lot_num = iogc.lot_num
-                        AND ioc.lot_id = iogc.lot_id)
+                        AND ioc.lot_num = iogc.lot_num)
       SELECT r.*
       FROM result r;
     `,

@@ -149,7 +149,7 @@ const page: RapidPage = {
               placeholder: "Search",
               actionEventName: "onSearch",
               filterMode: "contains",
-              filterFields: ["code", "name"],
+              filterFields: ["code", "name", "specification"],
             },
           ],
           orderBy: [

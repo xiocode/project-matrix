@@ -27,7 +27,7 @@ export default {
 } satisfies ServerOperation;
 
 async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
-  // const sequenceService = server.getService<SequenceService>("sequenceService");
+  const sequenceService = server.getService<SequenceService>("sequenceService");
 
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
@@ -68,15 +68,15 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
     saveGoodInputBase.lot = originGood.lot
   }
 
-  // const binNums = await sequenceService.generateSn(server, {
-  //   ruleCode: "qixiang.binNum",
-  //   amount: input.shelves.length
-  // } as GenerateSequenceNumbersInput)
+  const binNums = await sequenceService.generateSn(server, {
+    ruleCode: "qixiang.binNum",
+    amount: input.shelves.length
+  } as GenerateSequenceNumbersInput)
 
   await Promise.all(input.shelves.map(async (shelve, index) => {
     const saveGoodInput = {
       ...saveGoodInputBase,
-      binNum: originGood.binNum + "-" + (index + 1),
+      binNum: binNums[index],
       quantity: shelve.weight,
     };
 

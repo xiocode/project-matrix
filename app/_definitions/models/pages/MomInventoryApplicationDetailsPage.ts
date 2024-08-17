@@ -359,6 +359,10 @@ function getFormConfig(formType: "newForm" | "editForm") {
         type: "auto",
         code: "unit",
       },
+      {
+        type: "auto",
+        code: "remark",
+      },
     ],
     customRequest: {
       method: "post",
@@ -535,6 +539,10 @@ const page: RapidPage = {
                   rendererProps: {
                     format: "{{name}}",
                   },
+                },
+                {
+                  type: "auto",
+                  code: "remark",
                 },
               ],
               actions: [

@@ -15,6 +15,7 @@ export type CreateInventoryApplicationItemInput = {
   unit: number;
   lotNum?: string;
   quantity?: number;
+  remark?:string;
 };
 
 export default {
@@ -187,6 +188,7 @@ function createEntitySaveObject(
     lotNum: good.lot_num,
     quantity: good.quantity,
     orderNum: 1,
+    remark: input.remark,
     lot: good.lot_id ? {id: good.lot_id} : undefined,
   };
 }

@@ -154,20 +154,20 @@ const page: RapidPage = {
           },
         },
       ],
-      // stores: [
-      //   {
-      //     type: "entityStore",
-      //     name: "locations",
-      //     entityCode: "BaseLocation",
-      //     properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-      //     filters: [],
-      //     orderBy: [
-      //       {
-      //         field: "orderNum",
-      //       },
-      //     ],
-      //   },
-      // ],
+      stores: [
+        {
+          type: "entityStore",
+          name: "locations",
+          entityCode: "BaseLocation",
+          properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
+          filters: [],
+          orderBy: [
+            {
+              field: "orderNum",
+            },
+          ],
+        },
+      ],
       $exps: {
         convertListToTree: "!_.get($page.getScope('baseLocationList-scope').getStore('list').getConfig().filters, '[0].filters[0].value')",
       },

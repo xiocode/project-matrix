@@ -6,6 +6,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "code",
+      formControlProps: {
+        disabled: true
+      }
     },
     {
       type: "auto",
