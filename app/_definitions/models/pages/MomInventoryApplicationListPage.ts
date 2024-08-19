@@ -10,6 +10,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "operationType",
+      hidden: true,
     },
     {
       type: "auto",
@@ -101,6 +102,7 @@ const page: RapidPage = {
           ],
         },
       ],
+      extraProperties: ["operationType"],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -176,11 +178,11 @@ const page: RapidPage = {
           },
           width: "200px",
         },
-        {
-          type: "auto",
-          code: "operationType",
-          width: "150px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "operationType",
+        //   width: "150px",
+        // },
         {
           type: "auto",
           code: "businessType",

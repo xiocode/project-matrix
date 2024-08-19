@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
 
@@ -92,6 +92,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
     },
   ],
+  formDataAdapter: `
+    return _.merge({}, data, {
+      sourceType: _.get(data, "businessType.config.defaultSourceType"),
+    });
+`,
   onValuesChange: [
     {
       $action: "script",
@@ -311,7 +316,7 @@ const page: RapidPage = {
         },
       ],
       newForm: cloneDeep({
-        ...formConfig,
+        ...omit(formConfig, "formDataAdapter"),
         onSaveSuccess: [
           {
             $action: "script",

@@ -114,13 +114,18 @@ export default {
       placeholder: "请选择",
       searchPlaceholder: "批次号搜索",
       allowClear: true,
-      dropdownMatchSelectWidth: 600,
+      dropdownMatchSelectWidth: 700,
       columns: [
         {
           title: "批次号",
           code: "lotNum",
           width: 180,
           fixed: "left",
+        },
+        {
+          title: "在库数量",
+          code: "onHandQuantity",
+          width: 120,
         },
         {
           title: "入库时间",
@@ -154,7 +159,7 @@ export default {
       requestParams: {
         fixedFilters,
         orderBy,
-        properties: ["id", "lotNum", "material", "createdAt", "lot"],
+        properties: ["id", "lotNum", "material", "createdAt", "lot", "onHandQuantity"],
       },
       value: props.value,
       onChange: props.onChange,

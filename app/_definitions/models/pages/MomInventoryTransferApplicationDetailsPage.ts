@@ -67,6 +67,19 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "unit",
     },
   ],
+  relations: {
+    material: {
+      properties: ["id", "code", "name", "specification", "category"],
+      relations: {
+        category: {
+          properties: ["id", "code", "name", "printTemplate"],
+        },
+      },
+    },
+  },
+  formDataAdapter: `
+    return _.get(data, "material.category.id") ? _.merge(data, { materialCategoryId: _.get(data, "material.category.id") }) : data;
+  `,
   onValuesChange: [
     {
       $action: "script",
@@ -278,7 +291,7 @@ const page: RapidPage = {
                   $permissionCheck: "inventoryApplication.manage",
                 },
               ],
-              newForm: cloneDeep(formConfig),
+              newForm: cloneDeep(omit(formConfig, ["relations", "formDataAdapter"])),
               editForm: cloneDeep(omit(formConfig, "customRequest")),
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
