@@ -1,6 +1,7 @@
 import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
 import {utils, writeXLSX} from "xlsx";
 import type {
+  MomGood,
   MomGoodTransfer,
   MomInspectionMeasurement,
   MomInventoryApplicationItem,
@@ -39,6 +40,8 @@ async function handleExportByType(server: IRpdServer, input: ExportExcelInput) {
   switch (input.type) {
     case "application":
       return exportApplicationExcel(server, input);
+    case "goods":
+      return exportGoodsExcel(server, input);
     case "operation":
       return exportOperationExcel(server, input);
     case "inspection":
@@ -48,6 +51,17 @@ async function handleExportByType(server: IRpdServer, input: ExportExcelInput) {
     default:
       throw new Error(`Unsupported type: ${ input.type }`);
   }
+}
+
+async function exportGoodsExcel(server: IRpdServer, input: ExportExcelInput) {
+  const goodTransfers = await fetchGoods(server, input);
+
+  const rows = goodTransfers.map(flattenGoods);
+
+  return createExcelSheet(rows, [
+    "物料", "物料类型", "批号", "托盘号", "数量",
+    "状态", "仓库", "库位", "合格状态"
+  ]);
 }
 
 async function exportOperationExcel(server: IRpdServer, input: ExportExcelInput) {
@@ -84,6 +98,32 @@ async function exportApplicationExcel(server: IRpdServer, input: ExportExcelInpu
 }
 
 // Fetching Functions
+
+async function fetchGoods(server: IRpdServer, input: ExportExcelInput) {
+  let filters: EntityFilterOptions[] = [{ operator: "ne", field: "state", value: "pending"}];
+
+  if (input.createdAtFrom) {
+    filters.push({ operator: "gte", field: "createdAt", value: input.createdAtFrom });
+  }
+  if (input.createdAtTo) {
+    filters.push({ operator: "lte", field: "createdAt", value: input.createdAtTo });
+  }
+
+  return server.getEntityManager<MomGood>("mom_good").findEntities({
+    filters: filters,
+    properties: [
+      "id","material","lotNum","binNum","quantity","unit","state","warehouse","location","lot","manufactureDate","validityDate","createdAt"
+    ],
+    relations: {
+      material: {
+        properties: [
+          "id","code","name","specification","category"
+        ],
+      },
+    },
+    orderBy: [{ field: "id", desc: false }],
+  });
+}
 
 async function fetchGoodTransfers(server: IRpdServer, input: ExportExcelInput) {
   let filters: EntityFilterOptions[] = [{ operator: "notNull", field: "to" }];
@@ -203,6 +243,19 @@ async function fetchApplicationItems(server: IRpdServer, input: ExportExcelInput
 }
 
 // Data Flattening Functions
+function flattenGoods(good: MomGood) {
+  return {
+    material: `${ good.material?.code }-${ good.material?.name }-${ good.material?.specification }`,
+    materialCategory: `${ good.material?.category?.name }`,
+    lotNum: good.lotNum,
+    binNum: good.binNum,
+    quantity: good.quantity,
+    state: mapGoodState(good.state),
+    warehouse: good.warehouse?.name,
+    location: good.location?.name,
+    qualificationState: mapQualificationState(good.lot?.qualificationState),
+  };
+}
 
 function flattenGoodTransfer(goodTransfer: MomGoodTransfer) {
   return {
@@ -281,6 +334,25 @@ function mapApprovalState(state: string | undefined): string {
       return "未审核";
   }
 }
+
+function mapGoodState(state: string | undefined): string {
+  switch (state) {
+    case "normal":
+      return "正常";
+    case "splitted":
+      return "已拆分";
+    case "merged":
+      return "已合并";
+    case "transferred":
+      return "已转移";
+    case "destroied":
+      return "已销毁";
+    default:
+      return "待处理";
+  }
+}
+
+
 
 // Excel Sheet Creation
 

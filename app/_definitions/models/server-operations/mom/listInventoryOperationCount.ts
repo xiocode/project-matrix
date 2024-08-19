@@ -56,7 +56,7 @@ async function listInventoryOperationCount(server: IRpdServer, currentUserId: nu
         and mia.operation_type = 'adjust'
       group by mibt.operation_type, mibt.config ->> 'defaultSourceType'
       union all
-      select mibt.operation_type,
+      select 'out'                                                        as operation_type,
              mibt.config ->> 'defaultSourceType'                          as source_type,
              count(*) filter ( where mia.operation_state = 'processing' or mia.operation_state = 'pending' ) as waiting_count,
              count(*) filter ( where mia.operation_state = 'done' )       as completed_count

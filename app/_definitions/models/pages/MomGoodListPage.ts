@@ -97,6 +97,16 @@ const page: RapidPage = {
           `,
           $permissionCheck: "inventoryTag.manage",
         },
+        {
+          $type: "antdButton",
+          href: `/api/app/exportExcel?type=goods`,
+          children: [
+            {
+              $type: "text",
+              text: " 下载",
+            },
+          ],
+        },
       ],
       // fixedFilters: [
       //   {

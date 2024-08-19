@@ -59,6 +59,7 @@ import type {
   RouteHttpMethod,
   RouteType,
   SettingItemType,
+  SysAuditLogMethod,
   UndeletedDeletedState,
   UnitType,
   WarehouseStrategy,
@@ -8283,6 +8284,61 @@ export interface SysActionGroup {
  * 系统操作分组
  */
 export type SaveSysActionGroupInput = Omit<SysActionGroup, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 系统操作
+ */
+export interface SysAuditLog {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 操作人
+   */
+  user?: Partial<OcUser>;
+  /**
+   * 操作对象
+   */
+  targetSingularCode?: string;
+  /**
+   * 操作方法
+   */
+  method?: SysAuditLogMethod;
+  /**
+   * 变更记录
+   */
+  changes?: Record<string, any>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 系统操作
+ */
+export type SaveSysAuditLogInput = Omit<SysAuditLog, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * Webhook
