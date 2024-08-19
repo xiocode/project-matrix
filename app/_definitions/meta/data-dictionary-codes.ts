@@ -28,6 +28,7 @@ const dictionaryCodes = [
   'PropertyType',
   'RouteHttpMethod',
   'RouteType',
+  'MomApplicationSource',
   'MomEquipmentPowerState',
   'MomEquipmentProductionState',
   'MomGoodState',

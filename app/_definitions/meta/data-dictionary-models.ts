@@ -28,6 +28,7 @@ import MetaDataDictionaryLevel from '../models/data-dictionaries/MetaDataDiction
 import MetaPropertyType from '../models/data-dictionaries/MetaPropertyType';
 import MetaRouteHttpMethod from '../models/data-dictionaries/MetaRouteHttpMethod';
 import MetaRouteType from '../models/data-dictionaries/MetaRouteType';
+import MomApplicationSource from '../models/data-dictionaries/MomApplicationSource';
 import MomEquipmentPowerState from '../models/data-dictionaries/MomEquipmentPowerState';
 import MomEquipmentProductionState from '../models/data-dictionaries/MomEquipmentProductionState';
 import MomGoodState from '../models/data-dictionaries/MomGoodState';
@@ -95,6 +96,7 @@ export default [
   MetaPropertyType,
   MetaRouteHttpMethod,
   MetaRouteType,
+  MomApplicationSource,
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,

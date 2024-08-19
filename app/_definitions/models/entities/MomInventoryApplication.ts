@@ -126,6 +126,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       dataDictionary: "MomInventoryOperationState",
     },
     {
+      code: "source",
+      name: "来源",
+      type: "option",
+      dataDictionary: "MomApplicationSource",
+    },
+    {
       code: "processInstance",
       name: "流程实例",
       type: "relation",

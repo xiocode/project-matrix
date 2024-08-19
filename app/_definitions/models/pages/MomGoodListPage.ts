@@ -172,6 +172,12 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          title: "物料类型",
+          code: "material.category",
+          width: "200px",
+        },
+        {
+          type: "auto",
           code: "lotNum",
           width: "200px",
         },
@@ -198,6 +204,14 @@ const page: RapidPage = {
           type: "auto",
           code: "state",
           width: "100px",
+        },
+        {
+          type: "auto",
+          code: "warehouse",
+          width: "100px",
+          rendererProps: {
+            format: "{{name}}",
+          },
         },
         {
           type: "auto",
