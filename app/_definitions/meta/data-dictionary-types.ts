@@ -285,6 +285,14 @@ export type RouteType =
   ;
 
 /**
+ * 库存申请单来源
+ */
+export type MomApplicationSource =
+  | 'kis'
+  | 'manual'
+  ;
+
+/**
  * 设备电源状态
  */
 export type MomEquipmentPowerState =

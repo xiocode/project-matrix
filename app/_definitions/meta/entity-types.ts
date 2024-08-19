@@ -24,6 +24,7 @@ import type {
   InspectionKind,
   InspectionResult,
   MaterialSourceType,
+  MomApplicationSource,
   MomEquipmentPowerState,
   MomEquipmentProductionState,
   MomGoodState,
@@ -2870,6 +2871,10 @@ export interface MomGood {
    */
   unit?: Partial<BaseUnit>;
   /**
+   * 仓库
+   */
+  warehouse?: Partial<BaseLocation>;
+  /**
    * 位置
    */
   location?: Partial<BaseLocation>;
@@ -4325,6 +4330,10 @@ export interface MomInventoryApplication {
    * 库存操作状态
    */
   operationState?: MomInventoryOperationState;
+  /**
+   * 来源
+   */
+  source?: MomApplicationSource;
   /**
    * 流程实例
    */
