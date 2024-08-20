@@ -13,7 +13,7 @@ import {
   RapidToolbarRockConfig,
 } from "@ruiapp/rapid-extension";
 import { BusinessStoreConfig } from "~/app-extension/stores/business-store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 export default {
@@ -82,6 +82,13 @@ export default {
     const [rerenderKey, setRerenderKey] = useState<string | number>("");
 
     const dataSourceCode = props.dataSourceCode || "list";
+    useEffect(() => {
+      const store = context.scope.getStore(dataSourceCode);
+      if (store) {
+        store.loadData();
+      }
+    }, [dataSourceCode]);
+
     const tableColumnRocks: RockConfig[] = [];
 
     const toolboxRockConfig = {
@@ -90,6 +97,9 @@ export default {
       columns: props.columns,
       config: props.toolbox || {
         columnCacheKey: props.entityCode || props.entityName,
+      },
+      style: {
+        marginBottom: "16px",
       },
       onRerender: [
         {

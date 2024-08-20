@@ -50,6 +50,40 @@ const page: RapidPage = {
           ],
         },
       ],
+      searchForm: {
+        entityCode: "MomMaterialInventoryBalance",
+        items: [
+          {
+            type: "auto",
+            code: "materialCategory",
+            label: "物料类型",
+            formControlType: "rapidEntityTableSelect",
+            formControlProps: {
+              entityCode: "BaseMaterialCategory",
+              mode: "multiple",
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "material",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "category",
+                    operator: "exists",
+                    filters: [
+                      {
+                        field: "id",
+                        operator: "in",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
       pageSize: 20,
       relations: {
         material: {

@@ -33,6 +33,9 @@ import InspectionConditionRenderer from "./inspection-condition-renderer/Inspect
 import InspectionFeedStockList from "./inspection-feedstock/InspectionFeedStockList";
 import InspectionFinishedStockList from "./inspection-finishedstock/InspectionFinishedStockList";
 
+// render
+import BlockRerenderRock from "./block-rerender-rock/BlockRerenderRock";
+
 export default [
   Link,
   MaterialLabelRenderer,
@@ -68,4 +71,7 @@ export default [
   InspectionConditionRenderer,
   InspectionFeedStockList,
   InspectionFinishedStockList,
+
+  // render
+  BlockRerenderRock,
 ];

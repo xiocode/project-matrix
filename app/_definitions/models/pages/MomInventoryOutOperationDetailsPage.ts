@@ -22,7 +22,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
       {
         title: "批次号",
         code: "lotNum",
-        width: 120,
+        width: 180,
       },
     ],
     requestConfig: {
@@ -248,7 +248,7 @@ const page: RapidPage = {
             {
               type: "auto",
               code: "lotNum",
-              width: "100px",
+              width: "180px",
             },
             {
               type: "auto",
