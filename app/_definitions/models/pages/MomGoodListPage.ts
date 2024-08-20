@@ -146,6 +146,42 @@ const page: RapidPage = {
           },
           {
             type: "auto",
+            code: "materialCategory",
+            label: "物料类型",
+            formControlType: "rapidEntityTableSelect",
+            formControlProps: {
+              entityCode: "BaseMaterialCategory",
+              mode: "multiple",
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "material",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "category",
+                    operator: "exists",
+                    filters: [
+                      {
+                        field: "id",
+                        operator: "in",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "auto",
+            code: "warehouse",
+            filterMode: "in",
+            filterFields: ["warehouse_id"],
+            itemType: "text",
+          },
+          {
+            type: "auto",
             code: "location",
             filterMode: "in",
             filterFields: ["location_id"],
@@ -174,7 +210,13 @@ const page: RapidPage = {
           type: "auto",
           title: "物料类型",
           code: "material.category",
-          width: "200px",
+          width: "180px",
+        },
+        {
+          type: "auto",
+          title: "仓库",
+          code: "warehouse",
+          width: "160px",
         },
         {
           type: "auto",

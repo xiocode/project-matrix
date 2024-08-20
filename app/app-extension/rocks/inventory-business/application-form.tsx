@@ -413,7 +413,7 @@ const CustomerLotSelect = memo((props: any) => {
 
   const options = useMemo(() => (lots || []).map((lot) => ({ label: lot.lotNum, value: lot.lotNum })), [lots]);
 
-  return <Select style={{ width: "100%" }} options={options} loading={loading} value={props.value} onChange={props.onChange} />;
+  return <Select placeholder="请选择" style={{ width: "100%" }} options={options} loading={loading} value={props.value} onChange={props.onChange} />;
 });
 
 function useCustomLots() {

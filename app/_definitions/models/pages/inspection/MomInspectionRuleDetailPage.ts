@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
 
@@ -111,6 +111,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     skippable: false,
     mustPass: true,
   },
+  formDataAdapter: `
+    const dictionary = _.find(rapidAppDefinition.getDataDictionaries(), function(d) { return d.code === 'QualitativeInspectionDetermineType'; });
+    const item = _.find(_.get(dictionary, 'entries'), function(item) { return item.value === _.get(data, 'qualitativeDetermineType'); });
+    const values = _.map(_.split(_.get(item, 'name'), '-'), function(v) { return { name: v, id: v } });
+    return _.merge({}, data, {
+      qualitativeNorminalValues: values || [],
+    });
+  `,
   onValuesChange: [
     {
       $action: "script",
@@ -350,7 +358,7 @@ const page: RapidPage = {
                   $permissionCheck: "inspectionRule.manage",
                 },
               ],
-              newForm: cloneDeep(formConfig),
+              newForm: cloneDeep(omit(formConfig, ["formDataAdapter"])),
               editForm: cloneDeep(formConfig),
               $exps: {
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",

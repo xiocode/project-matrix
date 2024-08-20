@@ -22,7 +22,7 @@ const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
       {
         title: "批次号",
         code: "lotNum",
-        width: 120,
+        width: 180,
       },
     ],
     requestConfig: {
@@ -379,7 +379,7 @@ const page: RapidPage = {
             {
               type: "auto",
               code: "lotNum",
-              width: "100px",
+              width: "180px",
             },
             {
               type: "auto",
@@ -821,25 +821,25 @@ const page: RapidPage = {
     {
       $type: "rapidToolbar",
       items: [
-    {
-      $type: "rapidToolbarButton",
-      text: "确认提交",
-      actionStyle: "primary",
-      size: "large",
-      onAction: [
         {
-          $action: "sendHttpRequest",
-          method: "PATCH",
-          data: { state: "done", approvalState: "approving" },
+          $type: "rapidToolbarButton",
+          text: "确认提交",
+          actionStyle: "primary",
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: { state: "done", approvalState: "approving" },
+              $exps: {
+                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+              },
+            },
+          ],
           $exps: {
-            url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
           },
         },
-      ],
-      $exps: {
-        _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
-      },
-    },
         {
           $type: "rapidToolbarButton",
           text: "批准",

@@ -10,6 +10,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "operationType",
+      hidden: true,
     },
     {
       type: "auto",
@@ -45,10 +46,84 @@ const page: RapidPage = {
   permissionCheck: { any: [] },
   view: [
     {
+      $id: "inventoryApplicationList",
       $type: "sonicEntityList",
       entityCode: "MomInventoryApplication",
       viewMode: "table",
       selectionMode: "none",
+      expandedRow: {
+        $id: `applicationItemList_`,
+        $type: "rapidEntityList",
+        entityCode: "MomInventoryApplicationItem",
+        dataSourceType: "dataSource",
+        viewMode: "table",
+        selectionMode: "none",
+        // fixedFilters: [
+        //   {
+        //     field: "application",
+        //     operator: "exists",
+        //     filters: [
+        //       {
+        //         field: "id",
+        //         operator: "eq",
+        //         value: "",
+        //       },
+        //     ],
+        //   },
+        // ],
+        pageSize: -1,
+        // orderBy: [
+        //   {
+        //     field: "orderNum",
+        //   },
+        // ],
+        columns: [
+          {
+            type: "auto",
+            code: "material",
+            rendererType: "anchor",
+            rendererProps: {
+              children: {
+                $type: "materialLabelRenderer",
+                $exps: {
+                  value: "$slot.value",
+                },
+              },
+              $exps: {
+                href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+              },
+            },
+          },
+          {
+            type: "auto",
+            code: "lotNum",
+            width: "180px",
+          },
+          {
+            type: "auto",
+            code: "quantity",
+            width: "100px",
+          },
+          {
+            type: "auto",
+            code: "unit",
+            width: "80px",
+            rendererProps: {
+              format: "{{name}}",
+            },
+          },
+          {
+            type: "auto",
+            code: "remark",
+          },
+        ],
+        $exps: {
+          // "fixedFilters[0].filters[0].value": "_.get($self.record, 'id')",
+          // dataSourceCode: "'id' + _.get($self.record, 'id')",
+          dataSource: "_.get($self.record, 'items')",
+          $id: "'applicationItemList_' + _.get($self.record, 'id')",
+        },
+      },
       // filterForm: {
       //   column: 3,
       //   items: [
@@ -101,6 +176,12 @@ const page: RapidPage = {
           ],
         },
       ],
+      relations: {
+        items: {
+          properties: ["id", "material", "lotNum", "quantity", "unit", "remark"],
+        },
+      },
+      extraProperties: ["operationType", "items"],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -176,11 +257,11 @@ const page: RapidPage = {
           },
           width: "200px",
         },
-        {
-          type: "auto",
-          code: "operationType",
-          width: "150px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "operationType",
+        //   width: "150px",
+        // },
         {
           type: "auto",
           code: "businessType",

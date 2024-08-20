@@ -617,412 +617,416 @@ const page: RapidPage = {
       showLine: false,
     },
     {
-      $type: "antdTabs",
-      items: [
-        {
-          key: "items",
-          label: "库存操作明细",
-          children: [
-            {
-              $id: "goodTransferList_records",
-              $type: "sonicEntityList",
-              entityCode: "MomGoodTransfer",
-              viewMode: "table",
-              fixedFilters: [
-                {
-                  field: "operation",
-                  operator: "exists",
-                  filters: [
-                    {
-                      field: "id",
-                      operator: "eq",
-                      value: "-1",
-                    },
-                  ],
-                },
-              ],
-              listActions: [
-                // {
-                //   $type: "sonicToolbarNewEntityButton",
-                //   text: "新建",
-                //   icon: "PlusOutlined",
-                //   actionStyle: "primary",
-                //   $permissionCheck: "inventoryOperation.manage",
-                //   $exps: {
-                //     _hidden: `_.get(${operationDataExp}, 'state') !== 'processing'`,
-                //   },
-                // },
-                // {
-                //   $type: "sonicToolbarRefreshButton",
-                //   text: "刷新",
-                //   icon: "ReloadOutlined",
-                // },
-                {
-                  $type: "batchPrintAction",
-                  title: "批量打印",
-                  dataSourceAdapter: `
-                    const createdAt = _.get(record, "good.createdAt");
-                    const validityDate = _.get(record, "good.validityDate");
-                    const dictionaries = rapidAppDefinition.getDataDictionaries();
-                    const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
-                    const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(record, "lot.qualificationState") });
-
-                    return {
-                      templateCode: _.get(record, "material.category.printTemplate.code"),
-                      taskData: _.merge({}, record, {
-                        materialName: _.get(record, "material.name"),
-                        materialCode: _.get(record, "material.code"),
-                        materialSpecification: _.get(record, "material.specification"),
-                        lotNum: _.get(record, 'lot.lotNum'),
-                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
-                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        unit: _.get(record, "unit.name"),
-                        qualificationState: _.get(qualificationStateInfo, 'name')
-                      })
-                    };
-                  `,
-                },
-              ],
-              pageSize: -1,
-              orderBy: [
-                {
-                  field: "createdAt",
-                },
-              ],
-              relations: {
-                material: {
-                  properties: ["id", "code", "name", "specification", "category"],
-                  relations: {
-                    category: {
-                      properties: ["id", "code", "name", "printTemplate"],
-                    },
-                  },
-                },
-              },
-              columns: [
-                {
-                  type: "auto",
-                  code: "material",
-                  rendererType: "anchor",
-                  rendererProps: {
-                    children: {
-                      $type: "materialLabelRenderer",
-                      $exps: {
-                        value: "$slot.value",
+      $id: "operationInfoBlock",
+      $type: "blockRerenderRock",
+      children: {
+        $type: "antdTabs",
+        items: [
+          {
+            key: "items",
+            label: "库存操作明细",
+            children: [
+              {
+                $id: "goodTransferList_records",
+                $type: "sonicEntityList",
+                entityCode: "MomGoodTransfer",
+                viewMode: "table",
+                fixedFilters: [
+                  {
+                    field: "operation",
+                    operator: "exists",
+                    filters: [
+                      {
+                        field: "id",
+                        operator: "eq",
+                        value: "-1",
                       },
-                    },
-                    $exps: {
-                      href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
-                    },
+                    ],
                   },
-                },
-                {
-                  type: "auto",
-                  code: "lot",
-                  title: "批号",
-                  width: "160px",
-                  rendererProps: {
-                    format: "{{lotNum}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "binNum",
-                  width: "160px",
-                  title: "托盘号",
-                },
-                {
-                  type: "auto",
-                  code: "quantity",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "unit",
-                  width: "80px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-                {
-                  key: "qualityGuaranteePeriod",
-                  type: "auto",
-                  code: "material",
-                  title: "保质期",
-                  fieldName: "material.qualityGuaranteePeriod",
-                },
-                {
-                  key: "manufactureDate",
-                  type: "auto",
-                  code: "good",
-                  title: "生产日期",
-                  fieldName: "good.manufactureDate",
-                  fieldType: "date",
-                },
-                {
-                  key: "validityDate",
-                  type: "auto",
-                  code: "good",
-                  title: "有效期至",
-                  fieldName: "good.validityDate",
-                  fieldType: "date",
-                },
-                {
-                  type: "auto",
-                  code: "to",
-                  width: "150px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-              ],
-              actions: [
-                {
-                  $type: "sonicRecordActionPrintEntity",
-                  code: "print",
-                  actionType: "print",
-                  actionText: "打印",
-                  dataSourceAdapter: `
-                    return _.map(data, function(item){
-                      const createdAt = _.get(item, "good.createdAt");
-                      const validityDate = _.get(item, "good.validityDate");
+                ],
+                listActions: [
+                  // {
+                  //   $type: "sonicToolbarNewEntityButton",
+                  //   text: "新建",
+                  //   icon: "PlusOutlined",
+                  //   actionStyle: "primary",
+                  //   $permissionCheck: "inventoryOperation.manage",
+                  //   $exps: {
+                  //     _hidden: `_.get(${operationDataExp}, 'state') !== 'processing'`,
+                  //   },
+                  // },
+                  // {
+                  //   $type: "sonicToolbarRefreshButton",
+                  //   text: "刷新",
+                  //   icon: "ReloadOutlined",
+                  // },
+                  {
+                    $type: "batchPrintAction",
+                    title: "批量打印",
+                    dataSourceAdapter: `
+                      const createdAt = _.get(record, "good.createdAt");
+                      const validityDate = _.get(record, "good.validityDate");
                       const dictionaries = rapidAppDefinition.getDataDictionaries();
                       const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
-                      const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(item, "lot.qualificationState") });
-
+                      const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(record, "lot.qualificationState") });
+  
                       return {
-                        templateCode: _.get(item, "material.category.printTemplate.code"),
+                        templateCode: _.get(record, "material.category.printTemplate.code"),
+                        taskData: _.merge({}, record, {
+                          materialName: _.get(record, "material.name"),
+                          materialCode: _.get(record, "material.code"),
+                          materialSpecification: _.get(record, "material.specification"),
+                          lotNum: _.get(record, 'lot.lotNum'),
+                          createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                          validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                          currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                          unit: _.get(record, "unit.name"),
+                          qualificationState: _.get(qualificationStateInfo, 'name')
+                        })
+                      };
+                    `,
+                  },
+                ],
+                pageSize: -1,
+                orderBy: [
+                  {
+                    field: "createdAt",
+                  },
+                ],
+                relations: {
+                  material: {
+                    properties: ["id", "code", "name", "specification", "category"],
+                    relations: {
+                      category: {
+                        properties: ["id", "code", "name", "printTemplate"],
+                      },
+                    },
+                  },
+                },
+                columns: [
+                  {
+                    type: "auto",
+                    code: "material",
+                    rendererType: "anchor",
+                    rendererProps: {
+                      children: {
+                        $type: "materialLabelRenderer",
+                        $exps: {
+                          value: "$slot.value",
+                        },
+                      },
+                      $exps: {
+                        href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+                      },
+                    },
+                  },
+                  {
+                    type: "auto",
+                    code: "lot",
+                    title: "批号",
+                    width: "160px",
+                    rendererProps: {
+                      format: "{{lotNum}}",
+                    },
+                  },
+                  {
+                    type: "auto",
+                    code: "binNum",
+                    width: "160px",
+                    title: "托盘号",
+                  },
+                  {
+                    type: "auto",
+                    code: "quantity",
+                    width: "100px",
+                  },
+                  {
+                    type: "auto",
+                    code: "unit",
+                    width: "80px",
+                    rendererProps: {
+                      format: "{{name}}",
+                    },
+                  },
+                  {
+                    key: "qualityGuaranteePeriod",
+                    type: "auto",
+                    code: "material",
+                    title: "保质期",
+                    fieldName: "material.qualityGuaranteePeriod",
+                  },
+                  {
+                    key: "manufactureDate",
+                    type: "auto",
+                    code: "good",
+                    title: "生产日期",
+                    fieldName: "good.manufactureDate",
+                    fieldType: "date",
+                  },
+                  {
+                    key: "validityDate",
+                    type: "auto",
+                    code: "good",
+                    title: "有效期至",
+                    fieldName: "good.validityDate",
+                    fieldType: "date",
+                  },
+                  {
+                    type: "auto",
+                    code: "to",
+                    width: "150px",
+                    rendererProps: {
+                      format: "{{name}}",
+                    },
+                  },
+                ],
+                actions: [
+                  {
+                    $type: "sonicRecordActionPrintEntity",
+                    code: "print",
+                    actionType: "print",
+                    actionText: "打印",
+                    dataSourceAdapter: `
+                      return _.map(data, function(item){
+                        const createdAt = _.get(item, "good.createdAt");
+                        const validityDate = _.get(item, "good.validityDate");
+                        const dictionaries = rapidAppDefinition.getDataDictionaries();
+                        const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
+                        const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(item, "lot.qualificationState") });
+  
+                        return {
+                          templateCode: _.get(item, "material.category.printTemplate.code"),
+                          taskData: _.merge({}, item, {
+                            materialName: _.get(item, "material.name"),
+                            materialCode: _.get(item, "material.code"),
+                            materialSpecification: _.get(item, "material.specification"),
+                            lotNum: _.get(item, 'lot.lotNum'),
+                            createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                            validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                            currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            unit: _.get(item, "unit.name"),
+                            qualificationState: _.get(qualificationStateInfo, 'name')
+                          })
+                        }
+                      });
+                    `,
+                    $exps: {
+                      _hidden: `_.get(${operationDataExp}, 'operationType') !== 'in'`,
+                    },
+                  },
+                  // {
+                  //   $type: "inspectionPrintRecordAction",
+                  //   actionType: "print",
+                  //   actionText: "送检",
+                  //   printTemplateCode: "rawMaterialInspectionIdentificationCard",
+                  //   dataSourceAdapter: `
+                  //     return _.map(data, function(item){
+                  //       const createdAt = _.get(item, "good.createdAt");
+
+                  //       return _.merge({}, item, {
+                  //         materialName: _.get(item, "material.name"),
+                  //         materialCode: _.get(item, "material.code"),
+                  //         materialSpecification: _.get(item, "material.specification"),
+                  //         createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+                  //         lotNum: _.get(item, 'lot.lotNum'),
+                  //         currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                  //         sampleCode: _.get(item, 'sampleNo'),
+                  //         inspectDate: dayjs().format("YYYY-MM-DD"),
+                  //         remark: _.get(item, 'remark')
+                  //       })
+                  //     });
+                  //   `,
+                  //   $exps: {
+                  //     operationId: "$rui.parseQuery().id",
+                  //   },
+                  // },
+                  {
+                    $type: "sonicRecordActionEditEntity",
+                    code: "edit",
+                    actionType: "edit",
+                    actionText: "修改",
+                    $permissionCheck: "inventoryOperation.manage",
+                    $exps: {
+                      _hidden: `_.get(${operationDataExp}, 'state') !== 'processing'`,
+                    },
+                  },
+                  {
+                    $type: "sonicRecordActionDeleteEntity",
+                    code: "delete",
+                    actionType: "delete",
+                    actionText: "删除",
+                    dataSourceCode: "list",
+                    entityCode: "MomGoodTransfer",
+                    $permissionCheck: "inventoryOperation.manage",
+                    $exps: {
+                      _hidden: `_.get(${operationDataExp}, 'state') !== 'processing'`,
+                    },
+                  },
+                ],
+                newForm: cloneDeep(createOperationFormConfig),
+                editForm: cloneDeep(editOperationFormConfig),
+                onSelectedIdsChange: [
+                  {
+                    $action: "setVars",
+                    $exps: {
+                      "vars.selectedIds": "$event.args[0].selectedIds",
+                      "vars.selectedRecords": "$event.args[0].selectedRecords",
+                    },
+                  },
+                ],
+                stores: [
+                  {
+                    type: "entityStore",
+                    name: "locations",
+                    entityCode: "BaseLocation",
+                    properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
+                    filters: [],
+                    orderBy: [
+                      {
+                        field: "orderNum",
+                      },
+                    ],
+                  },
+                ],
+                $exps: {
+                  "fixedFilters[0].filters[0].value": `_.get(${operationDataExp}, 'id') || -1`,
+                  "newForm.fixedFields.operation_id": `_.get(${operationDataExp}, 'id')`,
+                  "newForm.fixedFields.operationId": `_.get(${operationDataExp}, 'id')`,
+                },
+              },
+            ],
+          },
+          {
+            key: "groups",
+            label: "物品明细",
+            children: [
+              {
+                $id: "goodTransferGroupList",
+                $type: "businessTable",
+                selectionMode: "none",
+                dataSourceCode: "goodTransferGroupList",
+                requestConfig: {
+                  url: "/api/app/listGoodInTransfers",
+                },
+                $exps: {
+                  "fixedFilters[0].value": `_.get(${operationDataExp}, 'id')`,
+                },
+                fixedFilters: [
+                  {
+                    field: "operationId",
+                    operator: "eq",
+                    value: "",
+                  },
+                ],
+                requestParamsAdapter: `
+                  return {
+                    operationId: _.get(params, "filters[0]filters[0]value"),
+                    limit: 1000
+                  }
+                `,
+                responseDataAdapter: `
+                  return {
+                    list: data || []
+                  }
+                `,
+                columns: [
+                  {
+                    title: "物料编号",
+                    type: "auto",
+                    code: "material.code",
+                  },
+                  {
+                    title: "物料名称",
+                    type: "auto",
+                    code: "material.name",
+                  },
+                  {
+                    title: "规格型号",
+                    type: "auto",
+                    code: "material.specification",
+                  },
+                  {
+                    title: "单位",
+                    type: "auto",
+                    code: "material.defaultUnit.name",
+                  },
+                  {
+                    title: "入库数量",
+                    type: "auto",
+                    code: "completedAmount",
+                  },
+                  {
+                    title: "入库托数",
+                    type: "auto",
+                    code: "completedPalletAmount",
+                  },
+                  {
+                    title: "批号",
+                    type: "auto",
+                    code: "lotNum",
+                  },
+                  // {
+                  //   title: "保质期（天）",
+                  //   type: "auto",
+                  //   code: "material.specification",
+                  // },
+                  // {
+                  //   title: "生产日期",
+                  //   type: "auto",
+                  //   code: "material.specification",
+                  // },
+                  // {
+                  //   title: "有效期至",
+                  //   type: "auto",
+                  //   code: "material.specification",
+                  // },
+                  {
+                    title: "检验状态",
+                    type: "auto",
+                    code: "inspectState",
+                    rendererType: "rapidOptionFieldRenderer",
+                    rendererProps: {
+                      dictionaryCode: "QualificationState",
+                    },
+                  },
+                ],
+                actions: [
+                  {
+                    $type: "inspectionPrintRecordAction",
+                    actionType: "print",
+                    actionText: "送检",
+                    dataSourceAdapter: `
+                    return _.map(data, function(item){
+                      const createdAt = _.get(item, "good.createdAt");
+  
+                      return {
+                        templateCode: "rawMaterialInspectionIdentificationCard",
                         taskData: _.merge({}, item, {
                           materialName: _.get(item, "material.name"),
                           materialCode: _.get(item, "material.code"),
                           materialSpecification: _.get(item, "material.specification"),
-                          lotNum: _.get(item, 'lot.lotNum'),
                           createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                          validityDate: validityDate && dayjs(validityDate).format("YYYY-MM-DD"),
+                          lotNum: _.get(item, 'lot.lotNum'),
                           currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                          unit: _.get(item, "unit.name"),
-                          qualificationState: _.get(qualificationStateInfo, 'name')
+                          sampleCode: _.get(item, 'sampleNo'),
+                          inspectDate: dayjs().format("YYYY-MM-DD"),
+                          remark: _.get(item, 'remark')
                         })
                       }
                     });
                   `,
-                  $exps: {
-                    _hidden: `_.get(${operationDataExp}, 'operationType') !== 'in'`,
-                  },
-                },
-                // {
-                //   $type: "inspectionPrintRecordAction",
-                //   actionType: "print",
-                //   actionText: "送检",
-                //   printTemplateCode: "rawMaterialInspectionIdentificationCard",
-                //   dataSourceAdapter: `
-                //     return _.map(data, function(item){
-                //       const createdAt = _.get(item, "good.createdAt");
-
-                //       return _.merge({}, item, {
-                //         materialName: _.get(item, "material.name"),
-                //         materialCode: _.get(item, "material.code"),
-                //         materialSpecification: _.get(item, "material.specification"),
-                //         createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                //         lotNum: _.get(item, 'lot.lotNum'),
-                //         currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                //         sampleCode: _.get(item, 'sampleNo'),
-                //         inspectDate: dayjs().format("YYYY-MM-DD"),
-                //         remark: _.get(item, 'remark')
-                //       })
-                //     });
-                //   `,
-                //   $exps: {
-                //     operationId: "$rui.parseQuery().id",
-                //   },
-                // },
-                {
-                  $type: "sonicRecordActionEditEntity",
-                  code: "edit",
-                  actionType: "edit",
-                  actionText: "修改",
-                  $permissionCheck: "inventoryOperation.manage",
-                  $exps: {
-                    _hidden: `_.get(${operationDataExp}, 'state') !== 'processing'`,
-                  },
-                },
-                {
-                  $type: "sonicRecordActionDeleteEntity",
-                  code: "delete",
-                  actionType: "delete",
-                  actionText: "删除",
-                  dataSourceCode: "list",
-                  entityCode: "MomGoodTransfer",
-                  $permissionCheck: "inventoryOperation.manage",
-                  $exps: {
-                    _hidden: `_.get(${operationDataExp}, 'state') !== 'processing'`,
-                  },
-                },
-              ],
-              newForm: cloneDeep(createOperationFormConfig),
-              editForm: cloneDeep(editOperationFormConfig),
-              onSelectedIdsChange: [
-                {
-                  $action: "setVars",
-                  $exps: {
-                    "vars.selectedIds": "$event.args[0].selectedIds",
-                    "vars.selectedRecords": "$event.args[0].selectedRecords",
-                  },
-                },
-              ],
-              stores: [
-                {
-                  type: "entityStore",
-                  name: "locations",
-                  entityCode: "BaseLocation",
-                  properties: ["id", "type", "code", "name", "parent", "orderNum", "createdAt"],
-                  filters: [],
-                  orderBy: [
-                    {
-                      field: "orderNum",
+                    $exps: {
+                      operationId: `_.get(${operationDataExp}, 'id')`,
                     },
-                  ],
-                },
-              ],
-              $exps: {
-                "fixedFilters[0].filters[0].value": `_.get(${operationDataExp}, 'id') || -1`,
-                "newForm.fixedFields.operation_id": `_.get(${operationDataExp}, 'id')`,
-                "newForm.fixedFields.operationId": `_.get(${operationDataExp}, 'id')`,
-              },
-            },
-          ],
-        },
-        {
-          key: "groups",
-          label: "物品明细",
-          children: [
-            {
-              $id: "goodTransferGroupList",
-              $type: "businessTable",
-              selectionMode: "none",
-              dataSourceCode: "goodTransferGroupList",
-              requestConfig: {
-                url: "/api/app/listGoodInTransfers",
-              },
-              $exps: {
-                "fixedFilters[0].value": `_.get(${operationDataExp}, 'id')`,
-              },
-              fixedFilters: [
-                {
-                  field: "operationId",
-                  operator: "eq",
-                  value: "",
-                },
-              ],
-              requestParamsAdapter: `
-                return {
-                  operationId: _.get(params, "filters[0]filters[0]value"),
-                  limit: 1000
-                }
-              `,
-              responseDataAdapter: `
-                return {
-                  list: data || []
-                }
-              `,
-              columns: [
-                {
-                  title: "物料编号",
-                  type: "auto",
-                  code: "material.code",
-                },
-                {
-                  title: "物料名称",
-                  type: "auto",
-                  code: "material.name",
-                },
-                {
-                  title: "规格型号",
-                  type: "auto",
-                  code: "material.specification",
-                },
-                {
-                  title: "单位",
-                  type: "auto",
-                  code: "material.defaultUnit.name",
-                },
-                {
-                  title: "入库数量",
-                  type: "auto",
-                  code: "completedAmount",
-                },
-                {
-                  title: "入库托数",
-                  type: "auto",
-                  code: "completedPalletAmount",
-                },
-                {
-                  title: "批号",
-                  type: "auto",
-                  code: "lotNum",
-                },
-                // {
-                //   title: "保质期（天）",
-                //   type: "auto",
-                //   code: "material.specification",
-                // },
-                // {
-                //   title: "生产日期",
-                //   type: "auto",
-                //   code: "material.specification",
-                // },
-                // {
-                //   title: "有效期至",
-                //   type: "auto",
-                //   code: "material.specification",
-                // },
-                {
-                  title: "检验状态",
-                  type: "auto",
-                  code: "inspectState",
-                  rendererType: "rapidOptionFieldRenderer",
-                  rendererProps: {
-                    dictionaryCode: "QualificationState",
                   },
-                },
-              ],
-              actions: [
-                {
-                  $type: "inspectionPrintRecordAction",
-                  actionType: "print",
-                  actionText: "送检",
-                  dataSourceAdapter: `
-                  return _.map(data, function(item){
-                    const createdAt = _.get(item, "good.createdAt");
-
-                    return {
-                      templateCode: "rawMaterialInspectionIdentificationCard",
-                      taskData: _.merge({}, item, {
-                        materialName: _.get(item, "material.name"),
-                        materialCode: _.get(item, "material.code"),
-                        materialSpecification: _.get(item, "material.specification"),
-                        createdAt: createdAt && dayjs(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-                        lotNum: _.get(item, 'lot.lotNum'),
-                        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        sampleCode: _.get(item, 'sampleNo'),
-                        inspectDate: dayjs().format("YYYY-MM-DD"),
-                        remark: _.get(item, 'remark')
-                      })
-                    }
-                  });
-                `,
-                  $exps: {
-                    operationId: `_.get(${operationDataExp}, 'id')`,
-                  },
-                },
-              ],
-            },
-          ],
+                ],
+              },
+            ],
+          },
+        ],
+        $exps: {
+          _hidden: `_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in'`,
         },
-      ],
-      $exps: {
-        _hidden: `_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in'`,
       },
     },
   ],

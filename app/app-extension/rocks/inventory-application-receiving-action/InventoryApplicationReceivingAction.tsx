@@ -15,18 +15,28 @@ export default {
     const { createOperationRecord, creating } = useApplicationOperationRecords(async () => {
       await context.scope.getStore("operationList").loadData();
 
+      context.page.sendComponentMessage("operationInfoBlock", {
+        name: "rerenderRock",
+      });
+
+      await new Promise((res) => {
+        setTimeout(() => {
+          res(null);
+        }, 100);
+      });
+
       openCreateModal();
     });
 
     const openCreateModal = async () => {
-      await context.page.getScope("goodTransferList_records-scope").notifyEvent({
-        framework: context.framework,
-        page: context.page,
-        scope: context.page.getScope("goodTransferList_records-scope"),
-        name: "onNewEntityButtonClick",
-        senderCategory: "component",
-        sender: context.page.getComponent("goodTransferList_records-newForm"),
-        args: [props.record],
+      context.page.getScope("goodTransferList_records-scope").setVars({
+        "modal-newEntity-open": true,
+      });
+
+      await new Promise((res) => {
+        setTimeout(() => {
+          res(null);
+        }, 200);
       });
 
       context.page.sendComponentMessage("goodTransferList_records-newForm", {
