@@ -1,6 +1,7 @@
 import { cloneDeep, merge, omit } from "lodash";
 import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
+import type { RockEvent } from "@ruiapp/move-style";
 
 const materialFormItemConfig: RapidEntityFormConfig["items"][0] = {
   type: "auto",
@@ -374,7 +375,6 @@ function getFormConfig(formType: "newForm" | "editForm") {
 }
 
 const operationDataExp = `_.first(_.get($page.getScope('applicationItemList-scope')?.getStore('operationList'), 'data.list'))`;
-
 const page: RapidPage = {
   code: "mom_inventory_application_details",
   //@ts-ignore
@@ -429,6 +429,26 @@ const page: RapidPage = {
       ],
       $exps: {
         entityId: "$rui.parseQuery().id",
+      },
+    },
+    {
+      $type: "pagePrint",
+      slots: [],
+      filters: [
+        { operator: "and", filters: [{ field: "application", operator: "exists", filters: [{ field: "id", operator: "eq", value: "$rui.parseQuery().id" }] }] },
+      ],
+      columns: [
+        { code: "material", name: "物品", isObject: true, value: "code", jointValue: "name", joinAnOtherValue: "specification" },
+        { code: "lotNum", name: "批号" },
+        { code: "quantity", name: "数量" },
+        { code: "unit", name: "单位", isObject: true, value: "code" },
+        { code: "remark", name: "备注" },
+      ],
+      $exps: {
+        apiUrl: `'mom/mom_inventory_application_items/operations/find'`,
+        orderBy: '[{"field": "orderNum"}]',
+        "filters[0].filters[0].filters[0].value": "$rui.parseQuery().id",
+        properties: '["id", "material", "lotNum", "quantity", "unit"]',
       },
     },
     {

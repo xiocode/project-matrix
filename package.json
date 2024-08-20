@@ -64,6 +64,7 @@
     "morgan": "~1.10.0",
     "node-machine-id": "^1.1.12",
     "pg": "~8.11.5",
+    "print-dom": "^1.2.4",
     "qrcode.react": "~3.1.0",
     "qs": "~6.11.2",
     "react": "~18.2.0",
