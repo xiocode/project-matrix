@@ -196,6 +196,45 @@ const page: RapidPage = {
         entityCode: "MomInventoryApplication",
         items: [
           {
+            type: "input",
+            code: "items",
+            formControlProps: {
+              placeholder: "搜索物品名称、编号、规格",
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "items",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "material",
+                    operator: "exists",
+                    filters: [
+                      {
+                        operator: "or",
+                        filters: [
+                          {
+                            field: "name",
+                            operator: "contains",
+                          },
+                          {
+                            field: "code",
+                            operator: "contains",
+                          },
+                          {
+                            field: "specification",
+                            operator: "contains",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
             type: "auto",
             code: "businessType",
             filterMode: "in",
@@ -256,6 +295,11 @@ const page: RapidPage = {
             url: "/pages/mom_inventory_application_details?id={{id}}",
           },
           width: "200px",
+        },
+        {
+          type: "auto",
+          code: "source",
+          width: "120px",
         },
         // {
         //   type: "auto",
