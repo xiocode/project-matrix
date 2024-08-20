@@ -119,6 +119,7 @@ import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SvcPrinter from '../models/entities/SvcPrinter';
 import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
+import SysAuditLog from '../models/entities/SysAuditLog';
 import SysWebhook from '../models/entities/SysWebhook';
 import bpm$BpmInstance from '../models/entities/bpm/BpmInstance';
 import bpm$BpmJob from '../models/entities/bpm/BpmJob';
@@ -267,6 +268,7 @@ const entityDefinitions = [
   SvcPrinter,
   SysAction,
   SysActionGroup,
+  SysAuditLog,
   SysWebhook,
   bpm$BpmInstance,
   bpm$BpmJob,
@@ -415,6 +417,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(SvcPrinter, entityDefinitions),
   autoConfigureRapidEntity(SysAction, entityDefinitions),
   autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
+  autoConfigureRapidEntity(SysAuditLog, entityDefinitions),
   autoConfigureRapidEntity(SysWebhook, entityDefinitions),
   autoConfigureRapidEntity(bpm$BpmInstance, entityDefinitions),
   autoConfigureRapidEntity(bpm$BpmJob, entityDefinitions),

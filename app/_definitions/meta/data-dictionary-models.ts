@@ -60,6 +60,7 @@ import PublishState from '../models/data-dictionaries/PublishState';
 import QualificationState from '../models/data-dictionaries/QualificationState';
 import QualitativeInspectionDetermineType from '../models/data-dictionaries/QualitativeInspectionDetermineType';
 import QuantityType from '../models/data-dictionaries/QuantityType';
+import SysAuditLogMethod from '../models/data-dictionaries/SysAuditLogMethod';
 import UndeletedDeletedState from '../models/data-dictionaries/UndeletedDeletedState';
 import UnitType from '../models/data-dictionaries/UnitType';
 import UserSecretLevel from '../models/data-dictionaries/UserSecretLevel';
@@ -128,6 +129,7 @@ export default [
   QualificationState,
   QualitativeInspectionDetermineType,
   QuantityType,
+  SysAuditLogMethod,
   UndeletedDeletedState,
   UnitType,
   UserSecretLevel,

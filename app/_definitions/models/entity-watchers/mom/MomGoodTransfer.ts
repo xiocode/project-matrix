@@ -83,7 +83,7 @@ export default [
         const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
 
         const inventoryOperation = await inventoryOperationManager.findEntity({
-          filters: [{operator: "eq", field: "id", value: after.operation_id}],
+          filters: [{operator: "eq", field: "id", value: after.operation?.id}],
           properties: ["id", "application", "businessType"],
         })
 
@@ -93,7 +93,7 @@ export default [
               {
                 operator: "eq",
                 field: "id",
-                value: after.application_id,
+                value: inventoryOperation?.application?.id,
               },
             ],
             properties: ["id", "from", "to", "businessType"],
@@ -107,6 +107,11 @@ export default [
                   operator: "eq",
                   field: "application_id",
                   value: inventoryApplication?.id,
+                },
+                {
+                  operator: "eq",
+                  field: "operation_type",
+                  value: 'in',
                 },
               ],
               properties: ["id", "from", "to", "businessType"],

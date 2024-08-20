@@ -601,6 +601,14 @@ export type QuantityType =
   ;
 
 /**
+ * 操作方法
+ */
+export type SysAuditLogMethod =
+  | 'update'
+  | 'delete'
+  ;
+
+/**
  * 未删除/已删除状态
  */
 export type UndeletedDeletedState =

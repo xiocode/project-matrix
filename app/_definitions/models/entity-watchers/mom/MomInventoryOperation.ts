@@ -26,7 +26,7 @@ export default [
     eventName: "entity.create",
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
-      const {server, payload} = ctx;
+      const { server, payload } = ctx;
       const changes = payload.after;
       try {
         if (changes?.application) {
@@ -47,7 +47,7 @@ export default [
     eventName: "entity.update",
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
-      const {server, payload} = ctx;
+      const { server, payload } = ctx;
       const kisApi = await new KisHelper(server).NewAPIClient();
       const kisOperationApi = new KisInventoryOperationAPI(kisApi);
 
@@ -82,7 +82,7 @@ export default [
 
           if (kisConfig && false) {
             const warehouseLocations = await server.getEntityManager<BaseLocation>("base_location").findEntities({
-              filters: [{operator: "notNull", field: "externalCode"}],
+              filters: [{ operator: "notNull", field: "externalCode" }],
             });
 
             // const transfers = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
@@ -235,7 +235,7 @@ export default [
 
             if (inventoryOperation) {
 
-              const resp = await rapidApi.post("app/listInventoryCheckTransfers", {"operationId": after.id});
+              const resp = await rapidApi.post("app/listInventoryCheckTransfers", { "operationId": after.id });
 
               const records = resp.data;
 
@@ -247,22 +247,22 @@ export default [
                   operationType: profitInventoryBusinessType?.operationType,
                   state: "processing",
                   approvalState: "uninitiated",
-                  businessType: {id: profitInventoryBusinessType?.id},
+                  businessType: { id: profitInventoryBusinessType?.id },
                 } as SaveMomInventoryOperationInput
 
                 let profitTransfers = [];
                 for (const record of records) {
                   for (const profitGood of record.profitGoods) {
                     profitTransfers.push({
-                      good: {id: profitGood.id},
-                      material: {id: record.material?.id},
-                      unit: {id: record.material?.defaultUnit?.id},
+                      good: { id: profitGood.id },
+                      material: { id: record.material?.id },
+                      unit: { id: record.material?.defaultUnit?.id },
                       quantity: profitGood.quantity,
                       binNum: profitGood.binNum,
                       lotNum: profitGood.lotNum,
                       manufactureDate: profitGood.manufactureDate,
                       validityDate: profitGood.validityDate,
-                      lot: {id: profitGood.lotId},
+                      lot: { id: profitGood.lotId },
                       orderNum: 1,
                     } as MomGoodTransfer);
                   }
@@ -281,22 +281,22 @@ export default [
                   operationType: lossesInventoryBusinessType?.operationType,
                   state: "done",
                   approvalState: "approved",
-                  businessType: {id: lossesInventoryBusinessType?.id},
+                  businessType: { id: lossesInventoryBusinessType?.id },
                 } as SaveMomInventoryOperationInput
 
                 let lossTransfers = [];
                 for (const record of records) {
                   for (const lossGood of record.lossGoods) {
                     lossTransfers.push({
-                      good: {id: lossGood.id},
-                      material: {id: record.material?.id},
-                      unit: {id: record.material?.defaultUnit?.id},
+                      good: { id: lossGood.id },
+                      material: { id: record.material?.id },
+                      unit: { id: record.material?.defaultUnit?.id },
                       quantity: lossGood.quantity,
                       binNum: lossGood.binNum,
                       lotNum: lossGood.lotNum,
                       manufactureDate: lossGood.manufactureDate,
                       validityDate: lossGood.validityDate,
-                      lot: {id: lossGood.lotId},
+                      lot: { id: lossGood.lotId },
                       orderNum: 1,
                     } as MomGoodTransfer);
                   }
@@ -344,8 +344,18 @@ export default [
       } catch (e) {
         console.log(e)
       }
+
+      await server.getEntityManager("sys_audit_log").createEntity({
+        entity: {
+          user: { id: ctx?.routerContext?.state.userId },
+          targetSingularCode: "mom_inventory_operation",
+          method: "UPDATE",
+          changes: changes,
+        }
+      })
     },
   },
+
 ] satisfies EntityWatcher<any>[];
 
 async function listTransfersOfOperation(server: IRpdServer, operationId: number) {
