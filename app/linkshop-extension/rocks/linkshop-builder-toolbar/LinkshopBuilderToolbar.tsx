@@ -200,7 +200,7 @@ export default {
           },
           {
             label: "复选框",
-            key: "sfCheckboxGroup",
+            key: "sfCheckbox",
             icon: <CheckSquareOutlined />,
           },
           {

@@ -17,6 +17,11 @@ export type LinkshopAppRockConfig = SimpleRockConfig &
     $type: "linkshopApp";
 
     /**
+     * 应用变量
+     */
+    variables: LinkshopAppVariableConfig[];
+
+    /**
      * 应用步骤
      */
     layouts: LinkshopAppLayoutRockConfig[];
@@ -56,7 +61,16 @@ export type LinkshopAppStepRockConfig = ContainerRockConfig &
     layoutId?: string;
   };
 
-export type DesignerPageCommand = PageCommand | DesignerCommandAddStep | DesignerCommandModifyStep | DesignerCommandRemoveStep | DesignerCommandCopyStep;
+export type DesignerPageCommand =
+  | PageCommand
+  | DesignerCommandAddStep
+  | DesignerCommandModifyStep
+  | DesignerCommandRemoveStep
+  | DesignerCommandCopyStep
+  | DesignerCommandAddVariable
+  | DesignerCommandModifyVariable
+  | DesignerCommandRemoveVariable
+  | DesignerCommandSetRuntimeStateVariables;
 
 export type DesignerCommandAddStep = {
   name: "addStep";
@@ -84,4 +98,40 @@ export type DesignerCommandCopyStep = {
   payload: {
     step: Record<string, any>;
   };
-}
+};
+
+export type DesignerCommandAddVariable = {
+  name: "addVariable";
+  payload: {
+    variable: LinkshopAppVariableConfig;
+  };
+};
+
+export type DesignerCommandModifyVariable = {
+  name: "modifyVariable";
+  payload: {
+    variable: LinkshopAppVariableConfig;
+  };
+};
+
+export type DesignerCommandRemoveVariable = {
+  name: "removeVariable";
+  payload: {
+    variable: LinkshopAppVariableConfig;
+  };
+};
+
+export type DesignerCommandSetRuntimeStateVariables = {
+  name: "setRuntimeStateVariables";
+  payload: {
+    variables: LinkshopAppVariableConfig[];
+  };
+};
+
+export type LinkshopAppVariableConfig = {
+  name: string;
+  type: LinkshopAppVariableType;
+  defaultValue: any;
+};
+
+export type LinkshopAppVariableType = "string" | "integer" | "float" | "boolean";

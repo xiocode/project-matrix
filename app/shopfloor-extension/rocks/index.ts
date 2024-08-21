@@ -1,7 +1,9 @@
 import SfButton from "./sf-button/SfButton";
+import SfCheckbox from "./sf-checkbox/SfCheckbox";
 import SfIcon from "./sf-icon/SfIcon";
 import SfPicture from "./sf-picture/SfPicture";
 import SfText from "./sf-text/SfText";
+import SfTextInput from "./sf-text-input/SfTextInput";
 import SfQRCode from "./sf-qrcode/SfQRCode";
 import SfBarcode from "./sf-barcode/SfBarcode";
 import SfQRCodeScanner from "./sf-qrcode-scanner/SfQRCodeScanner";
@@ -17,9 +19,11 @@ import SfEntityForm from "./sf-entity-form/SfEntityForm";
 
 export default [
   SfButton,
+  SfCheckbox,
   SfIcon,
   SfPicture,
   SfText,
+  SfTextInput,
   SfQRCode,
   SfBarcode,
   SfQRCodeScanner,
