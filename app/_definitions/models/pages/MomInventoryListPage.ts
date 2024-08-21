@@ -104,7 +104,10 @@ function genListConfig(warehouseCode?: string) {
       {
         $type: "sonicToolbarFormItem",
         formItemType: "search",
-        placeholder: "Search",
+        formControlProps: {
+          style: { width: 260 },
+        },
+        placeholder: "搜索物品名称、编号、规格",
         actionEventName: "onSearch",
         filterMode: "contains",
         filterFields: [

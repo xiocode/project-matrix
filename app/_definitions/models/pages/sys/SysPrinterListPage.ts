@@ -7,8 +7,8 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "code",
       formControlProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
     {
       type: "auto",
@@ -48,7 +48,7 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          placeholder: "搜索编码",
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code"],

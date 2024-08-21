@@ -63,7 +63,7 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          placeholder: "搜索批号",
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["lotNum"],
