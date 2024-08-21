@@ -312,37 +312,41 @@ export default [
               }
             }
           } else {
-            let transfers = await listTransfersOfOperation(server, after.id);
+            if (inventoryOperation) {
+              let transfers = await listTransfersOfOperation(server, after.id);
 
-            if (after.operationType === "in") {
-              for (const transfer of transfers) {
-                if (transfer.good_id) {
-                  await server.getEntityManager<MomGood>("mom_good").updateEntityById({
-                    routeContext: ctx.routerContext,
-                    id: transfer.good_id,
-                    entityToSave: {
-                      state: "normal",
-                    } as SaveMomGoodInput,
-                  });
+              if (inventoryOperation.operationType === "in") {
+                for (const transfer of transfers) {
+                  if (transfer.good_id) {
+                    await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+                      routeContext: ctx.routerContext,
+                      id: transfer.good_id,
+                      entityToSave: {
+                        state: "normal",
+                      } as SaveMomGoodInput,
+                    });
+                  }
                 }
               }
-            }
 
-            if (after.operationType === "out") {
-              for (const transfer of transfers) {
-                if (transfer.good_id) {
-                  await server.getEntityManager<MomGood>("mom_good").updateEntityById({
-                    routeContext: ctx.routerContext,
-                    id: transfer.good_id,
-                    entityToSave: {
-                      state: "transferred",
-                    } as SaveMomGoodInput,
-                  });
+              if (inventoryOperation.operationType === "out") {
+                for (const transfer of transfers) {
+                  if (transfer.good_id) {
+                    await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+                      routeContext: ctx.routerContext,
+                      id: transfer.good_id,
+                      entityToSave: {
+                        state: "transferred",
+                      } as SaveMomGoodInput,
+                    });
+                  }
                 }
               }
-            }
 
-            await updateInventoryStats(server, after.business_id, after.operationType, transfers);
+              if (inventoryOperation.businessType && inventoryOperation.businessType.id) {
+                await updateInventoryStats(server, inventoryOperation?.businessType?.id, inventoryOperation.operationType, transfers);
+              }
+            }
           }
         }
 
@@ -494,9 +498,9 @@ async function updateInventoryStats(server: IRpdServer, businessId: number, oper
 
       const groupFields: string[] = statTableConfig.groupFields || defaultGroupFields;
       let quantityChange = transfer.quantity;
-      if (operationType === "out") {
-        quantityChange *= -1;
-      }
+      // if (operationType === "out") {
+      //   quantityChange *= -1;
+      // }
 
       await inventoryStatService.changeInventoryQuantities({
         balanceEntityCode: statTableConfig.balanceEntityCode,
