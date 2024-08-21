@@ -339,6 +339,10 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       const copyStep = cloneDeep(command.payload.step);
       copyStep.$name = copyStep.$name+' copy'
       copyStep.$id = createRandomString(10)
+      copyStep.children = copyStep.children.map(c=>({
+        ...c,
+        $id: createRandomString(10)
+      }))
       this.setAppConfig({
         ...(this.appConfig || {}),
         steps: [...existedSteps, copyStep],
