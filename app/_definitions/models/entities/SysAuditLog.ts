@@ -3,7 +3,6 @@ import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
-  metaOnly: true,
   namespace: "sys",
   code: "SysAuditLog",
   name: "系统操作",
