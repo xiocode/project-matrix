@@ -265,7 +265,6 @@ const page: RapidPage = {
         },
       },
       expandedRow: {
-        $id: `applicationItemList_`,
         $type: "rapidEntityList",
         entityCode: "MomInventoryApplicationItem",
         dataSourceType: "dataSource",
@@ -313,10 +312,7 @@ const page: RapidPage = {
           },
         ],
         $exps: {
-          // "fixedFilters[0].filters[0].value": "_.get($self.record, 'id')",
-          // dataSourceCode: "'id' + _.get($self.record, 'id')",
-          dataSource: "_.get($self.record, 'items')",
-          $id: "'applicationItemList_' + _.get($self.record, 'id')",
+          dataSource: "_.get($slot.record, 'items')",
         },
       },
       newForm: cloneDeep(formConfig),
