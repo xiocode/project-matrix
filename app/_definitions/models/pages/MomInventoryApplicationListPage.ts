@@ -58,25 +58,7 @@ const page: RapidPage = {
         dataSourceType: "dataSource",
         viewMode: "table",
         selectionMode: "none",
-        // fixedFilters: [
-        //   {
-        //     field: "application",
-        //     operator: "exists",
-        //     filters: [
-        //       {
-        //         field: "id",
-        //         operator: "eq",
-        //         value: "",
-        //       },
-        //     ],
-        //   },
-        // ],
         pageSize: -1,
-        // orderBy: [
-        //   {
-        //     field: "orderNum",
-        //   },
-        // ],
         columns: [
           {
             type: "auto",
@@ -186,54 +168,49 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          formControlProps: {
+            style: { width: 360 },
+          },
+          placeholder: "搜索申请单号、物料（名称、编号、规格）",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["code"],
+          filterFields: [
+            "code",
+            {
+              field: "items",
+              operator: "exists",
+              filters: [
+                {
+                  field: "material",
+                  operator: "exists",
+                  filters: [
+                    {
+                      operator: "or",
+                      filters: [
+                        {
+                          field: "name",
+                          operator: "contains",
+                        },
+                        {
+                          field: "code",
+                          operator: "contains",
+                        },
+                        {
+                          field: "specification",
+                          operator: "contains",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
       searchForm: {
         entityCode: "MomInventoryApplication",
         items: [
-          {
-            type: "input",
-            code: "items",
-            formControlProps: {
-              placeholder: "搜索物品名称、编号、规格",
-            },
-            filterMode: "in",
-            filterFields: [
-              {
-                field: "items",
-                operator: "exists",
-                filters: [
-                  {
-                    field: "material",
-                    operator: "exists",
-                    filters: [
-                      {
-                        operator: "or",
-                        filters: [
-                          {
-                            field: "name",
-                            operator: "contains",
-                          },
-                          {
-                            field: "code",
-                            operator: "contains",
-                          },
-                          {
-                            field: "specification",
-                            operator: "contains",
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
           {
             type: "auto",
             code: "businessType",

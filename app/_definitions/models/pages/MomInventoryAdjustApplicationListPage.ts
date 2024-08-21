@@ -63,12 +63,71 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          formControlProps: {
+            style: { width: 360 },
+          },
+          placeholder: "搜索申请单号、物料（名称、编号、规格）",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["code"],
+          filterFields: [
+            "code",
+            {
+              field: "items",
+              operator: "exists",
+              filters: [
+                {
+                  field: "material",
+                  operator: "exists",
+                  filters: [
+                    {
+                      operator: "or",
+                      filters: [
+                        {
+                          field: "name",
+                          operator: "contains",
+                        },
+                        {
+                          field: "code",
+                          operator: "contains",
+                        },
+                        {
+                          field: "specification",
+                          operator: "contains",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
+      searchForm: {
+        entityCode: "MomInventoryApplication",
+        items: [
+          {
+            type: "auto",
+            code: "applicant",
+            filterMode: "in",
+            filterFields: ["applicant_id"],
+          },
+          {
+            type: "dateRange",
+            code: "createdAt",
+            filterMode: "range",
+            filterExtra: {
+              rangeUnit: "day",
+            },
+          },
+          {
+            type: "auto",
+            code: "operationState",
+            filterMode: "in",
+            itemType: "text",
+          },
+        ],
+      },
       fixedFilters: [
         {
           operator: "eq",
@@ -83,6 +142,7 @@ const page: RapidPage = {
         },
       ],
       pageSize: 20,
+      extraProperties: ["operationType", "items"],
       columns: [
         {
           type: "link",
@@ -93,11 +153,11 @@ const page: RapidPage = {
           },
           width: "200px",
         },
-        {
-          type: "auto",
-          code: "operationType",
-          width: "150px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "operationType",
+        //   width: "150px",
+        // },
         {
           type: "auto",
           code: "businessType",
@@ -199,6 +259,66 @@ const page: RapidPage = {
         //   ],
         // },
       ],
+      relations: {
+        items: {
+          properties: ["id", "material", "lotNum", "quantity", "unit", "remark"],
+        },
+      },
+      expandedRow: {
+        $id: `applicationItemList_`,
+        $type: "rapidEntityList",
+        entityCode: "MomInventoryApplicationItem",
+        dataSourceType: "dataSource",
+        viewMode: "table",
+        selectionMode: "none",
+        pageSize: -1,
+        columns: [
+          {
+            type: "auto",
+            code: "material",
+            rendererType: "anchor",
+            rendererProps: {
+              children: {
+                $type: "materialLabelRenderer",
+                $exps: {
+                  value: "$slot.value",
+                },
+              },
+              $exps: {
+                href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+              },
+            },
+          },
+          {
+            type: "auto",
+            code: "lotNum",
+            width: "180px",
+          },
+          {
+            type: "auto",
+            code: "quantity",
+            width: "100px",
+          },
+          {
+            type: "auto",
+            code: "unit",
+            width: "80px",
+            rendererProps: {
+              format: "{{name}}",
+            },
+          },
+          {
+            type: "auto",
+            code: "remark",
+          },
+        ],
+        $exps: {
+          // "fixedFilters[0].filters[0].value": "_.get($self.record, 'id')",
+          // dataSourceCode: "'id' + _.get($self.record, 'id')",
+          dataSource: "_.get($self.record, 'items')",
+          $id: "'applicationItemList_' + _.get($self.record, 'id')",
+        },
+      },
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
       stores: [

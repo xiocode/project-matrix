@@ -39,17 +39,37 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          placeholder: "搜索名称、编号",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["name", "description"],
+          filterFields: [
+            {
+              field: "materialCategory",
+              operator: "exists",
+              filters: [
+                {
+                  operator: "or",
+                  filters: [
+                    {
+                      field: "name",
+                      operator: "contains",
+                    },
+                    {
+                      field: "code",
+                      operator: "contains",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
       columns: [
         {
           type: "link",
           code: "materialCategory",
-          rendererType: 'rapidLinkRenderer',
+          rendererType: "rapidLinkRenderer",
           rendererProps: {
             text: "{{materialCategory.code}}-{{materialCategory.name}}",
             url: "/pages/mom_inspection_sampling_details?id={{id}}",

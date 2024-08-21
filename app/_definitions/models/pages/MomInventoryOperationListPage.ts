@@ -213,10 +213,44 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          formControlProps: {
+            style: { width: 360 },
+          },
+          placeholder: "搜索操作单号、物料（名称、编号、规格）",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["code"],
+          filterFields: [
+            "code",
+            {
+              field: "transfers",
+              operator: "exists",
+              filters: [
+                {
+                  field: "material",
+                  operator: "exists",
+                  filters: [
+                    {
+                      operator: "or",
+                      filters: [
+                        {
+                          field: "name",
+                          operator: "contains",
+                        },
+                        {
+                          field: "code",
+                          operator: "contains",
+                        },
+                        {
+                          field: "specification",
+                          operator: "contains",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
       searchForm: {
@@ -245,7 +279,7 @@ const page: RapidPage = {
         },
       ],
       pageSize: 20,
-      extraProperties: ["operationType"],
+      extraProperties: ["operationType", "transfers"],
       columns: [
         {
           type: "link",
@@ -316,6 +350,62 @@ const page: RapidPage = {
           $permissionCheck: "inventoryOperation.manage",
         },
       ],
+      relations: {
+        transfers: {
+          properties: ["id", "material", "lotNum", "quantity", "unit"],
+        },
+      },
+      expandedRow: {
+        $id: `operationItemList_`,
+        $type: "rapidEntityList",
+        entityCode: "MomInventoryApplicationItem",
+        dataSourceType: "dataSource",
+        viewMode: "table",
+        selectionMode: "none",
+        pageSize: -1,
+        columns: [
+          {
+            type: "auto",
+            code: "material",
+            rendererType: "anchor",
+            rendererProps: {
+              children: {
+                $type: "materialLabelRenderer",
+                $exps: {
+                  value: "$slot.value",
+                },
+              },
+              $exps: {
+                href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+              },
+            },
+          },
+          {
+            type: "auto",
+            code: "lotNum",
+            width: "180px",
+          },
+          {
+            type: "auto",
+            code: "quantity",
+            width: "100px",
+          },
+          {
+            type: "auto",
+            code: "unit",
+            width: "80px",
+            rendererProps: {
+              format: "{{name}}",
+            },
+          },
+        ],
+        $exps: {
+          // "fixedFilters[0].filters[0].value": "_.get($self.record, 'id')",
+          // dataSourceCode: "'id' + _.get($self.record, 'id')",
+          dataSource: "_.get($self.record, 'transfers')",
+          $id: "'operationItemList_' + _.get($self.record, 'id')",
+        },
+      },
       newForm: cloneDeep({
         ...omit(formConfig, "formDataAdapter"),
         onSaveSuccess: [

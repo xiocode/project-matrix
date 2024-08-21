@@ -96,7 +96,7 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          placeholder: "搜索申请单号",
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["code"],
@@ -109,6 +109,7 @@ const page: RapidPage = {
         },
       ],
       pageSize: 20,
+      extraProperties: ["operationType"],
       columns: [
         {
           type: "link",
@@ -129,11 +130,11 @@ const page: RapidPage = {
             url: "/pages/mom_inventory_application_details?id={{id}}",
           },
         },
-        {
-          type: "auto",
-          code: "operationType",
-          width: "150px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "operationType",
+        //   width: "150px",
+        // },
         {
           type: "auto",
           code: "businessType",

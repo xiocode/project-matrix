@@ -54,6 +54,7 @@ const page: RapidPage = {
   // permissionCheck: {any: ["inventoryTag.view","inventoryTag.manage"]},
   view: [
     {
+      $id: "goodEntityList",
       $type: "sonicEntityList",
       entityCode: "MomGood",
       viewMode: "table",
@@ -139,7 +140,7 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          placeholder: "搜索批号、托盘号",
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["lotNum", "binNum"],
@@ -188,13 +189,68 @@ const page: RapidPage = {
             code: "warehouse",
             filterMode: "in",
             filterFields: ["warehouse_id"],
-            itemType: "text",
+            formControlProps: {
+              requestParams: {
+                fixedFilters: [
+                  {
+                    field: "type",
+                    operator: "eq",
+                    value: "warehouse",
+                  },
+                ],
+              },
+            },
           },
           {
             type: "auto",
             code: "location",
             filterMode: "in",
             filterFields: ["location_id"],
+            formControlProps: {
+              requestParams: {
+                fixedFilters: [
+                  {
+                    field: "parent_id",
+                    operator: "in",
+                    value: [],
+                  },
+                  {
+                    field: "type",
+                    operator: "eq",
+                    value: "storageArea",
+                  },
+                ],
+              },
+            },
+            $exps: {
+              "formControlProps.requestParams.fixedFilters[0].value": "$self.form.getFieldValue('warehouse')",
+            },
+          },
+        ],
+        onValuesChange: [
+          {
+            $action: "script",
+            script: `
+              const changedValues = event.args[0] || {};
+              if(changedValues.hasOwnProperty('warehouse')) {
+                event.page.sendComponentMessage(event.sender.$id, {
+                  name: "setFieldsValue",
+                  payload: {
+                    location: undefined,
+                  }
+                });
+
+                await new Promise(function(res){
+                  setTimeout(() => {
+                    res(null);
+                  }, 600);
+                });
+
+                event.page.sendComponentMessage('goodEntityList-searchForm-rapidForm-item-location-input', {
+                  name: "refreshData",
+                });
+              }
+            `,
           },
         ],
       },

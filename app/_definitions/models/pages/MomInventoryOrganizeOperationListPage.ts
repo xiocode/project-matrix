@@ -21,7 +21,7 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "Search",
+          placeholder: "搜索托盘号",
           actionEventName: "onSearch",
           filterMode: "contains",
           filterFields: ["binNum"],
