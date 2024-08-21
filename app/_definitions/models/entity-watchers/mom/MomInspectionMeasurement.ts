@@ -1,5 +1,9 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {MomInspectionMeasurement, type MomInspectionSheet,} from "~/_definitions/meta/entity-types";
+import {
+  MomInspectionCharacteristic,
+  MomInspectionMeasurement,
+  type MomInspectionSheet,
+} from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -99,8 +103,61 @@ export default [
             state: "inspecting"
           },
         });
-      }
 
+        const operationTarget = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntity({
+          filters: [
+            {
+              operator: "eq",
+              field: "id",
+              value: after.id,
+            },
+          ],
+          properties: ["id", "sampleCode", "sheet"]
+        });
+
+        if (changes) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inspection_characteristic",
+              targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
+              method: "delete",
+            }
+          })
+        }
+      }
+    },
+  },
+  {
+    eventName: "entity.delete",
+    modelSingularCode: "mom_inspection_measurement",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+      const { server, payload } = ctx;
+
+      const before = payload.before
+      try {
+        const operationTarget = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntity({
+          filters: [
+            {
+              operator: "eq",
+              field: "id",
+              value: before.id,
+            },
+          ],
+          properties: ["id", "sampleCode", "sheet"]
+        });
+
+        await server.getEntityManager("sys_audit_log").createEntity({
+          entity: {
+            user: { id: ctx?.routerContext?.state.userId },
+            targetSingularCode: "mom_inspection_characteristic",
+            targetSingularName: `检验记录-${operationTarget?.sheet?.code}-样本:${operationTarget?.sampleCode}`,
+            method: "delete",
+          }
+        })
+      } catch (e) {
+        console.error(e);
+      }
     },
   },
 ] satisfies EntityWatcher<any>[];

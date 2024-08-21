@@ -1,5 +1,10 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {BaseLot, MomInspectionMeasurement} from "~/_definitions/meta/entity-types";
+import {
+  BaseLot,
+  MomInspectionMeasurement,
+  MomInspectionSheet,
+  MomInventoryApplication
+} from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -68,6 +73,29 @@ export default [
       const after = payload.after;
       const changes = payload.changes;
 
+      const operationTarget = await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").findEntity({
+        filters: [
+          {
+            operator: "eq",
+            field: "id",
+            value: after.id,
+          },
+        ],
+        properties: ["id", "code"],
+      });
+
+      if (changes) {
+        await server.getEntityManager("sys_audit_log").createEntity({
+          entity: {
+            user: { id: ctx?.routerContext?.state.userId },
+            targetSingularCode: "mom_inspection_sheet",
+            targetSingularName: `检验单 - ${ operationTarget?.code }`,
+            method: "update",
+            changes: changes,
+          }
+        })
+      }
+
       if (changes.hasOwnProperty('state') && changes.state === 'inspected') {
         const measurements = await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").findEntities(
           {
@@ -110,5 +138,34 @@ export default [
         }
       }
     }
-  }
+  },
+  {
+    eventName: "entity.delete",
+    modelSingularCode: "mom_inspection_sheet",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+      const { server, payload, routerContext } = ctx;
+
+      const before = payload.before
+
+      const operationTarget = await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").findEntity({
+        filters: [
+          {
+            operator: "eq",
+            field: "id",
+            value: before.id,
+          },
+        ],
+        properties: ["id", "code"],
+      });
+
+      await server.getEntityManager("sys_audit_log").createEntity({
+        entity: {
+          user: { id: ctx?.routerContext?.state.userId },
+          targetSingularCode: "mom_inspection_sheet",
+          targetSingularName: `检验单 - ${operationTarget?.code}`,
+          method: "delete",
+        }
+      })
+    },
+  },
 ] satisfies EntityWatcher<any>[];
