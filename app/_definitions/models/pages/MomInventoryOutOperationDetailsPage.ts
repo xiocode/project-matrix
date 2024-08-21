@@ -516,49 +516,49 @@ const page: RapidPage = {
       $type: "sectionSeparator",
       showLine: false,
     },
-    // {
-    //   $type: "rapidToolbar",
-    //   items: [
-    //     {
-    //       $type: "rapidToolbarButton",
-    //       text: "批准",
-    //       actionStyle: "primary",
-    //       size: "large",
-    //       onAction: [
-    //         {
-    //           $action: "sendHttpRequest",
-    //           method: "PATCH",
-    //           data: { approvalState: "approved" },
-    //           $exps: {
-    //             url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-    //           },
-    //         },
-    //       ],
-    //       $exps: {
-    //         _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
-    //       },
-    //     },
-    //     {
-    //       $type: "rapidToolbarButton",
-    //       text: "拒绝",
-    //       danger: true,
-    //       size: "large",
-    //       onAction: [
-    //         {
-    //           $action: "sendHttpRequest",
-    //           method: "PATCH",
-    //           data: { approvalState: "rejected" },
-    //           $exps: {
-    //             url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
-    //           },
-    //         },
-    //       ],
-    //       $exps: {
-    //         _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
-    //       },
-    //     },
-    //   ],
-    // },
+    {
+      $type: "rapidToolbar",
+      items: [
+        {
+          $type: "rapidToolbarButton",
+          text: "批准",
+          actionStyle: "primary",
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: { approvalState: "approved" },
+              $exps: {
+                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+              },
+            },
+          ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+          },
+        },
+        {
+          $type: "rapidToolbarButton",
+          text: "拒绝",
+          danger: true,
+          size: "large",
+          onAction: [
+            {
+              $action: "sendHttpRequest",
+              method: "PATCH",
+              data: { approvalState: "rejected" },
+              $exps: {
+                url: `"/api/mom/mom_inventory_operations/" + $rui.parseQuery().id`,
+              },
+            },
+          ],
+          $exps: {
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approving'",
+          },
+        },
+      ],
+    },
   ],
 };
 
