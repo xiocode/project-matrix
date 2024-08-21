@@ -1,19 +1,22 @@
-import type { Rock, RockConfig, RockEvent, RockEventHandlerScript, RockInstanceContext } from "@ruiapp/move-style";
+import type { Rock, RockConfig, RockInstanceContext } from "@ruiapp/move-style";
 import LinkshopBuilderStepsPanelMeta from "./LinkshopBuilderStepsPanelMeta";
 import type { LinkshopBuilderStepsPanelRockConfig } from "./linkshop-builder-steps-panel-types";
-import type { LinkshopAppLayoutRockConfig, LinkshopAppRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
-import { useCallback, useMemo, useState } from "react";
-import { find, forEach } from "lodash";
+import type { LinkshopAppLayoutRockConfig, LinkshopAppStepRockConfig } from "~/linkshop-extension/linkshop-types";
+import { useState } from "react";
 import type { LinkshopAppDesignerStore } from "~/linkshop-extension/stores/LinkshopAppDesignerStore";
 import { sendDesignerCommand } from "~/linkshop-extension/utilities/DesignerUtility";
 import StepSettingsFormModal from "./StepSettingsFormModal";
 import { EllipsisOutlined, PlusOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
+import { closestCenter, DndContext, DragEndEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 enum StepOperator {
   View = "view",
   Modify = "modify",
   Remove = "remove",
+  Copy = "copy",
 }
 
 export type StepTreeNode = StepNode | ComponentNode | SlotNode;
@@ -43,6 +46,27 @@ export interface SlotNode {
   children?: StepTreeNode[];
 }
 
+function SortableItem(props: { id: string; children: React.ReactNode }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    display: "flex",
+    flexDireaction: "row",
+    cursor: "move",
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes}>
+      <svg viewBox="0 0 20 20" width="12" {...listeners}>
+        <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+      </svg>
+      {props.children}
+    </div>
+  );
+}
+
 export default {
   Renderer(context: RockInstanceContext, props: LinkshopBuilderStepsPanelRockConfig) {
     const { designerStoreName } = props;
@@ -51,6 +75,29 @@ export default {
     const steps = shopfloorApp?.steps || [];
 
     const [state, setState] = useState<{ visible?: boolean; stepConfig?: LinkshopAppStepRockConfig }>({});
+
+    const sensors = useSensors(
+      useSensor(PointerSensor),
+      useSensor(KeyboardSensor, {
+        coordinateGetter: sortableKeyboardCoordinates,
+      }),
+    );
+
+    function handleDragEnd(event: DragEndEvent) {
+      const { active, over } = event;
+
+      if (!active || !over) return;
+
+      if (active.id !== over?.id) {
+        const ids = steps.map((step) => step.$id);
+        const oldIndex = ids.indexOf(active.id as string);
+        const newIndex = ids.indexOf(over.id as string);
+        const data = arrayMove(steps, oldIndex, newIndex);
+        designerStore.updateSteps(data);
+
+        return data;
+      }
+    }
 
     const onStepOperator = (key: StepOperator, step: any) => {
       switch (key) {
@@ -104,6 +151,14 @@ export default {
             },
           });
           break;
+        case StepOperator.Copy:
+          sendDesignerCommand(context.page, designerStore, {
+            name: "copyStep",
+            payload: {
+              step,
+            },
+          });
+          break;
       }
     };
 
@@ -115,36 +170,44 @@ export default {
       <>
         <div className="lsb-sidebar-panel">
           <h3>步骤</h3>
-          {steps?.map((s) => {
-            const selected = s.$id === designerStore.currentStep?.$id;
-            return (
-              <div
-                key={s.$name}
-                style={{ cursor: "pointer" }}
-                className={`lsb-sidebar-panel--item rui-row-mid ${selected ? "lsb-sidebar-panel--item_selected" : ""}`}
-                onClick={() => {
-                  onStepOperator(StepOperator.View, s);
-                }}
-              >
-                <span className="rui-text-ellipsis rui-flex">{s.$name}</span>
-                <Dropdown
-                  menu={{
-                    items: [
-                      { label: "修改", key: StepOperator.Modify },
-                      { label: "删除", key: StepOperator.Remove },
-                    ],
-                    onClick: ({ key }) => {
-                      onStepOperator(key as StepOperator, s);
-                    },
-                  }}
-                >
-                  <span className="lsb-sidebar-panel--item_icon rui-noshrink" style={{ marginLeft: 6 }}>
-                    <EllipsisOutlined />
-                  </span>
-                </Dropdown>
-              </div>
-            );
-          })}
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={steps.map((step) => step.$id as string)} strategy={verticalListSortingStrategy}>
+              {steps.map((s) => {
+                const selected = s.$id === designerStore.currentStep?.$id;
+
+                return (
+                  <SortableItem key={s.$id} id={s.$id as string}>
+                    <div
+                      key={s.id}
+                      style={{ cursor: "pointer", flex: 1, marginLeft: 4 }}
+                      className={`lsb-sidebar-panel--item rui-row-mid ${selected ? "lsb-sidebar-panel--item_selected" : ""}`}
+                      onClick={() => {
+                        onStepOperator(StepOperator.View, s);
+                      }}
+                    >
+                      <span className="rui-text-ellipsis rui-flex">{s.$name}</span>
+                      <Dropdown
+                        menu={{
+                          items: [
+                            { label: "修改", key: StepOperator.Modify },
+                            { label: "删除", key: StepOperator.Remove },
+                            { label: "复制", key: StepOperator.Copy },
+                          ],
+                          onClick: ({ key }) => {
+                            onStepOperator(key as StepOperator, s);
+                          },
+                        }}
+                      >
+                        <span className="lsb-sidebar-panel--item_icon rui-noshrink" style={{ marginLeft: 6 }}>
+                          <EllipsisOutlined></EllipsisOutlined>
+                        </span>
+                      </Dropdown>
+                    </div>
+                  </SortableItem>
+                );
+              })}
+            </SortableContext>
+          </DndContext>
           <div
             className="lsb-sidebar-panel--add_btn"
             onClick={() => {

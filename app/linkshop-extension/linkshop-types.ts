@@ -1,5 +1,4 @@
-import type { ContainerRockConfig, PageCommand, RockConfigBase, SimpleRockConfig, StoreConfig } from "@ruiapp/move-style";
-import { EntityStoreConfig } from "@ruiapp/rapid-extension";
+import type { ContainerRockConfig, PageCommand, RockConfigBase, SimpleRockConfig } from "@ruiapp/move-style";
 
 export type LinkshopWidgetCommonConfig = {
   left: number;
@@ -57,7 +56,7 @@ export type LinkshopAppStepRockConfig = ContainerRockConfig &
     layoutId?: string;
   };
 
-export type DesignerPageCommand = PageCommand | DesignerCommandAddStep | DesignerCommandModifyStep | DesignerCommandRemoveStep;
+export type DesignerPageCommand = PageCommand | DesignerCommandAddStep | DesignerCommandModifyStep | DesignerCommandRemoveStep | DesignerCommandCopyStep;
 
 export type DesignerCommandAddStep = {
   name: "addStep";
@@ -79,3 +78,10 @@ export type DesignerCommandRemoveStep = {
     step: Record<string, any>;
   };
 };
+
+export type DesignerCommandCopyStep = {
+  name: "copyStep";
+  payload: {
+    step: Record<string, any>;
+  };
+}

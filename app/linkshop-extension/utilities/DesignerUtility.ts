@@ -13,7 +13,7 @@ export function genRandomComponentId() {
   return createRandomString(10);
 }
 
-function createRandomString(length: number) {
+export function createRandomString(length: number) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   let result = "";
   for (let i = 0; i < length; i++) {

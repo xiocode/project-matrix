@@ -4,7 +4,7 @@ import { cloneDeep, find, map, some } from "lodash";
 import type { DesignStage } from "../designer-types";
 import rapidApi from "~/rapidApi";
 import type { EntityStoreConfig } from "@ruiapp/rapid-extension";
-import { genRandomComponentId } from "../utilities/DesignerUtility";
+import { createRandomString, genRandomComponentId } from "../utilities/DesignerUtility";
 
 export interface LinkshopAppStoreConfig extends StoreConfigBase {
   appId?: string;
@@ -334,6 +334,15 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
         ...(this.appConfig || {}),
         steps: existedSteps?.filter((s) => s.$id !== command.payload?.step?.$id),
       } as LinkshopAppRockConfig);
+    } else if (command.name === "copyStep") {
+      const existedSteps = this.appConfig?.steps || [];
+      const copyStep = cloneDeep(command.payload.step);
+      copyStep.$name = copyStep.$name+' copy'
+      copyStep.$id = createRandomString(10)
+      this.setAppConfig({
+        ...(this.appConfig || {}),
+        steps: [...existedSteps, copyStep],
+      } as LinkshopAppRockConfig);
     }
 
     // this.#emitter.emit("dataChange", null);
@@ -358,6 +367,14 @@ export class LinkshopAppDesignerStore implements IStore<LinkshopAppStoreConfig> 
       ...(this.appConfig || {}),
       // TODO: store name editable?
       steps: existedSteps?.map((s) => (s.$id === step?.$id ? { ...s, ...(step || {}) } : s)),
+    } as LinkshopAppRockConfig);
+  }
+
+  updateSteps(steps: LinkshopAppStepRockConfig[]) {
+    this.setAppConfig({
+      ...(this.appConfig || {}),
+      // TODO: store name editable?
+      steps: steps,
     } as LinkshopAppRockConfig);
   }
 
