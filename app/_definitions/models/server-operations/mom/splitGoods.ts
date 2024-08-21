@@ -1,4 +1,4 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} from "@ruiapp/rapid-core";
 import type {MomGood, SaveMomGoodInput,} from "~/_definitions/meta/entity-types";
 import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
 import MomGoodTransfer from "~/_definitions/models/entities/MomGoodTransfer";
@@ -15,10 +15,10 @@ export default {
   code: "splitGoods",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const {server} = ctx;
+    const {server, routerContext} = ctx;
     const input: SplitGoodsInput = ctx.input;
 
-    await splitGoods(server, input);
+    await splitGoods(server, routerContext, input);
 
     ctx.output = {
       result: ctx.input,
@@ -26,7 +26,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
+async function splitGoods(server: IRpdServer, ctx : RouteContext, input: SplitGoodsInput) {
   const sequenceService = server.getService<SequenceService>("sequenceService");
 
   const goodManager = server.getEntityManager<MomGood>("mom_good");
@@ -84,6 +84,7 @@ async function splitGoods(server: IRpdServer, input: SplitGoodsInput) {
   }));
 
   await goodManager.updateEntityById({
+    routeContext: ctx,
     id: originGood.id,
     entityToSave: {state: "splitted"} as SaveMomGoodInput,
   });

@@ -1,4 +1,4 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} from "@ruiapp/rapid-core";
 import type {
   MomGood,
   MomGoodLocation,
@@ -23,10 +23,10 @@ export default {
   code: "submitGoodInTransfers",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const {server} = ctx;
+    const { server, routerContext } = ctx;
     const input: CreateGoodTransferInput = ctx.input;
 
-    await submitGoodInTransfers(server, input);
+    await submitGoodInTransfers(server, routerContext, input);
 
     ctx.output = {
       result: ctx.input,
@@ -34,7 +34,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function submitGoodInTransfers(server: IRpdServer, input: CreateGoodTransferInput) {
+async function submitGoodInTransfers(server: IRpdServer, ctx: RouteContext, input: CreateGoodTransferInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
   const goodLocationManager = server.getEntityManager<MomGoodLocation>("mom_good_location");
   const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
@@ -74,31 +74,33 @@ async function submitGoodInTransfers(server: IRpdServer, input: CreateGoodTransf
             }
           ]
         },
-        {operator: "eq", field: "binNum", value: shelve.binNum},
+        { operator: "eq", field: "binNum", value: shelve.binNum },
       ],
       properties: ["id", "good"],
     })
 
     await goodManager.updateEntityById({
+      routeContext: ctx,
       id: goodTransfer?.good?.id,
       entityToSave: {
-        location: {id: input.toLocationId},
+        location: { id: input.toLocationId },
         putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       } as SaveMomGoodInput,
     });
 
     await goodLocationManager.createEntity({
       entity: {
-        good: {id: goodTransfer?.good?.id},
-        location: {id: input.toLocationId},
+        good: { id: goodTransfer?.good?.id },
+        location: { id: input.toLocationId },
         putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       } as SaveMomGoodLocationInput,
     });
 
     await goodTransferManager.updateEntityById({
+      routeContext: ctx,
       id: goodTransfer?.id,
       entityToSave: {
-        to: {id: input.toLocationId},
+        to: { id: input.toLocationId },
       } as SaveMomGoodTransferInput,
     });
   }

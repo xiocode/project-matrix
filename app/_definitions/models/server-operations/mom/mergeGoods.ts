@@ -1,4 +1,4 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} from "@ruiapp/rapid-core";
 import type {MomGood, SaveMomGoodInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
@@ -13,10 +13,10 @@ export default {
   code: "mergeGoods",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const {server} = ctx;
+    const {server, routerContext} = ctx;
     const input: MergeGoodsInput = ctx.input;
 
-    await mergeGoods(server, input);
+    await mergeGoods(server, routerContext, input);
 
     ctx.output = {
       result: ctx.input,
@@ -24,7 +24,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
+async function mergeGoods(server: IRpdServer, ctx : RouteContext, input: MergeGoodsInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
   const sequenceService = server.getService<SequenceService>("sequenceService");
@@ -81,6 +81,7 @@ async function mergeGoods(server: IRpdServer, input: MergeGoodsInput) {
 
   await Promise.all(goods.map(async good => {
     await goodManager.updateEntityById({
+      routeContext: ctx,
       id: good.id,
       entityToSave: {
         state: "merged",

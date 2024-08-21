@@ -47,6 +47,7 @@ export default [
       }
 
       await momInspectionSheetManager.updateEntityById({
+        routeContext: ctx.routerContext,
         id: after.sheet_id,
         entityToSave: {
           result: result,
@@ -97,6 +98,7 @@ export default [
         }
 
         await momInspectionSheetManager.updateEntityById({
+          routeContext: ctx.routerContext,
           id: after.sheet_id,
           entityToSave: {
             result: result,

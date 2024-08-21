@@ -1,4 +1,4 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
+import type {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} from "@ruiapp/rapid-core";
 import type {
   MomGood,
   MomGoodLocation,
@@ -24,10 +24,10 @@ export default {
   code: "submitGoodOutTransfers",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const {server} = ctx;
+    const { server, routerContext } = ctx;
     const input: CreateGoodOutTransferInput = ctx.input;
 
-    await submitGoodOutTransfers(server, input);
+    await submitGoodOutTransfers(server, routerContext, input);
 
     ctx.output = {
       result: ctx.input,
@@ -35,7 +35,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function submitGoodOutTransfers(server: IRpdServer, input: CreateGoodOutTransferInput) {
+async function submitGoodOutTransfers(server: IRpdServer, ctx: RouteContext, input: CreateGoodOutTransferInput) {
   const inventory = await findInventoryOperation(server, input.operationId);
 
   if (!inventory) throw new Error("未找到对应的库存操作");
@@ -49,7 +49,7 @@ async function submitGoodOutTransfers(server: IRpdServer, input: CreateGoodOutTr
 
         await createGoodTransfer(server, input.operationId, good);
 
-        await handleGood(server, good.id, good.location?.id);
+        await handleGood(server, ctx, good.id, good.location?.id);
 
       }
     }
@@ -59,7 +59,7 @@ async function submitGoodOutTransfers(server: IRpdServer, input: CreateGoodOutTr
 async function findInventoryOperation(server: IRpdServer, operationId: number) {
   const inventoryManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
   return await inventoryManager.findEntity({
-    filters: [{operator: "eq", field: "id", value: operationId}],
+    filters: [{ operator: "eq", field: "id", value: operationId }],
     properties: ["id", "businessType"],
   });
 }
@@ -68,9 +68,9 @@ async function findGoods(server: IRpdServer, input: CreateGoodOutTransferInput, 
   const goodManager = server.getEntityManager<MomGood>("mom_good");
   return await goodManager.findEntities({
     filters: [
-      {operator: "eq", field: "material_id", value: input.materialId},
-      {operator: "eq", field: "lot_num", value: input.lotNum},
-      {operator: "eq", field: "bin_num", value: binNum},
+      { operator: "eq", field: "material_id", value: input.materialId },
+      { operator: "eq", field: "lot_num", value: input.lotNum },
+      { operator: "eq", field: "bin_num", value: binNum },
     ],
     properties: ["id", "material", "unit", "location", "quantity", "lotNum", "binNum", "validityDate", "lot", "state"],
   });
@@ -110,14 +110,14 @@ async function createGoodTransfer(server: IRpdServer, operationId: number, good:
   const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
 
   let savedGoodTransfer = {
-    operation: {id: operationId},
-    material: {id: good.material?.id},
+    operation: { id: operationId },
+    material: { id: good.material?.id },
     lotNum: good.lotNum,
     binNum: good.binNum,
-    good: {id: good.id},
+    good: { id: good.id },
     quantity: good.quantity,
-    unit: {id: good.unit?.id},
-    from: {id: good.location?.id},
+    unit: { id: good.unit?.id },
+    from: { id: good.location?.id },
     transferTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     orderNum: 1,
   } as SaveMomGoodTransferInput
@@ -125,7 +125,7 @@ async function createGoodTransfer(server: IRpdServer, operationId: number, good:
   if (good.lot) {
     savedGoodTransfer = {
       ...savedGoodTransfer,
-      lot: {id: good.lot.id},
+      lot: { id: good.lot.id },
     };
   }
 
@@ -134,7 +134,7 @@ async function createGoodTransfer(server: IRpdServer, operationId: number, good:
   });
 }
 
-async function handleGood(server: IRpdServer, goodId: number, locationId: number | undefined) {
+async function handleGood(server: IRpdServer, ctx: RouteContext, goodId: number, locationId: number | undefined) {
   // 处理货品状态和位置信息
 
   if (!locationId) return;
@@ -143,6 +143,7 @@ async function handleGood(server: IRpdServer, goodId: number, locationId: number
 
   if (good) {
     await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+      routeContext: ctx,
       id: goodId,
       entityToSave: {
         quantity: 0,
@@ -159,11 +160,11 @@ async function handleGood(server: IRpdServer, goodId: number, locationId: number
       {
         operator: "and",
         filters: [
-          {field: "good", operator: "exists", filters: [{field: "id", operator: "eq", value: goodId}]},
+          { field: "good", operator: "exists", filters: [{ field: "id", operator: "eq", value: goodId }] },
           {
             field: "location",
             operator: "exists",
-            filters: [{field: "id", operator: "eq", value: locationId}]
+            filters: [{ field: "id", operator: "eq", value: locationId }]
           },
         ]
       }
@@ -173,6 +174,7 @@ async function handleGood(server: IRpdServer, goodId: number, locationId: number
 
   if (goodLocation) {
     await goodLocationManager.updateEntityById({
+      routeContext: ctx,
       id: goodLocation.id,
       entityToSave: {
         takeOutTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
