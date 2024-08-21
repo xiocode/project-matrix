@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { memo, useEffect, useRef, useState } from "react";
 import { Checkbox, Col, Form, Input, message, Modal, Row } from "antd";
 import ModelSelector from "./ModelSelector";

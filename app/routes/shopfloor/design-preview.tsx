@@ -3,6 +3,7 @@ import type { PageConfig } from "@ruiapp/move-style";
 import { Rui } from "@ruiapp/react-renderer";
 import ReactRocks from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
+import DataBindingExtension from "@ruiapp/data-binding-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import DesignerExtension from "@ruiapp/designer-extension";
 import RapidExtension, { RapidExtensionSetting, rapidAppDefinition } from "@ruiapp/rapid-extension";
@@ -44,6 +45,7 @@ framework.setLoggerProvider(new RuiLoggerProvider());
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 
+framework.loadExtension(DataBindingExtension);
 framework.loadExtension(ReactRocks);
 framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);

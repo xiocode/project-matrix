@@ -1,8 +1,9 @@
 import { Framework, Page } from "@ruiapp/move-style";
-import type { PageConfig, RockConfig } from "@ruiapp/move-style";
+import type { PageConfig, RockConfig, StoreConfig } from "@ruiapp/move-style";
 import { Rui } from "@ruiapp/react-renderer";
 import ReactRocks from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
+import DataBindingExtension from "@ruiapp/data-binding-extension";
 import MonacoExtension from "@ruiapp/monaco-extension";
 import RapidExtension, { rapidAppDefinition, RapidExtensionSetting } from "@ruiapp/rapid-extension";
 import { useMemo } from "react";
@@ -30,6 +31,7 @@ import { ShopfloorApp } from "~/_definitions/meta/entity-types";
 import { RuiLoggerProvider } from "rui-logger";
 import { redirectToSignin } from "~/utils/navigate";
 import axios from "axios";
+import { LinkshopAppRuntimeStateStoreConfig } from "~/linkshop-extension/stores/LinkshopAppRuntimeStateStore";
 
 export function links() {
   return [antdStyles, indexStyles, linkshopBuilderStyles, shopfloorExtensionStyles].map((styles) => {
@@ -44,6 +46,7 @@ framework.registerExpressionVar("axios", axios);
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 
+framework.loadExtension(DataBindingExtension);
 framework.loadExtension(ReactRocks);
 framework.loadExtension(AntdExtension);
 framework.loadExtension(MonacoExtension);
@@ -192,24 +195,46 @@ export default function Index() {
     }
 
     const shopfloorAppConfig = shopfloorApp.content;
-    ruiPageConfig = {
-      $id: "playerPage",
-      stores: get(shopfloorAppConfig, "stores", []),
-      view: [
+    if (!shopfloorAppConfig) {
+      ruiPageConfig = {
+        $id: "playerPage",
+        view: [
+          {
+            $type: "antdAlert",
+            type: "error",
+            message: "应用未配置完成。",
+          },
+        ],
+      };
+    } else {
+      const stores: StoreConfig[] = [
         {
-          $id: "linkshopScannerProvider",
-          $type: "linkshopScannerProvider",
-          children: [
-            {
-              $id: "linkshopApp",
-              $type: "linkshopApp",
-              layouts: get(shopfloorAppConfig, "layouts", []),
-              steps: get(shopfloorAppConfig, "steps", []),
-            },
-          ],
-        },
-      ],
-    } as any;
+          type: "linkshopAppRuntimeStateStore",
+          name: "runtimeStore",
+          variables: shopfloorAppConfig.variables,
+        } as LinkshopAppRuntimeStateStoreConfig,
+        ...get(shopfloorAppConfig, "stores", []),
+      ];
+
+      ruiPageConfig = {
+        $id: "playerPage",
+        stores,
+        view: [
+          {
+            $id: "linkshopScannerProvider",
+            $type: "linkshopScannerProvider",
+            children: [
+              {
+                $id: "linkshopApp",
+                $type: "linkshopApp",
+                layouts: get(shopfloorAppConfig, "layouts", []),
+                steps: get(shopfloorAppConfig, "steps", []),
+              },
+            ],
+          },
+        ],
+      } as any;
+    }
 
     return new Page(framework, ruiPageConfig);
   }, [appId, shopfloorApp, pageAccessAllowed]);

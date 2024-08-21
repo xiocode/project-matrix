@@ -1,5 +1,5 @@
 import { Framework, Page } from "@ruiapp/move-style";
-import type { PageConfig, RockConfig, RockEvent } from "@ruiapp/move-style";
+import type { PageConfig, RockConfig, RockEvent, RockEventHandlerSendComponentMessage, RockEventHandlerSetComponentProperty } from "@ruiapp/move-style";
 import { Rui } from "@ruiapp/react-renderer";
 import ReactRocks from "@ruiapp/react-rocks";
 import AntdExtension from "@ruiapp/antd-extension";
@@ -276,11 +276,11 @@ export default function Index() {
                       ],
                     },
                     {
-                      key: "assets",
-                      label: "资源",
+                      key: "variables",
+                      label: "变量",
                       children: [
                         {
-                          $type: "linkshopBuilderAssetsPanel",
+                          $type: "linkshopBuilderVariablesPanel",
                         },
                       ],
                     },
@@ -427,11 +427,74 @@ export default function Index() {
                                 },
                                 {
                                   $type: "designerComponentPropertiesPanel",
+                                  onSettingPropExpression: [
+                                    {
+                                      $action: "setComponentProperty",
+                                      componentId: "componentPropExpSetter",
+                                      propName: "propName",
+                                      propValue: "",
+                                      $exps: {
+                                        propValue: "$event.args[0]",
+                                      },
+                                    } as RockEventHandlerSetComponentProperty,
+                                    {
+                                      $action: "setComponentProperty",
+                                      componentId: "componentPropExpSettingModal",
+                                      propName: "open",
+                                      propValue: true,
+                                    } as RockEventHandlerSetComponentProperty,
+                                    {
+                                      $action: "sendComponentMessage",
+                                      componentId: "componentPropExpSetter",
+                                      message: {
+                                        name: "refreshView",
+                                      },
+                                    } as RockEventHandlerSendComponentMessage,
+                                  ],
                                   $exps: {
                                     _hidden: "!$stores.designerStore.selectedComponentId",
                                     designingPage: "$stores.designerStore.page",
                                     selectedComponentId: "$stores.designerStore.selectedComponentId",
                                   },
+                                },
+                                {
+                                  $id: "componentPropExpSettingModal",
+                                  $type: "antdModal",
+                                  title: "属性绑定",
+                                  maskClosable: false,
+                                  children: [
+                                    {
+                                      $id: "componentPropExpSetter",
+                                      $type: "linkshopBuilderComponentExpressionSetter",
+                                      $exps: {
+                                        _hidden: "!$stores.designerStore.selectedComponentId",
+                                        designerStore: "$stores.designerStore",
+                                      },
+                                    },
+                                  ],
+                                  onOk: [
+                                    {
+                                      $action: "sendComponentMessage",
+                                      componentId: "componentPropExpSetter",
+                                      message: {
+                                        name: "commitChanges",
+                                      },
+                                    } as RockEventHandlerSendComponentMessage,
+                                    {
+                                      $action: "setComponentProperty",
+                                      componentId: "componentPropExpSettingModal",
+                                      propName: "open",
+                                      propValue: false,
+                                    } as RockEventHandlerSetComponentProperty,
+                                  ],
+                                  onCancel: [
+                                    {
+                                      $action: "setComponentProperty",
+                                      componentId: "componentPropExpSettingModal",
+                                      propName: "open",
+                                      propValue: false,
+                                    } as RockEventHandlerSetComponentProperty,
+                                  ],
                                 },
                               ],
                             },

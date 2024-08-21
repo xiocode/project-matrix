@@ -77,6 +77,7 @@ const page: RapidPage = {
       secondaryColSpan: 20,
       main: {
         $type: "antdTree",
+        blockNode: true,
         showLine: true,
         defaultExpandAll: true,
         fieldNames: { key: "id", title: "name" },

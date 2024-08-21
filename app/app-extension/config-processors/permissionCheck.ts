@@ -2,8 +2,8 @@ import type { ConfigProcessor } from "@ruiapp/move-style";
 import { get, isArray, isString, set } from "lodash";
 
 export default {
-  beforeRockRender(config) {
-    let policy = config.$permissionCheck;
+  beforeRockRender({ rockConfig }) {
+    let policy = rockConfig.$permissionCheck;
     if (policy) {
       if (isString(policy)) {
         policy = { any: [policy] };
@@ -11,10 +11,14 @@ export default {
         policy = { all: policy };
       }
 
-      if (get(config, "$exps._hidden")) {
-        set(config, "$exps._hidden", `(${get(config, "$exps._hidden")}) || !$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
+      if (get(rockConfig, "$exps._hidden")) {
+        set(
+          rockConfig,
+          "$exps._hidden",
+          `(${get(rockConfig, "$exps._hidden")}) || !$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`,
+        );
       } else {
-        set(config, "$exps._hidden", `!$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
+        set(rockConfig, "$exps._hidden", `!$functions.isAccessAllowed(${JSON.stringify(policy)}, me?.allowedActions || [])`);
       }
     }
   },
