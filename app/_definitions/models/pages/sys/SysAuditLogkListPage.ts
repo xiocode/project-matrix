@@ -10,6 +10,12 @@ const page: RapidPage = {
       entityCode: "SysAuditLog",
       viewMode: "table",
       selectionMode: "none",
+      orderBy: [
+        {
+          field: "createdAt",
+          desc: true,
+        },
+      ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -41,11 +47,10 @@ const page: RapidPage = {
           type: "auto",
           code: "method",
         },
-        {
-          type: "auto",
-          code: "changes",
-        }
-        ,
+        // {
+        //   type: "auto",
+        //   code: "changes",
+        // },
         {
           type: "auto",
           code: "createdAt",

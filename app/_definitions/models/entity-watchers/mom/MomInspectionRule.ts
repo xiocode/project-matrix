@@ -39,9 +39,9 @@ export default [
     },
   },
   {
-    eventName: "entity.delete",
+    eventName: "entity.beforeDelete",
     modelSingularCode: "mom_inspection_rule",
-    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeDelete">) => {
       const { server, payload } = ctx;
 
       const before = payload.before
