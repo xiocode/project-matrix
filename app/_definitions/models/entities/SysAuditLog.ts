@@ -19,6 +19,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: "targetSingularCode",
       name: "操作对象",
+      type: "option",
+      dataDictionary: "SysAuditLogTarget",
+    },
+    {
+      code: "targetSingularName",
+      name: "操作对象名称",
       type: "text",
     },
     {

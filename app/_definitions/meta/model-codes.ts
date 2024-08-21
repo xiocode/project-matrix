@@ -2120,6 +2120,7 @@ const entityFieldCodes = {
     'id',
     'user',
     'targetSingularCode',
+    'targetSingularName',
     'method',
     'changes',
     'createdAt',

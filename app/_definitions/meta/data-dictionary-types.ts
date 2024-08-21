@@ -609,6 +609,20 @@ export type SysAuditLogMethod =
   ;
 
 /**
+ * 操作对象
+ */
+export type SysAuditLogTarget =
+  | 'base_material'
+  | 'mom_inventory_application'
+  | 'mom_inventory_operation'
+  | 'mom_inspection_sheet'
+  | 'mom_inspection_rule'
+  | 'mom_inspection_characteristic'
+  | 'mom_inspection_measurement'
+  | 'mom_good_transfer'
+  ;
+
+/**
  * 未删除/已删除状态
  */
 export type UndeletedDeletedState =

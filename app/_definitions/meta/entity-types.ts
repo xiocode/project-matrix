@@ -60,6 +60,7 @@ import type {
   RouteType,
   SettingItemType,
   SysAuditLogMethod,
+  SysAuditLogTarget,
   UndeletedDeletedState,
   UnitType,
   WarehouseStrategy,
@@ -8300,7 +8301,11 @@ export interface SysAuditLog {
   /**
    * 操作对象
    */
-  targetSingularCode?: string;
+  targetSingularCode?: SysAuditLogTarget;
+  /**
+   * 操作对象名称
+   */
+  targetSingularName?: string;
   /**
    * 操作方法
    */

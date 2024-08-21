@@ -65,7 +65,7 @@ export default [
               value: after.id,
             },
           ],
-          properties: ["id", "application", "from", "to", "operationType", "businessType", "contractNum", "supplier", "customer", "externalCode"],
+          properties: ["id", "code", "application", "from", "to", "operationType", "businessType", "contractNum", "supplier", "customer", "externalCode"],
         });
 
         if (after.hasOwnProperty("state") && after.state === "done") {
@@ -341,18 +341,53 @@ export default [
             await updateInventoryStats(server, after.business_id, after.operationType, transfers);
           }
         }
+
+        if (changes) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inventory_operation",
+              targetSingularName: `库存操作单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
+              method: "update",
+              changes: changes,
+            }
+          })
+        }
       } catch (e) {
         console.log(e)
       }
+    },
+  },
+  {
+    eventName: "entity.delete",
+    modelSingularCode: "mom_inventory_operation",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+      const { server, payload } = ctx;
 
-      await server.getEntityManager("sys_audit_log").createEntity({
-        entity: {
-          user: { id: ctx?.routerContext?.state.userId },
-          targetSingularCode: "mom_inventory_operation",
-          method: "UPDATE",
-          changes: changes,
-        }
-      })
+      const before = payload.before
+      try {
+        const inventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findEntity({
+          filters: [
+            {
+              operator: "eq",
+              field: "id",
+              value: before.id,
+            },
+          ],
+          properties: ["id", "code", "businessType"],
+        });
+
+        await server.getEntityManager("sys_audit_log").createEntity({
+          entity: {
+            user: { id: ctx?.routerContext?.state.userId },
+            targetSingularCode: "mom_inventory_operation",
+            targetSingularName: `库存操作单 - ${inventoryOperation?.businessType?.name} - ${inventoryOperation?.code}`,
+            method: "delete",
+          }
+        })
+      } catch (e) {
+        console.error(e);
+      }
     },
   },
 

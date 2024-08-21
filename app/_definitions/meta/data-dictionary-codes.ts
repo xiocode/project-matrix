@@ -61,6 +61,7 @@ const dictionaryCodes = [
   'QualitativeInspectionDetermineType',
   'QuantityType',
   'SysAuditLogMethod',
+  'SysAuditLogTarget',
   'UndeletedDeletedState',
   'UnitType',
   'UserSecretLevel',
