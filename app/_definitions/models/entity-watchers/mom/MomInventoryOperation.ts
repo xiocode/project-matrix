@@ -32,6 +32,7 @@ export default [
         if (changes?.application) {
           const applicationManager = server.getEntityManager<MomGood>("mom_inventory_application");
           await applicationManager.updateEntityById({
+            routeContext: ctx.routerContext,
             id: changes.application.id,
             entityToSave: {
               operationState: "processing",
@@ -71,6 +72,7 @@ export default [
         if (after.hasOwnProperty("state") && after.state === "done") {
           if (after?.application_id) {
             await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
+              routeContext: ctx.routerContext,
               id: after.application_id,
               entityToSave: {
                 operationState: "done",
@@ -316,6 +318,7 @@ export default [
               for (const transfer of transfers) {
                 if (transfer.good_id) {
                   await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+                    routeContext: ctx.routerContext,
                     id: transfer.good_id,
                     entityToSave: {
                       state: "normal",
@@ -329,6 +332,7 @@ export default [
               for (const transfer of transfers) {
                 if (transfer.good_id) {
                   await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+                    routeContext: ctx.routerContext,
                     id: transfer.good_id,
                     entityToSave: {
                       state: "transferred",

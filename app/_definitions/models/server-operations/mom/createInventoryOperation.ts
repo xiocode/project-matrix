@@ -1,4 +1,4 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
+import {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} from "@ruiapp/rapid-core";
 import type {
   BaseLocation,
   BaseMaterial,
@@ -61,10 +61,10 @@ export default {
   method: "POST",
 
   async handler(ctx: ActionHandlerContext) {
-    const {server} = ctx;
+    const {server, routerContext} = ctx;
     const input: CreateInventoryOperationInput = ctx.input;
 
-    await createInventoryOperation(server, input);
+    await createInventoryOperation(server, routerContext, input);
 
     ctx.output = {
       result: ctx.input,
@@ -72,7 +72,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-export async function createInventoryOperation(server: IRpdServer, input: CreateInventoryOperationInput) {
+export async function createInventoryOperation(server: IRpdServer, ctx: RouteContext, input: CreateInventoryOperationInput) {
   const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
   const goodManager = server.getEntityManager<MomGood>("mom_good");
   const goodTransferManager = server.getEntityManager<MomGoodTransfer>("mom_good_transfer");
@@ -134,6 +134,7 @@ export async function createInventoryOperation(server: IRpdServer, input: Create
   }
 
   inventoryOperationManager.updateEntityById({
+    routeContext: ctx,
     id: inventoryOperation.id,
     entityToSave: {
       state: "done",

@@ -108,6 +108,7 @@ export default [
 
         for (const measurement of measurements) {
           await server.getEntityManager<MomInspectionMeasurement>("mom_inspection_measurement").updateEntityById({
+            routeContext: ctx.routerContext,
             id: measurement.id,
             entityToSave: {
               locked: true,

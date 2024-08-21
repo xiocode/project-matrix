@@ -1,13 +1,16 @@
-import type { EntityWatchHandlerContext, EntityWatcher } from "@ruiapp/rapid-core";
-import type { CbsOrder } from "~/_definitions/meta/entity-types";
-import { createInventoryOperation, type CreateInventoryOperationInput } from "../../server-operations/mom/createInventoryOperation";
+import type {EntityWatchHandlerContext, EntityWatcher} from "@ruiapp/rapid-core";
+import type {CbsOrder} from "~/_definitions/meta/entity-types";
+import {
+  createInventoryOperation,
+  type CreateInventoryOperationInput
+} from "../../server-operations/mom/createInventoryOperation";
 
 export default [
   {
     eventName: "entity.update",
     modelSingularCode: "cbs_order",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
-      const { server, payload } = ctx;
+      const { server, routerContext, payload } = ctx;
       const changes: Partial<CbsOrder> = payload.changes;
       const after: CbsOrder = payload.after;
       if (after.kind === "purchase") {
@@ -15,7 +18,9 @@ export default [
           return;
         }
 
-        const orderItems = await server.queryDatabaseObject(`select * from cbs_order_items where order_id=$1;`, [after.id]);
+        const orderItems = await server.queryDatabaseObject(`select *
+                                                             from cbs_order_items
+                                                             where order_id = $1;`, [after.id]);
         const transfers: CreateInventoryOperationInput["transfers"] = [];
         for (const orderItem of orderItems) {
           transfers.push({
@@ -35,13 +40,18 @@ export default [
           },
           transfers,
         };
-        await createInventoryOperation(server, createOperationInput);
+        if (routerContext) {
+          await createInventoryOperation(server, routerContext, createOperationInput);
+        }
+
       } else if (after.kind === "sale") {
         if (!changes.hasOwnProperty("state") || changes.state !== "fulfilled") {
           return;
         }
 
-        const orderItems = await server.queryDatabaseObject(`select * from cbs_order_items where order_id=$1;`, [after.id]);
+        const orderItems = await server.queryDatabaseObject(`select *
+                                                             from cbs_order_items
+                                                             where order_id = $1;`, [after.id]);
         const transfers: CreateInventoryOperationInput["transfers"] = [];
         for (const orderItem of orderItems) {
           transfers.push({
@@ -60,7 +70,9 @@ export default [
           },
           transfers,
         };
-        await createInventoryOperation(server, createOperationInput);
+        if (routerContext) {
+          await createInventoryOperation(server, routerContext, createOperationInput);
+        }
       }
     },
   },
