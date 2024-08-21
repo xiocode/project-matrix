@@ -141,9 +141,9 @@ export default [
     }
   },
   {
-    eventName: "entity.delete",
+    eventName: "entity.beforeDelete",
     modelSingularCode: "mom_inspection_sheet",
-    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeDelete">) => {
       const { server, payload, routerContext } = ctx;
 
       const before = payload.before

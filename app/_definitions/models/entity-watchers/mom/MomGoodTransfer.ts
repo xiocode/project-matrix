@@ -214,26 +214,14 @@ export default [
       }
     },
   },
+
   {
-    eventName: "entity.delete",
+    eventName: "entity.beforeDelete",
     modelSingularCode: "mom_good_transfer",
-    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeDelete">) => {
       const {server, payload} = ctx;
       const changes = payload.before;
       try {
-        const momInventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findById(changes.operation_id);
-
-        if (momInventoryOperation?.operationType === "in") {
-          if (changes.good_id) {
-            const goodManager = server.getEntityManager<MomGood>("mom_good");
-            const good = await goodManager.findById(changes.good_id);
-
-            if (good) {
-              await goodManager.deleteById(good.id);
-            }
-          }
-        }
-
         const operationTarget = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntity({
           filters: [
             {
@@ -253,6 +241,30 @@ export default [
             method: "delete",
           }
         })
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
+  {
+    eventName: "entity.delete",
+    modelSingularCode: "mom_good_transfer",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+      const {server, payload} = ctx;
+      const changes = payload.before;
+      try {
+        const momInventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findById(changes.operation_id);
+
+        if (momInventoryOperation?.operationType === "in") {
+          if (changes.good_id) {
+            const goodManager = server.getEntityManager<MomGood>("mom_good");
+            const good = await goodManager.findById(changes.good_id);
+
+            if (good) {
+              await goodManager.deleteById(good.id);
+            }
+          }
+        }
       } catch (e) {
         console.error(e);
       }

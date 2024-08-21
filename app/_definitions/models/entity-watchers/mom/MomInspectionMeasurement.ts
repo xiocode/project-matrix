@@ -123,7 +123,7 @@ export default [
               user: { id: ctx?.routerContext?.state.userId },
               targetSingularCode: "mom_inspection_characteristic",
               targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
-              method: "delete",
+              method: "update",
             }
           })
         }
@@ -131,9 +131,9 @@ export default [
     },
   },
   {
-    eventName: "entity.delete",
+    eventName: "entity.beforeDelete",
     modelSingularCode: "mom_inspection_measurement",
-    handler: async (ctx: EntityWatchHandlerContext<"entity.delete">) => {
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeDelete">) => {
       const { server, payload } = ctx;
 
       const before = payload.before
