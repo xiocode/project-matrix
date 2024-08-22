@@ -2,7 +2,7 @@ import type { ConfigProcessor } from "@ruiapp/move-style";
 import { get, isArray, isString, set } from "lodash";
 
 export default {
-  beforeRockRender({ rockConfig }) {
+  beforeRockRender(rockConfig) {
     let policy = rockConfig.$permissionCheck;
     if (policy) {
       if (isString(policy)) {
