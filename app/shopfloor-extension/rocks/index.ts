@@ -4,6 +4,7 @@ import SfIcon from "./sf-icon/SfIcon";
 import SfPicture from "./sf-picture/SfPicture";
 import SfText from "./sf-text/SfText";
 import SfTextInput from "./sf-text-input/SfTextInput";
+import SfNumberInput from './sf-number-input/SfNumberInput'
 import SfQRCode from "./sf-qrcode/SfQRCode";
 import SfBarcode from "./sf-barcode/SfBarcode";
 import SfQRCodeScanner from "./sf-qrcode-scanner/SfQRCodeScanner";
@@ -24,6 +25,7 @@ export default [
   SfPicture,
   SfText,
   SfTextInput,
+  SfNumberInput,
   SfQRCode,
   SfBarcode,
   SfQRCodeScanner,
