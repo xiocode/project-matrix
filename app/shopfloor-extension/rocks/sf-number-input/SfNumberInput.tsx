@@ -11,12 +11,7 @@ export default {
       value,
       disabled,
       color,
-      verticalAlignment,
       fontSize,
-      letterSpacing,
-      horizontalAlignment,
-      fontWeightIsBold,
-      fontStyleIsOblique,
       textDecorationLine,
       textDecorationStyle,
       textDecorationColor,
@@ -29,11 +24,6 @@ export default {
     wrapStyle.flexDirection = "column";
     wrapStyle.color = color;
     wrapStyle.fontSize = fontSize;
-    wrapStyle.letterSpacing = letterSpacing;
-    wrapStyle.textAlign = horizontalAlignment;
-    wrapStyle.justifyContent = verticalAlignment;
-    wrapStyle.fontWeight = fontWeightIsBold === true ? "bold" : "normal";
-    wrapStyle.fontStyle = fontStyleIsOblique === true ? "oblique" : "normal";
     wrapStyle.textDecorationLine = textDecorationLine;
     wrapStyle.textDecorationStyle = textDecorationStyle;
     wrapStyle.textDecorationColor = textDecorationColor;

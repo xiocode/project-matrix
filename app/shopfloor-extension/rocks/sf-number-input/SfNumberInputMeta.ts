@@ -24,31 +24,6 @@ export default {
       defaultValue: "#000000d9",
     },
 
-    letterSpacing: {
-      valueType: "number",
-      defaultValue: 0,
-    },
-
-    horizontalAlignment: {
-      valueType: "string",
-      defaultValue: "left",
-    },
-
-    verticalAlignment: {
-      valueType: "string",
-      defaultValue: "center",
-    },
-
-    fontWeightIsBold: {
-      valueType: "boolean",
-      defaultValue: false,
-    },
-
-    fontStyleIsOblique: {
-      valueType: "boolean",
-      defaultValue: false,
-    },
-
     textDecorationLine: {
       valueType: "string",
       defaultValue: "none",
@@ -111,59 +86,6 @@ export default {
           $type: "colorPropSetter",
           label: "文本颜色",
           propName: "color",
-        },
-        {
-          $type: "numberPropSetter",
-          label: "文字间距",
-          propName: "letterSpacing",
-        },
-        {
-          $type: "selectPropSetter",
-          label: "左右对齐",
-          propName: "horizontalAlignment",
-          options: [
-            {
-              label: "局左",
-              value: "left",
-            },
-            {
-              label: "居中",
-              value: "center",
-            },
-            {
-              label: "居右",
-              value: "right",
-            },
-          ],
-        },
-        {
-          $type: "selectPropSetter",
-          label: "上下对齐",
-          propName: "verticalAlignment",
-          options: [
-            {
-              label: "居上",
-              value: "flex-start",
-            },
-            {
-              label: "居中",
-              value: "center",
-            },
-            {
-              label: "居下",
-              value: "flex-end",
-            },
-          ],
-        },
-        {
-          $type: "switchPropSetter",
-          label: "加粗",
-          propName: "fontWeightIsBold",
-        },
-        {
-          $type: "switchPropSetter",
-          label: "斜体",
-          propName: "fontStyleIsOblique",
         },
         {
           $type: "selectPropSetter",
