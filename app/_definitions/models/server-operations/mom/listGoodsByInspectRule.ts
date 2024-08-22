@@ -89,7 +89,7 @@ async function listLotsByInspectRule(server: IRpdServer, input: ListLotsInput) {
     [input.inspectRuleId, input.customerId, input.materialId],
   );
 
-  const model =  server.getModel({ singularCode: "mom_material_lot_inventory_b alance" });
+  const model =  server.getModel({ singularCode: "mom_material_lot_inventory_balance" });
 
   return rows.map((item) => mapDbRowToEntity(server, model!, item, false));
 }

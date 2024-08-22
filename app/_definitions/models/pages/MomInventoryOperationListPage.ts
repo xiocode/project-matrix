@@ -1,6 +1,6 @@
-import { cloneDeep, omit } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
-import { materialFormatStrTemplate } from "~/utils/fmt";
+import {cloneDeep, omit} from "lodash";
+import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
+import {materialFormatStrTemplate} from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -279,7 +279,7 @@ const page: RapidPage = {
         },
       ],
       pageSize: 20,
-      extraProperties: ["operationType", "transfers"],
+      extraProperties: ["operationType", "transfers", "state", "approvalState"],
       columns: [
         {
           type: "link",
@@ -339,6 +339,9 @@ const page: RapidPage = {
           actionType: "edit",
           actionText: "修改",
           $permissionCheck: "inventoryOperation.manage",
+          $exps: {
+            _hidden: "$slot.record.state !== 'processing'",
+          },
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -348,6 +351,9 @@ const page: RapidPage = {
           dataSourceCode: "list",
           entityCode: "MomInventoryOperation",
           $permissionCheck: "inventoryOperation.manage",
+          $exps: {
+            _hidden: "$slot.record.state !== 'processing'",
+          },
         },
       ],
       relations: {

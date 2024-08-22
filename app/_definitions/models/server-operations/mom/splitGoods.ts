@@ -15,7 +15,7 @@ export default {
   code: "splitGoods",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const {server, routerContext} = ctx;
+    const { server, routerContext } = ctx;
     const input: SplitGoodsInput = ctx.input;
 
     await splitGoods(server, routerContext, input);
@@ -26,7 +26,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function splitGoods(server: IRpdServer, ctx : RouteContext, input: SplitGoodsInput) {
+async function splitGoods(server: IRpdServer, ctx: RouteContext, input: SplitGoodsInput) {
   const sequenceService = server.getService<SequenceService>("sequenceService");
 
   const goodManager = server.getEntityManager<MomGood>("mom_good");
@@ -35,8 +35,8 @@ async function splitGoods(server: IRpdServer, ctx : RouteContext, input: SplitGo
     filters: [{
       operator: "and",
       filters: [
-        {operator: "eq", field: "id", value: input.originGoodId},
-        {operator: "eq", field: "state", value: "normal"},
+        { operator: "eq", field: "id", value: input.originGoodId },
+        { operator: "eq", field: "state", value: "normal" },
       ]
     }],
     properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
@@ -80,12 +80,12 @@ async function splitGoods(server: IRpdServer, ctx : RouteContext, input: SplitGo
       quantity: shelve.weight,
     };
 
-    await goodManager.createEntity({entity: saveGoodInput});
+    await goodManager.createEntity({ entity: saveGoodInput });
   }));
 
   await goodManager.updateEntityById({
     routeContext: ctx,
     id: originGood.id,
-    entityToSave: {state: "splitted"} as SaveMomGoodInput,
+    entityToSave: { state: "splitted", quantity: 0 } as SaveMomGoodInput,
   });
 }

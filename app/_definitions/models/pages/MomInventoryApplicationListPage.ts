@@ -334,6 +334,9 @@ const page: RapidPage = {
           actionType: "edit",
           actionText: "修改",
           $permissionCheck: "inventoryApplication.manage",
+          $exps: {
+            _hidden: "$slot.record.operationState !== 'pending'",
+          },
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -343,6 +346,9 @@ const page: RapidPage = {
           dataSourceCode: "list",
           entityCode: "MomInventoryApplication",
           $permissionCheck: "inventoryApplication.manage",
+          $exps: {
+            _hidden: "$slot.record.operationState !== 'pending'",
+          },
         },
         {
           $type: "rapidTableAction",
