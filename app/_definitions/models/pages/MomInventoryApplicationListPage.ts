@@ -36,6 +36,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   defaultFormFields: {
     state: "approved",
     operationState: "pending",
+    source: "manual",
   },
 };
 
@@ -390,6 +391,7 @@ const page: RapidPage = {
       $exps: {
         "newForm.fixedFields.state": "'approved'",
         "newForm.fixedFields.operationState": "'pending'",
+        "newForm.fixedFields.source": "'manual'",
       },
     },
   ],
