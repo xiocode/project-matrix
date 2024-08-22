@@ -1,5 +1,5 @@
 import { useNavigate } from "@remix-run/react";
-import { RockEvent, type Rock } from "@ruiapp/move-style";
+import { RockEvent, RockInstanceContext, type Rock } from "@ruiapp/move-style";
 import { useDebounceFn, useSetState } from "ahooks";
 import { Button, Form, Input, InputNumber, Select, Space, Table } from "antd";
 import { memo, useEffect, useMemo, useState } from "react";
@@ -8,6 +8,71 @@ import { PlusOutlined } from "@ant-design/icons";
 import { renderRock } from "@ruiapp/react-renderer";
 import { last, omit, split } from "lodash";
 import dayjs from "dayjs";
+
+const LotSelect = memo<{
+  isSalesOut: boolean;
+  operationType: string;
+  businessType: string;
+  customerId: string;
+  record: Record<string, any>;
+  recordIndex: number;
+  context: RockInstanceContext;
+  onChange(v: string): void;
+}>((props) => {
+  const { isSalesOut, operationType, businessType, customerId, record: r, recordIndex: i, context } = props;
+
+  const { loading, inspectionRule } = useInspectionRule({ customerId, materialId: r.material?.id });
+
+  if (isSalesOut && customerId && inspectionRule) {
+    return (
+      <CustomerLotSelect
+        loading={loading}
+        materialId={r.material?.id}
+        customerId={customerId}
+        inspectRuleId={inspectionRule?.id}
+        value={r.lotNum}
+        onChange={(val: string) => {
+          props.onChange(val);
+        }}
+      />
+    );
+  }
+
+  if (operationType === "out" || operationType === "transfer") {
+    return renderRock({
+      context,
+      rockConfig: {
+        $id: i + "_lotnum",
+        $type: "materialLotNumSelector",
+        materialId: r.material?.id,
+        customerId: customerId,
+        materialCategoryId: r.material?.category?.id,
+        businessTypeId: businessType,
+        value: r.lotNum,
+        onChange: [
+          {
+            $action: "script",
+            script: (e: RockEvent) => {
+              const val = e.args?.[0];
+              props.onChange(val);
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  return (
+    <Input
+      placeholder="请输入"
+      value={r.lotNum}
+      onChange={(e) => {
+        const val = e.target.value;
+        props.onChange(val);
+      }}
+    />
+  );
+});
 
 export default {
   $type: "inventoryApplicationForm",
@@ -195,53 +260,16 @@ export default {
                   dataIndex: "lotNum",
                   width: 120,
                   render: (_, r, i) => {
-                    if (isSalesOut && form.getFieldValue("customer")) {
-                      return (
-                        <CustomerLotSelect
-                          materialId={r.material?.id}
-                          customerId={form.getFieldValue("customer")}
-                          value={r.lotNum}
-                          onChange={(val: string) => {
-                            setMaterialItems((draft) => {
-                              return draft.map((item, index) => (i === index ? { ...item, lotNum: val } : item));
-                            });
-                          }}
-                        />
-                      );
-                    }
-
-                    if (operationType === "out" || operationType === "transfer") {
-                      return renderRock({
-                        context,
-                        rockConfig: {
-                          $id: i + "_lotnum",
-                          $type: "materialLotNumSelector",
-                          materialId: r.material?.id,
-                          customerId: form.getFieldValue("customer"),
-                          materialCategoryId: r.material?.category?.id,
-                          businessTypeId: form.getFieldValue("businessType"),
-                          value: r.lotNum,
-                          onChange: [
-                            {
-                              $action: "script",
-                              script: (e: RockEvent) => {
-                                const val = e.args?.[0];
-                                setMaterialItems((draft) => {
-                                  return draft.map((item, index) => (i === index ? { ...item, lotNum: val } : item));
-                                });
-                              },
-                            },
-                          ],
-                        },
-                      });
-                    }
-
                     return (
-                      <Input
-                        placeholder="请输入"
-                        value={r.lotNum}
-                        onChange={(e) => {
-                          const val = e.target.value;
+                      <LotSelect
+                        context={context}
+                        record={r}
+                        recordIndex={i}
+                        isSalesOut={isSalesOut}
+                        customerId={form.getFieldValue("customer")}
+                        operationType={operationType!}
+                        businessType={form.getFieldValue("businessType")}
+                        onChange={(val) => {
                           setMaterialItems((draft) => {
                             return draft.map((item, index) => (i === index ? { ...item, lotNum: val } : item));
                           });
@@ -406,60 +434,82 @@ const CustomerLotSelect = memo((props: any) => {
   const { loadCustomLots, loading, lots } = useCustomLots();
 
   useEffect(() => {
-    if (props.materialId && props.customerId) {
-      loadCustomLots({ materialId: props.materialId, customerId: props.customerId });
+    if (props.materialId && props.customerId && props.inspectRuleId) {
+      loadCustomLots({ materialId: props.materialId, customerId: props.customerId, inspectRuleId: props.inspectRuleId });
     }
-  }, [props.materialId, props.customerId]);
+  }, [props.materialId, props.customerId, props.inspectRuleId]);
 
   const options = useMemo(() => (lots || []).map((lot) => ({ label: lot.lotNum, value: lot.lotNum })), [lots]);
 
-  return <Select placeholder="请选择" style={{ width: "100%" }} options={options} loading={loading} value={props.value} onChange={props.onChange} />;
+  return (
+    <Select placeholder="请选择" style={{ width: "100%" }} options={options} loading={props.loading || loading} value={props.value} onChange={props.onChange} />
+  );
 });
 
 function useCustomLots() {
   const [state, setState] = useSetState<{ loading?: boolean; lots?: any[] }>({});
 
-  const loadCustomLots = async (params: { materialId: string; customerId: string }) => {
+  const loadCustomLots = async (params: { materialId: string; customerId: string; inspectRuleId: string }) => {
     setState({ loading: true });
 
-    const { error, result } = await rapidApiRequest({
-      url: "/mom/mom_inspection_rules/operations/find",
+    const { error, result: lotResult } = await rapidApiRequest({
+      url: "/app/listLotsByInspectRule",
       method: "POST",
       data: {
-        filters: [
-          {
-            field: "material_id",
-            operator: "eq",
-            value: params.materialId,
-          },
-          {
-            field: "customer_id",
-            operator: "eq",
-            value: params.customerId,
-          },
-        ],
+        inspectRuleId: params.inspectRuleId,
+        materialId: params.materialId,
+        customerId: params.customerId,
       },
     });
 
-    const rule = result?.list?.[0];
-    if (!error && rule) {
-      const { error: lotError, result: lotResult } = await rapidApiRequest({
-        url: "/app/listLotsByInspectRule",
-        method: "POST",
-        data: {
-          inspectRuleId: rule.id,
-          materialId: params.materialId,
-          customerId: params.customerId,
-        },
-      });
-
-      if (!lotError) {
-        setState({ lots: lotResult || [] });
-      }
+    if (!error) {
+      setState({ lots: lotResult || [] });
     }
 
     setState({ loading: false });
   };
 
   return { loadCustomLots, ...state };
+}
+
+function useInspectionRule(params: { materialId: string; customerId: string }) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [inspectionRule, setInspectionRule] = useState<any>(null);
+
+  useEffect(() => {
+    (async () => {
+      if (!params.customerId || !params.materialId) {
+        setInspectionRule(null);
+        return;
+      }
+
+      setLoading(true);
+      const { error, result } = await rapidApiRequest({
+        url: "/mom/mom_inspection_rules/operations/find",
+        method: "POST",
+        data: {
+          filters: [
+            {
+              field: "material_id",
+              operator: "eq",
+              value: params.materialId,
+            },
+            {
+              field: "customer_id",
+              operator: "eq",
+              value: params.customerId,
+            },
+          ],
+        },
+      });
+
+      const rule = result?.list?.[0];
+      if (!error) {
+        setInspectionRule(rule);
+      }
+      setLoading(false);
+    })();
+  }, [params.customerId, params.materialId]);
+
+  return { loading, inspectionRule };
 }
