@@ -30,7 +30,6 @@ export default {
           dataIndex: item.code,
           align: "center",
           render: (_: any, record: any) => {
-            console.log(record, "record999");
             return item.isObject
               ? item.jointValue
                 ? `${record[item.code]?.[item.value]}-${record[item.code]?.[item.jointValue]}(${record[item.code]?.[item?.joinAnOtherValue]})` || "-"
@@ -41,10 +40,12 @@ export default {
       });
       return res;
     };
-
+    console.log(detail, "detail888");
     const printContent = (
       <div>
-        <div className="print-content-title">{detail?.businessType?.name}单号</div>
+        <div className="print-content-title">
+          {detail?.businessType?.name}单:{detail?.code}
+        </div>
         <Table className="antd-style" bordered columns={formateCol() || []} dataSource={dataSource} pagination={false} />
       </div>
     );

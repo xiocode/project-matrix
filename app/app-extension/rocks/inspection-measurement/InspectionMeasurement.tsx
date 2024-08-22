@@ -449,7 +449,7 @@ export default {
                         <Space>
                           <Button
                             type="primary"
-                            // style={Info.state !== "inspected" ? { display: "none" } : {}}
+                            style={Info.state !== "inspected" ? { display: "none" } : {}}
                             disabled={Info.state === "inspected" && selected.length === 0}
                             onClick={async () => {
                               const res = inspection.filter((i) => i.round === Info.round + 1);
