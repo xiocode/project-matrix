@@ -582,6 +582,7 @@ class KisDataSync {
             operationState: 'pending',
             items: entities,
             externalCode: Head.FInterID,
+            source: 'kis',
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
@@ -623,6 +624,7 @@ class KisDataSync {
             operationState: 'pending',
             items: entities,
             externalCode: Head.FInterID,
+            source: 'kis',
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
@@ -664,6 +666,7 @@ class KisDataSync {
             operationState: 'pending',
             items: entities,
             externalCode: Head.FInterID,
+            source: 'kis',
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
@@ -705,6 +708,7 @@ class KisDataSync {
             operationState: 'pending',
             items: entities,
             externalCode: Head.FInterID,
+            source: 'kis',
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
@@ -746,6 +750,7 @@ class KisDataSync {
             operationState: 'pending',
             items: entities,
             externalCode: Head.FInterID,
+            source: 'kis',
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
