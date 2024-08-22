@@ -2,6 +2,7 @@ import type {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} fr
 import type {MomGood, SaveMomGoodInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
+import {updateInventoryBalance} from "~/_definitions/models/server-operations/mom/splitGoods";
 
 export type MergeGoodsInput = {
   goodIds: number[];
@@ -13,7 +14,7 @@ export default {
   code: "mergeGoods",
   method: "POST",
   async handler(ctx: ActionHandlerContext) {
-    const {server, routerContext} = ctx;
+    const { server, routerContext } = ctx;
     const input: MergeGoodsInput = ctx.input;
 
     await mergeGoods(server, routerContext, input);
@@ -24,7 +25,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function mergeGoods(server: IRpdServer, ctx : RouteContext, input: MergeGoodsInput) {
+async function mergeGoods(server: IRpdServer, ctx: RouteContext, input: MergeGoodsInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
 
   const sequenceService = server.getService<SequenceService>("sequenceService");
@@ -33,8 +34,8 @@ async function mergeGoods(server: IRpdServer, ctx : RouteContext, input: MergeGo
     filters: [{
       operator: "and",
       filters: [
-        {operator: "in", field: "id", value: input.goodIds},
-        {operator: "eq", field: "state", value: "normal"},
+        { operator: "in", field: "id", value: input.goodIds },
+        { operator: "eq", field: "state", value: "normal" },
       ]
     }],
     properties: ["id", "lotNum", "binNum", "material", "location", "quantity", "manufactureDate", "validityDate", "unit", "putInTime", "lot"],
@@ -59,7 +60,7 @@ async function mergeGoods(server: IRpdServer, ctx : RouteContext, input: MergeGo
 
   let saveGoodInput: SaveMomGoodInput = {
     material: originGood.material,
-    location: {id: input.locationId},
+    location: { id: input.locationId },
     quantity: goods.reduce((acc, curr) => acc + (curr?.quantity || 0), 0),
     manufactureDate: dayjs().format("YYYY-MM-DD"),
     putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
@@ -90,4 +91,7 @@ async function mergeGoods(server: IRpdServer, ctx : RouteContext, input: MergeGo
       } as SaveMomGoodInput,
     });
   }));
+
+  await updateInventoryBalance(server);
 }
+
