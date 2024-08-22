@@ -280,12 +280,6 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          title: "仓库",
-          code: "warehouse",
-          width: "160px",
-        },
-        {
-          type: "auto",
           code: "lotNum",
           width: "200px",
         },
