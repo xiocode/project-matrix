@@ -127,7 +127,20 @@ export default {
                 $id: `${props.$id}_businessType`,
                 placeholder: "请选择",
                 columns: [{ title: "名称", code: "name" }],
-                requestConfig: { url: "/mom/mom_inventory_business_types/operations/find", method: "post" },
+                requestConfig: {
+                  url: "/mom/mom_inventory_business_types/operations/find",
+                  method: "post",
+                  params: {
+                    fixedFilters: [
+                      {
+                        field: "operationType",
+                        operator: "in",
+                        value: ["in", "out"],
+                        itemType: "text",
+                      },
+                    ],
+                  },
+                },
                 onSelectedRecord: [
                   {
                     $action: "script",

@@ -140,10 +140,36 @@ const page: RapidPage = {
         {
           $type: "sonicToolbarFormItem",
           formItemType: "search",
-          placeholder: "搜索批号、托盘号",
+          placeholder: "搜索批号、托盘号、物料",
           actionEventName: "onSearch",
           filterMode: "contains",
-          filterFields: ["lotNum", "binNum"],
+          filterFields: [
+            "lotNum",
+            "binNum",
+            {
+              field: "material",
+              operator: "exists",
+              filters: [
+                {
+                  operator: "or",
+                  filters: [
+                    {
+                      field: "name",
+                      operator: "contains",
+                    },
+                    {
+                      field: "code",
+                      operator: "contains",
+                    },
+                    {
+                      field: "specification",
+                      operator: "contains",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
       searchForm: {
