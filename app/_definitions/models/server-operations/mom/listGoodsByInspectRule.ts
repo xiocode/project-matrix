@@ -1,5 +1,4 @@
-import type {ActionHandlerContext, IRpdServer, ServerOperation} from "@ruiapp/rapid-core";
-import {MomMaterialLotInventoryBalance,} from "~/_definitions/meta/entity-types";
+import {ActionHandlerContext, IRpdServer, mapDbRowToEntity, ServerOperation} from "@ruiapp/rapid-core";
 
 export type ListLotsInput = {
   inspectRuleId: number;
@@ -7,9 +6,6 @@ export type ListLotsInput = {
   materialId: number;
 };
 
-export interface ListLotsOut extends MomMaterialLotInventoryBalance {
-  InspectResult: boolean;
-}
 
 export default {
   code: "listLotsByInspectRule",
@@ -24,7 +20,9 @@ export default {
 
 async function listLotsByInspectRule(server: IRpdServer, input: ListLotsInput) {
 
-  const transfers = await server.queryDatabaseObject(
+
+
+  const rows = await server.queryDatabaseObject(
     `
       with inspect_measurements_cte AS (select mim.sheet_id, mic.name, mim.qualitative_value, mim.quantitative_value
                                         from mom_inspection_measurements mim
@@ -91,9 +89,7 @@ async function listLotsByInspectRule(server: IRpdServer, input: ListLotsInput) {
     [input.inspectRuleId, input.customerId, input.materialId],
   );
 
-  return transfers.map((item) => {
-    return {
-      ...item
-    } as ListLotsOut;
-  });
+  const model =  server.getModel({ singularCode: "momMaterialLotInventoryBalance" });
+
+  return rows.map((item) => mapDbRowToEntity(server, model!, item, false));
 }
