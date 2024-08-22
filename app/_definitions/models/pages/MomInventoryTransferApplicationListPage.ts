@@ -22,10 +22,12 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "from",
+      required: true,
     },
     {
       type: "auto",
       code: "to",
+      required: true,
     },
     // {
     //   type: "auto",
