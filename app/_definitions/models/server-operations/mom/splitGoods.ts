@@ -1,7 +1,6 @@
 import type {ActionHandlerContext, IRpdServer, RouteContext, ServerOperation} from "@ruiapp/rapid-core";
 import type {MomGood, SaveMomGoodInput,} from "~/_definitions/meta/entity-types";
 import SequenceService, {GenerateSequenceNumbersInput} from "@ruiapp/rapid-core/src/plugins/sequence/SequenceService";
-import MomGoodTransfer from "~/_definitions/models/entities/MomGoodTransfer";
 
 export type SplitGoodsInput = {
   originGoodId: number;
@@ -88,4 +87,170 @@ async function splitGoods(server: IRpdServer, ctx: RouteContext, input: SplitGoo
     id: originGood.id,
     entityToSave: { state: "splitted", quantity: 0 } as SaveMomGoodInput,
   });
+
+  await updateInventoryBalance(server);
+}
+
+
+export async function updateInventoryBalance(server: IRpdServer) {
+
+  await server.queryDatabaseObject(
+    `
+      WITH material_balance AS (SELECT material_id,
+                                       unit_id,
+                                       tags,
+                                       SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
+                                FROM mom_goods
+                                GROUP BY material_id, unit_id, tags)
+      INSERT
+      INTO mom_material_inventory_balances (material_id, tags, unit_id, available_quantity, on_hand_quantity,
+                                            created_at,
+                                            updated_at)
+      SELECT mb.material_id,
+             mb.tags,
+             mb.unit_id,
+             mb.on_hand_quantity,
+             mb.on_hand_quantity,
+             NOW(),
+             NOW()
+      FROM material_balance mb
+      ON CONFLICT (material_id, coalesce(tags, ''))
+        DO UPDATE SET available_quantity = EXCLUDED.available_quantity,
+                      on_hand_quantity   = EXCLUDED.on_hand_quantity,
+                      updated_at         = EXCLUDED.updated_at;
+    `,
+  );
+
+  await server.queryDatabaseObject(
+    `
+      WITH lot_balance AS (SELECT material_id,
+                                  tags,
+                                  lot_num,
+                                  lot_id,
+                                  SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
+                           FROM mom_goods
+                           GROUP BY material_id, tags, lot_num, lot_id)
+      INSERT
+      INTO mom_material_lot_inventory_balances (material_id, tags, lot_num, lot_id, on_hand_quantity, created_at,
+                                                updated_at)
+      SELECT lb.material_id,
+             lb.tags,
+             lb.lot_num,
+             lb.lot_id,
+             lb.on_hand_quantity,
+             NOW(),
+             NOW()
+      FROM lot_balance lb
+      ON CONFLICT (material_id, coalesce(tags, ''), lot_id)
+        DO UPDATE SET on_hand_quantity = EXCLUDED.on_hand_quantity,
+                      updated_at       = EXCLUDED.updated_at;
+    `,
+  );
+
+  await server.queryDatabaseObject(
+    `
+      WITH material_balance AS (SELECT material_id,
+                                       unit_id,
+                                       tags,
+                                       SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
+                                FROM mom_goods
+                                GROUP BY material_id, unit_id, tags)
+      INSERT
+      INTO mom_material_inventory_balances (material_id, tags, unit_id, available_quantity, on_hand_quantity,
+                                            created_at,
+                                            updated_at)
+      SELECT mb.material_id,
+             mb.tags,
+             mb.unit_id,
+             mb.on_hand_quantity,
+             mb.on_hand_quantity,
+             NOW(),
+             NOW()
+      FROM material_balance mb
+      ON CONFLICT (material_id, coalesce(tags, ''))
+        DO UPDATE SET available_quantity = EXCLUDED.available_quantity,
+                      on_hand_quantity   = EXCLUDED.on_hand_quantity,
+                      updated_at         = EXCLUDED.updated_at;
+    `,
+  );
+
+  await server.queryDatabaseObject(
+    `
+      WITH lot_warehouse_balance AS (SELECT material_id,
+                                            tags,
+                                            lot_num,
+                                            lot_id,
+                                            warehouse_id,
+                                            SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
+                                     FROM mom_goods
+                                     GROUP BY material_id, tags, lot_num, lot_id, warehouse_id)
+      INSERT
+      INTO mom_material_lot_warehouse_inventory_balances (material_id, tags, lot_num, lot_id, warehouse_id,
+                                                          on_hand_quantity,
+                                                          created_at, updated_at)
+      SELECT lwb.material_id,
+             lwb.tags,
+             lwb.lot_num,
+             lwb.lot_id,
+             lwb.warehouse_id,
+             lwb.on_hand_quantity,
+             NOW(),
+             NOW()
+      FROM lot_warehouse_balance lwb
+      ON CONFLICT (material_id, coalesce(tags, ''), lot_id, warehouse_id)
+        DO UPDATE SET on_hand_quantity = EXCLUDED.on_hand_quantity,
+                      updated_at       = EXCLUDED.updated_at;
+    `,
+  );
+
+  await server.queryDatabaseObject(
+    `
+      WITH warehouse_balance AS (SELECT material_id,
+                                        tags,
+                                        warehouse_id,
+                                        SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
+                                 FROM mom_goods
+                                 GROUP BY material_id, tags, warehouse_id)
+      INSERT
+      INTO mom_material_warehouse_inventory_balances (material_id, tags, warehouse_id, on_hand_quantity, created_at,
+                                                      updated_at)
+      SELECT wb.material_id,
+             wb.tags,
+             wb.warehouse_id,
+             wb.on_hand_quantity,
+             NOW(),
+             NOW()
+      FROM warehouse_balance wb
+      ON CONFLICT (material_id, coalesce(tags, ''), warehouse_id)
+        DO UPDATE SET on_hand_quantity = EXCLUDED.on_hand_quantity,
+                      updated_at       = EXCLUDED.updated_at;
+    `,
+  );
+
+  await server.queryDatabaseObject(
+    `
+      WITH location_balance AS (SELECT material_id,
+                                       tags,
+                                       warehouse_id,
+                                       location_id,
+                                       SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
+                                FROM mom_goods
+                                GROUP BY material_id, tags, warehouse_id, location_id)
+      INSERT
+      INTO mom_material_warehouse_location_inventory_balances (material_id, tags, warehouse_id, location_id,
+                                                               on_hand_quantity,
+                                                               created_at, updated_at)
+      SELECT lb.material_id,
+             lb.tags,
+             lb.warehouse_id,
+             lb.location_id,
+             lb.on_hand_quantity,
+             NOW(),
+             NOW()
+      FROM location_balance lb
+      ON CONFLICT (material_id, coalesce(tags, ''), warehouse_id, location_id)
+        DO UPDATE SET on_hand_quantity = EXCLUDED.on_hand_quantity,
+                      updated_at       = EXCLUDED.updated_at;
+    `,
+  );
 }
