@@ -177,6 +177,17 @@ const page: RapidPage = {
         items: [
           {
             type: "auto",
+            code: "lotNum",
+            filterMode: "contains",
+          },
+          {
+            type: "auto",
+            label: "托盘号",
+            code: "binNum",
+            filterMode: "contains",
+          },
+          {
+            type: "auto",
             code: "state",
             filterMode: "in",
             itemType: "text",

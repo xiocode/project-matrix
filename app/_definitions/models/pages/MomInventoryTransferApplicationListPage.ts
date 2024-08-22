@@ -215,7 +215,7 @@ const page: RapidPage = {
           actionText: "修改",
           $permissionCheck: "inventoryApplication.manage",
           $exps: {
-            _hidden: "$slot.record.operationState !== 'pending'",
+            disabled: "$slot.record.operationState !== 'pending'",
           },
         },
         {
@@ -227,7 +227,7 @@ const page: RapidPage = {
           entityCode: "MomInventoryApplication",
           $permissionCheck: "inventoryApplication.manage",
           $exps: {
-            _hidden: "$slot.record.operationState !== 'pending'",
+            disabled: "$slot.record.operationState !== 'pending'",
           },
         },
         // {
@@ -236,7 +236,7 @@ const page: RapidPage = {
         //   actionText: "下发",
         //   $permissionCheck: "inventoryApplication.manage",
         //   $exps: {
-        //     _hidden: "$slot.record.operationState !== 'pending' || $slot.record.operationType !== 'in'",
+        //     disabled: "$slot.record.operationState !== 'pending' || $slot.record.operationType !== 'in'",
         //   },
         //   onAction: [
         //     {
