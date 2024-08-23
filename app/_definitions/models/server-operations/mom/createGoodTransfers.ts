@@ -88,10 +88,12 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
 
   input.lotId = lotInfo?.id;
 
+  let palletCount = input.palletCount || input.transfers.length;
+
   const unit = await unitManager.findById({ id: material.defaultUnit?.id });
   const binNums = await sequenceService.generateSn(server, {
     ruleCode: "qixiang.binNum",
-    amount: input.palletCount
+    amount: palletCount
   } as GenerateSequenceNumbersInput)
 
 

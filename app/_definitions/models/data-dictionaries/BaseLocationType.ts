@@ -10,6 +10,7 @@ export default {
     { name: "建筑物", value: "building" },
     { name: "车间", value: "shop" },
     { name: "仓库", value: "warehouse" },
+    { name: "库区", value: "warehouseArea" },
     { name: "库位", value: "storageArea" },
     { name: "办公楼", value: "office" },
     { name: "实验室", value: "lab" },
