@@ -21,6 +21,7 @@ export default {
 
     const { mergeBinNum, merging } = useMergeBinNum(() => {
       closeModal();
+      context.scope.setVars({ [`goodEntityList-rapidEntityList-selectedIds`]: [] });
       context.scope.getStore("list").loadData();
     });
 
@@ -30,7 +31,7 @@ export default {
       return `将标识卡 “${materialInfo}” 合并`;
     }, [selectedRecords]);
 
-    const { locationOptions, canMerge } = useMemo(() => {
+    const { locationOptions, canMerge, isAllNormalState } = useMemo(() => {
       const materialGroupKeys = new Set();
       const locationMap = new Map();
       selectedRecords.forEach((r: any) => {
@@ -41,6 +42,7 @@ export default {
       });
 
       return {
+        isAllNormalState: !selectedRecords.some((r: any) => r.state !== "normal"),
         // 不同物料、不同批次的不允许合并
         canMerge: materialGroupKeys.size === 1,
         // 如果是同一库位则只能选择该库位，如果是不同库位可以选择任意原标识卡库位
@@ -73,6 +75,11 @@ export default {
             script: () => {
               if (!canMerge) {
                 message.error("不同物料、不同批次的不允许合并");
+                return;
+              }
+
+              if (!isAllNormalState) {
+                message.error("仅正常状态的标签允许合并");
                 return;
               }
 

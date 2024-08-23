@@ -382,6 +382,17 @@ export default {
     return (
       <div className="pm_inspection-input-sectioN">
         <Spin spinning={loading || false}>
+          {Info && (!Info?.sampleCount || !Info?.rule?.id) && (
+            <Button
+              style={{ marginBottom: 16 }}
+              type="primary"
+              onClick={() => {
+                checkCofigInit();
+              }}
+            >
+              检验配置
+            </Button>
+          )}
           {inspection &&
             inspection.map((item: any, index) => {
               return (
@@ -857,20 +868,18 @@ function useConfigForm(options: { sheetId: string; onOk: (value: any) => void })
       open={open}
       destroyOnClose
       closable={false}
-      footer={
-        <Button
-          type="primary"
-          onClick={() => {
-            form.validateFields().then((res) => {
-              onOk(res);
-              setConfigCheckRule(res);
-              history.go(0);
-            });
-          }}
-        >
-          提交
-        </Button>
-      }
+      cancelText="取消"
+      okText="提交"
+      onCancel={() => {
+        setOpen(false);
+      }}
+      onOk={() => {
+        form.validateFields().then((res) => {
+          onOk(res);
+          setConfigCheckRule(res);
+          history.go(0);
+        });
+      }}
     >
       <Alert message="提示：检测到当前检验单配置异常，请补全以下配置" type="error" />
       <Form style={{ marginTop: 20 }} form={form} labelCol={{ span: 6 }}>
