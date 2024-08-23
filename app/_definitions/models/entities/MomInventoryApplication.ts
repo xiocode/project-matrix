@@ -130,6 +130,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "来源",
       type: "option",
       dataDictionary: "MomApplicationSource",
+      defaultValue: "manual",
     },
     {
       code: "processInstance",

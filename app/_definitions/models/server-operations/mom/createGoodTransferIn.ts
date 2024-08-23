@@ -40,7 +40,7 @@ export default {
     const { server } = ctx;
     const input: CreateGoodTransferInput = ctx.input;
 
-    await createGoodTransfers(server, input);
+    await createGoodTransferIn(server, input);
 
     ctx.output = {
       result: ctx.input,
@@ -48,7 +48,7 @@ export default {
   },
 } satisfies ServerOperation;
 
-async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransferInput) {
+async function createGoodTransferIn(server: IRpdServer, input: CreateGoodTransferInput) {
   const goodManager = server.getEntityManager<MomGood>("mom_good");
   const materialManager = server.getEntityManager<BaseMaterial>("base_material");
   const inspectRuleManager = server.getEntityManager<MomInspectionRule>("mom_inspection_rule");
@@ -89,7 +89,13 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
 
   input.lotId = lotInfo?.id;
 
-  let palletCount = input.palletCount || input.transfers.length;
+  let palletCount = 0;
+  if (input.palletCount) {
+    palletCount = input.palletCount;
+  }
+  if (input.transfers) {
+    palletCount = (input.palletCount || 0) + input.transfers.length;
+  }
 
   const unit = await unitManager.findById({ id: material.defaultUnit?.id });
   const binNums = await sequenceService.generateSn(server, {
@@ -97,10 +103,14 @@ async function createGoodTransfers(server: IRpdServer, input: CreateGoodTransfer
     amount: palletCount
   } as GenerateSequenceNumbersInput)
 
-
-  const goods: SaveMomGoodInput[] = input.palletCount
-    ? Array.from({ length: input.palletCount }, (_, i) => createGoodInput(material, unit, input, validityDate, `${ binNums[i] }`, input.palletWeight))
-    : input.transfers.map((transfer, idx) => createGoodInput(material, unit, input, validityDate, `${ binNums[idx] }`, transfer.palletWeight));
+  let goods: SaveMomGoodInput[] = [];
+  if (input.palletCount && input.palletCount > 0) {
+    goods = goods.concat(Array.from({ length: input.palletCount }, (_, index) => createGoodInput(material, unit, input, validityDate, `${ binNums[index] }`, input.palletWeight)))
+  }
+  if (input.transfers && input.transfers.length > 0) {
+    let palletCount = input.palletCount || 0;
+    goods = goods.concat(input.transfers.map((transfer, index) => createGoodInput(material, unit, input, validityDate, `${ binNums[palletCount + index] }`, transfer.palletWeight)))
+  }
 
   let totalWeight = 0;
 
