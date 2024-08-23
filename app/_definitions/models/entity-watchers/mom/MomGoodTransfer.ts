@@ -3,7 +3,7 @@ import {
   type BaseLot,
   type BaseMaterial,
   MomGood,
-  MomGoodTransfer, MomInspectionSheet,
+  MomGoodTransfer,
   MomInventoryApplication,
   type MomInventoryBusinessType,
   type MomInventoryOperation,

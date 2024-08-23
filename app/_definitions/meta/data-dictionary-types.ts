@@ -25,6 +25,7 @@ export type BaseLocationType =
   | 'building'
   | 'shop'
   | 'warehouse'
+  | 'warehouseArea'
   | 'storageArea'
   | 'office'
   | 'lab'
