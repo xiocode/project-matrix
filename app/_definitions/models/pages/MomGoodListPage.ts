@@ -240,6 +240,32 @@ const page: RapidPage = {
           },
           {
             type: "auto",
+            code: "warehouseArea",
+            filterMode: "in",
+            filterFields: ["warehouse_area_id"],
+            formControlProps: {
+              requestParams: {
+                fixedFilters: [
+                  {
+                    field: "parent_id",
+                    operator: "in",
+                    value: [],
+                  },
+                  {
+                    field: "type",
+                    operator: "eq",
+                    value: "warehouseArea",
+                  },
+                ],
+              },
+            },
+            $exps: {
+              "formControlProps.requestParams.fixedFilters[0].value":
+                "_.isEmpty($self.form.getFieldValue('warehouse')) ? undefined : $self.form.getFieldValue('warehouse')",
+            },
+          },
+          {
+            type: "auto",
             code: "location",
             filterMode: "in",
             filterFields: ["location_id"],
@@ -260,7 +286,8 @@ const page: RapidPage = {
               },
             },
             $exps: {
-              "formControlProps.requestParams.fixedFilters[0].value": "$self.form.getFieldValue('warehouse')",
+              "formControlProps.requestParams.fixedFilters[0].value":
+                "_.isEmpty($self.form.getFieldValue('warehouseArea')) ? undefined : $self.form.getFieldValue('warehouseArea')",
             },
           },
         ],
@@ -270,6 +297,24 @@ const page: RapidPage = {
             script: `
               const changedValues = event.args[0] || {};
               if(changedValues.hasOwnProperty('warehouse')) {
+                event.page.sendComponentMessage(event.sender.$id, {
+                  name: "setFieldsValue",
+                  payload: {
+                    warehouseArea: undefined,
+                    location: undefined,
+                  }
+                });
+
+                await new Promise(function(res){
+                  setTimeout(() => {
+                    res(null);
+                  }, 600);
+                });
+
+                event.page.sendComponentMessage('goodEntityList-searchForm-rapidForm-item-warehouseArea-input', {
+                  name: "refreshData",
+                });
+              }else if(changedValues.hasOwnProperty('warehouseArea')){
                 event.page.sendComponentMessage(event.sender.$id, {
                   name: "setFieldsValue",
                   payload: {
