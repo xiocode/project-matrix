@@ -2877,6 +2877,10 @@ export interface MomGood {
    */
   warehouse?: Partial<BaseLocation>;
   /**
+   * 库区
+   */
+  warehouseArea?: Partial<BaseLocation>;
+  /**
    * 位置
    */
   location?: Partial<BaseLocation>;

@@ -822,6 +822,7 @@ const entityFieldCodes = {
     'quantity',
     'unit',
     'warehouse',
+    'warehouseArea',
     'location',
     'putInTime',
     'source',
