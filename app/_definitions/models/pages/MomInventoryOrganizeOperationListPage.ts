@@ -27,6 +27,12 @@ const page: RapidPage = {
           filterFields: ["binNum"],
         },
       ],
+      orderBy: [
+        {
+          field: "createdAt",
+          desc: true,
+        },
+      ],
       fixedFilters: [
         {
           field: "operation",

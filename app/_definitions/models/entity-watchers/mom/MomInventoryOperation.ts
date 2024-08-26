@@ -20,6 +20,7 @@ import KisHelper from "~/sdk/kis/helper";
 import KisInventoryOperationAPI, {WarehouseEntry} from "~/sdk/kis/inventory";
 import rapidApi from "~/rapidApi";
 import {getNowString} from "~/utils/time-utils";
+import {updateInventoryBalance} from "~/_definitions/models/server-operations/mom/splitGoods";
 
 export default [
   {
@@ -343,7 +344,7 @@ export default [
                 }
               }
 
-              if (inventoryOperation.businessType && inventoryOperation.businessType.id) {
+              if ((inventoryOperation.operationType === "in" || inventoryOperation.operationType === "out") && inventoryOperation.businessType && inventoryOperation.businessType.id) {
                 await updateInventoryStats(server, inventoryOperation?.businessType?.id, inventoryOperation.operationType, transfers);
               }
             }
@@ -389,7 +390,7 @@ export default [
           entity: {
             user: { id: ctx?.routerContext?.state.userId },
             targetSingularCode: "mom_inventory_operation",
-            targetSingularName: `库存操作单 - ${inventoryOperation?.businessType?.name} - ${inventoryOperation?.code}`,
+            targetSingularName: `库存操作单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
             method: "delete",
           }
         })
