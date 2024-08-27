@@ -120,7 +120,12 @@ async function listInventoryOperationCount(server: IRpdServer, input: ListInvent
     `;
   }
 
-  const transfers = await server.queryDatabaseObject(stmt, [input.warehouseId]);
+  let params = []
+  if (input.warehouseId && input.warehouseId >0) {
+    params.push(input.warehouseId)
+  }
+
+  const transfers = await server.queryDatabaseObject(stmt, params);
 
 
   const outputs = transfers.map((item) => {
