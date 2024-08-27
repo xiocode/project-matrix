@@ -1274,6 +1274,7 @@ const entityFieldCodes = {
     'department',
     'finishedMaterial',
     'supplier',
+    'processed',
     'createdAt',
     'createdBy',
     'updatedAt',

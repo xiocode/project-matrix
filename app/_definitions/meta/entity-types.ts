@@ -4760,6 +4760,10 @@ export interface MomInventoryOperation {
    */
   supplier?: Partial<BasePartner>;
   /**
+   * 是否处理
+   */
+  processed?: boolean;
+  /**
    * 创建时间
    */
   createdAt?: string;

@@ -20,7 +20,7 @@ import KisHelper from "~/sdk/kis/helper";
 import KisInventoryOperationAPI, {WarehouseEntry} from "~/sdk/kis/inventory";
 import rapidApi from "~/rapidApi";
 import {getNowString} from "~/utils/time-utils";
-import {updateInventoryBalance} from "~/_definitions/models/server-operations/mom/splitGoods";
+import dayjs from "dayjs";
 
 export default [
   {
@@ -318,12 +318,14 @@ export default [
 
               if (inventoryOperation.operationType === "in") {
                 for (const transfer of transfers) {
-                  if (transfer.good_id) {
+                  if (transfer.good_id && transfer.to_location_id) {
                     await server.getEntityManager<MomGood>("mom_good").updateEntityById({
                       routeContext: ctx.routerContext,
                       id: transfer.good_id,
                       entityToSave: {
                         state: "normal",
+                        location: {id: transfer.to_location_id},
+                        putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
                       } as SaveMomGoodInput,
                     });
                   }

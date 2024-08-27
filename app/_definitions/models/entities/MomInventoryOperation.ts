@@ -154,6 +154,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_partner",
       targetIdColumnName: "supplier_id",
     },
+    {
+      code: "processed",
+      name: "是否处理",
+      type: "boolean",
+      defaultValue: "false"
+    },
   ],
 };
 

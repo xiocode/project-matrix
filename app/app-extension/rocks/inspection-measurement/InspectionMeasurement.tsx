@@ -28,7 +28,7 @@ export default {
     const [validateOpen, setValidateOpen] = useState<boolean>(false);
     const [resultState, setResultState] = useState<boolean>(false);
 
-    const { loadInpsectionMeasurement, loading, inspection, setState } = useInpsectionMeasurement({
+    const { loadInpsectionMeasurement, loading, inspection, setState } = useInspectionMeasurement({
       ruleId: Info?.rule?.id,
       sheetId: Info?.id,
       round: Info?.round,
@@ -538,7 +538,7 @@ interface ICheckRuleData {
   checkRules?: any[];
 }
 
-function useInpsectionMeasurement(props: { ruleId: string; round: number; sheetId: string; sampleCount: number }) {
+function useInspectionMeasurement(props: { ruleId: string; round: number; sheetId: string; sampleCount: number }) {
   const { ruleId, sheetId, sampleCount, round } = props;
   const [state, setState] = useSetState<InpsectionData>({});
   const { submitInspectionMeasurement } = useCreateInspectionMeasurement({
@@ -549,7 +549,7 @@ function useInpsectionMeasurement(props: { ruleId: string; round: number; sheetI
     },
   });
 
-  const loadInpsectionMeasurement = async () => {
+  const loadInspectionMeasurement = async () => {
     if (state.loading) {
       return;
     }
@@ -685,7 +685,7 @@ function useInpsectionMeasurement(props: { ruleId: string; round: number; sheetI
     }
   };
 
-  return { loadInpsectionMeasurement, ...state, setState };
+  return { loadInpsectionMeasurement: loadInspectionMeasurement, ...state, setState };
 }
 
 function useCreateInspectionMeasurement(options: { sheetId: string; round: number; onSuccess: () => void }) {
@@ -707,9 +707,6 @@ function useCreateInspectionMeasurement(options: { sheetId: string; round: numbe
               round: isReCheck ? options?.round + 1 : 1,
               measurements: item.items.map((it: any) => {
                 return {
-                  instrument: {
-                    id: item.items.find((i: any) => i.uuid === it.uuid)?.instrument?.id,
-                  },
                   isQualified: calculateInspectionResult(it, it.measuredValue),
                   sampleCode: item.code,
                   locked: isReCheck ? true : false,
@@ -787,7 +784,7 @@ function useUpdateInspectionMeasurement(options: { sheetId: string; onSuccess: (
   return { submitting, update };
 }
 
-function useSetCofigCheckRule(options: { sheetId: string }) {
+function useSetConfigCheckRule(options: { sheetId: string }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [state, setState] = useSetState<ICheckRuleData>({});
@@ -852,7 +849,7 @@ function useConfigForm(options: { sheetId: string; onOk: (value: any) => void })
   const [open, setOpen] = useState<boolean>(false);
   const [formItems, setFormItems] = useState<any[]>([]);
   const [form] = Form.useForm();
-  const { checkRules, loadCheckRuleList, setConfigCheckRule } = useSetCofigCheckRule({ sheetId: options?.sheetId });
+  const { checkRules, loadCheckRuleList, setConfigCheckRule } = useSetConfigCheckRule({ sheetId: options?.sheetId });
 
   const modal = (
     <Modal
