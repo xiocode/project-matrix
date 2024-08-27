@@ -117,10 +117,10 @@ async function listInventoryOperationCount(server: IRpdServer, input: ListInvent
     where 1 = 1
       and mia.operation_type = 'transfer' and (mia.from_warehouse_id = $1 or mia.to_warehouse_id = $1)
     group by mibt.operation_type, mibt.config ->> 'defaultSourceType'
-    `
+    `;
   }
 
-  const transfers = await server.queryDatabaseObject(stmt);
+  const transfers = await server.queryDatabaseObject(stmt, [input.warehouseId]);
 
 
   const outputs = transfers.map((item) => {
