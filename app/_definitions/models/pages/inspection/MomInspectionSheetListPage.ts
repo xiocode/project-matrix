@@ -21,10 +21,17 @@ const formConfig: Partial<RapidEntityFormConfig> = {
           { code: "specification", title: "规格", width: 120 },
         ],
       },
+      required: true,
     },
     {
       type: "auto",
       code: "lotNum",
+      required: true,
+    },
+    {
+      type: "auto",
+      code: "sampleCount",
+      required: true,
     },
     // {
     //   type: "auto",
@@ -67,6 +74,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         listTextFormat: "{{name}}",
         listFilterFields: ["name"],
       },
+      required: true,
     },
     // {
     //   code: "routeProcess",
@@ -84,14 +92,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   type: "auto",
     //   code: "result",
     // },
-    {
-      type: "auto",
-      code: "state",
-    },
-    {
-      type: "auto",
-      code: "approvalState",
-    },
+    // {
+    //   type: "auto",
+    //   code: "state",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "approvalState",
+    // },
   ],
   defaultFormFields: {
     result: "uninspected",
@@ -278,6 +286,9 @@ const page: RapidPage = {
           actionType: "edit",
           actionText: "修改",
           // $permissionCheck: "inspection.manage",
+          $exps: {
+            disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
+          },
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -287,6 +298,9 @@ const page: RapidPage = {
           dataSourceCode: "list",
           entityCode: "MomInspectionSheet",
           // $permissionCheck: "inspection.manage",
+          $exps: {
+            disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
+          },
         },
       ],
       newForm: cloneDeep(formConfig),
