@@ -327,7 +327,7 @@ const page: RapidPage = {
           code: "code",
           // rendererType: 'rapidLinkRenderer',
           rendererProps: {
-            url: "/pages/mom_inventory_application_details?id={{id}}",
+            url: "/pages/mom_inventory_application_details?id={{id}}&operationType={{operationType}}",
           },
           width: "200px",
         },
