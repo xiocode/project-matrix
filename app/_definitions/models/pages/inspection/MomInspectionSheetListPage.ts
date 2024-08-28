@@ -138,7 +138,7 @@ const page: RapidPage = {
           ],
         },
       ],
-      extraProperties: ["rule"],
+      extraProperties: ["rule", "treatment"],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -251,6 +251,11 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "treatment",
+          width: "100px",
+        },
+        {
+          type: "auto",
           code: "sender",
           width: "150px",
           rendererProps: {
@@ -279,6 +284,7 @@ const page: RapidPage = {
           width: "150px",
         },
       ],
+      actionsColumnWidth: "160px",
       actions: [
         {
           $type: "sonicRecordActionEditEntity",
@@ -300,6 +306,12 @@ const page: RapidPage = {
           // $permissionCheck: "inspection.manage",
           $exps: {
             disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
+          },
+        },
+        {
+          $type: "insecptionBadAction",
+          $exps: {
+            _hidden: "$slot.record.result === 'qualified'",
           },
         },
       ],

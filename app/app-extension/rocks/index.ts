@@ -33,6 +33,7 @@ import ViewInspectionRecordAction from "./view-inspection-record-action/ViewInsp
 import InspectionConditionRenderer from "./inspection-condition-renderer/InspectionConditionRenderer";
 import InspectionFeedStockList from "./inspection-feedstock/InspectionFeedStockList";
 import InspectionFinishedStockList from "./inspection-finishedstock/InspectionFinishedStockList";
+import InsecptionBadAction from "./insecption-bad-action/InsecptionBadAction";
 
 // render
 import BlockRerenderRock from "./block-rerender-rock/BlockRerenderRock";
@@ -73,6 +74,7 @@ export default [
   InspectionConditionRenderer,
   InspectionFeedStockList,
   InspectionFinishedStockList,
+  InsecptionBadAction,
 
   // render
   BlockRerenderRock,
