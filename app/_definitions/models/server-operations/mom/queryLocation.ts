@@ -1,7 +1,7 @@
 import {ActionHandlerContext, IRpdServer, mapDbRowToEntity, ServerOperation} from "@ruiapp/rapid-core";
 
 export type QueryLocationInput = {
-  warehouseId: number;
+  warehouseId?: string;
   code: string;
 };
 
@@ -21,15 +21,27 @@ export default {
 
 async function queryLocation(server: IRpdServer, input: QueryLocationInput) {
 
-  const rows = await server.queryDatabaseObject(
+  let stmt =     `
+      select *
+      from base_locations
+      where code = $1;
     `
+
+  let params = [input.code]
+
+  if (input.warehouseId && input.warehouseId != "") {
+    stmt =     `
       select *
       from base_locations
       where code = $1
         AND get_root_location_id(id) = $2;
-    `,
-    [input.code, input.warehouseId],
-  );
+    `
+    params.push(input.warehouseId)
+  }
+
+
+
+  const rows = await server.queryDatabaseObject(stmt,params);
 
   const model = server.getModel({ singularCode: "base_location" });
 
