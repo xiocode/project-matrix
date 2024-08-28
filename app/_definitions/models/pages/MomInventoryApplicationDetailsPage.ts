@@ -625,6 +625,7 @@ const page: RapidPage = {
               ],
               $exps: {
                 "stores[0].filters[0].value": "$rui.parseQuery().id",
+                "stores[0].filters[1].value": "$rui.parseQuery().operationType",
                 "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.application": "$rui.parseQuery().id",
               },
