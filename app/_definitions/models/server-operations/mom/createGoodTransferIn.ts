@@ -249,15 +249,38 @@ async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionS
 
   const inspectionSheetManager = server.getEntityManager("mom_inspection_sheet");
 
-  const inspectionSheet = await inspectionSheetManager.findEntity({
+  let inspectionSheet = await inspectionSheetManager.findEntity({
     filters: [
       { operator: "eq", field: "lot_num", value: sheet.lotNum },
       { operator: "eq", field: "material_id", value: sheet.material.id },
       { operator: "eq", field: "inventory_operation_id", value: sheet.inventoryOperation?.id },
     ],
+    keepNonPropertyFields: true,
   });
 
   if (inspectionSheet) {
+    return inspectionSheet
+  }
+
+  inspectionSheet = await inspectionSheetManager.findEntity({
+    filters: [
+      { operator: "eq", field: "lot_num", value: sheet.lotNum },
+      { operator: "eq", field: "material_id", value: sheet.material.id },
+      { operator: "null", field: "inventory_operation_id" },
+    ],
+    keepNonPropertyFields: true,
+  });
+
+  if (inspectionSheet) {
+    await inspectionSheetManager.updateEntityById(
+      {
+        id: inspectionSheet.id,
+        entityToSave: {
+          lot_id: sheet.lot?.id,
+          inventory_operation_id: sheet.inventoryOperation?.id
+        }
+      }
+    );
     return inspectionSheet;
   }
 
