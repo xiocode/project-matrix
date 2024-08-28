@@ -457,6 +457,9 @@ const page: RapidPage = {
           actionType: "split",
           actionText: "拆分",
           $permissionCheck: "inventoryTag.manage",
+          $exps: {
+            disabled: `$slot.record.state !== 'normal'`,
+          },
         },
       ],
       newForm: cloneDeep(formConfig),

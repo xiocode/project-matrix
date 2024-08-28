@@ -119,7 +119,6 @@ const page: RapidPage = {
         {
           type: "link",
           code: "name",
-          width: "100px",
           fixed: "left",
           rendererType: "link",
           rendererProps: {

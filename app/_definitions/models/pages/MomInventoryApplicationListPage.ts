@@ -15,6 +15,19 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "businessType",
+      required: true,
+      formControlProps: {
+        requestParams: {
+          fixedFilters: [
+            {
+              field: "operationType",
+              operator: "in",
+              value: ["in", "out"],
+              itemType: "text",
+            },
+          ],
+        },
+      },
     },
     {
       type: "auto",
@@ -23,10 +36,38 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     // {
     //   type: "auto",
     //   code: "from",
+    //   formControlProps: {
+    //     requestParams: {
+    //       fixedFilters: [
+    //         {
+    //           field: "type",
+    //           operator: "eq",
+    //           value: "warehouse",
+    //         },
+    //       ],
+    //     },
+    //   },
+    //   $exps: {
+    //     _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+    //   },
     // },
     // {
     //   type: "auto",
     //   code: "to",
+    //   formControlProps: {
+    //     requestParams: {
+    //       fixedFilters: [
+    //         {
+    //           field: "type",
+    //           operator: "eq",
+    //           value: "warehouse",
+    //         },
+    //       ],
+    //     },
+    //   },
+    //   $exps: {
+    //     _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
+    //   },
     // },
     // {
     //   type: "auto",
@@ -38,6 +79,26 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     operationState: "pending",
     source: "manual",
   },
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `
+        const changedValues = event.args[0] || {};
+        if(changedValues.hasOwnProperty('businessType')) {
+          const _ = event.framework.getExpressionVars()._;
+          const businessTypeItems = _.get(event.scope.stores['dataFormItemList-businessType'], 'data.list');
+          const businessTypeItem = _.find(businessTypeItems, function (item) { return item.id == changedValues.businessType });
+
+          event.page.sendComponentMessage(event.sender.$id, {
+            name: "setFieldsValue",
+            payload: {
+              operationType: _.get(businessTypeItem, "operationType"),
+            }
+          });
+        }
+      `,
+    },
+  ],
 };
 
 const page: RapidPage = {

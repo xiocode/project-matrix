@@ -11,6 +11,15 @@ type ViewModel = {
   ENV: Record<string, any>;
 };
 
+export const links = () => {
+  return [
+    {
+      rel: "icon",
+      href: "/favicon.png",
+    },
+  ];
+};
+
 export const loader: LoaderFunction = async ({ request }) => {
   const systemSettings = (
     await rapidService.get(`svc/systemSettingValues?groupCode=public`, {
@@ -30,7 +39,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   charset: "utf-8",
-  title: data.systemSettings.systemName || "麒祥高新材料WMS",
+  title: data.systemSettings.systemName || "麒祥WMS",
   viewport: "width=device-width,initial-scale=1",
 });
 

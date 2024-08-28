@@ -24,7 +24,7 @@ export default {
   },
 
   Renderer(context, props: Record<string, any>) {
-    const { materialId, businessTypeId, materialCategoryId } = props;
+    const { materialId, businessTypeId, materialCategoryId, warehouseId } = props;
 
     let fixedFilters: FindEntityOptions["filters"] = [
       {
@@ -88,6 +88,14 @@ export default {
       }
     }
 
+    if (warehouseId) {
+      fixedFilters.push({
+        field: "warehouse_id",
+        operator: "eq",
+        value: warehouseId,
+      });
+    }
+
     // TODO: 关联字段排序
     // if (currentStrategy?.validityFilter) {
     //   fixedFilters.push({
@@ -106,7 +114,7 @@ export default {
     // }
 
     const rockConfig: RockConfig = {
-      $id: `${props.$id}_${materialId}_lot_list`,
+      $id: `${props.$id}_${materialId}_${warehouseId}_lot_list`,
       $type: "rapidEntityTableSelect",
       listTextFieldName: "lotNum",
       listValueFieldName: "lotNum",
@@ -155,7 +163,7 @@ export default {
           render: `_.get(record, 'lot.validityDate') && dayjs(_.get(record, 'lot.validityDate')).format('YYYY-MM-DD')`,
         },
       ],
-      entityCode: "MomMaterialLotInventoryBalance",
+      entityCode: warehouseId ? "MomMaterialLotWarehouseInventoryBalance" : "MomMaterialLotInventoryBalance",
       requestParams: {
         fixedFilters,
         orderBy,

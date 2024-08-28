@@ -6,20 +6,24 @@ import { memo, useEffect, useMemo, useState } from "react";
 import rapidApi, { rapidApiRequest } from "~/rapidApi";
 import { PlusOutlined } from "@ant-design/icons";
 import { renderRock } from "@ruiapp/react-renderer";
-import { last, omit, split } from "lodash";
+import { forEach, isEmpty, last, omit, pick, split } from "lodash";
 import dayjs from "dayjs";
+import { materialFormatStrTemplate } from "~/utils/fmt";
+import { ColumnProps } from "antd/lib/table";
+import { decimalSum } from "~/utils/decimal";
 
 const LotSelect = memo<{
   isSalesOut: boolean;
   operationType: string;
   businessType: string;
   customerId: string;
+  warehouseId?: string;
   record: Record<string, any>;
   recordIndex: number;
   context: RockInstanceContext;
   onChange(v: string): void;
 }>((props) => {
-  const { isSalesOut, operationType, businessType, customerId, record: r, recordIndex: i, context } = props;
+  const { isSalesOut, operationType, businessType, customerId, warehouseId, record: r, recordIndex: i, context } = props;
 
   const { loading, inspectionRule } = useInspectionRule({ customerId, materialId: r.material?.id });
 
@@ -27,6 +31,7 @@ const LotSelect = memo<{
     return (
       <CustomerLotSelect
         loading={loading}
+        warehouseId={warehouseId}
         materialId={r.material?.id}
         customerId={customerId}
         inspectRuleId={inspectionRule?.id}
@@ -45,6 +50,7 @@ const LotSelect = memo<{
         $id: i + "_lotnum",
         $type: "materialLotNumSelector",
         materialId: r.material?.id,
+        warehouseId: warehouseId,
         customerId: customerId,
         materialCategoryId: r.material?.category?.id,
         businessTypeId: businessType,
@@ -89,10 +95,89 @@ export default {
     const [isSalesOut, setIsSalesOut] = useState<boolean>(false);
     const [operationType, setOperationType] = useState<string>();
     const [materialItems, setMaterialItems] = useState<any[]>([]);
+    const [enabledBinNum, setEnabledBinNum] = useState<boolean>(false);
+    const [warehouseId, setWarehouseId] = useState<string>();
 
     const { saveApplication, saving } = useSaveApplication(() => {
       navigate("/pages/mom_inventory_application_list");
     });
+
+    let binNumColumn: ColumnProps<any> = {
+      title: "托盘号",
+      dataIndex: "binNum",
+      width: 120,
+      render: (_, r, i) => {
+        let fixedFilters: any[] = [];
+        if (r.material?.id) {
+          fixedFilters.push({
+            field: "material",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: r.material?.id,
+              },
+            ],
+          });
+        }
+        if (r.lotNum) {
+          fixedFilters.push({
+            field: "lotNum",
+            operator: "eq",
+            value: r.lotNum,
+          });
+        }
+        if (warehouseId) {
+          fixedFilters.push({
+            field: "warehouse_id",
+            operator: "eq",
+            value: warehouseId,
+          });
+        }
+
+        return renderRock({
+          context,
+          rockConfig: {
+            $type: "rapidTableSelect",
+            $id: `${i}_${warehouseId}_${r.material?.id}_${r.lotNum}_binNum`,
+            placeholder: "请选择",
+            dropdownMatchSelectWidth: 500,
+            mode: "multiple",
+            listValueFieldName: "binNum",
+            listTextFormat: "{{binNum}}",
+            listFilterFields: ["binNum"],
+            searchPlaceholder: "托盘号搜索",
+            columns: [
+              { title: "托盘号", code: "binNum", width: 100 },
+              { title: "在库数量", code: "quantity", width: 100 },
+              { title: "库位", code: "location.name", width: 100 },
+            ],
+            requestConfig: {
+              url: "/mom/mom_goods/operations/find",
+              method: "post",
+              params: {
+                properties: ["id", "material", "good", "binNum", "lotNum", "lot", "quantity", "location"],
+                fixedFilters,
+              },
+            },
+            value: (r.binNum || []).map((item: any) => item.binNum),
+            onSelectedRecord: [
+              {
+                $action: "script",
+                script: (e: RockEvent) => {
+                  const records: any[] = e.args[1];
+                  setMaterialItems((draft) => {
+                    const binNumQuantity = (records || []).reduce((s, r) => decimalSum(s, r.quantity || 0), 0);
+                    return draft.map((item, index) => (i === index ? { ...item, binNum: records, quantity: binNumQuantity } : item));
+                  });
+                },
+              },
+            ],
+          },
+        });
+      },
+    };
 
     return (
       <div style={{ padding: "24px 0 0" }}>
@@ -100,23 +185,58 @@ export default {
           form={form}
           labelCol={{ span: 2 }}
           wrapperCol={{ span: 5 }}
-          onFinish={(values) => {
+          onFinish={({ warehouse, ...restValues }) => {
+            let applicationItems: any[] = [];
+            forEach(materialItems, (item) => {
+              if (isEmpty(item.binNum)) {
+                applicationItems.push({
+                  material: item.material?.id,
+                  unit: item.unit?.id,
+                  lotNum: item.lotNum,
+                  quantity: item.quantity,
+                  remark: item.remark,
+                });
+              } else {
+                forEach(item.binNum, (binNumItem) => {
+                  applicationItems.push({
+                    material: item.material?.id,
+                    unit: item.unit?.id,
+                    lotNum: item.lotNum,
+                    remark: item.remark,
+                    quantity: binNumItem.quantity,
+                    good: binNumItem.good,
+                    binNum: binNumItem.binNum,
+                  });
+                });
+              }
+            });
+
+            let warehouseInfo: Record<string, any> = {
+              to: warehouse,
+            };
+            if (restValues.operationType === "out") {
+              warehouseInfo = {
+                from: warehouse,
+              };
+            }
+
             saveApplication({
               operationState: "pending",
               operationType: "in",
               state: "approved",
-              ...values,
-              items: materialItems?.map((item) => ({
-                material: item.material?.id,
-                unit: item.unit?.id,
-                lotNum: item.lotNum,
-                quantity: item.quantity,
-                remark: item.remark,
-              })),
+              source: "manual",
+              ...restValues,
+              ...warehouseInfo,
+              items: applicationItems,
             });
           }}
-          onValuesChange={() => {
+          onValuesChange={(values) => {
             setRefreshKey(dayjs().unix());
+
+            if (values.hasOwnProperty("warehouse")) {
+              setWarehouseId(values.warehouse);
+              setMaterialItems([]);
+            }
           }}
         >
           <Form.Item required label="业务类型" name="businessType" rules={[{ required: true, message: "业务类型必填" }]}>
@@ -150,9 +270,14 @@ export default {
                       const isSalesOut = record?.operationType === "out" && record?.config?.defaultSourceType === "sales";
 
                       setOperationType(record?.operationType);
+                      setEnabledBinNum(record?.operationType === "out");
                       setIsSalesOut(isSalesOut);
                       if (!isSalesOut) {
                         form.setFieldValue("customer", null);
+                      }
+                      // 切换业务类型，如果为非出库操作，需要清空托盘号信息
+                      if (record?.operationType !== "out") {
+                        setMaterialItems(materialItems?.map(({ binNum, ...restItem }) => restItem));
                       }
                       form.setFieldValue("operationType", record?.operationType);
                     },
@@ -173,6 +298,36 @@ export default {
                 searchPlaceholder: "名称搜索",
                 columns: [{ title: "名称", code: "name" }],
                 requestConfig: { url: "/app/oc_users/operations/find", method: "post", params: { orderBy: [{ field: "name" }] } },
+              },
+            })}
+          </Form.Item>
+          <Form.Item label="仓库" name="warehouse" rules={[{ required: true, message: "仓库必填" }]}>
+            {renderRock({
+              context,
+              rockConfig: {
+                $type: "rapidTableSelect",
+                $id: `${props.$id}_warehouse`,
+                placeholder: "请选择",
+                listFilterFields: ["name", "code"],
+                searchPlaceholder: "名称、编号搜索",
+                columns: [
+                  { title: "名称", code: "name" },
+                  { title: "编号", code: "code" },
+                ],
+                requestConfig: {
+                  url: "/app/base_locations/operations/find",
+                  method: "post",
+                  params: {
+                    fixedFilters: [
+                      {
+                        field: "type",
+                        operator: "eq",
+                        value: "warehouse",
+                      },
+                    ],
+                    orderBy: [{ field: "name" }],
+                  },
+                },
               },
             })}
           </Form.Item>
@@ -206,9 +361,28 @@ export default {
             rules={[
               {
                 validator: (r, val: any, cb) => {
-                  const hasError = materialItems.some((v) => !v.material);
+                  let hasError = false;
+                  let hasMultipleRecord = false;
+                  let uniqueMap = new Map();
+                  forEach(materialItems, (item) => {
+                    if (!item.material) {
+                      hasError = true;
+                    } else {
+                      let uniqueKey = `${item.material.id}_${item.lotNum || ""}`;
+                      if (uniqueMap.get(uniqueKey)) {
+                        hasMultipleRecord = true;
+                      }
+                      uniqueMap.set(uniqueKey, true);
+                    }
+                  });
+
                   if (hasError) {
                     cb("物品不可为空");
+                    return;
+                  }
+
+                  if (hasMultipleRecord) {
+                    cb("存在多条 “物料-批号” 相同的明细记录");
                     return;
                   }
 
@@ -227,6 +401,81 @@ export default {
                   dataIndex: "material",
                   width: 180,
                   render: (_, r, i) => {
+                    let fixedFilters: any[] = [];
+                    if (warehouseId) {
+                      fixedFilters.push({
+                        field: "warehouse_id",
+                        operator: "eq",
+                        value: warehouseId,
+                      });
+                      return renderRock({
+                        context,
+                        rockConfig: {
+                          $type: "rapidTableSelect",
+                          $id: `${i}_warehouse_material`,
+                          placeholder: "请选择",
+                          dropdownMatchSelectWidth: 500,
+                          listValueFieldName: "material.id",
+                          listTextFormat: "{{material.code}}-{{material.name}}（{{material.specification}}）",
+                          listFilterFields: [
+                            {
+                              field: "material",
+                              operator: "exists",
+                              filters: [
+                                {
+                                  operator: "or",
+                                  filters: [
+                                    {
+                                      field: "name",
+                                      operator: "contains",
+                                    },
+                                    {
+                                      field: "code",
+                                      operator: "contains",
+                                    },
+                                    {
+                                      field: "specification",
+                                      operator: "contains",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                          searchPlaceholder: "物品信息搜索",
+                          columns: [
+                            { title: "名称", code: "material.name", width: 100 },
+                            { title: "编号", code: "material.code", width: 100 },
+                            { title: "规格", code: "material.specification", width: 100 },
+                            { title: "单位", code: "unit.name", width: 80 },
+                          ],
+                          requestConfig: {
+                            url: "/mom/mom_goods/operations/find",
+                            method: "post",
+                            params: {
+                              fixedFilters,
+                              properties: ["id", "material", "unit", "lotNum", "binNum"],
+                              // orderBy: [{ field: "code" }],
+                            },
+                          },
+                          value: r.material?.id,
+                          onSelectedRecord: [
+                            {
+                              $action: "script",
+                              script: (e: RockEvent) => {
+                                const record: any = e.args[0];
+                                setMaterialItems((draft) => {
+                                  return draft.map((item, index) =>
+                                    i === index ? { ...item, material: record?.material, unit: record?.unit, lotNum: undefined, binNum: undefined } : item,
+                                  );
+                                });
+                              },
+                            },
+                          ],
+                        },
+                      });
+                    }
+
                     return renderRock({
                       context,
                       rockConfig: {
@@ -234,6 +483,7 @@ export default {
                         $id: `${i}_material`,
                         placeholder: "请选择",
                         dropdownMatchSelectWidth: 500,
+                        listTextFormat: materialFormatStrTemplate,
                         listFilterFields: ["name", "code", "specification"],
                         searchPlaceholder: "物品信息搜索",
                         columns: [
@@ -246,6 +496,7 @@ export default {
                           url: "/app/base_materials/operations/find",
                           method: "post",
                           params: {
+                            fixedFilters,
                             properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
                             orderBy: [{ field: "code" }],
                           },
@@ -258,7 +509,7 @@ export default {
                               const record: any = e.args[0];
                               setMaterialItems((draft) => {
                                 return draft.map((item, index) =>
-                                  i === index ? { ...item, material: record, unit: record?.defaultUnit, lotNum: undefined } : item,
+                                  i === index ? { ...item, material: record, unit: record?.defaultUnit, lotNum: undefined, binNum: undefined } : item,
                                 );
                               });
                             },
@@ -269,7 +520,7 @@ export default {
                   },
                 },
                 {
-                  title: "批次号",
+                  title: "批号",
                   dataIndex: "lotNum",
                   width: 120,
                   render: (_, r, i) => {
@@ -279,6 +530,7 @@ export default {
                         record={r}
                         recordIndex={i}
                         isSalesOut={isSalesOut}
+                        warehouseId={warehouseId}
                         customerId={form.getFieldValue("customer")}
                         operationType={operationType!}
                         businessType={form.getFieldValue("businessType")}
@@ -291,6 +543,7 @@ export default {
                     );
                   },
                 },
+                ...(enabledBinNum ? [binNumColumn] : []),
                 {
                   title: "数量",
                   dataIndex: "quantity",
@@ -299,6 +552,7 @@ export default {
                     return (
                       <InputNumber
                         placeholder="请输入"
+                        disabled={!isEmpty(r.binNum)}
                         style={{ width: "100%" }}
                         value={r.quantity}
                         onChange={(val) => {
@@ -382,7 +636,7 @@ export default {
               block
               type="dashed"
               onClick={() => {
-                const newRecord = omit(last(materialItems) || {}, ["lotNum", "quantity"]);
+                const newRecord = pick(last(materialItems), ["material", "unit"]);
                 setMaterialItems([...materialItems, { ...newRecord }]);
               }}
             >
@@ -448,9 +702,9 @@ const CustomerLotSelect = memo((props: any) => {
 
   useEffect(() => {
     if (props.materialId && props.customerId && props.inspectRuleId) {
-      loadCustomLots({ materialId: props.materialId, customerId: props.customerId, inspectRuleId: props.inspectRuleId });
+      loadCustomLots({ materialId: props.materialId, customerId: props.customerId, inspectRuleId: props.inspectRuleId, warehouseId: props.warehouseId });
     }
-  }, [props.materialId, props.customerId, props.inspectRuleId]);
+  }, [props.materialId, props.customerId, props.inspectRuleId, props.warehouseId]);
 
   const options = useMemo(() => (lots || []).map((lot) => ({ label: lot.lotNum, value: lot.lotNum })), [lots]);
 
@@ -462,7 +716,7 @@ const CustomerLotSelect = memo((props: any) => {
 function useCustomLots() {
   const [state, setState] = useSetState<{ loading?: boolean; lots?: any[] }>({});
 
-  const loadCustomLots = async (params: { materialId: string; customerId: string; inspectRuleId: string }) => {
+  const loadCustomLots = async (params: { materialId: string; customerId: string; inspectRuleId: string; warehouseId?: string }) => {
     setState({ loading: true });
 
     const { error, result: lotResult } = await rapidApiRequest({
@@ -472,6 +726,7 @@ function useCustomLots() {
         inspectRuleId: params.inspectRuleId,
         materialId: params.materialId,
         customerId: params.customerId,
+        warehouseId: params.warehouseId,
       },
     });
 
