@@ -253,35 +253,6 @@ export async function updateInventoryBalance(server: IRpdServer) {
 
   await server.queryDatabaseObject(
     `
-      WITH lot_warehouse_balance AS (SELECT material_id,
-                                            tags,
-                                            lot_num,
-                                            lot_id,
-                                            warehouse_id,
-                                            SUM(CASE WHEN state = 'normal' THEN quantity ELSE 0 END) AS on_hand_quantity
-                                     FROM mom_goods
-                                     GROUP BY material_id, tags, lot_num, lot_id, warehouse_id)
-      INSERT
-      INTO mom_material_lot_warehouse_inventory_balances (material_id, tags, lot_num, lot_id, warehouse_id,
-                                                          on_hand_quantity,
-                                                          created_at, updated_at)
-      SELECT lwb.material_id,
-             lwb.tags,
-             lwb.lot_num,
-             lwb.lot_id,
-             lwb.warehouse_id,
-             lwb.on_hand_quantity,
-             NOW(),
-             NOW()
-      FROM lot_warehouse_balance lwb
-      ON CONFLICT (material_id, coalesce(tags, ''), lot_id, warehouse_id)
-        DO UPDATE SET on_hand_quantity = EXCLUDED.on_hand_quantity,
-                      updated_at       = EXCLUDED.updated_at;
-    `,
-  );
-
-  await server.queryDatabaseObject(
-    `
       WITH warehouse_balance AS (SELECT material_id,
                                         tags,
                                         warehouse_id,
