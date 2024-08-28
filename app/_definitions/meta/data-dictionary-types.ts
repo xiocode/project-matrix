@@ -338,6 +338,7 @@ export type MomInspectionSheetState =
 export type MomInspectionSheetTreatment =
   | 'special'
   | 'withdraw'
+  | 'forced'
   ;
 
 /**

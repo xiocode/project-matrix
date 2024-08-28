@@ -547,6 +547,10 @@ export interface BaseLot {
    */
   state?: BaseLotState;
   /**
+   * 处理方式
+   */
+  treatment?: MomInspectionSheetTreatment;
+  /**
    * 创建时间
    */
   createdAt?: string;

@@ -138,6 +138,22 @@ export default [
           });
         }
       }
+
+      if (changes.hasOwnProperty('treatment')) {
+        if (after.lot_id) {
+          const isAOD = changes.treatment === 'special';
+          const qualified = after.result === 'qualified' ? true : changes.treatment === 'forced';
+          await server.getEntityManager<BaseLot>("base_lot").updateEntityById({
+            routeContext: ctx.routerContext,
+            id: after.lot_id,
+            entityToSave: {
+              treatment: changes.treatment,
+              isAOD: isAOD,
+              qualificationState: qualified,
+            }
+          });
+        }
+      }
     }
   },
   {
@@ -163,7 +179,7 @@ export default [
         entity: {
           user: { id: ctx?.routerContext?.state.userId },
           targetSingularCode: "mom_inspection_sheet",
-          targetSingularName: `检验单 - ${operationTarget?.code}`,
+          targetSingularName: `检验单 - ${ operationTarget?.code }`,
           method: "delete",
         }
       })
