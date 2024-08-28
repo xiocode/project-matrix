@@ -292,7 +292,7 @@ export default {
                       .patch(`/mom/mom_inspection_sheets/${Info?.id}`, {
                         state: "inspected",
                         approvalState: "approving",
-                        treatment,
+                        treatment: "",
                       })
                       .then(async (res) => {
                         history.go(0);
@@ -351,24 +351,24 @@ export default {
                 </div>
               );
             })}
-            <Form form={form}>
-              <Form.Item
-                label="处理结果"
-                name="treatment"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Select
-                  options={[
-                    { label: "特采", value: "special", color: "orange" },
-                    { label: "退货", value: "withdraw", color: "red" },
-                  ]}
-                />
-              </Form.Item>
-            </Form>
+            {/*<Form form={form}>*/}
+            {/*  <Form.Item*/}
+            {/*    label="处理结果"*/}
+            {/*    name="treatment"*/}
+            {/*    rules={[*/}
+            {/*      {*/}
+            {/*        required: true,*/}
+            {/*      },*/}
+            {/*    ]}*/}
+            {/*  >*/}
+            {/*    <Select*/}
+            {/*      options={[*/}
+            {/*        { label: "特采", value: "special", color: "orange" },*/}
+            {/*        { label: "退货", value: "withdraw", color: "red" },*/}
+            {/*      ]}*/}
+            {/*    />*/}
+            {/*  </Form.Item>*/}
+            {/*</Form>*/}
           </>
         ) : (
           <></>
