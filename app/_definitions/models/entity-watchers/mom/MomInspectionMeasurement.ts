@@ -1,9 +1,5 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {
-  MomInspectionCharacteristic,
-  MomInspectionMeasurement,
-  type MomInspectionSheet,
-} from "~/_definitions/meta/entity-types";
+import {MomInspectionMeasurement, type MomInspectionSheet,} from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -37,22 +33,23 @@ export default [
       }, {} as Record<string, MomInspectionMeasurement>);
 
 
-      const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
+      if (Object.values(latestMeasurement).every((item) => (item.qualitativeValue !== undefined && item.quantitativeValue !== undefined))) {
+        const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
 
+        let result = "qualified";
+        // If any of the latest measurements is unqualified, the sheet is unqualified.
+        if (Object.values(latestMeasurement).some((item) => (item.characteristic?.mustPass || false) && item.isQualified !== undefined && !item.isQualified)) {
+          result = "unqualified";
+        }
 
-      let result = "qualified";
-      // If any of the latest measurements is unqualified, the sheet is unqualified.
-      if (Object.values(latestMeasurement).some((item) => (item.characteristic?.mustPass || false) && !item.isQualified)) {
-        result = "unqualified";
+        await momInspectionSheetManager.updateEntityById({
+          routeContext: ctx.routerContext,
+          id: after.sheet_id,
+          entityToSave: {
+            result: result,
+          },
+        });
       }
-
-      await momInspectionSheetManager.updateEntityById({
-        routeContext: ctx.routerContext,
-        id: after.sheet_id,
-        entityToSave: {
-          result: result,
-        },
-      });
     },
   },
   {
