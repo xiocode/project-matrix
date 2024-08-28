@@ -156,13 +156,15 @@ export default {
         dataIndex: "result",
         width: 300,
         render: (_, r) => {
-          const isOk = calculateInspectionResult(r, r.measuredValue);
-
-          if (isOk == null) {
-            return;
+          if (r.measuredValue) {
+            const isOk = calculateInspectionResult(r, r.measuredValue);
+            if (isOk == null) {
+              return;
+            }
+            return isOk ? <Tag color="green">合格</Tag> : <Tag color="red">不合格</Tag>;
+          } else {
+            return "-";
           }
-
-          return isOk ? <Tag color="green">合格</Tag> : <Tag color="red">不合格</Tag>;
         },
       },
     ];
