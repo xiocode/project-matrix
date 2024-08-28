@@ -60,6 +60,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "option",
       dataDictionary: "BaseLotState",
     },
+    {
+      code: "treatment",
+      name: "处理方式",
+      type: "option",
+      dataDictionary: "MomInspectionSheetTreatment",
+    },
   ],
 };
 

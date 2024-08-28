@@ -208,6 +208,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "datetime",
     },
   ],
+  indexes: [
+    {
+      unique: true,
+      properties: ["material", "inventoryOperation", "lotNum"],
+    },
+  ]
 };
 
 export default entity;

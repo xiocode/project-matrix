@@ -8,5 +8,6 @@ export default {
   entries: [
     { name: "特采", value: "special" , color: "orange" },
     { name: "退货", value: "withdraw", color: "red" },
+    { name: "强制合格", value: "forced", color: "red" },
   ],
 } as RapidDataDictionary;

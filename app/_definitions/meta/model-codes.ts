@@ -265,6 +265,7 @@ const entityFieldCodes = {
     'qualificationState',
     'isAOD',
     'state',
+    'treatment',
     'createdAt',
     'createdBy',
     'updatedAt',
