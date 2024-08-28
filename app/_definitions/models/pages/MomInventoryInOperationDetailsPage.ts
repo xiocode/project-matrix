@@ -94,37 +94,37 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "isTankerTransportation",
     },
-    {
-      type: "auto",
-      code: "outMethod",
-      label: "收货方式",
-      formControlType: "rapidRadioListFormInput",
-      formControlProps: {
-        optionType: "button",
-        listTextFieldName: "label",
-        listValueFieldName: "value",
-        listDataSource: {
-          data: {
-            list: [
-              {
-                label: "批量收货",
-                value: "batch",
-              },
-              {
-                label: "单托收货",
-                value: "single",
-              },
-            ],
-          },
-        },
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "outMethod",
+    //   label: "收货方式",
+    //   formControlType: "rapidRadioListFormInput",
+    //   formControlProps: {
+    //     optionType: "button",
+    //     listTextFieldName: "label",
+    //     listValueFieldName: "value",
+    //     listDataSource: {
+    //       data: {
+    //         list: [
+    //           {
+    //             label: "批量收货",
+    //             value: "batch",
+    //           },
+    //           {
+    //             label: "单托收货",
+    //             value: "single",
+    //           },
+    //         ],
+    //       },
+    //     },
+    //   },
+    // },
     {
       type: "auto",
       label: "单托数量",
-      $exps: {
-        _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
-      },
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
+      // },
       code: "palletWeight",
       formControlType: "antdInputNumber",
       formControlProps: {
@@ -134,9 +134,9 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       label: "托数",
-      $exps: {
-        _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
-      },
+      // $exps: {
+      //   _hidden: "$self.form.getFieldValue('outMethod') !== 'batch'",
+      // },
       code: "palletCount",
       formControlType: "antdInputNumber",
       formControlProps: {
@@ -147,7 +147,7 @@ const createFormConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "transfers",
       $exps: {
-        _hidden: "$self.form.getFieldValue('outMethod') !== 'single'",
+        // _hidden: "$self.form.getFieldValue('outMethod') !== 'single'",
         wrapperCol: JSON.stringify({ offset: 0 }),
       },
       formControlType: "rapidEditableTable",
