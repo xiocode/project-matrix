@@ -25,13 +25,15 @@ export default {
       {
         title: "生产批号",
         dataIndex: "lotNum",
-        width: 120,
+        width: 160,
+        fixed: "left",
         render: (_: any) => _ || "",
       },
       {
         title: "产品",
         dataIndex: "materialName",
-        width: 120,
+        width: 160,
+        fixed: "left",
         render: (_: any) => _ || "",
       },
       //   {
@@ -43,25 +45,29 @@ export default {
       {
         title: "成品送样时间",
         dataIndex: "inspectionDate",
-        width: 120,
+        width: 140,
+        fixed: "left",
         render: (_: any) => dayjs(_).format("YYYY年MM月DD日") || "",
       },
       {
         title: "检测进度",
         dataIndex: "state",
         width: 120,
+        fixed: "left",
         render: (_: any) => _ || "",
       },
       {
         title: "成品检测时间",
         dataIndex: "inspected_at",
-        width: 120,
+        width: 140,
+        fixed: "left",
         render: (_: any) => dayjs(_).format("YYYY年MM月DD日") || "",
       },
       {
         title: "判定",
         dataIndex: "result",
         width: 120,
+        fixed: "left",
         render: (_: any) => _ || "",
       },
       //   {
@@ -74,6 +80,7 @@ export default {
         title: "备注",
         dataIndex: "remark",
         width: 120,
+        fixed: "left",
         render: (_: any) => _ || "",
       },
     ];
@@ -87,10 +94,12 @@ export default {
       };
     });
 
+    const tableWidth = (extraCol || []).reduce((s, col) => col.width + s, 1000);
+
     return (
       <div className="pm_inspection-input-sectioN">
         <div className="pm_inspection-title">成品检测数据列表：</div>
-        <Table columns={columns.concat(extraCol)} dataSource={dataSource} />
+        <Table scroll={{ x: tableWidth }} columns={columns.concat(extraCol)} dataSource={dataSource} />
       </div>
     );
   },
