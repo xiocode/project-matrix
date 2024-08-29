@@ -17,6 +17,12 @@ import BasePartner from '../models/entities/BasePartner';
 import BasePartnerCategory from '../models/entities/BasePartnerCategory';
 import BaseUnit from '../models/entities/BaseUnit';
 import BaseUnitCategory from '../models/entities/BaseUnitCategory';
+import bpm$BpmInstance from '../models/entities/bpm/BpmInstance';
+import bpm$BpmJob from '../models/entities/bpm/BpmJob';
+import bpm$BpmManualTask from '../models/entities/bpm/BpmManualTask';
+import bpm$BpmProcess from '../models/entities/bpm/BpmProcess';
+import bpm$BpmProcessCategory from '../models/entities/bpm/BpmProcessCategory';
+import bpm$BpmProcessRevision from '../models/entities/bpm/BpmProcessRevision';
 import CbsContract from '../models/entities/CbsContract';
 import CbsContractFile from '../models/entities/CbsContractFile';
 import CbsContractFundingBudget from '../models/entities/CbsContractFundingBudget';
@@ -110,23 +116,6 @@ import MomWorkTrack from '../models/entities/MomWorkTrack';
 import OcDepartment from '../models/entities/OcDepartment';
 import OcRole from '../models/entities/OcRole';
 import OcUser from '../models/entities/OcUser';
-import ShopfloorApp from '../models/entities/ShopfloorApp';
-import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
-import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
-import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
-import ShopfloorStation from '../models/entities/ShopfloorStation';
-import SvcPrintTask from '../models/entities/SvcPrintTask';
-import SvcPrinter from '../models/entities/SvcPrinter';
-import SysAction from '../models/entities/SysAction';
-import SysActionGroup from '../models/entities/SysActionGroup';
-import SysAuditLog from '../models/entities/SysAuditLog';
-import SysWebhook from '../models/entities/SysWebhook';
-import bpm$BpmInstance from '../models/entities/bpm/BpmInstance';
-import bpm$BpmJob from '../models/entities/bpm/BpmJob';
-import bpm$BpmManualTask from '../models/entities/bpm/BpmManualTask';
-import bpm$BpmProcess from '../models/entities/bpm/BpmProcess';
-import bpm$BpmProcessCategory from '../models/entities/bpm/BpmProcessCategory';
-import bpm$BpmProcessRevision from '../models/entities/bpm/BpmProcessRevision';
 import pm$PmMilestone from '../models/entities/pm/PmMilestone';
 import pm$PmPhase from '../models/entities/pm/PmPhase';
 import pm$PmProject from '../models/entities/pm/PmProject';
@@ -146,6 +135,17 @@ import pm$PmWorkItemTypeStep from '../models/entities/pm/PmWorkItemTypeStep';
 import setting$SystemSettingGroupSetting from '../models/entities/setting/SystemSettingGroupSetting';
 import setting$SystemSettingItem from '../models/entities/setting/SystemSettingItem';
 import setting$SystemSettingItemSetting from '../models/entities/setting/SystemSettingItemSetting';
+import ShopfloorApp from '../models/entities/ShopfloorApp';
+import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
+import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
+import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
+import ShopfloorStation from '../models/entities/ShopfloorStation';
+import SvcPrinter from '../models/entities/SvcPrinter';
+import SvcPrintTask from '../models/entities/SvcPrintTask';
+import SysAction from '../models/entities/SysAction';
+import SysActionGroup from '../models/entities/SysActionGroup';
+import SysAuditLog from '../models/entities/SysAuditLog';
+import SysWebhook from '../models/entities/SysWebhook';
 import utility$Notification from '../models/entities/utility/Notification';
 
 const entityDefinitions = [
@@ -166,6 +166,12 @@ const entityDefinitions = [
   BasePartnerCategory,
   BaseUnit,
   BaseUnitCategory,
+  bpm$BpmInstance,
+  bpm$BpmJob,
+  bpm$BpmManualTask,
+  bpm$BpmProcess,
+  bpm$BpmProcessCategory,
+  bpm$BpmProcessRevision,
   CbsContract,
   CbsContractFile,
   CbsContractFundingBudget,
@@ -259,23 +265,6 @@ const entityDefinitions = [
   OcDepartment,
   OcRole,
   OcUser,
-  ShopfloorApp,
-  ShopfloorAppStep,
-  ShopfloorAppVersion,
-  ShopfloorDisplayDevice,
-  ShopfloorStation,
-  SvcPrintTask,
-  SvcPrinter,
-  SysAction,
-  SysActionGroup,
-  SysAuditLog,
-  SysWebhook,
-  bpm$BpmInstance,
-  bpm$BpmJob,
-  bpm$BpmManualTask,
-  bpm$BpmProcess,
-  bpm$BpmProcessCategory,
-  bpm$BpmProcessRevision,
   pm$PmMilestone,
   pm$PmPhase,
   pm$PmProject,
@@ -295,6 +284,17 @@ const entityDefinitions = [
   setting$SystemSettingGroupSetting,
   setting$SystemSettingItem,
   setting$SystemSettingItemSetting,
+  ShopfloorApp,
+  ShopfloorAppStep,
+  ShopfloorAppVersion,
+  ShopfloorDisplayDevice,
+  ShopfloorStation,
+  SvcPrinter,
+  SvcPrintTask,
+  SysAction,
+  SysActionGroup,
+  SysAuditLog,
+  SysWebhook,
   utility$Notification,
 ];
 const configuredEntities:TRapidEntity[] = [
@@ -315,6 +315,12 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(BasePartnerCategory, entityDefinitions),
   autoConfigureRapidEntity(BaseUnit, entityDefinitions),
   autoConfigureRapidEntity(BaseUnitCategory, entityDefinitions),
+  autoConfigureRapidEntity(bpm$BpmInstance, entityDefinitions),
+  autoConfigureRapidEntity(bpm$BpmJob, entityDefinitions),
+  autoConfigureRapidEntity(bpm$BpmManualTask, entityDefinitions),
+  autoConfigureRapidEntity(bpm$BpmProcess, entityDefinitions),
+  autoConfigureRapidEntity(bpm$BpmProcessCategory, entityDefinitions),
+  autoConfigureRapidEntity(bpm$BpmProcessRevision, entityDefinitions),
   autoConfigureRapidEntity(CbsContract, entityDefinitions),
   autoConfigureRapidEntity(CbsContractFile, entityDefinitions),
   autoConfigureRapidEntity(CbsContractFundingBudget, entityDefinitions),
@@ -408,23 +414,6 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(OcDepartment, entityDefinitions),
   autoConfigureRapidEntity(OcRole, entityDefinitions),
   autoConfigureRapidEntity(OcUser, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorApp, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorAppStep, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorAppVersion, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorDisplayDevice, entityDefinitions),
-  autoConfigureRapidEntity(ShopfloorStation, entityDefinitions),
-  autoConfigureRapidEntity(SvcPrintTask, entityDefinitions),
-  autoConfigureRapidEntity(SvcPrinter, entityDefinitions),
-  autoConfigureRapidEntity(SysAction, entityDefinitions),
-  autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
-  autoConfigureRapidEntity(SysAuditLog, entityDefinitions),
-  autoConfigureRapidEntity(SysWebhook, entityDefinitions),
-  autoConfigureRapidEntity(bpm$BpmInstance, entityDefinitions),
-  autoConfigureRapidEntity(bpm$BpmJob, entityDefinitions),
-  autoConfigureRapidEntity(bpm$BpmManualTask, entityDefinitions),
-  autoConfigureRapidEntity(bpm$BpmProcess, entityDefinitions),
-  autoConfigureRapidEntity(bpm$BpmProcessCategory, entityDefinitions),
-  autoConfigureRapidEntity(bpm$BpmProcessRevision, entityDefinitions),
   autoConfigureRapidEntity(pm$PmMilestone, entityDefinitions),
   autoConfigureRapidEntity(pm$PmPhase, entityDefinitions),
   autoConfigureRapidEntity(pm$PmProject, entityDefinitions),
@@ -444,6 +433,17 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(setting$SystemSettingGroupSetting, entityDefinitions),
   autoConfigureRapidEntity(setting$SystemSettingItem, entityDefinitions),
   autoConfigureRapidEntity(setting$SystemSettingItemSetting, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorApp, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorAppStep, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorAppVersion, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorDisplayDevice, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorStation, entityDefinitions),
+  autoConfigureRapidEntity(SvcPrinter, entityDefinitions),
+  autoConfigureRapidEntity(SvcPrintTask, entityDefinitions),
+  autoConfigureRapidEntity(SysAction, entityDefinitions),
+  autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
+  autoConfigureRapidEntity(SysAuditLog, entityDefinitions),
+  autoConfigureRapidEntity(SysWebhook, entityDefinitions),
   autoConfigureRapidEntity(utility$Notification, entityDefinitions),
 ];
 export default configuredEntities;
