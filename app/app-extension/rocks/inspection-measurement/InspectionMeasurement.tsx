@@ -169,7 +169,7 @@ export default {
       },
     ];
 
-    const checkCofigInit = () => {
+    const checkCofigInit = (Info: any) => {
       let formItems = [];
       if (!Info?.rule?.id) {
         formItems.push({
@@ -186,16 +186,17 @@ export default {
         });
       }
       if (!Info?.sampleCount || !Info?.rule?.id) {
-        actionPop(true, formItems);
+        return actionPop(true, formItems);
       }
     };
 
     useEffect(() => {
       if (Info) {
-        checkCofigInit();
         setResultState(Info.result === "qualified");
-        if (Info?.rule?.id) {
+        if (Info?.rule?.id && Info?.sampleCount) {
           loadInpsectionMeasurement();
+        } else {
+          checkCofigInit(Info);
         }
       }
     }, [Info]);
@@ -384,17 +385,6 @@ export default {
     return (
       <div className="pm_inspection-input-sectioN">
         <Spin spinning={loading || false}>
-          {Info && (!Info?.sampleCount || !Info?.rule?.id) && (
-            <Button
-              style={{ marginBottom: 16 }}
-              type="primary"
-              onClick={() => {
-                checkCofigInit();
-              }}
-            >
-              检验配置
-            </Button>
-          )}
           {inspection &&
             inspection.map((item: any, index) => {
               return (
@@ -462,7 +452,7 @@ export default {
                         <Space>
                           <Button
                             type="primary"
-                            style={Info.state !== "inspected" ? { display: "none" } : {}}
+                            // style={Info.state !== "inspected" ? { display: "none" } : {}}
                             disabled={Info.state === "inspected" && selected.length === 0}
                             onClick={async () => {
                               const res = inspection.filter((i) => i.round === Info.round + 1);
@@ -895,6 +885,7 @@ function useConfigForm(options: { sheetId: string; onOk: (value: any) => void })
       </Form>
     </Modal>
   );
+
   const actionPop = (open: boolean, formItems: any[]) => {
     setOpen(open);
     loadCheckRuleList();
