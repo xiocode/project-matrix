@@ -33,7 +33,7 @@ export default [
         filters: [
           { operator: "eq", field: "sheet_id", value: after.sheet_id },
         ],
-        properties: ["id", "characteristic", "isQualified", "createdAt"],
+        properties: ["id", "characteristic", "isQualified", "createdAt", "qualitativeValue", "quantitativeValue"],
       });
 
       // Get the latest measurement for each characteristic.
@@ -51,7 +51,7 @@ export default [
       }, {} as Record<string, MomInspectionMeasurement>);
 
 
-      if (Object.values(latestMeasurement).every((item) => (item.qualitativeValue !== undefined && item.quantitativeValue !== undefined))) {
+      if (Object.values(latestMeasurement).every((item) => (item.qualitativeValue !== null || item.quantitativeValue !== null))) {
         const momInspectionSheetManager = server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet");
 
         let result = "qualified";

@@ -15,7 +15,7 @@ const page: RapidPage = {
         height: "100vh",
       },
       attributes: {
-        src: "http://192.168.1.10:8100/#/de-link/KejLoYpS",
+        src: "http://192.168.1.234:8100/#/de-link/KejLoYpS",
       },
     },
   ],
