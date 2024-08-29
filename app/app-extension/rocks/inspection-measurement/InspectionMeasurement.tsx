@@ -238,7 +238,7 @@ export default {
         .filter((item: any) => item.unSkippable.length > 0);
       setUnSkippableArr(orderBy(res, "code"));
       if (res.length > 0) {
-        setValidateOpen(true);
+        return setValidateOpen(true);
       } else {
         const items = arr.map((it: any) => it.items).flat();
         const isQualified = items.filter((it: any) => !it.skippable).every((it: any) => calculateInspectionResult(it, it.measuredValue));
@@ -314,10 +314,10 @@ export default {
         {unSkippableArr.length > 0 ? (
           <>
             <Alert style={{ marginBottom: 10 }} message="检测到当前当前检验单，有以下检验不可跳过。请完成检验！明细如下：" />
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", justifyContent: "flex-start", alignContent: "center" }}>
               {unSkippableArr.map((item: any, index: number) => {
                 return (
-                  <div key={index} style={{ marginBottom: 5 }}>
+                  <div key={index} style={{ marginBottom: 5, marginRight: 5 }}>
                     <span>样本号：</span>
                     <span style={{ color: "red" }}>{item.code}</span>
                     {item?.unSkippable?.map((it: any, index: number) => {
@@ -336,22 +336,24 @@ export default {
         ) : !resultState ? (
           <>
             <Alert style={{ marginBottom: 10 }} message="检测到当前当前检验，有必须合格检验项。请选择处理结果：" />
-            {unQualifiedArr.map((item: any, index: number) => {
-              return (
-                <div key={index} style={{ marginBottom: 5 }}>
-                  <span>样本号：</span>
-                  <span style={{ color: "red" }}>{item.code}</span>
-                  {item?.unQualifiedArr?.map((it: any, index: number) => {
-                    return (
-                      <div key={index}>
-                        <span>检验项：</span>
-                        <span style={{ color: "red" }}>{it.name}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+            <div style={{ display: "flex", justifyContent: "flex-start", alignContent: "center" }}>
+              {unQualifiedArr.map((item: any, index: number) => {
+                return (
+                  <div key={index} style={{ marginBottom: 5, marginRight: 5 }}>
+                    <span>样本号：</span>
+                    <span style={{ color: "red" }}>{item.code}</span>
+                    {item?.unQualifiedArr?.map((it: any, index: number) => {
+                      return (
+                        <div key={index}>
+                          <span>检验项：</span>
+                          <span style={{ color: "red" }}>{it.name}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
             <Form form={form}>
               <Form.Item
                 label="处理结果"
@@ -398,7 +400,9 @@ export default {
                             type="primary"
                             disabled={!(Info?.state !== "inspected") || checkRecord(item.data)}
                             onClick={() => {
-                              validateMeasurment(Info?.id, item.data);
+                              validateMeasurment(Info?.id, item.data, () => {
+                                history.go(0);
+                              });
                             }}
                           >
                             提交检验记录
