@@ -259,7 +259,7 @@ export default {
               approvalState: "approving",
             })
             .then(async (res) => {
-              props?.onSucess();
+              onSucess?.();
             });
         } else if (res.length > 0) {
           setResultState(false);
@@ -741,9 +741,7 @@ function useCreateInspectionMeasurement(options: { sheetId: string; round: numbe
       .post("/mom/mom_inspection_sheet_samples/operations/create_batch", params)
       .then((res) => {
         if (res.status >= 200 && res.status < 400) {
-          if (!isReCheck) {
-            options.onSuccess?.();
-          }
+          options.onSuccess?.();
         }
         setSubmitting(false);
       })
