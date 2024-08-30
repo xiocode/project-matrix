@@ -21,6 +21,7 @@ import KisInventoryOperationAPI, {WarehouseEntry} from "~/sdk/kis/inventory";
 import rapidApi from "~/rapidApi";
 import {getNowString} from "~/utils/time-utils";
 import dayjs from "dayjs";
+import {isPlainObject} from "lodash";
 
 export default [
   {
@@ -30,7 +31,10 @@ export default [
       const { server, payload } = ctx;
       const before = payload.before;
       try {
-        let applicationId = before?.application_id ? before.application_id : before?.application?.id;
+        let applicationId = before?.application_id ? before.application_id : before?.application;
+        if (isPlainObject(before?.application)) {
+          applicationId = before.application.id;
+        }
         if (applicationId && applicationId > 0) {
           const application = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
             filters: [
