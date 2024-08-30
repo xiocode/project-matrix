@@ -388,6 +388,7 @@ const page: RapidPage = {
       entityCode: "MomInventoryApplication",
       mode: "view",
       column: 3,
+      extraProperties: ["from", "to"],
       items: [
         {
           type: "auto",
@@ -404,18 +405,26 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        // {
-        //   type: "auto",
-        //   code: "from",
-        //   rendererProps: {
-        //     format: "{{name}}",
-        //   },
-        // },
+        {
+          type: "auto",
+          label: "仓库",
+          code: "warehouse",
+          rendererType: "text",
+          rendererProps: {
+            text: "",
+          },
+          $exps: {
+            "rendererProps.text": "$self.form.getFieldValue('to')?.name || $self.form.getFieldValue('from')?.name",
+          },
+        },
         // {
         //   type: "auto",
         //   code: "to",
         //   rendererProps: {
         //     format: "{{name}}",
+        //   },
+        //   $exps: {
+        //     _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
         //   },
         // },
         // {
