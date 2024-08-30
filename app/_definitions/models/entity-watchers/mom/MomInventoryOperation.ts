@@ -24,6 +24,39 @@ import dayjs from "dayjs";
 
 export default [
   {
+    eventName: "entity.beforeCreate",
+    modelSingularCode: "mom_inventory_operation",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
+      const { server, payload } = ctx;
+      const before = payload.before;
+      try {
+        let applicationId = before?.application_id ? before.application_id : before?.application?.id;
+        if (applicationId && applicationId > 0) {
+          const application = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
+            filters: [
+              {
+                operator: "eq",
+                field: "id",
+                value: applicationId,
+              },
+            ],
+            properties: ["id", "operationType", "from", "to"],
+          });
+          switch (application?.operationType) {
+            case "in":
+              before.warehouse_id = application.to?.id;
+              break;
+            case "out":
+              before.warehouse_id = application.from?.id;
+              break;
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
+  {
     eventName: "entity.create",
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
@@ -31,7 +64,7 @@ export default [
       const changes = payload.after;
       try {
         if (changes?.application) {
-          const applicationManager = server.getEntityManager<MomGood>("mom_inventory_application");
+          const applicationManager = server.getEntityManager<MomInventoryApplication>("mom_inventory_application");
           await applicationManager.updateEntityById({
             routeContext: ctx.routerContext,
             id: changes.application.id,
@@ -324,7 +357,7 @@ export default [
                       id: transfer.good_id,
                       entityToSave: {
                         state: "normal",
-                        location: {id: transfer.to_location_id},
+                        location: { id: transfer.to_location_id },
                         putInTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
                       } as SaveMomGoodInput,
                     });
