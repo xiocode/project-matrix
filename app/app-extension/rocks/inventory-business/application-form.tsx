@@ -402,7 +402,7 @@ export default {
                   width: 180,
                   render: (_, r, i) => {
                     let fixedFilters: any[] = [];
-                    if (warehouseId) {
+                    if (operationType === "out" && warehouseId) {
                       fixedFilters.push({
                         field: "warehouse_id",
                         operator: "eq",
@@ -450,11 +450,11 @@ export default {
                             { title: "单位", code: "unit.name", width: 80 },
                           ],
                           requestConfig: {
-                            url: "/mom/mom_goods/operations/find",
+                            url: "/mom/mom_material_warehouse_inventory_balances/operations/find",
                             method: "post",
                             params: {
                               fixedFilters,
-                              properties: ["id", "material", "unit", "lotNum", "binNum"],
+                              properties: ["id", "material", "unit"],
                               // orderBy: [{ field: "code" }],
                             },
                           },
