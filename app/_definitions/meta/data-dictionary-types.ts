@@ -541,20 +541,20 @@ export type PmWorkItemStepState =
   ;
 
 /**
- * 打印机网络状态
- */
-export type PrinterNetworkState =
-  | '0'
-  | '1'
-  ;
-
-/**
  * 打印任务状态
  */
 export type PrintTaskState =
   | '0'
   | '1'
   | '2'
+  ;
+
+/**
+ * 打印机网络状态
+ */
+export type PrinterNetworkState =
+  | '0'
+  | '1'
   ;
 
 /**
@@ -600,22 +600,6 @@ export type QuantityType =
   | 'temperature'
   | 'amount_of_substance'
   | 'luminous_intensity'
-  ;
-
-/**
- * 设置项类型
- */
-export type SettingItemType =
-  | 'text'
-  | 'textarea'
-  | 'number'
-  | 'switch'
-  | 'checkbox'
-  | 'date'
-  | 'time'
-  | 'datetime'
-  | 'file'
-  | 'json'
   ;
 
 /**
@@ -673,4 +657,20 @@ export type WarehouseStrategy =
   | 'fifo'
   | 'fdfo'
   | 'manual'
+  ;
+
+/**
+ * 设置项类型
+ */
+export type SettingItemType =
+  | 'text'
+  | 'textarea'
+  | 'number'
+  | 'switch'
+  | 'checkbox'
+  | 'date'
+  | 'time'
+  | 'datetime'
+  | 'file'
+  | 'json'
   ;
