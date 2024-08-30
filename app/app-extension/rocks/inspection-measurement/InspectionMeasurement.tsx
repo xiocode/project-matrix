@@ -156,7 +156,7 @@ export default {
         dataIndex: "result",
         width: 300,
         render: (_, r) => {
-          if (r.measuredValue) {
+          if (r.measuredValue || r.measuredValue == 0) {
             const isOk = calculateInspectionResult(r, r.measuredValue);
             if (isOk == null) {
               return;
