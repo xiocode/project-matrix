@@ -155,10 +155,10 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "warehouse",
-          label: "入库仓库",
-          $exps: {
-            _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '生产入库')",
-          },
+          label: "仓库",
+          // $exps: {
+          //   _hidden: "!($stores.detail?.data?.list[0]?.businessType.name === '生产入库')",
+          // },
         },
         {
           type: "auto",

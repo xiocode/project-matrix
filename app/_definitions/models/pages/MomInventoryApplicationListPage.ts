@@ -221,7 +221,7 @@ const page: RapidPage = {
           properties: ["id", "material", "lotNum", "quantity", "unit", "remark"],
         },
       },
-      extraProperties: ["operationType", "items"],
+      extraProperties: ["operationType", "items", "to", "from"],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -330,6 +330,18 @@ const page: RapidPage = {
             url: "/pages/mom_inventory_application_details?id={{id}}&operationType={{operationType}}",
           },
           width: "200px",
+        },
+        {
+          type: "auto",
+          code: "warehouse",
+          title: "仓库",
+          width: "120px",
+          rendererType: "text",
+          rendererProps: {
+            $exps: {
+              text: "_.get($slot.record, 'to.name') || _.get($slot.record, 'from.name')",
+            },
+          },
         },
         {
           type: "auto",
