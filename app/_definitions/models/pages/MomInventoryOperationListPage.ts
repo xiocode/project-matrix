@@ -318,6 +318,14 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          title: "仓库",
+          code: "warehouse",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
           code: "createdAt",
           width: "150px",
         },
