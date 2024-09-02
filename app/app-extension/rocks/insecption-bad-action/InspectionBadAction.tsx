@@ -5,7 +5,7 @@ import { useState } from "react";
 import { rapidApiRequest } from "~/rapidApi";
 
 export default {
-  $type: "insecptionBadAction",
+  $type: "inspectionBadAction",
 
   slots: {},
 
