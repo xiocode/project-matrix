@@ -309,9 +309,9 @@ const page: RapidPage = {
           },
         },
         {
-          $type: "insecptionBadAction",
+          $type: "inspectionBadAction",
           $exps: {
-            _hidden: "$slot.record.result === 'qualified'",
+            _hidden: "$slot.record.result !== 'unqualified'",
           },
         },
       ],
