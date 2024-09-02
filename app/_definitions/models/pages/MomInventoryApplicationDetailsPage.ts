@@ -96,6 +96,10 @@ const createOperationFormConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "packageNum",
     },
+    {
+      type: "auto",
+      code: "isTankerTransportation",
+    },
     // {
     //   type: "auto",
     //   code: "outMethod",
@@ -700,7 +704,7 @@ const page: RapidPage = {
                       const dictionaries = rapidAppDefinition.getDataDictionaries();
                       const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
                       const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(record, "lot.qualificationState") });
-  
+
                       return {
                         templateCode: _.get(record, "material.category.printTemplate.code"),
                         taskData: _.merge({}, record, {
@@ -824,7 +828,7 @@ const page: RapidPage = {
                         const dictionaries = rapidAppDefinition.getDataDictionaries();
                         const dictionary = _.find(dictionaries, function(d) { return d.code === 'QualificationState'; });
                         const qualificationStateInfo = _.find(_.get(dictionary, 'entries'), function(e){ return e.value === _.get(item, "lot.qualificationState") });
-  
+
                         return {
                           templateCode: _.get(item, "material.category.printTemplate.code"),
                           taskData: _.merge({}, item, {
@@ -1029,7 +1033,7 @@ const page: RapidPage = {
                     dataSourceAdapter: `
                     return _.map(data, function(item){
                       const createdAt = _.get(item, "good.createdAt");
-  
+
                       return {
                         templateCode: "rawMaterialInspectionIdentificationCard",
                         taskData: _.merge({}, item, {
