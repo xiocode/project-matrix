@@ -1164,6 +1164,7 @@ const entityFieldCodes = {
     'operationType',
     'businessType',
     'applicant',
+    'biller',
     'items',
     'state',
     'extra',

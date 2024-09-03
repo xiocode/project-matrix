@@ -25,7 +25,7 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeUpdate">) => {
       const {server, payload} = ctx;
 
-      const changes = payload.changes;
+      let changes = payload.changes;
 
       if (changes.material && changes.manufactureDate) {
         const materialManager = server.getEntityManager<BaseMaterial>("base_material");

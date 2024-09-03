@@ -5,6 +5,7 @@ import mom$createGoodTransferIn from '../models/server-operations/mom/createGood
 import mom$createInventoryApplicationItems from '../models/server-operations/mom/createInventoryApplicationItems';
 import mom$createInventoryOperation from '../models/server-operations/mom/createInventoryOperation';
 import mom$exportExcel from '../models/server-operations/mom/exportExcel';
+import mom$fix from '../models/server-operations/mom/fix';
 import mom$listGoodCheckTransfer from '../models/server-operations/mom/listGoodCheckTransfer';
 import mom$listGoodInTransfer from '../models/server-operations/mom/listGoodInTransfer';
 import mom$listGoodOutTransfer from '../models/server-operations/mom/listGoodOutTransfer';
@@ -31,6 +32,7 @@ export default [
   mom$createInventoryApplicationItems,
   mom$createInventoryOperation,
   mom$exportExcel,
+  mom$fix,
   mom$listGoodCheckTransfer,
   mom$listGoodInTransfer,
   mom$listGoodOutTransfer,

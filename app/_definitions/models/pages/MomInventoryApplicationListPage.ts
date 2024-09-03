@@ -33,6 +33,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "applicant",
     },
+    {
+      type: "auto",
+      code: "biller",
+    },
     // {
     //   type: "auto",
     //   code: "from",
@@ -380,6 +384,14 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "applicant",
+          width: "150px",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "biller",
           width: "150px",
           rendererProps: {
             format: "{{name}}",

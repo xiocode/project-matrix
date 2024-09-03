@@ -3,6 +3,18 @@ import {MomInventoryApplication,} from "~/_definitions/meta/entity-types";
 
 export default [
   {
+    eventName: "entity.beforeCreate",
+    modelSingularCode: "mom_inventory_application",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
+      const { server, payload } = ctx;
+
+      let before = payload.before
+      if (before.source === "manual") {
+        before.biller_id = ctx.routerContext?.state.userId
+      }
+    },
+  },
+  {
     eventName: "entity.update",
     modelSingularCode: "mom_inventory_application",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
@@ -10,7 +22,7 @@ export default [
       const changes = payload.changes;
       const after = payload.after;
 
-      try{
+      try {
         const inventoryOperation = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
           filters: [
             {
@@ -61,7 +73,7 @@ export default [
           entity: {
             user: { id: ctx?.routerContext?.state.userId },
             targetSingularCode: "mom_inventory_application",
-            targetSingularName: `库存申请单 - ${inventoryOperation?.businessType?.name} - ${inventoryOperation?.code}`,
+            targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
             method: "delete",
           }
         })

@@ -47,12 +47,14 @@ async function listGoodOutTransfers(server: IRpdServer, input: QueryGoodOutTrans
 WITH inventory_good_transfers_cte AS (SELECT operation_id,
                                              material_id,
                                              lot_num,
+                                             lot_id,
                                              SUM(quantity) AS completed_amount
                                       FROM mom_good_transfers
                                       WHERE operation_id = $1
                                       GROUP BY operation_id,
                                                material_id,
-                                               lot_num),
+                                               lot_num,
+                                               lot_id),
      inventory_operation_amount_cte AS (SELECT mio.id           AS operation_id,
                                                miai.material_id,
                                                miai.lot_num,
@@ -70,18 +72,18 @@ WITH inventory_good_transfers_cte AS (SELECT operation_id,
                                         mio.material_id,
                                         mio.lot_num,
                                         mio.total_amount,
-                                        mgt.completed_amount
+                                        coalesce(mgt.completed_amount, 0) AS completed_amount
                                  FROM inventory_operation_amount_cte mio
                                           LEFT JOIN inventory_good_transfers_cte mgt
                                                     ON mio.operation_id = mgt.operation_id
                                                         AND mio.material_id = mgt.material_id
                                                         AND mio.lot_num = mgt.lot_num
                                  WHERE 1 = 1
-                                   AND mio.operation_id = 497),
+                                   AND mio.operation_id = $1),
      inventory_operation_goods_cte AS (SELECT ioc.operation_id,
                                               mg.*,
                                               SUM(mg.quantity) OVER (PARTITION BY mg.material_id,
-                                                  mg.lot_num, mg.lot_num ORDER BY mg.validity_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_quantity
+                                                  mg.lot_num, mg.lot_id ORDER BY mg.validity_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_quantity
                                        FROM mom_goods mg
                                                 INNER JOIN inventory_operation_cte ioc
                                                            ON mg.material_id = ioc.material_id
@@ -90,6 +92,7 @@ WITH inventory_good_transfers_cte AS (SELECT operation_id,
      inventory_operation_goods_agg_cte AS (SELECT iogc.operation_id,
                                                   iogc.material_id,
                                                   iogc.lot_num,
+                                                  iogc.lot_id,
                                                   jsonb_agg(jsonb_build_object('id',
                                                                                iogc.id,
                                                                                'binNum',
@@ -106,7 +109,8 @@ WITH inventory_good_transfers_cte AS (SELECT operation_id,
                                                     INNER JOIN base_locations bl ON iogc.location_id = bl.id
                                            GROUP BY iogc.operation_id,
                                                     iogc.material_id,
-                                                    iogc.lot_num),
+                                                    iogc.lot_num,
+                                                    iogc.lot_id),
      result AS (SELECT ioc.*,
                        jsonb_build_object('id', bl.id, 'state', bl.state, 'lotNum', bl.lot_num, 'sourceType',
                                           bl.source_type, 'manufactureDate', bl.manufacture_date, 'expireTime',

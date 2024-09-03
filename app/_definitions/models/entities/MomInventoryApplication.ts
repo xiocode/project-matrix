@@ -68,6 +68,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "applicant_id",
     },
     {
+      code: "biller",
+      name: "制单人",
+      type: "relation",
+      targetSingularCode: "oc_user",
+      targetIdColumnName: "biller_id",
+    },
+    {
       code: "items",
       name: "明细项",
       type: "relation[]",
