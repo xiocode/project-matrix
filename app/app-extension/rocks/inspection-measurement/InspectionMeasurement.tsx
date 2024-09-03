@@ -226,10 +226,15 @@ export default {
       return orderBy(result, "code");
     };
 
+    const isEmpty = (params: any) => {
+      if (params === undefined || params === null || params === "") return true;
+      return false;
+    };
+
     const validateMeasurment = async (sheetId: string, arr: any, onSucess?: () => void) => {
       const res = arr
         .map((item: any) => {
-          const unSkippable = item.items.filter((it: any) => !it.skippable).filter((i: any) => !i.qualitativeValue && !i.quantitativeValue);
+          const unSkippable = item.items.filter((it: any) => !it.skippable).filter((i: any) => isEmpty(!i.qualitativeValue) && isEmpty(!i.quantitativeValue));
           return {
             code: item.code,
             unSkippable: unSkippable,
