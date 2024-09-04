@@ -145,6 +145,9 @@ const page: RapidPage = {
       //     },
       //   ],
       // },
+      rowSelection: {
+        checkStrictly: false,
+      },
       onSelectedIdsChange: [
         {
           $action: "setVars",
