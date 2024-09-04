@@ -55,12 +55,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "boolean",
     },
   ],
-  indexes: [
-    {
-      unique: true,
-      properties: ["category", "material", "customer"],
-    },
-  ],
+  // indexes: [
+  //   {
+  //     unique: true,
+  //     properties: ["category", "material", "customer"],
+  //   },
+  // ],
 };
 
 export default entity;

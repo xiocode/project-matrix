@@ -14,7 +14,7 @@ export default [
       const { server, payload, routerContext } = ctx;
 
       const before = payload.before
-      const changes = payload.changes
+      let changes = payload.changes
 
       if (before.hasOwnProperty('lotNum')) {
         const lotManager = server.getEntityManager<BaseLot>("base_lot");
@@ -28,7 +28,10 @@ export default [
             }],
           properties: ["id"],
         });
-        changes.lot = lot?.id;
+        if (lot) {
+          changes.lot = { id: lot?.id };
+        }
+
       }
 
       if (changes.hasOwnProperty('approvalState') && changes.approvalState !== before.approvalState) {
@@ -46,7 +49,7 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
       const { server, payload } = ctx;
 
-      const before = payload.before
+      let before = payload.before
 
       if (before.hasOwnProperty('lotNum')) {
         const lotManager = server.getEntityManager<BaseLot>("base_lot");
@@ -60,7 +63,9 @@ export default [
             }],
           properties: ["id"],
         });
-        before.lot = lot?.id;
+        if (lot) {
+          before.lot = { id: lot?.id };
+        }
       }
     },
   },

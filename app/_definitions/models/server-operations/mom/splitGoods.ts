@@ -200,8 +200,8 @@ WHERE NOT EXISTS (SELECT 1
                   FROM lot_balance lb
                   WHERE mlb.material_id = lb.material_id
                     AND COALESCE(mlb.tags, '') = COALESCE(lb.tags, '')
-                    AND mlb.lot_id = lb.lot_id);
-
+                    AND mlb.lot_id = lb.lot_id
+                    and mlb.unit_id = lb.unit_id);
     `,
   );
 

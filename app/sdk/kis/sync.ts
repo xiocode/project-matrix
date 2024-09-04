@@ -121,7 +121,7 @@ class KisDataSync {
 
         const data = response.data.data;
 
-        console.log(`URL: ${options.url}, Payload: ${JSON.stringify(options.payload, null, 2)}, Current Page: ${page} Total Items: ${data?.TotalItems}, Page Size: ${pageSize}, Total Pages: ${data?.TotalPage || data?.TotalPages || 1}, "syncAll: ${options.syncAll}"`);
+        // console.log(`URL: ${options.url}, Payload: ${JSON.stringify(options.payload, null, 2)}, Current Page: ${page} Total Items: ${data?.TotalItems}, Page Size: ${pageSize}, Total Pages: ${data?.TotalPage || data?.TotalPages || 1}, "syncAll: ${options.syncAll}"`);
 
         if (data?.GoodItemStocks?.length) {
           results.push(...data.GoodItemStocks);
@@ -175,11 +175,11 @@ class KisDataSync {
 
   private async syncEntities(options: SyncOptions, isLoadDetail: boolean = false) {
     const data = isLoadDetail ? await this.fetchDetailPages(options) : await this.fetchListPages(options);
-    console.log(`Fetched ${data.length} items from ${options.url}`)
+    // console.log(`Fetched ${data.length} items from ${options.url}`)
     const filteredData = options.filter ? data.filter(options.filter) : data;
-    console.log(`Filtered ${filteredData.length} items from ${options.url}`)
+    // console.log(`Filtered ${filteredData.length} items from ${options.url}`)
     const entities = (await Promise.all(filteredData.map(options.mapToEntity))).filter(item => item != null);
-    console.log(`Mapped ${entities.length} items from ${options.url}`)
+    // console.log(`Mapped ${entities.length} items from ${options.url}`)
     const entityManager = options.singularCode ? this.server.getEntityManager(options.singularCode) : null;
 
     for (const entity of entities) {
@@ -251,7 +251,7 @@ class KisDataSync {
           const parentId = this.materialCategories.find(cat => cat.externalCode === String(item.FParentID))?.id;
 
           if (!parentId && item.FParentID !== 0) {
-            console.log(`Parent category not found for item ${item.FName}`)
+            // console.log(`Parent category not found for item ${item.FName}`)
             return null;
           }
 
@@ -486,7 +486,7 @@ class KisDataSync {
         mapToEntity: async (item: any) => {
           const material = materials.find(material => material.externalCode === String(item.FMaterialID));
           if (!material) {
-            console.log(`Material not found for item ${item.FMaterialNumber}`)
+            // console.log(`Material not found for item ${item.FMaterialNumber}`)
 
             return null;
           }
@@ -593,7 +593,7 @@ class KisDataSync {
         },
         syncAll: false,
         filter: (item: any) => item.Head.FCheckDate !== null,
-        pageSize: 10,
+        pageSize: 50,
       }),
       // 采购退货出库通知单
       this.createListSyncFunction({
@@ -636,7 +636,7 @@ class KisDataSync {
         },
         syncAll: false,
         filter: (item: any) => item.Head.FCheckDate !== null,
-        pageSize: 10,
+        pageSize: 50,
       }),
       // 销售退货入库通知单
       this.createListSyncFunction({
@@ -679,7 +679,7 @@ class KisDataSync {
         },
         syncAll: false,
         filter: (item: any) => item.Head.FCheckDate !== null,
-        pageSize: 10,
+        pageSize: 50,
       }),
       // 销售退货入库通知单
       this.createListSyncFunction({
@@ -722,7 +722,7 @@ class KisDataSync {
         },
         syncAll: false,
         filter: (item: any) => item.Head.FCheckDate !== null,
-        pageSize: 10,
+        pageSize: 50,
       }),
       // 销售订单（当通知单用）
       this.createListSyncFunction({
@@ -764,7 +764,7 @@ class KisDataSync {
         },
         syncAll: false,
         filter: (item: any) => item.Head.FCheckDate !== null,
-        pageSize: 10,
+        pageSize: 50,
       }),
     ];
 

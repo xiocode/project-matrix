@@ -198,7 +198,7 @@ const page: RapidPage = {
           text: "批准",
           actionStyle: "primary",
           size: "large",
-          // $permissionCheck: "inspectionSheet.review",
+          $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -227,7 +227,7 @@ const page: RapidPage = {
           text: "拒绝",
           danger: true,
           size: "large",
-          // $permissionCheck: "inspectionSheet.review",
+          $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",

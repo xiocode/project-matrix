@@ -4305,6 +4305,10 @@ export interface MomInventoryApplication {
    */
   applicant?: Partial<OcUser>;
   /**
+   * 制单人
+   */
+  biller?: Partial<OcUser>;
+  /**
    * 明细项
    */
   items?: any;

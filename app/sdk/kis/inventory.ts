@@ -27,93 +27,27 @@ export interface WarehouseEntry {
   FSourceTranType?: number;
   FUnitID?: string;
   FDeptID?: number;
-  FPlanMode?:number;
+  FPlanMode:number;
 
 }
 
-export interface WarehouseInPayload {
+export interface WarehousePayload {
   Object: {
     Head: {
-      FBillerID?: number;
+      FBillerID?: string;
       FBillNo?: string;
-      FPOStyle: number;
       FSupplyID?: string;
       Fdate: string;
-      FDCStockID: string;
+      FDCStockID?: string;
+      FSCStockID?: string;
+      FPurposeID?: number;
       FDeptID?: number;
-      FFManagerID: string;
-      FSManagerID: string;
+      FFManagerID?: string;
+      FSManagerID?: string;
       FTranType: number; // 1
       FROB?: number;
     };
     Entry: Array<WarehouseEntry>;
-  };
-}
-
-export interface WarehouseOutPayload {
-  Object: {
-    Head: {
-      FAcctID: number;
-      FBackFlushed: any;
-      FBillerID: number;
-      FBillNo: string;
-      FCheckDate: string;
-      FCheckerID: number;
-      Fdate: string;
-      FDeptID: number;
-      FFManagerID: number;
-      FManageType: number;
-      FPosterID: number;
-      FPurposeID: number;
-      FSCStockID: number;
-      FSManagerID: number;
-      FTranType: number;
-      Fuse: string;
-      FWBINTERID: number;
-      FROB: number;
-    };
-    Entry: Array<{
-      Famount: number;
-      FAuxPropID: number;
-      Fauxqty: number;
-      FAuxQtyMust: number;
-      FBatchNo: string;
-      FBomInterID: number;
-      FCostCenterID: number;
-      FCostObjGroupID: number;
-      FCostOBJID: number;
-      FDCSPID: number;
-      FEntryID: number;
-      FICMOBillNo: string;
-      FICMOInterID: number;
-      FInStockID: number;
-      FItemID: number;
-      FKFDate: any;
-      FKFPeriod: number;
-      FMTONo: string;
-      Fnote: string;
-      FOperID: number;
-      FOperSN: number;
-      FPeriodDate: any;
-      FPlanAmount: number;
-      FPlanMode: number;
-      FPPBomEntryID: number;
-      FQty: number;
-      FQtyMust: number;
-      FReProduceType: number;
-      FSCStockID: number;
-      FSecCoefficient: number;
-      FSecQty: number;
-      FSnList: Array<{
-        FSerialNum: string;
-        FSerialDesc: string;
-      }>;
-      FSourceBillNo: string;
-      FSourceEntryID: number;
-      FSourceInterId: number;
-      FSourceTranType: number;
-      FUnitID: number;
-    }>;
   };
 }
 
@@ -202,7 +136,7 @@ class KisInventoryOperationAPI {
       if (response.data.errcode === 0) {
         return response.data as ApiResponse<T>;
       }
-      console.log(`API request failed (attempt ${attempts + 1}):`, response.data);
+      // console.log(`API request failed (attempt ${attempts + 1}):`, response.data);
       attempts += 1;
       await this.sleep(2000); // Wait before retrying
     }
@@ -210,25 +144,25 @@ class KisInventoryOperationAPI {
   }
 
   // 产成品入库单
-  public async createProductReceipt(payload: WarehouseInPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createProductReceipt(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/productreceipt/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
 
   // 生产领料单
-  public async createPickingList(payload: WarehouseOutPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createPickingList(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/pickinglist/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
 
   // 外购入库单
-  public async createPurchaseReceipt(payload: WarehouseInPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createPurchaseReceipt(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/purchasereceipt/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
 
   // 销售出库单
-  public async createSalesDelivery(payload: WarehouseOutPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createSalesDelivery(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/salesdelivery/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
@@ -240,19 +174,19 @@ class KisInventoryOperationAPI {
   }
 
   // 委外加工入库单
-  public async createSubcontractReceipt(payload: WarehouseInPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createSubcontractReceipt(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/subcontractreceipt/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
 
   // 其他入库
-  public async createMiscellaneousReceipt(payload: WarehouseInPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createMiscellaneousReceipt(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/miscellaneousreceipt/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
 
   // 其他出库
-  public async createMiscellaneousDelivery(payload: WarehouseOutPayload): Promise<ApiResponse<WarehouseResponseData>> {
+  public async createMiscellaneousDelivery(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
     const url = "/koas/app007104/api/miscellaneousdelivery/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }

@@ -29,7 +29,7 @@ export default [
     modelSingularCode: "mom_inventory_operation",
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
       const { server, payload } = ctx;
-      const before = payload.before;
+      let before = payload.before;
       try {
         let applicationId = before?.application_id ? before.application_id : before?.application;
         if (isPlainObject(before?.application)) {
@@ -104,137 +104,8 @@ export default [
               value: after.id,
             },
           ],
-          properties: ["id", "code", "application", "from", "to", "operationType", "businessType", "contractNum", "supplier", "customer", "externalCode"],
+          properties: ["id", "code", "application", "warehouse", "operationType", "businessType", "contractNum", "supplier", "customer", "externalCode", "createdBy"],
         });
-
-        if (after.hasOwnProperty("state") && after.state === "done") {
-          if (after?.application_id) {
-            await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
-              routeContext: ctx.routerContext,
-              id: after.application_id,
-              entityToSave: {
-                operationState: "done",
-              },
-            });
-          }
-
-          const kisConfig = await server.getEntityManager<KisConfig>("kis_config").findEntity({});
-
-          if (kisConfig && false) {
-            const warehouseLocations = await server.getEntityManager<BaseLocation>("base_location").findEntities({
-              filters: [{ operator: "notNull", field: "externalCode" }],
-            });
-
-            // const transfers = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
-            //   filters: [
-            //     {
-            //       operator: "eq",
-            //       field: "operation_id",
-            //       value: after.id,
-            //     },
-            //   ],
-            //   properties: ["id", "good", "quantity", "to", "from", "lot", "material"],
-            // });
-
-            // transfer aggregate, sum quantity by material and lotnum and location
-            const transfers = await server.queryDatabaseObject(
-              `
-                SELECT mgt.material_id,
-                       mgt.lot_num,
-                       bm.external_code                               AS material_external_code,
-                       mgt.lot_id,
-                       coalesce(tbl.id, fbl.id)                       AS location_id,
-                       coalesce(tbl.external_code, fbl.external_code) AS location_external_code,
-                       bu.external_code                               AS unit_external_code,
-                       SUM(mgt.quantity)                              AS quantity
-                FROM mom_good_transfers mgt
-                       inner join base_materials bm on mgt.material_id = bm.id
-                       left join base_locations tbl ON mgt.to_location_id = tbl.id
-                       left join base_locations fbl ON mgt.from_location_id = fbl.id
-                       inner join base_units bu on bm.default_unit_id = bu.id
-                WHERE operation_id = $1
-                GROUP BY mgt.material_id, bm.external_code, mgt.lot_num, mgt.lot_id, tbl.id, tbl.external_code, fbl.id,
-                         fbl.external_code, bu.external_code;
-              `,
-              [after.id]
-            );
-
-            if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
-              if (inventoryOperation?.businessType?.operationType === "in") {
-                // TODO: 生成KIS入库单
-                switch (inventoryOperation?.businessType?.name) {
-                  case "采购入库":
-                    let entries: WarehouseEntry[] = [];
-                    let warehouseId: string = "0";
-                    if (transfers && transfers.length > 0) {
-                      const warehouseIds = await server.queryDatabaseObject(
-                        `
-        SELECT get_root_location_id($1) AS id;
-      `,
-                        [transfers[0]?.location_id]
-                      );
-                      warehouseId = warehouseLocations.find(item => item.id === warehouseIds[0]?.id)?.externalCode || "";
-                    }
-
-                    console.log(transfers)
-
-                    for (const transfer of transfers) {
-                      entries.push({
-                        FItemID: transfer.material_external_code,
-                        FQty: transfer.quantity,
-                        Fauxqty: transfer.quantity,
-                        FAuxQtyMust: transfer.quantity,
-                        FDCSPID: transfer.location_external_code,
-                        FDCStockID: transfer.location_external_code,
-                        FBatchNo: transfer.lot_num,
-                        FUnitID: transfer.unit_external_code,
-                        // FSourceBillNo: inventoryOperation?.contractNum,
-                        FSourceTranType: 71,
-                        FDeptID: 264,
-                        FMTONo: transfer.lot_num,
-                        FSecQty: transfer.quantity,
-                        FSecCoefficient: 1,
-                        FPlanMode: 14036,
-                        FAuxPrice: 1,
-                        Famount: transfer.quantity,
-                      });
-                    }
-
-                    await kisOperationApi.createProductReceipt(
-                      {
-                        Object: {
-                          Head: {
-                            Fdate: getNowString(),
-                            FPOStyle: 252,
-                            FDCStockID: warehouseId,
-                            FFManagerID: "308",
-                            FSManagerID: "308",
-                            FTranType: 1,
-                          },
-                          Entry: entries,
-                        },
-                      })
-                    break;
-                  case "生产入库":
-                    // await kisOperationApi.createPickingList({
-                    //   Object: {
-                    //     Head: {},
-                    //     Entry: [{}],
-                    //   },
-                    // } as WarehouseOutPayload)
-                    break;
-                  default:
-                    break;
-                }
-              } else if (after.operationType === "out") {
-                //   TODO: 生成KIS出库单
-              } else if (after.operationType === "transfer") {
-                //   TODO: 生成KIS调拨单
-
-              }
-            }
-          }
-        }
 
         if (changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
 
@@ -385,6 +256,359 @@ export default [
 
               if ((inventoryOperation.operationType === "in" || inventoryOperation.operationType === "out") && inventoryOperation.businessType && inventoryOperation.businessType.id) {
                 await updateInventoryStats(server, inventoryOperation?.businessType?.id, inventoryOperation.operationType, transfers);
+              }
+            }
+          }
+        }
+
+        if (after.hasOwnProperty("state") && after.state === "done") {
+          if (after?.application_id) {
+            await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").updateEntityById({
+              routeContext: ctx.routerContext,
+              id: after.application_id,
+              entityToSave: {
+                operationState: "done",
+              },
+            });
+          }
+
+          const kisConfig = await server.getEntityManager<KisConfig>("kis_config").findEntity({});
+
+          if (kisConfig) {
+            // transfer aggregate, sum quantity by material and lotnum and location
+            const transfers = await server.queryDatabaseObject(
+              `
+                SELECT mgt.material_id,
+                       mgt.lot_num,
+                       bm.external_code                               AS material_external_code,
+                       mgt.lot_id,
+                       coalesce(tbl.id, fbl.id)                       AS location_id,
+                       coalesce(tbl.external_code, fbl.external_code) AS location_external_code,
+                       bu.external_code                               AS unit_external_code,
+                       SUM(mgt.quantity)                              AS quantity
+                FROM mom_good_transfers mgt
+                       inner join base_materials bm on mgt.material_id = bm.id
+                       left join base_locations tbl ON mgt.to_location_id = tbl.id
+                       left join base_locations fbl ON mgt.from_location_id = fbl.id
+                       inner join base_units bu on bm.default_unit_id = bu.id
+                WHERE operation_id = $1
+                GROUP BY mgt.material_id, bm.external_code, mgt.lot_num, mgt.lot_id, tbl.id, tbl.external_code, fbl.id,
+                         fbl.external_code, bu.external_code;
+              `,
+              [after.id]
+            );
+
+            if (inventoryOperation?.application?.source === 'manual' && changes.hasOwnProperty("approvalState") && changes.approvalState === "approved") {
+              let entries: WarehouseEntry[] = [];
+              const warehouseId = inventoryOperation.warehouse?.externalCode || "";
+
+              if (inventoryOperation?.businessType?.operationType === "in") {
+                // TODO: 生成KIS入库单
+                switch (inventoryOperation?.businessType?.name) {
+                  case "采购入库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createPurchaseReceipt(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "生产入库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createProductReceipt(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 2,
+                            FROB: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "其它原因入库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createMiscellaneousReceipt(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 10,
+                            FDeptID: 779,
+                            FROB: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "委外加工入库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createSubcontractReceipt(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "生产退料入库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createPickingList(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FPurposeID: 1200,
+                            FDeptID: 778,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 24,
+                            FROB: -1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  default:
+                    break;
+                }
+              } else if (after.operationType === "out") {
+                switch (inventoryOperation?.businessType?.name) {
+                  case "销售出库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createSubcontractReceipt(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 21,
+                            FDeptID: 781,
+                            FROB: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "其它原因出库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createMiscellaneousDelivery(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 29,
+                            FDeptID: 783,
+                            FROB: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  case "领料出库":
+                    for (const transfer of transfers) {
+                      entries.push({
+                        FItemID: transfer.material_external_code,
+                        FQty: transfer.quantity,
+                        Fauxqty: transfer.quantity,
+                        FAuxQtyMust: transfer.quantity,
+                        FDCSPID: transfer.location_external_code,
+                        FDCStockID: transfer.location_external_code,
+                        FBatchNo: transfer.lot_num,
+                        FUnitID: transfer.unit_external_code,
+                        FMTONo: transfer.lot_num,
+                        FSecQty: transfer.quantity,
+                        FSecCoefficient: 1,
+                        FAuxPrice: 1,
+                        Famount: transfer.quantity,
+                        FPlanMode: 14036
+                      });
+                    }
+
+                    await kisOperationApi.createPickingList(
+                      {
+                        Object: {
+                          Head: {
+                            Fdate: getNowString(),
+                            FDCStockID: warehouseId,
+                            FPurposeID: 1200,
+                            FDeptID: 778,
+                            FFManagerID: inventoryOperation.createdBy?.externalCode,
+                            FSManagerID: inventoryOperation.createdBy?.externalCode,
+                            FBillerID: inventoryOperation.createdBy?.externalCode,
+                            FTranType: 24,
+                            FROB: 1,
+                          },
+                          Entry: entries,
+                        },
+                      })
+                    break;
+                  default:
+                    break;
+                }
+              } else if (after.operationType === "transfer") {
+                //   TODO: 生成KIS调拨单
+
               }
             }
           }

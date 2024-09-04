@@ -303,7 +303,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionSheet",
-          // $permissionCheck: "inspection.manage",
+          // $permissionCheck: "inspectionSheet.manage",
           $exps: {
             disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
           },
