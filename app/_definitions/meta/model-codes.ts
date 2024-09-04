@@ -1023,6 +1023,7 @@ const entityFieldCodes = {
     'isQualified',
     'round',
     'locked',
+    'remark',
     'createdAt',
     'createdBy',
     'updatedAt',
