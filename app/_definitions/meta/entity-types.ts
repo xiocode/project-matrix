@@ -4357,6 +4357,22 @@ export interface MomInventoryApplication {
    */
   externalCode?: string;
   /**
+   * 保管人
+   */
+  fSManager?: Partial<OcUser>;
+  /**
+   * 验收人
+   */
+  fFManager?: Partial<OcUser>;
+  /**
+   * 领料用途
+   */
+  fUse?: string;
+  /**
+   * 生产计划单编号
+   */
+  fPlanSn?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -7732,6 +7748,10 @@ export interface OcUser {
    * 外部编号
    */
   externalCode?: string;
+  /**
+   * 外部用户编号
+   */
+  externalUserCode?: string;
   /**
    * 创建时间
    */

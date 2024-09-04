@@ -1,16 +1,16 @@
-import { useNavigate } from "@remix-run/react";
-import { RockEvent, RockInstanceContext, type Rock } from "@ruiapp/move-style";
-import { useDebounceFn, useSetState } from "ahooks";
-import { Button, Form, Input, InputNumber, Select, Space, Table } from "antd";
-import { memo, useEffect, useMemo, useState } from "react";
-import rapidApi, { rapidApiRequest } from "~/rapidApi";
-import { PlusOutlined } from "@ant-design/icons";
-import { renderRock } from "@ruiapp/react-renderer";
-import { forEach, isEmpty, last, omit, pick, split } from "lodash";
+import {useNavigate} from "@remix-run/react";
+import {RockEvent, RockInstanceContext, type Rock} from "@ruiapp/move-style";
+import {useDebounceFn, useSetState} from "ahooks";
+import {Button, Form, Input, InputNumber, Select, Space, Table} from "antd";
+import {memo, useEffect, useMemo, useState} from "react";
+import rapidApi, {rapidApiRequest} from "~/rapidApi";
+import {PlusOutlined} from "@ant-design/icons";
+import {renderRock} from "@ruiapp/react-renderer";
+import {forEach, isEmpty, last, omit, pick, split} from "lodash";
 import dayjs from "dayjs";
-import { materialFormatStrTemplate } from "~/utils/fmt";
-import { ColumnProps } from "antd/lib/table";
-import { decimalSum } from "~/utils/decimal";
+import {materialFormatStrTemplate} from "~/utils/fmt";
+import {ColumnProps} from "antd/lib/table";
+import {decimalSum} from "~/utils/decimal";
 
 const LotSelect = memo<{
   isSalesOut: boolean;
@@ -23,22 +23,31 @@ const LotSelect = memo<{
   context: RockInstanceContext;
   onChange(v: string): void;
 }>((props) => {
-  const { isSalesOut, operationType, businessType, customerId, warehouseId, record: r, recordIndex: i, context } = props;
+  const {
+    isSalesOut,
+    operationType,
+    businessType,
+    customerId,
+    warehouseId,
+    record: r,
+    recordIndex: i,
+    context
+  } = props;
 
   const { loading, inspectionRule } = useInspectionRule({ customerId, materialId: r.material?.id });
 
   if (isSalesOut && customerId && inspectionRule) {
     return (
       <CustomerLotSelect
-        loading={loading}
-        warehouseId={warehouseId}
-        materialId={r.material?.id}
-        customerId={customerId}
-        inspectRuleId={inspectionRule?.id}
-        value={r.lotNum}
-        onChange={(val: string) => {
+        loading={ loading }
+        warehouseId={ warehouseId }
+        materialId={ r.material?.id }
+        customerId={ customerId }
+        inspectRuleId={ inspectionRule?.id }
+        value={ r.lotNum }
+        onChange={ (val: string) => {
           props.onChange(val);
-        }}
+        } }
       />
     );
   }
@@ -71,11 +80,11 @@ const LotSelect = memo<{
   return (
     <Input
       placeholder="请输入"
-      value={r.lotNum}
-      onChange={(e) => {
+      value={ r.lotNum }
+      onChange={ (e) => {
         const val = e.target.value;
         props.onChange(val);
-      }}
+      } }
     />
   );
 });
@@ -140,7 +149,7 @@ export default {
           context,
           rockConfig: {
             $type: "rapidTableSelect",
-            $id: `${i}_${warehouseId}_${r.material?.id}_${r.lotNum}_binNum`,
+            $id: `${ i }_${ warehouseId }_${ r.material?.id }_${ r.lotNum }_binNum`,
             placeholder: "请选择",
             dropdownMatchSelectWidth: 500,
             mode: "multiple",
@@ -169,7 +178,11 @@ export default {
                   const records: any[] = e.args[1];
                   setMaterialItems((draft) => {
                     const binNumQuantity = (records || []).reduce((s, r) => decimalSum(s, r.quantity || 0), 0);
-                    return draft.map((item, index) => (i === index ? { ...item, binNum: records, quantity: binNumQuantity } : item));
+                    return draft.map((item, index) => (i === index ? {
+                      ...item,
+                      binNum: records,
+                      quantity: binNumQuantity
+                    } : item));
                   });
                 },
               },
@@ -180,12 +193,12 @@ export default {
     };
 
     return (
-      <div style={{ padding: "24px 0 0" }}>
+      <div style={ { padding: "24px 0 0" } }>
         <Form
-          form={form}
-          labelCol={{ span: 2 }}
-          wrapperCol={{ span: 5 }}
-          onFinish={({ warehouse, ...restValues }) => {
+          form={ form }
+          labelCol={ { span: 2 } }
+          wrapperCol={ { span: 5 } }
+          onFinish={ ({ warehouse, ...restValues }) => {
             let applicationItems: any[] = [];
             forEach(materialItems, (item) => {
               if (isEmpty(item.binNum)) {
@@ -229,22 +242,23 @@ export default {
               ...warehouseInfo,
               items: applicationItems,
             });
-          }}
-          onValuesChange={(values) => {
+          } }
+          onValuesChange={ (values) => {
             setRefreshKey(dayjs().unix());
 
             if (values.hasOwnProperty("warehouse")) {
               setWarehouseId(values.warehouse);
               setMaterialItems([]);
             }
-          }}
+          } }
         >
-          <Form.Item required label="业务类型" name="businessType" rules={[{ required: true, message: "业务类型必填" }]}>
-            {renderRock({
+          <Form.Item required label="业务类型" name="businessType"
+                     rules={ [{ required: true, message: "业务类型必填" }] }>
+            { renderRock({
               context,
               rockConfig: {
                 $type: "rapidTableSelect",
-                $id: `${props.$id}_businessType`,
+                $id: `${ props.$id }_businessType`,
                 placeholder: "请选择",
                 columns: [{ title: "名称", code: "name" }],
                 requestConfig: {
@@ -280,33 +294,137 @@ export default {
                         setMaterialItems(materialItems?.map(({ binNum, ...restItem }) => restItem));
                       }
                       form.setFieldValue("operationType", record?.operationType);
+                      form.setFieldValue("fFManager", undefined);
+                      form.setFieldValue("fSManager", undefined);
                     },
                   },
                 ],
               },
-            })}
+            }) }
           </Form.Item>
-          <Form.Item hidden name="operationType" />
-          <Form.Item label="申请人" name="applicant" rules={[{ required: true, message: "申请人必填" }]}>
-            {renderRock({
+          <Form.Item hidden name="operationType"/>
+          <Form.Item label="申请人" name="applicant" rules={ [{ required: true, message: "申请人必填" }] }>
+            { renderRock({
               context,
               rockConfig: {
                 $type: "rapidTableSelect",
-                $id: `${props.$id}_applicant`,
+                $id: `${ props.$id }_applicant`,
                 placeholder: "请选择",
                 listFilterFields: ["name"],
                 searchPlaceholder: "名称搜索",
                 columns: [{ title: "名称", code: "name" }],
-                requestConfig: { url: "/app/oc_users/operations/find", method: "post", params: { orderBy: [{ field: "name" }] } },
+                requestConfig: {
+                  url: "/app/oc_users/operations/find",
+                  method: "post",
+                  params: { orderBy: [{ field: "name" }] }
+                },
               },
-            })}
+            }) }
           </Form.Item>
-          <Form.Item label="仓库" name="warehouse" rules={[{ required: true, message: "仓库必填" }]}>
-            {renderRock({
+          { operationType === "in" && <>
+            <Form.Item label="验收" name="fFManager" rules={ [{ required: true, message: "验收人必填" }] }>
+              { renderRock({
+                context,
+                rockConfig: {
+                  $type: "rapidTableSelect",
+                  $id: `${ props.$id }_ff_manager`,
+                  placeholder: "请选择",
+                  listFilterFields: ["name"],
+                  searchPlaceholder: "名称搜索",
+                  columns: [{ title: "名称", code: "name" }],
+                  requestConfig: {
+                    url: "/app/oc_users/operations/find",
+                    method: "post",
+                    params: { orderBy: [{ field: "name" }] }
+                  },
+                },
+              }) }
+            </Form.Item>
+            <Form.Item label="保管" name="fSManager" rules={ [{ required: true, message: "保管人必填" }] }>
+              { renderRock({
+                context,
+                rockConfig: {
+                  $type: "rapidTableSelect",
+                  $id: `${ props.$id }_fs_manager`,
+                  placeholder: "请选择",
+                  listFilterFields: ["name"],
+                  searchPlaceholder: "名称搜索",
+                  columns: [{ title: "名称", code: "name" }],
+                  requestConfig: {
+                    url: "/app/oc_users/operations/find",
+                    method: "post",
+                    params: { orderBy: [{ field: "name" }] }
+                  },
+                },
+              }) }
+            </Form.Item>
+          </>
+          }
+          { operationType === "out" && <>
+            <Form.Item label="发料" name="fFManager" rules={ [{ required: true, message: "验收人必填" }] }>
+              { renderRock({
+                context,
+                rockConfig: {
+                  $type: "rapidTableSelect",
+                  $id: `${ props.$id }_ff_manager`,
+                  placeholder: "请选择",
+                  listFilterFields: ["name"],
+                  searchPlaceholder: "名称搜索",
+                  columns: [{ title: "名称", code: "name" }],
+                  requestConfig: {
+                    url: "/app/oc_users/operations/find",
+                    method: "post",
+                    params: { orderBy: [{ field: "name" }] }
+                  },
+                },
+              }) }
+            </Form.Item>
+            <Form.Item label="领料" name="fSManager" rules={ [{ required: true, message: "保管人必填" }] }>
+              { renderRock({
+                context,
+                rockConfig: {
+                  $type: "rapidTableSelect",
+                  $id: `${ props.$id }_fs_manager`,
+                  placeholder: "请选择",
+                  listFilterFields: ["name"],
+                  searchPlaceholder: "名称搜索",
+                  columns: [{ title: "名称", code: "name" }],
+                  requestConfig: {
+                    url: "/app/oc_users/operations/find",
+                    method: "post",
+                    params: { orderBy: [{ field: "name" }] }
+                  },
+                },
+              }) }
+            </Form.Item>
+            <Form.Item label="领料用途" name="fUse" rules={ [{ required: true, message: "领料用途" }] }>
+              { renderRock({
+                context,
+                rockConfig: {
+                  $type: "antdInput",
+                  $id: `${ props.$id }_f_use`,
+                  placeholder: "请输入",
+                },
+              }) }
+            </Form.Item>
+            <Form.Item label="生产计划单号" name="fPlanSn" rules={ [{ message: "生产计划单号" }] }>
+              { renderRock({
+                context,
+                rockConfig: {
+                  $type: "antdInput",
+                  $id: `${ props.$id }_f_plan_sn`,
+                  placeholder: "请输入",
+                },
+              }) }
+            </Form.Item>
+          </>
+          }
+          <Form.Item label="仓库" name="warehouse" rules={ [{ required: true, message: "仓库必填" }] }>
+            { renderRock({
               context,
               rockConfig: {
                 $type: "rapidTableSelect",
-                $id: `${props.$id}_warehouse`,
+                $id: `${ props.$id }_warehouse`,
                 placeholder: "请选择",
                 listFilterFields: ["name", "code"],
                 searchPlaceholder: "名称、编号搜索",
@@ -329,14 +447,14 @@ export default {
                   },
                 },
               },
-            })}
+            }) }
           </Form.Item>
-          <Form.Item label="客户" name="customer" hidden={!isSalesOut}>
-            {renderRock({
+          <Form.Item label="客户" name="customer" hidden={ !isSalesOut }>
+            { renderRock({
               context,
               rockConfig: {
                 $type: "rapidTableSelect",
-                $id: `${props.$id}_customer`,
+                $id: `${ props.$id }_customer`,
                 placeholder: "请选择",
                 listFilterFields: ["name"],
                 searchPlaceholder: "名称搜索",
@@ -346,19 +464,23 @@ export default {
                   method: "post",
                   params: {
                     orderBy: [{ field: "name" }],
-                    fixedFilters: [{ field: "categories", operator: "exists", filters: [{ field: "code", operator: "eq", value: "customer" }] }],
+                    fixedFilters: [{
+                      field: "categories",
+                      operator: "exists",
+                      filters: [{ field: "code", operator: "eq", value: "customer" }]
+                    }],
                     properties: ["id", "name", "categories"],
                   },
                 },
               },
-            })}
+            }) }
           </Form.Item>
           <Form.Item
             label="物品明细"
             name="items"
-            labelCol={{ span: 2 }}
-            wrapperCol={{ span: 22 }}
-            rules={[
+            labelCol={ { span: 2 } }
+            wrapperCol={ { span: 22 } }
+            rules={ [
               {
                 validator: (r, val: any, cb) => {
                   let hasError = false;
@@ -368,7 +490,7 @@ export default {
                     if (!item.material) {
                       hasError = true;
                     } else {
-                      let uniqueKey = `${item.material.id}_${item.lotNum || ""}`;
+                      let uniqueKey = `${ item.material.id }_${ item.lotNum || "" }`;
                       if (uniqueMap.get(uniqueKey)) {
                         hasMultipleRecord = true;
                       }
@@ -389,13 +511,13 @@ export default {
                   cb();
                 },
               },
-            ]}
+            ] }
           >
             <Table
               size="middle"
-              dataSource={materialItems}
-              scroll={{ x: 740 }}
-              columns={[
+              dataSource={ materialItems }
+              scroll={ { x: 740 } }
+              columns={ [
                 {
                   title: "物品",
                   dataIndex: "material",
@@ -412,7 +534,7 @@ export default {
                         context,
                         rockConfig: {
                           $type: "rapidTableSelect",
-                          $id: `${i}_warehouse_material`,
+                          $id: `${ i }_warehouse_material`,
                           placeholder: "请选择",
                           dropdownMatchSelectWidth: 500,
                           listValueFieldName: "material.id",
@@ -472,7 +594,13 @@ export default {
                                 const record: any = e.args[0];
                                 setMaterialItems((draft) => {
                                   return draft.map((item, index) =>
-                                    i === index ? { ...item, material: record?.material, unit: record?.unit, lotNum: undefined, binNum: undefined } : item,
+                                    i === index ? {
+                                      ...item,
+                                      material: record?.material,
+                                      unit: record?.unit,
+                                      lotNum: undefined,
+                                      binNum: undefined
+                                    } : item,
                                   );
                                 });
                               },
@@ -486,7 +614,7 @@ export default {
                       context,
                       rockConfig: {
                         $type: "rapidTableSelect",
-                        $id: `${i}_material`,
+                        $id: `${ i }_material`,
                         placeholder: "请选择",
                         dropdownMatchSelectWidth: 500,
                         listTextFormat: materialFormatStrTemplate,
@@ -515,7 +643,13 @@ export default {
                               const record: any = e.args[0];
                               setMaterialItems((draft) => {
                                 return draft.map((item, index) =>
-                                  i === index ? { ...item, material: record, unit: record?.defaultUnit, lotNum: undefined, binNum: undefined } : item,
+                                  i === index ? {
+                                    ...item,
+                                    material: record,
+                                    unit: record?.defaultUnit,
+                                    lotNum: undefined,
+                                    binNum: undefined
+                                  } : item,
                                 );
                               });
                             },
@@ -532,19 +666,19 @@ export default {
                   render: (_, r, i) => {
                     return (
                       <LotSelect
-                        context={context}
-                        record={r}
-                        recordIndex={i}
-                        isSalesOut={isSalesOut}
-                        warehouseId={warehouseId}
-                        customerId={form.getFieldValue("customer")}
-                        operationType={operationType!}
-                        businessType={form.getFieldValue("businessType")}
-                        onChange={(val) => {
+                        context={ context }
+                        record={ r }
+                        recordIndex={ i }
+                        isSalesOut={ isSalesOut }
+                        warehouseId={ warehouseId }
+                        customerId={ form.getFieldValue("customer") }
+                        operationType={ operationType! }
+                        businessType={ form.getFieldValue("businessType") }
+                        onChange={ (val) => {
                           setMaterialItems((draft) => {
                             return draft.map((item, index) => (i === index ? { ...item, lotNum: val } : item));
                           });
-                        }}
+                        } }
                       />
                     );
                   },
@@ -558,14 +692,14 @@ export default {
                     return (
                       <InputNumber
                         placeholder="请输入"
-                        disabled={!isEmpty(r.binNum)}
-                        style={{ width: "100%" }}
-                        value={r.quantity}
-                        onChange={(val) => {
+                        disabled={ !isEmpty(r.binNum) }
+                        style={ { width: "100%" } }
+                        value={ r.quantity }
+                        onChange={ (val) => {
                           setMaterialItems((draft) => {
                             return draft.map((item, index) => (i === index ? { ...item, quantity: val } : item));
                           });
-                        }}
+                        } }
                       />
                     );
                   },
@@ -579,7 +713,7 @@ export default {
                       context,
                       rockConfig: {
                         $type: "rapidTableSelect",
-                        $id: `${i}_unit`,
+                        $id: `${ i }_unit`,
                         placeholder: "请选择",
                         pageSize: 1000,
                         listFilterFields: [],
@@ -609,13 +743,13 @@ export default {
                     return (
                       <Input
                         placeholder="请输入"
-                        value={r.remark}
-                        onChange={(e) => {
+                        value={ r.remark }
+                        onChange={ (e) => {
                           const val = e.target.value;
                           setMaterialItems((draft) => {
                             return draft.map((item, index) => (i === index ? { ...item, remark: val } : item));
                           });
-                        }}
+                        } }
                       />
                     );
                   },
@@ -625,47 +759,47 @@ export default {
                   render: (_, r, index) => {
                     return (
                       <span
-                        style={{ cursor: "pointer", color: "red" }}
-                        onClick={() => {
+                        style={ { cursor: "pointer", color: "red" } }
+                        onClick={ () => {
                           setMaterialItems(materialItems.filter((m, i) => i !== index));
-                        }}
+                        } }
                       >
                         移除
                       </span>
                     );
                   },
                 },
-              ]}
-              pagination={false}
+              ] }
+              pagination={ false }
             />
             <Button
               block
               type="dashed"
-              onClick={() => {
+              onClick={ () => {
                 const newRecord = pick(last(materialItems), ["material", "unit"]);
                 setMaterialItems([...materialItems, { ...newRecord }]);
-              }}
+              } }
             >
-              <PlusOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              <PlusOutlined onPointerEnterCapture={ undefined } onPointerLeaveCapture={ undefined }/>
               添加
             </Button>
           </Form.Item>
-          <Form.Item wrapperCol={{ span: 22, offset: 2 }} style={{ marginTop: 36 }}>
-            <Space size={24}>
+          <Form.Item wrapperCol={ { span: 22, offset: 2 } } style={ { marginTop: 36 } }>
+            <Space size={ 24 }>
               <Button
-                disabled={saving}
-                onClick={() => {
+                disabled={ saving }
+                onClick={ () => {
                   navigate("/pages/mom_inventory_application_list");
-                }}
+                } }
               >
                 取消
               </Button>
               <Button
                 type="primary"
-                loading={saving}
-                onClick={() => {
+                loading={ saving }
+                onClick={ () => {
                   form.submit();
-                }}
+                } }
               >
                 保存
               </Button>
@@ -708,21 +842,32 @@ const CustomerLotSelect = memo((props: any) => {
 
   useEffect(() => {
     if (props.materialId && props.customerId && props.inspectRuleId) {
-      loadCustomLots({ materialId: props.materialId, customerId: props.customerId, inspectRuleId: props.inspectRuleId, warehouseId: props.warehouseId });
+      loadCustomLots({
+        materialId: props.materialId,
+        customerId: props.customerId,
+        inspectRuleId: props.inspectRuleId,
+        warehouseId: props.warehouseId
+      });
     }
   }, [props.materialId, props.customerId, props.inspectRuleId, props.warehouseId]);
 
   const options = useMemo(() => (lots || []).map((lot) => ({ label: lot.lotNum, value: lot.lotNum })), [lots]);
 
   return (
-    <Select placeholder="请选择" style={{ width: "100%" }} options={options} loading={props.loading || loading} value={props.value} onChange={props.onChange} />
+    <Select placeholder="请选择" style={ { width: "100%" } } options={ options } loading={ props.loading || loading }
+            value={ props.value } onChange={ props.onChange }/>
   );
 });
 
 function useCustomLots() {
   const [state, setState] = useSetState<{ loading?: boolean; lots?: any[] }>({});
 
-  const loadCustomLots = async (params: { materialId: string; customerId: string; inspectRuleId: string; warehouseId?: string }) => {
+  const loadCustomLots = async (params: {
+    materialId: string;
+    customerId: string;
+    inspectRuleId: string;
+    warehouseId?: string
+  }) => {
     setState({ loading: true });
 
     const { error, result: lotResult } = await rapidApiRequest({

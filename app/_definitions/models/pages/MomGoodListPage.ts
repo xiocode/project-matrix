@@ -115,10 +115,6 @@ const page: RapidPage = {
       //     operator: "eq",
       //     value: "normal",
       //   },
-      //   {
-      //     field: "location_id",
-      //     operator: "notNull",
-      //   },
       // ],
       relations: {
         material: {
@@ -412,6 +408,18 @@ const page: RapidPage = {
           rendererProps: {
             format: "{{name}}",
           },
+        },
+        {
+          type: "auto",
+          code: "manufactureDate",
+          width: "100px",
+          fieldType: "date",
+        },
+        {
+          type: "auto",
+          code: "validityDate",
+          width: "100px",
+          fieldType: "date",
         },
         {
           type: "auto",

@@ -151,6 +151,30 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "外部编号",
       type: "text",
     },
+    {
+      code: "fSManager",
+      name: "保管人",
+      type: "relation",
+      targetSingularCode: "oc_user",
+      targetIdColumnName: "fs_manager_id",
+    },
+    {
+      code: "fFManager",
+      name: "验收人",
+      type: "relation",
+      targetSingularCode: "oc_user",
+      targetIdColumnName: "ff_manager_id",
+    },
+    {
+      code: "fUse",
+      name: "领料用途",
+      type: "text",
+    },
+    {
+      code: "fPlanSn",
+      name: "生产计划单编号",
+      type: "text",
+    },
   ],
 };
 

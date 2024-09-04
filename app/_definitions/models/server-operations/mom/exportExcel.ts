@@ -59,7 +59,7 @@ async function exportGoodsExcel(server: IRpdServer, input: ExportExcelInput) {
   const rows = goodTransfers.map(flattenGoods);
 
   return createExcelSheet(rows, [
-    "物料", "物料类型", "批号", "托盘号", "数量",
+    "物料", "物料类型", "批号", "托盘号", "数量", "生产日期", "有效期",
     "状态", "仓库", "库位", "合格状态"
   ]);
 }
@@ -250,6 +250,8 @@ function flattenGoods(good: MomGood) {
     lotNum: good.lotNum,
     binNum: good.binNum,
     quantity: good.quantity,
+    manufactureDate: good.manufactureDate,
+    validityDate: good.validityDate,
     state: mapGoodState(good.state),
     warehouse: good.warehouse?.name,
     location: good.location?.name,

@@ -73,7 +73,7 @@ async function listGoodInTransfers(server: IRpdServer, input: QueryGoodInTransfe
              inner join base_materials bm on r.material_id = bm.id
              inner join base_units bu on bm.default_unit_id = bu.id
              left join base_lots bl on r.lot_id = bl.id
-             left join mom_inspection_sheets mis on r.material_id = mis.material_id and r.lot_num = mis.lot_num;
+             left join mom_inspection_sheets mis on r.material_id = mis.material_id and r.lot_num = mis.lot_num and r.operation_id = mis.inventory_operation_id;
     `,
     [input.operationId],
   );

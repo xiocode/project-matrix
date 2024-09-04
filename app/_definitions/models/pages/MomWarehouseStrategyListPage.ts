@@ -38,6 +38,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       code: "enabled",
       type: "auto",
+      defaultValue: true,
     },
   ],
 };
