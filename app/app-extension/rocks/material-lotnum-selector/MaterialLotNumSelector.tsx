@@ -17,6 +17,13 @@ export default {
       type: "entityStore",
       entityModel: entity,
       properties: ["id", "materialCategory", "warehouse", "businessType", "strategy", "enabled", "qualifiedFilter", "validityFilter"],
+      fixedFilters: [
+        {
+          field: "enabled",
+          operator: "eq",
+          value: true,
+        },
+      ],
     };
 
     context.scope.addStore(store);

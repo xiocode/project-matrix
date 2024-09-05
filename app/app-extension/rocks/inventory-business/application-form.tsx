@@ -455,6 +455,12 @@ export default {
                             params: {
                               fixedFilters,
                               properties: ["id", "material", "unit"],
+                              relations: {
+                                material: {
+                                  properties: ["id", "code", "name", "specification", "category"],
+                                  category: true,
+                                },
+                              },
                               // orderBy: [{ field: "code" }],
                             },
                           },
