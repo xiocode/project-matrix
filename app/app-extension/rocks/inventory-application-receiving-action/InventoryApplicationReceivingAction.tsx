@@ -40,6 +40,9 @@ export default {
       });
 
       context.page.sendComponentMessage("goodTransferList_records-newForm", {
+        name: "resetFields",
+      });
+      context.page.sendComponentMessage("goodTransferList_records-newForm", {
         name: "setFieldsValue",
         payload: {
           ...props.record,

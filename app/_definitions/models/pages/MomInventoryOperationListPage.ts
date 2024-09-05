@@ -1,6 +1,6 @@
-import {cloneDeep, omit} from "lodash";
-import type {RapidPage, RapidEntityFormConfig} from "@ruiapp/rapid-extension";
-import {materialFormatStrTemplate} from "~/utils/fmt";
+import { cloneDeep, omit } from "lodash";
+import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
@@ -311,7 +311,7 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "businessType",
-          width: "150px",
+          width: "160px",
           rendererProps: {
             format: "{{name}}",
           },
