@@ -360,7 +360,7 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "businessType",
-          width: "150px",
+          width: "160px",
           rendererProps: {
             format: "{{name}}",
           },
