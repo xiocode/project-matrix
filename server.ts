@@ -160,15 +160,14 @@ export async function startServer() {
     rapidRequestHandler(req, res, next);
   });
 
-  const remixRequestHandler = createRemixRequestHandler(rapidServer);
   app.all(
     "*",
     isDevelopmentEnv
       ? (req, res, next) => {
-          purgeRequireCache();
-          return remixRequestHandler(req, res, next);
-        }
-      : remixRequestHandler,
+        purgeRequireCache();
+        return createRemixRequestHandler(rapidServer)(req, res, next);
+      }
+      : createRemixRequestHandler(rapidServer),
   );
   const port = process.env.PORT || 3000;
 
