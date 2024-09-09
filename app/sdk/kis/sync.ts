@@ -188,13 +188,13 @@ class KisDataSync {
         isLoadDetail ? await entityManager.updateEntityById(entity) : await entityManager.createEntity({entity});
       } catch (e: any) {
         if (e.code === '23505') {
-          console.error(`Entity with code ${entity.code} already exists or id ${entity.id} updated`);
+          // console.error(`Entity with code ${entity.code} already exists or id ${entity.id} updated`);
         } else {
           console.error(e);
         }
       }
     }
-    this.ctx.logger.info(`${options.singularCode} entities ${isLoadDetail ? 'detail' : 'list'} synced`);
+    // this.ctx.logger.info(`${options.singularCode} entities ${isLoadDetail ? 'detail' : 'list'} synced`);
   }
 
   // Utility function to split an array into chunks

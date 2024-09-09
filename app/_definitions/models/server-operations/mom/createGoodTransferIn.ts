@@ -276,8 +276,8 @@ async function saveInspectionSheet(server: IRpdServer, sheet: SaveMomInspectionS
       {
         id: inspectionSheet.id,
         entityToSave: {
-          lot_id: sheet.lot?.id,
-          inventory_operation_id: sheet.inventoryOperation?.id
+          lot: { id: sheet.lot?.id },
+          inventoryOperation: { id: sheet.inventoryOperation?.id },
         }
       }
     );

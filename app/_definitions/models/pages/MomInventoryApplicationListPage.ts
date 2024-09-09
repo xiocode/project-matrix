@@ -36,43 +36,97 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "biller",
+      required: true,
     },
-    // {
-    //   type: "auto",
-    //   code: "from",
-    //   formControlProps: {
-    //     requestParams: {
-    //       fixedFilters: [
-    //         {
-    //           field: "type",
-    //           operator: "eq",
-    //           value: "warehouse",
-    //         },
-    //       ],
-    //     },
-    //   },
-    //   $exps: {
-    //     _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
-    //   },
-    // },
-    // {
-    //   type: "auto",
-    //   code: "to",
-    //   formControlProps: {
-    //     requestParams: {
-    //       fixedFilters: [
-    //         {
-    //           field: "type",
-    //           operator: "eq",
-    //           value: "warehouse",
-    //         },
-    //       ],
-    //     },
-    //   },
-    //   $exps: {
-    //     _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
-    //   },
-    // },
+    {
+      type: "auto",
+      label: "验收",
+      code: "fFManager",
+      required: true,
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
+      },
+    },
+    {
+      type: "auto",
+      code: "fSManager",
+      label: "保管",
+      required: true,
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
+      },
+    },
+    {
+      type: "auto",
+      label: "发料",
+      code: "fFManager",
+      required: true,
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+      },
+    },
+    {
+      type: "auto",
+      code: "fSManager",
+      label: "领料",
+      required: true,
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+      },
+    },
+    {
+      type: "auto",
+      code: "fUse",
+      label: "领料用途",
+      required: true,
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+      },
+    },
+    {
+      type: "auto",
+      code: "fPlanSn",
+      label: "生产计划单编号",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+      },
+    },
+    {
+      type: "auto",
+      code: "from",
+      formControlProps: {
+        requestParams: {
+          fixedFilters: [
+            {
+              field: "type",
+              operator: "eq",
+              value: "warehouse",
+            },
+          ],
+        },
+      },
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+      },
+    },
+    {
+      type: "auto",
+      code: "to",
+      formControlProps: {
+        requestParams: {
+          fixedFilters: [
+            {
+              field: "type",
+              operator: "eq",
+              value: "warehouse",
+            },
+          ],
+        },
+      },
+      $exps: {
+        _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
+      },
+    },
     // {
     //   type: "auto",
     //   code: "operationState",

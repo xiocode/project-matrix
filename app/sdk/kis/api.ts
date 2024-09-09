@@ -39,16 +39,6 @@ class KingdeeSDK {
       },
     });
 
-    // 打印请求和响应日志
-    // this.axiosInstance.interceptors.request.use(request => {
-    //   console.log('Starting Request', JSON.stringify(request, null, 2))
-    //   return request
-    // })
-    //
-    // this.axiosInstance.interceptors.response.use(response => {
-    //   console.log('Response:', JSON.stringify(response.data, null, 2))
-    //   return response
-    // })
 
     this.machineId = machineIdSync();
     this.clientId = config.clientId;
@@ -95,11 +85,11 @@ class KingdeeSDK {
 
   public async refreshAccessToken(): Promise<void> {
     const config: AxiosRequestConfig = {
-      url: `/koas/user/refresh_login_access_token?access_token=${this.accessToken}`,
+      url: `/koas/user/refresh_login_access_token?access_token=${ this.accessToken }`,
       method: 'POST',
       headers: {
         'Kis-State': this.machineId,
-        'Kis-Timestamp': `${Math.floor(Date.now() / 1000)}`,
+        'Kis-Timestamp': `${ Math.floor(Date.now() / 1000) }`,
         'Kis-Traceid': uuidv4(),
         'Kis-Ver': '1.0',
       },
@@ -119,11 +109,11 @@ class KingdeeSDK {
 
   public async refreshAuthData(): Promise<void> {
     const config: AxiosRequestConfig = {
-      url: `/koas/user/refresh_auth_data?client_id=${this.clientId}&client_secret=${this.clientSecret}`,
+      url: `/koas/user/refresh_auth_data?client_id=${ this.clientId }&client_secret=${ this.clientSecret }`,
       method: 'POST',
       headers: {
         'Kis-State': this.machineId,
-        'Kis-Timestamp': `${Math.floor(Date.now() / 1000)}`,
+        'Kis-Timestamp': `${ Math.floor(Date.now() / 1000) }`,
         'Kis-Traceid': uuidv4(),
         'Kis-Ver': '1.0',
       },
@@ -144,20 +134,32 @@ class KingdeeSDK {
 
   }
 
-  public async PostResourceRequest(resourceUrl: string, payload: object): Promise<AxiosResponse<any>> {
+  public async PostResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
     const config: AxiosRequestConfig = {
-      url: `${resourceUrl}?access_token=${this.accessToken}`,
+      url: `${ resourceUrl }?access_token=${ this.accessToken }`,
       method: 'POST',
       headers: {
         'Kis-Authdata': this.authData,
         'Kis-State': this.machineId, // Use unique machine ID
-        'Kis-Timestamp': `${Math.floor(Date.now() / 1000)}`, // Current timestamp
+        'Kis-Timestamp': `${ Math.floor(Date.now() / 1000) }`, // Current timestamp
         'Kis-Traceid': uuidv4(), // Unique trace ID
         'Kis-Ver': '1.0',
         'X-Gw-Router-Addr': this.gatewayRouterAddr,
       },
       data: payload,
     };
+    if (debug) {
+      // 打印请求和响应日志
+      this.axiosInstance.interceptors.request.use(request => {
+        console.log('Starting Request', JSON.stringify(request, null, 2))
+        return request
+      })
+
+      this.axiosInstance.interceptors.response.use(response => {
+        console.log('Response:', JSON.stringify(response.data, null, 2))
+        return response
+      })
+    }
     return this.request<any>(config);
   }
 }

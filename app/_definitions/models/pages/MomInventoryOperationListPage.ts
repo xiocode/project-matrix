@@ -326,6 +326,11 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          title: "KIS单据编号",
+          code: "externalCode",
+        },
+        {
+          type: "auto",
           code: "createdAt",
           width: "150px",
         },

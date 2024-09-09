@@ -28,7 +28,8 @@ export interface WarehouseEntry {
   FUnitID?: string;
   FDeptID?: number;
   FPlanMode:number;
-
+  FReProduceType?: number;
+  FSCStockID?: string;
 }
 
 export interface WarehousePayload {
@@ -36,16 +37,18 @@ export interface WarehousePayload {
     Head: {
       FBillerID?: string;
       FBillNo?: string;
-      FSupplyID?: string;
       Fdate: string;
+      FSettleDate?: string
       FDCStockID?: string;
       FSCStockID?: string;
       FPurposeID?: number;
-      FDeptID?: number;
+      FDeptID?: string;
       FFManagerID?: string;
       FSManagerID?: string;
       FTranType: number; // 1
       FROB?: number;
+      Fuse?: string;
+      FHeadSelfB0436?: string;
     };
     Entry: Array<WarehouseEntry>;
   };
@@ -132,11 +135,11 @@ class KisInventoryOperationAPI {
   private async retryApiRequest<T>(url: string, payload: object, retries: number = 3): Promise<ApiResponse<T>> {
     let attempts = 0;
     while (attempts < retries) {
-      const response = await this.api.PostResourceRequest(url, payload);
+      const response = await this.api.PostResourceRequest(url, payload, true);
       if (response.data.errcode === 0) {
         return response.data as ApiResponse<T>;
       }
-      // console.log(`API request failed (attempt ${attempts + 1}):`, response.data);
+      console.log(`API request failed (attempt ${attempts + 1}):`, payload, response.data);
       attempts += 1;
       await this.sleep(2000); // Wait before retrying
     }
@@ -178,6 +181,13 @@ class KisInventoryOperationAPI {
     const url = "/koas/app007104/api/subcontractreceipt/create";
     return await this.retryApiRequest<WarehouseResponseData>(url, payload);
   }
+
+  // 委外加工出库单
+  public async createSubcontractdelivery(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
+    const url = "/koas/app007104/api/subcontractdelivery/create";
+    return await this.retryApiRequest<WarehouseResponseData>(url, payload);
+  }
+
 
   // 其他入库
   public async createMiscellaneousReceipt(payload: WarehousePayload): Promise<ApiResponse<WarehouseResponseData>> {
