@@ -87,6 +87,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "锁定",
       type: "boolean",
     },
+    {
+      code: "remark",
+      name: "备注",
+      type: "text",
+    },
   ],
 };
 

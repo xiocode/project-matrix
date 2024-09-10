@@ -3717,6 +3717,10 @@ export interface MomInspectionMeasurement {
    */
   locked?: boolean;
   /**
+   * 备注
+   */
+  remark?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
