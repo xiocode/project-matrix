@@ -22,7 +22,7 @@ export default [
           properties: ["id", "code", "name", "specification"],
         });
 
-        if (changes) {
+        if (changes && ctx?.routerContext?.state.userId) {
           await server.getEntityManager("sys_audit_log").createEntity({
             entity: {
               user: { id: ctx?.routerContext?.state.userId },
@@ -56,15 +56,16 @@ export default [
           ],
           properties: ["id", "code", "name", "specification"],
         });
-
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "base_material",
-            targetSingularName: `物料 - ${ operationTarget?.code }-${ operationTarget?.name }-${ operationTarget?.specification }`,
-            method: "delete",
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "base_material",
+              targetSingularName: `物料 - ${ operationTarget?.code }-${ operationTarget?.name }-${ operationTarget?.specification }`,
+              method: "delete",
+            }
+          })
+        }
       } catch (e) {
         console.error(e);
       }

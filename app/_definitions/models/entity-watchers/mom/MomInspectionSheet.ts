@@ -90,15 +90,17 @@ export default [
       });
 
       if (changes) {
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "mom_inspection_sheet",
-            targetSingularName: `检验单 - ${ operationTarget?.code }`,
-            method: "update",
-            changes: changes,
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inspection_sheet",
+              targetSingularName: `检验单 - ${ operationTarget?.code }`,
+              method: "update",
+              changes: changes,
+            }
+          })
+        }
       }
 
       if (changes.hasOwnProperty('state') && changes.state === 'inspected') {
@@ -136,6 +138,7 @@ export default [
         });
         if (lot && after.result) {
           await lotManager.updateEntityById({
+            routeContext: ctx.routerContext,
             id: lot.id,
             entityToSave: {
               qualificationState: after.result,
@@ -179,15 +182,16 @@ export default [
         ],
         properties: ["id", "code"],
       });
-
-      await server.getEntityManager("sys_audit_log").createEntity({
-        entity: {
-          user: { id: ctx?.routerContext?.state.userId },
-          targetSingularCode: "mom_inspection_sheet",
-          targetSingularName: `检验单 - ${ operationTarget?.code }`,
-          method: "delete",
-        }
-      })
+      if (ctx?.routerContext?.state.userId) {
+        await server.getEntityManager("sys_audit_log").createEntity({
+          entity: {
+            user: { id: ctx?.routerContext?.state.userId },
+            targetSingularCode: "mom_inspection_sheet",
+            targetSingularName: `检验单 - ${ operationTarget?.code }`,
+            method: "delete",
+          }
+        })
+      }
     },
   },
 ] satisfies EntityWatcher<any>[];

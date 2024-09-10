@@ -115,14 +115,16 @@ export default [
         });
 
         if (changes) {
-          await server.getEntityManager("sys_audit_log").createEntity({
-            entity: {
-              user: { id: ctx?.routerContext?.state.userId },
-              targetSingularCode: "mom_inspection_characteristic",
-              targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
-              method: "update",
-            }
-          })
+          if (ctx?.routerContext?.state.userId) {
+            await server.getEntityManager("sys_audit_log").createEntity({
+              entity: {
+                user: { id: ctx?.routerContext?.state.userId },
+                targetSingularCode: "mom_inspection_characteristic",
+                targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
+                method: "update",
+              }
+            })
+          }
         }
       }
     },
@@ -145,15 +147,16 @@ export default [
           ],
           properties: ["id", "sampleCode", "sheet"]
         });
-
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "mom_inspection_characteristic",
-            targetSingularName: `检验记录-${operationTarget?.sheet?.code}-样本:${operationTarget?.sampleCode}`,
-            method: "delete",
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inspection_characteristic",
+              targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
+              method: "delete",
+            }
+          })
+        }
       } catch (e) {
         console.error(e);
       }

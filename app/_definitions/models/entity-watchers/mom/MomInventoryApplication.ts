@@ -35,15 +35,17 @@ export default [
         });
 
         if (changes) {
-          await server.getEntityManager("sys_audit_log").createEntity({
-            entity: {
-              user: { id: ctx?.routerContext?.state.userId },
-              targetSingularCode: "mom_inventory_application",
-              targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
-              method: "update",
-              changes: changes,
-            }
-          })
+          if (ctx?.routerContext?.state.userId) {
+            await server.getEntityManager("sys_audit_log").createEntity({
+              entity: {
+                user: { id: ctx?.routerContext?.state.userId },
+                targetSingularCode: "mom_inventory_application",
+                targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
+                method: "update",
+                changes: changes,
+              }
+            })
+          }
         }
       } catch (e) {
         console.log(e)
@@ -69,14 +71,16 @@ export default [
           properties: ["id", "code", "businessType"],
         });
 
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "mom_inventory_application",
-            targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
-            method: "delete",
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inventory_application",
+              targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
+              method: "delete",
+            }
+          })
+        }
       } catch (e) {
         console.error(e);
       }

@@ -23,15 +23,17 @@ export default [
         });
 
         if (changes) {
-          await server.getEntityManager("sys_audit_log").createEntity({
-            entity: {
-              user: { id: ctx?.routerContext?.state.userId },
-              targetSingularCode: "mom_inspection_rule",
-              targetSingularName: `检验规则 -${ operationTarget?.name }- [${ operationTarget?.material.code }-${ operationTarget?.material.name }-${ operationTarget?.material.specification }]`,
-              method: "update",
-              changes: changes,
-            }
-          })
+          if (ctx?.routerContext?.state.userId) {
+            await server.getEntityManager("sys_audit_log").createEntity({
+              entity: {
+                user: { id: ctx?.routerContext?.state.userId },
+                targetSingularCode: "mom_inspection_rule",
+                targetSingularName: `检验规则 -${ operationTarget?.name }- [${ operationTarget?.material.code }-${ operationTarget?.material.name }-${ operationTarget?.material.specification }]`,
+                method: "update",
+                changes: changes,
+              }
+            })
+          }
         }
       } catch (e) {
         console.log(e)
@@ -56,15 +58,16 @@ export default [
           ],
           properties: ["id", "name", "material"]
         });
-
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "mom_inspection_rule",
-            targetSingularName: `检验规则 -${ operationTarget?.name }- [${ operationTarget?.material.code }-${ operationTarget?.material.name }-${ operationTarget?.material.specification }]`,
-            method: "delete",
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inspection_rule",
+              targetSingularName: `检验规则 -${ operationTarget?.name }- [${ operationTarget?.material.code }-${ operationTarget?.material.name }-${ operationTarget?.material.specification }]`,
+              method: "delete",
+            }
+          })
+        }
       } catch (e) {
         console.error(e);
       }

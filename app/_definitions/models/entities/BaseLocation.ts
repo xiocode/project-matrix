@@ -49,6 +49,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "外部编码",
       type: "text",
     },
+    {
+      code: "externalGroupCode",
+      name: "外部库位组编码",
+      type: "text",
+    },
   ],
 };
 
