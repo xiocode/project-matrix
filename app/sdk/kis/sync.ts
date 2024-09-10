@@ -91,11 +91,11 @@ class KisDataSync {
       if (response.data.errcode === 0) {
         return response;
       }
-      console.error(`API ${url} request failed (attempt ${attempts + 1}):`, url, response.data);
+      console.error(`API ${ url } request failed (attempt ${ attempts + 1 }):`, url, response.data);
       attempts += 1;
       await this.sleep(2000); // Wait before retrying
     }
-    throw new Error(`Failed to fetch data from ${url} after ${retries} attempts`);
+    throw new Error(`Failed to fetch data from ${ url } after ${ retries } attempts`);
   }
 
   // Fetch paginated list from the API
@@ -157,7 +157,7 @@ class KisDataSync {
       const chunks = this.chunkArray(options?.payload?.ItemIds, 20); // Split itemIds into chunks of 20
 
       for (const chunk of chunks) {
-        const response = await this.retryApiRequest(options.url, {ItemIds: chunk});
+        const response = await this.retryApiRequest(options.url, { ItemIds: chunk });
         const data = response.data.data;
         if (data.GoodItemStocks && data.GoodItemStocks.length) {
           results.push(...data.GoodItemStocks);
@@ -185,7 +185,7 @@ class KisDataSync {
     for (const entity of entities) {
       try {
         if (!entityManager) break;
-        isLoadDetail ? await entityManager.updateEntityById(entity) : await entityManager.createEntity({entity});
+        isLoadDetail ? await entityManager.updateEntityById(entity) : await entityManager.createEntity({ entity });
       } catch (e: any) {
         if (e.code === '23505') {
           // console.error(`Entity with code ${entity.code} already exists or id ${entity.id} updated`);
@@ -239,37 +239,37 @@ class KisDataSync {
           externalCode: item.FItemID,
           type: 'others',
           orderNum: 1,
-          category: {id: 1}
+          category: { id: 1 }
         } as SaveBaseUnitInput),
       }),
       // 同步物料分类
       this.createListSyncFunction(
         {
-        url: "/koas/APP006992/api/Material/List",
-        singularCode: "base_material_category",
-        mapToEntity: async (item: any) => {
-          const parentId = this.materialCategories.find(cat => cat.externalCode === String(item.FParentID))?.id;
+          url: "/koas/APP006992/api/Material/List",
+          singularCode: "base_material_category",
+          mapToEntity: async (item: any) => {
+            const parentId = this.materialCategories.find(cat => cat.externalCode === String(item.FParentID))?.id;
 
-          if (!parentId && item.FParentID !== 0) {
-            // console.log(`Parent category not found for item ${item.FName}`)
-            return null;
-          }
+            if (!parentId && item.FParentID !== 0) {
+              // console.log(`Parent category not found for item ${item.FName}`)
+              return null;
+            }
 
-          let entity = {
-            code: item.FNumber,
-            name: item.FName,
-            externalCode: item.FItemID,
-            orderNum: 1,
-          } as SaveBaseMaterialCategoryInput;
+            let entity = {
+              code: item.FNumber,
+              name: item.FName,
+              externalCode: item.FItemID,
+              orderNum: 1,
+            } as SaveBaseMaterialCategoryInput;
 
-          if (parentId) {
-            entity.parent = {id: parentId};
-          }
+            if (parentId) {
+              entity.parent = { id: parentId };
+            }
 
-          return entity;
-        },
-        payload: {Detail: false},
-      }),
+            return entity;
+          },
+          payload: { Detail: false },
+        }),
       this.createListSyncFunction({
         url: "/koas/APP006992/api/Stock/List",
         singularCode: "base_location",
@@ -296,20 +296,20 @@ class KisDataSync {
       //     } as SaveBaseLocationInput;
       //   },
       // }),
-      // // 同步仓库
-      // this.createListSyncFunction({
-      //   url: "/koas/APP006992/api/StockPlace/List",
-      //   singularCode: "base_location",
-      //   mapToEntity: async (item: any) => {
-      //     return {
-      //       code: item.FNumber,
-      //       name: item.FName,
-      //       externalCode: item.FSPID,
-      //       parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
-      //       type: 'storageArea',
-      //     } as SaveBaseLocationInput;
-      //   },
-      // }),
+      // 同步库位
+      this.createListSyncFunction({
+        url: "/koas/APP006992/api/StockPlace/List",
+        singularCode: "base_location",
+        mapToEntity: async (item: any) => {
+          return {
+            code: item.FNumber,
+            name: item.FName,
+            externalCode: item.FSPID,
+            parent: {id: this.baseLocations.find(cat => cat.externalGroupCode === String(item.FSPGroupID))?.id},
+            type: 'storageArea',
+          } as SaveBaseLocationInput;
+        },
+      }),
     ]
 
     for (const syncListFunction of syncBaseFunctions) {
@@ -329,7 +329,7 @@ class KisDataSync {
           externalCode: item.FItemID,
           type: 'others',
           orderNum: 1,
-          category: {id: 1}
+          category: { id: 1 }
         } as SaveBaseUnitInput),
       }),
       // 同步物料
@@ -344,10 +344,10 @@ class KisDataSync {
             name: item.FName,
             externalCode: item.FItemID,
             state: 'enabled',
-            category: {id: category?.id},
+            category: { id: category?.id },
           } as SaveBaseMaterialInput;
         },
-        payload: {Detail: true},
+        payload: { Detail: true },
         filter: (item: any) => item.FParentID !== 0
       }),
       // 同步员工
@@ -378,7 +378,7 @@ class KisDataSync {
             code: item.FNumber,
             name: item.FName,
             externalCode: item.FItemID,
-            categories: category ? [{id: category.id}] : [],
+            categories: category ? [{ id: category.id }] : [],
           } as SaveBasePartnerInput;
         },
         filter: (item: any) => item.FParentID !== 0
@@ -398,20 +398,6 @@ class KisDataSync {
           } as SaveBasePartnerInput;
         },
       }),
-      // // 同步仓库
-      // this.createListSyncFunction({
-      //   url: "/koas/APP006992/api/StockPlace/List",
-      //   singularCode: "base_location",
-      //   mapToEntity: async (item: any) => {
-      //     return {
-      //       code: item.FNumber,
-      //       name: item.FName,
-      //       externalCode: item.FSPID,
-      //       parent: {id: this.baseLocations.find(cat => cat.externalCode === String(item.FSPGroupID))?.id},
-      //       type: 'storageArea',
-      //     } as SaveBaseLocationInput;
-      //   },
-      // })
     ];
 
     for (const syncListFunction of syncFunctions) {
@@ -422,7 +408,7 @@ class KisDataSync {
     const materials = await this.server.getEntityManager("base_material").findEntities({
       filters: [{
         operator: "and",
-        filters: [{operator: "notNull", field: "externalCode"}, {operator: "null", field: "default_unit_id"}]
+        filters: [{ operator: "notNull", field: "externalCode" }, { operator: "null", field: "default_unit_id" }]
       }],
     });
 
@@ -432,16 +418,21 @@ class KisDataSync {
       this.createDetailSyncFunction({
         url: "/koas/APP006992/api/Material/GetListDetails",
         singularCode: "base_material",
-        mapToEntity: async (item: any) => ({
-          id: materials.find(material => material.externalCode === String(item.FItemID))?.id,
-          entityToSave: {
-            specification: item.FModel,
-            defaultUnit: {
-              id: item.FUnitID ? this.units.find(unit => unit.externalCode === String(item.FUnitID))?.id : null,
+        mapToEntity: async (item: any) => {
+
+          console.log(item)
+
+          return {
+            id: materials.find(material => material.externalCode === String(item.FItemID))?.id,
+            entityToSave: {
+              specification: item.FModel,
+              defaultUnit: {
+                id: item.FUnitID ? this.units.find(unit => unit.externalCode === String(item.FUnitID))?.id : null,
+              },
             },
-          },
-        } as UpdateEntityByIdOptions),
-        payload: {ItemIds: materialIds}
+          } as UpdateEntityByIdOptions
+        },
+        payload: { ItemIds: materialIds }
       }),
     ];
 
@@ -457,12 +448,12 @@ class KisDataSync {
 
 
     const materials: BaseMaterial[] = await this.server.getEntityManager("base_material").findEntities({
-      filters: [{operator: "notNull", field: "externalCode"}],
+      filters: [{ operator: "notNull", field: "externalCode" }],
       properties: ["id", "externalCode", "defaultUnit"],
     });
 
     const warehouseLocations: BaseLocation[] = await this.server.getEntityManager("base_location").findEntities({
-      filters: [{operator: "notNull", field: "externalCode"}],
+      filters: [{ operator: "notNull", field: "externalCode" }],
     });
 
 
@@ -496,12 +487,12 @@ class KisDataSync {
             const stock = warehouseLocations.find(location => location.code === String(item.FStockNumber))?.id
 
             let entity = {
-              operation: {id: result.id},
-              material: {id: material?.id},
+              operation: { id: result.id },
+              material: { id: material?.id },
               lotNum: item.FBatchNo,
               quantity: item.FBUQty,
-              unit: {id: material?.defaultUnit?.id},
-              to: {id: stock}
+              unit: { id: material?.defaultUnit?.id },
+              to: { id: stock }
             } as SaveMomGoodTransferInput
 
             return entity;
@@ -509,7 +500,7 @@ class KisDataSync {
 
 
         },
-        payload: {Data: {}},
+        payload: { Data: {} },
         syncAll: true,
       }),
     ]
@@ -536,14 +527,14 @@ class KisDataSync {
 
     const [materials, employees, partners] = await Promise.all([
       this.server.getEntityManager("base_material").findEntities({
-        filters: [{operator: "notNull", field: "externalCode"}],
+        filters: [{ operator: "notNull", field: "externalCode" }],
         properties: ["id", "externalCode", "defaultUnit"],
       }),
       this.server.getEntityManager("oc_user").findEntities({
-        filters: [{operator: "notNull", field: "externalCode"}],
+        filters: [{ operator: "notNull", field: "externalCode" }],
       }),
       this.server.getEntityManager("base_partner").findEntities({
-        filters: [{operator: "notNull", field: "externalCode"}],
+        filters: [{ operator: "notNull", field: "externalCode" }],
       }),
     ]);
 
@@ -557,7 +548,7 @@ class KisDataSync {
         url: "/koas/app007140/api/materialreceiptnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
-          const {Entry, Head} = item;
+          const { Entry, Head } = item;
 
           const mapEntryToEntity = (entry: any) => {
             const material = materialMap.get(String(entry.FItemID));
@@ -565,7 +556,7 @@ class KisDataSync {
               material,
               lotNum: entry.FBatchNo,
               quantity: entry.Fauxqty,
-              unit: {id: material?.defaultUnit?.id},
+              unit: { id: material?.defaultUnit?.id },
             } as SaveMomInventoryApplicationItemInput;
           };
 
@@ -574,9 +565,9 @@ class KisDataSync {
           return {
             code: Head.FBillNo,
             contractNum: Head.FHeadSelfP0338,
-            businessType: {id: 1}, // 采购入库
-            supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
-            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            businessType: { id: 1 }, // 采购入库
+            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
             operationType: 'in',
             state: 'approved',
             operationState: 'pending',
@@ -600,7 +591,7 @@ class KisDataSync {
         url: "/koas/app007140/api/materialreturnnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
-          const {Entry, Head} = item;
+          const { Entry, Head } = item;
 
           const mapEntryToEntity = (entry: any) => {
             const material = materialMap.get(String(entry.FItemID));
@@ -608,7 +599,7 @@ class KisDataSync {
               material,
               lotNum: entry.FBatchNo,
               quantity: entry.Fauxqty,
-              unit: {id: material?.defaultUnit?.id},
+              unit: { id: material?.defaultUnit?.id },
               remark: entry?.Fnote
             } as SaveMomInventoryApplicationItemInput;
           };
@@ -617,9 +608,9 @@ class KisDataSync {
 
           return {
             code: Head.FBillNo,
-            businessType: {id: 8}, // 采购退货出库
-            supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
-            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            businessType: { id: 8 }, // 采购退货出库
+            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
             operationType: 'out',
             state: 'approved',
             operationState: 'pending',
@@ -643,7 +634,7 @@ class KisDataSync {
         url: "/koas/app007099/api/goodsreturnnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
-          const {Entry, Head} = item;
+          const { Entry, Head } = item;
 
           const mapEntryToEntity = (entry: any) => {
             const material = materialMap.get(String(entry.FItemID));
@@ -651,7 +642,7 @@ class KisDataSync {
               material,
               lotNum: entry.FBatchNo,
               quantity: entry.Fauxqty,
-              unit: {id: material?.defaultUnit?.id},
+              unit: { id: material?.defaultUnit?.id },
               remark: entry?.Fnote
             } as SaveMomInventoryApplicationItemInput;
           };
@@ -660,9 +651,9 @@ class KisDataSync {
 
           return {
             code: Head.FBillNo,
-            businessType: {id: 7}, // 销售退货入库
-            supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
-            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            businessType: { id: 7 }, // 销售退货入库
+            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
             operationType: 'out',
             state: 'approved',
             operationState: 'pending',
@@ -686,7 +677,7 @@ class KisDataSync {
         url: "/koas/app007099/api/goodsreturnnotice/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
-          const {Entry, Head} = item;
+          const { Entry, Head } = item;
 
           const mapEntryToEntity = (entry: any) => {
             const material = materialMap.get(String(entry.FItemID));
@@ -694,7 +685,7 @@ class KisDataSync {
               material,
               lotNum: entry.FBatchNo,
               quantity: entry.Fauxqty,
-              unit: {id: material?.defaultUnit?.id},
+              unit: { id: material?.defaultUnit?.id },
               remark: entry?.Fnote
             } as SaveMomInventoryApplicationItemInput;
           };
@@ -703,9 +694,9 @@ class KisDataSync {
 
           return {
             code: Head.FBillNo,
-            businessType: {id: 7}, // 销售退货入库
-            supplier: {id: partnerMap.get(String(Head.FSupplyID))?.id},
-            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            businessType: { id: 7 }, // 销售退货入库
+            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
             operationType: 'out',
             state: 'approved',
             operationState: 'pending',
@@ -729,14 +720,14 @@ class KisDataSync {
         url: "/koas/app007099/api/salesorder/list",
         singularCode: "mom_inventory_application",
         mapToEntity: async (item: any) => {
-          const {Entry, Head} = item;
+          const { Entry, Head } = item;
 
           const mapEntryToEntity = (entry: any) => {
             const material = materialMap.get(String(entry.FItemID));
             return {
               material,
               quantity: entry.Fauxqty,
-              unit: {id: material?.defaultUnit?.id},
+              unit: { id: material?.defaultUnit?.id },
               remark: entry?.Fnote
             } as SaveMomInventoryApplicationItemInput;
           };
@@ -745,9 +736,9 @@ class KisDataSync {
 
           return {
             code: Head.FBillNo,
-            businessType: {id: 4}, // 销售出库
-            customer: {id: partnerMap.get(String(Head.FCustID))?.id},
-            applicant: {id: employeeMap.get(String(Head.FEmpID))?.id},
+            businessType: { id: 4 }, // 销售出库
+            customer: { id: partnerMap.get(String(Head.FCustID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
             operationType: 'out',
             state: 'approved',
             operationState: 'pending',
@@ -781,7 +772,7 @@ class KisDataSync {
     const inventoryOperationManager = this.server.getEntityManager("mom_inventory_operation")
 
     const operations = await inventoryOperationManager.findEntities({
-      filters: [{operator: "eq", field: "approval_state", value: "approving"}, {
+      filters: [{ operator: "eq", field: "approval_state", value: "approving" }, {
         operator: "notNull",
         field: "externalCode"
       }],
@@ -827,7 +818,7 @@ class KisDataSync {
         default:
           break;
       }
-      const response = await this.retryApiRequest(statusApiUrl, {Id: operation.externalCode})
+      const response = await this.retryApiRequest(statusApiUrl, { Id: operation.externalCode })
       if (response.data.Head.FCheckDate) {
         await inventoryOperationManager.updateEntityById({
           id: operation.id,

@@ -207,6 +207,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "检验完成时间",
       type: "datetime",
     },
+    {
+      code: "acceptQuantity",
+      name: "收货数量",
+      type: "double",
+    },
+    {
+      code: "acceptPalletCount",
+      name: "收货托数",
+      type: "double",
+    },
   ],
   // indexes: [
   //   {

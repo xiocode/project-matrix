@@ -472,6 +472,10 @@ export interface BaseLocation {
    */
   externalCode?: string;
   /**
+   * 外部库位组编码
+   */
+  externalGroupCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4080,6 +4084,14 @@ export interface MomInspectionSheet {
    */
   inspectedAt?: string;
   /**
+   * 收货数量
+   */
+  acceptQuantity?: number;
+  /**
+   * 收货托数
+   */
+  acceptPalletCount?: number;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4467,6 +4479,14 @@ export interface MomInventoryApplicationItem {
    * 备注
    */
   remark?: string;
+  /**
+   * 收货数量
+   */
+  acceptQuantity?: number;
+  /**
+   * 收货托数
+   */
+  acceptPalletCount?: number;
   /**
    * 创建时间
    */

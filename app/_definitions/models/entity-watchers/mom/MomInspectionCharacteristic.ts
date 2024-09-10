@@ -22,7 +22,7 @@ export default [
           properties: ["id", "rule", "name"]
         });
 
-        if (changes) {
+        if (changes && ctx?.routerContext?.state.userId) {
           await server.getEntityManager("sys_audit_log").createEntity({
             entity: {
               user: { id: ctx?.routerContext?.state.userId },
@@ -58,15 +58,16 @@ export default [
           ],
           properties: ["id", "rule", "name"]
         });
-
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "mom_inspection_characteristic",
-            targetSingularName: `检验特征-${ operationTarget?.rule?.name }-${ operationTarget?.name }`,
-            method: "delete",
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inspection_characteristic",
+              targetSingularName: `检验特征-${ operationTarget?.rule?.name }-${ operationTarget?.name }`,
+              method: "delete",
+            }
+          })
+        }
       } catch (e) {
         console.error(e);
       }

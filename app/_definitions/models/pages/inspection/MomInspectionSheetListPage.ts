@@ -246,6 +246,11 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "acceptQuantity",
+          width: "100px",
+        },
+        {
+          type: "auto",
           code: "result",
           width: "150px",
         },

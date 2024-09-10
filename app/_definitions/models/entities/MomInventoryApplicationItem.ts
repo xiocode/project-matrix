@@ -84,6 +84,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "备注",
       type: "text",
     },
+    {
+      code: "acceptQuantity",
+      name: "收货数量",
+      type: "double",
+    },
+    {
+      code: "acceptPalletCount",
+      name: "收货托数",
+      type: "double",
+    },
   ],
 };
 

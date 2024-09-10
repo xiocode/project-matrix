@@ -3,8 +3,8 @@ import {
   type BaseLot,
   type BaseMaterial,
   MomGood,
-  MomGoodTransfer,
-  MomInventoryApplication,
+  MomGoodTransfer, MomInspectionSheet,
+  MomInventoryApplication, MomInventoryApplicationItem,
   type MomInventoryBusinessType,
   type MomInventoryOperation,
   type SaveBaseLotInput,
@@ -80,6 +80,14 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
       const { server, payload } = ctx;
       let after = payload.after;
+
+      interface LotAcceptCountMap {
+        [lotNum: string]: {
+          quantity: number;
+          palletCount: number;
+        }
+      }
+
       try {
 
         const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
@@ -89,8 +97,68 @@ export default [
           properties: ["id", "application", "businessType", "operationType"],
         })
 
+        let lotAcceptCountMap: LotAcceptCountMap = {}
+        if (inventoryOperation?.operationType === "in") {
+          const goodTransfers = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
+            filters: [{ operator: "eq", field: "operation_id", value: inventoryOperation.id }],
+          })
+
+          goodTransfers.forEach((goodTransfer) => {
+            if (goodTransfer.lotNum && goodTransfer.quantity) {
+              if (!lotAcceptCountMap[goodTransfer.lotNum]) {
+                lotAcceptCountMap[goodTransfer.lotNum] = {
+                  quantity: 0,
+                  palletCount: 0
+                }
+              }
+              lotAcceptCountMap[goodTransfer.lotNum].quantity += goodTransfer.quantity
+              lotAcceptCountMap[goodTransfer.lotNum].palletCount += 1
+            }
+          })
+
+          for (let lotNum in lotAcceptCountMap) {
+            const applicationItems = await server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").findEntities({
+              filters: [
+                { operator: "eq", field: "lotNum", value: lotNum },
+                { operator: "eq", field: "application_id", value: inventoryOperation?.application?.id },
+              ],
+            })
+
+            for (let applicationItem of applicationItems) {
+              await server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").updateEntityById({
+                routeContext: ctx.routerContext,
+                id: applicationItem.id,
+                entityToSave: {
+                  acceptCount: lotAcceptCountMap[lotNum].quantity,
+                  palletCount: lotAcceptCountMap[lotNum].palletCount
+                }
+              })
+            }
+
+            const inspectionSheet = await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").findEntity({
+              filters: [
+                { operator: "eq", field: "lotNum", value: lotNum },
+                { operator: "eq", field: "inventory_operation_id", value: inventoryOperation?.id },
+              ],
+            })
+
+            if (inspectionSheet) {
+              await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").updateEntityById({
+                routeContext: ctx.routerContext,
+                id: inspectionSheet.id,
+                entityToSave: {
+                  acceptCount: lotAcceptCountMap[lotNum].quantity,
+                  palletCount: lotAcceptCountMap[lotNum].palletCount
+                }
+              })
+            }
+          }
+        }
+
+
         if (inventoryOperation?.operationType === "organize" && after.good_id) {
           await server.getEntityManager<MomGood>("mom_good").updateEntityById({
+            routeContext: ctx.routerContext,
             id: after.good_id,
             entityToSave: {
               location: { id: after.to?.id || after.to_location_id },
@@ -244,15 +312,16 @@ export default [
           ],
           properties: ["id", "operation", "material", "binNum", "lotNum"],
         });
-
-        await server.getEntityManager("sys_audit_log").createEntity({
-          entity: {
-            user: { id: ctx?.routerContext?.state.userId },
-            targetSingularCode: "mom_inspection_sheet",
-            targetSingularName: `库存操作记录 - ${ operationTarget?.operation?.code } - ${ operationTarget?.material?.name } - ${ operationTarget?.binNum } - ${ operationTarget?.lotNum }`,
-            method: "delete",
-          }
-        })
+        if (ctx?.routerContext?.state.userId) {
+          await server.getEntityManager("sys_audit_log").createEntity({
+            entity: {
+              user: { id: ctx?.routerContext?.state.userId },
+              targetSingularCode: "mom_inspection_sheet",
+              targetSingularName: `库存操作记录 - ${ operationTarget?.operation?.code } - ${ operationTarget?.material?.name } - ${ operationTarget?.binNum } - ${ operationTarget?.lotNum }`,
+              method: "delete",
+            }
+          })
+        }
       } catch (e) {
         console.error(e);
       }
@@ -300,7 +369,7 @@ export default [
           properties: ["id", "operation", "material", "binNum", "lotNum"],
         });
 
-        if (changes) {
+        if (changes && ctx?.routerContext?.state.userId) {
           await server.getEntityManager("sys_audit_log").createEntity({
             entity: {
               user: { id: ctx?.routerContext?.state.userId },
