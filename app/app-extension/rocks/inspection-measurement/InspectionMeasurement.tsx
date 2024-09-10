@@ -152,6 +152,11 @@ export default {
         },
       },
       {
+        title: "备注",
+        dataIndex: "remark",
+        width: 200,
+      },
+      {
         title: "判定",
         dataIndex: "result",
         width: 300,
@@ -499,7 +504,7 @@ export default {
                       expandable={{
                         expandedRowRender: (record) => (
                           <Table
-                            scroll={{ x: 700 }}
+                            scroll={{ x: 900 }}
                             rowKey={(record, index) => record?.uuid || index}
                             columns={tableColumns}
                             rowSelection={{
@@ -528,7 +533,7 @@ export default {
                       columns={tableColumns}
                       dataSource={formatTableData([...item.data]) || []}
                       pagination={false}
-                      scroll={{ x: 700 }}
+                      scroll={{ x: 900 }}
                     />
                   </div>
                 </div>

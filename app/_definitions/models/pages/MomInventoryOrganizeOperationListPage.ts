@@ -84,6 +84,12 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "lotNum",
+          title: "批号",
+          width: "150px",
+        },
+        {
+          type: "auto",
           code: "binNum",
           title: "托盘号",
           width: "150px",

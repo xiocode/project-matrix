@@ -818,12 +818,24 @@ const page: RapidPage = {
                   },
                   {
                     type: "auto",
-                    code: "to",
-                    width: "150px",
+                    title: "仓库",
+                    code: "warehouse",
+                    width: "120px",
+                    rendererType: "text",
                     rendererProps: {
-                      format: "{{name}}",
+                      $exps: {
+                        text: "_.get($slot.record, 'to.name') || _.get($slot.record, 'from.name')",
+                      },
                     },
                   },
+                  // {
+                  //   type: "auto",
+                  //   code: "to",
+                  //   width: "150px",
+                  //   rendererProps: {
+                  //     format: "{{name}}",
+                  //   },
+                  // },
                 ],
                 actions: [
                   {
@@ -999,11 +1011,17 @@ const page: RapidPage = {
                     title: "入库数量",
                     type: "auto",
                     code: "completedAmount",
+                    $exps: {
+                      title: "_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in' ? '出库数量' : '入库数量'",
+                    },
                   },
                   {
                     title: "入库托数",
                     type: "auto",
                     code: "completedPalletAmount",
+                    $exps: {
+                      title: "_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in' ? '出库托数' : '入库托数'",
+                    },
                   },
                   {
                     title: "批号",

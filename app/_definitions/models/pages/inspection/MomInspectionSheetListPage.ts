@@ -176,6 +176,28 @@ const page: RapidPage = {
             filterMode: "in",
             filterFields: ["inspector_id"],
           },
+          {
+            type: "auto",
+            code: "materialCategory",
+            formControlType: "rapidEntityTableSelect",
+            formControlProps: {
+              entityCode: "BaseMaterialCategory",
+              mode: "multiple",
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "material",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "category_id",
+                    operator: "in",
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
       orderBy: [
