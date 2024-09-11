@@ -98,9 +98,18 @@ async function createGoodTransferIn(server: IRpdServer, input: CreateGoodTransfe
   }
 
   const unit = await unitManager.findById({ id: material.defaultUnit?.id });
-  const binNums = await sequenceService.generateSn(server, {
+
+  const originBinNums = await sequenceService.generateSn(server, {
     ruleCode: "qixiang.binNum",
-    amount: palletCount
+    amount: 1
+  } as GenerateSequenceNumbersInput)
+
+  const binNums = await sequenceService.generateSn(server, {
+    ruleCode: "qixiang.binNum.split",
+    amount: palletCount,
+    parameters: {
+      originBinNum: originBinNums[0],
+    }
   } as GenerateSequenceNumbersInput)
 
   let goods: SaveMomGoodInput[] = [];
