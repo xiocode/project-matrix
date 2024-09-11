@@ -574,6 +574,8 @@ class KisDataSync {
             items: entities,
             externalCode: Head.FInterID,
             source: 'kis',
+            fPOStyle: Head.FPOStyle,
+            fSupplyID: Head.FSupplyID,
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
@@ -616,6 +618,51 @@ class KisDataSync {
             operationState: 'pending',
             items: entities,
             externalCode: Head.FInterID,
+            fSupplyID: Head.FSupplyID,
+            source: 'kis',
+          } as SaveMomInventoryApplicationInput;
+        },
+        payload: {
+          OrderBy: {
+            Property: "FCheckDate",
+            Type: "Desc",
+          },
+        },
+        syncAll: false,
+        filter: (item: any) => item.Head.FCheckDate !== null,
+        pageSize: 50,
+      }),
+      // 销售退货入库通知单
+      this.createListSyncFunction({
+        url: "/koas/app007099/api/goodsreturnnotice/list",
+        singularCode: "mom_inventory_application",
+        mapToEntity: async (item: any) => {
+          const { Entry, Head } = item;
+
+          const mapEntryToEntity = (entry: any) => {
+            const material = materialMap.get(String(entry.FItemID));
+            return {
+              material,
+              lotNum: entry.FBatchNo,
+              quantity: entry.Fauxqty,
+              unit: { id: material?.defaultUnit?.id },
+              remark: entry?.Fnote
+            } as SaveMomInventoryApplicationItemInput;
+          };
+
+          const entities = Entry.map(mapEntryToEntity);
+
+          return {
+            code: Head.FBillNo,
+            businessType: { id: 7 }, // 销售退货入库
+            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
+            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
+            operationType: 'out',
+            state: 'approved',
+            operationState: 'pending',
+            items: entities,
+            externalCode: Head.FInterID,
+            fSupplyID: Head.FSupplyID,
             source: 'kis',
           } as SaveMomInventoryApplicationInput;
         },
@@ -660,49 +707,7 @@ class KisDataSync {
             items: entities,
             externalCode: Head.FInterID,
             source: 'kis',
-          } as SaveMomInventoryApplicationInput;
-        },
-        payload: {
-          OrderBy: {
-            Property: "FCheckDate",
-            Type: "Desc",
-          },
-        },
-        syncAll: false,
-        filter: (item: any) => item.Head.FCheckDate !== null,
-        pageSize: 50,
-      }),
-      // 销售退货入库通知单
-      this.createListSyncFunction({
-        url: "/koas/app007099/api/goodsreturnnotice/list",
-        singularCode: "mom_inventory_application",
-        mapToEntity: async (item: any) => {
-          const { Entry, Head } = item;
-
-          const mapEntryToEntity = (entry: any) => {
-            const material = materialMap.get(String(entry.FItemID));
-            return {
-              material,
-              lotNum: entry.FBatchNo,
-              quantity: entry.Fauxqty,
-              unit: { id: material?.defaultUnit?.id },
-              remark: entry?.Fnote
-            } as SaveMomInventoryApplicationItemInput;
-          };
-
-          const entities = Entry.map(mapEntryToEntity);
-
-          return {
-            code: Head.FBillNo,
-            businessType: { id: 7 }, // 销售退货入库
-            supplier: { id: partnerMap.get(String(Head.FSupplyID))?.id },
-            applicant: { id: employeeMap.get(String(Head.FEmpID))?.id },
-            operationType: 'out',
-            state: 'approved',
-            operationState: 'pending',
-            items: entities,
-            externalCode: Head.FInterID,
-            source: 'kis',
+            fSupplyID: Head.FSupplyID,
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
@@ -745,6 +750,7 @@ class KisDataSync {
             items: entities,
             externalCode: Head.FInterID,
             source: 'kis',
+            fSupplyID: Head.FSupplyID,
           } as SaveMomInventoryApplicationInput;
         },
         payload: {

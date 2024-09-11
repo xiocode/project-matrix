@@ -4389,6 +4389,14 @@ export interface MomInventoryApplication {
    */
   fPlanSn?: string;
   /**
+   * KIS采购方式
+   */
+  fPOStyle?: string;
+  /**
+   * KIS供应商
+   */
+  fSupplyID?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
