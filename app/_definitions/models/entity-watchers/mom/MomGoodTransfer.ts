@@ -129,8 +129,8 @@ export default [
                 routeContext: ctx.routerContext,
                 id: applicationItem.id,
                 entityToSave: {
-                  acceptCount: lotAcceptCountMap[lotNum].quantity,
-                  palletCount: lotAcceptCountMap[lotNum].palletCount
+                  acceptQuantity: lotAcceptCountMap[lotNum].quantity,
+                  acceptPalletCount: lotAcceptCountMap[lotNum].palletCount
                 }
               })
             }
@@ -147,8 +147,8 @@ export default [
                 routeContext: ctx.routerContext,
                 id: inspectionSheet.id,
                 entityToSave: {
-                  acceptCount: lotAcceptCountMap[lotNum].quantity,
-                  palletCount: lotAcceptCountMap[lotNum].palletCount
+                  acceptQuantity: lotAcceptCountMap[lotNum].quantity,
+                  acceptPalletCount: lotAcceptCountMap[lotNum].palletCount
                 }
               })
             }

@@ -1185,6 +1185,8 @@ const entityFieldCodes = {
     'fFManager',
     'fUse',
     'fPlanSn',
+    'fPOStyle',
+    'fSupplyID',
     'createdAt',
     'createdBy',
     'updatedAt',

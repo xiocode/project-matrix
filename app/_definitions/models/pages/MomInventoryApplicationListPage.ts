@@ -489,9 +489,9 @@ const page: RapidPage = {
           actionType: "edit",
           actionText: "修改",
           $permissionCheck: "inventoryApplication.manage",
-          $exps: {
-            disabled: "$slot.record.operationState !== 'pending'",
-          },
+          // $exps: {
+          //   disabled: "$slot.record.operationState !== 'pending'",
+          // },
         },
         {
           $type: "sonicRecordActionDeleteEntity",

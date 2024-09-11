@@ -175,6 +175,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "生产计划单编号",
       type: "text",
     },
+    {
+      code: "fPOStyle",
+      name: "KIS采购方式",
+      type: "text",
+    },
+    {
+      code: "fSupplyID",
+      name: "KIS供应商",
+      type: "text",
+    },
   ],
 };
 

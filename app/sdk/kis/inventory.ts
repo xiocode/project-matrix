@@ -43,12 +43,18 @@ export interface WarehousePayload {
       FSCStockID?: string;
       FPurposeID?: number;
       FDeptID?: string;
+      FManagerID?: string;
+      FEmpID?: string;
       FFManagerID?: string;
       FSManagerID?: string;
       FTranType: number; // 1
       FROB?: number;
       Fuse?: string;
       FHeadSelfB0436?: string;
+      FPOStyle?: string;
+      FSupplyID?: string;
+      FHeadSelfA0143?: string; // 质检员
+      FMarketingStyle?: string;
     };
     Entry: Array<WarehouseEntry>;
   };
