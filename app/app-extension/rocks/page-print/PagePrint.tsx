@@ -2,7 +2,9 @@ import type { Rock } from "@ruiapp/move-style";
 import PagePrint from "./PagePrintMeta";
 import { lazy, useEffect, useState, Suspense } from "react";
 import rapidApi from "~/rapidApi";
-import { Table } from "antd";
+import { Divider, Space, Table } from "antd";
+import { trim } from "lodash";
+import { parseRockExpressionFunc } from "@ruiapp/rapid-extension";
 
 const PrintTemplate = lazy(() => import("./PrintOrderTemplate"));
 export default {
@@ -30,6 +32,18 @@ export default {
           dataIndex: item.code,
           align: "center",
           render: (_: any, record: any) => {
+            if (typeof item.columnRenderAdapter === "string" && trim(item.columnRenderAdapter)) {
+              const adapter = parseRockExpressionFunc(item.columnRenderAdapter, { record }, context);
+              const labels = adapter();
+              return (
+                <Space split={<Divider type="vertical" />}>
+                  {labels?.map((label: any, i: number) => (
+                    <span key={i}>{label}</span>
+                  ))}
+                </Space>
+              );
+            }
+
             return item.isObject
               ? item.jointValue
                 ? `${record[item.code]?.[item.value]}-${record[item.code]?.[item.jointValue]}(${record[item.code]?.[item?.joinAnOtherValue]})` || "-"
@@ -40,7 +54,7 @@ export default {
       });
       return res;
     };
-    console.log(detail, "detail888");
+
     const printContent = (
       <div>
         <div className="print-content-title">
@@ -75,6 +89,7 @@ const useLodaData = () => {
           orderBy: props?.orderBy,
           filters: props?.filters,
           properties: props?.properties,
+          relations: props.relations,
         })
         .then((res) => {
           setDataSource(res.data.list);

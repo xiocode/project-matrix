@@ -218,7 +218,7 @@ export default {
                     lotNum: item.lotNum,
                     remark: item.remark,
                     quantity: binNumItem.quantity,
-                    good: binNumItem.good,
+                    good: binNumItem.id,
                     binNum: binNumItem.binNum,
                   });
                 });

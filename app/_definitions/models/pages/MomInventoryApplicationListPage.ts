@@ -324,8 +324,23 @@ const page: RapidPage = {
           ],
         },
       ],
+      enabledFilterCache: true,
+      filterCacheName: "mom_inventory_application_list",
       searchForm: {
         entityCode: "MomInventoryApplication",
+        formDataAdapter: `
+          const createdAt = _.get(data, "createdAt");
+          if(_.isArray(createdAt) && !_.isEmpty(createdAt)){
+            return {
+              ...data,
+              createdAt: createdAt.map(function(v){
+                return v ? moment(v) : v;
+              })
+            }
+          }
+
+          return data;
+        `,
         items: [
           {
             type: "auto",

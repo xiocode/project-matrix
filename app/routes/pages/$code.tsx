@@ -12,6 +12,7 @@ import { redirect, type LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
 import qs from "qs";
+import moment from "moment";
 
 import dataDictionaryModels from "~/_definitions/meta/data-dictionary-models";
 import entityModels from "~/_definitions/meta/entity-models";
@@ -45,6 +46,7 @@ framework.registerExpressionVar("rapidAppDefinition", rapidAppDefinition);
 framework.registerExpressionVar("_", _);
 framework.registerExpressionVar("qs", qs);
 framework.registerExpressionVar("dayjs", dayjs);
+framework.registerExpressionVar("moment", moment);
 
 framework.loadExtension(ReactRocks);
 framework.loadExtension(AntdExtension);
