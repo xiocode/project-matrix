@@ -36,6 +36,7 @@ export default {
 
         try {
           const printTemplateStoreData = page?.scope?.getStore("printTemplateList")?.data?.list || [];
+          console.log("printTemplateTaskData", dataSource);
           await rapidApi.post(`/svc/printer/printers/${formData.code}/tasks`, {
             tasks: (dataSource || [])
               .map((record) => {
