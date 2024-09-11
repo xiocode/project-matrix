@@ -53,16 +53,11 @@ async function mergeGoods(server: IRpdServer, ctx: RouteContext, input: MergeGoo
 
   let newGood: MomGood;
 
-  const originBinNums = await sequenceService.generateSn(server, {
-    ruleCode: "qixiang.binNum",
-    amount: 1
-  } as GenerateSequenceNumbersInput)
-
   const binNums = await sequenceService.generateSn(server, {
     ruleCode: "qixiang.binNum.split",
     amount: 1,
     parameters: {
-      originBinNum: originBinNums[0],
+      originBinNum: originGood.binNum,
     }
   } as GenerateSequenceNumbersInput)
 
