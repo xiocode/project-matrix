@@ -596,11 +596,17 @@ const page: RapidPage = {
                   type: "auto",
                   code: "acceptQuantity",
                   width: "100px",
+                  $exps: {
+                    _hidden: `_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'`,
+                  },
                 },
                 {
                   type: "auto",
                   code: "acceptPalletCount",
                   width: "100px",
+                  $exps: {
+                    _hidden: `_.get(_.first(_.get($stores.detail, 'data.list')), 'operationType') !== 'in'`,
+                  },
                 },
                 {
                   type: "auto",
