@@ -53,11 +53,19 @@ async function mergeGoods(server: IRpdServer, ctx: RouteContext, input: MergeGoo
 
   let newGood: MomGood;
 
+  // 检查 originBinNum 中包含两个 '-'
+  let originBinNum = originGood.binNum;
+  if (originBinNum) {
+    if ((originBinNum.match(/-/g) || []).length === 2) {
+      originBinNum = originBinNum.split('-').slice(0, 2).join('-');
+    }
+  }
+
   const binNums = await sequenceService.generateSn(server, {
     ruleCode: "qixiang.binNum.split",
     amount: 1,
     parameters: {
-      originBinNum: originGood.binNum,
+      originBinNum: originBinNum,
     }
   } as GenerateSequenceNumbersInput)
 
