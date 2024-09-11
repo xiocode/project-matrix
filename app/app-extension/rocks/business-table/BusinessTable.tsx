@@ -77,7 +77,7 @@ export default {
 
   Renderer(context, props, state) {
     const { pageSize = 20 } = props;
-    const { logger } = context;
+    const { logger, page } = context;
 
     const [rerenderKey, setRerenderKey] = useState<string | number>("");
 
@@ -147,6 +147,13 @@ export default {
 
       if (!column.title) {
         column.title = "";
+      }
+
+      if (column.$exps) {
+        page.interpreteComponentProperties(null as any, column as any, {
+          $self: column,
+          $parent: props,
+        });
       }
 
       if (column.cell) {

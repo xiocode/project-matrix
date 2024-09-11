@@ -149,6 +149,8 @@ const page: RapidPage = {
           filterFields: ["code", "lotNum"],
         },
       ],
+      enabledFilterCache: true,
+      filterCacheName: "mom_inspection_sheet_list",
       searchForm: {
         entityCode: "MomInspectionSheet",
         items: [
@@ -176,6 +178,74 @@ const page: RapidPage = {
             filterMode: "in",
             filterFields: ["inspector_id"],
           },
+          {
+            type: "auto",
+            code: "materialCategory",
+            label: "物料类型",
+            formControlType: "rapidEntityTableSelect",
+            formControlProps: {
+              entityCode: "BaseMaterialCategory",
+              mode: "multiple",
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "material",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "category_id",
+                    operator: "in",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "auto",
+            code: "material",
+            formControlType: "rapidEntityTableSelect",
+            formControlProps: {
+              entityCode: "BaseMaterial",
+              dropdownMatchSelectWidth: 500,
+              listTextFormat: materialFormatStrTemplate,
+              listFilterFields: ["name", "code", "specification"],
+              requestParams: {
+                properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
+                keepNonPropertyFields: true,
+              },
+              columns: [
+                {
+                  title: "名称",
+                  code: "name",
+                  width: 120,
+                },
+                {
+                  title: "编号",
+                  code: "code",
+                  width: 120,
+                },
+                {
+                  title: "规格",
+                  code: "specification",
+                  width: 120,
+                },
+              ],
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "material",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "id",
+                    operator: "in",
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
       orderBy: [
@@ -184,6 +254,14 @@ const page: RapidPage = {
           desc: true,
         },
       ],
+      relations: {
+        material: {
+          properties: ["id", "code", "name", "specification", "category"],
+          relations: {
+            category: true,
+          },
+        },
+      },
       columns: [
         {
           type: "auto",
@@ -205,6 +283,18 @@ const page: RapidPage = {
           rendererType: "link",
           rendererProps: {
             url: "/pages/mom_inspection_sheet_details?id={{id}}",
+          },
+        },
+        {
+          code: "materialCategory",
+          type: "auto",
+          width: "120px",
+          title: "物料类型",
+          rendererType: "text",
+          rendererProps: {
+            $exps: {
+              text: "_.get($slot.record, 'material.category.name')",
+            },
           },
         },
         {

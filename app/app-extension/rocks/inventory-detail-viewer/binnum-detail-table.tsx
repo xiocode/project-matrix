@@ -22,7 +22,12 @@ const BinNumDetailTable = memo<IProps>((props) => {
     {
       title: "托编码",
       dataIndex: "binNum",
-      width: 120,
+      width: 150,
+    },
+    {
+      title: "批号",
+      dataIndex: "lotNum",
+      width: 150,
     },
     {
       title: "库位",
@@ -49,7 +54,7 @@ const BinNumDetailTable = memo<IProps>((props) => {
     },
   ];
 
-  return <Table rowKey="id" loading={loading} columns={tableColumns} dataSource={detailItems} size="middle" scroll={{ x: 720 }} pagination={false} />;
+  return <Table rowKey="id" loading={loading} columns={tableColumns} dataSource={detailItems} size="middle" scroll={{ x: 900 }} pagination={false} />;
 });
 
 export default BinNumDetailTable;
@@ -80,9 +85,14 @@ function useBinNumDetail() {
               },
             ],
           },
+          {
+            field: "quantity",
+            operator: "gt",
+            value: 0,
+          },
         ],
         pagination: { limit: 1000, offset: 0 },
-        properties: ["id", "material", "binNum", "lot", "quantity", "location", "putInTime", "validityDate"],
+        properties: ["id", "material", "binNum", "lot", "lotNum", "quantity", "location", "putInTime", "validityDate"],
       },
     });
 

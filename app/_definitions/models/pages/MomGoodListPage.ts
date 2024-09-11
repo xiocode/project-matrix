@@ -168,6 +168,8 @@ const page: RapidPage = {
           ],
         },
       ],
+      enabledFilterCache: true,
+      filterCacheName: "mom_good_list",
       searchForm: {
         entityCode: "MomGood",
         items: [

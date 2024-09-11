@@ -87,7 +87,8 @@ export default {
         label: "打印机",
         formControlProps: {
           listDataSourceCode: "printerList",
-          listTextFieldName: "code",
+          listTextFormat: "{{name}}({{description}})",
+          // listTextFieldName: "code",
           listValueFieldName: "code",
         },
         required: true,
