@@ -468,12 +468,16 @@ const page: RapidPage = {
           code: "binNum",
           name: "托盘号",
           columnRenderAdapter: `
-            const binNum = _.get(record, "binNum");
-            const quantity = _.get(record, "quantity");
-            const location = _.get(record, "good.location.name");
-            return [binNum, quantity, location];
+            const binNumItems = _.get(record, 'binNumItems');
+            return _.map(binNumItems,function(item){  
+              const binNum = _.get(item, "binNum") || '-';
+              const quantity = _.get(item, "quantity") || 0;
+              const location = _.get(item, "good.location.name") || '-';
+              return _.join([binNum, quantity, location], ' | ');
+            });
           `,
         },
+        { code: "quantity", name: "数量" },
         { code: "unit", name: "单位", isObject: true, value: "code" },
         { code: "remark", name: "备注" },
       ],
