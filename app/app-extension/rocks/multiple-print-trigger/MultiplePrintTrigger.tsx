@@ -103,7 +103,7 @@ export default {
         label: "打印机",
         formControlProps: {
           listDataSource: context.page.scope.getStore("printerList"),
-          listTextFormat: "{{name}}({{description}})",
+          listTextFormat: "{{code}}({{description}})",
           // listTextFieldName: "code",
           listValueFieldName: "code",
         },
