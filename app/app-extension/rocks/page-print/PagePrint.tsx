@@ -1,10 +1,11 @@
 import type { Rock } from "@ruiapp/move-style";
 import PagePrint from "./PagePrintMeta";
-import { lazy, useEffect, useState, Suspense } from "react";
+import { lazy, useEffect, useState, Suspense, useMemo } from "react";
 import rapidApi from "~/rapidApi";
-import { Divider, Space, Table } from "antd";
-import { trim } from "lodash";
+import { Divider, Space, Table, Tag } from "antd";
+import { forEach, isEmpty, trim } from "lodash";
 import { parseRockExpressionFunc } from "@ruiapp/rapid-extension";
+import { decimalSum } from "~/utils/decimal";
 
 const PrintTemplate = lazy(() => import("./PrintOrderTemplate"));
 export default {
@@ -21,6 +22,22 @@ export default {
       }
     }, [detail]);
 
+    const dataSourceGroupBy = useMemo(() => {
+      const groupMap = new Map();
+      forEach(dataSource, (item) => {
+        const uniqeKey = `${item.material.id}_${item.lotNum}`;
+        const group = groupMap.get(uniqeKey);
+        if (!group) {
+          groupMap.set(uniqeKey, { ...item, binNumItems: [item] });
+        } else {
+          const binNumItems = group.binNumItems;
+          groupMap.set(uniqeKey, { ...item, quantity: decimalSum(group.quantity || 0, item.quantity || 0), binNumItems: [...binNumItems, item] });
+        }
+      });
+
+      return [...groupMap.values()];
+    }, [dataSource]);
+
     if (!isMounted) {
       return <></>;
     }
@@ -36,9 +53,9 @@ export default {
               const adapter = parseRockExpressionFunc(item.columnRenderAdapter, { record }, context);
               const labels = adapter();
               return (
-                <Space split={<Divider type="vertical" />}>
+                <Space wrap direction="vertical">
                   {labels?.map((label: any, i: number) => (
-                    <span key={i}>{label}</span>
+                    <Tag key={i}>{label}</Tag>
                   ))}
                 </Space>
               );
@@ -60,7 +77,7 @@ export default {
         <div className="print-content-title">
           {detail?.businessType?.name}单:{detail?.code}
         </div>
-        <Table className="antd-style" bordered columns={formateCol() || []} dataSource={dataSource} pagination={false} />
+        <Table className="antd-style" bordered columns={formateCol() || []} dataSource={dataSourceGroupBy} pagination={false} />
       </div>
     );
 

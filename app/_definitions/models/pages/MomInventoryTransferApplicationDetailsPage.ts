@@ -166,21 +166,43 @@ const page: RapidPage = {
     {
       $type: "pagePrint",
       slots: [],
+      orderBy: [{ field: "orderNum" }],
+      relations: {
+        lot: true,
+        good: {
+          properties: ["id", "location"],
+          relations: {
+            location: true,
+          },
+        },
+      },
+      properties: ["id", "material", "lotNum", "quantity", "unit", "quantity", "binNum", "lot", "good"],
       filters: [
         { operator: "and", filters: [{ field: "application", operator: "exists", filters: [{ field: "id", operator: "eq", value: "$rui.parseQuery().id" }] }] },
       ],
       columns: [
         { code: "material", name: "物品", isObject: true, value: "code", jointValue: "name", joinAnOtherValue: "specification" },
         { code: "lotNum", name: "批号" },
+        {
+          code: "binNum",
+          name: "托盘号",
+          columnRenderAdapter: `
+            const binNumItems = _.get(record, 'binNumItems');
+            return _.map(binNumItems,function(item){  
+              const binNum = _.get(item, "binNum") || '-';
+              const quantity = _.get(item, "quantity") || 0;
+              const location = _.get(item, "good.location.name") || '-';
+              return _.join([binNum, quantity, location], ' | ');
+            });
+          `,
+        },
         { code: "quantity", name: "数量" },
         { code: "unit", name: "单位", isObject: true, value: "code" },
         { code: "remark", name: "备注" },
       ],
       $exps: {
         apiUrl: `'mom/mom_inventory_application_items/operations/find'`,
-        orderBy: '[{"field": "orderNum"}]',
         "filters[0].filters[0].filters[0].value": "$rui.parseQuery().id",
-        properties: '["id", "material", "lotNum", "quantity", "unit"]',
       },
     },
     {
