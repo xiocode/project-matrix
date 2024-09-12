@@ -468,7 +468,7 @@ const page: RapidPage = {
           code: "binNum",
           name: "托盘号",
           columnRenderAdapter: `
-            const binNumItems = _.get(record, 'binNumItems');
+            const binNumItems = _.filter(_.get(record, 'binNumItems'),function(item) { return !!_.get(item, "binNum") });
             return _.map(binNumItems,function(item){  
               const binNum = _.get(item, "binNum") || '-';
               const quantity = _.get(item, "quantity") || 0;
