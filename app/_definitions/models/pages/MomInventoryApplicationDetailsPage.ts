@@ -411,6 +411,58 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "applicant",
+          rendererProps: {
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "fFManager",
+          rendererProps: {
+            format: "{{name}}",
+          },
+          $exps: {
+            label: "$self.form.getFieldValue('operationType') === 'out' ? '发料' : '验收'",
+          },
+        },
+        {
+          type: "auto",
+          code: "fSManager",
+          rendererProps: {
+            format: "{{name}}",
+          },
+          $exps: {
+            label: "$self.form.getFieldValue('operationType') === 'out' ? '领料' : '保管'",
+          },
+        },
+        {
+          type: "auto",
+          code: "fUse",
+          $exps: {
+            _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+          },
+        },
+        {
+          type: "auto",
+          code: "fPlanSn",
+          $exps: {
+            _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+          },
+        },
+        {
+          type: "auto",
+          code: "customer",
+          rendererProps: {
+            format: "{{name}}",
+          },
+          $exps: {
+            _hidden:
+              "!($self.form.getFieldValue('businessType')?.config?.defaultSourceType === 'sales' && $self.form.getFieldValue('operationType') === 'out')",
+          },
+        },
+        {
+          type: "auto",
           label: "仓库",
           code: "warehouse",
           rendererType: "text",

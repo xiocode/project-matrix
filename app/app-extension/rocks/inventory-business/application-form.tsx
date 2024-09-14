@@ -98,8 +98,8 @@ export default {
     const [enabledBinNum, setEnabledBinNum] = useState<boolean>(false);
     const [warehouseId, setWarehouseId] = useState<string>();
 
-    const { saveApplication, saving } = useSaveApplication(() => {
-      navigate("/pages/mom_inventory_application_list");
+    const { saveApplication, saving } = useSaveApplication((data) => {
+      navigate(`/pages/mom_inventory_application_details?id=${data.id}`);
     });
 
     let binNumColumn: ColumnProps<any> = {
@@ -363,7 +363,7 @@ export default {
           )}
           {operationType === "out" && (
             <>
-              <Form.Item label="发料" name="fFManager" rules={[{ required: true, message: "验收人必填" }]}>
+              <Form.Item label="发料" name="fFManager" rules={[{ required: true, message: "发料人必填" }]}>
                 {renderRock({
                   context,
                   rockConfig: {
@@ -381,7 +381,7 @@ export default {
                   },
                 })}
               </Form.Item>
-              <Form.Item label="领料" name="fSManager" rules={[{ required: true, message: "保管人必填" }]}>
+              <Form.Item label="领料" name="fSManager" rules={[{ required: true, message: "领料人必填" }]}>
                 {renderRock({
                   context,
                   rockConfig: {
@@ -819,7 +819,7 @@ export default {
   },
 } as Rock<any>;
 
-function useSaveApplication(onSuccess: () => void) {
+function useSaveApplication(onSuccess: (data: Record<string, any>) => void) {
   const [saving, setSaving] = useState<boolean>(false);
 
   const saveApplication = async (formData: Record<string, any>) => {
@@ -832,7 +832,7 @@ function useSaveApplication(onSuccess: () => void) {
       .post("/mom/mom_inventory_applications", formData)
       .then((res) => {
         if (res.status >= 200 && res.status < 400) {
-          onSuccess();
+          onSuccess(res.data);
         }
       })
       .finally(() => {

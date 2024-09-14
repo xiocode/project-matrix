@@ -2,10 +2,12 @@ import type { Rock } from "@ruiapp/move-style";
 import PagePrint from "./PagePrintMeta";
 import { lazy, useEffect, useState, Suspense, useMemo } from "react";
 import rapidApi from "~/rapidApi";
-import { Divider, Space, Table, Tag } from "antd";
-import { forEach, isEmpty, trim } from "lodash";
+import { Descriptions, Divider, Space, Table, Tag } from "antd";
+import { find, forEach, get, isEmpty, trim } from "lodash";
 import { parseRockExpressionFunc } from "@ruiapp/rapid-extension";
 import { decimalSum } from "~/utils/decimal";
+import rapidAppDefinition from "~/rapidAppDefinition";
+import dayjs from "dayjs";
 
 const PrintTemplate = lazy(() => import("./PrintOrderTemplate"));
 export default {
@@ -72,11 +74,37 @@ export default {
       return res;
     };
 
+    const operationTypeDictionary = find(rapidAppDefinition.dataDictionaries, (d) => d.code === "MomInventoryOperationType");
+    const operationType = find(operationTypeDictionary?.entries, (e) => e.value === get(detail, "operationType"));
+
     const printContent = (
       <div>
         <div className="print-content-title">
           {detail?.businessType?.name}单:{detail?.code}
         </div>
+        <Descriptions title="基础信息" column={3}>
+          <Descriptions.Item label="申请单号">{get(detail, "code")}</Descriptions.Item>
+          <Descriptions.Item label="库存操作类型">{get(operationType, "name") && <Tag>{get(operationType, "name")}</Tag>}</Descriptions.Item>
+          <Descriptions.Item label="业务类型">{get(detail, "businessType.name")}</Descriptions.Item>
+          {["in", "out"].includes(get(detail, "operationType")) && (
+            <>
+              <Descriptions.Item label="申请人">{get(detail, "applicant.name")}</Descriptions.Item>
+              <Descriptions.Item label={get(detail, "operationType") === "in" ? "验收" : "发料"}>{get(detail, "fFManager.name")}</Descriptions.Item>
+              <Descriptions.Item label={get(detail, "operationType") === "in" ? "保管" : "领料"}>{get(detail, "fSManager.name")}</Descriptions.Item>
+              {get(detail, "operationType") === "out" && (
+                <>
+                  <Descriptions.Item label="领料用途">{get(detail, "fUse")}</Descriptions.Item>
+                  <Descriptions.Item label="生产计划单编号">{get(detail, "fPlanSn")}</Descriptions.Item>
+                </>
+              )}
+              {get(detail, "operationType") === "out" && get(detail, "businessType.config.defaultSourceType") === "sales" && (
+                <Descriptions.Item label="客户">{get(detail, "customer.name")}</Descriptions.Item>
+              )}
+              <Descriptions.Item label="仓库">{get(detail, "operationType") === "in" ? get(detail, "to.name") : get(detail, "from.name")}</Descriptions.Item>
+            </>
+          )}
+          <Descriptions.Item label="创建时间">{get(detail, "createdAt") && dayjs(get(detail, "createdAt")).format("YYYY-MM-DD HH:mm:ss")}</Descriptions.Item>
+        </Descriptions>
         <Table className="antd-style" bordered columns={formateCol() || []} dataSource={dataSourceGroupBy} pagination={false} />
       </div>
     );

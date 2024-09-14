@@ -75,11 +75,28 @@ export default {
     if (currentStrategy?.isAOD) {
       const lotFilterIndex = fixedFilters.findIndex((f: any) => f.field === "lot");
       if (lotFilterIndex > -1) {
-        (fixedFilters[lotFilterIndex] as any).filters.push({
-          field: "isAOD",
-          operator: "eq",
-          value: true,
-        });
+        (fixedFilters[lotFilterIndex] as any).filters = [
+          {
+            field: "isAOD",
+            operator: "eq",
+            value: true,
+          },
+          {
+            operator: "or",
+            filters: [
+              {
+                field: "qualificationState",
+                operator: "eq",
+                value: "qualified",
+              },
+              {
+                field: "treatment",
+                operator: "eq",
+                value: "special",
+              },
+            ],
+          },
+        ];
       } else {
         fixedFilters.push({
           field: "lot",
@@ -154,11 +171,17 @@ export default {
           width: 120,
           render: (record: any) => {
             switch (record.lot?.qualificationState) {
+              case "inspectFree":
+                return "免检";
               case "uninspected":
                 return "待检";
               case "qualified":
                 return "合格";
               case "unqualified":
+                if (record.lot?.treatment === "special") {
+                  return "不合格（特采）";
+                }
+
                 return "不合格";
             }
           },
