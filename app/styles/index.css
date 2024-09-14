@@ -11,6 +11,15 @@
   margin: 0;
 }
 
+.branch-logo {
+  height: 72px;
+  background-image: url("../assets/images/qixiang-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70% 70%;
+  background-color: #fff;
+}
+
 .rui-player-left-sider {
   height: 100vh;
   overflow: auto;
