@@ -250,8 +250,8 @@ export default {
       if (res.length > 0) {
         return setValidateOpen(true);
       } else {
-        const items = arr.map((it: any) => it.items).flat();
-        const isQualified = items.filter((it: any) => !it.skippable).every((it: any) => calculateInspectionResult(it, it.measuredValue));
+        // const items = arr.map((it: any) => it.items).flat();
+        // const isQualified = items.filter((it: any) => !it.skippable).every((it: any) => calculateInspectionResult(it, it.measuredValue));
         const res = arr
           .map((item: any) => {
             const unQualifiedArr = item.items.filter((it: any) => !it.skippable).filter((it: any) => !calculateInspectionResult(it, it.measuredValue));
@@ -262,19 +262,14 @@ export default {
           })
           .filter((item: any) => item.unQualifiedArr.length > 0);
         setUnQualifiedArr(orderBy(res, "code"));
-        if (isQualified) {
-          await rapidApi
-            .patch(`/mom/mom_inspection_sheets/${sheetId}`, {
-              state: "inspected",
-              approvalState: "approving",
-            })
-            .then(async (res) => {
-              onSucess?.();
-            });
-        } else if (res.length > 0) {
-          setResultState(false);
-          setValidateOpen(true);
-        }
+        await rapidApi
+          .patch(`/mom/mom_inspection_sheets/${sheetId}`, {
+            state: "inspected",
+            approvalState: "approving",
+          })
+          .then(async (res) => {
+            onSucess?.();
+          });
       }
     };
 
@@ -394,11 +389,19 @@ export default {
       const res = items.every((it: any) => it.locked);
       return res;
     };
+
+    // const reCheckRecord = (arr: any) => {
+    //   const items = arr.map((item: any) => item.items).flat();
+    //   const res = items.every((it: any) => it.locked && (it.qualitativeValue || it.quantitativeValue)&&it);
+    //   return res;
+    // };
+
     return (
       <div className="pm_inspection-input-sectioN">
         <Spin spinning={loading || false}>
           {inspection &&
             inspection.map((item: any, index) => {
+              console.log(item, "item888");
               return (
                 <div key={index}>
                   <div className="inspection_measurement--title">第{item.round}轮次检验:</div>
