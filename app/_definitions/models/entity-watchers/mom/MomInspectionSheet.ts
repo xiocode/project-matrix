@@ -1,10 +1,5 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {
-  BaseLot,
-  MomInspectionMeasurement,
-  MomInspectionSheet,
-  MomInventoryApplication
-} from "~/_definitions/meta/entity-types";
+import {BaseLot, MomInspectionMeasurement, MomInspectionSheet} from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -86,7 +81,7 @@ export default [
             value: after.id,
           },
         ],
-        properties: ["id", "code"],
+        properties: ["id", "code", "lot", "material", "lotNum", "result"],
       });
 
       if (changes) {
@@ -128,20 +123,20 @@ export default [
         const lotManager = server.getEntityManager<BaseLot>("base_lot");
         const lot = await lotManager.findEntity({
           filters: [
-            { operator: "eq", field: "lotNum", value: after.lotNum },
+            { operator: "eq", field: "lotNum", value: operationTarget?.lotNum },
             {
               operator: "eq",
               field: "material_id",
-              value: after.material_id
+              value: operationTarget?.material?.id
             }],
           properties: ["id"],
         });
         if (lot && after.result) {
           await lotManager.updateEntityById({
             routeContext: ctx.routerContext,
-            id: lot.id,
+            id: operationTarget?.lot?.id,
             entityToSave: {
-              qualificationState: after.result,
+              qualificationState: operationTarget?.result,
             },
           });
         }
@@ -150,10 +145,10 @@ export default [
       if (changes.hasOwnProperty('treatment')) {
         if (after.lot_id) {
           const isAOD = changes.treatment === 'special';
-          const qualified = after.result === 'qualified' ? 'true' : changes.treatment === 'forced';
+          const qualified = operationTarget?.result === 'qualified' ? 'true' : changes.treatment === 'forced';
           await server.getEntityManager<BaseLot>("base_lot").updateEntityById({
             routeContext: ctx.routerContext,
-            id: after.lot_id,
+            id: operationTarget?.lot?.id,
             entityToSave: {
               treatment: changes.treatment,
               isAOD: isAOD,
