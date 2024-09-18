@@ -14,6 +14,13 @@ import {
 import dayjs from "dayjs";
 import {updateInventoryBalance} from "~/_definitions/models/server-operations/mom/splitGoods";
 
+interface LotAcceptCountMap {
+  [lotNum: string]: {
+    quantity: number;
+    palletCount: number;
+  }
+}
+
 export default [
   {
     eventName: "entity.beforeCreate",
@@ -81,19 +88,13 @@ export default [
       const { server, payload } = ctx;
       let after = payload.after;
 
-      interface LotAcceptCountMap {
-        [lotNum: string]: {
-          quantity: number;
-          palletCount: number;
-        }
-      }
 
       try {
 
         const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
 
         const inventoryOperation = await inventoryOperationManager.findEntity({
-          filters: [{ operator: "eq", field: "id", value: after.operation.id }],
+          filters: [{ operator: "eq", field: "id", value: after.operation_id || after.operation.id }],
           properties: ["id", "application", "businessType", "operationType"],
         })
 
@@ -334,9 +335,70 @@ export default [
       const { server, payload } = ctx;
       const changes = payload.before;
       try {
-        const momInventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findById(changes.operation_id);
+        const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
 
-        if (momInventoryOperation?.operationType === "in") {
+        const inventoryOperation = await inventoryOperationManager.findEntity({
+          filters: [{ operator: "eq", field: "id", value: changes.operation_id }],
+          properties: ["id", "application", "businessType", "operationType"],
+        })
+
+        let lotAcceptCountMap: LotAcceptCountMap = {}
+        if (inventoryOperation?.operationType === "in") {
+          const goodTransfers = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
+            filters: [{ operator: "eq", field: "operation_id", value: inventoryOperation.id }],
+          })
+
+          goodTransfers.forEach((goodTransfer) => {
+            if (goodTransfer.lotNum && goodTransfer.quantity) {
+              if (!lotAcceptCountMap[goodTransfer.lotNum]) {
+                lotAcceptCountMap[goodTransfer.lotNum] = {
+                  quantity: 0,
+                  palletCount: 0
+                }
+              }
+              lotAcceptCountMap[goodTransfer.lotNum].quantity += goodTransfer.quantity
+              lotAcceptCountMap[goodTransfer.lotNum].palletCount += 1
+            }
+          })
+
+          for (let lotNum in lotAcceptCountMap) {
+            const applicationItems = await server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").findEntities({
+              filters: [
+                { operator: "eq", field: "lotNum", value: lotNum },
+                { operator: "eq", field: "operation_id", value: inventoryOperation?.application?.id },
+              ],
+            })
+
+            for (let applicationItem of applicationItems) {
+              await server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").updateEntityById({
+                routeContext: ctx.routerContext,
+                id: applicationItem.id,
+                entityToSave: {
+                  acceptQuantity: lotAcceptCountMap[lotNum].quantity,
+                  acceptPalletCount: lotAcceptCountMap[lotNum].palletCount
+                }
+              })
+            }
+
+            const inspectionSheet = await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").findEntity({
+              filters: [
+                { operator: "eq", field: "lotNum", value: lotNum },
+                { operator: "eq", field: "inventory_operation_id", value: inventoryOperation?.id },
+              ],
+            })
+
+            if (inspectionSheet) {
+              await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").updateEntityById({
+                routeContext: ctx.routerContext,
+                id: inspectionSheet.id,
+                entityToSave: {
+                  acceptQuantity: lotAcceptCountMap[lotNum].quantity,
+                  acceptPalletCount: lotAcceptCountMap[lotNum].palletCount
+                }
+              })
+            }
+          }
+
           if (changes.good_id) {
             const goodManager = server.getEntityManager<MomGood>("mom_good");
             const good = await goodManager.findById(changes.good_id);
@@ -345,6 +407,8 @@ export default [
               await goodManager.deleteById(good.id);
             }
           }
+
+          await updateInventoryBalance(server)
         }
       } catch (e) {
         console.error(e);
