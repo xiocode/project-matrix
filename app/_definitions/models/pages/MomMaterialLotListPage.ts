@@ -4,32 +4,32 @@ import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    {
-      type: "auto",
-      code: "lotNum",
-    },
-    {
-      type: "auto",
-      code: "material",
-      formControlProps: {
-        dropdownMatchSelectWidth: 500,
-        listTextFormat: materialFormatStrTemplate,
-        listFilterFields: ["name", "code", "specification"],
-        columns: [
-          { code: "code", title: "编号", width: 120 },
-          { code: "name", title: "名称", width: 120 },
-          { code: "specification", title: "规格", width: 120 },
-        ],
-      },
-    },
-    {
-      type: "auto",
-      code: "sourceType",
-    },
-    {
-      type: "date",
-      code: "manufactureDate",
-    },
+    // {
+    //   type: "auto",
+    //   code: "lotNum",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "material",
+    //   formControlProps: {
+    //     dropdownMatchSelectWidth: 500,
+    //     listTextFormat: materialFormatStrTemplate,
+    //     listFilterFields: ["name", "code", "specification"],
+    //     columns: [
+    //       { code: "code", title: "编号", width: 120 },
+    //       { code: "name", title: "名称", width: 120 },
+    //       { code: "specification", title: "规格", width: 120 },
+    //     ],
+    //   },
+    // },
+    // {
+    //   type: "auto",
+    //   code: "sourceType",
+    // },
+    // {
+    //   type: "date",
+    //   code: "manufactureDate",
+    // },
     {
       type: "auto",
       code: "qualificationState",
@@ -51,14 +51,14 @@ const page: RapidPage = {
       entityCode: "BaseLot",
       viewMode: "table",
       selectionMode: "none",
-      listActions: [
-        {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
-        },
-      ],
+      // listActions: [
+      //   {
+      //     $type: "sonicToolbarNewEntityButton",
+      //     text: "新建",
+      //     icon: "PlusOutlined",
+      //     actionStyle: "primary",
+      //   },
+      // ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -77,14 +77,10 @@ const page: RapidPage = {
       ],
       columns: [
         {
-          type: "link",
+          type: "auto",
           code: "lotNum",
           width: "200px",
           fixed: "left",
-          rendererType: "link",
-          rendererProps: {
-            url: "/pages/mom_material_lot_details?id={{id}}",
-          },
         },
         {
           type: "auto",
@@ -143,14 +139,14 @@ const page: RapidPage = {
           actionType: "edit",
           actionText: "修改",
         },
-        {
-          $type: "sonicRecordActionDeleteEntity",
-          code: "delete",
-          actionType: "delete",
-          actionText: "删除",
-          dataSourceCode: "list",
-          entityCode: "BaseLot",
-        },
+        // {
+        //   $type: "sonicRecordActionDeleteEntity",
+        //   code: "delete",
+        //   actionType: "delete",
+        //   actionText: "删除",
+        //   dataSourceCode: "list",
+        //   entityCode: "BaseLot",
+        // },
       ],
       newForm: cloneDeep(formConfig),
       editForm: cloneDeep(formConfig),
