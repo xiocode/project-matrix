@@ -9,6 +9,7 @@ export default [
       const { server, payload } = ctx;
       const changes = payload.changes;
       const after = payload.after;
+      const before = payload.before;
 
       try {
         const operationTarget = await server.getEntityManager<MomInspectionRule>("mom_inspection_rule").findEntity({
@@ -31,6 +32,7 @@ export default [
                 targetSingularName: `检验规则 -${ operationTarget?.name }- [${ operationTarget?.material.code }-${ operationTarget?.material.name }-${ operationTarget?.material.specification }]`,
                 method: "update",
                 changes: changes,
+                before: before,
               }
             })
           }
@@ -65,6 +67,7 @@ export default [
               targetSingularCode: "mom_inspection_rule",
               targetSingularName: `检验规则 -${ operationTarget?.name }- [${ operationTarget?.material.code }-${ operationTarget?.material.name }-${ operationTarget?.material.specification }]`,
               method: "delete",
+              before: before,
             }
           })
         }

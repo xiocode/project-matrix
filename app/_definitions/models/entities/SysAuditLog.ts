@@ -33,6 +33,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       dataDictionary: "SysAuditLogMethod",
     },
     {
+      code: "before",
+      name: "变更前记录",
+      type: "json",
+    },
+    {
       code: "changes",
       name: "变更记录",
       type: "json",

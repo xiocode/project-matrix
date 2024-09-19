@@ -36,12 +36,13 @@ export default {
 
         try {
           const printTemplateStoreData = page?.scope?.getStore("printTemplateList")?.data?.list || [];
-          console.log("printTemplateTaskData", dataSource);
           await rapidApi.post(`/svc/printer/printers/${formData.code}/tasks`, {
             tasks: (dataSource || [])
               .map((record) => {
                 const templateCode = record.templateCode || "rawMaterialIdentificationCard";
                 const printTemplate = templateCode && find(printTemplateStoreData, (item) => item.code === templateCode);
+                console.log("multiple print trigger: ", replaceTemplatePlaceholder(printTemplate?.content, record?.taskData));
+
                 return {
                   type: "zpl-label",
                   name: "标签打印",

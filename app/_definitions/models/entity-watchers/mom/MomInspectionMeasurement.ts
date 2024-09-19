@@ -58,6 +58,7 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const { server, payload } = ctx;
 
+      const before = payload.before;
       const after = payload.after;
       const changes = payload.changes;
 
@@ -122,6 +123,8 @@ export default [
                 targetSingularCode: "mom_inspection_characteristic",
                 targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
                 method: "update",
+                before: before,
+                changes: changes,
               }
             })
           }
@@ -154,6 +157,7 @@ export default [
               targetSingularCode: "mom_inspection_characteristic",
               targetSingularName: `检验记录-${ operationTarget?.sheet?.code }-样本:${ operationTarget?.sampleCode }`,
               method: "delete",
+              before: before,
             }
           })
         }

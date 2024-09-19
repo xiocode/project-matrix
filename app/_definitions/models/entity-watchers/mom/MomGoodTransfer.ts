@@ -13,6 +13,7 @@ import {
 } from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 import {updateInventoryBalance} from "~/_definitions/models/server-operations/mom/splitGoods";
+import {before} from "lodash";
 
 interface LotAcceptCountMap {
   [lotNum: string]: {
@@ -301,14 +302,14 @@ export default [
     modelSingularCode: "mom_good_transfer",
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeDelete">) => {
       const { server, payload } = ctx;
-      const changes = payload.before;
+      const before = payload.before;
       try {
         const operationTarget = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntity({
           filters: [
             {
               operator: "eq",
               field: "id",
-              value: changes.id,
+              value: before.id,
             },
           ],
           properties: ["id", "operation", "material", "binNum", "lotNum"],
@@ -320,6 +321,7 @@ export default [
               targetSingularCode: "mom_inspection_sheet",
               targetSingularName: `库存操作记录 - ${ operationTarget?.operation?.code } - ${ operationTarget?.material?.name } - ${ operationTarget?.binNum } - ${ operationTarget?.lotNum }`,
               method: "delete",
+              before: before,
             }
           })
         }
@@ -421,6 +423,7 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const { server, payload } = ctx;
       const changes = payload.changes;
+      const before = payload.before;
       try {
         const operationTarget = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntity({
           filters: [
@@ -441,6 +444,7 @@ export default [
               targetSingularName: `库存操作记录 - ${ operationTarget?.operation?.code } -物料:${ operationTarget?.material?.name } -批号:${ operationTarget?.lotNum } -托盘号:${ operationTarget?.binNum }`,
               method: "update",
               changes: changes,
+              before: before,
             }
           })
         }

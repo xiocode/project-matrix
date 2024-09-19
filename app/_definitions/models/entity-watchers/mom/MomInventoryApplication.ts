@@ -1,5 +1,6 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
 import {MomInventoryApplication,} from "~/_definitions/meta/entity-types";
+import {before} from "lodash";
 
 export default [
   {
@@ -19,6 +20,7 @@ export default [
     modelSingularCode: "mom_inventory_application",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
       const { server, payload } = ctx;
+      const before = payload.before;
       const changes = payload.changes;
       const after = payload.after;
 
@@ -43,6 +45,7 @@ export default [
                 targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
                 method: "update",
                 changes: changes,
+                before: before,
               }
             })
           }
@@ -78,6 +81,7 @@ export default [
               targetSingularCode: "mom_inventory_application",
               targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
               method: "delete",
+              before: before,
             }
           })
         }

@@ -72,6 +72,7 @@ export default [
 
       const after = payload.after;
       const changes = payload.changes;
+      const before = payload.before;
 
       const operationTarget = await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").findEntity({
         filters: [
@@ -93,6 +94,7 @@ export default [
               targetSingularName: `检验单 - ${ operationTarget?.code }`,
               method: "update",
               changes: changes,
+              before: before,
             }
           })
         }
@@ -184,6 +186,7 @@ export default [
             targetSingularCode: "mom_inspection_sheet",
             targetSingularName: `检验单 - ${ operationTarget?.code }`,
             method: "delete",
+            before: before,
           }
         })
       }
