@@ -387,9 +387,9 @@ const page: RapidPage = {
           actionType: "edit",
           actionText: "修改",
           // $permissionCheck: "inspection.manage",
-          $exps: {
-            disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
-          },
+          // $exps: {
+          //   disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
+          // },
         },
         {
           $type: "sonicRecordActionDeleteEntity",
