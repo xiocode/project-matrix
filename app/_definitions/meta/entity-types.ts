@@ -8379,6 +8379,10 @@ export interface SysAuditLog {
    */
   method?: SysAuditLogMethod;
   /**
+   * 变更前记录
+   */
+  before?: Record<string, any>;
+  /**
    * 变更记录
    */
   changes?: Record<string, any>;

@@ -98,6 +98,7 @@ export default [
 
       const changes = payload.changes;
       const after = payload.after;
+      const before = payload.before;
 
       try {
         const inventoryOperationManager = server.getEntityManager<MomInventoryOperation>("mom_inventory_operation");
@@ -734,6 +735,7 @@ export default [
                 targetSingularName: `库存操作单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
                 method: "update",
                 changes: changes,
+                before: before,
               }
             })
           }
@@ -769,6 +771,7 @@ export default [
               targetSingularCode: "mom_inventory_operation",
               targetSingularName: `库存操作单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
               method: "delete",
+              before: before,
             }
           })
         }

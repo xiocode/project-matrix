@@ -9,6 +9,7 @@ export default [
       const { server, payload } = ctx;
       const changes = payload.changes;
       const after = payload.after;
+      const before = payload.before;
 
       try {
         const operationTarget = await server.getEntityManager<MomInspectionCharacteristic>("mom_inspection_characteristic").findEntity({
@@ -30,6 +31,7 @@ export default [
               targetSingularName: `检验特征-${ operationTarget?.rule?.name }-${ operationTarget?.name }`,
               method: "update",
               changes: changes,
+              before: before,
             }
           })
         }
@@ -65,6 +67,7 @@ export default [
               targetSingularCode: "mom_inspection_characteristic",
               targetSingularName: `检验特征-${ operationTarget?.rule?.name }-${ operationTarget?.name }`,
               method: "delete",
+              before: before,
             }
           })
         }

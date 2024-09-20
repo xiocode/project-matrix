@@ -50,8 +50,11 @@ export default {
         }
 
         try {
+
           await rapidApi.post(`/svc/printer/printers/${formData.code}/tasks`, {
             tasks: (dataSource || []).map((record) => {
+              console.log("print trigger: ", replaceTemplatePlaceholder(formData.content, record));
+
               return {
                 type: "zpl-label",
                 name: "标签打印",

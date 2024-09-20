@@ -9,6 +9,7 @@ export default [
       const { server, payload } = ctx;
       const changes = payload.changes;
       const after = payload.after;
+      const before = payload.before;
 
       try {
         const operationTarget = await server.getEntityManager<BaseMaterial>("base_material").findEntity({
@@ -30,6 +31,7 @@ export default [
               targetSingularName: `物料 - ${ operationTarget?.code } - ${ operationTarget?.name } - ${ operationTarget?.specification }`,
               method: "update",
               changes: changes,
+              before: before,
             }
           })
         }
@@ -63,6 +65,7 @@ export default [
               targetSingularCode: "base_material",
               targetSingularName: `物料 - ${ operationTarget?.code }-${ operationTarget?.name }-${ operationTarget?.specification }`,
               method: "delete",
+              before: before,
             }
           })
         }

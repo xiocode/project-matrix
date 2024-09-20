@@ -2139,6 +2139,7 @@ const entityFieldCodes = {
     'targetSingularCode',
     'targetSingularName',
     'method',
+    'before',
     'changes',
     'createdAt',
     'createdBy',
