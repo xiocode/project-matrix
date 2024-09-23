@@ -39,7 +39,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   charset: "utf-8",
-  title: data.systemSettings.systemName || "麒祥WMS",
+  title: data.systemSettings.systemName || "华特MES",
   viewport: "width=device-width,initial-scale=1",
 });
 

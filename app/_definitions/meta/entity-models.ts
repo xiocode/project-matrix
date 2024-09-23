@@ -41,6 +41,8 @@ import MomAssemblyMain from '../models/entities/MomAssemblyMain';
 import MomAssemblyPart from '../models/entities/MomAssemblyPart';
 import MomEquipment from '../models/entities/MomEquipment';
 import MomEquipmentCategory from '../models/entities/MomEquipmentCategory';
+import MomEquipmentDimension from '../models/entities/MomEquipmentDimension';
+import MomFactory from '../models/entities/MomFactory';
 import MomGood from '../models/entities/MomGood';
 import MomGoodLabel from '../models/entities/MomGoodLabel';
 import MomGoodLocation from '../models/entities/MomGoodLocation';
@@ -100,8 +102,11 @@ import MomRouteTemplateProcess from '../models/entities/MomRouteTemplateProcess'
 import MomShift from '../models/entities/MomShift';
 import MomShop from '../models/entities/MomShop';
 import MomStation from '../models/entities/MomStation';
+import MomTransportOperation from '../models/entities/MomTransportOperation';
+import MomTransportOperationItem from '../models/entities/MomTransportOperationItem';
 import MomWarehouse from '../models/entities/MomWarehouse';
 import MomWarehouseStrategy from '../models/entities/MomWarehouseStrategy';
+import MomWorkFeed from '../models/entities/MomWorkFeed';
 import MomWorkOrder from '../models/entities/MomWorkOrder';
 import MomWorkReport from '../models/entities/MomWorkReport';
 import MomWorkTask from '../models/entities/MomWorkTask';
@@ -190,6 +195,8 @@ const entityDefinitions = [
   MomAssemblyPart,
   MomEquipment,
   MomEquipmentCategory,
+  MomEquipmentDimension,
+  MomFactory,
   MomGood,
   MomGoodLabel,
   MomGoodLocation,
@@ -249,8 +256,11 @@ const entityDefinitions = [
   MomShift,
   MomShop,
   MomStation,
+  MomTransportOperation,
+  MomTransportOperationItem,
   MomWarehouse,
   MomWarehouseStrategy,
+  MomWorkFeed,
   MomWorkOrder,
   MomWorkReport,
   MomWorkTask,
@@ -339,6 +349,8 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomAssemblyPart, entityDefinitions),
   autoConfigureRapidEntity(MomEquipment, entityDefinitions),
   autoConfigureRapidEntity(MomEquipmentCategory, entityDefinitions),
+  autoConfigureRapidEntity(MomEquipmentDimension, entityDefinitions),
+  autoConfigureRapidEntity(MomFactory, entityDefinitions),
   autoConfigureRapidEntity(MomGood, entityDefinitions),
   autoConfigureRapidEntity(MomGoodLabel, entityDefinitions),
   autoConfigureRapidEntity(MomGoodLocation, entityDefinitions),
@@ -398,8 +410,11 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomShift, entityDefinitions),
   autoConfigureRapidEntity(MomShop, entityDefinitions),
   autoConfigureRapidEntity(MomStation, entityDefinitions),
+  autoConfigureRapidEntity(MomTransportOperation, entityDefinitions),
+  autoConfigureRapidEntity(MomTransportOperationItem, entityDefinitions),
   autoConfigureRapidEntity(MomWarehouse, entityDefinitions),
   autoConfigureRapidEntity(MomWarehouseStrategy, entityDefinitions),
+  autoConfigureRapidEntity(MomWorkFeed, entityDefinitions),
   autoConfigureRapidEntity(MomWorkOrder, entityDefinitions),
   autoConfigureRapidEntity(MomWorkReport, entityDefinitions),
   autoConfigureRapidEntity(MomWorkTask, entityDefinitions),

@@ -23,6 +23,10 @@ import HomePage from '../models/pages/HomePage';
 import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
+import MomEquipmentCategoryListPage from '../models/pages/MomEquipmentCategoryListPage';
+import MomEquipmentDetailsPage from '../models/pages/MomEquipmentDetailsPage';
+import MomEquipmentListPage from '../models/pages/MomEquipmentListPage';
+import MomFactoryListPage from '../models/pages/MomFactoryListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
 import MomGoodLocationListPage from '../models/pages/MomGoodLocationListPage';
 import MomInspectionSamplingDetailPage from '../models/pages/MomInspectionSamplingDetailPage';
@@ -61,6 +65,8 @@ import MomProcessCategoryListPage from '../models/pages/MomProcessCategoryListPa
 import MomProcessListPage from '../models/pages/MomProcessListPage';
 import MomProdTaskDetailsPage from '../models/pages/MomProdTaskDetailsPage';
 import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
+import MomTransportOperationDetailsPage from '../models/pages/MomTransportOperationDetailsPage';
+import MomTransportOperationListPage from '../models/pages/MomTransportOperationListPage';
 import MomWarehouseListPage from '../models/pages/MomWarehouseListPage';
 import MomWarehouseStrategyListPage from '../models/pages/MomWarehouseStrategyListPage';
 import MomWorkOrderDetailsPage from '../models/pages/MomWorkOrderDetailsPage';
@@ -143,6 +149,10 @@ export default [
   MetaModelDetailsPage,
   MetaModelListPage,
   MetaRouteListPage,
+  MomEquipmentCategoryListPage,
+  MomEquipmentDetailsPage,
+  MomEquipmentListPage,
+  MomFactoryListPage,
   MomGoodListPage,
   MomGoodLocationListPage,
   MomInspectionSamplingDetailPage,
@@ -181,6 +191,8 @@ export default [
   MomProcessListPage,
   MomProdTaskDetailsPage,
   MomProdTaskListPage,
+  MomTransportOperationDetailsPage,
+  MomTransportOperationListPage,
   MomWarehouseListPage,
   MomWarehouseStrategyListPage,
   MomWorkOrderDetailsPage,

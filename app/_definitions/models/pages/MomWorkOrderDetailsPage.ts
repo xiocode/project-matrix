@@ -6,24 +6,23 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
       type: "auto",
-      code: "workTask",
+      code: "workOrder",
       listDataFindOptions: {
-        properties: ["id", "code", "routeProcess", "material"],
+        properties: ["id", "code",],
       },
       formControlProps: {
-        listTextFormat: "{{code}} {{routeProcess.name}}",
+        listTextFormat: "{{code}}",
         dropdownMatchSelectWidth: 300,
         listFilterFields: ["code"],
         columns: [
           { code: "code", title: "编号", width: 120 },
-          { code: "routeProcess.name", title: "工艺", width: 120 },
         ],
       },
     },
-    {
-      type: "auto",
-      code: "tags",
-    },
+    // {
+    //   type: "auto",
+    //   code: "tags",
+    // },
     {
       type: "auto",
       code: "qualifiedQuantity",
@@ -74,6 +73,43 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
           },
         ],
       },
+    },
+  ],
+  defaultFormFields: {
+    unqualifiedQuantity: 0,
+    scrapQuantity: 0,
+  },
+};
+
+const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
+  items: [
+    {
+      type: "auto",
+      code: "workTask",
+      listDataFindOptions: {
+        properties: ["id", "code", "routeProcess", "material"],
+      },
+      formControlProps: {
+        listTextFormat: "{{code}} {{routeProcess.name}}",
+        dropdownMatchSelectWidth: 300,
+        listFilterFields: ["code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "routeProcess.name", title: "工艺", width: 120 },
+        ],
+      },
+    },
+    {
+      type: "auto",
+      code: "material",
+    },
+    {
+      type: "auto",
+      code: "quantity",
+    },
+    {
+      type: "auto",
+      code: "unit",
     },
   ],
   defaultFormFields: {
@@ -486,10 +522,10 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        {
-          type: "auto",
-          code: "tags",
-        },
+        // {
+        //   type: "auto",
+        //   code: "tags",
+        // },
         {
           type: "auto",
           code: "assignmentState",
@@ -626,12 +662,12 @@ const page: RapidPage = {
           ],
         },
         {
-          key: "tasks",
-          label: "工序任务",
+          key: "feeds",
+          label: "投料记录",
           children: [
             {
               $type: "sonicEntityList",
-              entityCode: "MomWorkTask",
+              entityCode: "MomWorkFeed",
               viewMode: "table",
               selectionMode: "none",
               fixedFilters: [
@@ -656,13 +692,20 @@ const page: RapidPage = {
               ],
               columns: [
                 {
-                  type: "link",
-                  code: "code",
-                  width: "200px",
+                  type: "auto",
+                  code: "rawMaterial",
                   fixed: "left",
-                  rendererType: "link",
+                  rendererType: "anchor",
                   rendererProps: {
-                    url: "/pages/mom_work_task_details?id={{id}}",
+                    children: {
+                      $type: "materialLabelRenderer",
+                      $exps: {
+                        value: "$slot.value",
+                      },
+                    },
+                    $exps: {
+                      href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+                    },
                   },
                 },
                 {
@@ -689,52 +732,8 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "equipment",
-                  width: "150px",
-                  rendererProps: {
-                    format: "{{code}} {{name}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "assignees",
-                  width: "150px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "deadline",
-                  width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "assigner",
-                  width: "100px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "assignedAt",
-                  width: "150px",
-                },
-                {
-                  type: "auto",
                   code: "acceptedAt",
                   width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "assignmentState",
-                  width: "100px",
-                },
-                {
-                  type: "auto",
-                  code: "executionState",
-                  width: "100px",
                 },
               ],
               actions: [
@@ -750,11 +749,11 @@ const page: RapidPage = {
                   actionType: "delete",
                   actionText: "删除",
                   dataSourceCode: "list",
-                  entityCode: "MomWorkTask",
+                  entityCode: "MomWorkFeed",
                 },
               ],
-              newForm: cloneDeep(taskFormConfig),
-              editForm: cloneDeep(taskFormConfig),
+              newForm: cloneDeep(feedFormConfig),
+              editForm: cloneDeep(feedFormConfig),
               $exps: {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
                 "newForm.fixedFields.work_order_id": "$rui.parseQuery().id",
@@ -762,18 +761,143 @@ const page: RapidPage = {
             },
           ],
         },
-        {
-          key: "sandTable",
-          label: "物料需求",
-          children: [
-            {
-              $type: "mrpWorkOrderSandTable",
-              $exps: {
-                workOrderId: "$rui.parseQuery().id",
-              },
-            },
-          ],
-        },
+        // {
+        //   key: "tasks",
+        //   label: "工序任务",
+        //   children: [
+        //     {
+        //       $type: "sonicEntityList",
+        //       entityCode: "MomWorkTask",
+        //       viewMode: "table",
+        //       selectionMode: "none",
+        //       fixedFilters: [
+        //         {
+        //           field: "work_order_id",
+        //           operator: "eq",
+        //           value: "",
+        //         },
+        //       ],
+        //       listActions: [
+        //         {
+        //           $type: "sonicToolbarNewEntityButton",
+        //           text: "新建",
+        //           icon: "PlusOutlined",
+        //           actionStyle: "primary",
+        //         },
+        //         // {
+        //         //   $type: "sonicToolbarRefreshButton",
+        //         //   text: "刷新",
+        //         //   icon: "ReloadOutlined",
+        //         // },
+        //       ],
+        //       columns: [
+        //         {
+        //           type: "link",
+        //           code: "code",
+        //           width: "200px",
+        //           fixed: "left",
+        //           rendererType: "link",
+        //           rendererProps: {
+        //             url: "/pages/mom_work_task_details?id={{id}}",
+        //           },
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "process",
+        //           width: "150px",
+        //           fixed: "left",
+        //           rendererProps: {
+        //             format: "{{name}}",
+        //           },
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "quantity",
+        //           width: "80px",
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "unit",
+        //           width: "50px",
+        //           rendererProps: {
+        //             format: "{{name}}",
+        //           },
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "equipment",
+        //           width: "150px",
+        //           rendererProps: {
+        //             format: "{{code}} {{name}}",
+        //           },
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "assignees",
+        //           width: "150px",
+        //           rendererProps: {
+        //             format: "{{name}}",
+        //           },
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "deadline",
+        //           width: "150px",
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "assigner",
+        //           width: "100px",
+        //           rendererProps: {
+        //             format: "{{name}}",
+        //           },
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "assignedAt",
+        //           width: "150px",
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "acceptedAt",
+        //           width: "150px",
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "assignmentState",
+        //           width: "100px",
+        //         },
+        //         {
+        //           type: "auto",
+        //           code: "executionState",
+        //           width: "100px",
+        //         },
+        //       ],
+        //       actions: [
+        //         {
+        //           $type: "sonicRecordActionEditEntity",
+        //           code: "edit",
+        //           actionType: "edit",
+        //           actionText: "修改",
+        //         },
+        //         {
+        //           $type: "sonicRecordActionDeleteEntity",
+        //           code: "delete",
+        //           actionType: "delete",
+        //           actionText: "删除",
+        //           dataSourceCode: "list",
+        //           entityCode: "MomWorkTask",
+        //         },
+        //       ],
+        //       newForm: cloneDeep(taskFormConfig),
+        //       editForm: cloneDeep(taskFormConfig),
+        //       $exps: {
+        //         "fixedFilters[0].value": "$rui.parseQuery().id",
+        //         "newForm.fixedFields.work_order_id": "$rui.parseQuery().id",
+        //       },
+        //     },
+        //   ],
+        // },
       ],
     },
   ],

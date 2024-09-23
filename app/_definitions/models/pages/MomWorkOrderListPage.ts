@@ -32,10 +32,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         ],
       },
     },
-    {
-      type: "auto",
-      code: "tags",
-    },
+    // {
+    //   type: "auto",
+    //   code: "tags",
+    // },
     {
       type: "auto",
       code: "route",
@@ -66,14 +66,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         },
       },
     },
-    {
-      type: "auto",
-      code: "scheduledStartDate",
-    },
-    {
-      type: "auto",
-      code: "scheduledFinishDate",
-    },
+    // {
+    //   type: "auto",
+    //   code: "scheduledStartDate",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "scheduledFinishDate",
+    // },
     {
       type: "auto",
       code: "quantity",
@@ -82,10 +82,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "unit",
     },
-    {
-      type: "auto",
-      code: "assignmentState",
-    },
+    // {
+    //   type: "auto",
+    //   code: "assignmentState",
+    // },
     {
       type: "auto",
       code: "executionState",
@@ -212,21 +212,21 @@ const page: RapidPage = {
             format: "{{version}}",
           },
         },
-        {
-          type: "auto",
-          code: "tags",
-          width: "100px",
-        },
-        {
-          type: "auto",
-          code: "scheduledStartDate",
-          width: "100px",
-        },
-        {
-          type: "auto",
-          code: "scheduledFinishDate",
-          width: "100px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "tags",
+        //   width: "100px",
+        // },
+        // {
+        //   type: "auto",
+        //   code: "scheduledStartDate",
+        //   width: "100px",
+        // },
+        // {
+        //   type: "auto",
+        //   code: "scheduledFinishDate",
+        //   width: "100px",
+        // },
         {
           type: "auto",
           code: "quantity",
@@ -240,11 +240,11 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
-        {
-          type: "auto",
-          code: "assignmentState",
-          width: "100px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "assignmentState",
+        //   width: "100px",
+        // },
         {
           type: "auto",
           code: "executionState",

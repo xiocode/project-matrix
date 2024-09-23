@@ -5,6 +5,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: "auto",
+      code: "factory",
+    },
+    {
+      type: "auto",
       code: "code",
     },
     {
@@ -60,9 +64,13 @@ const page: RapidPage = {
       columns: [
         {
           type: "auto",
-          code: "code",
+          code: "factory",
           width: "100px",
           fixed: "left",
+        },
+        {
+          type: "auto",
+          code: "code",
         },
         {
           type: "auto",

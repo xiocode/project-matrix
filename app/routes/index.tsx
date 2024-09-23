@@ -66,7 +66,7 @@ export default function Index() {
     <ConfigProvider locale={zhCN}>
       <Layout style={{ minHeight: "100vh" }} hasSider>
         <Sider className="rui-player-left-sider">
-          <h1 className="branch-title">麒祥高新材料WMS</h1>
+          <h1 className="branch-title">华特MES</h1>
           <AppLeftNav navItems={viewModel.navItems} />
         </Sider>
         <Layout>

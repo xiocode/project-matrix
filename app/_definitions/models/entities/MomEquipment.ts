@@ -25,13 +25,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_equipment_category",
       targetIdColumnName: "category_id",
-      required: true,
     },
     {
       code: "state",
       name: "状态",
       type: "option",
       dataDictionary: "EnabledDisabledState",
+      defaultValue: "enabled",
       required: true,
     },
     {
@@ -59,6 +59,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_station",
       targetIdColumnName: "station_id",
+    },
+    {
+      code: "factory",
+      name: "工厂",
+      type: "relation",
+      targetSingularCode: "mom_factory",
+      targetIdColumnName: "factory_id",
     },
   ],
 };

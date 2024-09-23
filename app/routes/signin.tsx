@@ -72,7 +72,7 @@ function getPageConfig(viewModel: ViewModel) {
                 children: [
                   {
                     $type: "text",
-                    text: viewModel.systemSettings.systemName || "麒祥高新材料WMS",
+                    text: viewModel.systemSettings.systemName || "华特MES",
                   },
                 ],
               },

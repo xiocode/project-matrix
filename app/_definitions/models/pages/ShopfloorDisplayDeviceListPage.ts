@@ -5,6 +5,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
     {
       type: "auto",
+      code: "code",
+      label: "Mac地址"
+    },
+    {
+      type: "auto",
       code: "name",
     },
     {
@@ -56,6 +61,12 @@ const page: RapidPage = {
       ],
       pageSize: 20,
       columns: [
+        {
+          type: "auto",
+          code: "code",
+          title: "Mac地址",
+          width: "200px",
+        },
         {
           type: "auto",
           code: "name",
