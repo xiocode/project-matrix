@@ -19,26 +19,6 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
         ],
       },
     },
-    // {
-    //   type: "auto",
-    //   code: "tags",
-    // },
-    {
-      type: "auto",
-      code: "qualifiedQuantity",
-    },
-    {
-      type: "auto",
-      code: "unqualifiedQuantity",
-    },
-    {
-      type: "auto",
-      code: "scrapQuantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
-    },
     {
       type: "auto",
       code: "equipment",
@@ -85,256 +65,17 @@ const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
       type: "auto",
-      code: "workTask",
-      listDataFindOptions: {
-        properties: ["id", "code", "routeProcess", "material"],
-      },
-      formControlProps: {
-        listTextFormat: "{{code}} {{routeProcess.name}}",
-        dropdownMatchSelectWidth: 300,
-        listFilterFields: ["code"],
-        columns: [
-          { code: "code", title: "编号", width: 120 },
-          { code: "routeProcess.name", title: "工艺", width: 120 },
-        ],
-      },
+      code: "process",
     },
     {
       type: "auto",
-      code: "material",
-    },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
+      code: "rawMaterial",
     },
   ],
   defaultFormFields: {
     unqualifiedQuantity: 0,
     scrapQuantity: 0,
   },
-};
-
-const taskFormConfig: Partial<RapidEntityFormRockConfig> = {
-  items: [
-    // {
-    //   type: "auto",
-    //   code: "code",
-    // },
-    {
-      type: "auto",
-      code: "material",
-      listDataFindOptions: {
-        properties: ["id", "code", "name", "specification", "defaultUnit"],
-        fixedFilters: [
-          {
-            operator: "eq",
-            field: "can_produce",
-            value: true,
-          },
-        ],
-      },
-      formControlProps: {
-        dropdownMatchSelectWidth: 500,
-        listTextFormat: materialFormatStrTemplate,
-        listFilterFields: ["name", "code", "specification"],
-        columns: [
-          { code: "code", title: "编号", width: 120 },
-          { code: "name", title: "名称", width: 120 },
-          { code: "specification", title: "规格", width: 120 },
-        ],
-      },
-    },
-    {
-      type: "auto",
-      code: "route",
-      listDataFindOptions: {
-        fixedFilters: [
-          {
-            field: "material",
-            operator: "exists",
-            filters: [
-              {
-                field: "id",
-                operator: "eq",
-                value: "",
-              },
-            ],
-          },
-        ],
-        $exps: {
-          "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
-        },
-      },
-      formControlProps: {
-        listTextFieldName: "version",
-        listFilterFields: ["version"],
-        columns: [{ code: "version", title: "版本" }],
-        $exps: {
-          disabled: "!$self.form.getFieldValue('material')",
-        },
-      },
-    },
-    {
-      type: "auto",
-      code: "routeProcess",
-      listDataFindOptions: {
-        properties: ["id", "process", "aliasName"],
-        // fixedFilters: [
-        //   {
-        //     field: "route_id",
-        //     operator: "eq",
-        //     value: "",
-        //   },
-        // ],
-        // $exps: {
-        //   "fixedFilters[0].value": "$scope.vars.active_route_id",
-        // },
-      },
-      formControlProps: {
-        listTextFormat: "{{process.name}}",
-        $exps: {
-          disabled: "!$self.form.getFieldValue('route')",
-        },
-      },
-    },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
-    },
-    {
-      type: "auto",
-      code: "equipment",
-      formControlProps: {
-        dropdownMatchSelectWidth: 300,
-        listTextFormat: "{{code}} {{name}}",
-        listFilterFields: ["name", "code"],
-        columns: [
-          { code: "code", title: "编号", width: 120 },
-          { code: "name", title: "名称", width: 120 },
-        ],
-      },
-    },
-    {
-      type: "auto",
-      code: "assignees",
-      formControlProps: {
-        listTextFormat: "{{name}} ({{department.name}})",
-      },
-      listDataFindOptions: {
-        properties: ["id", "name", "department"],
-        fixedFilters: [
-          {
-            field: "state",
-            operator: "eq",
-            value: "normal",
-          },
-        ],
-        orderBy: [
-          {
-            field: "code",
-          },
-        ],
-      },
-    },
-    {
-      type: "auto",
-      code: "deadline",
-    },
-    {
-      type: "auto",
-      code: "assigner",
-      formControlProps: {
-        listTextFormat: "{{name}} ({{department.name}})",
-      },
-      listDataFindOptions: {
-        properties: ["id", "name", "department"],
-        fixedFilters: [
-          {
-            field: "state",
-            operator: "eq",
-            value: "normal",
-          },
-        ],
-        orderBy: [
-          {
-            field: "code",
-          },
-        ],
-      },
-    },
-    {
-      type: "auto",
-      code: "assignmentState",
-    },
-    {
-      type: "auto",
-      code: "executionState",
-    },
-  ],
-  onFormRefresh: [
-    {
-      $action: "script",
-      script: `
-        let material = event.args[0].form.getFieldValue("material");
-        const materialId = material && material.id || material;
-        event.scope.setVars({
-          active_material_id: materialId,
-        }, true);
-        event.scope.loadStoreData('dataFormItemList-route');
-
-        let route = event.args[0].form.getFieldValue("route");
-        const routeId = route && route.id || route;
-        event.scope.setVars({
-          active_route_id: routeId,
-        }, true);
-        event.scope.loadStoreData('dataFormItemList-route');
-
-        const _ = event.framework.getExpressionVars()._;
-        const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-        material = _.find(materials, function (item) { return item.id == materialId });
-        const unitId = _.get(material, 'defaultUnit.id');
-        event.page.sendComponentMessage(event.sender.$id, {
-          name: "setFieldsValue",
-          payload: {
-            unit: unitId,
-          }
-        });
-      `,
-    },
-  ],
-  onValuesChange: [
-    {
-      $action: "script",
-      script: `
-        const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
-          event.scope.setVars({
-            active_material_id: changedValues.material,
-          }, true);
-          const _ = event.framework.getExpressionVars()._;
-          const materials = _.get(event.scope.stores['dataFormItemList-material'], 'data.list');
-          const material = _.find(materials, function (item) { return item.id == changedValues.material });
-          const unitId = _.get(material, 'defaultUnit.id');
-          event.page.sendComponentMessage(event.sender.$id, {
-            name: "setFieldsValue",
-            payload: {
-              unit: unitId,
-              route: null,
-            }
-          });
-          event.scope.loadStoreData('dataFormItemList-route');
-        }
-      `,
-    },
-  ],
 };
 
 const page: RapidPage = {
@@ -379,41 +120,6 @@ const page: RapidPage = {
             _hidden: "!($stores.detail?.data?.list[0]?.executionState == 'pending' || $stores.detail?.data?.list[0]?.executionState == 'processing')",
           },
         },
-
-        // {
-        //   $type: "rapidToolbarButton",
-        //   text: "下发工单",
-        //   actionStyle: "primary",
-        //   onAction: [
-        //     {
-        //       $action: "sendHttpRequest",
-        //       method: "PATCH",
-        //       url: "",
-        //       data: {
-        //         $operation: {
-        //           type: "issueOrder"
-        //         },
-        //         $stateProperties: ["assignmentState"],
-        //       },
-        //       $exps: {
-        //         "url": "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
-        //       },
-        //     },
-        //     {
-        //       $action: "antdMessage",
-        //       title: "工单下发成功。",
-        //       onClose: [
-        //         {
-        //           $action: "loadScopeData",
-        //         },
-        //       ],
-        //     },
-        //   ],
-        //   $exps: {
-        //     _hidden: "!($stores.detail?.data?.list[0]?.assignmentState == 'assigning')",
-        //   },
-        // },
-
         {
           $type: "rapidToolbarButton",
           text: "完成工单",
@@ -447,7 +153,6 @@ const page: RapidPage = {
             _hidden: "!($stores.detail?.data?.list[0]?.executionState == 'processing')",
           },
         },
-
         {
           $type: "rapidToolbarButton",
           text: "重新开启",
@@ -513,25 +218,6 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "quantity",
-        },
-        {
-          type: "auto",
-          code: "unit",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
-        // {
-        //   type: "auto",
-        //   code: "tags",
-        // },
-        {
-          type: "auto",
-          code: "assignmentState",
-        },
-        {
-          type: "auto",
           code: "executionState",
         },
         {
@@ -586,38 +272,6 @@ const page: RapidPage = {
                   code: "createdAt",
                   title: "报工时间",
                   width: "150px",
-                },
-                {
-                  type: "auto",
-                  code: "workTask",
-                  width: "150px",
-                  fixed: "left",
-                  rendererProps: {
-                    format: "{{code}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "qualifiedQuantity",
-                  width: "80px",
-                },
-                {
-                  type: "auto",
-                  code: "unqualifiedQuantity",
-                  width: "80px",
-                },
-                {
-                  type: "auto",
-                  code: "scrapQuantity",
-                  width: "80px",
-                },
-                {
-                  type: "auto",
-                  code: "unit",
-                  width: "50px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
                 },
                 {
                   type: "auto",
@@ -719,20 +373,7 @@ const page: RapidPage = {
                 },
                 {
                   type: "auto",
-                  code: "quantity",
-                  width: "80px",
-                },
-                {
-                  type: "auto",
-                  code: "unit",
-                  width: "50px",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  code: "acceptedAt",
+                  code: "createdAt",
                   width: "150px",
                 },
               ],
@@ -761,143 +402,6 @@ const page: RapidPage = {
             },
           ],
         },
-        // {
-        //   key: "tasks",
-        //   label: "工序任务",
-        //   children: [
-        //     {
-        //       $type: "sonicEntityList",
-        //       entityCode: "MomWorkTask",
-        //       viewMode: "table",
-        //       selectionMode: "none",
-        //       fixedFilters: [
-        //         {
-        //           field: "work_order_id",
-        //           operator: "eq",
-        //           value: "",
-        //         },
-        //       ],
-        //       listActions: [
-        //         {
-        //           $type: "sonicToolbarNewEntityButton",
-        //           text: "新建",
-        //           icon: "PlusOutlined",
-        //           actionStyle: "primary",
-        //         },
-        //         // {
-        //         //   $type: "sonicToolbarRefreshButton",
-        //         //   text: "刷新",
-        //         //   icon: "ReloadOutlined",
-        //         // },
-        //       ],
-        //       columns: [
-        //         {
-        //           type: "link",
-        //           code: "code",
-        //           width: "200px",
-        //           fixed: "left",
-        //           rendererType: "link",
-        //           rendererProps: {
-        //             url: "/pages/mom_work_task_details?id={{id}}",
-        //           },
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "process",
-        //           width: "150px",
-        //           fixed: "left",
-        //           rendererProps: {
-        //             format: "{{name}}",
-        //           },
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "quantity",
-        //           width: "80px",
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "unit",
-        //           width: "50px",
-        //           rendererProps: {
-        //             format: "{{name}}",
-        //           },
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "equipment",
-        //           width: "150px",
-        //           rendererProps: {
-        //             format: "{{code}} {{name}}",
-        //           },
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "assignees",
-        //           width: "150px",
-        //           rendererProps: {
-        //             format: "{{name}}",
-        //           },
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "deadline",
-        //           width: "150px",
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "assigner",
-        //           width: "100px",
-        //           rendererProps: {
-        //             format: "{{name}}",
-        //           },
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "assignedAt",
-        //           width: "150px",
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "acceptedAt",
-        //           width: "150px",
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "assignmentState",
-        //           width: "100px",
-        //         },
-        //         {
-        //           type: "auto",
-        //           code: "executionState",
-        //           width: "100px",
-        //         },
-        //       ],
-        //       actions: [
-        //         {
-        //           $type: "sonicRecordActionEditEntity",
-        //           code: "edit",
-        //           actionType: "edit",
-        //           actionText: "修改",
-        //         },
-        //         {
-        //           $type: "sonicRecordActionDeleteEntity",
-        //           code: "delete",
-        //           actionType: "delete",
-        //           actionText: "删除",
-        //           dataSourceCode: "list",
-        //           entityCode: "MomWorkTask",
-        //         },
-        //       ],
-        //       newForm: cloneDeep(taskFormConfig),
-        //       editForm: cloneDeep(taskFormConfig),
-        //       $exps: {
-        //         "fixedFilters[0].value": "$rui.parseQuery().id",
-        //         "newForm.fixedFields.work_order_id": "$rui.parseQuery().id",
-        //       },
-        //     },
-        //   ],
-        // },
       ],
     },
   ],

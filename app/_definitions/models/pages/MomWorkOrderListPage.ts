@@ -74,14 +74,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   type: "auto",
     //   code: "scheduledFinishDate",
     // },
-    {
-      type: "auto",
-      code: "quantity",
-    },
-    {
-      type: "auto",
-      code: "unit",
-    },
+    // {
+    //   type: "auto",
+    //   code: "quantity",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "unit",
+    // },
     // {
     //   type: "auto",
     //   code: "assignmentState",
@@ -227,19 +227,19 @@ const page: RapidPage = {
         //   code: "scheduledFinishDate",
         //   width: "100px",
         // },
-        {
-          type: "auto",
-          code: "quantity",
-          width: "100px",
-        },
-        {
-          type: "auto",
-          code: "unit",
-          width: "50px",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
+        // {
+        //   type: "auto",
+        //   code: "quantity",
+        //   width: "100px",
+        // },
+        // {
+        //   type: "auto",
+        //   code: "unit",
+        //   width: "50px",
+        //   rendererProps: {
+        //     format: "{{name}}",
+        //   },
+        // },
         // {
         //   type: "auto",
         //   code: "assignmentState",
