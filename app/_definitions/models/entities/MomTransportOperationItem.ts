@@ -75,6 +75,21 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "备注",
       type: "text",
     },
+    {
+      code: "deliveryOrderFile",
+      name: "送货委托单",
+      type: "file",
+    },
+    {
+      code: "qualityInspectionReportFile",
+      name: "质检报告",
+      type: "file",
+    },
+    {
+      code: "sealNumPicture",
+      name: "铅封号照片",
+      type: "image",
+    },
   ],
 };
 

@@ -24,21 +24,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "deliveryOrder",
-      label: "送货委托书",
-    },
-    {
-      type: "auto",
-      code: "qualityInspectionReport",
-      label: "质检报告",
-    },
-    {
-      type: "auto",
-      code: "sealNumPicture",
-      label: "铅封号照片",
-    },
-    {
-      type: "auto",
       code: "state",
     },
     {
@@ -113,96 +98,6 @@ const page: RapidPage = {
           type: "auto",
           code: "createdAt",
           width: "150px",
-        },
-        {
-          type: "auto",
-          code: "deliveryOrder",
-          width: "150px",
-          // rendererProps: {
-          //   item: {
-          //     $type: "antdListItemMeta",
-          //     title: {
-          //       $type: "antdSpace",
-          //       children: [
-          //         {
-          //           $type: "text",
-          //           text: "",
-          //         },
-          //         {
-          //           $type: "anchor",
-          //           href: "",
-          //           children: "下载",
-          //         },
-          //       ],
-          //     },
-          //     $exps: {
-          //       "title.children[0].text": "$slot.value.name",
-          //       "title.children[1].href": "'/api/download/document?documentId=' + $slot.value.id",
-          //       description:
-          //         "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
-          //     },
-          //   },
-          // },
-        },
-        {
-          type: "auto",
-          code: "qualityInspectionReport",
-          width: "150px",
-          // rendererProps: {
-          //   item: {
-          //     $type: "antdListItemMeta",
-          //     title: {
-          //       $type: "antdSpace",
-          //       children: [
-          //         {
-          //           $type: "text",
-          //           text: "",
-          //         },
-          //         {
-          //           $type: "anchor",
-          //           href: "",
-          //           children: "下载",
-          //         },
-          //       ],
-          //     },
-          //     $exps: {
-          //       "title.children[0].text": "$slot.value.name",
-          //       "title.children[1].href": "'/api/download/document?documentId=' + $slot.value.id",
-          //       description:
-          //         "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
-          //     },
-          //   },
-          // },
-        },
-        {
-          type: "auto",
-          code: "sealNumPicture",
-          width: "150px",
-          // rendererProps: {
-          //   item: {
-          //     $type: "antdListItemMeta",
-          //     title: {
-          //       $type: "antdSpace",
-          //       children: [
-          //         {
-          //           $type: "text",
-          //           text: "",
-          //         },
-          //         {
-          //           $type: "anchor",
-          //           href: "",
-          //           children: "下载",
-          //         },
-          //       ],
-          //     },
-          //     $exps: {
-          //       "title.children[0].text": "$slot.value.name",
-          //       "title.children[1].href": "'/api/download/document?documentId=' + $slot.value.id",
-          //       description:
-          //         "$functions.formatFileSize($slot.value.size) + ' | ' + $slot.record.createdBy.name + ' 创建于 ' + $functions.formatDateTime($slot.value.createdAt)",
-          //     },
-          //   },
-          // },
         },
         {
           type: "auto",
