@@ -227,6 +227,18 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "报告文件",
       type: "file",
     },
+    {
+      code: "gcmsReportFile",
+      name: "GCMS报告文件",
+      type: "file",
+    },
+    {
+      code: "factory",
+      name: "工厂",
+      type: "relation",
+      targetSingularCode: "mom_factory",
+      targetIdColumnName: "factory_id",
+    },
   ],
   // indexes: [
   //   {

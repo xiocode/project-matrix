@@ -38,6 +38,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "boolean",
       defaultValue: "false",
     },
+    {
+      code: "factory",
+      name: "工厂",
+      type: "relation",
+      targetSingularCode: "mom_factory",
+      targetIdColumnName: "factory_id",
+    },
   ],
 };
 
