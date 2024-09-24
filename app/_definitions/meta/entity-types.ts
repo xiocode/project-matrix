@@ -555,6 +555,10 @@ export interface BaseLot {
    */
   treatment?: MomInspectionSheetTreatment;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -658,6 +662,10 @@ export interface BaseMaterial {
    */
   externalCode?: string;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -729,6 +737,10 @@ export interface BaseMaterialCategory {
    */
   printTemplate?: Partial<MomPrintTemplate>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -779,6 +791,10 @@ export interface BaseMaterialDocument {
    * 状态
    */
   state: EnabledDisabledState;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -834,6 +850,10 @@ export interface BaseMaterialType {
    * 配置
    */
   config?: Record<string, any>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -949,6 +969,10 @@ export interface BasePartner {
    */
   externalCode?: string;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -999,6 +1023,10 @@ export interface BasePartnerCategory {
    * 排序号
    */
   orderNum: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -1071,6 +1099,10 @@ export interface BaseUnit {
    */
   externalCode?: string;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -1121,6 +1153,10 @@ export interface BaseUnitCategory {
    * 单位
    */
   units?: any;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -3051,6 +3087,10 @@ export interface MomGood {
    */
   lot?: Partial<BaseLot>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3335,6 +3375,10 @@ export interface MomInspectionCategory {
    */
   parent?: Partial<MomInspectionCategory>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3442,6 +3486,10 @@ export interface MomInspectionCharacteristic {
    */
   config?: Record<string, any>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3488,6 +3536,10 @@ export interface MomInspectionCharacteristicCategory {
    * 描述
    */
   description?: string;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -3543,6 +3595,10 @@ export interface MomInspectionDefect {
    * 状态
    */
   state: EnabledDisabledState;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -3603,6 +3659,10 @@ export interface MomInspectionDefectCategory {
    */
   defects?: any;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3658,6 +3718,10 @@ export interface MomInspectionDefectStat {
    */
   defectAmount?: number;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3705,6 +3769,10 @@ export interface MomInspectionInstrument {
    */
   category?: Partial<MomInspectionInstrumentCategory>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3751,6 +3819,10 @@ export interface MomInspectionInstrumentCategory {
    * 描述
    */
   description?: string;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -3847,6 +3919,10 @@ export interface MomInspectionMeasurement {
    */
   remark?: string;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -3893,6 +3969,10 @@ export interface MomInspectionMethod {
    * 描述
    */
   description?: string;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -3961,6 +4041,10 @@ export interface MomInspectionRule {
    */
   isDefault?: boolean;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4007,6 +4091,10 @@ export interface MomInspectionSampling {
    * 明细项
    */
   items?: any;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -4062,6 +4150,10 @@ export interface MomInspectionSamplingItem {
    * 样本数
    */
   samplingCount: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -4222,6 +4314,14 @@ export interface MomInspectionSheet {
    */
   reportFile?: any;
   /**
+   * GCMS报告文件
+   */
+  gcmsReportFile?: any;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -4276,6 +4376,10 @@ export interface MomInspectionSheetSample {
    * 检验轮次
    */
   round: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -6546,6 +6650,10 @@ export interface MomProcessCategory {
    */
   orderNum: number;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -6743,6 +6851,10 @@ export interface MomRouteProcessInput {
    */
   config?: Record<string, any>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -6801,6 +6913,10 @@ export interface MomRouteProcessOutput {
    * 配置
    */
   config?: Record<string, any>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -6950,6 +7066,10 @@ export interface MomShift {
    * 排序号
    */
   orderNum: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -7484,6 +7604,10 @@ export interface MomWorkFeed {
    */
   extra?: Record<string, any>;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -7591,6 +7715,10 @@ export interface MomWorkOrder {
    */
   inspectionSheets?: any;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -7697,6 +7825,10 @@ export interface MomWorkReport {
    * 其它信息
    */
   extra?: Record<string, any>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -7833,6 +7965,10 @@ export interface MomWorkTask {
    */
   inspectionSheets?: any;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -7895,6 +8031,10 @@ export interface MomWorkTeam {
    * 组员
    */
   members?: Partial<BaseEmployee>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -7987,6 +8127,10 @@ export interface MomWorkTrack {
    */
   productionTasks?: any;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -8049,6 +8193,10 @@ export interface OcDepartment {
    * 外部编号
    */
   externalCode?: string;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -8116,6 +8264,10 @@ export interface OcRole {
    * 操作
    */
   actions?: any;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -8196,6 +8348,10 @@ export interface OcUser {
    */
   externalUserCode?: string;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -8274,6 +8430,10 @@ export interface ShopfloorApp {
    * 发布人
    */
   publishedBy?: Partial<OcUser>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -8456,6 +8616,10 @@ export interface ShopfloorDisplayDevice {
    */
   deleted?: boolean;
   /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -8518,6 +8682,10 @@ export interface ShopfloorStation {
    * 是否删除
    */
   deleted?: boolean;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */
@@ -8801,6 +8969,10 @@ export interface SysAuditLog {
    * 变更记录
    */
   changes?: Record<string, any>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
   /**
    * 创建时间
    */

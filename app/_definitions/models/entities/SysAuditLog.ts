@@ -37,6 +37,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "变更记录",
       type: "json",
     },
+    {
+      code: "factory",
+      name: "工厂",
+      type: "relation",
+      targetSingularCode: "mom_factory",
+      targetIdColumnName: "factory_id",
+    },
   ],
 };
 

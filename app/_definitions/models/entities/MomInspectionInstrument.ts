@@ -20,6 +20,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_inspection_instrument_category",
       targetIdColumnName: "category_id",
     },
+    {
+      code: "factory",
+      name: "工厂",
+      type: "relation",
+      targetSingularCode: "mom_factory",
+      targetIdColumnName: "factory_id",
+    },
   ],
 };
 
