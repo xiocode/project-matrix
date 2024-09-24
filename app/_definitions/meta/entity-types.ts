@@ -7140,6 +7140,18 @@ export interface MomTransportOperation {
    */
   state: BusinessInstanceState;
   /**
+   * 送货委托单
+   */
+  deliveryOrder: any;
+  /**
+   * 质检报告
+   */
+  qualityInspectionReport: any;
+  /**
+   * 铅封号
+   */
+  sealNumPicture: any;
+  /**
    * 审批状态
    */
   approvalState?: ApprovalState;
