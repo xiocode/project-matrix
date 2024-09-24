@@ -24,6 +24,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "config",
+      name: "配置",
+      type: "json",
+    },
+    {
       code: "apps",
       name: "关联应用",
       type: "relation[]",

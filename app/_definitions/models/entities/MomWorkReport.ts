@@ -80,6 +80,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "double",
     },
     {
+      code: "duration",
+      name: "工作时长",
+      type: "double",
+    },
+    {
       code: "unit",
       name: "单位",
       type: "relation",

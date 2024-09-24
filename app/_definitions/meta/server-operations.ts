@@ -24,6 +24,7 @@ import mom$submitGoodOutTransfers from '../models/server-operations/mom/submitGo
 import mom$submitMrpResult from '../models/server-operations/mom/submitMrpResult';
 import mom$submitWorkOrderMrpResult from '../models/server-operations/mom/submitWorkOrderMrpResult';
 import notification$readAllNotifications from '../models/server-operations/notification/readAllNotifications';
+import shopfloor$bootstrap from '../models/server-operations/shopfloor/bootstrap';
 import sys$listMyAllowedSysActions from '../models/server-operations/sys/listMyAllowedSysActions';
 
 export default [
@@ -52,5 +53,6 @@ export default [
   mom$submitMrpResult,
   mom$submitWorkOrderMrpResult,
   notification$readAllNotifications,
+  shopfloor$bootstrap,
   sys$listMyAllowedSysActions,
 ] as TServerOperation[];

@@ -7658,6 +7658,10 @@ export interface MomWorkReport {
    */
   scrapQuantity?: number;
   /**
+   * 工作时长
+   */
+  duration?: number;
+  /**
    * 单位
    */
   unit?: Partial<BaseUnit>;
@@ -8239,6 +8243,10 @@ export interface ShopfloorApp {
    */
   content?: Record<string, any>;
   /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
    * 发布时间
    */
   publishedAt?: string;
@@ -8478,6 +8486,10 @@ export interface ShopfloorStation {
    * 描述
    */
   description?: string;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
   /**
    * 关联应用
    */
