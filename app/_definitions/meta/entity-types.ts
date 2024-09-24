@@ -4214,6 +4214,14 @@ export interface MomInspectionSheet {
    */
   acceptPalletCount?: number;
   /**
+   * 图片
+   */
+  pictures?: any;
+  /**
+   * 报告文件
+   */
+  reportFile?: any;
+  /**
    * 创建时间
    */
   createdAt?: string;

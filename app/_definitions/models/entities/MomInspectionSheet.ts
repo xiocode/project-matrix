@@ -217,6 +217,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "收货托数",
       type: "double",
     },
+    {
+      code: "pictures",
+      name: "图片",
+      type: "image[]",
+    },
+    {
+      code: "reportFile",
+      name: "报告文件",
+      type: "file",
+    },
   ],
   // indexes: [
   //   {

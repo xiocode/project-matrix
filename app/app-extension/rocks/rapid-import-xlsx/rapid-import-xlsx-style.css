@@ -1,0 +1,29 @@
+.rapid-import-xlsx {
+}
+
+.rapid-import-xlsx--title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 24px 24px;
+}
+
+.rapid-import-xlsx--body {
+}
+
+.rapid-import-xlsx--uploadBtn {
+  min-height: 360px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rapid-import-xlsx--previewTable {
+}
+
+.rapid-import-xlsx--uploadResult {
+}
+
+.rapid-import-xlsx--error {
+  background-color: #fff2f0 !important;
+}
