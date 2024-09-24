@@ -26,7 +26,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "lotNum",
-      required: true,
+      label: "批次号",
+      formControlType: "lotNumSelector",
+      formControlProps: {},
+      $exps: {
+        "formControlProps.materialId": "$self.form.getFieldValue('material')",
+        "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
+      },
     },
     {
       type: "auto",
@@ -64,22 +70,56 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       listDataFindOptions: {
         fixedFilters: [
           {
+            field: "material",
+            operator: "exists",
+            filters: [
+              {
+                field: "id",
+                operator: "eq",
+                value: "",
+              },
+            ],
+          },
+          {
             field: "customer",
             operator: "null",
           },
         ],
+        properties: ["id", "name", "category"],
+        $exps: {
+          "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
+        },
       },
       formControlProps: {
         listSearchable: true,
         listTextFormat: "{{name}}",
         listFilterFields: ["name"],
+        columns: [{ code: "name", title: "名称", width: 120 }],
       },
-      required: true,
     },
     // {
     //   code: "routeProcess",
     //   type: "auto",
     // },
+    {
+      code: "gcmsReportFile",
+      label: "GCMS报告",
+      required: true,
+      type: "auto",
+      $exps: {
+        _hidden: "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
+      },
+    },
+    {
+      code: "reportFile",
+      label: "质检报告",
+      type: "auto",
+      required: true,
+      $exps: {
+        _hidden:
+          "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '进料检验(泰洋圣)'||$page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
+      },
+    },
     {
       type: "auto",
       code: "sender",
@@ -100,6 +140,21 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   type: "auto",
     //   code: "approvalState",
     // },
+  ],
+
+  onValuesChange: [
+    {
+      $action: "script",
+      script: `
+        const changedValues = event.args[0] || {};
+        if(changedValues.hasOwnProperty('material')) {
+          event.scope.setVars({
+            active_material_id: changedValues?.material,
+          }, true);
+        }
+        event.scope.loadStoreData('dataFormItemList-rule');         
+      `,
+    },
   ],
   defaultFormFields: {
     result: "uninspected",
@@ -139,6 +194,7 @@ const page: RapidPage = {
         },
       ],
       extraProperties: ["rule", "treatment"],
+
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -255,6 +311,11 @@ const page: RapidPage = {
         },
       ],
       relations: {
+        rule: {
+          relations: {
+            category: true,
+          },
+        },
         material: {
           properties: ["id", "code", "name", "specification", "category"],
           relations: {
@@ -283,6 +344,18 @@ const page: RapidPage = {
           rendererType: "link",
           rendererProps: {
             url: "/pages/mom_inspection_sheet_details?id={{id}}",
+          },
+        },
+        {
+          code: "rule",
+          type: "auto",
+          width: "150px",
+          rendererType: "text",
+          title: "检验类型",
+          rendererProps: {
+            $exps: {
+              text: "_.get($slot.record, 'rule.category.name')||'-'",
+            },
           },
         },
         {

@@ -16,6 +16,7 @@ import MergeBinNumAction from "./merge-bin-num-action/MergeBinNumAction";
 import SplitBinNumAction from "./split-bin-num-action/SplitBinNumAction";
 import BusinessForm from "./business-form/BusinessForm";
 import BusinessTable from "./business-table/BusinessTable";
+import LotNumSelector from "./lotnum-selector/LotNumSelector";
 import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSelector";
 import InspectionInputSection from "./inspection-input-section/InspectionInputSection";
 import BatchPrintAction from "./batch-print-action/BatchPrintAction";
@@ -57,6 +58,7 @@ export default [
   SplitBinNumAction,
   BusinessForm,
   BusinessTable,
+  LotNumSelector,
   MaterialLotNumSelector,
   InspectionInputSection,
   BatchPrintAction,

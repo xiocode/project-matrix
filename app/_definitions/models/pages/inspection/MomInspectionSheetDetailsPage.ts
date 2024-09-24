@@ -1,4 +1,5 @@
 import type { RapidPage } from "@ruiapp/rapid-extension";
+
 import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const page: RapidPage = {
@@ -17,6 +18,11 @@ const page: RapidPage = {
       column: 3,
       extraProperties: ["sampleCount", "round"],
       relations: {
+        rule: {
+          relations: {
+            category: true,
+          },
+        },
         material: {
           properties: ["id", "code", "name", "specification", "category"],
           relations: {
@@ -67,6 +73,21 @@ const page: RapidPage = {
         {
           code: "lotNum",
           type: "auto",
+        },
+        {
+          code: "reportFile",
+          type: "auto",
+          $exps: {
+            _hidden:
+              "!($page.getStore('detail').data?.list[0]?.rule?.category?.name === '进料检验(泰洋圣)'||$page.getStore('detail').data?.list[0]?.rule?.category?.name === '出库检验(泰洋圣)')",
+          },
+        },
+        {
+          code: "gcmsReportFile",
+          type: "auto",
+          $exps: {
+            _hidden: "!($page.getStore('detail').data?.list[0]?.rule?.category?.name === '出库检验(泰洋圣)')",
+          },
         },
         // {
         //   code: "serialNum",
@@ -131,6 +152,17 @@ const page: RapidPage = {
             format: "{{name}}",
           },
         },
+        {
+          code: "rule",
+          type: "auto",
+          rendererType: "text",
+          label: "检验类型",
+          rendererProps: {
+            $exps: {
+              text: "$stores.detail?.data?.list[0]?.rule?.category?.name",
+            },
+          },
+        },
         // {
         //   code: "routeProcess",
         //   type: "auto",
@@ -177,74 +209,9 @@ const page: RapidPage = {
           label: "检验记录",
           children: [
             {
-              $id: "MomInspectionMeasurement",
-              $type: "sonicEntityList",
-              entityCode: "MomInspectionMeasurement",
-              viewMode: "table",
-              selectionMode: "none",
-              fixedFilters: [
-                {
-                  field: "sheet",
-                  operator: "eq",
-                  value: "",
-                },
-              ],
-              listActions: [
-                {
-                  $type: "sonicToolbarNewEntityButton",
-                  text: "新建",
-                  icon: "PlusOutlined",
-                  actionStyle: "primary",
-                  $permissionCheck: "inspectionRule.manage",
-                },
-                // {
-                //   $type: "sonicToolbarRefreshButton",
-                //   text: "刷新",
-                //   icon: "ReloadOutlined",
-                // },
-              ],
-              pageSize: -1,
-              orderBy: [
-                {
-                  field: "id",
-                },
-              ],
-              extraProperties: [
-                "id",
-                "sheet",
-                "sampleCode",
-                "characteristic",
-                "instrumentCategory",
-                "instrument",
-                "inspector",
-                "inspectedAt",
-                "deliveryOrder",
-                "qualityInspectionReport",
-                "sealNumPicture",
-                "qualitativeValue",
-                "quantitativeValue",
-              ],
-              columns: [
-                {
-                  type: "auto",
-                  label: "检验特征",
-                  code: "characteristic",
-                  rendererProps: {
-                    format: "{{name}}",
-                  },
-                },
-                {
-                  type: "auto",
-                  label: "检验结果",
-                  code: "qualitativeValue",
-                  // rendererProps: {
-                  //   format: "{{name}}",
-                  // },
-                },
-              ],
+              $type: "inspectionMeasurement",
               $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
-                // "newForm.fixedFields.rule_id": "$rui.parseQuery().id",
+                entityId: "$rui.parseQuery().id",
               },
             },
           ],
