@@ -7140,18 +7140,6 @@ export interface MomTransportOperation {
    */
   state: BusinessInstanceState;
   /**
-   * 送货委托单
-   */
-  deliveryOrder: any;
-  /**
-   * 质检报告
-   */
-  qualityInspectionReport: any;
-  /**
-   * 铅封号
-   */
-  sealNumPicture: any;
-  /**
    * 审批状态
    */
   approvalState?: ApprovalState;
@@ -7254,6 +7242,18 @@ export interface MomTransportOperationItem {
    * 备注
    */
   remark?: string;
+  /**
+   * 送货委托单
+   */
+  deliveryOrderFile?: any;
+  /**
+   * 质检报告
+   */
+  qualityInspectionReportFile?: any;
+  /**
+   * 铅封号照片
+   */
+  sealNumPicture?: any;
   /**
    * 创建时间
    */

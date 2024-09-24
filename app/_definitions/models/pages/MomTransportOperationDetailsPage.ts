@@ -37,6 +37,24 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "unit",
     },
+    {
+      type: "auto",
+      code: "deliveryOrderFile",
+      label: "送货委托书",
+      required: true,
+    },
+    {
+      type: "auto",
+      code: "qualityInspectionReportFile",
+      label: "质检报告",
+      required: true,
+    },
+    {
+      type: "auto",
+      code: "sealNumPicture",
+      label: "铅封号照片",
+      required: true,
+    },
   ],
   onValuesChange: [
     {
@@ -196,6 +214,21 @@ const page: RapidPage = {
                   rendererProps: {
                     format: "{{name}}",
                   },
+                },
+                {
+                  type: "auto",
+                  code: "deliveryOrderFile",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "qualityInspectionReportFile",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "sealNumPicture",
+                  width: "150px",
                 },
               ],
               actions: [
