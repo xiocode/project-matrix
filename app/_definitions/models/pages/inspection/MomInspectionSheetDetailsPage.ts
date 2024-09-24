@@ -177,9 +177,74 @@ const page: RapidPage = {
           label: "检验记录",
           children: [
             {
-              $type: "inspectionMeasurement",
+              $id: "MomInspectionMeasurement",
+              $type: "sonicEntityList",
+              entityCode: "MomInspectionMeasurement",
+              viewMode: "table",
+              selectionMode: "none",
+              fixedFilters: [
+                {
+                  field: "sheet",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              listActions: [
+                {
+                  $type: "sonicToolbarNewEntityButton",
+                  text: "新建",
+                  icon: "PlusOutlined",
+                  actionStyle: "primary",
+                  $permissionCheck: "inspectionRule.manage",
+                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
+              ],
+              pageSize: -1,
+              orderBy: [
+                {
+                  field: "id",
+                },
+              ],
+              extraProperties: [
+                "id",
+                "sheet",
+                "sampleCode",
+                "characteristic",
+                "instrumentCategory",
+                "instrument",
+                "inspector",
+                "inspectedAt",
+                "deliveryOrder",
+                "qualityInspectionReport",
+                "sealNumPicture",
+                "qualitativeValue",
+                "quantitativeValue",
+              ],
+              columns: [
+                {
+                  type: "auto",
+                  label: "检验特征",
+                  code: "characteristic",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
+                {
+                  type: "auto",
+                  label: "检验结果",
+                  code: "qualitativeValue",
+                  // rendererProps: {
+                  //   format: "{{name}}",
+                  // },
+                },
+              ],
               $exps: {
-                entityId: "$rui.parseQuery().id",
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+                // "newForm.fixedFields.rule_id": "$rui.parseQuery().id",
               },
             },
           ],

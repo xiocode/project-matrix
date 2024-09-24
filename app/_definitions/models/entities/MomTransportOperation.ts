@@ -1,8 +1,7 @@
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
-import type {PropertySequenceConfig} from "@ruiapp/rapid-core";
-import {BusinessInstanceState} from "~/_definitions/meta/data-dictionary-types";
+import type { PropertySequenceConfig } from "@ruiapp/rapid-core";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
@@ -20,7 +19,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             segments: [
               {
                 type: "literal",
-                content: "TS-"
+                content: "TS-",
               },
               {
                 type: "year",
@@ -66,6 +65,24 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "状态",
       type: "option",
       dataDictionary: "BusinessInstanceState",
+      required: true,
+    },
+    {
+      code: "deliveryOrder",
+      name: "送货委托单",
+      type: "file",
+      required: true,
+    },
+    {
+      code: "qualityInspectionReport",
+      name: "质检报告",
+      type: "file",
+      required: true,
+    },
+    {
+      code: "sealNumPicture",
+      name: "铅封号",
+      type: "image",
       required: true,
     },
     {
