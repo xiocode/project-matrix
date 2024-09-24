@@ -1147,6 +1147,8 @@ const entityFieldCodes = {
     'inspectedAt',
     'acceptQuantity',
     'acceptPalletCount',
+    'pictures',
+    'reportFile',
     'createdAt',
     'createdBy',
     'updatedAt',
