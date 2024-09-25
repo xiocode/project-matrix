@@ -355,14 +355,14 @@ const page: RapidPage = {
                       code: "aliasName",
                       width: "200px",
                     },
-                    {
-                      type: "auto",
-                      code: "inputs",
-                    },
-                    {
-                      type: "auto",
-                      code: "outputs",
-                    },
+                    // {
+                    //   type: "auto",
+                    //   code: "inputs",
+                    // },
+                    // {
+                    //   type: "auto",
+                    //   code: "outputs",
+                    // },
                     {
                       type: "auto",
                       code: "standardCycleTime",
