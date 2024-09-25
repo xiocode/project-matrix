@@ -2767,6 +2767,14 @@ export interface MomEquipment {
    */
   name: string;
   /**
+   * 生产厂家
+   */
+  manufacturer?: string;
+  /**
+   * 型号
+   */
+  model?: string;
+  /**
    * 分类
    */
   category?: Partial<MomEquipmentCategory>;
@@ -3370,6 +3378,10 @@ export interface MomInspectionCategory {
    * 排序号
    */
   orderNum?: number;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
   /**
    * 上级分类
    */

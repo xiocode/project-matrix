@@ -12,8 +12,8 @@
 }
 
 .branch-logo {
-  height: 72px;
-  /*background-image: url("../assets/images/qixiang-logo.png");*/
+  height: 60px;
+  background-image: url("../assets/images/logo.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 70% 70%;
