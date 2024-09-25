@@ -42,6 +42,7 @@ import MomAssemblyPart from '../models/entities/MomAssemblyPart';
 import MomEquipment from '../models/entities/MomEquipment';
 import MomEquipmentCategory from '../models/entities/MomEquipmentCategory';
 import MomEquipmentDimension from '../models/entities/MomEquipmentDimension';
+import MomEquipmentMetric from '../models/entities/MomEquipmentMetric';
 import MomFactory from '../models/entities/MomFactory';
 import MomGood from '../models/entities/MomGood';
 import MomGoodLabel from '../models/entities/MomGoodLabel';
@@ -196,6 +197,7 @@ const entityDefinitions = [
   MomEquipment,
   MomEquipmentCategory,
   MomEquipmentDimension,
+  MomEquipmentMetric,
   MomFactory,
   MomGood,
   MomGoodLabel,
@@ -350,6 +352,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomEquipment, entityDefinitions),
   autoConfigureRapidEntity(MomEquipmentCategory, entityDefinitions),
   autoConfigureRapidEntity(MomEquipmentDimension, entityDefinitions),
+  autoConfigureRapidEntity(MomEquipmentMetric, entityDefinitions),
   autoConfigureRapidEntity(MomFactory, entityDefinitions),
   autoConfigureRapidEntity(MomGood, entityDefinitions),
   autoConfigureRapidEntity(MomGoodLabel, entityDefinitions),
