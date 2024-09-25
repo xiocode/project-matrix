@@ -38,14 +38,14 @@ const flowProcessFormConfig: Partial<RapidEntityFormRockConfig> = {
         ],
       },
     },
-    {
-      type: "auto",
-      code: "inputs",
-    },
-    {
-      type: "auto",
-      code: "outputs",
-    },
+    // {
+    //   type: "auto",
+    //   code: "inputs",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "outputs",
+    // },
     {
       type: "auto",
       code: "aliasName",
