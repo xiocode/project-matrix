@@ -2911,7 +2911,7 @@ export interface MomEquipmentDimension {
   /**
    * 标准值
    */
-  nominal?: string;
+  nominal?: number;
   /**
    * 上限值
    */
@@ -2958,6 +2958,93 @@ export interface MomEquipmentDimension {
  * 设备采集参数
  */
 export type SaveMomEquipmentDimensionInput = Omit<MomEquipmentDimension, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 设备采集参数
+ */
+export interface MomEquipmentMetric {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
+   * 工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 生产报工
+   */
+  workReport?: Partial<MomWorkReport>;
+  /**
+   * 采集参数
+   */
+  dimension?: Partial<MomEquipmentDimension>;
+  /**
+   * 标准值
+   */
+  nominal?: number;
+  /**
+   * 上限值
+   */
+  upperLimit?: number;
+  /**
+   * 下限值
+   */
+  lowerLimit?: number;
+  /**
+   * 下限值
+   */
+  lowerLimit?: number;
+  /**
+   * 实际值
+   */
+  value?: number;
+  /**
+   * 是否超标
+   */
+  isOutSpecification?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 设备采集参数
+ */
+export type SaveMomEquipmentMetricInput = Omit<MomEquipmentMetric, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 工厂

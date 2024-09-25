@@ -18,19 +18,11 @@ const secondaryFormConfig: Partial<RapidEntityFormRockConfig> = {
   items: [
     {
       type: "auto",
-      code: "type",
-    },
-    {
-      type: "auto",
       code: "code",
     },
     {
       type: "auto",
       code: "name",
-    },
-    {
-      type: "auto",
-      code: "printSymbol",
     },
     {
       type: "auto",
@@ -148,11 +140,6 @@ const page: RapidPage = {
               type: "auto",
               code: "name",
               fixed: "left",
-            },
-            {
-              type: "auto",
-              code: "printSymbol",
-              width: "100px",
             },
             {
               type: "auto",

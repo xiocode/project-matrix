@@ -27,7 +27,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: "nominal",
       name: "标准值",
-      type: "text",
+      type: "double",
     },
     {
       code: "upperLimit",
