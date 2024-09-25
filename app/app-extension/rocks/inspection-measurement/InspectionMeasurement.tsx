@@ -20,6 +20,9 @@ export default {
 
   Renderer(context, props, state) {
     const Info = context?.scope.stores.detail.data?.list[0];
+
+    const perimissionArr = context?.framework?.getExpressionVars()?.me.allowedActions || [];
+
     const [form] = Form.useForm();
     const [unSkippableArr, setUnSkippableArr] = useState<any>([]);
     const [unQualifiedArr, setUnQualifiedArr] = useState<any>([]);
@@ -122,7 +125,7 @@ export default {
               return (
                 <InputNumber
                   placeholder="请输入"
-                  disabled={r.locked}
+                  disabled={!perimissionArr.includes(props?.$exps.permissionCheck) || r.locked}
                   style={{ width: "100%", maxWidth: 260 }}
                   value={r.measuredValue}
                   onChange={(v) => {
@@ -137,7 +140,7 @@ export default {
               return (
                 <Select
                   options={options}
-                  disabled={r.locked}
+                  disabled={!perimissionArr.includes(props?.$exps.permissionCheck) || r.locked}
                   placeholder="请选择"
                   style={{ width: "100%", maxWidth: 260 }}
                   value={r.measuredValue}
@@ -382,7 +385,7 @@ export default {
                         <Space>
                           <Button
                             type="primary"
-                            disabled={!(Info?.state !== "inspected") || checkRecord(item.data)}
+                            disabled={!perimissionArr.includes(props?.$exps.permissionCheck) || !(Info?.state !== "inspected") || checkRecord(item.data)}
                             onClick={() => {
                               validateMeasurment(Info?.id, item.data, () => {
                                 history.go(0);

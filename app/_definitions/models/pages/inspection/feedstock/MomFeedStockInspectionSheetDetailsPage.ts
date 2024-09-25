@@ -132,6 +132,7 @@ const page: RapidPage = {
             {
               $type: "inspectionMeasurement",
               $exps: {
+                permissionCheck: "tysInspectionFeedStock.manage",
                 entityId: "$rui.parseQuery().id",
               },
             },
@@ -149,9 +150,10 @@ const page: RapidPage = {
         {
           $type: "rapidToolbarButton",
           text: "批准",
+
           actionStyle: "primary",
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
+          $permissionCheck: "tysInspectionFeedStock.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -180,7 +182,7 @@ const page: RapidPage = {
           text: "拒绝",
           danger: true,
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
+          $permissionCheck: "tysInspectionFeedStock.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
