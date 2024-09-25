@@ -4,47 +4,52 @@ import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    // {
-    //   type: "auto",
-    //   code: "code",
-    // },
-    // {
-    //   code: "rule",
-    //   type: "auto",
-    //   required: true,
-    //   listDataFindOptions: {
-    //     fixedFilters: [
-    //       {
-    //         field: "material",
-    //         operator: "exists",
-    //         filters: [
-    //           {
-    //             field: "id",
-    //             operator: "eq",
-    //             value: "",
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         field: "customer",
-    //         operator: "null",
-    //       },
-    //     ],
-    //     properties: ["id", "name", "category"],
-    //     $exps: {
-    //       "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
-    //     },
-    //   },
-    //   formControlProps: {
-    //     listSearchable: true,
-    //     listTextFormat: "{{name}}",
-    //     listFilterFields: ["name"],
-    //     columns: [{ code: "name", title: "名称", width: 120 }],
-    //   },
-    // },
+    {
+      code: "rule",
+      type: "auto",
+      required: true,
+      listDataFindOptions: {
+        fixedFilters: [
+          {
+            field: "category",
+            operator: "exists",
+            filters: [
+              {
+                field: "code",
+                operator: "eq",
+                value: "outgoing_inspect_topsenchem",
+              },
+            ],
+          },
+          {
+            field: "customer",
+            operator: "null",
+          },
+        ],
+        properties: ["id", "name", "category", "material", "config"],
+      },
+      formControlProps: {
+        listSearchable: true,
+        listTextFormat: "{{name}}",
+        listFilterFields: ["name"],
+        columns: [{ code: "name", title: "名称", width: 120 }],
+      },
+    },
     {
       type: "auto",
       code: "material",
+      listDataFindOptions: {
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$scope.vars.active_material_id",
+        },
+      },
       formControlProps: {
         dropdownMatchSelectWidth: 500,
         listTextFormat: materialFormatStrTemplate,
@@ -54,6 +59,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
           { code: "name", title: "名称", width: 120 },
           { code: "specification", title: "规格", width: 120 },
         ],
+        $exps: {
+          disabled: "!$self.form.getFieldValue('rule')",
+        },
       },
       required: true,
     },
@@ -62,55 +70,30 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "lotNum",
       required: true,
       label: "批次号",
-      formControlType: "lotNumSelector",
-      formControlProps: {},
+      formControlProps: {
+        $exps: {
+          disabled: "!$self.form.getFieldValue('rule')",
+        },
+      },
       $exps: {
+        _hidden: "!$scope.vars.active_rule_config",
+      },
+    },
+    {
+      type: "auto",
+      code: "lotNum",
+      required: true,
+      label: "批次号",
+      formControlType: "lotNumSelector",
+      formControlProps: {
+        $exps: {
+          disabled: "!$self.form.getFieldValue('rule')",
+        },
+      },
+      $exps: {
+        _hidden: "$scope.vars.active_rule_config",
         "formControlProps.materialId": "$self.form.getFieldValue('material')",
         "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
-      },
-    },
-    {
-      type: "auto",
-      code: "sampleCount",
-      required: true,
-    },
-    // {
-    //   type: "auto",
-    //   code: "serialNum",
-    // },
-    {
-      code: "inventoryOperation",
-      type: "auto",
-      formControlProps: {
-        listTextFormat: "{{code}}",
-        listFilterFields: ["code"],
-        columns: [{ code: "code", title: "操作单号" }],
-      },
-    },
-    // {
-    //   code: "workOrder",
-    //   type: "auto",
-    // },
-    // {
-    //   code: "workTrack",
-    //   type: "auto",
-    // },
-    // {
-    //   code: "workTask",
-    //   type: "auto",
-    // },
-
-    // {
-    //   code: "routeProcess",
-    //   type: "auto",
-    // },
-    {
-      code: "gcmsReportFile",
-      label: "GCMS报告",
-      required: true,
-      type: "auto",
-      $exps: {
-        _hidden: "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
       },
     },
     {
@@ -118,10 +101,12 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       label: "质检报告",
       type: "auto",
       required: true,
-      $exps: {
-        _hidden:
-          "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '进料检验(泰洋圣)'||$page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
-      },
+    },
+    {
+      code: "gcmsReportFile",
+      label: "GCMS报告",
+      required: true,
+      type: "auto",
     },
     {
       type: "auto",
@@ -131,18 +116,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "remark",
     },
-    // {
-    //   type: "auto",
-    //   code: "result",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "state",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "approvalState",
-    // },
   ],
 
   onValuesChange: [
@@ -150,18 +123,24 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       $action: "script",
       script: `
         const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
+        const ruleList = $page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list;
+        const config = ruleList[0]?.category?.config?.incoming
+        const materialId = ruleList.find((item) => item.id === changedValues.rule)?.material?.id
+        if(changedValues.hasOwnProperty('rule')) {
           event.scope.setVars({
-            active_material_id: changedValues?.material,
+            active_material_id: materialId,
+            active_rule_config:config
           }, true);
         }
-        event.scope.loadStoreData('dataFormItemList-rule');         
+
+        event.scope.loadStoreData('dataFormItemList-material');
       `,
     },
   ],
   defaultFormFields: {
     result: "uninspected",
     state: "pending",
+    sampleCount: "1",
     approvalState: "uninitiated",
     round: "1",
   },
@@ -180,25 +159,6 @@ const page: RapidPage = {
       viewMode: "table",
       // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
-      listActions: [
-        {
-          $type: "sonicToolbarNewEntityButton",
-          text: "新建",
-          icon: "PlusOutlined",
-          actionStyle: "primary",
-        },
-        {
-          $type: "antdButton",
-          href: `/api/app/exportExcel?type=inspection`,
-          children: [
-            {
-              $type: "text",
-              text: " 下载",
-            },
-          ],
-        },
-      ],
-      extraProperties: ["rule", "treatment"],
       fixedFilters: [
         {
           field: "rule",
@@ -218,6 +178,26 @@ const page: RapidPage = {
           ],
         },
       ],
+      listActions: [
+        {
+          $type: "sonicToolbarNewEntityButton",
+          text: "新建",
+          icon: "PlusOutlined",
+          actionStyle: "primary",
+        },
+        {
+          $type: "antdButton",
+          href: `/api/app/exportExcel?type=inspection`,
+          children: [
+            {
+              $type: "text",
+              text: " 下载",
+            },
+          ],
+        },
+      ],
+      extraProperties: ["rule", "treatment"],
+
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -232,6 +212,24 @@ const page: RapidPage = {
       filterCacheName: "mom_inspection_sheet_list",
       searchForm: {
         entityCode: "MomInspectionSheet",
+        onValuesChange: [
+          {
+            $action: "script",
+            script: `
+                const changedValues = event.args[0] || {};
+                const ruleList = $page.getScope('sonicEntityList1-scope').getStore('searchFormItemList-rule')?.data?.list;
+                console.log(ruleList,"ruleList")
+                const materialId = ruleList.find((item) => item.id === changedValues.rule)?.material?.id
+                if(changedValues.hasOwnProperty('rule')) {
+                  event.scope.setVars({
+                    active_material_id: materialId,
+                  }, true);
+                }
+        
+                event.scope.loadStoreData('searchFormItemList-material');
+              `,
+          },
+        ],
         items: [
           {
             type: "auto",
@@ -258,72 +256,65 @@ const page: RapidPage = {
             filterFields: ["inspector_id"],
           },
           {
+            code: "rule",
             type: "auto",
-            code: "materialCategory",
-            label: "物料类型",
-            formControlType: "rapidEntityTableSelect",
-            formControlProps: {
-              entityCode: "BaseMaterialCategory",
-              mode: "multiple",
+            required: true,
+            listDataFindOptions: {
+              fixedFilters: [
+                {
+                  field: "category",
+                  operator: "exists",
+                  filters: [
+                    {
+                      field: "code",
+                      operator: "eq",
+                      value: "outgoing_inspect_topsenchem",
+                    },
+                  ],
+                },
+                {
+                  field: "customer",
+                  operator: "null",
+                },
+              ],
+              properties: ["id", "name", "category", "material", "config"],
             },
-            filterMode: "in",
-            filterFields: [
-              {
-                field: "material",
-                operator: "exists",
-                filters: [
-                  {
-                    field: "category_id",
-                    operator: "in",
-                  },
-                ],
-              },
-            ],
+            formControlProps: {
+              listSearchable: true,
+              listTextFormat: "{{name}}",
+              listFilterFields: ["name"],
+              columns: [{ code: "name", title: "名称", width: 120 }],
+            },
           },
           {
             type: "auto",
             code: "material",
-            formControlType: "rapidEntityTableSelect",
+            listDataFindOptions: {
+              fixedFilters: [
+                {
+                  field: "id",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              $exps: {
+                "fixedFilters[0].value": "$scope.vars.active_material_id",
+              },
+            },
             formControlProps: {
-              entityCode: "BaseMaterial",
               dropdownMatchSelectWidth: 500,
               listTextFormat: materialFormatStrTemplate,
               listFilterFields: ["name", "code", "specification"],
-              requestParams: {
-                properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
-                keepNonPropertyFields: true,
-              },
               columns: [
-                {
-                  title: "名称",
-                  code: "name",
-                  width: 120,
-                },
-                {
-                  title: "编号",
-                  code: "code",
-                  width: 120,
-                },
-                {
-                  title: "规格",
-                  code: "specification",
-                  width: 120,
-                },
+                { code: "code", title: "编号", width: 120 },
+                { code: "name", title: "名称", width: 120 },
+                { code: "specification", title: "规格", width: 120 },
               ],
-            },
-            filterMode: "in",
-            filterFields: [
-              {
-                field: "material",
-                operator: "exists",
-                filters: [
-                  {
-                    field: "id",
-                    operator: "in",
-                  },
-                ],
+              $exps: {
+                disabled: "!$self.form.getFieldValue('rule')",
               },
-            ],
+            },
+            required: true,
           },
         ],
       },
@@ -366,33 +357,10 @@ const page: RapidPage = {
           fixed: "left",
           rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_inspection_sheet_details?id={{id}}",
+            url: "/pages/mom_stock_out_inspection_sheet_details?id={{id}}",
           },
         },
-        {
-          code: "rule",
-          type: "auto",
-          width: "150px",
-          rendererType: "text",
-          title: "检验类型",
-          rendererProps: {
-            $exps: {
-              text: "_.get($slot.record, 'rule.category.name')||'-'",
-            },
-          },
-        },
-        {
-          code: "materialCategory",
-          type: "auto",
-          width: "120px",
-          title: "物料类型",
-          rendererType: "text",
-          rendererProps: {
-            $exps: {
-              text: "_.get($slot.record, 'material.category.name')",
-            },
-          },
-        },
+
         {
           type: "auto",
           code: "material",
@@ -407,6 +375,18 @@ const page: RapidPage = {
             },
             $exps: {
               href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
+            },
+          },
+        },
+        {
+          code: "rule",
+          type: "auto",
+          width: "150px",
+          rendererType: "text",
+          title: "检验类型",
+          rendererProps: {
+            $exps: {
+              text: "_.get($slot.record, 'rule.category.name')||'-'",
             },
           },
         },
