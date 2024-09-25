@@ -402,6 +402,60 @@ const page: RapidPage = {
             },
           ],
         },
+        {
+          key: "feeds",
+          label: "数采数据",
+          children: [
+            {
+              $type: "sonicEntityList",
+              entityCode: "MomEquipmentMetric",
+              viewMode: "table",
+              selectionMode: "none",
+              fixedFilters: [
+                {
+                  field: "work_order_id",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              columns: [
+                {
+                  type: "auto",
+                  code: "nominal",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "upperLimit",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "lowerLimit",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "value",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "isOutSpecification",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "createdAt",
+                  width: "150px",
+                },
+              ],
+              $exps: {
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+              },
+            },
+          ],
+        },
       ],
     },
   ],

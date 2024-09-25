@@ -3004,10 +3004,6 @@ export interface MomEquipmentMetric {
    */
   lowerLimit?: number;
   /**
-   * 下限值
-   */
-  lowerLimit?: number;
-  /**
    * 实际值
    */
   value?: number;

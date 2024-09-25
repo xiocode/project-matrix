@@ -859,7 +859,6 @@ const entityFieldCodes = {
     'nominal',
     'upperLimit',
     'lowerLimit',
-    'lowerLimit',
     'value',
     'isOutSpecification',
     'createdAt',

@@ -65,11 +65,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "double",
     },
     {
-      code: "lowerLimit",
-      name: "下限值",
-      type: "double",
-    },
-    {
       code: "value",
       name: "实际值",
       type: "double",

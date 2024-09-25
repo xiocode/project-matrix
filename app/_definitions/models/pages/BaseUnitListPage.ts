@@ -143,11 +143,6 @@ const page: RapidPage = {
             },
             {
               type: "auto",
-              code: "type",
-              width: "100px",
-            },
-            {
-              type: "auto",
               code: "orderNum",
               width: "100px",
             },
