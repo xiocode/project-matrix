@@ -403,7 +403,7 @@ const page: RapidPage = {
           ],
         },
         {
-          key: "feeds",
+          key: "metrics",
           label: "数采数据",
           children: [
             {
