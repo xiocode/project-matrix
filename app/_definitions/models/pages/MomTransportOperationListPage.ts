@@ -41,7 +41,7 @@ const page: RapidPage = {
   code: "mom_transport_operation_list",
   name: "运输单列表",
   title: "运输单列表",
-  // permissionCheck: {any: []},
+  // permissionCheck: { any: ["inspectionTransport.manage"] },
   view: [
     {
       $type: "sonicEntityList",
@@ -54,7 +54,7 @@ const page: RapidPage = {
           text: "新建",
           icon: "PlusOutlined",
           actionStyle: "primary",
-          // $permissionCheck: "inventoryOperation.manage",
+          $permissionCheck: "inspectionTransport.manage",
         },
       ],
       extraActions: [
@@ -116,7 +116,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
-          // $permissionCheck: "inventoryOperation.manage",
+          $permissionCheck: "inspectionTransport.manage",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
@@ -125,7 +125,7 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomTransportOperation",
-          // $permissionCheck: "inventoryOperation.manage",
+          $permissionCheck: "inspectionTransport.manage",
         },
       ],
       newForm: cloneDeep(formConfig),

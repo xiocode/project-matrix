@@ -82,6 +82,8 @@ const page: RapidPage = {
   code: "mom_transport_operation_details",
   name: "运输单详情",
   title: "运输单详情",
+  //@ts-ignore
+  parentCode: "mom_transport_operation_list",
   // permissionCheck: {any: []},
   view: [
     {
@@ -159,7 +161,7 @@ const page: RapidPage = {
                   text: "新建",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
-                  // $permissionCheck: "inventoryOperation.manage",
+                  $permissionCheck: "inspectionTransport.manage",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
@@ -237,7 +239,7 @@ const page: RapidPage = {
                   code: "edit",
                   actionType: "edit",
                   actionText: "修改",
-                  $permissionCheck: "inventoryOperation.manage",
+                  $permissionCheck: "inspectionTransport.manage",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
@@ -249,7 +251,7 @@ const page: RapidPage = {
                   actionText: "删除",
                   dataSourceCode: "list",
                   entityCode: "MomGoodTransfer",
-                  $permissionCheck: "inventoryOperation.manage",
+                  $permissionCheck: "inspectionTransport.manage",
                   $exps: {
                     _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'processing'",
                   },
@@ -277,6 +279,7 @@ const page: RapidPage = {
           $type: "rapidToolbarButton",
           text: "确认提交",
           actionStyle: "primary",
+          $permissionCheck: "inspectionTransport.manage",
           size: "large",
           onAction: [
             {
@@ -296,6 +299,7 @@ const page: RapidPage = {
           $type: "rapidToolbarButton",
           text: "批准",
           actionStyle: "primary",
+          $permissionCheck: "inspectionTransport.manage",
           size: "large",
           onAction: [
             {
@@ -315,6 +319,7 @@ const page: RapidPage = {
           $type: "rapidToolbarButton",
           text: "拒绝",
           danger: true,
+          $permissionCheck: "inspectionTransport.manage",
           size: "large",
           onAction: [
             {
