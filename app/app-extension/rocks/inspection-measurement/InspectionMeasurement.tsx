@@ -5,7 +5,7 @@ import { Alert, Button, Form, InputNumber, message, Modal, Select, Space, Spin, 
 import { useDebounceFn, useSetState } from "ahooks";
 import { v4 as uuidv4 } from "uuid";
 import rapidApi from "~/rapidApi";
-import { find, get, groupBy, map, orderBy, split, uniqBy } from "lodash";
+import { find, get, groupBy, map, orderBy, split } from "lodash";
 import rapidAppDefinition from "~/rapidAppDefinition";
 import { useEffect, useState } from "react";
 import { calculateInspectionResult } from "~/utils/calculate";
@@ -20,11 +20,9 @@ export default {
 
   Renderer(context, props, state) {
     const Info = context?.scope.stores.detail.data?.list[0];
-
     const [form] = Form.useForm();
     const [unSkippableArr, setUnSkippableArr] = useState<any>([]);
     const [unQualifiedArr, setUnQualifiedArr] = useState<any>([]);
-    const [selected, setSelected] = useState<any>([]);
     const [validateOpen, setValidateOpen] = useState<boolean>(false);
     const [resultState, setResultState] = useState<boolean>(false);
 
@@ -35,13 +33,13 @@ export default {
       sampleCount: Info?.sampleCount,
     });
 
-    const { submitInspectionMeasurement } = useCreateInspectionMeasurement({
-      sheetId: Info?.id,
-      round: Info?.round,
-      onSuccess: () => {
-        history.go(0);
-      },
-    });
+    // const { submitInspectionMeasurement } = useCreateInspectionMeasurement({
+    //   sheetId: Info?.id,
+    //   round: Info?.round,
+    //   onSuccess: () => {
+    //     history.go(0);
+    //   },
+    // });
 
     const { update } = useUpdateInspectionMeasurement({
       sheetId: Info?.id,
@@ -297,7 +295,6 @@ export default {
               disabled={unSkippableArr.length > 0}
               onClick={() => {
                 form.validateFields().then(async (res) => {
-                  // const { treatment } = res;
                   try {
                     await rapidApi
                       .patch(`/mom/mom_inspection_sheets/${Info?.id}`, {
@@ -328,8 +325,6 @@ export default {
               {unSkippableArr.map((item: any, index: number) => {
                 return (
                   <div key={index} style={{ marginBottom: 5, marginRight: 5 }}>
-                    <span>样本号：</span>
-                    <span style={{ color: "red" }}>{item.code}</span>
                     {item?.unSkippable?.map((it: any, index: number) => {
                       return (
                         <div key={index}>
@@ -350,8 +345,6 @@ export default {
               {unQualifiedArr.map((item: any, index: number) => {
                 return (
                   <div key={index} style={{ marginBottom: 5, marginRight: 5 }}>
-                    <span>样本号：</span>
-                    <span style={{ color: "red" }}>{item.code}</span>
                     {item?.unQualifiedArr?.map((it: any, index: number) => {
                       return (
                         <div key={index}>
@@ -364,24 +357,6 @@ export default {
                 );
               })}
             </div>
-            {/*<Form form={form}>*/}
-            {/*  <Form.Item*/}
-            {/*    label="处理结果"*/}
-            {/*    name="treatment"*/}
-            {/*    rules={[*/}
-            {/*      {*/}
-            {/*        required: true,*/}
-            {/*      },*/}
-            {/*    ]}*/}
-            {/*  >*/}
-            {/*    <Select*/}
-            {/*      options={[*/}
-            {/*        { label: "特采", value: "special", color: "orange" },*/}
-            {/*        { label: "退货", value: "withdraw", color: "red" },*/}
-            {/*      ]}*/}
-            {/*    />*/}
-            {/*  </Form.Item>*/}
-            {/*</Form>*/}
           </>
         ) : (
           <></>
@@ -401,7 +376,6 @@ export default {
             inspection.map((item: any, index) => {
               return (
                 <div key={index}>
-                  <div className="inspection_measurement--title">第{item.round}轮次检验:</div>
                   <div key={index}>
                     {item.round === Info?.round && (
                       <div className="pm_inspection-measurement--footer">
@@ -417,112 +391,19 @@ export default {
                           >
                             提交检验记录
                           </Button>
-                          <Button
-                            type="primary"
-                            disabled={Info.state === "pending"}
-                            onClick={() => {
-                              let res: any[] = [];
-                              if (inspection.length !== Info?.round) {
-                                setState({
-                                  inspection: inspection.pop(),
-                                });
-                              }
-                              const uuidItem = selected.map((i: any) => i.uuid);
-                              item.data.map((it: any) => {
-                                const filterItem = it.items.filter((t: any) => uuidItem.includes(t.uuid));
-                                if (filterItem.length > 0) {
-                                  res.push({
-                                    code: it.code,
-                                    sheetId: it.sheetId,
-                                    round: it.round + 1,
-                                    items: filterItem.map((t: any) => {
-                                      return {
-                                        ...t,
-                                        locked: false,
-                                        olduuid: t.uuid,
-                                        uuid: uuidv4(),
-                                      };
-                                    }),
-                                  });
-                                }
-                              });
-                              setState({
-                                inspection: inspection.concat([
-                                  {
-                                    round: Info?.round + 1,
-                                    data: res,
-                                  },
-                                ]),
-                              });
-                            }}
-                          >
-                            复检
-                          </Button>
                         </Space>
                       </div>
                     )}
-                    {item.round === Info?.round + 1 && (
-                      <div className="pm_inspection-measurement--footer">
-                        <Space>
-                          <Button
-                            type="primary"
-                            // style={Info.state !== "inspected" ? { display: "none" } : {}}
-                            disabled={Info.state === "inspected" && selected.length === 0}
-                            onClick={async () => {
-                              const res = inspection.filter((i) => i.round === Info.round + 1);
-                              validateMeasurment(Info?.id, item.data, () => {
-                                submitInspectionMeasurement(res, true);
-                              });
-                            }}
-                          >
-                            提交复检记录
-                          </Button>
-                        </Space>
-                      </div>
-                    )}
-
                     <Table
                       size="middle"
                       rowClassName={() => "editable-row"}
                       rowKey={(record, index) => record?.uuid || index}
-                      rowSelection={{
-                        type: "checkbox",
-                        hideSelectAll: true,
-                        onSelect: (record, select, selectedRows: any) => {
-                          if (select) {
-                            const res = uniqBy([...selected, ...selectedRows], "uuid");
-                            setSelected(res);
-                          } else {
-                            const res = selected.filter((item: any) => item.uuid !== record?.uuid);
-                            setSelected(res);
-                          }
-                        },
-                        getCheckboxProps: (record) => ({
-                          disabled: record.round === Info.round ? record?.isQualified : record?.locked,
-                        }),
-                      }}
                       expandable={{
                         expandedRowRender: (record) => (
                           <Table
                             scroll={{ x: 900 }}
                             rowKey={(record, index) => record?.uuid || index}
                             columns={tableColumns}
-                            rowSelection={{
-                              type: "checkbox",
-                              onSelect: (record, select, selectedRows: any) => {
-                                if (select) {
-                                  const res = uniqBy([...selected, ...selectedRows], "uuid");
-                                  setSelected(res);
-                                } else {
-                                  const res = selected.filter((i: any) => i.uuid !== record?.uuid);
-                                  setSelected(res);
-                                }
-                              },
-                              hideSelectAll: true,
-                              getCheckboxProps: (record) => ({
-                                disabled: record.round === Info.round ? record?.isQualified : record?.locked,
-                              }),
-                            }}
                             showHeader={false}
                             dataSource={record.items}
                             pagination={false}
