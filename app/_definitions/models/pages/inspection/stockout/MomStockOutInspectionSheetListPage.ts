@@ -8,40 +8,40 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     //   type: "auto",
     //   code: "code",
     // },
-    {
-      code: "rule",
-      type: "auto",
-      required: true,
-      listDataFindOptions: {
-        fixedFilters: [
-          {
-            field: "material",
-            operator: "exists",
-            filters: [
-              {
-                field: "id",
-                operator: "eq",
-                value: "",
-              },
-            ],
-          },
-          {
-            field: "customer",
-            operator: "null",
-          },
-        ],
-        properties: ["id", "name", "category"],
-        $exps: {
-          "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
-        },
-      },
-      formControlProps: {
-        listSearchable: true,
-        listTextFormat: "{{name}}",
-        listFilterFields: ["name"],
-        columns: [{ code: "name", title: "名称", width: 120 }],
-      },
-    },
+    // {
+    //   code: "rule",
+    //   type: "auto",
+    //   required: true,
+    //   listDataFindOptions: {
+    //     fixedFilters: [
+    //       {
+    //         field: "material",
+    //         operator: "exists",
+    //         filters: [
+    //           {
+    //             field: "id",
+    //             operator: "eq",
+    //             value: "",
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         field: "customer",
+    //         operator: "null",
+    //       },
+    //     ],
+    //     properties: ["id", "name", "category"],
+    //     $exps: {
+    //       "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
+    //     },
+    //   },
+    //   formControlProps: {
+    //     listSearchable: true,
+    //     listTextFormat: "{{name}}",
+    //     listFilterFields: ["name"],
+    //     columns: [{ code: "name", title: "名称", width: 120 }],
+    //   },
+    // },
     {
       type: "auto",
       code: "material",
@@ -168,9 +168,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_inspection_sheet_list",
-  name: "检验单管理",
-  title: "检验单管理",
+  code: "mom_stock_out_inspection_sheet_list",
+  name: "出库检验",
+  title: "出库检验单",
+  //@ts-ignore
+  parentCode: "mom_inspection_sheet_list",
   view: [
     {
       $type: "sonicEntityList",
@@ -197,7 +199,25 @@ const page: RapidPage = {
         },
       ],
       extraProperties: ["rule", "treatment"],
-
+      fixedFilters: [
+        {
+          field: "rule",
+          operator: "exists",
+          filters: [
+            {
+              field: "category",
+              operator: "exists",
+              filters: [
+                {
+                  field: "code",
+                  operator: "eq",
+                  value: "outgoing_inspect_topsenchem",
+                },
+              ],
+            },
+          ],
+        },
+      ],
       extraActions: [
         {
           $type: "sonicToolbarFormItem",

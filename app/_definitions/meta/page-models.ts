@@ -105,6 +105,10 @@ import inspection$MomInspectionRuleDetailPage from '../models/pages/inspection/M
 import inspection$MomInspectionRuleListPage from '../models/pages/inspection/MomInspectionRuleListPage';
 import inspection$MomInspectionSheetDetailsPage from '../models/pages/inspection/MomInspectionSheetDetailsPage';
 import inspection$MomInspectionSheetListPage from '../models/pages/inspection/MomInspectionSheetListPage';
+import inspection$feedstock$MomFeedStockInspectionSheetDetailsPage from '../models/pages/inspection/feedstock/MomFeedStockInspectionSheetDetailsPage';
+import inspection$feedstock$MomFeedStockInspectionSheetListPage from '../models/pages/inspection/feedstock/MomFeedStockInspectionSheetListPage';
+import inspection$stockout$MomStockOutInspectionSheetDetailsPage from '../models/pages/inspection/stockout/MomStockOutInspectionSheetDetailsPage';
+import inspection$stockout$MomStockOutInspectionSheetListPage from '../models/pages/inspection/stockout/MomStockOutInspectionSheetListPage';
 import pm$PmProjectCategoryListPage from '../models/pages/pm/PmProjectCategoryListPage';
 import pm$PmProjectDetailsPage from '../models/pages/pm/PmProjectDetailsPage';
 import pm$PmProjectEventListPage from '../models/pages/pm/PmProjectEventListPage';
@@ -231,6 +235,10 @@ export default [
   inspection$MomInspectionRuleListPage,
   inspection$MomInspectionSheetDetailsPage,
   inspection$MomInspectionSheetListPage,
+  inspection$feedstock$MomFeedStockInspectionSheetDetailsPage,
+  inspection$feedstock$MomFeedStockInspectionSheetListPage,
+  inspection$stockout$MomStockOutInspectionSheetDetailsPage,
+  inspection$stockout$MomStockOutInspectionSheetListPage,
   pm$PmProjectCategoryListPage,
   pm$PmProjectDetailsPage,
   pm$PmProjectEventListPage,

@@ -1,13 +1,9 @@
 import { cloneDeep } from "lodash";
-import type { RapidPage, RapidEntityFormConfig } from "@ruiapp/rapid-extension";
+import type { RapidPage, RapidEntityFormConfig, SonicEntityListRockConfig } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const formConfig: Partial<RapidEntityFormConfig> = {
   items: [
-    // {
-    //   type: "auto",
-    //   code: "code",
-    // },
     {
       code: "rule",
       type: "auto",
@@ -15,13 +11,13 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       listDataFindOptions: {
         fixedFilters: [
           {
-            field: "material",
+            field: "category",
             operator: "exists",
             filters: [
               {
-                field: "id",
+                field: "code",
                 operator: "eq",
-                value: "",
+                value: "incoming_inspect_topsenchem",
               },
             ],
           },
@@ -30,10 +26,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             operator: "null",
           },
         ],
-        properties: ["id", "name", "category"],
-        $exps: {
-          "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
-        },
+        properties: ["id", "name", "category", "material", "config"],
       },
       formControlProps: {
         listSearchable: true,
@@ -45,6 +38,18 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "material",
+      listDataFindOptions: {
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$scope.vars.active_material_id",
+        },
+      },
       formControlProps: {
         dropdownMatchSelectWidth: 500,
         listTextFormat: materialFormatStrTemplate,
@@ -54,6 +59,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
           { code: "name", title: "名称", width: 120 },
           { code: "specification", title: "规格", width: 120 },
         ],
+        $exps: {
+          disabled: "!$self.form.getFieldValue('rule')",
+        },
       },
       required: true,
     },
@@ -62,55 +70,30 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "lotNum",
       required: true,
       label: "批次号",
-      formControlType: "lotNumSelector",
-      formControlProps: {},
+      formControlProps: {
+        $exps: {
+          disabled: "!$self.form.getFieldValue('rule')",
+        },
+      },
       $exps: {
+        _hidden: "!$scope.vars.active_rule_config",
+      },
+    },
+    {
+      type: "auto",
+      code: "lotNum",
+      required: true,
+      label: "批次号",
+      formControlType: "lotNumSelector",
+      formControlProps: {
+        $exps: {
+          disabled: "!$self.form.getFieldValue('rule')",
+        },
+      },
+      $exps: {
+        _hidden: "$scope.vars.active_rule_config",
         "formControlProps.materialId": "$self.form.getFieldValue('material')",
         "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
-      },
-    },
-    {
-      type: "auto",
-      code: "sampleCount",
-      required: true,
-    },
-    // {
-    //   type: "auto",
-    //   code: "serialNum",
-    // },
-    {
-      code: "inventoryOperation",
-      type: "auto",
-      formControlProps: {
-        listTextFormat: "{{code}}",
-        listFilterFields: ["code"],
-        columns: [{ code: "code", title: "操作单号" }],
-      },
-    },
-    // {
-    //   code: "workOrder",
-    //   type: "auto",
-    // },
-    // {
-    //   code: "workTrack",
-    //   type: "auto",
-    // },
-    // {
-    //   code: "workTask",
-    //   type: "auto",
-    // },
-
-    // {
-    //   code: "routeProcess",
-    //   type: "auto",
-    // },
-    {
-      code: "gcmsReportFile",
-      label: "GCMS报告",
-      required: true,
-      type: "auto",
-      $exps: {
-        _hidden: "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
       },
     },
     {
@@ -118,10 +101,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       label: "质检报告",
       type: "auto",
       required: true,
-      $exps: {
-        _hidden:
-          "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '进料检验(泰洋圣)'||$page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
-      },
     },
     {
       type: "auto",
@@ -131,18 +110,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "remark",
     },
-    // {
-    //   type: "auto",
-    //   code: "result",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "state",
-    // },
-    // {
-    //   type: "auto",
-    //   code: "approvalState",
-    // },
   ],
 
   onValuesChange: [
@@ -150,27 +117,38 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       $action: "script",
       script: `
         const changedValues = event.args[0] || {};
-        if(changedValues.hasOwnProperty('material')) {
+
+        const ruleList = $page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list;
+        console.log(ruleList,"ruleList")
+        const config = ruleList[0]?.category?.config?.incoming
+        const materialId = ruleList.find((item) => item.id === changedValues.rule)?.material?.id
+        console.log(config,"config")
+        if(changedValues.hasOwnProperty('rule')) {
           event.scope.setVars({
-            active_material_id: changedValues?.material,
+            active_material_id: materialId,
+            active_rule_config:config
           }, true);
         }
-        event.scope.loadStoreData('dataFormItemList-rule');         
+
+        event.scope.loadStoreData('dataFormItemList-material');
       `,
     },
   ],
   defaultFormFields: {
     result: "uninspected",
     state: "pending",
+    sampleCount: "1",
     approvalState: "uninitiated",
     round: "1",
   },
 };
 
 const page: RapidPage = {
-  code: "mom_inspection_sheet_list",
-  name: "检验单管理",
-  title: "检验单管理",
+  code: "mom_feed_stock_inspection_sheet_list",
+  name: "进料检验",
+  title: "进料检验单",
+  //@ts-ignore
+  parentCode: "mom_inspection_sheet_list",
   view: [
     {
       $type: "sonicEntityList",
@@ -178,6 +156,25 @@ const page: RapidPage = {
       viewMode: "table",
       // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
+      fixedFilters: [
+        {
+          field: "rule",
+          operator: "exists",
+          filters: [
+            {
+              field: "category",
+              operator: "exists",
+              filters: [
+                {
+                  field: "code",
+                  operator: "eq",
+                  value: "incoming_inspect_topsenchem",
+                },
+              ],
+            },
+          ],
+        },
+      ],
       listActions: [
         {
           $type: "sonicToolbarNewEntityButton",
@@ -212,6 +209,24 @@ const page: RapidPage = {
       filterCacheName: "mom_inspection_sheet_list",
       searchForm: {
         entityCode: "MomInspectionSheet",
+        onValuesChange: [
+          {
+            $action: "script",
+            script: `
+              const changedValues = event.args[0] || {};
+              const ruleList = $page.getScope('sonicEntityList1-scope').getStore('searchFormItemList-rule')?.data?.list;
+              console.log(ruleList,"ruleList")
+              const materialId = ruleList.find((item) => item.id === changedValues.rule)?.material?.id
+              if(changedValues.hasOwnProperty('rule')) {
+                event.scope.setVars({
+                  active_material_id: materialId,
+                }, true);
+              }
+      
+              event.scope.loadStoreData('searchFormItemList-material');
+            `,
+          },
+        ],
         items: [
           {
             type: "auto",
@@ -238,75 +253,69 @@ const page: RapidPage = {
             filterFields: ["inspector_id"],
           },
           {
+            code: "rule",
             type: "auto",
-            code: "materialCategory",
-            label: "物料类型",
-            formControlType: "rapidEntityTableSelect",
-            formControlProps: {
-              entityCode: "BaseMaterialCategory",
-              mode: "multiple",
+            required: true,
+            listDataFindOptions: {
+              fixedFilters: [
+                {
+                  field: "category",
+                  operator: "exists",
+                  filters: [
+                    {
+                      field: "code",
+                      operator: "eq",
+                      value: "incoming_inspect_topsenchem",
+                    },
+                  ],
+                },
+                {
+                  field: "customer",
+                  operator: "null",
+                },
+              ],
+              properties: ["id", "name", "category", "material", "config"],
             },
-            filterMode: "in",
-            filterFields: [
-              {
-                field: "material",
-                operator: "exists",
-                filters: [
-                  {
-                    field: "category_id",
-                    operator: "in",
-                  },
-                ],
-              },
-            ],
+            formControlProps: {
+              listSearchable: true,
+              listTextFormat: "{{name}}",
+              listFilterFields: ["name"],
+              columns: [{ code: "name", title: "名称", width: 120 }],
+            },
           },
           {
             type: "auto",
             code: "material",
-            formControlType: "rapidEntityTableSelect",
+            listDataFindOptions: {
+              fixedFilters: [
+                {
+                  field: "id",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              $exps: {
+                "fixedFilters[0].value": "$scope.vars.active_material_id",
+              },
+            },
             formControlProps: {
-              entityCode: "BaseMaterial",
               dropdownMatchSelectWidth: 500,
               listTextFormat: materialFormatStrTemplate,
               listFilterFields: ["name", "code", "specification"],
-              requestParams: {
-                properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
-                keepNonPropertyFields: true,
-              },
               columns: [
-                {
-                  title: "名称",
-                  code: "name",
-                  width: 120,
-                },
-                {
-                  title: "编号",
-                  code: "code",
-                  width: 120,
-                },
-                {
-                  title: "规格",
-                  code: "specification",
-                  width: 120,
-                },
+                { code: "code", title: "编号", width: 120 },
+                { code: "name", title: "名称", width: 120 },
+                { code: "specification", title: "规格", width: 120 },
               ],
-            },
-            filterMode: "in",
-            filterFields: [
-              {
-                field: "material",
-                operator: "exists",
-                filters: [
-                  {
-                    field: "id",
-                    operator: "in",
-                  },
-                ],
+              $exps: {
+                disabled: "!$self.form.getFieldValue('rule')",
               },
-            ],
+            },
+            required: true,
           },
         ],
       },
+
       orderBy: [
         {
           field: "id",
@@ -346,7 +355,7 @@ const page: RapidPage = {
           fixed: "left",
           rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_inspection_sheet_details?id={{id}}",
+            url: "/pages/mom_feed_stock_inspection_sheet_details?id={{id}}",
           },
         },
         {
@@ -492,7 +501,7 @@ const page: RapidPage = {
         "newForm.fixedFields.state": '"pending"',
         "newForm.fixedFields.approvalState": '"uninitiated"',
       },
-    },
+    } as SonicEntityListRockConfig,
   ],
 };
 
