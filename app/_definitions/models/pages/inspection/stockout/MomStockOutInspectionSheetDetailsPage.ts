@@ -67,83 +67,16 @@ const page: RapidPage = {
           },
         },
         {
-          type: "auto",
-          code: "customer",
-        },
-        {
           code: "lotNum",
           type: "auto",
         },
         {
           code: "reportFile",
           type: "auto",
-          $exps: {
-            _hidden:
-              "!($page.getStore('detail').data?.list[0]?.rule?.category?.name === '进料检验(泰洋圣)'||$page.getStore('detail').data?.list[0]?.rule?.category?.name === '出库检验(泰洋圣)')",
-          },
         },
         {
           code: "gcmsReportFile",
           type: "auto",
-          $exps: {
-            _hidden: "!($page.getStore('detail').data?.list[0]?.rule?.category?.name === '出库检验(泰洋圣)')",
-          },
-        },
-        // {
-        //   code: "serialNum",
-        //   type: "auto",
-        // },
-        {
-          code: "sampleCount",
-          type: "auto",
-        },
-        // {
-        //   code: "workOrder",
-        //   type: "auto",
-        //   rendererProps: {
-        //     format: "{{code}}",
-        //   },
-        // formControlProps: {
-        //   listTextFormat: "{{code}}",
-        //   listFilterFields: ["code"],
-        //   columns: [{ code: "code", title: "编号" }],
-        // }
-        // },
-        // {
-        //   code: "workTrack",
-        //   type: "auto",
-        //   rendererProps: {
-        //     format: "{{code}}",
-        //   },
-        // formControlProps: {
-        //   listTextFormat: "{{code}}",
-        //   listFilterFields: ["code"],
-        //   columns: [{ code: "code", title: "编号" }],
-        // }
-        // },
-        // {
-        //   code: "workTask",
-        //   type: "auto",
-        //   rendererProps: {
-        //     format: "{{code}}",
-        //   },
-        // formControlProps: {
-        //   listTextFormat: "{{code}}",
-        //   listFilterFields: ["code"],
-        //   columns: [{ code: "code", title: "编号" }],
-        // }
-        // },
-        {
-          code: "inventoryOperation",
-          type: "auto",
-          rendererProps: {
-            format: "{{code}}",
-          },
-          formControlProps: {
-            listTextFormat: "{{code}}",
-            listFilterFields: ["code"],
-            columns: [{ code: "code", title: "操作单号" }],
-          },
         },
         {
           code: "rule",
@@ -163,10 +96,6 @@ const page: RapidPage = {
             },
           },
         },
-        // {
-        //   code: "routeProcess",
-        //   type: "auto",
-        // },
         {
           code: "sender",
           type: "auto",
@@ -191,10 +120,6 @@ const page: RapidPage = {
           rendererProps: {
             format: "{{name}}",
           },
-        },
-        {
-          code: "round",
-          type: "auto",
         },
       ],
       $exps: {
