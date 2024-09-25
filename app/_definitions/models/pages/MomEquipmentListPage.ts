@@ -6,18 +6,25 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "factory",
+      label: "工厂名称"
     },
     {
       type: "auto",
-      code: "station",
+      code: "manufacturer",
+    },
+    {
+      type: "auto",
+      code: "model",
     },
     {
       type: "auto",
       code: "code",
+      label: "设备编号"
     },
     {
       type: "auto",
       code: "name",
+      label: "设备名称"
     },
     {
       type: "auto",
@@ -81,14 +88,20 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "name",
+          title: "设备名称",
         },
         {
           type: "auto",
           code: "factory",
+          title: "工厂名称",
         },
         {
           type: "auto",
-          code: "station",
+          code: "manufacturer",
+        },
+        {
+          type: "auto",
+          code: "model",
         },
         {
           type: "auto",

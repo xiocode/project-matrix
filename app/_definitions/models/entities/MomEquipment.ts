@@ -20,6 +20,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
     },
     {
+      code: "manufacturer",
+      name: "生产厂家",
+      type: "text",
+    },
+    {
+      code: "model",
+      name: "型号",
+      type: "text",
+    },
+    {
       code: "category",
       name: "分类",
       type: "relation",

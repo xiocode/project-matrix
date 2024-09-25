@@ -26,6 +26,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "integer",
     },
     {
+      code: "config",
+      name: "配置",
+      type: "json",
+    },
+    {
       code: "parent",
       name: "上级分类",
       type: "relation",
