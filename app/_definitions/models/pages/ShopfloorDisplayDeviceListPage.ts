@@ -18,7 +18,15 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "stations",
+      code: "process",
+    },
+    {
+      type: "auto",
+      code: "app",
+    },
+    {
+      type: "auto",
+      code: "config",
     },
     {
       type: "textarea",
@@ -80,12 +88,16 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "stations",
+          code: "process",
           rendererProps: {
-            item: {
-              $type: "rapidObjectRenderer",
-              format: "{{name}}",
-            },
+            format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "app",
+          rendererProps: {
+            format: "{{name}}",
           },
         },
         {
@@ -107,7 +119,7 @@ const page: RapidPage = {
           actionType: "delete",
           actionText: "删除",
           dataSourceCode: "list",
-          entityCode: "ShopfloorApp",
+          entityCode: "ShopfloorDisplayDevice",
         },
       ],
       newForm: cloneDeep(formConfig),
