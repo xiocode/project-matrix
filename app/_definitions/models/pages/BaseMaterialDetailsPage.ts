@@ -337,18 +337,22 @@ const page: RapidPage = {
                       },
                     },
                   ],
+                  extraProperties: ["route"],
                   columns: [
+                    {
+                      type: "link",
+                      code: "process",
+                      width: "200px",
+                      rendererType: "link",
+                      rendererProps: {
+                        text: "{{process.code}}-{{process.name}}",
+                        url: "/pages/mom_route_process_parameter_details?processId={{process.id}}&routeId={{route.id}}",
+                      },
+                    },
                     {
                       type: "auto",
                       code: "orderNum",
                       width: "100px",
-                    },
-                    {
-                      type: "auto",
-                      code: "process",
-                      rendererProps: {
-                        format: "{{name}}",
-                      },
                     },
                     {
                       type: "auto",
