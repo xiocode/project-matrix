@@ -68,6 +68,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "lotNum",
+      name: "批次号",
+      type: "text",
+    },
+    {
       code: "route",
       name: "工艺路线",
       type: "relation",

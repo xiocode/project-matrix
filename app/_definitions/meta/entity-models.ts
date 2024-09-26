@@ -41,8 +41,7 @@ import MomAssemblyMain from '../models/entities/MomAssemblyMain';
 import MomAssemblyPart from '../models/entities/MomAssemblyPart';
 import MomEquipment from '../models/entities/MomEquipment';
 import MomEquipmentCategory from '../models/entities/MomEquipmentCategory';
-import MomEquipmentDimension from '../models/entities/MomEquipmentDimension';
-import MomEquipmentMetric from '../models/entities/MomEquipmentMetric';
+import MomEquipmentCategoryDimension from '../models/entities/MomEquipmentCategoryDimension';
 import MomFactory from '../models/entities/MomFactory';
 import MomGood from '../models/entities/MomGood';
 import MomGoodLabel from '../models/entities/MomGoodLabel';
@@ -98,6 +97,8 @@ import MomRoute from '../models/entities/MomRoute';
 import MomRouteProcess from '../models/entities/MomRouteProcess';
 import MomRouteProcessInput from '../models/entities/MomRouteProcessInput';
 import MomRouteProcessOutput from '../models/entities/MomRouteProcessOutput';
+import MomRouteProcessParameter from '../models/entities/MomRouteProcessParameter';
+import MomRouteProcessParameterMeasurement from '../models/entities/MomRouteProcessParameterMeasurement';
 import MomRouteTemplate from '../models/entities/MomRouteTemplate';
 import MomRouteTemplateProcess from '../models/entities/MomRouteTemplateProcess';
 import MomShift from '../models/entities/MomShift';
@@ -196,8 +197,7 @@ const entityDefinitions = [
   MomAssemblyPart,
   MomEquipment,
   MomEquipmentCategory,
-  MomEquipmentDimension,
-  MomEquipmentMetric,
+  MomEquipmentCategoryDimension,
   MomFactory,
   MomGood,
   MomGoodLabel,
@@ -253,6 +253,8 @@ const entityDefinitions = [
   MomRouteProcess,
   MomRouteProcessInput,
   MomRouteProcessOutput,
+  MomRouteProcessParameter,
+  MomRouteProcessParameterMeasurement,
   MomRouteTemplate,
   MomRouteTemplateProcess,
   MomShift,
@@ -351,8 +353,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomAssemblyPart, entityDefinitions),
   autoConfigureRapidEntity(MomEquipment, entityDefinitions),
   autoConfigureRapidEntity(MomEquipmentCategory, entityDefinitions),
-  autoConfigureRapidEntity(MomEquipmentDimension, entityDefinitions),
-  autoConfigureRapidEntity(MomEquipmentMetric, entityDefinitions),
+  autoConfigureRapidEntity(MomEquipmentCategoryDimension, entityDefinitions),
   autoConfigureRapidEntity(MomFactory, entityDefinitions),
   autoConfigureRapidEntity(MomGood, entityDefinitions),
   autoConfigureRapidEntity(MomGoodLabel, entityDefinitions),
@@ -408,6 +409,8 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(MomRouteProcess, entityDefinitions),
   autoConfigureRapidEntity(MomRouteProcessInput, entityDefinitions),
   autoConfigureRapidEntity(MomRouteProcessOutput, entityDefinitions),
+  autoConfigureRapidEntity(MomRouteProcessParameter, entityDefinitions),
+  autoConfigureRapidEntity(MomRouteProcessParameterMeasurement, entityDefinitions),
   autoConfigureRapidEntity(MomRouteTemplate, entityDefinitions),
   autoConfigureRapidEntity(MomRouteTemplateProcess, entityDefinitions),
   autoConfigureRapidEntity(MomShift, entityDefinitions),

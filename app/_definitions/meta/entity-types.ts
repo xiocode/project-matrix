@@ -2891,15 +2891,15 @@ export type SaveMomEquipmentCategoryInput = Omit<MomEquipmentCategory, 'id' | 'c
 /**
  * 设备采集参数
  */
-export interface MomEquipmentDimension {
+export interface MomEquipmentCategoryDimension {
   /**
    * id
    */
   id: number;
   /**
-   * 设备
+   * 设备分类
    */
-  equipment?: Partial<MomEquipment>;
+  equipmentCategory?: Partial<MomEquipmentCategory>;
   /**
    * 编码
    */
@@ -2908,18 +2908,6 @@ export interface MomEquipmentDimension {
    * 名称
    */
   name?: string;
-  /**
-   * 标准值
-   */
-  nominal?: number;
-  /**
-   * 上限值
-   */
-  upperLimit?: number;
-  /**
-   * 下限值
-   */
-  lowerLimit?: number;
   /**
    * 配置
    */
@@ -2957,90 +2945,7 @@ export interface MomEquipmentDimension {
 /**
  * 设备采集参数
  */
-export type SaveMomEquipmentDimensionInput = Omit<MomEquipmentDimension, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
-
-/**
- * 设备采集参数
- */
-export interface MomEquipmentMetric {
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 工厂
-   */
-  factory?: Partial<MomFactory>;
-  /**
-   * 设备
-   */
-  equipment?: Partial<MomEquipment>;
-  /**
-   * 工序
-   */
-  process?: Partial<MomProcess>;
-  /**
-   * 生产工单
-   */
-  workOrder?: Partial<MomWorkOrder>;
-  /**
-   * 生产报工
-   */
-  workReport?: Partial<MomWorkReport>;
-  /**
-   * 采集参数
-   */
-  dimension?: Partial<MomEquipmentDimension>;
-  /**
-   * 标准值
-   */
-  nominal?: number;
-  /**
-   * 上限值
-   */
-  upperLimit?: number;
-  /**
-   * 下限值
-   */
-  lowerLimit?: number;
-  /**
-   * 实际值
-   */
-  value?: number;
-  /**
-   * 是否超标
-   */
-  isOutSpecification?: boolean;
-  /**
-   * 创建时间
-   */
-  createdAt?: string;
-  /**
-   * 创建人
-   */
-  createdBy?: Partial<OcUser>;
-  /**
-   * 更新时间
-   */
-  updatedAt?: string;
-  /**
-   * 更新人
-   */
-  updatedBy?: Partial<OcUser>;
-  /**
-   * 删除时间
-   */
-  deletedAt?: string;
-  /**
-   * 删除人
-   */
-  deletedBy?: Partial<OcUser>;
-}
-
-/**
- * 设备采集参数
- */
-export type SaveMomEquipmentMetricInput = Omit<MomEquipmentMetric, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+export type SaveMomEquipmentCategoryDimensionInput = Omit<MomEquipmentCategoryDimension, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 工厂
@@ -7044,6 +6949,172 @@ export interface MomRouteProcessOutput {
 export type SaveMomRouteProcessOutputInput = Omit<MomRouteProcessOutput, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 工艺参数
+ */
+export interface MomRouteProcessParameter {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工艺流程
+   */
+  route: Partial<MomRoute>;
+  /**
+   * 排序号
+   */
+  orderNum: number;
+  /**
+   * 生产工序
+   */
+  process: Partial<MomProcess>;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
+   * 编码
+   */
+  code?: string;
+  /**
+   * 名称
+   */
+  name?: string;
+  /**
+   * 标准值
+   */
+  nominal?: number;
+  /**
+   * 上限值
+   */
+  upperLimit?: number;
+  /**
+   * 下限值
+   */
+  lowerLimit?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 工艺参数
+ */
+export type SaveMomRouteProcessParameterInput = Omit<MomRouteProcessParameter, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 设备数采记录
+ */
+export interface MomRouteProcessParameterMeasurement {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
+   * 工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 生产工单
+   */
+  workOrder?: Partial<MomWorkOrder>;
+  /**
+   * 生产报工
+   */
+  workReport?: Partial<MomWorkReport>;
+  /**
+   * 工艺参数
+   */
+  parameter?: Partial<MomRouteProcessParameter>;
+  /**
+   * 数采参数
+   */
+  dimension?: Partial<MomEquipmentCategoryDimension>;
+  /**
+   * 标准值
+   */
+  nominal?: number;
+  /**
+   * 上限值
+   */
+  upperLimit?: number;
+  /**
+   * 下限值
+   */
+  lowerLimit?: number;
+  /**
+   * 实际值
+   */
+  value?: number;
+  /**
+   * 是否超标
+   */
+  isOutSpecification?: boolean;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 设备数采记录
+ */
+export type SaveMomRouteProcessParameterMeasurementInput = Omit<MomRouteProcessParameterMeasurement, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 工艺流程模板
  */
 export interface MomRouteTemplate {
@@ -7683,6 +7754,10 @@ export interface MomWorkFeed {
    */
   tags?: string;
   /**
+   * 批号
+   */
+  lotNum?: string;
+  /**
    * 数量
    */
   quantity?: number;
@@ -7757,6 +7832,10 @@ export interface MomWorkOrder {
    * 标签
    */
   tags?: string;
+  /**
+   * 批次号
+   */
+  lotNum?: string;
   /**
    * 工艺路线
    */
@@ -7924,6 +8003,18 @@ export interface MomWorkReport {
    * 工厂
    */
   factory?: Partial<MomFactory>;
+  /**
+   * 批次号
+   */
+  lotNum?: string;
+  /**
+   * 箱号
+   */
+  binNum?: string;
+  /**
+   * 序列号
+   */
+  serialNum?: string;
   /**
    * 创建时间
    */

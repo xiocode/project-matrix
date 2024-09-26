@@ -62,6 +62,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "lotNum",
+      name: "批号",
+      type: "text",
+    },
+    {
       code: "quantity",
       name: "数量",
       type: "double",
