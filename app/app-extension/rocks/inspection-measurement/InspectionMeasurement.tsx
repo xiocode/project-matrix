@@ -36,14 +36,6 @@ export default {
       sampleCount: Info?.sampleCount,
     });
 
-    // const { submitInspectionMeasurement } = useCreateInspectionMeasurement({
-    //   sheetId: Info?.id,
-    //   round: Info?.round,
-    //   onSuccess: () => {
-    //     history.go(0);
-    //   },
-    // });
-
     const { update } = useUpdateInspectionMeasurement({
       sheetId: Info?.id,
       onSuccess() {},
@@ -53,15 +45,17 @@ export default {
 
     const tableColumns: TableProps<any>["columns"] = [
       {
-        title: "样本号",
-        dataIndex: "code",
-        width: 120,
-        render: (_) => _ || "",
-      },
-      {
         title: "检验项",
         dataIndex: "name",
         width: 180,
+      },
+      {
+        title: "检验方法",
+        width: 180,
+        dataIndex: "method",
+        render: (_: any, record: any) => {
+          return _?.name || "-";
+        },
       },
       {
         title: "检验仪器",
@@ -106,6 +100,7 @@ export default {
                 }),
               };
             });
+
             if (Info.round === r.round) {
               update({
                 id: r.measurementsId,
@@ -115,6 +110,7 @@ export default {
                 quantitativeValue: r.kind === "quantitative" ? v : "",
               });
             }
+
             setState({
               inspection: changedInspection,
             });
@@ -208,24 +204,13 @@ export default {
     }, [Info]);
 
     const formatTableData = (arr: any) => {
-      const result = arr?.map((item: any) => {
-        const v = item.items[0]?.kind === "quantitative" ? item.items[0]?.quantitativeValue : item.items[0]?.qualitativeValue;
+      const result = arr[0]?.items.map((item: any) => {
+        const v = item.kind === "quantitative" ? item.quantitativeValue : item.qualitativeValue;
         return {
-          code: item.code,
-          ...item.items[0],
-          round: item.round,
-          isQualified: calculateInspectionResult(item.items[0], v),
-          items: item.items
-            .map((it: any) => {
-              const v = it.kind === "quantitative" ? it.quantitativeValue : it.qualitativeValue;
-              return {
-                parentCode: item.code,
-                round: item.round,
-                isQualified: calculateInspectionResult(it, v),
-                ...it,
-              };
-            })
-            .slice(1, item.items.lenght),
+          code: arr[0].code,
+          round: arr[0].round,
+          isQualified: calculateInspectionResult(item, v),
+          ...item,
         };
       });
 
@@ -372,6 +357,7 @@ export default {
       const res = items.every((it: any) => it.locked);
       return res;
     };
+
     return (
       <div className="pm_inspection-input-sectioN">
         <Spin spinning={loading || false}>
@@ -379,47 +365,30 @@ export default {
             inspection.map((item: any, index) => {
               return (
                 <div key={index}>
-                  <div key={index}>
-                    {item.round === Info?.round && (
-                      <div className="pm_inspection-measurement--footer">
-                        <Space>
-                          <Button
-                            type="primary"
-                            disabled={!perimissionArr.includes(props?.$exps.permissionCheck) || !(Info?.state !== "inspected") || checkRecord(item.data)}
-                            onClick={() => {
-                              validateMeasurment(Info?.id, item.data, () => {
-                                history.go(0);
-                              });
-                            }}
-                          >
-                            提交检验记录
-                          </Button>
-                        </Space>
-                      </div>
-                    )}
-                    <Table
-                      size="middle"
-                      rowClassName={() => "editable-row"}
-                      rowKey={(record, index) => record?.uuid || index}
-                      expandable={{
-                        expandedRowRender: (record) => (
-                          <Table
-                            scroll={{ x: 900 }}
-                            rowKey={(record, index) => record?.uuid || index}
-                            columns={tableColumns}
-                            showHeader={false}
-                            dataSource={record.items}
-                            pagination={false}
-                          />
-                        ),
-                        defaultExpandedRowKeys: ["0"],
-                      }}
-                      columns={tableColumns}
-                      dataSource={formatTableData([...item.data]) || []}
-                      pagination={false}
-                      scroll={{ x: 900 }}
-                    />
+                  <div className="pm_inspection-measurement--footer">
+                    <Space>
+                      <Button
+                        type="primary"
+                        disabled={!perimissionArr.includes(props?.$exps.permissionCheck) || !(Info?.state !== "inspected") || checkRecord(item.data)}
+                        onClick={() => {
+                          validateMeasurment(Info?.id, item.data, () => {
+                            history.go(0);
+                          });
+                        }}
+                      >
+                        提交检验记录
+                      </Button>
+                    </Space>
                   </div>
+                  <Table
+                    size="middle"
+                    rowClassName={() => "editable-row"}
+                    rowKey={(record, index) => record?.uuid || index}
+                    columns={tableColumns}
+                    dataSource={formatTableData([...item.data]) || []}
+                    pagination={false}
+                    scroll={{ x: 900 }}
+                  />
                 </div>
               );
             })}
@@ -467,14 +436,31 @@ function useInspectionMeasurement(props: { ruleId: string; round: number; sheetI
         ],
         relations: {
           measurements: {
-            properties: ["id", "isQualified", "qualitativeValue", "quantitativeValue", "sampleCode", "instrument", "characteristic", "locked", "round"],
+            relations: {
+              characteristic: {
+                relations: {
+                  method: true,
+                },
+              },
+            },
+            properties: [
+              "id",
+              "isQualified",
+              "qualitativeValue",
+              "quantitativeValue",
+              "sampleCode",
+              "instrument",
+              "characteristic",
+              "locked",
+              "round",
+              "method",
+            ],
           },
         },
         pagination: { limit: 1000, offset: 0 },
         properties: ["id", "code", "sheet", "measurements", "round"],
       });
       const measurements = res.data.list;
-
       const measurementIsNull = res.data.list.every((item: any) => item.measurements.length <= 0);
       let sampleArr = [];
       let roundArr = [];

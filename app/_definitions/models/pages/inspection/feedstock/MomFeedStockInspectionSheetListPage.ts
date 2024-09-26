@@ -154,7 +154,6 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomInspectionSheet",
       viewMode: "table",
-
       selectionMode: "none",
       fixedFilters: [
         {
