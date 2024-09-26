@@ -2255,6 +2255,7 @@ const entityFieldCodes = {
     'deleted',
     'factory',
     'config',
+    'features',
     'createdAt',
     'createdBy',
     'updatedAt',

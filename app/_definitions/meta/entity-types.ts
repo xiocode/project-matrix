@@ -8814,6 +8814,10 @@ export interface ShopfloorDisplayDevice {
    */
   config?: Record<string, any>;
   /**
+   * 功能列表
+   */
+  features?: any;
+  /**
    * 创建时间
    */
   createdAt?: string;

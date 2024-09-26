@@ -55,6 +55,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "配置",
       type: "json",
     },
+    {
+      code: "features",
+      name: "功能列表",
+      type: "relation[]",
+      targetSingularCode: "shopfloor_display_device_feature",
+      selfIdColumnName: "display_device_id",
+    },
   ],
 };
 
