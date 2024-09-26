@@ -2247,6 +2247,7 @@ const entityFieldCodes = {
   'ShopfloorDisplayDevice': [
     'id',
     'code',
+    'identifier',
     'name',
     'description',
     'stations',

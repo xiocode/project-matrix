@@ -65,6 +65,7 @@ import MomProcessCategoryListPage from '../models/pages/MomProcessCategoryListPa
 import MomProcessListPage from '../models/pages/MomProcessListPage';
 import MomProdTaskDetailsPage from '../models/pages/MomProdTaskDetailsPage';
 import MomProdTaskListPage from '../models/pages/MomProdTaskListPage';
+import MomRouteProcessParameterDetailsPage from '../models/pages/MomRouteProcessParameterDetailsPage';
 import MomTransportOperationDetailsPage from '../models/pages/MomTransportOperationDetailsPage';
 import MomTransportOperationListPage from '../models/pages/MomTransportOperationListPage';
 import MomWarehouseListPage from '../models/pages/MomWarehouseListPage';
@@ -195,6 +196,7 @@ export default [
   MomProcessListPage,
   MomProdTaskDetailsPage,
   MomProdTaskListPage,
+  MomRouteProcessParameterDetailsPage,
   MomTransportOperationDetailsPage,
   MomTransportOperationListPage,
   MomWarehouseListPage,

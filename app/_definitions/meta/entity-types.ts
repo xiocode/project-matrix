@@ -8786,6 +8786,10 @@ export interface ShopfloorDisplayDevice {
    */
   code?: string;
   /**
+   * 唯一标识
+   */
+  identifier?: string;
+  /**
    * 名称
    */
   name: string;
