@@ -251,15 +251,15 @@ const page: RapidPage = {
             },
           ],
           $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'inspected'",
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approved'",
           },
         },
         {
           $type: "rapidToolbarButton",
           text: "拒绝",
           danger: true,
+          $permissionCheck: "inspectionTransport.manage",
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -280,7 +280,7 @@ const page: RapidPage = {
             },
           ],
           $exps: {
-            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'state') !== 'inspected'",
+            _hidden: "_.get(_.first(_.get($stores.detail, 'data.list')), 'approvalState') !== 'approved'",
           },
         },
       ],
