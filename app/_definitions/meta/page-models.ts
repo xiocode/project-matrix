@@ -78,6 +78,7 @@ import OcRoleListPage from '../models/pages/OcRoleListPage';
 import OcUserListPage from '../models/pages/OcUserListPage';
 import ShopfloorAppDetailsPage from '../models/pages/ShopfloorAppDetailsPage';
 import ShopfloorAppListPage from '../models/pages/ShopfloorAppListPage';
+import ShopfloorDisplayDeviceDetailsPage from '../models/pages/ShopfloorDisplayDeviceDetailsPage';
 import ShopfloorDisplayDeviceListPage from '../models/pages/ShopfloorDisplayDeviceListPage';
 import ShopfloorStationListPage from '../models/pages/ShopfloorStationListPage';
 import account$AccountChangePasswordPage from '../models/pages/account/AccountChangePasswordPage';
@@ -209,6 +210,7 @@ export default [
   OcUserListPage,
   ShopfloorAppDetailsPage,
   ShopfloorAppListPage,
+  ShopfloorDisplayDeviceDetailsPage,
   ShopfloorDisplayDeviceListPage,
   ShopfloorStationListPage,
   account$AccountChangePasswordPage,
