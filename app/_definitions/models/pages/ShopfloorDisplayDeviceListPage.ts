@@ -6,23 +6,18 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       type: "auto",
       code: "code",
+      required: true,
     },
     {
       type: "auto",
       code: "identifier",
+      required: true,
     },
     {
       type: "auto",
       code: "name",
       label: "设备名称",
-    },
-    {
-      type: "auto",
-      code: "process",
-    },
-    {
-      type: "auto",
-      code: "app",
+      required: true,
     },
     {
       type: "auto",
@@ -78,27 +73,19 @@ const page: RapidPage = {
           code: "code",
         },
         {
-          type: "auto",
+          type: "link",
           code: "identifier",
+          width: "150px",
+          fixed: "left",
+          rendererType: "link",
+          rendererProps: {
+            url: "/pages/shopfloor_display_device_details?id={{id}}",
+          },
         },
         {
           type: "auto",
           code: "name",
           title: "设备名称",
-        },
-        {
-          type: "auto",
-          code: "process",
-          rendererProps: {
-            format: "{{name}}",
-          },
-        },
-        {
-          type: "auto",
-          code: "app",
-          rendererProps: {
-            format: "{{name}}",
-          },
         },
         {
           type: "auto",

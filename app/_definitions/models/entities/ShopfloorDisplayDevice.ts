@@ -38,20 +38,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       selfIdColumnName: "display_device_id",
     },
     {
-      code: "process",
-      name: "关联工序",
-      type: "relation",
-      targetSingularCode: "mom_process",
-      targetIdColumnName: "process_id",
-    },
-    {
-      code: "app",
-      name: "关联应用",
-      type: "relation",
-      targetSingularCode: "shopfloor_app",
-      targetIdColumnName: "app_id",
-    },
-    {
       code: "deleted",
       name: "是否删除",
       type: "boolean",

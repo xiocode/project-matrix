@@ -121,6 +121,7 @@ import ShopfloorApp from '../models/entities/ShopfloorApp';
 import ShopfloorAppStep from '../models/entities/ShopfloorAppStep';
 import ShopfloorAppVersion from '../models/entities/ShopfloorAppVersion';
 import ShopfloorDisplayDevice from '../models/entities/ShopfloorDisplayDevice';
+import ShopfloorDisplayDeviceFeature from '../models/entities/ShopfloorDisplayDeviceFeature';
 import ShopfloorStation from '../models/entities/ShopfloorStation';
 import SvcPrintTask from '../models/entities/SvcPrintTask';
 import SvcPrinter from '../models/entities/SvcPrinter';
@@ -277,6 +278,7 @@ const entityDefinitions = [
   ShopfloorAppStep,
   ShopfloorAppVersion,
   ShopfloorDisplayDevice,
+  ShopfloorDisplayDeviceFeature,
   ShopfloorStation,
   SvcPrintTask,
   SvcPrinter,
@@ -433,6 +435,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(ShopfloorAppStep, entityDefinitions),
   autoConfigureRapidEntity(ShopfloorAppVersion, entityDefinitions),
   autoConfigureRapidEntity(ShopfloorDisplayDevice, entityDefinitions),
+  autoConfigureRapidEntity(ShopfloorDisplayDeviceFeature, entityDefinitions),
   autoConfigureRapidEntity(ShopfloorStation, entityDefinitions),
   autoConfigureRapidEntity(SvcPrintTask, entityDefinitions),
   autoConfigureRapidEntity(SvcPrinter, entityDefinitions),

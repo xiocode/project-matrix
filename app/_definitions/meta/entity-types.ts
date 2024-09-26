@@ -8802,14 +8802,6 @@ export interface ShopfloorDisplayDevice {
    */
   stations?: any;
   /**
-   * 关联工序
-   */
-  process?: Partial<MomProcess>;
-  /**
-   * 关联应用
-   */
-  app?: Partial<ShopfloorApp>;
-  /**
    * 是否删除
    */
   deleted?: boolean;
@@ -8851,6 +8843,65 @@ export interface ShopfloorDisplayDevice {
  * 车间配置系统-显示设备
  */
 export type SaveShopfloorDisplayDeviceInput = Omit<ShopfloorDisplayDevice, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
+ * 车间配置系统-显示设备
+ */
+export interface ShopfloorDisplayDeviceFeature {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 显示设备
+   */
+  displayDevice?: Partial<ShopfloorDisplayDevice>;
+  /**
+   * 关联工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 关联应用
+   */
+  app?: Partial<ShopfloorApp>;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 车间配置系统-显示设备
+ */
+export type SaveShopfloorDisplayDeviceFeatureInput = Omit<ShopfloorDisplayDeviceFeature, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
  * 车间配置系统-工位
