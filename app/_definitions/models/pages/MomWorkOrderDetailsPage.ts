@@ -408,7 +408,7 @@ const page: RapidPage = {
           children: [
             {
               $type: "sonicEntityList",
-              entityCode: "MomEquipmentMetric",
+              entityCode: "MomRouteProcessParameterMeasurement",
               viewMode: "table",
               selectionMode: "none",
               fixedFilters: [
