@@ -8802,6 +8802,14 @@ export interface ShopfloorDisplayDevice {
    */
   stations?: any;
   /**
+   * 关联工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 关联应用
+   */
+  app?: Partial<ShopfloorApp>;
+  /**
    * 是否删除
    */
   deleted?: boolean;
@@ -8809,6 +8817,10 @@ export interface ShopfloorDisplayDevice {
    * 工厂
    */
   factory?: Partial<MomFactory>;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
@@ -8876,6 +8888,14 @@ export interface ShopfloorStation {
    * 工厂
    */
   factory?: Partial<MomFactory>;
+  /**
+   * 工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 配置
+   */
+  config?: Record<string, any>;
   /**
    * 创建时间
    */
