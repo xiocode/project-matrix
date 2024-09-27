@@ -37,6 +37,7 @@ import InspectionBadAction from "./insecption-bad-action/InspectionBadAction";
 
 // render
 import BlockRerenderRock from "./block-rerender-rock/BlockRerenderRock";
+import CustomTextRenderer from "./custom-text-renderer/CustomTextRenderer";
 
 export default [
   Link,
@@ -78,4 +79,5 @@ export default [
 
   // render
   BlockRerenderRock,
+  CustomTextRenderer,
 ];

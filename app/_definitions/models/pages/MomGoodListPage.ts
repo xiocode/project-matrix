@@ -423,17 +423,47 @@ const page: RapidPage = {
           width: "100px",
           fieldType: "date",
         },
+        // {
+        //   type: "auto",
+        //   code: "lot",
+        //   title: "检验状态",
+        //   width: "100px",
+        //   rendererType: "rapidOptionFieldRenderer",
+        //   rendererProps: {
+        //     dictionaryCode: "QualificationState",
+        //     $exps: {
+        //       value: "$slot.record.lot && $slot.record.lot.qualificationState",
+        //     },
+        //   },
+        // },
         {
           type: "auto",
           code: "lot",
           title: "检验状态",
           width: "100px",
-          rendererType: "rapidOptionFieldRenderer",
+          rendererType: "customTextRenderer",
           rendererProps: {
-            dictionaryCode: "QualificationState",
-            $exps: {
-              value: "$slot.record.lot && $slot.record.lot.qualificationState",
-            },
+            render: `
+              const qualificationState = _.get(record, "lot.qualificationState");
+              switch (qualificationState) {
+                case "inspectFree":
+                  return "免检";
+                case "uninspected":
+                  return "待检";
+                case "qualified":
+                  return "合格";
+                case "unqualified":
+                  if (record.lot?.treatment === "special") {
+                    return "不合格（特采）";
+                  } else if (record.lot?.treatment === "withdraw") {
+                    return "不合格（退货）";
+                  }
+
+                  return "不合格";
+                default:
+                  return "";
+              }
+            `,
           },
         },
       ],
