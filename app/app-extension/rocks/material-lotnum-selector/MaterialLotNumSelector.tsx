@@ -180,6 +180,8 @@ export default {
               case "unqualified":
                 if (record.lot?.treatment === "special") {
                   return "不合格（特采）";
+                } else if (record.lot?.treatment === "withdraw") {
+                  return "不合格（退货）";
                 }
 
                 return "不合格";
