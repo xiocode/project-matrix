@@ -21,6 +21,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "outputs",
+    },
+    {
+      type: "auto",
       code: "orderNum",
     },
   ],
@@ -82,6 +86,16 @@ const page: RapidPage = {
           width: "100px",
           rendererProps: {
             format: "{{name}}",
+          },
+        },
+        {
+          type: "auto",
+          code: "outputs",
+          rendererProps: {
+            item: {
+              $type: "rapidObjectRenderer",
+              format: "{{code}}-{{name}}",
+            },
           },
         },
         {

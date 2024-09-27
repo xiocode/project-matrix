@@ -6599,6 +6599,10 @@ export interface MomProcess {
    */
   standardCycleTime?: number;
   /**
+   * 产出物料
+   */
+  outputs?: any;
+  /**
    * 创建时间
    */
   createdAt?: string;
