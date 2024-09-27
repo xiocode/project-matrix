@@ -79,8 +79,13 @@ const page: RapidPage = {
         //   width: "100px",
         // },
         {
-          type: "auto",
+          type: "link",
           code: "name",
+          rendererType: "rapidLinkRenderer",
+          rendererProps: {
+            url: "/pages/mom_equipment_category_details?id={{id}}",
+          },
+          width: "150px",
         },
         // {
         //   type: "auto",

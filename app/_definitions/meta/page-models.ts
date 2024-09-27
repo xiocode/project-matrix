@@ -23,8 +23,8 @@ import HomePage from '../models/pages/HomePage';
 import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
 import MetaModelListPage from '../models/pages/MetaModelListPage';
 import MetaRouteListPage from '../models/pages/MetaRouteListPage';
+import MomEquipmentCategoryDetailPage from '../models/pages/MomEquipmentCategoryDetailPage';
 import MomEquipmentCategoryListPage from '../models/pages/MomEquipmentCategoryListPage';
-import MomEquipmentDetailsPage from '../models/pages/MomEquipmentDetailsPage';
 import MomEquipmentListPage from '../models/pages/MomEquipmentListPage';
 import MomFactoryListPage from '../models/pages/MomFactoryListPage';
 import MomGoodListPage from '../models/pages/MomGoodListPage';
@@ -163,8 +163,8 @@ export default [
   MetaModelDetailsPage,
   MetaModelListPage,
   MetaRouteListPage,
+  MomEquipmentCategoryDetailPage,
   MomEquipmentCategoryListPage,
-  MomEquipmentDetailsPage,
   MomEquipmentListPage,
   MomFactoryListPage,
   MomGoodListPage,

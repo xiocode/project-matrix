@@ -10,6 +10,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     // },
     {
       type: "auto",
+      code: "factory",
+    },
+    {
+      type: "auto",
       code: "material",
       listDataFindOptions: {
         properties: ["id", "code", "name", "specification", "defaultUnit"],
@@ -32,40 +36,48 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         ],
       },
     },
+    {
+      type: "auto",
+      code: "process",
+    },
+    {
+      type: "auto",
+      code: "equipment",
+    },
     // {
     //   type: "auto",
     //   code: "tags",
     // },
-    {
-      type: "auto",
-      code: "route",
-      listDataFindOptions: {
-        fixedFilters: [
-          {
-            field: "material",
-            operator: "exists",
-            filters: [
-              {
-                field: "id",
-                operator: "eq",
-                value: "",
-              },
-            ],
-          },
-        ],
-        $exps: {
-          "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
-        },
-      },
-      formControlProps: {
-        listTextFieldName: "version",
-        listFilterFields: ["version"],
-        columns: [{ code: "version", title: "版本" }],
-        $exps: {
-          disabled: "!$self.form.getFieldValue('material')",
-        },
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "route",
+    //   listDataFindOptions: {
+    //     fixedFilters: [
+    //       {
+    //         field: "material",
+    //         operator: "exists",
+    //         filters: [
+    //           {
+    //             field: "id",
+    //             operator: "eq",
+    //             value: "",
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //     $exps: {
+    //       "fixedFilters[0].filters[0].value": "$scope.vars.active_material_id",
+    //     },
+    //   },
+    //   formControlProps: {
+    //     listTextFieldName: "version",
+    //     listFilterFields: ["version"],
+    //     columns: [{ code: "version", title: "版本" }],
+    //     $exps: {
+    //       disabled: "!$self.form.getFieldValue('material')",
+    //     },
+    //   },
+    // },
     // {
     //   type: "auto",
     //   code: "scheduledStartDate",
@@ -204,19 +216,24 @@ const page: RapidPage = {
             },
           },
         },
-        {
-          type: "auto",
-          code: "route",
-          width: "100px",
-          rendererProps: {
-            format: "{{version}}",
-          },
-        },
         // {
         //   type: "auto",
-        //   code: "tags",
+        //   code: "route",
         //   width: "100px",
+        //   rendererProps: {
+        //     format: "{{version}}",
+        //   },
         // },
+        {
+          type: "auto",
+          code: "process",
+          width: "100px",
+        },
+        {
+          type: "auto",
+          code: "equipment",
+          width: "100px",
+        },
         // {
         //   type: "auto",
         //   code: "scheduledStartDate",

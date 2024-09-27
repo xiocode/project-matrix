@@ -21,6 +21,19 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: "auto",
+      code: "process",
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
+      },
+    },
+    {
+      type: "auto",
       code: "equipment",
       formControlProps: {
         dropdownMatchSelectWidth: 300,
@@ -66,6 +79,10 @@ const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: "auto",
       code: "process",
+    },
+    {
+      type: "auto",
+      code: "equipment",
     },
     {
       type: "auto",
@@ -218,6 +235,18 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "factory",
+        },
+        {
+          type: "auto",
+          code: "process",
+        },
+        {
+          type: "auto",
+          code: "equipment",
+        },
+        {
+          type: "auto",
           code: "executionState",
         },
         {
@@ -272,6 +301,14 @@ const page: RapidPage = {
                   code: "createdAt",
                   title: "报工时间",
                   width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "process",
+                  width: "150px",
+                  rendererProps: {
+                    format: "{{code}} {{name}}",
+                  },
                 },
                 {
                   type: "auto",
@@ -360,6 +397,15 @@ const page: RapidPage = {
                     $exps: {
                       href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
                     },
+                  },
+                },
+                {
+                  type: "auto",
+                  code: "equipment",
+                  width: "150px",
+                  fixed: "left",
+                  rendererProps: {
+                    format: "{{name}}",
                   },
                 },
                 {

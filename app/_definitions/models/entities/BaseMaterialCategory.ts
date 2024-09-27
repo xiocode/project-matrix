@@ -46,6 +46,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       selfIdColumnName: "category_id",
     },
     {
+      code: "brekdown",
+      name: "物料",
+      type: "relation[]",
+      targetSingularCode: "base_material",
+      selfIdColumnName: "category_id",
+    },
+    {
       code: "externalCode",
       name: "外部编号",
       type: "text",

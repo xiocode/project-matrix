@@ -729,6 +729,10 @@ export interface BaseMaterialCategory {
    */
   materials?: any;
   /**
+   * 物料
+   */
+  brekdown?: any;
+  /**
    * 外部编号
    */
   externalCode?: string;
@@ -6611,6 +6615,10 @@ export interface MomProcess {
    */
   standardCycleTime?: number;
   /**
+   * 生产设备
+   */
+  equipments?: any;
+  /**
    * 产出物料
    */
   outputs?: any;
@@ -7766,6 +7774,10 @@ export interface MomWorkFeed {
    */
   process?: Partial<MomProcess>;
   /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
    * 标签
    */
   tags?: string;
@@ -7908,6 +7920,14 @@ export interface MomWorkOrder {
    * 工厂
    */
   factory?: Partial<MomFactory>;
+  /**
+   * 工序
+   */
+  process?: Partial<MomProcess>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
   /**
    * 创建时间
    */

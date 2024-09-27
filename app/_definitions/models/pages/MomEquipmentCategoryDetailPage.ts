@@ -31,11 +31,11 @@ const formConfig: Partial<RapidEntityFormRockConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_equipment_details",
+  code: "mom_equipment_category_details",
   //@ts-ignore
-  parentCode: "mom_equipment_list",
-  name: "设备详情",
-  title: "设备详情",
+  parentCode: "mom_equipment_category_list",
+  name: "设备分类详情",
+  title: "设备分类详情",
   // permissionCheck: {any: []},
   view: [
     {
@@ -75,12 +75,12 @@ const page: RapidPage = {
             {
               $id: "goodTransferList",
               $type: "sonicEntityList",
-              entityCode: "MomEquipmentDimension",
+              entityCode: "MomEquipmentCategoryDimension",
               viewMode: "table",
               selectionMode: "none",
               fixedFilters: [
                 {
-                  field: "equipment_id",
+                  field: "category_id",
                   operator: "eq",
                   value: "",
                 },
@@ -139,14 +139,14 @@ const page: RapidPage = {
                   actionType: "delete",
                   actionText: "删除",
                   dataSourceCode: "list",
-                  entityCode: "MomEquipmentDimension",
+                  entityCode: "MomEquipmentCategoryDimension",
                 },
               ],
               newForm: cloneDeep(formConfig),
               editForm: cloneDeep(formConfig),
               $exps: {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.equipment_id": "$rui.parseQuery().id",
+                "newForm.fixedFields.category_id": "$rui.parseQuery().id",
               },
             },
           ],

@@ -303,6 +303,20 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_factory",
       targetIdColumnName: "factory_id",
     },
+    {
+      code: "process",
+      name: "工序",
+      type: "relation",
+      targetSingularCode: "mom_process",
+      targetIdColumnName: "process_id",
+    },
+    {
+      code: "equipment",
+      name: "设备",
+      type: "relation",
+      targetSingularCode: "mom_equipment",
+      targetIdColumnName: "equipment_id",
+    },
   ],
 };
 
