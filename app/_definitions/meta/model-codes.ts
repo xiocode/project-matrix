@@ -1723,6 +1723,7 @@ const entityFieldCodes = {
     'factory',
     'orderNum',
     'standardCycleTime',
+    'outputs',
     'createdAt',
     'createdBy',
     'updatedAt',
