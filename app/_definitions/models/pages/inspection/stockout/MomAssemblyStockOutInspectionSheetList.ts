@@ -17,7 +17,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
               {
                 field: "code",
                 operator: "eq",
-                value: "grain_outgoing_inspect",
+                value: "finished_outgoing_inspect",
               },
             ],
           },
@@ -76,7 +76,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         },
       },
       $exps: {
-        _hidden: "$scope.vars.active_hidden",
+        _hidden: "!$scope.vars.active_rule_config",
       },
     },
     {
@@ -87,26 +87,20 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       formControlType: "lotNumSelector",
       formControlProps: {
         $exps: {
-          disabled: "!($self.form.getFieldValue('rule')&&$self.form.getFieldValue('material'))",
+          disabled: "!$self.form.getFieldValue('rule')",
         },
       },
       $exps: {
-        _hidden: "!$scope.vars.active_hidden",
+        _hidden: "$scope.vars.active_rule_config",
         "formControlProps.materialId": "$self.form.getFieldValue('material')",
         "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
       },
     },
     {
       code: "reportFile",
-      label: "检验报告",
+      label: "质检报告",
       type: "auto",
       required: true,
-    },
-    {
-      code: "gcmsReportFile",
-      label: "GCMS报告",
-      required: true,
-      type: "auto",
     },
     {
       type: "auto",
@@ -126,29 +120,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         const ruleList = $page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list;
         const config = ruleList[0]?.category?.config?.incoming
         const materialId = ruleList.find((item) => item.id === changedValues.rule)?.material?.id
-        const name = ruleList.find((item) => item.id === changedValues.rule)?.name
-        const id = ruleList.find((item) => item.id === changedValues.rule)?.id
-        const isQulity = !(id==31|| id == 32||id ==35||id == 37)
-        const isNormal = !(id == 37)
-        const hidden = name === '石蜡油检验'
         if(changedValues.hasOwnProperty('rule')) {
-
-            event.scope.setVars({
-                active_material_id: materialId,
-                active_rule_config:config,
-                active_rule_id:id,
-                active_hidden:hidden,
-                active_isNormal:isNormal,
-                active_isQulity:isQulity
-            }, true);
-            
-            // if(event.sender.form.getFieldsValue('material')){
-            //     event.sender.form.setFieldsValue({
-            //     material:undefined,
-            //     lotNum:undefined 
-            //     })
-            // }
-         
+          event.scope.setVars({
+            active_material_id: materialId,
+            active_rule_config:config
+          }, true);
         }
 
         event.scope.loadStoreData('dataFormItemList-material');
@@ -165,9 +141,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_priling_stock_out_Inspection_sheet_list",
-  name: "造粒出库检验",
-  title: "造粒出库检验",
+  code: "mom_assembly_stock_out_inspection_sheet_list",
+  name: "总成出库检验",
+  title: "总成出库检验单",
   //@ts-ignore
   parentCode: "mom_inspection_sheet_list",
   view: [
@@ -189,7 +165,7 @@ const page: RapidPage = {
                 {
                   field: "code",
                   operator: "eq",
-                  value: "grain_outgoing_inspect",
+                  value: "finished_outgoing_inspect",
                 },
               ],
             },
@@ -217,6 +193,7 @@ const page: RapidPage = {
         },
       ],
       extraProperties: ["rule", "treatment"],
+
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -287,7 +264,7 @@ const page: RapidPage = {
                     {
                       field: "code",
                       operator: "eq",
-                      value: "grain_outgoing_inspect",
+                      value: "finished_outgoing_inspect",
                     },
                   ],
                 },
@@ -376,7 +353,7 @@ const page: RapidPage = {
           fixed: "left",
           rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_priling_stock_out_Inspection_sheet_details?id={{id}}",
+            url: "/pages/mom_assembly_stock_out_inspection_sheet_details?id={{id}}",
           },
         },
 
