@@ -4318,6 +4318,18 @@ export interface MomInspectionSheet {
    */
   gcmsReportFile?: any;
   /**
+   * 月度发票
+   */
+  invoiceReportFile?: any;
+  /**
+   * 常规检测
+   */
+  normalReportFile?: any;
+  /**
+   * 质保书
+   */
+  qualityReportFile?: any;
+  /**
    * 工厂
    */
   factory?: Partial<MomFactory>;

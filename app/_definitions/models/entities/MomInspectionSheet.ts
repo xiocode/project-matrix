@@ -1,7 +1,7 @@
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
-import type {PropertySequenceConfig} from "@ruiapp/rapid-core";
+import type { PropertySequenceConfig } from "@ruiapp/rapid-core";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "mom",
@@ -20,7 +20,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
             segments: [
               {
                 type: "literal",
-                content: "IS-"
+                content: "IS-",
               },
               {
                 type: "year",
@@ -230,6 +230,21 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
     {
       code: "gcmsReportFile",
       name: "GCMS报告文件",
+      type: "file",
+    },
+    {
+      code: "invoiceReportFile",
+      name: "月度发票",
+      type: "file",
+    },
+    {
+      code: "normalReportFile",
+      name: "常规检测",
+      type: "file",
+    },
+    {
+      code: "qualityReportFile",
+      name: "质保书",
       type: "file",
     },
     {
