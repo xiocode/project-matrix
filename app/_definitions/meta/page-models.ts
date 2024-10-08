@@ -111,6 +111,8 @@ import inspection$feedstock$MomFeedStockInspectionSheetDetailsPage from '../mode
 import inspection$feedstock$MomFeedStockInspectionSheetListPage from '../models/pages/inspection/feedstock/MomFeedStockInspectionSheetListPage';
 import inspection$prilling$MomPrillingFeedStockInspectionSheetDetailsPage from '../models/pages/inspection/prilling/MomPrillingFeedStockInspectionSheetDetailsPage';
 import inspection$prilling$MomPrillingFeedStockInspectionSheetList from '../models/pages/inspection/prilling/MomPrillingFeedStockInspectionSheetList';
+import inspection$stockout$MomAssemblyStockOutInspectionSheetDetailsPage from '../models/pages/inspection/stockout/MomAssemblyStockOutInspectionSheetDetailsPage';
+import inspection$stockout$MomAssemblyStockOutInspectionSheetList from '../models/pages/inspection/stockout/MomAssemblyStockOutInspectionSheetList';
 import inspection$stockout$MomPrilingStockOutInspectionSheetDetailsPage from '../models/pages/inspection/stockout/MomPrilingStockOutInspectionSheetDetailsPage';
 import inspection$stockout$MomPrilingStockOutInspectionSheetList from '../models/pages/inspection/stockout/MomPrilingStockOutInspectionSheetList';
 import inspection$stockout$MomStockOutInspectionSheetDetailsPage from '../models/pages/inspection/stockout/MomStockOutInspectionSheetDetailsPage';
@@ -247,6 +249,8 @@ export default [
   inspection$feedstock$MomFeedStockInspectionSheetListPage,
   inspection$prilling$MomPrillingFeedStockInspectionSheetDetailsPage,
   inspection$prilling$MomPrillingFeedStockInspectionSheetList,
+  inspection$stockout$MomAssemblyStockOutInspectionSheetDetailsPage,
+  inspection$stockout$MomAssemblyStockOutInspectionSheetList,
   inspection$stockout$MomPrilingStockOutInspectionSheetDetailsPage,
   inspection$stockout$MomPrilingStockOutInspectionSheetList,
   inspection$stockout$MomStockOutInspectionSheetDetailsPage,

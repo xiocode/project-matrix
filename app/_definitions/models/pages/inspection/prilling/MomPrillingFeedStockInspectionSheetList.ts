@@ -321,7 +321,7 @@ const page: RapidPage = {
                     {
                       field: "code",
                       operator: "eq",
-                      value: "outgoing_inspect_topsenchem",
+                      value: "granulation_incoming_inspect",
                     },
                   ],
                 },
