@@ -151,7 +151,6 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomInspectionSheet",
       viewMode: "table",
-      // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
       fixedFilters: [
         {
@@ -177,13 +176,13 @@ const page: RapidPage = {
           $type: "sonicToolbarNewEntityButton",
           text: "新建",
           icon: "PlusOutlined",
-          $permissionCheck: "tysInspectionStockOut.manage",
+          $permissionCheck: "htInspectionAssemblyStockOut.manage",
           actionStyle: "primary",
         },
         {
           $type: "antdButton",
           href: `/api/app/exportExcel?type=inspection`,
-          $permissionCheck: "tysInspectionStockOut.manage",
+          $permissionCheck: "htInspectionAssemblyStockOut.manage",
           children: [
             {
               $type: "text",
@@ -458,7 +457,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
-          $permissionCheck: "tysInspectionStockOut.manage",
+          $permissionCheck: "htInspectionAssemblyStockOut.manage",
           $exps: {
             disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
           },
@@ -470,14 +469,14 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionSheet",
-          $permissionCheck: "tysInspectionStockOut.manage",
+          $permissionCheck: "htInspectionAssemblyStockOut.manage",
           $exps: {
             disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
           },
         },
         {
           $type: "inspectionBadAction",
-          $permissionCheck: "tysInspectionStockOut.manage",
+          $permissionCheck: "htInspectionAssemblyStockOut.manage",
           $exps: {
             _hidden: "$slot.record.result !== 'unqualified'",
           },
