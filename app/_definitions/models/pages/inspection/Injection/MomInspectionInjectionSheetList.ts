@@ -17,7 +17,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
               {
                 field: "code",
                 operator: "eq",
-                value: "granulation_incoming_inspect",
+                value: "injection_molding_inspect",
               },
             ],
           },
@@ -76,7 +76,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         },
       },
       $exps: {
-        _hidden: "$scope.vars.active_hidden",
+        _hidden: "!$scope.vars.active_rule_config",
       },
     },
     {
@@ -87,60 +87,20 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       formControlType: "lotNumSelector",
       formControlProps: {
         $exps: {
-          disabled: "!($self.form.getFieldValue('rule')&&$self.form.getFieldValue('material'))",
+          disabled: "!$self.form.getFieldValue('rule')",
         },
       },
       $exps: {
-        _hidden: "!$scope.vars.active_hidden",
+        _hidden: "$scope.vars.active_rule_config",
         "formControlProps.materialId": "$self.form.getFieldValue('material')",
         "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
       },
     },
     {
       code: "reportFile",
-      label: "检验报告",
+      label: "质检报告",
       type: "auto",
       required: true,
-      $exps: {
-        _hidden: "$scope.vars.active_hidden",
-      },
-    },
-    {
-      code: "gcmsReportFile",
-      label: "GCMS报告",
-      required: true,
-      type: "auto",
-      $exps: {
-        // _hidden:"$scope.vars.active_rule_id "
-        _hidden: "!$scope.vars.active_hidden",
-      },
-    },
-    {
-      code: "invoiceReportFile",
-      label: "月度发票",
-      required: true,
-      type: "auto",
-      $exps: {
-        _hidden: "!$scope.vars.active_hidden",
-      },
-    },
-    {
-      code: "normalReportFile",
-      label: "常规检测",
-      required: true,
-      type: "auto",
-      $exps: {
-        _hidden: "(!$scope.vars.active_hidden&&$scope.vars.active_isNormal)",
-      },
-    },
-    {
-      code: "qualityReportFile",
-      label: "质保书",
-      required: true,
-      type: "auto",
-      $exps: {
-        _hidden: "$scope.vars.active_hidden?true:$scope.vars.active_isQulity",
-      },
     },
     {
       type: "auto",
@@ -160,29 +120,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         const ruleList = $page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list;
         const config = ruleList[0]?.category?.config?.incoming
         const materialId = ruleList.find((item) => item.id === changedValues.rule)?.material?.id
-        const name = ruleList.find((item) => item.id === changedValues.rule)?.name
-        const id = ruleList.find((item) => item.id === changedValues.rule)?.id
-        const isQulity = !(id==31|| id == 32||id ==35||id == 37)
-        const isNormal = !(id == 37)
-        const hidden = name === '石蜡油检验'
         if(changedValues.hasOwnProperty('rule')) {
-
-            event.scope.setVars({
-                active_material_id: materialId,
-                active_rule_config:config,
-                active_rule_id:id,
-                active_hidden:hidden,
-                active_isNormal:isNormal,
-                active_isQulity:isQulity
-            }, true);
-            
-            // if(event.sender.form.getFieldsValue('material')){
-            //     event.sender.form.setFieldsValue({
-            //     material:undefined,
-            //     lotNum:undefined 
-            //     })
-            // }
-         
+          event.scope.setVars({
+            active_material_id: materialId,
+            active_rule_config:config
+          }, true);
         }
 
         event.scope.loadStoreData('dataFormItemList-material');
@@ -201,7 +143,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 const page: RapidPage = {
   code: "mom_inspection_Injection_sheet_list",
   name: "注塑检验",
-  title: "注塑检验",
+  title: "注塑检验单",
   //@ts-ignore
   parentCode: "mom_inspection_sheet_list",
   view: [
@@ -209,7 +151,6 @@ const page: RapidPage = {
       $type: "sonicEntityList",
       entityCode: "MomInspectionSheet",
       viewMode: "table",
-      // permissionCheck: {any: ["inspection.manage"]},
       selectionMode: "none",
       fixedFilters: [
         {
@@ -223,7 +164,7 @@ const page: RapidPage = {
                 {
                   field: "code",
                   operator: "eq",
-                  value: "granulation_incoming_inspect",
+                  value: "injection_molding_inspect",
                 },
               ],
             },
@@ -235,13 +176,13 @@ const page: RapidPage = {
           $type: "sonicToolbarNewEntityButton",
           text: "新建",
           icon: "PlusOutlined",
-          $permissionCheck: "xzyInspectionFeedStock.manage",
+          $permissionCheck: "hgInspectionInjection.manage",
           actionStyle: "primary",
         },
         {
           $type: "antdButton",
           href: `/api/app/exportExcel?type=inspection`,
-          $permissionCheck: "xzyInspectionFeedStock.manage",
+          $permissionCheck: "hgInspectionInjection.manage",
           children: [
             {
               $type: "text",
@@ -251,6 +192,7 @@ const page: RapidPage = {
         },
       ],
       extraProperties: ["rule", "treatment"],
+
       extraActions: [
         {
           $type: "sonicToolbarFormItem",
@@ -321,7 +263,7 @@ const page: RapidPage = {
                     {
                       field: "code",
                       operator: "eq",
-                      value: "granulation_incoming_inspect",
+                      value: "injection_molding_inspect",
                     },
                   ],
                 },
@@ -410,7 +352,7 @@ const page: RapidPage = {
           fixed: "left",
           rendererType: "link",
           rendererProps: {
-            url: "/pages/mom_prilling_feed_stock_inspection_sheet_details?id={{id}}",
+            url: "/pages/mom_inspection_injection_sheet_details?id={{id}}",
           },
         },
 
@@ -515,7 +457,7 @@ const page: RapidPage = {
           code: "edit",
           actionType: "edit",
           actionText: "修改",
-          $permissionCheck: "xzyInspectionFeedStock.manage",
+          $permissionCheck: "hgInspectionInjection.manage",
           $exps: {
             disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
           },
@@ -527,14 +469,14 @@ const page: RapidPage = {
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomInspectionSheet",
-          $permissionCheck: "xzyInspectionFeedStock.manage",
+          $permissionCheck: "hgInspectionInjection.manage",
           $exps: {
             disabled: "$slot.record.approvalState !== 'approving' && $slot.record.approvalState !== 'uninitiated'",
           },
         },
         {
           $type: "inspectionBadAction",
-          $permissionCheck: "xzyInspectionFeedStock.manage",
+          $permissionCheck: "hgInspectionInjection.manage",
           $exps: {
             _hidden: "$slot.record.result !== 'unqualified'",
           },

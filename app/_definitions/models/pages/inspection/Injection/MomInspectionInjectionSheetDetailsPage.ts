@@ -3,11 +3,11 @@ import type { RapidPage } from "@ruiapp/rapid-extension";
 import { materialFormatStrTemplate } from "~/utils/fmt";
 
 const page: RapidPage = {
-  code: "mom_assembly_stock_out_inspection_sheet_details",
+  code: "mom_inspection_injection_sheet_details",
   //@ts-ignore
-  parentCode: "mom_assembly_stock_out_inspection_sheet_list",
-  name: "总成出库检验单",
-  title: "总成出库检验单详情",
+  parentCode: "mom_inspection_Injection_sheet_list",
+  name: "注塑检验单",
+  title: "注塑检验单详情",
 
   permissionCheck: { any: [] },
   view: [
@@ -151,7 +151,7 @@ const page: RapidPage = {
           text: "批准",
           actionStyle: "primary",
           size: "large",
-          $permissionCheck: "htInspectionAssemblyStockOut.manage",
+          $permissionCheck: "injection_molding_inspect",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -180,7 +180,7 @@ const page: RapidPage = {
           text: "拒绝",
           danger: true,
           size: "large",
-          $permissionCheck: "htInspectionAssemblyStockOut.manage",
+          $permissionCheck: "injection_molding_inspect",
           onAction: [
             {
               $action: "sendHttpRequest",
