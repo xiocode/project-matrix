@@ -151,7 +151,7 @@ const page: RapidPage = {
           text: "批准",
           actionStyle: "primary",
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
+          $permissionCheck: "	htInspectionAssemblyStockOut.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -180,7 +180,7 @@ const page: RapidPage = {
           text: "拒绝",
           danger: true,
           size: "large",
-          $permissionCheck: "inspectionSheet.review",
+          $permissionCheck: "	htInspectionAssemblyStockOut.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
