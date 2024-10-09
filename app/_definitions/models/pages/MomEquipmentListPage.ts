@@ -77,13 +77,8 @@ const page: RapidPage = {
       pageSize: 20,
       columns: [
         {
-          type: "link",
+          type: "auto",
           code: "code",
-          rendererType: "rapidLinkRenderer",
-          rendererProps: {
-            url: "/pages/mom_equipment_details?id={{id}}",
-          },
-          width: "150px",
         },
         {
           type: "auto",

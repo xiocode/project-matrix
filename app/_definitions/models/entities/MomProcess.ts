@@ -45,6 +45,15 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       description: "以秒为单位",
     },
     {
+      code: "equipments",
+      name: "生产设备",
+      type: "relation[]",
+      targetSingularCode: "mom_equipment",
+      linkTableName: "mom_process_equipments",
+      targetIdColumnName: "equipment_id",
+      selfIdColumnName: "process_id",
+    },
+    {
       code: "outputs",
       name: "产出物料",
       type: "relation[]",

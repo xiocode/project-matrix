@@ -46,7 +46,7 @@ importers:
         version: 0.1.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(@ruiapp/react-renderer@0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ruiapp/designer-extension':
         specifier: ~0.2.3
-        version: 0.2.3(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@babel/runtime@7.23.2)(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@dnd-kit/sortable@8.0.0(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0))(@dnd-kit/utilities@3.2.2(react@18.2.0))(@ruiapp/move-style@0.3.5(lodash@4.17.21))(@ruiapp/react-renderer@0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 0.2.3(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@babel/runtime@7.25.7)(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@dnd-kit/sortable@8.0.0(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0))(@dnd-kit/utilities@3.2.2(react@18.2.0))(@ruiapp/move-style@0.3.5(lodash@4.17.21))(@ruiapp/react-renderer@0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ruiapp/designer-hud':
         specifier: ~0.1.1
         version: 0.1.1(@ruiapp/move-style@0.3.5(lodash@4.17.21))(@ruiapp/react-renderer@0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -146,6 +146,9 @@ importers:
       morgan:
         specifier: ~1.10.0
         version: 1.10.0
+      mqtt:
+        specifier: ^5.10.1
+        version: 5.10.1
       node-machine-id:
         specifier: ^1.1.12
         version: 1.1.12
@@ -1106,6 +1109,10 @@ packages:
 
   '@babel/runtime@7.23.2':
     resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.25.7':
+    resolution: {integrity: sha512-FjoyLe754PMiYsFaN5C94ttGiOmBNYTf6pLr4xXHAT5uctHb092PBszndLDR5XA/jghQvn4n7JMHl7dmTgbm9w==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.22.15':
@@ -2252,6 +2259,9 @@ packages:
   '@types/react@18.3.3':
     resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
+  '@types/readable-stream@4.0.15':
+    resolution: {integrity: sha512-oAZ3kw+kJFkEqyh7xORZOku1YAKvsFTogRY8kVl4vHpEKiDkfnSA/My8haRE7fvmix5Zyy+1pwzOi7yycGLBJw==}
+
   '@types/responselike@1.0.2':
     resolution: {integrity: sha512-/4YQT5Kp6HxUDb4yhRkm0bJ7TbjvTddqX7PZ5hz6qV3pxSo72f/6YPRo+Mu2DU307tm9IioO69l7uAwn5XNcFA==}
 
@@ -2278,6 +2288,9 @@ packages:
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
+
+  '@types/ws@8.5.12':
+    resolution: {integrity: sha512-3tPRkv1EtkDpzlgyKyI8pGsGZAGPEaXeu0DOj5DI25Ja91bdAYddYHbADRYVrZMRbfW+1l5YwXVDKohDJNQxkQ==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -2860,6 +2873,9 @@ packages:
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
 
+  bl@6.0.16:
+    resolution: {integrity: sha512-V/kz+z2Mx5/6qDfRCilmrukUXcXuCoXKg3/3hDvzKKoSUx8CJKudfIoT29XZc3UE9xBvxs5qictiHdprwtteEg==}
+
   blockly@10.4.3:
     resolution: {integrity: sha512-+opfBmQnSiv7vTiY/TkDEBOslxUyfj8luS3S+qs1NnQKjInC+Waf2l9cNsMh9J8BMkmiCIT+Ed/3mmjIaL9wug==}
 
@@ -2908,6 +2924,9 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
+
+  buffer@6.0.3:
+    resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
   bytes@3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
@@ -3121,6 +3140,9 @@ packages:
     resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
     engines: {node: ^12.20.0 || >=14}
 
+  commist@3.2.0:
+    resolution: {integrity: sha512-4PIMoPniho+LqXmpS5d3NuGYncG6XWlkBSVGiWycL22dd42OYdUGil2CWuzklaJoNxyxUSpO4MKIBU94viWNAw==}
+
   commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
 
@@ -3137,6 +3159,10 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+
+  concat-stream@2.0.0:
+    resolution: {integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==}
+    engines: {'0': node >= 6.0}
 
   connect@3.7.0:
     resolution: {integrity: sha512-ZqRXc+tZukToSNmh5C2iWMSoV3X1YUcPbqEM4DkEG5tNQXrQUZCNVGGv3IuicnkMtPfGf3Xtp8WCXs295iQ1pQ==}
@@ -3873,6 +3899,10 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fast-unique-numbers@8.0.13:
+    resolution: {integrity: sha512-7OnTFAVPefgw2eBJ1xj2PGGR9FwYzSUso9decayHgCDX4sJkHLdcsYTytTg+tYv+wKF3U8gJuSBz2jJpQV4u/g==}
+    engines: {node: '>=16.1.0'}
+
   fast-xml-parser@4.4.0:
     resolution: {integrity: sha512-kLY3jFlwIYwBNDojclKsNAC12sfD6NwW74QB2CoNGPvtVxjliYehVunB3HYyNi+n4Tt1dAcgwYvmKF/Z18flqg==}
     hasBin: true
@@ -4150,6 +4180,9 @@ packages:
 
   hast-util-whitespace@2.0.1:
     resolution: {integrity: sha512-nAxA0v8+vXSBDt3AnRUNjyRIQ0rD+ntpbAp4LnPkumc5M9yUbSMa4XDU9Q6etY4f1Wp4bNgvc1yjiZtsTTrSng==}
+
+  help-me@5.0.0:
+    resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
 
   hermes-estree@0.19.1:
     resolution: {integrity: sha512-daLGV3Q2MKk8w4evNMKwS8zBE/rcpA800nu1Q5kM08IKijoSnPe9Uo1iIxzPKRkn95IxxsgBMPeYHt3VG4ej2g==}
@@ -4708,6 +4741,9 @@ packages:
   js-cookie@2.2.1:
     resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
 
+  js-sdsl@4.3.0:
+    resolution: {integrity: sha512-mifzlm2+5nZ+lEcLJMoBK0/IH/bDg8XnJfd/Wq6IP+xoCjLZsTOnV2QpxlVbX9bMnkl5PdEjNtBJ9Cj1NjifhQ==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -4961,6 +4997,9 @@ packages:
   lowercase-keys@2.0.0:
     resolution: {integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==}
     engines: {node: '>=8'}
+
+  lru-cache@10.4.3:
+    resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -5321,6 +5360,14 @@ packages:
     resolution: {integrity: sha512-AbegBVI4sh6El+1gNwvD5YIck7nSA36weD7xvIxG4in80j/UoK8AEGaWnnz8v1GxonMCltmlNs5ZKbGvl9b1XQ==}
     engines: {node: '>= 0.8.0'}
 
+  mqtt-packet@9.0.0:
+    resolution: {integrity: sha512-8v+HkX+fwbodsWAZIZTI074XIoxVBOmPeggQuDFCGg1SqNcC+uoRMWu7J6QlJPqIUIJXmjNYYHxBBLr1Y/Df4w==}
+
+  mqtt@5.10.1:
+    resolution: {integrity: sha512-hXCOki8sANoQ7w+2OzJzg6qMBxTtrH9RlnVNV8panLZgnl+Gh0J/t4k6r8Az8+C7y3KAcyXtn0mmLixyUom8Sw==}
+    engines: {node: '>=16.0.0'}
+    hasBin: true
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -5464,6 +5511,9 @@ packages:
 
   nullthrows@1.1.1:
     resolution: {integrity: sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==}
+
+  number-allocator@1.0.14:
+    resolution: {integrity: sha512-OrL44UTVAvkKdOdRQZIJpLkAdjXGTRda052sN4sO77bKEzYYqWKMBjQvrJFzqygI99gL6Z4u2xctPW1tB8ErvA==}
 
   nwsapi@2.2.9:
     resolution: {integrity: sha512-2f3F0SEEer8bBu0dsNCFF50N0cTThV1nWFYcEYFZttdW0lDAoybv9cQoK7X7/68Z89S7FoRrVjP1LPX4XRf9vg==}
@@ -5896,6 +5946,10 @@ packages:
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
+  process@0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
+    engines: {node: '>= 0.6.0'}
+
   promise-inflight@1.0.1:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
     peerDependencies:
@@ -6296,6 +6350,10 @@ packages:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
     engines: {node: '>= 6'}
 
+  readable-stream@4.5.2:
+    resolution: {integrity: sha512-yjavECdqeZ3GLXNgRXgeQEdz9fvDDkNKyHnbHRFtOr7/LcfgBcmct7t/ET+HaCTqfh06OzoAxrkN/IfjJBVe+g==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
   readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
@@ -6342,6 +6400,9 @@ packages:
   regjsparser@0.9.1:
     resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
     hasBin: true
+
+  reinterval@1.1.0:
+    resolution: {integrity: sha512-QIRet3SYrGp0HUHO88jVskiG6seqUGC5iAG7AwI/BV4ypGcuqk9Du6YQBUOUqm9c8pw1eyLoIaONifRua1lsEQ==}
 
   remark-frontmatter@4.0.1:
     resolution: {integrity: sha512-38fJrB0KnmD3E33a5jZC/5+gGAC2WKNiPw1/fdXJvijBlhA7RCsvJklrYJakS0HedninvaCYW8lQGf9C918GfA==}
@@ -6456,6 +6517,9 @@ packages:
   reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+
+  rfdc@1.4.1:
+    resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
 
   rimraf@2.6.3:
     resolution: {integrity: sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==}
@@ -7057,6 +7121,9 @@ packages:
   typed-array-length@1.0.4:
     resolution: {integrity: sha512-KjZypGq+I/H7HI5HlOoGHkWUUGq+Q0TPhQurLbyrVrvnKTBgzLhIJ7j6J/XTQOi0d1RjyZ0wdas8bKs2p0x3Ng==}
 
+  typedarray@0.0.6:
+    resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
+
   typescript@4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
@@ -7323,6 +7390,15 @@ packages:
     resolution: {integrity: sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==}
     engines: {node: '>=0.8'}
 
+  worker-timers-broker@6.1.8:
+    resolution: {integrity: sha512-FUCJu9jlK3A8WqLTKXM9E6kAmI/dR1vAJ8dHYLMisLNB/n3GuaFIjJ7pn16ZcD1zCOf7P6H62lWIEBi+yz/zQQ==}
+
+  worker-timers-worker@7.0.71:
+    resolution: {integrity: sha512-ks/5YKwZsto1c2vmljroppOKCivB/ma97g9y77MAAz2TBBjPPgpoOiS1qYQKIgvGTr2QYPT3XhJWIB6Rj2MVPQ==}
+
+  worker-timers@7.1.8:
+    resolution: {integrity: sha512-R54psRKYVLuzff7c1OTFcq/4Hue5Vlz4bFtNEIarpSiCYhpifHU3aIQI29S84o1j87ePCYqbmEJPqwBTf+3sfw==}
+
   wrap-ansi@6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}
     engines: {node: '>=8'}
@@ -7366,6 +7442,18 @@ packages:
 
   ws@8.17.0:
     resolution: {integrity: sha512-uJq6108EgZMAl20KagGkzCKfMEjxmKvZHG7Tlq0Z6nOky7YF7aq4mOx6xK8TJ/i1LeK4Qus7INktacctDgY8Ow==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.18.0:
+    resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -8542,6 +8630,10 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.0
 
+  '@babel/runtime@7.25.7':
+    dependencies:
+      regenerator-runtime: 0.14.0
+
   '@babel/template@7.22.15':
     dependencies:
       '@babel/code-frame': 7.22.13
@@ -9594,7 +9686,7 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@ruiapp/designer-extension@0.2.3(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@babel/runtime@7.23.2)(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@dnd-kit/sortable@8.0.0(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0))(@dnd-kit/utilities@3.2.2(react@18.2.0))(@ruiapp/move-style@0.3.5(lodash@4.17.21))(@ruiapp/react-renderer@0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@ruiapp/designer-extension@0.2.3(@ant-design/icons@4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@babel/runtime@7.25.7)(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@dnd-kit/sortable@8.0.0(@dnd-kit/core@6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0))(@dnd-kit/utilities@3.2.2(react@18.2.0))(@ruiapp/move-style@0.3.5(lodash@4.17.21))(@ruiapp/react-renderer@0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lodash@4.17.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@ant-design/icons': 4.8.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@dnd-kit/core': 6.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -9602,8 +9694,8 @@ snapshots:
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@ruiapp/move-style': 0.3.5(lodash@4.17.21)
       '@ruiapp/react-renderer': 0.3.4(@ruiapp/move-style@0.3.5(lodash@4.17.21))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
-      '@uiw/react-color-sketch': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
+      '@uiw/react-color-sketch': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       antd: 4.24.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       lodash: 4.17.21
       react: 18.2.0
@@ -10067,6 +10159,11 @@ snapshots:
       '@types/prop-types': 15.7.9
       csstype: 3.1.2
 
+  '@types/readable-stream@4.0.15':
+    dependencies:
+      '@types/node': 18.19.33
+      safe-buffer: 5.1.2
+
   '@types/responselike@1.0.2':
     dependencies:
       '@types/node': 18.19.33
@@ -10093,6 +10190,10 @@ snapshots:
   '@types/unist@2.0.9': {}
 
   '@types/uuid@9.0.8': {}
+
+  '@types/ws@8.5.12':
+    dependencies:
+      '@types/node': 18.19.33
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -10188,71 +10289,71 @@ snapshots:
       '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.3
 
-  '@uiw/color-convert@2.3.0(@babel/runtime@7.23.2)':
+  '@uiw/color-convert@2.3.0(@babel/runtime@7.25.7)':
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.25.7
 
-  '@uiw/react-color-alpha@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-alpha@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
-      '@uiw/react-drag-event-interactive': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@babel/runtime': 7.25.7
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
+      '@uiw/react-drag-event-interactive': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-color-editable-input-rgba@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-editable-input-rgba@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
-      '@uiw/react-color-editable-input': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@babel/runtime': 7.25.7
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
+      '@uiw/react-color-editable-input': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-color-editable-input@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-editable-input@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.25.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-color-hue@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-hue@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
-      '@uiw/react-color-alpha': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@babel/runtime': 7.25.7
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
+      '@uiw/react-color-alpha': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-color-saturation@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-saturation@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
-      '@uiw/react-drag-event-interactive': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@babel/runtime': 7.25.7
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
+      '@uiw/react-drag-event-interactive': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-color-sketch@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-sketch@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
-      '@uiw/react-color-alpha': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@uiw/react-color-editable-input': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@uiw/react-color-editable-input-rgba': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@uiw/react-color-hue': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@uiw/react-color-saturation': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@uiw/react-color-swatch': 2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@babel/runtime': 7.25.7
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
+      '@uiw/react-color-alpha': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/react-color-editable-input': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/react-color-editable-input-rgba': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/react-color-hue': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/react-color-saturation': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/react-color-swatch': 2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-color-swatch@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-color-swatch@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      '@uiw/color-convert': 2.3.0(@babel/runtime@7.23.2)
+      '@babel/runtime': 7.25.7
+      '@uiw/color-convert': 2.3.0(@babel/runtime@7.25.7)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@uiw/react-drag-event-interactive@2.3.0(@babel/runtime@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@uiw/react-drag-event-interactive@2.3.0(@babel/runtime@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.25.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -10883,6 +10984,13 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
+  bl@6.0.16:
+    dependencies:
+      '@types/readable-stream': 4.0.15
+      buffer: 6.0.3
+      inherits: 2.0.4
+      readable-stream: 4.5.2
+
   blockly@10.4.3:
     dependencies:
       jsdom: 22.1.0
@@ -10955,6 +11063,11 @@ snapshots:
   buffer-from@1.1.2: {}
 
   buffer@5.7.1:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
+  buffer@6.0.3:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
@@ -11172,6 +11285,8 @@ snapshots:
 
   commander@9.5.0: {}
 
+  commist@3.2.0: {}
+
   commondir@1.0.1: {}
 
   compressible@2.0.18:
@@ -11193,6 +11308,13 @@ snapshots:
   compute-scroll-into-view@1.0.20: {}
 
   concat-map@0.0.1: {}
+
+  concat-stream@2.0.0:
+    dependencies:
+      buffer-from: 1.1.2
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+      typedarray: 0.0.6
 
   connect@3.7.0:
     dependencies:
@@ -11780,7 +11902,7 @@ snapshots:
       debug: 4.3.4
       enhanced-resolve: 5.15.0
       eslint: 8.57.0
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.29.0)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-import: 2.29.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.1
       get-tsconfig: 4.7.2
@@ -11792,7 +11914,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.29.0)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
       debug: 3.2.7(supports-color@5.5.0)
     optionalDependencies:
@@ -11803,7 +11925,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.29.0)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
       debug: 3.2.7(supports-color@5.5.0)
     optionalDependencies:
@@ -11830,7 +11952,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.29.0)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -12174,6 +12296,11 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
+  fast-unique-numbers@8.0.13:
+    dependencies:
+      '@babel/runtime': 7.25.7
+      tslib: 2.6.2
+
   fast-xml-parser@4.4.0:
     dependencies:
       strnum: 1.0.5
@@ -12507,6 +12634,8 @@ snapshots:
       - supports-color
 
   hast-util-whitespace@2.0.1: {}
+
+  help-me@5.0.0: {}
 
   hermes-estree@0.19.1: {}
 
@@ -13244,6 +13373,8 @@ snapshots:
 
   js-cookie@2.2.1: {}
 
+  js-sdsl@4.3.0: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@3.14.1:
@@ -13523,6 +13654,8 @@ snapshots:
       tslib: 2.6.2
 
   lowercase-keys@2.0.0: {}
+
+  lru-cache@10.4.3: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -14156,6 +14289,37 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mqtt-packet@9.0.0:
+    dependencies:
+      bl: 6.0.16
+      debug: 4.3.4
+      process-nextick-args: 2.0.1
+    transitivePeerDependencies:
+      - supports-color
+
+  mqtt@5.10.1:
+    dependencies:
+      '@types/readable-stream': 4.0.15
+      '@types/ws': 8.5.12
+      commist: 3.2.0
+      concat-stream: 2.0.0
+      debug: 4.3.4
+      help-me: 5.0.0
+      lru-cache: 10.4.3
+      minimist: 1.2.8
+      mqtt-packet: 9.0.0
+      number-allocator: 1.0.14
+      readable-stream: 4.5.2
+      reinterval: 1.1.0
+      rfdc: 1.4.1
+      split2: 4.2.0
+      worker-timers: 7.1.8
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   mri@1.2.0: {}
 
   mrmime@1.0.1: {}
@@ -14280,6 +14444,13 @@ snapshots:
       boolbase: 1.0.0
 
   nullthrows@1.1.1: {}
+
+  number-allocator@1.0.14:
+    dependencies:
+      debug: 4.3.4
+      js-sdsl: 4.3.0
+    transitivePeerDependencies:
+      - supports-color
 
   nwsapi@2.2.9: {}
 
@@ -14708,6 +14879,8 @@ snapshots:
   prismjs@1.29.0: {}
 
   process-nextick-args@2.0.1: {}
+
+  process@0.11.10: {}
 
   promise-inflight@1.0.1: {}
 
@@ -15272,6 +15445,14 @@ snapshots:
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
 
+  readable-stream@4.5.2:
+    dependencies:
+      abort-controller: 3.0.0
+      buffer: 6.0.3
+      events: 3.3.0
+      process: 0.11.10
+      string_decoder: 1.3.0
+
   readdirp@3.6.0:
     dependencies:
       picomatch: 2.3.1
@@ -15328,6 +15509,8 @@ snapshots:
   regjsparser@0.9.1:
     dependencies:
       jsesc: 0.5.0
+
+  reinterval@1.1.0: {}
 
   remark-frontmatter@4.0.1:
     dependencies:
@@ -15417,6 +15600,8 @@ snapshots:
       signal-exit: 3.0.7
 
   reusify@1.0.4: {}
+
+  rfdc@1.4.1: {}
 
   rimraf@2.6.3:
     dependencies:
@@ -16038,6 +16223,8 @@ snapshots:
       for-each: 0.3.3
       is-typed-array: 1.1.12
 
+  typedarray@0.0.6: {}
+
   typescript@4.9.5: {}
 
   ufo@1.3.1: {}
@@ -16351,6 +16538,25 @@ snapshots:
 
   word@0.3.0: {}
 
+  worker-timers-broker@6.1.8:
+    dependencies:
+      '@babel/runtime': 7.25.7
+      fast-unique-numbers: 8.0.13
+      tslib: 2.6.2
+      worker-timers-worker: 7.0.71
+
+  worker-timers-worker@7.0.71:
+    dependencies:
+      '@babel/runtime': 7.25.7
+      tslib: 2.6.2
+
+  worker-timers@7.1.8:
+    dependencies:
+      '@babel/runtime': 7.25.7
+      tslib: 2.6.2
+      worker-timers-broker: 6.1.8
+      worker-timers-worker: 7.0.71
+
   wrap-ansi@6.2.0:
     dependencies:
       ansi-styles: 4.3.0
@@ -16383,6 +16589,8 @@ snapshots:
   ws@7.5.9: {}
 
   ws@8.17.0: {}
+
+  ws@8.18.0: {}
 
   xdm@2.1.0:
     dependencies:
