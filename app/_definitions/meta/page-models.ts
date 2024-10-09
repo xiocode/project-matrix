@@ -90,6 +90,8 @@ import bpm$BpmMyFinishedApprovalListPage from '../models/pages/bpm/BpmMyFinished
 import bpm$BpmMyInitiatedApplicationListPage from '../models/pages/bpm/BpmMyInitiatedApplicationListPage';
 import bpm$BpmMyPendingApprovalListPage from '../models/pages/bpm/BpmMyPendingApprovalListPage';
 import bpm$BpmProcessListPage from '../models/pages/bpm/BpmProcessListPage';
+import inspection$Injection$MomInspectionInjectionSheetDetailsPage from '../models/pages/inspection/Injection/MomInspectionInjectionSheetDetailsPage';
+import inspection$Injection$MomInspectionInjectionSheetList from '../models/pages/inspection/Injection/MomInspectionInjectionSheetList';
 import inspection$MomInspectionCategoryListPage from '../models/pages/inspection/MomInspectionCategoryListPage';
 import inspection$MomInspectionCharacteristicCategoryListPage from '../models/pages/inspection/MomInspectionCharacteristicCategoryListPage';
 import inspection$MomInspectionCharacteristicListPage from '../models/pages/inspection/MomInspectionCharacteristicListPage';
@@ -228,6 +230,8 @@ export default [
   bpm$BpmMyInitiatedApplicationListPage,
   bpm$BpmMyPendingApprovalListPage,
   bpm$BpmProcessListPage,
+  inspection$Injection$MomInspectionInjectionSheetDetailsPage,
+  inspection$Injection$MomInspectionInjectionSheetList,
   inspection$MomInspectionCategoryListPage,
   inspection$MomInspectionCharacteristicCategoryListPage,
   inspection$MomInspectionCharacteristicListPage,
