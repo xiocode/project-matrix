@@ -190,6 +190,11 @@ const page: RapidPage = {
       ],
       columns: [
         {
+          type: "auto",
+          code: "factory",
+          width: "100px",
+        },
+        {
           type: "link",
           code: "code",
           width: "200px",

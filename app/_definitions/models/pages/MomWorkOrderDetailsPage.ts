@@ -88,6 +88,17 @@ const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
       code: "rawMaterial",
     },
+    {
+      type: "auto",
+      code: "lot",
+      formControlProps: {
+        listTextFormat: "{{lotNum}}",
+        listFilterFields: ["lotNum"],
+        columns: [
+          { code: "lotNum", title: "批号", width: 120 },
+        ],
+      },
+    },
   ],
   defaultFormFields: {
     unqualifiedQuantity: 0,
@@ -398,6 +409,11 @@ const page: RapidPage = {
                       href: "$rui.execVarText('/pages/base_material_details?id={{id}}', $slot.value)",
                     },
                   },
+                },
+                {
+                  type: "auto",
+                  code: "lot",
+                  width: "150px",
                 },
                 {
                   type: "auto",
