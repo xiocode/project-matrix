@@ -199,9 +199,9 @@ const formConfig: Partial<RapidEntityFormConfig> = {
 };
 
 const page: RapidPage = {
-  code: "mom_inspection_Injection_sheet_list",
-  name: "注塑检验",
-  title: "注塑检验",
+  code: "mom_prilling_feed_stock_inspection_sheet_list",
+  name: "造粒来料检验",
+  title: "造粒来料检验",
   //@ts-ignore
   parentCode: "mom_inspection_sheet_list",
   view: [
