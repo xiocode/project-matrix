@@ -559,6 +559,14 @@ export interface BaseLot {
    */
   factory?: Partial<MomFactory>;
   /**
+   * 钉钉审批流程实例ID
+   */
+  dingtalkProcessInstanceId?: string;
+  /**
+   * 钉钉审批流程发起人
+   */
+  dingtalkApprovalOriginator?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -8581,6 +8589,10 @@ export interface OcUser {
    * 外部用户编号
    */
   externalUserCode?: string;
+  /**
+   * 钉钉用户ID
+   */
+  dingtalkUserId?: string;
   /**
    * 工厂
    */
