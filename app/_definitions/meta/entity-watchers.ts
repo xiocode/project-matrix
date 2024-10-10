@@ -12,6 +12,7 @@ import mom$MomInventoryApplication from '../models/entity-watchers/mom/MomInvent
 import mom$MomInventoryMaterial from '../models/entity-watchers/mom/MomInventoryMaterial';
 import mom$MomInventoryOperation from '../models/entity-watchers/mom/MomInventoryOperation';
 import mom$MomMaterialLot from '../models/entity-watchers/mom/MomMaterialLot';
+import mom$MomWorkFeed from '../models/entity-watchers/mom/MomWorkFeed';
 import mom$MomWorkOrder from '../models/entity-watchers/mom/MomWorkOrder';
 import mom$MomWorkReport from '../models/entity-watchers/mom/MomWorkReport';
 import mom$MomWorkTask from '../models/entity-watchers/mom/MomWorkTask';
@@ -30,6 +31,7 @@ export default [
   ...mom$MomInventoryMaterial,
   ...mom$MomInventoryOperation,
   ...mom$MomMaterialLot,
+  ...mom$MomWorkFeed,
   ...mom$MomWorkOrder,
   ...mom$MomWorkReport,
   ...mom$MomWorkTask,

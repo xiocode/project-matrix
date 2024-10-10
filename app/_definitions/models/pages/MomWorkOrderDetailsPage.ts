@@ -90,14 +90,7 @@ const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: "auto",
-      code: "lot",
-      formControlProps: {
-        listTextFormat: "{{lotNum}}",
-        listFilterFields: ["lotNum"],
-        columns: [
-          { code: "lotNum", title: "批号", width: 120 },
-        ],
-      },
+      code: "lotNum",
     },
   ],
   defaultFormFields: {
@@ -414,6 +407,9 @@ const page: RapidPage = {
                   type: "auto",
                   code: "lot",
                   width: "150px",
+                  rendererProps: {
+                    format: "{{lotNum}}",
+                  },
                 },
                 {
                   type: "auto",
