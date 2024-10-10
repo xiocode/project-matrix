@@ -12,7 +12,7 @@ export default [
       if (before.hasOwnProperty("lotNum")) {
         const lot = await saveMaterialLotInfo(server, {
           lotNum: before.lotNum,
-          material: before.material,
+          material: before.rawMaterial,
           sourceType: "selfMade",
           qualificationState: "qualified",
           isAOD: false,
