@@ -100,6 +100,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "json",
     },
     {
+      code: "lot",
+      name: "批号信息",
+      type: "relation",
+      targetSingularCode: "base_lot",
+      targetIdColumnName: "lot_id",
+    },
+    {
       code: "factory",
       name: "工厂",
       type: "relation",

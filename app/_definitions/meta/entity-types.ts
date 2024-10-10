@@ -7802,6 +7802,10 @@ export interface MomWorkFeed {
    */
   extra?: Record<string, any>;
   /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
+  /**
    * 工厂
    */
   factory?: Partial<MomFactory>;
@@ -7864,6 +7868,10 @@ export interface MomWorkOrder {
    * 批次号
    */
   lotNum?: string;
+  /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 工艺路线
    */
@@ -8043,6 +8051,10 @@ export interface MomWorkReport {
    * 批次号
    */
   lotNum?: string;
+  /**
+   * 批号信息
+   */
+  lot?: Partial<BaseLot>;
   /**
    * 箱号
    */
