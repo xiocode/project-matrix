@@ -73,6 +73,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_factory",
       targetIdColumnName: "factory_id",
     },
+    {
+      code: "dingtalkProcessInstanceId",
+      name: "钉钉审批流程实例ID",
+      type: "text",
+    },
+    {
+      code: "dingtalkApprovalOriginator",
+      name: "钉钉审批流程发起人",
+      type: "text",
+    },
   ],
 };
 

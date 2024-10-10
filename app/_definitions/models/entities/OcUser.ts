@@ -76,6 +76,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "dingtalkUserId",
+      name: "钉钉用户ID",
+      type: "text",
+    },
+    {
       code: "factory",
       name: "工厂",
       type: "relation",

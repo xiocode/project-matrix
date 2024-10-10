@@ -1,9 +1,9 @@
-import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
+import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import {
   BaseLot,
   MomInspectionMeasurement,
   MomInspectionSheet,
-  MomInventoryApplication
+  MomInventoryApplication, type SaveBaseLotInput
 } from "~/_definitions/meta/entity-types";
 
 export default [
@@ -16,22 +16,18 @@ export default [
       const before = payload.before
       let changes = payload.changes
 
-      if (before.hasOwnProperty('lotNum')) {
-        const lotManager = server.getEntityManager<BaseLot>("base_lot");
-        const lot = await lotManager.findEntity({
-          filters: [
-            { operator: "eq", field: "lotNum", value: before.lotNum },
-            {
-              operator: "eq",
-              field: "material_id",
-              value: before.material?.id || before.material_id
-            }],
-          properties: ["id"],
-        });
+      if (changes.hasOwnProperty('lotNum')) {
+        const lot = await saveMaterialLotInfo(server, {
+          lotNum: before.lotNum,
+          material: {"id": before.material?.id || before.material_id},
+          sourceType: "selfMade",
+          qualificationState: "uninspected",
+          isAOD: false,
+          state: "normal",
+        } as SaveBaseLotInput);
         if (lot) {
           changes.lot = { id: lot?.id };
         }
-
       }
 
       if (changes.hasOwnProperty('approvalState') && changes.approvalState !== before.approvalState) {
@@ -40,6 +36,8 @@ export default [
 
       if (changes.hasOwnProperty('state') && changes.state === 'inspected') {
         changes.inspector = routerContext?.state.userId;
+
+      //   TODO: 对接钉钉审核流程
       }
     },
   },
@@ -52,19 +50,16 @@ export default [
       let before = payload.before
 
       if (before.hasOwnProperty('lotNum')) {
-        const lotManager = server.getEntityManager<BaseLot>("base_lot");
-        const lot = await lotManager.findEntity({
-          filters: [
-            { operator: "eq", field: "lotNum", value: before.lotNum },
-            {
-              operator: "eq",
-              field: "material_id",
-              value: before.material?.id || before.material_id
-            }],
-          properties: ["id"],
-        });
+        const lot = await saveMaterialLotInfo(server, {
+          lotNum: before.lotNum,
+          material: {"id": before.material?.id || before.material_id},
+          sourceType: "selfMade",
+          qualificationState: "uninspected",
+          isAOD: false,
+          state: "normal",
+        } as SaveBaseLotInput);
         if (lot) {
-          before.lot = { id: lot?.id };
+          before.lot_id = lot?.id;
         }
       }
     },
@@ -195,3 +190,20 @@ export default [
     },
   },
 ] satisfies EntityWatcher<any>[];
+
+
+async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
+  if (!lot.lotNum || !lot.material || !lot.material.id) {
+    throw new Error("lotNum and material are required when saving lot info.");
+  }
+
+  const baseLotManager = server.getEntityManager<BaseLot>("base_lot");
+  const lotInDb = await baseLotManager.findEntity({
+    filters: [
+      { operator: "eq", field: "lot_num", value: lot.lotNum },
+      { operator: "eq", field: "material_id", value: lot.material.id },
+    ],
+  });
+
+  return lotInDb || (await baseLotManager.createEntity({ entity: lot }));
+}
