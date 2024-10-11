@@ -5,6 +5,9 @@ import {
   MomInspectionSheet,
   MomInventoryApplication, type SaveBaseLotInput
 } from "~/_definitions/meta/entity-types";
+import KisHelper from "~/sdk/kis/helper";
+import YidaHelper from "~/sdk/yida/helper";
+import YidaApi from "~/sdk/yida/api";
 
 export default [
   {
@@ -19,7 +22,7 @@ export default [
       if (changes.hasOwnProperty('lotNum')) {
         const lot = await saveMaterialLotInfo(server, {
           lotNum: before.lotNum,
-          material: {"id": before.material?.id || before.material || before.material_id},
+          material: { "id": before.material?.id || before.material || before.material_id },
           sourceType: "selfMade",
           qualificationState: "uninspected",
           isAOD: false,
@@ -36,8 +39,6 @@ export default [
 
       if (changes.hasOwnProperty('state') && changes.state === 'inspected') {
         changes.inspector = routerContext?.state.userId;
-
-      //   TODO: 对接钉钉审核流程
       }
     },
   },
@@ -52,7 +53,7 @@ export default [
       if (before.hasOwnProperty('lotNum')) {
         const lot = await saveMaterialLotInfo(server, {
           lotNum: before.lotNum,
-          material: {"id": before.material?.id || before.material || before.material_id},
+          material: { "id": before.material?.id || before.material || before.material_id },
           sourceType: "selfMade",
           qualificationState: "uninspected",
           isAOD: false,
@@ -104,7 +105,22 @@ export default [
             filters: [
               { operator: "eq", field: "sheet_id", value: after.id },
             ],
-            properties: ["id"],
+            properties: ["id", "sheet", "characteristic", "qualitativeValue", "quantitativeValue", "isQualified"],
+            relations: {
+              characteristic: {
+                relations: {
+                  method: true,
+                },
+              },
+              sheet: {
+                properties: ["id", "code", "lotNum", "material", "rule", "result"],
+                relations: {
+                  rule: {
+                    properties: ["id", "name", "category"],
+                  },
+                },
+              },
+            }
           }
         );
 
@@ -117,6 +133,14 @@ export default [
             }
           });
         }
+
+        const yidaSDK = await new YidaHelper(server).NewAPIClient();
+        const yidaAPI = new YidaApi(yidaSDK);
+
+        await yidaAPI.uploadInspectionMeasurements(measurements)
+
+        await yidaAPI.uploadInspectionSheetAudit(measurements)
+
       }
 
       if (after.lotNum && after.material_id) {

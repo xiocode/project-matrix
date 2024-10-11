@@ -107,7 +107,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       code: "gcmsReportFile",
       label: "GCMS报告",
-      required: true,
       type: "auto",
       $exps: {
         _hidden: "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
@@ -117,7 +116,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "reportFile",
       label: "质检报告",
       type: "auto",
-      required: true,
       $exps: {
         _hidden:
           "!($page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '进料检验(泰洋圣)'||$page.getScope('sonicEntityList1-scope').getStore('dataFormItemList-rule').data?.list[0]?.category?.name === '出库检验(泰洋圣)')",
@@ -155,7 +153,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
             active_material_id: changedValues?.material,
           }, true);
         }
-        event.scope.loadStoreData('dataFormItemList-rule');         
+        event.scope.loadStoreData('dataFormItemList-rule');
       `,
     },
   ],
