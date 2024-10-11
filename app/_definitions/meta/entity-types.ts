@@ -9397,6 +9397,73 @@ export interface Webhook {
 export type SaveWebhookInput = Omit<Webhook, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * YidaConfig
+ */
+export interface YidaConfig {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * API Endpoint
+   */
+  yida_api_endpoint?: string;
+  /**
+   * API Endpoint
+   */
+  dingtalk_api_endpoint?: string;
+  /**
+   * client_id
+   */
+  client_id?: string;
+  /**
+   * client_secret
+   */
+  client_secret?: string;
+  /**
+   * uid
+   */
+  uid?: number;
+  /**
+   * access_token
+   */
+  access_token?: string;
+  /**
+   * access_token_expire_in
+   */
+  access_token_expire_in: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * YidaConfig
+ */
+export type SaveYidaConfigInput = Omit<YidaConfig, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * 流程实例
  */
 export interface BpmInstance {

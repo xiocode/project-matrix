@@ -100,7 +100,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "reportFile",
       label: "质检报告",
       type: "auto",
-      required: true,
     },
     {
       type: "auto",
@@ -223,7 +222,7 @@ const page: RapidPage = {
                   active_material_id: materialId,
                 }, true);
               }
-      
+
               event.scope.loadStoreData('searchFormItemList-material');
             `,
           },

@@ -129,6 +129,7 @@ import SysAction from '../models/entities/SysAction';
 import SysActionGroup from '../models/entities/SysActionGroup';
 import SysAuditLog from '../models/entities/SysAuditLog';
 import SysWebhook from '../models/entities/SysWebhook';
+import YidaConfig from '../models/entities/YidaConfig';
 import bpm$BpmInstance from '../models/entities/bpm/BpmInstance';
 import bpm$BpmJob from '../models/entities/bpm/BpmJob';
 import bpm$BpmManualTask from '../models/entities/bpm/BpmManualTask';
@@ -286,6 +287,7 @@ const entityDefinitions = [
   SysActionGroup,
   SysAuditLog,
   SysWebhook,
+  YidaConfig,
   bpm$BpmInstance,
   bpm$BpmJob,
   bpm$BpmManualTask,
@@ -443,6 +445,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(SysActionGroup, entityDefinitions),
   autoConfigureRapidEntity(SysAuditLog, entityDefinitions),
   autoConfigureRapidEntity(SysWebhook, entityDefinitions),
+  autoConfigureRapidEntity(YidaConfig, entityDefinitions),
   autoConfigureRapidEntity(bpm$BpmInstance, entityDefinitions),
   autoConfigureRapidEntity(bpm$BpmJob, entityDefinitions),
   autoConfigureRapidEntity(bpm$BpmManualTask, entityDefinitions),
