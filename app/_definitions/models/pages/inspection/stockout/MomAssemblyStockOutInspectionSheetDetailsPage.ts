@@ -132,6 +132,7 @@ const page: RapidPage = {
             {
               $type: "inspectionMeasurement",
               $exps: {
+                permissionCheck: "htInspectionAssemblyStockOut.manage",
                 entityId: "$rui.parseQuery().id",
               },
             },
