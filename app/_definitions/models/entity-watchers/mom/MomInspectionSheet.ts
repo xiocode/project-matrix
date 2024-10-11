@@ -19,7 +19,7 @@ export default [
       if (changes.hasOwnProperty('lotNum')) {
         const lot = await saveMaterialLotInfo(server, {
           lotNum: before.lotNum,
-          material: {"id": before.material?.id || before.material_id},
+          material: {"id": before.material?.id || before.material || before.material_id},
           sourceType: "selfMade",
           qualificationState: "uninspected",
           isAOD: false,
@@ -52,7 +52,7 @@ export default [
       if (before.hasOwnProperty('lotNum')) {
         const lot = await saveMaterialLotInfo(server, {
           lotNum: before.lotNum,
-          material: {"id": before.material?.id || before.material_id},
+          material: {"id": before.material?.id || before.material || before.material_id},
           sourceType: "selfMade",
           qualificationState: "uninspected",
           isAOD: false,
