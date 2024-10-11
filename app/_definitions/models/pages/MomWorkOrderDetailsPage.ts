@@ -8,20 +8,42 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
       code: "workOrder",
       listDataFindOptions: {
-        properties: ["id", "code",],
+        properties: ["id", "code"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$rui.parseQuery().id",
+        },
       },
+
       formControlProps: {
         listTextFormat: "{{code}}",
         dropdownMatchSelectWidth: 300,
         listFilterFields: ["code"],
-        columns: [
-          { code: "code", title: "编号", width: 120 },
-        ],
+        columns: [{ code: "code", title: "编号", width: 120 }],
       },
     },
     {
       type: "auto",
       code: "process",
+      listDataFindOptions: {
+        properties: ["id", "code", "name"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$stores.detail?.data?.list[0]?.process.id",
+        },
+      },
       formControlProps: {
         dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
@@ -35,6 +57,19 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: "auto",
       code: "equipment",
+      listDataFindOptions: {
+        properties: ["id", "code", "name"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$stores.detail?.data?.list[0]?.equipment.id",
+        },
+      },
       formControlProps: {
         dropdownMatchSelectWidth: 300,
         listTextFormat: "{{code}} {{name}}",
@@ -71,6 +106,10 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
   defaultFormFields: {
     unqualifiedQuantity: 0,
     scrapQuantity: 0,
+    work_order_id: "",
+  },
+  $exps: {
+    "defaultFormFields.work_order_id": "$rui.parseQuery().id",
   },
 };
 
@@ -79,18 +118,77 @@ const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: "auto",
       code: "process",
+      listDataFindOptions: {
+        properties: ["id", "code", "name"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$stores.detail?.data?.list[0]?.process.id",
+        },
+      },
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
+      },
     },
     {
       type: "auto",
       code: "equipment",
+      listDataFindOptions: {
+        properties: ["id", "code", "name"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$stores.detail?.data?.list[0]?.equipment.id",
+        },
+      },
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
+      },
     },
     {
       type: "auto",
       code: "rawMaterial",
+      formControlType: "rawMaterialSelector",
+      formControlProps: {
+        $exps: {
+          materialId: "",
+        },
+      },
+      $exps: {
+        "formControlProps.$exps.materialId": "$stores.detail?.data?.list[0]?.material.id",
+      },
     },
     {
       type: "auto",
-      code: "lotNum",
+      code: "lot",
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{lotNum}}",
+        listFilterFields: ["lotNum"],
+        columns: [{ code: "lotNum", title: "批号", width: 120 }],
+      },
     },
   ],
   defaultFormFields: {
@@ -276,9 +374,15 @@ const page: RapidPage = {
               selectionMode: "none",
               fixedFilters: [
                 {
-                  field: "work_order_id",
-                  operator: "eq",
-                  value: "",
+                  field: "workOrder",
+                  operator: "exists",
+                  filters: [
+                    {
+                      field: "id",
+                      operator: "eq",
+                      value: "",
+                    },
+                  ],
                 },
               ],
               orderBy: [
@@ -349,9 +453,10 @@ const page: RapidPage = {
               ],
               newForm: cloneDeep(reportFormConfig),
               editForm: cloneDeep(reportFormConfig),
+
               $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
-                "newForm.fixedFields.work_order_id": "$rui.parseQuery().id",
+                "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
+                "newForm.defaultFormFields.work_order_id": "$rui.parseQuery().id",
               },
             },
           ],

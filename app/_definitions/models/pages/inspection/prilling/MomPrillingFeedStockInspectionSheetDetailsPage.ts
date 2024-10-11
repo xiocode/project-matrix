@@ -170,7 +170,7 @@ const page: RapidPage = {
             {
               $type: "inspectionMeasurement",
               $exps: {
-                permissionCheck: "xzyInspectionFeedStock.manage	",
+                permissionCheck: "xzyInspectionFeedStock.manage",
                 entityId: "$rui.parseQuery().id",
               },
             },

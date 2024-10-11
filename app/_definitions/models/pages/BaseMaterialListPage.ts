@@ -57,6 +57,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "factory",
+    },
+    {
+      type: "auto",
       code: "state",
     },
   ],

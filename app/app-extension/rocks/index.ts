@@ -39,6 +39,9 @@ import InspectionBadAction from "./insecption-bad-action/InspectionBadAction";
 // render
 import BlockRerenderRock from "./block-rerender-rock/BlockRerenderRock";
 
+// prod
+import RawMaterialSelector from "./raw-material-selector/RawMaterialSelector";
+
 export default [
   Link,
   MaterialLabelRenderer,
@@ -80,4 +83,7 @@ export default [
 
   // render
   BlockRerenderRock,
+
+  //prod
+  RawMaterialSelector,
 ];

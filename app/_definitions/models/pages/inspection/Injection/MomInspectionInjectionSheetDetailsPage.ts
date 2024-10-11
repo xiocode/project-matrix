@@ -8,7 +8,6 @@ const page: RapidPage = {
   parentCode: "mom_inspection_Injection_sheet_list",
   name: "注塑检验单",
   title: "注塑检验单详情",
-
   permissionCheck: { any: [] },
   view: [
     {
