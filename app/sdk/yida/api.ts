@@ -1,5 +1,9 @@
 import YidaSDK from "~/sdk/yida/sdk";
-import {MomInspectionMeasurement} from "~/_definitions/meta/entity-types";
+import {
+  MomInspectionMeasurement,
+  MomRouteProcessParameterMeasurement,
+  MomTransportOperationItem
+} from "~/_definitions/meta/entity-types";
 import {fmtCharacteristicNorminal} from "~/utils/fmt";
 
 class YidaApi {
@@ -9,25 +13,45 @@ class YidaApi {
     this.api = api;
   }
 
-  public async uploadTransmitAudit(input: any) {
+  public async uploadTransmitAudit(inputs: MomTransportOperationItem[]) {
+    let items = inputs.map((item: MomTransportOperationItem) => {
+      return {
+        textField_m25kjnoa: item.material?.name, // 物料
+        textField_m25kjnob: item.lotNum, // 批号
+        textField_m25kjnoc: item.sealNum, // 铅封号
+        textField_m25kjno9: item.quantity, // 数量
+        // imageField_m25l5iri: [ // 铅封号照片
+        //   {
+        //     downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+        //     name: "image.png",
+        //     url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png"
+        //   }
+        // ]
+      }
+    })
+    const transportOperation = inputs[0].operation
+
     let formDataJson = {
-      dateField_lmohm4lg: Date.now(),
-      textareaField_lmohm4lu: "测试",
-      attachmentField_m21e6gqy: [
-        {
-          downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          name: "image.png",
-          url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          ext: "png"
-        }
-      ],
-      imageField_lmohm4lv: [
-        {
-          downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          name: "image.png",
-          url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png"
-        }
-      ]
+      dateField_lmohm4lg: Date.now(), // 申请日期
+      textField_m25kjno6: transportOperation?.code, // 运输单号
+      textField_m25kjno7: transportOperation?.orderNumb, // 订单号
+      textField_m25kjno5: transportOperation?.supplier, // 送货单位
+      tableField_m25kjno8: items, // 明细
+      // attachmentField_m21e6gqy: [
+      //   {
+      //     downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     name: "image.png",
+      //     url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     ext: "png"
+      //   }
+      // ],
+      // imageField_lmohm4lv: [
+      //   {
+      //     downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     name: "image.png",
+      //     url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png"
+      //   }
+      // ]
     }
 
     let formDataJsonStr = JSON.stringify(formDataJson);
@@ -81,7 +105,7 @@ class YidaApi {
   }
 
   public async uploadInspectionSheetAudit(inputs: MomInspectionMeasurement[]) {
-    let measurements = inputs.map((item: any) => {
+    let measurements = inputs.map((item: MomInspectionMeasurement) => {
       return {
         textField_m24c9bpp: item.characteristic?.name || "",
         textField_m24g6498: item.characteristic?.method?.name || "",
@@ -129,6 +153,87 @@ class YidaApi {
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload, true)
     console.log(resp.data)
   }
+
+  public async uploadProductionMeasurementsAudit(inputs: MomRouteProcessParameterMeasurement[]) {
+    let measurements = inputs.map((item: MomRouteProcessParameterMeasurement) => {
+      return {
+        textField_m24c9bpp: item.dimension?.name || "", // 指标
+        textField_m24c9bpq: item.lowerLimit + '~' + item.upperLimit || "",
+        textField_m24c9bpr: item.value || "",
+        textField_m24g6499: item.isOutSpecification ? '正常' : '超差',
+      }
+    })
+
+    const workOrder = inputs[0].workOrder
+
+    let formDataJson = {
+      dateField_lmoh0yyn: Date.now(), // 检验日期
+      textField_m25kpi4f: workOrder?.factory?.name, // 工厂
+      textField_m24c9bps: workOrder?.material?.name, // 检验类型
+      textField_m24g649a: workOrder?.lotNum, // 物料
+      textField_m25kpi4d: workOrder?.process?.name, // 检验记录
+      textField_m25kpi4e: workOrder?.equipment?.name, // 批次
+      tableField_lmoh0yyo: measurements, // 记录
+      attachmentField_lmoh0yyt: [ // 附件
+        {
+          downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+          name: "image.png",
+          url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+          ext: "png"
+        }
+      ]
+    }
+
+    // convert json to string
+    let formDataJsonStr = JSON.stringify(formDataJson);
+
+    let payload =
+      {
+        noExecuteExpression : true,
+        language : "zh_CN",
+        formUuid : "FORM-C615C418035C41E98BB93ED146F0135BLNQG",
+        processCode : "TPROC--83766571L7JOTBP29OBTLCQH06J52329FK52MM1",
+        searchCondition : "[]",
+        appType : "APP_MV044H55941SP5OMR0PI",
+        formDataJson : formDataJsonStr,
+        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId : "68282452959857472",
+        departmentId : "1"
+      }
+    const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload, true)
+    console.log(resp.data)
+  }
+
+  // public async uploadProductionMeasurements(inputs: MomRouteProcessParameterMeasurement[]) {
+  //   for (const input of inputs) {
+  //     let formDataJson = {
+  //       textField_kocks566: input.sheet?.code , // 检验单号
+  //       textField_kpc0di1h: input.sheet?.rule?.category?.name,// 检验类型
+  //       textField_kocks567: input.sheet?.material?.name,// 物料
+  //       textField_kpc0di1l: input.sheet?.rule?.name ,// 检验规则
+  //       textField_kpc0di1i: input.sheet?.lotNum,// 批次
+  //       textField_m245vk9o: input.sheet?.result,// 结果
+  //       textField_m245vk9m: input.characteristic?.name,// 检验特性
+  //       textField_m245vk9q: fmtCharacteristicNorminal(input.characteristic!), // 标准值
+  //       textField_m245vk9r: input.qualitativeValue || input.quantitativeValue,// 检验值
+  //     }
+  //
+  //     let formDataJsonStr = JSON.stringify(formDataJson);
+  //
+  //     let payload = {
+  //       language : "zh_CN",
+  //       formUuid : "FORM-83F40CCD44614D4788A06E61D9765C1D4SDE",
+  //       appType : "APP_MV044H55941SP5OMR0PI",
+  //       formDataJson : formDataJsonStr,
+  //       systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+  //       userId : "68282452959857472"
+  //     }
+  //
+  //     const resp = await this.api.PostResourceRequest("/v1.0/yida/forms/instances", payload, true)
+  //     console.log(resp.data)
+  //   }
+  //
+  // }
 
 }
 
