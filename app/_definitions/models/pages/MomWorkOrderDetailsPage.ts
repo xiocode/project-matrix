@@ -737,7 +737,8 @@ const page: RapidPage = {
               ],
               newForm: cloneDeep(measurementFormConfig),
               $exps: {
-                "fixedFilters[0].value": "$rui.parseQuery().id",
+                "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
+                "newForm.defaultFormFields.work_order_id": "$rui.parseQuery().id",
               },
             },
           ],
