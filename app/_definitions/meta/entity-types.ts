@@ -7515,7 +7515,7 @@ export interface MomTransportOperationItem {
   /**
    * 申请信息
    */
-  operation?: Partial<undefined>;
+  operation?: Partial<MomTransportOperation>;
   /**
    * 跟踪码
    */

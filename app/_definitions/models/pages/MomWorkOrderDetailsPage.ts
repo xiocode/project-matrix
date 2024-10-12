@@ -581,7 +581,25 @@ const page: RapidPage = {
                   value: "",
                 },
               ],
+              listActions: [
+                {
+                  $type: "sonicToolbarNewEntityButton",
+                  text: "新建",
+                  icon: "PlusOutlined",
+                  actionStyle: "primary",
+                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
+              ],
               columns: [
+                {
+                  type: "auto",
+                  code: "dimension",
+                  width: "150px",
+                },
                 {
                   type: "auto",
                   code: "nominal",

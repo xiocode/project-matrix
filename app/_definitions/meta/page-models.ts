@@ -130,6 +130,7 @@ import pm$PmWorkItemListPage from '../models/pages/pm/PmWorkItemListPage';
 import pm$PmWorkItemResolutionListPage from '../models/pages/pm/PmWorkItemResolutionListPage';
 import pm$PmWorkItemTypeDetailsPage from '../models/pages/pm/PmWorkItemTypeDetailsPage';
 import pm$PmWorkItemTypeListPage from '../models/pages/pm/PmWorkItemTypeListPage';
+import prod$tys$MomProdTysDetailsPage from '../models/pages/prod/tys/MomProdTysDetailsPage';
 import prod$tys$MomProdTysSheetList from '../models/pages/prod/tys/MomProdTysSheetList';
 import setting$SystemSettingItemSettingPage from '../models/pages/setting/SystemSettingItemSettingPage';
 import setting$SystemSettingsPage from '../models/pages/setting/SystemSettingsPage';
@@ -271,6 +272,7 @@ export default [
   pm$PmWorkItemResolutionListPage,
   pm$PmWorkItemTypeDetailsPage,
   pm$PmWorkItemTypeListPage,
+  prod$tys$MomProdTysDetailsPage,
   prod$tys$MomProdTysSheetList,
   setting$SystemSettingItemSettingPage,
   setting$SystemSettingsPage,
