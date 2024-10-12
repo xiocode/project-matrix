@@ -304,6 +304,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       selfIdColumnName: "work_task_id",
     },
     {
+      code: "feeds",
+      name: "投料单",
+      type: "relation[]",
+      targetSingularCode: "mom_work_feed",
+      selfIdColumnName: "work_order_id",
+    },
+    {
       code: "factory",
       name: "工厂",
       type: "relation",

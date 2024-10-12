@@ -81,6 +81,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "double",
     },
     {
+      code: "actualStartTime",
+      name: "实际开始时间",
+      type: "datetime",
+    },
+    {
+      code: "actualFinishTime",
+      name: "实际完成时间",
+      type: "datetime",
+    },
+    {
       code: "duration",
       name: "工作时长",
       type: "double",
@@ -106,6 +116,15 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "base_employee",
       linkTableName: "mom_work_report_operators",
       targetIdColumnName: "operator_id",
+      selfIdColumnName: "report_id",
+    },
+    {
+      code: "measurements",
+      name: "数采数据",
+      type: "relation[]",
+      targetSingularCode: "mom_route_process_parameter_measurement",
+      linkTableName: "mom_work_report_measurements",
+      targetIdColumnName: "measurement_id",
       selfIdColumnName: "report_id",
     },
     {

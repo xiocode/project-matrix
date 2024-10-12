@@ -11,22 +11,22 @@ const formConfig: Partial<RapidEntityFormRockConfig> = {
       type: "auto",
       code: "name",
     },
-    {
-      type: "auto",
-      code: "nominal",
-    },
-    {
-      type: "auto",
-      code: "upperLimit",
-    },
-    {
-      type: "auto",
-      code: "lowerLimit",
-    },
-    {
-      type: "auto",
-      code: "config",
-    },
+    // {
+    //   type: "auto",
+    //   code: "nominal",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "upperLimit",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "lowerLimit",
+    // },
+    // {
+    //   type: "auto",
+    //   code: "config",
+    // },
   ],
 };
 
@@ -40,14 +40,10 @@ const page: RapidPage = {
   view: [
     {
       $type: "rapidEntityForm",
-      entityCode: "MomEquipment",
+      entityCode: "MomEquipmentCategory",
       mode: "view",
       column: 3,
       items: [
-        {
-          type: "auto",
-          code: "factory",
-        },
         {
           type: "auto",
           code: "code",
@@ -113,18 +109,18 @@ const page: RapidPage = {
                   type: "auto",
                   code: "name",
                 },
-                {
-                  type: "auto",
-                  code: "nominal",
-                },
-                {
-                  type: "auto",
-                  code: "upperLimit",
-                },
-                {
-                  type: "auto",
-                  code: "lowerLimit",
-                },
+                // {
+                //   type: "auto",
+                //   code: "nominal",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "upperLimit",
+                // },
+                // {
+                //   type: "auto",
+                //   code: "lowerLimit",
+                // },
               ],
               actions: [
                 {

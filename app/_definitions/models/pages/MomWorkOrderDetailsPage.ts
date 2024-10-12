@@ -102,6 +102,18 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
         ],
       },
     },
+    {
+      type: "auto",
+      code: "actualStartTime",
+    },
+    {
+      type: "auto",
+      code: "actualFinishTime",
+    },
+    {
+      type: "auto",
+      code: "duration",
+    },
   ],
   defaultFormFields: {
     unqualifiedQuantity: 0,
@@ -475,6 +487,7 @@ const page: RapidPage = {
                   field: "id",
                 },
               ],
+              extraProperties: ["workOrder"],
               listActions: [
                 {
                   $type: "sonicToolbarNewEntityButton",
@@ -490,10 +503,30 @@ const page: RapidPage = {
               ],
               columns: [
                 {
-                  type: "auto",
+                  type: "link",
                   code: "createdAt",
-                  title: "报工时间",
-                  width: "150px",
+                  width: "200px",
+                  fixed: "left",
+                  rendererType: "link",
+                  rendererProps: {
+                    url: "/pages/mom_work_report_details?workOrderId={{workOrder.id}}&workReportId={{id}}",
+                  },
+                },
+                {
+                  type: "auto",
+                  code: "serialNum",
+                },
+                {
+                  type: "auto",
+                  code: "actualStartTime",
+                },
+                {
+                  type: "auto",
+                  code: "actualFinishTime",
+                },
+                {
+                  type: "auto",
+                  code: "duration",
                 },
                 {
                   type: "auto",
@@ -737,8 +770,8 @@ const page: RapidPage = {
               ],
               newForm: cloneDeep(measurementFormConfig),
               $exps: {
-                "fixedFilters[0].filters[0].value": "$rui.parseQuery().id",
-                "newForm.defaultFormFields.work_order_id": "$rui.parseQuery().id",
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+                "newForm.fixedFields.work_order_id": "$rui.parseQuery().id",
               },
             },
           ],

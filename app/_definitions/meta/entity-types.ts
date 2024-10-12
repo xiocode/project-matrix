@@ -7933,6 +7933,10 @@ export interface MomWorkOrder {
    */
   inspectionSheets?: any;
   /**
+   * 投料单
+   */
+  feeds?: any;
+  /**
    * 工厂
    */
   factory?: Partial<MomFactory>;
@@ -8032,6 +8036,14 @@ export interface MomWorkReport {
    */
   scrapQuantity?: number;
   /**
+   * 实际开始时间
+   */
+  actualStartTime?: string;
+  /**
+   * 实际完成时间
+   */
+  actualFinishTime?: string;
+  /**
    * 工作时长
    */
   duration?: number;
@@ -8047,6 +8059,10 @@ export interface MomWorkReport {
    * 操作工
    */
   operators?: any;
+  /**
+   * 数采数据
+   */
+  measurements?: any;
   /**
    * 其它信息
    */
