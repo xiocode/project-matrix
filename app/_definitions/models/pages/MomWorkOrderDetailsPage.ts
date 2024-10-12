@@ -197,6 +197,91 @@ const feedFormConfig: Partial<RapidEntityFormRockConfig> = {
   },
 };
 
+
+const measurementFormConfig: Partial<RapidEntityFormRockConfig> = {
+  items: [
+    {
+      type: "auto",
+      code: "process",
+      listDataFindOptions: {
+        properties: ["id", "code", "name"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$stores.detail?.data?.list[0]?.process.id",
+        },
+      },
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
+      },
+    },
+    {
+      type: "auto",
+      code: "equipment",
+      listDataFindOptions: {
+        properties: ["id", "code", "name"],
+        fixedFilters: [
+          {
+            field: "id",
+            operator: "eq",
+            value: "",
+          },
+        ],
+        $exps: {
+          "fixedFilters[0].value": "$stores.detail?.data?.list[0]?.equipment.id",
+        },
+      },
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
+      },
+    },
+    {
+      type: "auto",
+      code: "dimension",
+    },
+    {
+      type: "auto",
+      code: "nominal",
+    },
+    {
+      type: "auto",
+      code: "upperLimit",
+    },
+    {
+      type: "auto",
+      code: "lowerLimit",
+    },
+    {
+      type: "auto",
+      code: "value",
+    },
+    {
+      type: "auto",
+      code: "isOutSpecification",
+    }
+  ],
+  defaultFormFields: {
+    isOutSpecification: false,
+  },
+};
+
 const page: RapidPage = {
   code: "mom_work_order_details",
   //@ts-ignore
@@ -599,6 +684,25 @@ const page: RapidPage = {
                   type: "auto",
                   code: "dimension",
                   width: "150px",
+                  rendererProps: {
+                    format: "{{name}}",
+                  }
+                },
+                {
+                  type: "auto",
+                  code: "process",
+                  width: "150px",
+                  rendererProps: {
+                    format: "{{code}}-{{name}}",
+                  }
+                },
+                {
+                  type: "auto",
+                  code: "equipment",
+                  width: "150px",
+                  rendererProps: {
+                    format: "{{code}}-{{name}}",
+                  }
                 },
                 {
                   type: "auto",
@@ -631,6 +735,7 @@ const page: RapidPage = {
                   width: "150px",
                 },
               ],
+              newForm: cloneDeep(measurementFormConfig),
               $exps: {
                 "fixedFilters[0].value": "$rui.parseQuery().id",
               },
