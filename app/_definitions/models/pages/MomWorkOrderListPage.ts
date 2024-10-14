@@ -206,6 +206,11 @@ const page: RapidPage = {
         },
         {
           type: "auto",
+          code: "lotNum",
+          width: "100px",
+        },
+        {
+          type: "auto",
           code: "material",
           fixed: "left",
           rendererType: "anchor",

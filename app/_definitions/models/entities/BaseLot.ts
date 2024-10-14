@@ -83,6 +83,21 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "钉钉审批流程发起人",
       type: "text",
     },
+    {
+      code: "ventilationStartTime",
+      name: "通风开始时间",
+      type: "datetime",
+    },
+    {
+      code: "ventilationFinishTime",
+      name: "通风结束时间",
+      type: "datetime",
+    },
+    {
+      code: "ventilationDuration",
+      name: "通风时长",
+      type: "integer",
+    },
   ],
 };
 
