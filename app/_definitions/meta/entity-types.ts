@@ -567,6 +567,18 @@ export interface BaseLot {
    */
   dingtalkApprovalOriginator?: string;
   /**
+   * 通风开始时间
+   */
+  ventilationStartTime?: string;
+  /**
+   * 通风结束时间
+   */
+  ventilationFinishTime?: string;
+  /**
+   * 通风时长
+   */
+  ventilationDuration?: number;
+  /**
    * 创建时间
    */
   createdAt?: string;

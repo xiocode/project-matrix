@@ -1,5 +1,5 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import type {MomWorkFeed} from "~/_definitions/meta/entity-types";
+import type {MomWorkFeed, MomWorkOrder} from "~/_definitions/meta/entity-types";
 
 export default [
   {
@@ -8,6 +8,21 @@ export default [
     handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
       const { server, payload } = ctx;
       const { before } = payload;
+
+      // 判断当前是否有正在运行中的工单，报错提示已经有正在运行中的工单
+      const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
+      const workOrder = await workOrderManager.findEntity({
+        filters: [
+          { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
+          { operator: "eq", field: "equipment_id", value: before.equipment.id || before.equipment || before.equipment_id },
+          { operator: "eq", field: "executionState", "value": "processing" },
+        ],
+        properties: ["id"]
+      });
+
+      if (workOrder) {
+        throw new Error("当前设备已有正在运行中的工单,请完成后再创建工单。");
+      }
 
       try {
         const process = await server.getEntityManager("mom_process").findEntity({
@@ -20,8 +35,6 @@ export default [
         if (process && process.factory) {
           before.factory_id = process.factory?.id
         }
-
-
       } catch (error) {
         console.error(error);
       }
