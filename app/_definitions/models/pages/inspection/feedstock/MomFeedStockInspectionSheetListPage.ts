@@ -399,29 +399,29 @@ const page: RapidPage = {
           code: "lotNum",
           width: "150px",
         },
-        {
-          type: "auto",
-          code: "inventoryOperation",
-          width: "150px",
-          rendererProps: {
-            format: "{{code}}",
-          },
-        },
-        {
-          type: "auto",
-          code: "acceptQuantity",
-          width: "100px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "inventoryOperation",
+        //   width: "150px",
+        //   rendererProps: {
+        //     format: "{{code}}",
+        //   },
+        // },
+        // {
+        //   type: "auto",
+        //   code: "acceptQuantity",
+        //   width: "100px",
+        // },
         {
           type: "auto",
           code: "result",
           width: "150px",
         },
-        {
-          type: "auto",
-          code: "treatment",
-          width: "100px",
-        },
+        // {
+        //   type: "auto",
+        //   code: "treatment",
+        //   width: "100px",
+        // },
         {
           type: "auto",
           code: "sender",
