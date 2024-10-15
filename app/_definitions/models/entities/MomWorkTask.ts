@@ -105,16 +105,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "date",
     },
     {
-      code: "actualStartDate",
-      name: "实际开始日期",
-      type: "date",
-    },
-    {
-      code: "actualFinishDate",
-      name: "实际完成日期",
-      type: "date",
-    },
-    {
       code: "quantity",
       name: "数量",
       type: "double",
@@ -197,6 +187,23 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_factory",
       targetIdColumnName: "factory_id",
+    },
+    {
+      code: "equipment",
+      name: "设备",
+      type: "relation",
+      targetSingularCode: "mom_equipment",
+      targetIdColumnName: "equipment_id",
+    },
+    {
+      code: "actualStartTime",
+      name: "实际开始时间",
+      type: "datetime",
+    },
+    {
+      code: "actualFinishTime",
+      name: "实际完成时间",
+      type: "datetime",
     },
   ],
 };

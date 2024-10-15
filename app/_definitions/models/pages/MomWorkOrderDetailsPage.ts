@@ -776,6 +776,95 @@ const page: RapidPage = {
             },
           ],
         },
+        {
+          key: "tasks",
+          label: "排工记录",
+          children: [
+            {
+              $type: "sonicEntityList",
+              entityCode: "MomWorkTask",
+              viewMode: "table",
+              selectionMode: "none",
+              fixedFilters: [
+                {
+                  field: "work_order_id",
+                  operator: "eq",
+                  value: "",
+                },
+              ],
+              listActions: [
+                {
+                  $type: "sonicToolbarNewEntityButton",
+                  text: "新建",
+                  icon: "PlusOutlined",
+                  actionStyle: "primary",
+                },
+                // {
+                //   $type: "sonicToolbarRefreshButton",
+                //   text: "刷新",
+                //   icon: "ReloadOutlined",
+                // },
+              ],
+              columns: [
+                {
+                  type: "auto",
+                  code: "equipment",
+                  width: "150px",
+                  fixed: "left",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
+                {
+                  type: "auto",
+                  code: "process",
+                  width: "150px",
+                  fixed: "left",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
+                },
+                {
+                  type: "auto",
+                  code: "actualStartTime",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "actualFinishTime",
+                  width: "150px",
+                },
+                {
+                  type: "auto",
+                  code: "executionState",
+                  width: "150px",
+                },
+              ],
+              actions: [
+                {
+                  $type: "sonicRecordActionEditEntity",
+                  code: "edit",
+                  actionType: "edit",
+                  actionText: "修改",
+                },
+                {
+                  $type: "sonicRecordActionDeleteEntity",
+                  code: "delete",
+                  actionType: "delete",
+                  actionText: "删除",
+                  dataSourceCode: "list",
+                  entityCode: "MomWorkTask",
+                },
+              ],
+              newForm: cloneDeep(feedFormConfig),
+              editForm: cloneDeep(feedFormConfig),
+              $exps: {
+                "fixedFilters[0].value": "$rui.parseQuery().id",
+                "newForm.fixedFields.work_order_id": "$rui.parseQuery().id",
+              },
+            },
+          ],
+        },
       ],
     },
   ],
