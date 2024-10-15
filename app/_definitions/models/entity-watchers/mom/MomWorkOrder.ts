@@ -14,11 +14,6 @@ export default [
       const workOrder = await workOrderManager.findEntity({
         filters: [
           { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
-          {
-            operator: "eq",
-            field: "equipment_id",
-            value: before.equipment.id || before.equipment || before.equipment_id
-          },
           { operator: "eq", field: "executionState", "value": "processing" },
         ],
         properties: ["id"]
@@ -96,11 +91,6 @@ export default [
         const workFeeds = await workFeedManager.findEntities({
           filters: [
             { operator: "eq", field: "process_id", value: after.process.id || after.process || after.process_id },
-            {
-              operator: "eq",
-              field: "equipment_id",
-              value: after.equipment.id || after.equipment || after.equipment_id
-            },
             { operator: "null", field: "workOrder" },
           ],
         });
