@@ -171,8 +171,8 @@ class YidaApi {
       textField_m25kpi4f: workOrder?.factory?.name, // 工厂
       textField_m24c9bps: workOrder?.material?.name, // 检验类型
       textField_m24g649a: workOrder?.lotNum, // 物料
-      textField_m25kpi4d: workOrder?.process?.name, // 检验记录
-      textField_m25kpi4e: workOrder?.equipment?.name, // 批次
+      // textField_m25kpi4d: workOrder?.process?.name, // 检验记录
+      // textField_m25kpi4e: workOrder?.equipment?.name, // 批次
       tableField_lmoh0yyo: measurements, // 记录
       attachmentField_lmoh0yyt: [ // 附件
         {

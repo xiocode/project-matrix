@@ -357,13 +357,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_process",
       targetIdColumnName: "process_id",
     },
-    {
-      code: "equipment",
-      name: "设备",
-      type: "relation",
-      targetSingularCode: "mom_equipment",
-      targetIdColumnName: "equipment_id",
-    },
   ],
 };
 

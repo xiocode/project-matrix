@@ -7957,10 +7957,6 @@ export interface MomWorkOrder {
    */
   process?: Partial<MomProcess>;
   /**
-   * 设备
-   */
-  equipment?: Partial<MomEquipment>;
-  /**
    * 创建时间
    */
   createdAt?: string;
@@ -8179,14 +8175,6 @@ export interface MomWorkTask {
    */
   scheduledFinishDate?: string;
   /**
-   * 实际开始日期
-   */
-  actualStartDate?: string;
-  /**
-   * 实际完成日期
-   */
-  actualFinishDate?: string;
-  /**
    * 数量
    */
   quantity?: number;
@@ -8238,6 +8226,18 @@ export interface MomWorkTask {
    * 工厂
    */
   factory?: Partial<MomFactory>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
+   * 实际开始时间
+   */
+  actualStartTime?: string;
+  /**
+   * 实际完成时间
+   */
+  actualFinishTime?: string;
   /**
    * 创建时间
    */
