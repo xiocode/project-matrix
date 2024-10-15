@@ -1,27 +1,26 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
+import type {MomWorkTask} from "~/_definitions/meta/entity-types";
 
 export default [
-  // {
-  //   eventName: "entity.beforeCreate",
-  //   modelSingularCode: "mom_work_report",
-  //   handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
-  //     const { server, payload } = ctx;
-  //     let before = payload.before;
-  //
-  //     const routeProcess = await server.getEntityManager("mom_route_process").findEntity({
-  //       filters: [
-  //         { operator: "eq", field: "id", value: before.routeProcess },
-  //       ],
-  //       properties: ["id", "process"]
-  //
-  //     });
-  //
-  //     if (routeProcess) {
-  //       before.process_id = routeProcess?.process?.id
-  //     }
-  //
-  //   }
-  // },
+  {
+    eventName: "entity.beforeCreate",
+    modelSingularCode: "mom_work_report",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeCreate">) => {
+      const { server, payload } = ctx;
+      let before = payload.before;
+
+      const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
+        filters: [
+          { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
+          { operator: "eq", field: "equipment_id", value: before.equipment.id || before.equipment || before.equipment_id },
+          { operator: "eq", field: "work_order_id", value: before.workOrder.id || before.workOrder || before.work_order_id },
+        ],
+      });
+      if (workTask) {
+        before.work_task_id = workTask.id;
+      }
+    }
+  },
   {
     eventName: "entity.create",
     modelSingularCode: "mom_work_report",
