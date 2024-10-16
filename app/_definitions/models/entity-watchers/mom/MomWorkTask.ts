@@ -1,6 +1,7 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
 import type {MomWorkOrder, MomWorkTask, SaveMomWorkOrderInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
+import IotHelper from "~/sdk/iot/helper";
 
 export default [
   {
@@ -36,6 +37,27 @@ export default [
     }
   },
   {
+    eventName: "entity.create",
+    modelSingularCode: "mom_work_task",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
+      const { server, payload } = ctx;
+      let after = payload.after;
+
+      // TODO: 上报设备当前任务
+      // let deviceTaskPayload = {
+      //   workOrder: after.code,
+      //   equipment: after.equipment.code,
+      //   process: after.process.code,
+      //   material: after.material.code,
+      // };
+      //
+      // const iotSDK = await new IotHelper(server).NewAPIClient();
+      // await iotSDK.PostResourceRequest("http://127.0.0.1:8080/api/v1/device/task", deviceTaskPayload);
+
+
+    }
+  },
+  {
     eventName: "entity.update",
     modelSingularCode: "mom_work_task",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
@@ -44,6 +66,8 @@ export default [
 
 
       if (changes.hasOwnProperty("executionState") && changes.executionState === "completed") {
+        // TODO: 处理如果当前工单多个工序，只处理最后一个工序
+
         const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
           filters: [
             { operator: "eq", field: "id", value: before.id },
@@ -61,6 +85,17 @@ export default [
             }
           })
         }
+
+        // TODO: 上报设备当前任务
+        // let deviceTaskPayload = {
+        //   workOrder: after.code,
+        //   equipment: after.equipment.code,
+        //   process: after.process.code,
+        //   material: after.material.code,
+        // };
+        //
+        // const iotSDK = await new IotHelper(server).NewAPIClient();
+        // await iotSDK.PostResourceRequest("http://127.0.0.1:8080/api/v1/device/task", deviceTaskPayload);
       }
     }
   },
