@@ -44,6 +44,7 @@ export default [
           });
           if (lot) {
             before.lot_id = lot.id;
+            before.lotNum = lot.lotNum;
           }
         }
       }
