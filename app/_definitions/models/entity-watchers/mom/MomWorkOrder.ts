@@ -1,5 +1,6 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
 import type {MomWorkFeed, MomWorkOrder, MomWorkTask, SaveMomWorkTaskInput} from "~/_definitions/meta/entity-types";
+import dayjs from "dayjs";
 
 export default [
   {
@@ -55,6 +56,8 @@ export default [
       if (before.hasOwnProperty("equipment_id")) {
         delete before.equipment_id;
       }
+
+      before.actualStartDate = dayjs().format("YYYY-MM-DD");
     },
   },
   {
@@ -91,6 +94,11 @@ export default [
         const workFeeds = await workFeedManager.findEntities({
           filters: [
             { operator: "eq", field: "process_id", value: after.process.id || after.process || after.process_id },
+            // {
+            //   operator: "eq",
+            //   field: "equipment_id",
+            //   value: after.equipment.id || after.equipment || after.equipment_id
+            // },
             { operator: "null", field: "workOrder" },
           ],
         });

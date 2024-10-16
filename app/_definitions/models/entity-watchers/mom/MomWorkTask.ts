@@ -1,5 +1,6 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
 import type {MomWorkOrder, MomWorkTask, SaveMomWorkOrderInput} from "~/_definitions/meta/entity-types";
+import dayjs from "dayjs";
 
 export default [
   {
@@ -56,6 +57,7 @@ export default [
             id: workTask.workOrder.id,
             entityToSave: {
               executionState: 'completed',
+              actualFinishDate: dayjs().format("YYYY-MM-DD"),
             }
           })
         }
