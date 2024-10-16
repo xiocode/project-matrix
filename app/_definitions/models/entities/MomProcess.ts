@@ -62,6 +62,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "material_id",
       selfIdColumnName: "process_id",
     },
+    {
+      code: "config",
+      name: "配置",
+      type: "json",
+    },
   ],
 };
 

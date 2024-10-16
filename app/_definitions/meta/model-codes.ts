@@ -1735,6 +1735,7 @@ const entityFieldCodes = {
     'standardCycleTime',
     'equipments',
     'outputs',
+    'config',
     'createdAt',
     'createdBy',
     'updatedAt',

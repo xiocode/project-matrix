@@ -1,6 +1,7 @@
 import type { TDictionaryCodes } from "../../meta/data-dictionary-codes";
 import type { TEntitySingularCodes } from "../../meta/model-codes";
 import type { RapidEntity } from "@ruiapp/rapid-extension";
+import type {PropertySequenceConfig} from "@ruiapp/rapid-core";
 
 const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   namespace: "app",
@@ -19,6 +20,39 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "lotNum",
       name: "批次号",
       type: "text",
+      config: {
+        sequence: {
+          enabled: true,
+          config: {
+            segments: [
+              {
+                type: "literal",
+                content: "LOT-"
+              },
+              {
+                type: "year",
+                length: 4,
+              },
+              {
+                type: "month",
+                length: 2,
+                padding: "0",
+              },
+              {
+                type: "dayOfMonth",
+                length: 2,
+                padding: "0",
+              },
+              {
+                type: "autoIncrement",
+                scope: "",
+                period: "day",
+                length: 3,
+              },
+            ],
+          },
+        } satisfies PropertySequenceConfig,
+      },
     },
     {
       code: "sourceType",

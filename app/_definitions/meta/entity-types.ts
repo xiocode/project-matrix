@@ -6643,6 +6643,10 @@ export interface MomProcess {
    */
   outputs?: any;
   /**
+   * 配置
+   */
+  config?: Record<string, any>;
+  /**
    * 创建时间
    */
   createdAt?: string;

@@ -15,6 +15,7 @@ import mom$MomMaterialLot from '../models/entity-watchers/mom/MomMaterialLot';
 import mom$MomWorkFeed from '../models/entity-watchers/mom/MomWorkFeed';
 import mom$MomWorkOrder from '../models/entity-watchers/mom/MomWorkOrder';
 import mom$MomWorkReport from '../models/entity-watchers/mom/MomWorkReport';
+import mom$MomWorkReportMeasurments from '../models/entity-watchers/mom/MomWorkReportMeasurments';
 import mom$MomWorkTask from '../models/entity-watchers/mom/MomWorkTask';
 
 export default [
@@ -34,5 +35,6 @@ export default [
   ...mom$MomWorkFeed,
   ...mom$MomWorkOrder,
   ...mom$MomWorkReport,
+  ...mom$MomWorkReportMeasurments,
   ...mom$MomWorkTask,
 ] as TEntityWatcherType[];
