@@ -31,6 +31,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "orderNum",
     },
+    {
+      type: "auto",
+      code: "config",
+    },
   ],
 };
 

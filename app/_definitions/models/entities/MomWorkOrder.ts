@@ -73,7 +73,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
       config: {
         sequence: {
-          enabled: true,
+          enabled: false,
           config: {
             segments: [
               {
