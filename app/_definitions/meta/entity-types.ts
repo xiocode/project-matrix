@@ -545,7 +545,7 @@ export interface BaseLot {
   /**
    * 是否让步接收
    */
-  isAOD: boolean;
+  isAOD?: boolean;
   /**
    * 状态
    */
