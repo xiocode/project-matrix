@@ -85,7 +85,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "isAOD",
       name: "是否让步接收",
       type: "boolean",
-      required: true,
       defaultValue: "false",
     },
     {

@@ -68,10 +68,7 @@ const page: RapidPage = {
           field: "createdAt",
         },
       ],
-      convertListToTree: true,
-      listParentField: "parent.id",
       pageSize: -1,
-      extraProperties: ["parent"],
       columns: [
         // {
         //   type: "auto",

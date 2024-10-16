@@ -22,22 +22,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         ],
       },
     },
-    {
-      type: "auto",
-      code: "sourceType",
-    },
-    {
-      type: "date",
-      code: "manufactureDate",
-    },
-    {
-      type: "auto",
-      code: "qualificationState",
-    },
-    {
-      type: "auto",
-      code: "isAOD",
-    },
   ],
 };
 
@@ -105,30 +89,8 @@ const page: RapidPage = {
         },
         {
           type: "auto",
-          code: "sourceType",
-          width: "100px",
-        },
-        {
-          type: "auto",
-          code: "manufactureDate",
-          width: "100px",
-          fieldType: "date",
-        },
-        {
-          type: "auto",
-          code: "expireTime",
-          width: "150px",
-          fieldType: "date",
-        },
-        {
-          type: "auto",
           code: "qualificationState",
           width: "100px",
-        },
-        {
-          type: "auto",
-          code: "isAOD",
-          width: "120px",
         },
         {
           type: "auto",
