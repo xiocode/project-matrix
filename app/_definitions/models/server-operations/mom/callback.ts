@@ -1,6 +1,10 @@
 import type {ActionHandlerContext, ServerOperation} from "@ruiapp/rapid-core";
 
 export type CallbackInput = {
+  machine: any,
+  runtimeFields: any
+  activityFields: any
+  attributeFields: any
 };
 
 export default {
@@ -11,8 +15,5 @@ export default {
     const input: CallbackInput = ctx.input;
 
 
-    ctx.output = {
-      result: ctx.input,
-    };
   },
 } satisfies ServerOperation;

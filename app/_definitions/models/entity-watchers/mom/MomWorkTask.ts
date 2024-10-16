@@ -72,10 +72,18 @@ export default [
           filters: [
             { operator: "eq", field: "id", value: before.id },
           ],
-          properties: ["id", "workOrder"],
+          properties: ["id", "workOrder", "process"],
         })
 
-        if (workTask && workTask.workOrder) {
+        let needFinish = false;
+        if (workTask?.process) {
+          if (workTask.process.equipments && workTask.process.equipments.length === 1) {
+            needFinish = true; // needFinish
+          }
+        }
+
+
+        if (workTask && workTask?.workOrder && needFinish) {
           const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
           await workOrderManager.updateEntityById({
             id: workTask.workOrder.id,
