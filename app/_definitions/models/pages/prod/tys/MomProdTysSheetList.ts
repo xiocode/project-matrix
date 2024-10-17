@@ -47,28 +47,28 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         ],
       },
     },
-    {
-      type: "auto",
-      code: "equipment",
-      listDataFindOptions: {
-        fixedFilters: [
-          {
-            field: "factory",
-            operator: "exists",
-            filters: [
-              {
-                field: "code",
-                operator: "eq",
-                value: "05",
-              },
-            ],
-          },
-        ],
-        $exps: {
-          "fixedFilters[0].filters[0]?.value": "$scope.vars.active_process_id",
-        },
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "equipment",
+    //   listDataFindOptions: {
+    //     fixedFilters: [
+    //       {
+    //         field: "factory",
+    //         operator: "exists",
+    //         filters: [
+    //           {
+    //             field: "code",
+    //             operator: "eq",
+    //             value: "05",
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //     $exps: {
+    //       "fixedFilters[0].filters[0]?.value": "$scope.vars.active_process_id",
+    //     },
+    //   },
+    // },
     {
       type: "auto",
       code: "material",

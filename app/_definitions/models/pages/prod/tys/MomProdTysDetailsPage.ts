@@ -221,6 +221,7 @@ const page: RapidPage = {
                   type: "cancelOrder",
                 },
                 $stateProperties: ["executionState"],
+                executionState: "canceled",
               },
               $exps: {
                 url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
@@ -255,6 +256,7 @@ const page: RapidPage = {
                   type: "completeOrder",
                 },
                 $stateProperties: ["executionState"],
+                executionState: "completed",
               },
               $exps: {
                 url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
@@ -346,10 +348,10 @@ const page: RapidPage = {
           type: "auto",
           code: "process",
         },
-        {
-          type: "auto",
-          code: "equipment",
-        },
+        // {
+        //   type: "auto",
+        //   code: "equipment",
+        // },
         {
           type: "auto",
           code: "executionState",
