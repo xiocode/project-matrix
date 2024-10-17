@@ -31,6 +31,7 @@ import FinAccount from '../models/entities/FinAccount';
 import FinBusinessCategory from '../models/entities/FinBusinessCategory';
 import FinExpenseCategory from '../models/entities/FinExpenseCategory';
 import FinTransaction from '../models/entities/FinTransaction';
+import HuateGCMS from '../models/entities/HuateGCMS';
 import KisConfig from '../models/entities/KisConfig';
 import MetaDataDictionary from '../models/entities/MetaDataDictionary';
 import MetaDataDictionaryEntry from '../models/entities/MetaDataDictionaryEntry';
@@ -189,6 +190,7 @@ const entityDefinitions = [
   FinBusinessCategory,
   FinExpenseCategory,
   FinTransaction,
+  HuateGCMS,
   KisConfig,
   MetaDataDictionary,
   MetaDataDictionaryEntry,
@@ -347,6 +349,7 @@ const configuredEntities:TRapidEntity[] = [
   autoConfigureRapidEntity(FinBusinessCategory, entityDefinitions),
   autoConfigureRapidEntity(FinExpenseCategory, entityDefinitions),
   autoConfigureRapidEntity(FinTransaction, entityDefinitions),
+  autoConfigureRapidEntity(HuateGCMS, entityDefinitions),
   autoConfigureRapidEntity(KisConfig, entityDefinitions),
   autoConfigureRapidEntity(MetaDataDictionary, entityDefinitions),
   autoConfigureRapidEntity(MetaDataDictionaryEntry, entityDefinitions),

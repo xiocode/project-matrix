@@ -204,36 +204,39 @@ class YidaApi {
     console.log(resp.data)
   }
 
-  // public async uploadProductionMeasurements(inputs: MomRouteProcessParameterMeasurement[]) {
-  //   for (const input of inputs) {
-  //     let formDataJson = {
-  //       textField_kocks566: input.sheet?.code , // 检验单号
-  //       textField_kpc0di1h: input.sheet?.rule?.category?.name,// 检验类型
-  //       textField_kocks567: input.sheet?.material?.name,// 物料
-  //       textField_kpc0di1l: input.sheet?.rule?.name ,// 检验规则
-  //       textField_kpc0di1i: input.sheet?.lotNum,// 批次
-  //       textField_m245vk9o: input.sheet?.result,// 结果
-  //       textField_m245vk9m: input.characteristic?.name,// 检验特性
-  //       textField_m245vk9q: fmtCharacteristicNorminal(input.characteristic!), // 标准值
-  //       textField_m245vk9r: input.qualitativeValue || input.quantitativeValue,// 检验值
-  //     }
-  //
-  //     let formDataJsonStr = JSON.stringify(formDataJson);
-  //
-  //     let payload = {
-  //       language : "zh_CN",
-  //       formUuid : "FORM-83F40CCD44614D4788A06E61D9765C1D4SDE",
-  //       appType : "APP_MV044H55941SP5OMR0PI",
-  //       formDataJson : formDataJsonStr,
-  //       systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
-  //       userId : "68282452959857472"
-  //     }
-  //
-  //     const resp = await this.api.PostResourceRequest("/v1.0/yida/forms/instances", payload, true)
-  //     console.log(resp.data)
-  //   }
-  //
-  // }
+  public async uploadProductionMeasurements(inputs: MomRouteProcessParameterMeasurement[]) {
+    for (const input of inputs) {
+      let formDataJson = {
+        textField_m25kshxc: input.workOrder?.factory?.code , // 工厂
+        textField_kocks567: input.workOrder?.material,// 物料
+        textField_m25kshxd: input.process?.name,// 工序
+        textField_m25kshxe: input.equipment?.name ,// 设备
+        textField_kpc0di1i: input.workReport?.lotNum,// 批次
+        textField_m25kshxg: input.workOrder?.code,// 工单号
+        textField_m245vk9m: input.dimension?.name,// 指标
+        textField_m245vk9q: input.nominal, // 标准值
+        textField_m2copt7z: input.upperLimit, // 上限
+        textField_m2copt80: input.lowerLimit, // 下限
+        textField_m245vk9r: input.value,// 检验值
+        textField_m2copt81: input.isOutSpecification ? '正常' : '超差',
+      }
+
+      let formDataJsonStr = JSON.stringify(formDataJson);
+
+      let payload = {
+        language : "zh_CN",
+        formUuid : "FORM-E53DDB7DAD344410AB53826F04074EC1LHIN",
+        appType : "APP_MV044H55941SP5OMR0PI",
+        formDataJson : formDataJsonStr,
+        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId : "68282452959857472"
+      }
+
+      const resp = await this.api.PostResourceRequest("/v1.0/yida/forms/instances", payload, true)
+      console.log(resp.data)
+    }
+
+  }
 
 }
 

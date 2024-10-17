@@ -10,6 +10,11 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "category",
+      label: "设备类型"
+    },
+    {
+      type: "auto",
       code: "manufacturer",
     },
     {
@@ -79,6 +84,11 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "code",
+        },
+        {
+          type: "auto",
+          code: "category",
+          title: "设备类型",
         },
         {
           type: "auto",

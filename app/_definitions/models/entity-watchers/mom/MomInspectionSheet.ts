@@ -1,13 +1,15 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import {
-  BaseLot,
+  BaseLot, HuateGCMS,
   MomInspectionMeasurement,
   MomInspectionSheet,
-  MomInventoryApplication, type SaveBaseLotInput
+  type SaveBaseLotInput, SaveHuateGCMSInput
 } from "~/_definitions/meta/entity-types";
-import KisHelper from "~/sdk/kis/helper";
 import YidaHelper from "~/sdk/yida/helper";
 import YidaApi from "~/sdk/yida/api";
+import path from "path";
+import * as XLSX from 'xlsx';
+import fs from "fs";
 
 export default [
   {
@@ -66,6 +68,46 @@ export default [
     },
   },
   {
+    eventName: "entity.create",
+    modelSingularCode: "mom_inspection_sheet",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.create">) => {
+      const { server, payload } = ctx;
+
+      let after = payload.after
+
+      if (after.hasOwnProperty('gcms_report_file')) {
+        const items = await readGCMSFile(server, after.gcms_report_file.key)
+        if (items) {
+          const gcmsItems = await server.getEntityManager<HuateGCMS>("huate_gcms").findEntities({
+            filters: [{
+              operator: "eq",
+              field: "enabled",
+              value: true
+            }]
+          });
+          if (gcmsItems && gcmsItems.length > 0) {
+            //   check if all items in gcmsItems
+
+            for (const item of items) {
+              const gcmsItem = gcmsItems.find((gcmsItem) => {
+                return item === gcmsItem.code
+              })
+
+              await server.getEntityManager<HuateGCMS>("huate_gcms").createEntity({
+                entity: {
+                  momInspectionSheetId: after.id,
+                  code: item,
+                  enabled: !!gcmsItem,
+                  needInspect: !gcmsItem,
+                } as SaveHuateGCMSInput
+              })
+            }
+          }
+        }
+      }
+    },
+  },
+  {
     eventName: "entity.update",
     modelSingularCode: "mom_inspection_sheet",
     handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
@@ -96,6 +138,37 @@ export default [
               changes: changes,
             }
           })
+        }
+      }
+
+      if (changes.hasOwnProperty('gcms_report_file')) {
+        const items = await readGCMSFile(server, after.gcms_report_file.key)
+        if (items) {
+          const gcmsItems = await server.getEntityManager<HuateGCMS>("huate_gcms").findEntities({
+            filters: [{
+              operator: "eq",
+              field: "enabled",
+              value: true
+            }]
+          });
+          if (gcmsItems && gcmsItems.length > 0) {
+            //   check if all items in gcmsItems
+
+            for (const item of items) {
+              const gcmsItem = gcmsItems.find((gcmsItem) => {
+                return item === gcmsItem.code
+              })
+
+              await server.getEntityManager<HuateGCMS>("huate_gcms").createEntity({
+                entity: {
+                  momInspectionSheetId: after.id,
+                  code: item,
+                  enabled: !!gcmsItem,
+                  needInspect: !gcmsItem,
+                } as SaveHuateGCMSInput
+              })
+            }
+          }
         }
       }
 
@@ -181,6 +254,9 @@ export default [
           });
         }
       }
+
+      //   TODO: 处理GCMS文件
+
     }
   },
   {
@@ -231,3 +307,56 @@ async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
 
   return lotInDb || (await baseLotManager.createEntity({ entity: lot }));
 }
+
+
+async function readGCMSFile(server: IRpdServer, fileKey: string) {
+  // TODO: 处理上报GCMS报告
+  const filePathName = path.join(server.config.localFileStoragePath, fileKey);
+  const fileBuffer = fs.readFileSync(filePathName);
+  const workbook = XLSX.read(fileBuffer, { type: 'buffer' })
+
+  // Get the "LibRes" sheet
+  const sheetName = 'LibRes';
+  const worksheet = workbook.Sheets[sheetName];
+
+  if (worksheet) {
+    // Convert the sheet to JSON
+    const data: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+    let targetColumnIndex = -1;
+    let dataStartIndex = -1;
+
+    // Scan the data to find the row with "匹配项名称"
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i];
+
+      if (Array.isArray(row)) {
+        const columnIndex = row.indexOf('匹配项名称');
+        if (columnIndex !== -1) {
+          targetColumnIndex = columnIndex;
+          dataStartIndex = i + 1;  // Start reading data from the next row
+          break;
+        }
+      }
+    }
+
+    if (targetColumnIndex !== -1 && dataStartIndex !== -1) {
+      // Extract data from the target column starting from the correct row
+      const matchingItems = data.slice(dataStartIndex).map(row => row[targetColumnIndex]);
+
+      console.log('匹配项名称列长度:', matchingItems.length);
+
+      return matchingItems
+    } else {
+      console.log('未找到"匹配项名称"列');
+    }
+  } else {
+    console.log(`未找到表格: ${ sheetName }`);
+  }
+
+}
+
+
+
+
+

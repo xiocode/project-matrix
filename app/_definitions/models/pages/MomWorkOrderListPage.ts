@@ -38,7 +38,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      code: "process",
+      code: "processes",
     },
     // {
     //   type: "auto",
@@ -232,8 +232,13 @@ const page: RapidPage = {
         // },
         {
           type: "auto",
-          code: "process",
-          width: "100px",
+          code: "processes",
+          rendererProps: {
+            item: {
+              $type: "rapidObjectRenderer",
+              format: "{{name}}",
+            },
+          },
         },
         // {
         //   type: "auto",
@@ -266,12 +271,10 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "executionState",
-          width: "100px",
         },
         {
           type: "auto",
           code: "createdAt",
-          width: "150px",
         },
       ],
       actions: [

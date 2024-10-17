@@ -14,7 +14,7 @@ export default [
       const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
       const workOrder = await workOrderManager.findEntity({
         filters: [
-          { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
+          { operator: "exists", field: "processes", filters: [{ operator: "in", field: "id", value: before.processes }] },
           { operator: "eq", field: "executionState", "value": "processing" },
         ],
         properties: ["id"]
@@ -27,7 +27,7 @@ export default [
       try {
         const process = await server.getEntityManager("mom_process").findEntity({
           filters: [
-            { operator: "eq", field: "id", value: before.process.id || before.process_id },
+            { operator: "in", field: "id", value: before.processes },
           ],
           properties: ["id", "factory"]
         });
@@ -39,16 +39,16 @@ export default [
         console.error(error);
       }
 
-      if ((before.hasOwnProperty("equipment") || before.hasOwnProperty("equipment_id")) && (before.hasOwnProperty("process") || before.hasOwnProperty("process_id"))) {
-        await server.getEntityManager<MomWorkTask>("mom_work_task").createEntity(
-          {
-            entity: {
-              process: { id: before.process.id || before.process || before.process_id },
-              equipment: { id: before.equipment.id || before.equipment || before.equipment_id },
-            } as SaveMomWorkTaskInput,
-          }
-        )
-      }
+      // if ((before.hasOwnProperty("equipment") || before.hasOwnProperty("equipment_id")) && (before.hasOwnProperty("process") || before.hasOwnProperty("process_id"))) {
+      //   await server.getEntityManager<MomWorkTask>("mom_work_task").createEntity(
+      //     {
+      //       entity: {
+      //         process: { id: before.process.id || before.process || before.process_id },
+      //         equipment: { id: before.equipment.id || before.equipment || before.equipment_id },
+      //       } as SaveMomWorkTaskInput,
+      //     }
+      //   )
+      // }
 
       if (before.hasOwnProperty("equipment")) {
         delete before.equipment;
