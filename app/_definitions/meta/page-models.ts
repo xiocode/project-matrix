@@ -1,4 +1,4 @@
-import type { RapidPage as TRapidPage } from '@ruiapp/rapid-extension';
+import type { RapidPageLoader as TRapidPageLoader } from '@ruiapp/rapid-extension';
 import AppNavItemListPage from '../models/pages/AppNavItemListPage';
 import BaseEmployeeListPage from '../models/pages/BaseEmployeeListPage';
 import BaseFormFieldListPage from '../models/pages/BaseFormFieldListPage';
@@ -20,9 +20,6 @@ import FinBusinessCategoryListPage from '../models/pages/FinBusinessCategoryList
 import FinExpenseCategoryListPage from '../models/pages/FinExpenseCategoryListPage';
 import FinTransactionListPage from '../models/pages/FinTransactionListPage';
 import HomePage from '../models/pages/HomePage';
-import MetaModelDetailsPage from '../models/pages/MetaModelDetailsPage';
-import MetaModelListPage from '../models/pages/MetaModelListPage';
-import MetaRouteListPage from '../models/pages/MetaRouteListPage';
 import MomEquipmentCategoryDetailPage from '../models/pages/MomEquipmentCategoryDetailPage';
 import MomEquipmentCategoryListPage from '../models/pages/MomEquipmentCategoryListPage';
 import MomEquipmentListPage from '../models/pages/MomEquipmentListPage';
@@ -120,6 +117,11 @@ import inspection$stockout$MomPrilingStockOutInspectionSheetDetailsPage from '..
 import inspection$stockout$MomPrilingStockOutInspectionSheetList from '../models/pages/inspection/stockout/MomPrilingStockOutInspectionSheetList';
 import inspection$stockout$MomStockOutInspectionSheetDetailsPage from '../models/pages/inspection/stockout/MomStockOutInspectionSheetDetailsPage';
 import inspection$stockout$MomStockOutInspectionSheetListPage from '../models/pages/inspection/stockout/MomStockOutInspectionSheetListPage';
+import meta$MetaDataDictionaryListPage from '../models/pages/meta/MetaDataDictionaryListPage';
+import meta$MetaModelDataPage from '../models/pages/meta/MetaModelDataPage';
+import meta$MetaModelDetailsPage from '../models/pages/meta/MetaModelDetailsPage';
+import meta$MetaModelListPage from '../models/pages/meta/MetaModelListPage';
+import meta$MetaRouteListPage from '../models/pages/meta/MetaRouteListPage';
 import pm$PmProjectCategoryListPage from '../models/pages/pm/PmProjectCategoryListPage';
 import pm$PmProjectDetailsPage from '../models/pages/pm/PmProjectDetailsPage';
 import pm$PmProjectEventListPage from '../models/pages/pm/PmProjectEventListPage';
@@ -163,9 +165,6 @@ export default [
   FinExpenseCategoryListPage,
   FinTransactionListPage,
   HomePage,
-  MetaModelDetailsPage,
-  MetaModelListPage,
-  MetaRouteListPage,
   MomEquipmentCategoryDetailPage,
   MomEquipmentCategoryListPage,
   MomEquipmentListPage,
@@ -263,6 +262,11 @@ export default [
   inspection$stockout$MomPrilingStockOutInspectionSheetList,
   inspection$stockout$MomStockOutInspectionSheetDetailsPage,
   inspection$stockout$MomStockOutInspectionSheetListPage,
+  meta$MetaDataDictionaryListPage,
+  meta$MetaModelDataPage,
+  meta$MetaModelDetailsPage,
+  meta$MetaModelListPage,
+  meta$MetaRouteListPage,
   pm$PmProjectCategoryListPage,
   pm$PmProjectDetailsPage,
   pm$PmProjectEventListPage,
@@ -283,4 +287,4 @@ export default [
   sys$SysPrinterListPage,
   sys$SysSubSystemListPage,
   sys$SysWebhookListPage,
-] as TRapidPage[];
+] as TRapidPageLoader[];

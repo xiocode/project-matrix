@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import _, { find } from "lodash";
 import { redirect, type LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import type { RapidPage, RapidEntity, RapidDataDictionary } from "@ruiapp/rapid-extension";
+import type { RapidPage, RapidEntity, RapidDataDictionary, RapidPageGenerator } from "@ruiapp/rapid-extension";
 import qs from "qs";
 import moment from "moment";
 
@@ -125,7 +125,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   const pageCode = params.code;
-  const sdPage: RapidPage | undefined = find(pageModels, (item) => item.code === pageCode);
+  const pageLoader: RapidPage | RapidPageGenerator | undefined = find(pageModels, (item) => item.code === pageCode);
+
+  let sdPage: RapidPage | undefined = undefined;
+  if (pageLoader) {
+    const generator = pageLoader as RapidPageGenerator;
+    if (generator.generateRapidPage) {
+      sdPage = generator.generateRapidPage({
+        context: {
+          appDefinition: {
+            entities: entityModels,
+            dataDictionaries: dataDictionaryModels,
+          },
+        },
+        request,
+        params,
+      });
+    } else {
+      sdPage = pageLoader;
+    }
+  }
 
   const myAllowedActions = (
     await rapidService.get(`app/listMyAllowedSysActions`, {
