@@ -161,6 +161,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "执行状态",
       type: "option",
       dataDictionary: "MomWorkTaskExecutionState",
+      defaultValue: "processing"
     },
     {
       code: "serialNum",
