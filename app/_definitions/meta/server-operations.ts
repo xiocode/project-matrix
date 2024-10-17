@@ -19,6 +19,7 @@ import mom$listRawMaterialInspections from '../models/server-operations/mom/list
 import mom$mergeGoods from '../models/server-operations/mom/mergeGoods';
 import mom$queryLocation from '../models/server-operations/mom/queryLocation';
 import mom$splitGoods from '../models/server-operations/mom/splitGoods';
+import mom$submitFinishedWorkReports from '../models/server-operations/mom/submitFinishedWorkReports';
 import mom$submitGoodCheckedTransfers from '../models/server-operations/mom/submitGoodCheckedTransfers';
 import mom$submitGoodInTransfers from '../models/server-operations/mom/submitGoodInTransfers';
 import mom$submitGoodOutTransfers from '../models/server-operations/mom/submitGoodOutTransfers';
@@ -49,6 +50,7 @@ export default [
   mom$mergeGoods,
   mom$queryLocation,
   mom$splitGoods,
+  mom$submitFinishedWorkReports,
   mom$submitGoodCheckedTransfers,
   mom$submitGoodInTransfers,
   mom$submitGoodOutTransfers,

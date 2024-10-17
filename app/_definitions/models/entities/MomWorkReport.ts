@@ -157,6 +157,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
     },
     {
+      code: "executionState",
+      name: "执行状态",
+      type: "option",
+      dataDictionary: "MomWorkTaskExecutionState",
+    },
+    {
       code: "serialNum",
       name: "序列号",
       type: "text",

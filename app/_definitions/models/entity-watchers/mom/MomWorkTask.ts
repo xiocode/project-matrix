@@ -11,6 +11,8 @@ export default [
       const { server, payload } = ctx;
       let before = payload.before;
 
+      before.actualStartTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+
       if (!before.hasOwnProperty("workOrder") && !before.hasOwnProperty("work_order_id")) {
         const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
         const workOrder = await workOrderManager.findEntity({
@@ -33,6 +35,18 @@ export default [
             before.work_order_id = workOrder.id;
           }
         }
+      }
+    }
+  },
+  {
+    eventName: "entity.beforeUpdate",
+    modelSingularCode: "mom_work_task",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeUpdate">) => {
+      const { server, payload } = ctx;
+      let changes = payload.changes;
+
+      if (changes.hasOwnProperty("actualFinishTime")) {
+        changes.executionState = 'completed';
       }
     }
   },

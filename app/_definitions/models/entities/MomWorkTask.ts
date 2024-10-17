@@ -189,13 +189,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "factory_id",
     },
     {
-      code: "equipment",
-      name: "设备",
-      type: "relation",
-      targetSingularCode: "mom_equipment",
-      targetIdColumnName: "equipment_id",
-    },
-    {
       code: "actualStartTime",
       name: "实际开始时间",
       type: "datetime",

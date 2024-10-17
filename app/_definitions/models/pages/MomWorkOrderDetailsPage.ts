@@ -104,6 +104,10 @@ const reportFormConfig: Partial<RapidEntityFormRockConfig> = {
     },
     {
       type: "auto",
+      code: "lotNum",
+    },
+    {
+      type: "auto",
       code: "actualStartTime",
     },
     {
