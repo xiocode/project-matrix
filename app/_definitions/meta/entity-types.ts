@@ -2147,6 +2147,61 @@ export interface FinTransaction {
 export type SaveFinTransactionInput = Omit<FinTransaction, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 大门
+ */
+export interface HuateGCMS {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 编码
+   */
+  code?: string;
+  /**
+   * 是否启用
+   */
+  enabled?: boolean;
+  /**
+   * 是否需要审核
+   */
+  needInspect?: boolean;
+  /**
+   * 检验单
+   */
+  sheet?: Partial<MomInspectionSheet>;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 大门
+ */
+export type SaveHuateGCMSInput = Omit<HuateGCMS, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * KisConfig
  */
 export interface KisConfig {
@@ -7960,6 +8015,10 @@ export interface MomWorkOrder {
    * 工序
    */
   process?: Partial<MomProcess>;
+  /**
+   * 工序
+   */
+  processes?: any;
   /**
    * 创建时间
    */

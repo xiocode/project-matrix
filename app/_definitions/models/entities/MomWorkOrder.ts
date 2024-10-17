@@ -73,7 +73,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "text",
       config: {
         sequence: {
-          enabled: false,
+          enabled: true,
           config: {
             segments: [
               {
@@ -356,6 +356,15 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "relation",
       targetSingularCode: "mom_process",
       targetIdColumnName: "process_id",
+    },
+    {
+      code: "processes",
+      name: "工序",
+      type: "relation[]",
+      targetSingularCode: "mom_process",
+      linkTableName: "mom_work_order_processes",
+      targetIdColumnName: "process_id",
+      selfIdColumnName: "task_id",
     },
   ],
 };
