@@ -35,7 +35,7 @@ export default [
         const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
         const workOrder = await workOrderManager.findEntity({
           filters: [
-            { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
+            { operator: "exists", field: "processes", filters: [{ operator: "eq", field: "id", value: before.process.id || before.process || before.process_id }] },
             // { operator: "eq", field: "equipment_id", value: before.equipment.id || before.equipment || before.equipment_id },
             { operator: "eq", field: "executionState", value: 'processing' },
           ],

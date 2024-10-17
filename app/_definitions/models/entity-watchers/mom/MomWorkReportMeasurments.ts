@@ -16,7 +16,7 @@ export default [
       try {
         const measurements = await server.getEntityManager<MomRouteProcessParameterMeasurement>("mom_route_process_parameter_measurement").findEntities({
           filters: [{ operator: "eq", field: "id", value: after.id }],
-          properties: ["id", "process", "equipment", "workOrder", "upperLimit", "lowerLimit", "nominal", "value", "isOutSpecification", "dimension"],
+          properties: ["id", "process", "equipment", "workOrder", "upperLimit", "lowerLimit", "nominal", "value", "isOutSpecification", "dimension", "workReport"],
           relations: {
             workOrder: {
               properties: ["id", "factory", "material", "process", "code", "process", "equipment"]
