@@ -47,28 +47,28 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         ],
       },
     },
-    {
-      type: "auto",
-      code: "equipment",
-      listDataFindOptions: {
-        fixedFilters: [
-          {
-            field: "factory",
-            operator: "exists",
-            filters: [
-              {
-                field: "code",
-                operator: "eq",
-                value: "05",
-              },
-            ],
-          },
-        ],
-        $exps: {
-          "fixedFilters[0].filters[0]?.value": "$scope.vars.active_process_id",
-        },
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "equipment",
+    //   listDataFindOptions: {
+    //     fixedFilters: [
+    //       {
+    //         field: "factory",
+    //         operator: "exists",
+    //         filters: [
+    //           {
+    //             field: "code",
+    //             operator: "eq",
+    //             value: "05",
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //     $exps: {
+    //       "fixedFilters[0].filters[0]?.value": "$scope.vars.active_process_id",
+    //     },
+    //   },
+    // },
     {
       type: "auto",
       code: "material",
@@ -268,7 +268,7 @@ const page: RapidPage = {
           $type: "sonicToolbarNewEntityButton",
           text: "新建",
           icon: "PlusOutlined",
-          permissionCheck: "tysProduction.manage",
+          $permissionCheck: "tysProduction.manage",
           actionStyle: "primary",
         },
       ],
@@ -377,14 +377,14 @@ const page: RapidPage = {
           $type: "sonicRecordActionEditEntity",
           code: "edit",
           actionType: "edit",
-          permissionCheck: "tysProduction.manage",
+          $permissionCheck: "tysProduction.manage",
           actionText: "修改",
         },
         {
           $type: "sonicRecordActionDeleteEntity",
           code: "delete",
           actionType: "delete",
-          permissionCheck: "tysProduction.manage",
+          $permissionCheck: "tysProduction.manage",
           actionText: "删除",
           dataSourceCode: "list",
           entityCode: "MomWorkOrder",

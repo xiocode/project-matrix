@@ -65,20 +65,20 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       },
       required: true,
     },
-    {
-      type: "auto",
-      code: "lotNum",
-      required: true,
-      label: "批次号",
-      formControlProps: {
-        $exps: {
-          disabled: "!$self.form.getFieldValue('rule')",
-        },
-      },
-      $exps: {
-        _hidden: "$scope.vars.active_hidden",
-      },
-    },
+    // {
+    //   type: "auto",
+    //   code: "lotNum",
+    //   required: true,
+    //   label: "批次号",
+    //   formControlProps: {
+    //     $exps: {
+    //       disabled: "!$self.form.getFieldValue('rule')",
+    //     },
+    //   },
+    //   $exps: {
+    //     _hidden: "$scope.vars.active_hidden",
+    //   },
+    // },
     {
       type: "auto",
       code: "lotNum",
@@ -91,7 +91,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
         },
       },
       $exps: {
-        _hidden: "!$scope.vars.active_hidden",
+        // _hidden: "!$scope.vars.active_hidden",
         "formControlProps.materialId": "$self.form.getFieldValue('material')",
         "formControlProps.materialCategoryId": "$self.form.getFieldValue('materialCategoryId')",
       },

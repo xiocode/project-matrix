@@ -210,7 +210,7 @@ const page: RapidPage = {
         {
           $type: "rapidToolbarButton",
           text: "取消工单",
-          permissionCheck: "tysProduction.manage",
+          $permissionCheck: "tysProduction.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -221,6 +221,7 @@ const page: RapidPage = {
                   type: "cancelOrder",
                 },
                 $stateProperties: ["executionState"],
+                executionState: "canceled",
               },
               $exps: {
                 url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
@@ -244,7 +245,7 @@ const page: RapidPage = {
           $type: "rapidToolbarButton",
           text: "完成工单",
           actionStyle: "primary",
-          permissionCheck: "tysProduction.manage",
+          $permissionCheck: "tysProduction.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -255,6 +256,7 @@ const page: RapidPage = {
                   type: "completeOrder",
                 },
                 $stateProperties: ["executionState"],
+                executionState: "completed",
               },
               $exps: {
                 url: "'/api/mom/mom_work_orders/' + $rui.parseQuery().id",
@@ -277,7 +279,7 @@ const page: RapidPage = {
         {
           $type: "rapidToolbarButton",
           text: "重新开启",
-          permissionCheck: "tysProduction.manage",
+          $permissionCheck: "tysProduction.manage",
           onAction: [
             {
               $action: "sendHttpRequest",
@@ -346,10 +348,10 @@ const page: RapidPage = {
           type: "auto",
           code: "process",
         },
-        {
-          type: "auto",
-          code: "equipment",
-        },
+        // {
+        //   type: "auto",
+        //   code: "equipment",
+        // },
         {
           type: "auto",
           code: "executionState",
@@ -397,7 +399,7 @@ const page: RapidPage = {
                 {
                   $type: "sonicToolbarNewEntityButton",
                   text: "新建",
-                  permissionCheck: "tysProduction.manage",
+                  $permissionCheck: "tysProduction.manage",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
                 },
@@ -444,7 +446,7 @@ const page: RapidPage = {
                   $type: "sonicRecordActionEditEntity",
                   code: "edit",
                   actionType: "edit",
-                  permissionCheck: "tysProduction.manage",
+                  $permissionCheck: "tysProduction.manage",
                   actionText: "修改",
                 },
                 {
@@ -452,7 +454,7 @@ const page: RapidPage = {
                   code: "delete",
                   actionType: "delete",
                   actionText: "删除",
-                  permissionCheck: "tysProduction.manage",
+                  $permissionCheck: "tysProduction.manage",
                   dataSourceCode: "list",
                   entityCode: "MomWorkReport",
                 },
@@ -487,7 +489,7 @@ const page: RapidPage = {
                 {
                   $type: "sonicToolbarNewEntityButton",
                   text: "新建",
-                  permissionCheck: "tysProduction.manage",
+                  $permissionCheck: "tysProduction.manage",
                   icon: "PlusOutlined",
                   actionStyle: "primary",
                 },
@@ -552,7 +554,7 @@ const page: RapidPage = {
                   $type: "sonicRecordActionEditEntity",
                   code: "edit",
                   actionType: "edit",
-                  permissionCheck: "tysProduction.manage",
+                  $permissionCheck: "tysProduction.manage",
                   actionText: "修改",
                 },
                 {
@@ -560,7 +562,7 @@ const page: RapidPage = {
                   code: "delete",
                   actionType: "delete",
                   actionText: "删除",
-                  permissionCheck: "tysProduction.manage",
+                  $permissionCheck: "tysProduction.manage",
                   dataSourceCode: "list",
                   entityCode: "MomWorkFeed",
                 },
