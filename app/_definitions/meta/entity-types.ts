@@ -8151,6 +8151,10 @@ export interface MomWorkReport {
    */
   binNum?: string;
   /**
+   * 执行状态
+   */
+  executionState?: MomWorkTaskExecutionState;
+  /**
    * 序列号
    */
   serialNum?: string;
@@ -8285,10 +8289,6 @@ export interface MomWorkTask {
    * 工厂
    */
   factory?: Partial<MomFactory>;
-  /**
-   * 设备
-   */
-  equipment?: Partial<MomEquipment>;
   /**
    * 实际开始时间
    */

@@ -1,5 +1,6 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import type {BaseLot, MomWorkTask, SaveBaseLotInput} from "~/_definitions/meta/entity-types";
+import dayjs from "dayjs";
 
 export default [
   {
@@ -9,48 +10,82 @@ export default [
       const { server, payload } = ctx;
       let before = payload.before;
 
-      const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
-        filters: [
-          { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
-          {
-            operator: "eq",
-            field: "equipment_id",
-            value: before.equipment.id || before.equipment || before.equipment_id
-          },
-          {
-            operator: "eq",
-            field: "work_order_id",
-            value: before.workOrder.id || before.workOrder || before.work_order_id
-          },
-        ],
-        properties: ["id", "material", "process", "equipment", "workOrder"],
-        relations: {
-          process: {
-            properties: [
-              "id", "config"
-            ],
-          },
-        }
-      });
+      before.actualStartTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-      if (workTask && workTask.process) {
-        if (workTask?.process?.config?.lotNumAutoGenerate) {
-          const lot = await saveMaterialLotInfo(server, {
-            material: { id: workTask?.material?.id },
-            sourceType: "selfMade",
-            qualificationState: "qualified",
-            isAOD: false,
-            state: "normal",
-          });
-          if (lot) {
-            before.lot_id = lot.id;
-            before.lotNum = lot.lotNum;
-          }
+      if (before.hasOwnProperty("lotNum") && !before.hasOwnProperty("lot")) {
+        const lot = await server.getEntityManager("base_lot").findEntity({
+          filters: [
+            { operator: "eq", field: "lot_num", value: before.lotNum },
+          ],
+          properties: ["id", "material", "lotNum"],
+        });
+        if (lot) {
+          before.lot = lot;
         }
       }
 
-      if (workTask) {
-        before.work_task_id = workTask.id;
+      if (before.hasOwnProperty("workOrder")) {
+        const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
+          filters: [
+            { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
+            {
+              operator: "eq",
+              field: "equipment_id",
+              value: before.equipment.id || before.equipment || before.equipment_id
+            },
+            {
+              operator: "eq",
+              field: "work_order_id",
+              value: before.workOrder.id || before.workOrder || before.work_order_id
+            },
+            {
+              operator: "eq",
+              field: "executionState",
+              value: "processing"
+            },
+
+          ],
+          properties: ["id", "material", "process", "equipment", "workOrder"],
+          relations: {
+            process: {
+              properties: [
+                "id", "config"
+              ],
+            },
+          }
+        });
+
+        if (workTask && workTask.process) {
+          if (workTask?.process?.config?.lotNumAutoGenerate) {
+            const lot = await saveMaterialLotInfo(server, {
+              material: { id: workTask?.material?.id },
+              sourceType: "selfMade",
+              qualificationState: "qualified",
+              isAOD: false,
+              state: "normal",
+            });
+            if (lot) {
+              before.lot_id = lot.id;
+              before.lotNum = lot.lotNum;
+            }
+          }
+        }
+
+        if (workTask) {
+          before.work_task_id = workTask.id;
+        }
+      }
+    }
+  },
+  {
+    eventName: "entity.beforeUpdate",
+    modelSingularCode: "mom_work_report",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.beforeUpdate">) => {
+      const { server, payload } = ctx;
+      let changes = payload.changes;
+
+      if (changes.hasOwnProperty("actualFinishTime")) {
+        changes.executionState = 'completed';
       }
     }
   },
