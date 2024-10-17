@@ -8016,10 +8016,6 @@ export interface MomWorkOrder {
    */
   processes?: any;
   /**
-   * 工序
-   */
-  processes?: any;
-  /**
    * 创建时间
    */
   createdAt?: string;
