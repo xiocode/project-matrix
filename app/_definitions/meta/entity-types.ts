@@ -8014,7 +8014,7 @@ export interface MomWorkOrder {
   /**
    * 工序
    */
-  process?: Partial<MomProcess>;
+  processes?: any;
   /**
    * 工序
    */

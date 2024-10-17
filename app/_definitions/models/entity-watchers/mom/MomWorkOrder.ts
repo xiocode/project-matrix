@@ -39,16 +39,16 @@ export default [
         console.error(error);
       }
 
-      // if ((before.hasOwnProperty("equipment") || before.hasOwnProperty("equipment_id")) && (before.hasOwnProperty("process") || before.hasOwnProperty("process_id"))) {
-      //   await server.getEntityManager<MomWorkTask>("mom_work_task").createEntity(
-      //     {
-      //       entity: {
-      //         process: { id: before.process.id || before.process || before.process_id },
-      //         equipment: { id: before.equipment.id || before.equipment || before.equipment_id },
-      //       } as SaveMomWorkTaskInput,
-      //     }
-      //   )
-      // }
+      if ((before.hasOwnProperty("equipment") || before.hasOwnProperty("equipment_id")) && (before.hasOwnProperty("processes"))) {
+        await server.getEntityManager<MomWorkTask>("mom_work_task").createEntity(
+          {
+            entity: {
+              processes: before.processes,
+              equipment: { id: before.equipment.id || before.equipment || before.equipment_id },
+            } as SaveMomWorkTaskInput,
+          }
+        )
+      }
 
       if (before.hasOwnProperty("equipment")) {
         delete before.equipment;

@@ -2064,7 +2064,7 @@ const entityFieldCodes = {
     'inspectionSheets',
     'feeds',
     'factory',
-    'process',
+    'processes',
     'processes',
     'createdAt',
     'createdBy',
