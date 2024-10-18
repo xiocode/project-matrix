@@ -20,19 +20,9 @@ export default {
       filters: [
         {
           operator: "eq",
-          field: "process_id",
-          value: input.process
-        },
-        {
-          operator: "eq",
-          field: "equipment_id",
-          value: input.equipment
-        },
-        {
-          operator: "eq",
-          field: "lot_id",
+          field: "id",
           value: input.from
-        }
+        },
       ],
       properties: ["id", "createdAt", "lot"]
     });
@@ -41,17 +31,7 @@ export default {
       filters: [
         {
           operator: "eq",
-          field: "process_id",
-          value: input.process
-        },
-        {
-          operator: "eq",
-          field: "equipment_id",
-          value: input.equipment
-        },
-        {
-          operator: "eq",
-          field: "lot_id",
+          field: "id",
           value: input.to
         },
       ],

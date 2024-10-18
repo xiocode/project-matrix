@@ -1838,6 +1838,8 @@ const entityFieldCodes = {
     'route',
     'orderNum',
     'process',
+    'equipment',
+    'dimension',
     'config',
     'factory',
     'code',

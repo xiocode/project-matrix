@@ -81,8 +81,13 @@ const page: RapidPage = {
           fixed: "left",
         },
         {
-          type: "auto",
+          type: "link",
           code: "code",
+          rendererType: "rapidLinkRenderer",
+          rendererProps: {
+            url: "/pages/mom_process_details?id={{id}}",
+          },
+          width: "150px",
         },
         {
           type: "auto",
