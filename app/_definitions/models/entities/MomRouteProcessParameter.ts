@@ -11,7 +11,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "route",
       name: "工艺流程",
       type: "relation",
-      required: true,
       targetSingularCode: "mom_route",
       targetIdColumnName: "route_id",
     },
@@ -19,7 +18,6 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "orderNum",
       name: "排序号",
       type: "integer",
-      required: true,
     },
     {
       code: "process",
@@ -28,6 +26,20 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       required: true,
       targetSingularCode: "mom_process",
       targetIdColumnName: "process_id",
+    },
+    {
+      code: "equipment",
+      name: "设备",
+      type: "relation",
+      targetSingularCode: "mom_equipment",
+      targetIdColumnName: "equipment_id",
+    },
+    {
+      code: "dimension",
+      name: "数采指标",
+      type: "relation",
+      targetSingularCode: "mom_equipment_category_dimension",
+      targetIdColumnName: "dimension_id",
     },
     {
       code: "config",

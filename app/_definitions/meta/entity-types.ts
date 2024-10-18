@@ -7062,15 +7062,23 @@ export interface MomRouteProcessParameter {
   /**
    * 工艺流程
    */
-  route: Partial<MomRoute>;
+  route?: Partial<MomRoute>;
   /**
    * 排序号
    */
-  orderNum: number;
+  orderNum?: number;
   /**
    * 生产工序
    */
   process: Partial<MomProcess>;
+  /**
+   * 设备
+   */
+  equipment?: Partial<MomEquipment>;
+  /**
+   * 数采指标
+   */
+  dimension?: Partial<MomEquipmentCategoryDimension>;
   /**
    * 配置
    */

@@ -56,7 +56,7 @@ export default [
         });
 
         if (workTask && workTask.process) {
-          if (workTask?.process?.config?.lotNumAutoGenerate) {
+          if (workTask?.process?.config?.reportLotNumAutoGenerate) {
             const lot = await saveMaterialLotInfo(server, {
               material: { id: workTask?.material?.id },
               sourceType: "selfMade",

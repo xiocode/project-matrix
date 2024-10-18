@@ -1,5 +1,12 @@
-import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import type {MomWorkFeed, MomWorkOrder, MomWorkTask, SaveMomWorkTaskInput} from "~/_definitions/meta/entity-types";
+import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
+import type {
+  BaseLot, MomProcess,
+  MomWorkFeed,
+  MomWorkOrder,
+  MomWorkTask,
+  SaveBaseLotInput,
+  SaveMomWorkTaskInput
+} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 
 export default [
@@ -14,7 +21,11 @@ export default [
       const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
       const workOrder = await workOrderManager.findEntity({
         filters: [
-          { operator: "exists", field: "processes", filters: [{ operator: "in", field: "id", value: before.processes }] },
+          {
+            operator: "exists",
+            field: "processes",
+            filters: [{ operator: "in", field: "id", value: before.processes }]
+          },
           { operator: "eq", field: "executionState", "value": "processing" },
         ],
         properties: ["id"]
@@ -25,16 +36,36 @@ export default [
       }
 
       try {
-        const process = await server.getEntityManager("mom_process").findEntity({
+        const processes = await server.getEntityManager<MomProcess>("mom_process").findEntities({
           filters: [
             { operator: "in", field: "id", value: before.processes },
           ],
-          properties: ["id", "factory"]
+          properties: ["id", "factory", "config"]
         });
 
-        if (process && process.factory) {
-          before.factory_id = process.factory?.id
+        if (processes && processes.length > 0) {
+          if (processes[0] && processes[0].factory) {
+            before.factory_id = processes[0].factory?.id
+          }
         }
+
+        for (const process of processes) {
+          if (process?.config?.reportLotNumAutoGenerate) {
+            const lot = await saveMaterialLotInfo(server, {
+              material: { id: before?.material?.id || before?.material },
+              sourceType: "selfMade",
+              qualificationState: "qualified",
+              isAOD: false,
+              state: "normal",
+            });
+            if (lot) {
+              before.lot_id = lot.id;
+              before.lotNum = lot.lotNum;
+            }
+            break;
+          }
+        }
+
       } catch (error) {
         console.error(error);
       }
@@ -122,3 +153,12 @@ export default [
     },
   },
 ] satisfies EntityWatcher<any>[];
+
+async function saveMaterialLotInfo(server: IRpdServer, lot: SaveBaseLotInput) {
+  if (!lot.material || !lot.material.id) {
+    throw new Error("material are required when saving lot info.");
+  }
+
+  const baseLotManager = server.getEntityManager<BaseLot>("base_lot");
+  return await baseLotManager.createEntity({ entity: lot })
+}
