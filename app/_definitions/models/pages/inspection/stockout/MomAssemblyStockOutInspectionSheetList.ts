@@ -179,17 +179,17 @@ const page: RapidPage = {
           $permissionCheck: "htInspectionAssemblyStockOut.manage",
           actionStyle: "primary",
         },
-        {
-          $type: "antdButton",
-          href: `/api/app/exportExcel?type=inspection`,
-          $permissionCheck: "htInspectionAssemblyStockOut.manage",
-          children: [
-            {
-              $type: "text",
-              text: " 下载",
-            },
-          ],
-        },
+        // {
+        //   $type: "antdButton",
+        //   href: `/api/app/exportExcel?type=inspection`,
+        //   $permissionCheck: "htInspectionAssemblyStockOut.manage",
+        //   children: [
+        //     {
+        //       $type: "text",
+        //       text: " 下载",
+        //     },
+        //   ],
+        // },
       ],
       extraProperties: ["rule", "treatment"],
 
@@ -220,7 +220,7 @@ const page: RapidPage = {
                     active_material_id: materialId,
                   }, true);
                 }
-        
+
                 event.scope.loadStoreData('searchFormItemList-material');
               `,
           },

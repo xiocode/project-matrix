@@ -237,17 +237,17 @@ const page: RapidPage = {
           $permissionCheck: "xzyInspectionFeedStock.manage",
           actionStyle: "primary",
         },
-        {
-          $type: "antdButton",
-          href: `/api/app/exportExcel?type=inspection`,
-          $permissionCheck: "xzyInspectionFeedStock.manage",
-          children: [
-            {
-              $type: "text",
-              text: " 下载",
-            },
-          ],
-        },
+        // {
+        //   $type: "antdButton",
+        //   href: `/api/app/exportExcel?type=inspection`,
+        //   $permissionCheck: "xzyInspectionFeedStock.manage",
+        //   children: [
+        //     {
+        //       $type: "text",
+        //       text: " 下载",
+        //     },
+        //   ],
+        // },
       ],
       extraProperties: ["rule", "treatment"],
       extraActions: [

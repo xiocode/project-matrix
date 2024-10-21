@@ -185,17 +185,6 @@ const page: RapidPage = {
           $permissionCheck: "tysInspectionStockOut.manage",
           actionStyle: "primary",
         },
-        {
-          $type: "antdButton",
-          href: `/api/app/exportExcel?type=inspection`,
-          $permissionCheck: "tysInspectionStockOut.manage",
-          children: [
-            {
-              $type: "text",
-              text: " 下载",
-            },
-          ],
-        },
       ],
       extraProperties: ["rule", "treatment"],
 
