@@ -1,39 +1,24 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-interface YidaSDKConfig {
+interface IotSDKConfig {
   baseURL: string;
-  clientId: string;
-  clientSecret: string;
-  accessToken: string;
-  accessTokenExpireIn: number;
 }
 
-class YidaSDK {
+class IotDBSDK {
   private axiosInstance: AxiosInstance;
-  public accessToken: string = ''; // Placeholder for accessToken
-  public accessTokenExpireIn: number = 0; // Placeholder for access token expiration
-  public clientId: string;
-  public clientSecret: string;
 
-  constructor(config: YidaSDKConfig) {
+  constructor(config: IotSDKConfig) {
     this.axiosInstance = axios.create({
       baseURL: config.baseURL,
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa('root:root'),
       },
     });
-
-
-    this.clientId = config.clientId;
-    this.clientSecret = config.clientSecret;
-    this.accessToken = config.accessToken;
-    this.accessTokenExpireIn = config.accessTokenExpireIn;
-
   }
 
   private async request<T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
-      await this.ensureTokensAreValid();
       return await this.axiosInstance.request<T>(config);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -45,37 +30,31 @@ class YidaSDK {
     }
   }
 
-  public async ensureTokensAreValid(): Promise<void> {
-    const now = Math.floor(Date.now() / 1000);
-    if (now >= this.accessTokenExpireIn - 600) {
-      await this.refreshAccessToken();
-    }
-  }
-
-  public async refreshAccessToken(): Promise<void> {
+  public async PutResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
     const config: AxiosRequestConfig = {
-      url: `https://api.dingtalk.com/v1.0/oauth2/accessToken`,
-      method: 'POST',
-      data: {
-        appKey: this.clientId,
-        appSecret: this.clientSecret,
-      },
+      url: `${ resourceUrl }`,
+      method: 'PUT',
+      data: payload,
     };
+    if (debug) {
+      // 打印请求和响应日志
+      this.axiosInstance.interceptors.request.use(request => {
+        console.log('Starting Request', JSON.stringify(request, null, 2))
+        return request
+      })
 
-    const response = await this.axiosInstance.request<any>(config);
-    const data = response.data;
-
-    this.accessToken = data.accessToken;
-    this.accessTokenExpireIn = Date.now() / 1000 + data.expireIn;
+      this.axiosInstance.interceptors.response.use(response => {
+        console.log('Response:', JSON.stringify(response.data, null, 2))
+        return response
+      })
+    }
+    return this.request<any>(config);
   }
 
   public async PostResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
     const config: AxiosRequestConfig = {
       url: `${ resourceUrl }`,
       method: 'POST',
-      headers: {
-        'x-acs-dingtalk-access-token': this.accessToken,
-      },
       data: payload,
     };
     if (debug) {
@@ -94,15 +73,10 @@ class YidaSDK {
   }
 
   public async GetResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
-    const queryParams = new URLSearchParams(payload as any).toString();
-    const separator = resourceUrl.includes('?') ? '&' : '?';
-
     const config: AxiosRequestConfig = {
-      url: `${resourceUrl}${separator}${queryParams}`,
+      url: `${ resourceUrl }`,
       method: 'GET',
-      headers: {
-        'x-acs-dingtalk-access-token': this.accessToken,
-      },
+      data: payload,
     };
     if (debug) {
       // 打印请求和响应日志
@@ -120,4 +94,4 @@ class YidaSDK {
   }
 }
 
-export default YidaSDK;
+export default IotDBSDK;

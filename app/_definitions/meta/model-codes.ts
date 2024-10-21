@@ -1203,6 +1203,7 @@ const entityFieldCodes = {
     'normalReportFile',
     'qualityReportFile',
     'factory',
+    'yidaId',
     'createdAt',
     'createdBy',
     'updatedAt',

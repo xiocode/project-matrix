@@ -4421,6 +4421,10 @@ export interface MomInspectionSheet {
    */
   factory?: Partial<MomFactory>;
   /**
+   * 宜搭ID
+   */
+  yidaId?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;

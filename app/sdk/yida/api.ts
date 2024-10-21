@@ -71,6 +71,8 @@ class YidaApi {
       }
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload)
     console.log(resp.data)
+
+    return resp.data;
   }
 
   public async uploadInspectionMeasurements(inputs: MomInspectionMeasurement[]) {
@@ -164,6 +166,8 @@ class YidaApi {
       }
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload, true)
     console.log(resp.data)
+
+    return resp.data;
   }
 
   public async uploadProductionMeasurementsAudit(inputs: MomRouteProcessParameterMeasurement[]) {
@@ -214,6 +218,8 @@ class YidaApi {
       }
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload, true)
     console.log(resp.data)
+
+    return resp.data;
   }
 
   public async uploadProductionMeasurements(inputs: MomRouteProcessParameterMeasurement[]) {
@@ -247,7 +253,22 @@ class YidaApi {
       const resp = await this.api.PostResourceRequest("/v1.0/yida/forms/instances", payload, true)
       console.log(resp.data)
     }
+  }
 
+  public async getAuditDetail(id: string) {
+
+    let payload = {
+      language: "zh_CN",
+      formUuid: "FORM-E53DDB7DAD344410AB53826F04074EC1LHIN",
+      appType: "APP_MV044H55941SP5OMR0PI",
+      systemToken: "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+      userId: "68282452959857472"
+    }
+
+    const resp = await this.api.GetResourceRequest(`/v2.0/yida/processes/instancesInfos/${id}`, payload, true)
+    console.log(resp.data)
+
+    return resp.data
   }
 
 }
