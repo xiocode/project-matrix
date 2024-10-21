@@ -2155,6 +2155,10 @@ export interface HuateGCMS {
    */
   id: number;
   /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
    * 编码
    */
   code?: string;
@@ -4396,6 +4400,10 @@ export interface MomInspectionSheet {
    * GCMS报告文件
    */
   gcmsReportFile?: any;
+  /**
+   * GCMS检测通过
+   */
+  gcmsPassed?: boolean;
   /**
    * 月度发票
    */

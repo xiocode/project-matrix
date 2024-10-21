@@ -8,6 +8,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
   name: "大门",
   fields: [
     {
+      code: "material",
+      name: "物料",
+      type: "relation",
+      targetSingularCode: "base_material",
+      targetIdColumnName: "material_id",
+    },
+    {
       code: "code",
       name: "编码",
       type: "text",

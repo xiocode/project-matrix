@@ -80,6 +80,10 @@ const page: RapidPage = {
           type: "auto",
         },
         {
+          type: "auto",
+          code: "gcmsPassed",
+        },
+        {
           code: "rule",
           type: "auto",
           rendererProps: {

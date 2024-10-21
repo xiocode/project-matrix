@@ -95,6 +95,7 @@ export default [
 
               await server.getEntityManager<HuateGCMS>("huate_gcms").createEntity({
                 entity: {
+                  material: after?.material?.id || after?.material || after?.material_id,
                   momInspectionSheetId: after.id,
                   code: item,
                   enabled: !!gcmsItem,
@@ -161,6 +162,7 @@ export default [
 
               await server.getEntityManager<HuateGCMS>("huate_gcms").createEntity({
                 entity: {
+                  material: after?.material?.id || after?.material || after?.material_id,
                   momInspectionSheetId: after.id,
                   code: item,
                   enabled: !!gcmsItem,

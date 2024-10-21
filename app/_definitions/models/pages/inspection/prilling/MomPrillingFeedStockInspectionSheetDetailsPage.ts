@@ -86,6 +86,10 @@ const page: RapidPage = {
           },
         },
         {
+          type: "auto",
+          code: "gcmsPassed",
+        },
+        {
           code: "invoiceReportFile",
           label: "月度发票",
           type: "auto",

@@ -233,6 +233,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       type: "file",
     },
     {
+      code: "gcmsPassed",
+      name: "GCMS检测通过",
+      type: "boolean",
+    },
+    {
       code: "invoiceReportFile",
       name: "月度发票",
       type: "file",

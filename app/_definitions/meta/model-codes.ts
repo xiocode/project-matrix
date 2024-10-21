@@ -659,6 +659,7 @@ const entityFieldCodes = {
   ],
   'HuateGCMS': [
     'id',
+    'material',
     'code',
     'enabled',
     'needInspect',
@@ -1197,6 +1198,7 @@ const entityFieldCodes = {
     'pictures',
     'reportFile',
     'gcmsReportFile',
+    'gcmsPassed',
     'invoiceReportFile',
     'normalReportFile',
     'qualityReportFile',

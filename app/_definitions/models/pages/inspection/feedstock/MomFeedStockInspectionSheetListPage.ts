@@ -181,17 +181,6 @@ const page: RapidPage = {
           icon: "PlusOutlined",
           actionStyle: "primary",
         },
-        {
-          $type: "antdButton",
-          href: `/api/app/exportExcel?type=inspection`,
-          $permissionCheck: "tysInspectionFeedStock.manage",
-          children: [
-            {
-              $type: "text",
-              text: " 下载",
-            },
-          ],
-        },
       ],
       extraProperties: ["rule", "treatment"],
 
