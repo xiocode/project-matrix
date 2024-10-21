@@ -10,7 +10,13 @@ export default [
       const { server, payload } = ctx;
       let before = payload.before;
 
-      before.actualStartTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      if (!before.hasOwnProperty("actualStartTime")) {
+        before.actualStartTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      }
+      if (!before.hasOwnProperty("actualFinishTime")) {
+        before.executionState = "processing";
+      }
+
 
       if (before.hasOwnProperty("lotNum") && !before.hasOwnProperty("lot")) {
         const lot = await server.getEntityManager("base_lot").findEntity({

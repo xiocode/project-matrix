@@ -29,6 +29,27 @@ class IotSDK {
     }
   }
 
+  public async PutResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
+    const config: AxiosRequestConfig = {
+      url: `${ resourceUrl }`,
+      method: 'PUT',
+      data: payload,
+    };
+    if (debug) {
+      // 打印请求和响应日志
+      this.axiosInstance.interceptors.request.use(request => {
+        console.log('Starting Request', JSON.stringify(request, null, 2))
+        return request
+      })
+
+      this.axiosInstance.interceptors.response.use(response => {
+        console.log('Response:', JSON.stringify(response.data, null, 2))
+        return response
+      })
+    }
+    return this.request<any>(config);
+  }
+
   public async PostResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
     const config: AxiosRequestConfig = {
       url: `${ resourceUrl }`,

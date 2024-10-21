@@ -6,6 +6,15 @@ const formConfig: Partial<RapidEntityFormRockConfig> = {
     {
       type: "auto",
       code: "equipment",
+      formControlProps: {
+        dropdownMatchSelectWidth: 300,
+        listTextFormat: "{{code}} {{name}}",
+        listFilterFields: ["name", "code"],
+        columns: [
+          { code: "code", title: "编号", width: 120 },
+          { code: "name", title: "名称", width: 120 },
+        ],
+      },
     },
     {
       type: "auto",
@@ -112,13 +121,16 @@ const page: RapidPage = {
                 {
                   type: "auto",
                   code: "equipment",
+                  rendererProps: {
+                    format: "{{code}}-{{name}}",
+                  },
                 },
                 {
                   type: "auto",
                   code: "dimension",
                   title: "数采指标",
                   rendererProps: {
-                    format: "{{code}}-{{name}}",
+                    format: "{{name}}",
                   },
                 },
                 {

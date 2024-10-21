@@ -12,6 +12,15 @@ export default [
       let before = payload.before;
 
       before.actualStartTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      before.executionState = 'processing';
+
+      if (!before.hasOwnProperty('process') ) {
+        throw new Error("工序必填.");
+      }
+
+      if (before.hasOwnProperty('process') && !before.hasOwnProperty('processes')) {
+        before.processes = [before.process.id || before.process || before.process_id];
+      }
 
       if (!before.hasOwnProperty("workOrder") && !before.hasOwnProperty("work_order_id")) {
         const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
@@ -26,7 +35,7 @@ export default [
         } else {
           const workOrder = await workOrderManager.createEntity({
             entity: {
-              processes: before.process,
+              processes: before.processes,
               material: { id: before.material.id || before.material || before.material_id },
               executionState: 'processing',
             } as SaveMomWorkOrderInput,
@@ -35,6 +44,10 @@ export default [
             before.work_order_id = workOrder.id;
           }
         }
+      }
+
+      if (before.hasOwnProperty("processes") ) {
+        delete before.processes;
       }
     }
   },
@@ -57,17 +70,24 @@ export default [
       const { server, payload } = ctx;
       let after = payload.after;
 
-      // TODO: 上报设备当前任务
-      // let deviceTaskPayload = {
-      //   workOrder: after.code,
-      //   equipment: after.equipment.code,
-      //   process: after.process.code,
-      //   material: after.material.code,
-      // };
-      //
-      // const iotSDK = await new IotHelper(server).NewAPIClient();
-      // await iotSDK.PostResourceRequest("http://127.0.0.1:8080/api/v1/device/task", deviceTaskPayload);
+      const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
+        filters: [
+          { operator: "eq", field: "id", value: after.id },
+        ],
+        properties: ["id", "code", "workOrder", "process", "material", "equipment"],
+      })
 
+      if (!workTask) {
+        return;
+      }
+
+      // TODO: 上报设备当前任务
+      let deviceTaskPayload = {
+        workTask: workTask.code,
+      };
+
+      const iotSDK = await new IotHelper(server).NewAPIClient();
+      await iotSDK.PutResourceRequest(`http://192.168.1.60:3020/api/machines/${workTask?.equipment?.id}/fields`, deviceTaskPayload);
 
     }
   },
@@ -107,6 +127,7 @@ export default [
             }
           })
         }
+
 
         // TODO: 上报设备当前任务
         // let deviceTaskPayload = {

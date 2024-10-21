@@ -53,11 +53,6 @@ export default {
           value: input.process
         },
         {
-          operator: "eq",
-          field: "process_id",
-          value: input.process
-        },
-        {
           operator: "gte",
           field: "created_at",
           value: timeFrom
@@ -69,6 +64,18 @@ export default {
         }
       ]
     });
+
+
+    for (const workReport of workReports) {
+      // 判断workReport.actualStartTime是否满足72H
+      if (!workReport.actualStartTime) {
+        throw new Error("通风开始时间为空");
+      }
+
+      if (dayjs().diff(dayjs(workReport.actualStartTime), "hour") < 72) {
+        throw new Error("通风时间不满足72H");
+      }
+    }
 
     for (const workReport of workReports) {
       await server.getEntityManager<MomWorkReport>("mom_work_report").updateEntityById({
