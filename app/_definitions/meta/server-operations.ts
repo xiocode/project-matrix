@@ -5,6 +5,7 @@ import mom$callback from '../models/server-operations/mom/callback';
 import mom$createGoodTransferIn from '../models/server-operations/mom/createGoodTransferIn';
 import mom$createInventoryApplicationItems from '../models/server-operations/mom/createInventoryApplicationItems';
 import mom$createInventoryOperation from '../models/server-operations/mom/createInventoryOperation';
+import mom$dingtalkCallback from '../models/server-operations/mom/dingtalkCallback';
 import mom$downloadInspectSheet from '../models/server-operations/mom/downloadInspectSheet';
 import mom$exportExcel from '../models/server-operations/mom/exportExcel';
 import mom$fix from '../models/server-operations/mom/fix';
@@ -36,6 +37,7 @@ export default [
   mom$createGoodTransferIn,
   mom$createInventoryApplicationItems,
   mom$createInventoryOperation,
+  mom$dingtalkCallback,
   mom$downloadInspectSheet,
   mom$exportExcel,
   mom$fix,

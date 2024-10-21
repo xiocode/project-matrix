@@ -94,13 +94,15 @@ class YidaSDK {
   }
 
   public async GetResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
+    const queryParams = new URLSearchParams(payload as any).toString();
+    const separator = resourceUrl.includes('?') ? '&' : '?';
+
     const config: AxiosRequestConfig = {
-      url: `${ resourceUrl }`,
+      url: `${resourceUrl}${separator}${queryParams}`,
       method: 'GET',
       headers: {
         'x-acs-dingtalk-access-token': this.accessToken,
       },
-      data: payload,
     };
     if (debug) {
       // 打印请求和响应日志
