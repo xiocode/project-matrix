@@ -105,7 +105,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       code: "gcmsReportFile",
       label: "GCMS报告",
-      required: true,
       type: "auto",
     },
     {
@@ -227,7 +226,7 @@ const page: RapidPage = {
                     active_material_id: materialId,
                   }, true);
                 }
-        
+
                 event.scope.loadStoreData('searchFormItemList-material');
               `,
           },

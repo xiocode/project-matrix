@@ -105,7 +105,6 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     {
       code: "gcmsReportFile",
       label: "GCMS报告",
-      required: true,
       type: "auto",
     },
     {
@@ -141,14 +140,14 @@ const formConfig: Partial<RapidEntityFormConfig> = {
                 active_isNormal:isNormal,
                 active_isQulity:isQulity
             }, true);
-            
+
             // if(event.sender.form.getFieldsValue('material')){
             //     event.sender.form.setFieldsValue({
             //     material:undefined,
-            //     lotNum:undefined 
+            //     lotNum:undefined
             //     })
             // }
-         
+
         }
 
         event.scope.loadStoreData('dataFormItemList-material');
@@ -244,7 +243,7 @@ const page: RapidPage = {
                     active_material_id: materialId,
                   }, true);
                 }
-        
+
                 event.scope.loadStoreData('searchFormItemList-material');
               `,
           },
