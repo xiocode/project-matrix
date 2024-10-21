@@ -58,16 +58,16 @@ class YidaApi {
 
     let payload =
       {
-        noExecuteExpression : true,
-        language : "zh_CN",
-        formUuid : "FORM-2327400348D843CD817C3AF4164F10A43CNW",
-        processCode : "TPROC--4G666BA1ABYO8E7EE4OBVBPMWOH13TG7W812MC",
-        searchCondition : "[]",
-        appType : "APP_MV044H55941SP5OMR0PI",
-        formDataJson : formDataJsonStr,
-        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
-        userId : "68282452959857472",
-        departmentId : "1"
+        noExecuteExpression: true,
+        language: "zh_CN",
+        formUuid: "FORM-2327400348D843CD817C3AF4164F10A43CNW",
+        processCode: "TPROC--4G666BA1ABYO8E7EE4OBVBPMWOH13TG7W812MC",
+        searchCondition: "[]",
+        appType: "APP_MV044H55941SP5OMR0PI",
+        formDataJson: formDataJsonStr,
+        systemToken: "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId: "68282452959857472",
+        departmentId: "1"
       }
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload)
     console.log(resp.data)
@@ -76,10 +76,10 @@ class YidaApi {
   public async uploadInspectionMeasurements(inputs: MomInspectionMeasurement[]) {
     for (const input of inputs) {
       let formDataJson = {
-        textField_kocks566: input.sheet?.code , // 检验单号
+        textField_kocks566: input.sheet?.code, // 检验单号
         textField_kpc0di1h: input.sheet?.rule?.category?.name,// 检验类型
         textField_kocks567: input.sheet?.material?.name,// 物料
-        textField_kpc0di1l: input.sheet?.rule?.name ,// 检验规则
+        textField_kpc0di1l: input.sheet?.rule?.name,// 检验规则
         textField_kpc0di1i: input.sheet?.lotNum,// 批次
         textField_m245vk9o: input.sheet?.result,// 结果
         textField_m245vk9m: input.characteristic?.name,// 检验特性
@@ -90,12 +90,12 @@ class YidaApi {
       let formDataJsonStr = JSON.stringify(formDataJson);
 
       let payload = {
-        language : "zh_CN",
-        formUuid : "FORM-83F40CCD44614D4788A06E61D9765C1D4SDE",
-        appType : "APP_MV044H55941SP5OMR0PI",
-        formDataJson : formDataJsonStr,
-        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
-        userId : "68282452959857472"
+        language: "zh_CN",
+        formUuid: "FORM-83F40CCD44614D4788A06E61D9765C1D4SDE",
+        appType: "APP_MV044H55941SP5OMR0PI",
+        formDataJson: formDataJsonStr,
+        systemToken: "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId: "68282452959857472"
       }
 
       const resp = await this.api.PostResourceRequest("/v1.0/yida/forms/instances", payload, true)
@@ -114,6 +114,18 @@ class YidaApi {
         textField_m24g6499: item.isQualified ? '合格' : '不合格',
       }
     })
+
+    if (inputs.length > 0) {
+      if (inputs[0]?.sheet?.gcmsReportFile) {
+        measurements.push({
+          textField_m24c9bpp: "GCMS报告",
+          textField_m24g6498: "",
+          textField_m24c9bpq: "",
+          textField_m24c9bpr: "",
+          textField_m24g6499: inputs[0]?.sheet.gcmsPassed ? '合格' : '不合格',
+        })
+      }
+    }
 
     const inspectionSheet = inputs[0].sheet
 
@@ -139,16 +151,16 @@ class YidaApi {
 
     let payload =
       {
-        noExecuteExpression : true,
-        language : "zh_CN",
-        formUuid : "FORM-857ACE8654FF4F7A942151E1FAA59CDBVYMX",
-        processCode : "TPROC--QSC66681WFCP4FR379WET88XRSJT3CAZ8C42M0",
-        searchCondition : "[]",
-        appType : "APP_MV044H55941SP5OMR0PI",
-        formDataJson : formDataJsonStr,
-        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
-        userId : "68282452959857472",
-        departmentId : "1"
+        noExecuteExpression: true,
+        language: "zh_CN",
+        formUuid: "FORM-857ACE8654FF4F7A942151E1FAA59CDBVYMX",
+        processCode: "TPROC--QSC66681WFCP4FR379WET88XRSJT3CAZ8C42M0",
+        searchCondition: "[]",
+        appType: "APP_MV044H55941SP5OMR0PI",
+        formDataJson: formDataJsonStr,
+        systemToken: "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId: "68282452959857472",
+        departmentId: "1"
       }
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload, true)
     console.log(resp.data)
@@ -189,16 +201,16 @@ class YidaApi {
 
     let payload =
       {
-        noExecuteExpression : true,
-        language : "zh_CN",
-        formUuid : "FORM-C615C418035C41E98BB93ED146F0135BLNQG",
-        processCode : "TPROC--83766571L7JOTBP29OBTLCQH06J52329FK52MM1",
-        searchCondition : "[]",
-        appType : "APP_MV044H55941SP5OMR0PI",
-        formDataJson : formDataJsonStr,
-        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
-        userId : "68282452959857472",
-        departmentId : "1"
+        noExecuteExpression: true,
+        language: "zh_CN",
+        formUuid: "FORM-C615C418035C41E98BB93ED146F0135BLNQG",
+        processCode: "TPROC--83766571L7JOTBP29OBTLCQH06J52329FK52MM1",
+        searchCondition: "[]",
+        appType: "APP_MV044H55941SP5OMR0PI",
+        formDataJson: formDataJsonStr,
+        systemToken: "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId: "68282452959857472",
+        departmentId: "1"
       }
     const resp = await this.api.PostResourceRequest("/v2.0/yida/processes/instances/start", payload, true)
     console.log(resp.data)
@@ -207,10 +219,10 @@ class YidaApi {
   public async uploadProductionMeasurements(inputs: MomRouteProcessParameterMeasurement[]) {
     for (const input of inputs) {
       let formDataJson = {
-        textField_m25kshxc: input.workOrder?.factory?.code , // 工厂
+        textField_m25kshxc: input.workOrder?.factory?.code, // 工厂
         textField_kocks567: input.workOrder?.material,// 物料
         textField_m25kshxd: input.process?.name,// 工序
-        textField_m25kshxe: input.equipment?.name ,// 设备
+        textField_m25kshxe: input.equipment?.name,// 设备
         textField_kpc0di1i: input.workReport?.lotNum,// 批次
         textField_m25kshxg: input.workOrder?.code,// 工单号
         textField_m245vk9m: input.dimension?.name,// 指标
@@ -224,12 +236,12 @@ class YidaApi {
       let formDataJsonStr = JSON.stringify(formDataJson);
 
       let payload = {
-        language : "zh_CN",
-        formUuid : "FORM-E53DDB7DAD344410AB53826F04074EC1LHIN",
-        appType : "APP_MV044H55941SP5OMR0PI",
-        formDataJson : formDataJsonStr,
-        systemToken : "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
-        userId : "68282452959857472"
+        language: "zh_CN",
+        formUuid: "FORM-E53DDB7DAD344410AB53826F04074EC1LHIN",
+        appType: "APP_MV044H55941SP5OMR0PI",
+        formDataJson: formDataJsonStr,
+        systemToken: "9FA66WC107APIRYWEES29D6BYQHM23FRS812MWB",
+        userId: "68282452959857472"
       }
 
       const resp = await this.api.PostResourceRequest("/v1.0/yida/forms/instances", payload, true)
