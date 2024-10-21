@@ -227,7 +227,17 @@ export default [
 
         await yidaAPI.uploadInspectionMeasurements(measurements)
 
-        await yidaAPI.uploadInspectionSheetAudit(measurements)
+        const yidaResp =  await yidaAPI.uploadInspectionSheetAudit(measurements)
+
+        if (yidaResp && yidaResp.result) {
+          await server.getEntityManager<MomInspectionSheet>("mom_inspection_sheet").updateEntityById({
+            routeContext: ctx.routerContext,
+            id: after.id,
+            entityToSave: {
+              yidaId: yidaResp.result
+            }
+          });
+        }
 
       }
 

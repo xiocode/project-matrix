@@ -259,6 +259,11 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_factory",
       targetIdColumnName: "factory_id",
     },
+    {
+      code: "yidaId",
+      name: "宜搭ID",
+      type: "text",
+    },
   ],
   // indexes: [
   //   {
