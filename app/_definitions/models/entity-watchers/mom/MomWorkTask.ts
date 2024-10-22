@@ -21,7 +21,7 @@ export default [
       }
 
       if (before.hasOwnProperty('process') && !before.hasOwnProperty('processes')) {
-        before.processes = [before.process.id || before.process || before.process_id];
+        before.processes = [before?.process?.id || before?.process || before.process_id];
       }
 
       if (!before.hasOwnProperty("workOrder") && !before.hasOwnProperty("work_order_id")) {
@@ -90,13 +90,13 @@ export default [
         return;
       }
 
-      // TODO: 上报设备当前任务
-      let deviceTaskPayload = {
-        workTask: workTask.code,
-      };
-
-      const iotSDK = await new IotHelper(server).NewAPIClient();
-      await iotSDK.PutResourceRequest(`http://192.168.1.60:3020/api/machines/${ workTask?.equipment?.id }/fields`, deviceTaskPayload);
+      // // TODO: 上报设备当前任务
+      // let deviceTaskPayload = {
+      //   workTask: workTask.code,
+      // };
+      //
+      // const iotSDK = await new IotHelper(server).NewAPIClient();
+      // await iotSDK.PutResourceRequest(`http://192.168.1.60:3020/api/machines/${ workTask?.equipment?.id }/fields`, deviceTaskPayload);
 
     }
   },

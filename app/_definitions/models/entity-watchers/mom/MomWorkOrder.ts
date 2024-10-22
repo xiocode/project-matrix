@@ -1,6 +1,7 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import type {
-  BaseLot, MomProcess,
+  BaseLot,
+  MomProcess,
   MomWorkFeed,
   MomWorkOrder,
   MomWorkTask,
@@ -101,9 +102,23 @@ export default [
 
       try {
 
+        const workOrderManager = server.getEntityManager<MomWorkOrder>("mom_work_order");
+        const workOrder = await workOrderManager.findEntity({
+          filters: [
+            {
+              operator: "eq",
+              field: "id",
+              value: after.id
+            }
+          ],
+          properties: ["id", "processes"]
+        });
+
+        const processIds = workOrder?.processes.map((process: MomProcess) => process.id);
+
         const workTasks = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntities({
           filters: [
-            { operator: "eq", field: "process_id", value: after.process.id || after.process || after.process_id },
+            { operator: "in", field: "process_id", value: processIds },
             { operator: "null", field: "workOrder" },
           ],
         });
@@ -125,7 +140,7 @@ export default [
         const workFeedManager = server.getEntityManager<MomWorkFeed>("mom_work_feed");
         const workFeeds = await workFeedManager.findEntities({
           filters: [
-            { operator: "eq", field: "process_id", value: after.process.id || after.process || after.process_id },
+            { operator: "in", field: "process_id", value: processIds },
             // {
             //   operator: "eq",
             //   field: "equipment_id",
