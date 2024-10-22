@@ -36,6 +36,13 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetIdColumnName: "factory_id",
     },
     {
+      code: "printTemplate",
+      name: "打印模版",
+      type: "relation",
+      targetSingularCode: "mom_print_template",
+      targetIdColumnName: "template_id",
+    },
+    {
       code: "config",
       name: "配置",
       type: "json",

@@ -15,6 +15,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "printTemplate",
+    },
+    {
+      type: "auto",
       code: "config",
     },
   ],
@@ -97,6 +101,13 @@ const page: RapidPage = {
                 {
                   type: "auto",
                   code: "app",
+                },
+                {
+                  type: "auto",
+                  code: "printTemplate",
+                  rendererProps: {
+                    format: "{{name}}",
+                  },
                 },
               ],
               actions: [

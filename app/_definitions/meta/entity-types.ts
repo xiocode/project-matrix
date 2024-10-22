@@ -2886,6 +2886,10 @@ export interface MomEquipment {
    */
   factory?: Partial<MomFactory>;
   /**
+   * 外部编号
+   */
+  externalCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
@@ -9039,6 +9043,10 @@ export interface ShopfloorDisplayDeviceFeature {
    * 工厂
    */
   factory?: Partial<MomFactory>;
+  /**
+   * 打印模版
+   */
+  printTemplate?: Partial<MomPrintTemplate>;
   /**
    * 配置
    */
