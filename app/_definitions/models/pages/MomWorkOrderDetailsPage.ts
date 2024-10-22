@@ -782,7 +782,7 @@ const page: RapidPage = {
         },
         {
           key: "tasks",
-          label: "排工记录",
+          label: "派工记录",
           children: [
             {
               $type: "sonicEntityList",
