@@ -3,6 +3,7 @@ import {MomWorkReport} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 
 export type SubmitFinishedWorkReportsInput = {
+  workOrder: number;
   process: number;
   equipment: number;
   from: number;
@@ -20,6 +21,11 @@ export default {
       filters: [
         {
           operator: "eq",
+          field: "process_id",
+          value: input.process
+        },
+        {
+          operator: "eq",
           field: "id",
           value: input.from
         },
@@ -29,6 +35,11 @@ export default {
 
     const toWorkReport = await server.getEntityManager<MomWorkReport>("mom_work_report").findEntity({
       filters: [
+        {
+          operator: "eq",
+          field: "process_id",
+          value: input.process
+        },
         {
           operator: "eq",
           field: "id",
@@ -42,8 +53,13 @@ export default {
       throw new Error("开始批号或结束批号不存在");
     }
 
-    let timeFrom = dayjs(Math.max(dayjs(fromWorkReport.createdAt).unix(), dayjs(toWorkReport.createdAt).unix())).format("YYYY-MM-DD HH:mm:ss");
-    let timeTo = dayjs(Math.min(dayjs(fromWorkReport.createdAt).unix(), dayjs(toWorkReport.createdAt).unix())).format("YYYY-MM-DD HH:mm:ss");
+    let timeFrom = dayjs(fromWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
+    let timeTo = dayjs(toWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
+
+    if (dayjs(fromWorkReport.createdAt).isAfter(dayjs(toWorkReport.createdAt))) {
+      timeFrom = dayjs(toWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      timeTo = dayjs(fromWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
+    }
 
     const workReports = await server.getEntityManager<MomWorkReport>("mom_work_report").findEntities({
       filters: [
@@ -54,12 +70,12 @@ export default {
         },
         {
           operator: "gte",
-          field: "created_at",
+          field: "actual_start_time",
           value: timeFrom
         },
         {
           operator: "lte",
-          field: "created_at",
+          field: "actual_start_time",
           value: timeTo
         }
       ],
