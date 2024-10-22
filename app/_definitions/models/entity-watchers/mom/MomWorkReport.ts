@@ -16,19 +16,10 @@ export default [
       if (!before.hasOwnProperty("actualFinishTime")) {
         before.executionState = "processing";
       }
-
-
-      if (before.hasOwnProperty("lotNum") && !before.hasOwnProperty("lot")) {
-        const lot = await server.getEntityManager("base_lot").findEntity({
-          filters: [
-            { operator: "eq", field: "lot_num", value: before.lotNum },
-          ],
-          properties: ["id", "material", "lotNum"],
-        });
-        if (lot) {
-          before.lot = lot;
-        }
+      if (before.hasOwnProperty("actualFinishTime")) {
+        before.executionState = "completed";
       }
+
 
       if (before.hasOwnProperty("workOrder")) {
         const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
@@ -71,7 +62,7 @@ export default [
               state: "normal",
             });
             if (lot) {
-              before.lot_id = lot.id;
+              before.lot = { id: lot.id };
               before.lotNum = lot.lotNum;
             }
           }
@@ -79,6 +70,18 @@ export default [
 
         if (workTask) {
           before.work_task_id = workTask.id;
+        }
+      }
+
+      if (before.hasOwnProperty("lotNum") && !before.hasOwnProperty("lot")) {
+        const lot = await server.getEntityManager("base_lot").findEntity({
+          filters: [
+            { operator: "eq", field: "lot_num", value: before.lotNum },
+          ],
+          properties: ["id", "material", "lotNum"],
+        });
+        if (lot) {
+          before.lot = lot;
         }
       }
     }
