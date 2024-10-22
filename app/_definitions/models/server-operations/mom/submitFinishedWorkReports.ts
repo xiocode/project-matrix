@@ -62,19 +62,34 @@ export default {
           field: "created_at",
           value: timeTo
         }
-      ]
+      ],
+      properties: ["id", "createdAt", "process", "actualStartTime"]
     });
 
 
     for (const workReport of workReports) {
-      // 判断workReport.actualStartTime是否满足72H
-      if (!workReport.actualStartTime) {
-        throw new Error("通风开始时间为空");
+      switch (workReport.process?.name) {
+        case "通风工序":
+          // 判断workReport.actualStartTime是否满足72H
+          if (!workReport.actualStartTime) {
+            throw new Error("通风开始时间为空");
+          }
+
+          if (dayjs().diff(dayjs(workReport.actualStartTime), "hour") < 72) {
+            throw new Error("通风时间不满足72H");
+          }
+          break;
+        case "烘烤工序":
+          if (!workReport.actualStartTime) {
+            throw new Error("烘烤开始时间为空");
+          }
+
+          if (dayjs().diff(dayjs(workReport.actualStartTime), "hour") < 4) {
+            throw new Error("烘烤时间不满足4H");
+          }
+          break;
       }
 
-      if (dayjs().diff(dayjs(workReport.actualStartTime), "hour") < 72) {
-        throw new Error("通风时间不满足72H");
-      }
     }
 
     for (const workReport of workReports) {
