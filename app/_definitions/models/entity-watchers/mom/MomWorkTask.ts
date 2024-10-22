@@ -106,18 +106,22 @@ export default [
 
 
       if (changes.hasOwnProperty("executionState") && changes.executionState === "completed") {
-        // TODO: 处理如果当前工单多个工序，只处理最后一个工序
 
         const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
           filters: [
             { operator: "eq", field: "id", value: before.id },
           ],
-          properties: ["id", "workOrder", "process"],
+          properties: ["id", "workOrder"],
+          relations: {
+            workOrder: {
+              properties: ["id", "processes"],
+            }
+          }
         })
 
         let needFinish = false;
-        if (workTask?.process) {
-          if (workTask.process.equipments && workTask.process.equipments.length === 1) {
+        if (workTask?.workOrder) {
+          if (workTask?.workOrder.processes && workTask?.workOrder?.processes.length === 1) {
             needFinish = true; // needFinish
           }
         }
