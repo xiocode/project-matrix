@@ -447,7 +447,7 @@ const page: RapidPage = {
               selectionMode: "none",
               dataSourceCode: "goodTransferGroupList",
               requestConfig: {
-                url: "/api/app/listGoodInTransfers",
+                url: "/api/app/listGoodOutTransfers",
               },
               $exps: {
                 "fixedFilters[0].value": "$rui.parseQuery().id",

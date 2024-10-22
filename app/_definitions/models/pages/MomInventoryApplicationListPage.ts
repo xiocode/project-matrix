@@ -44,7 +44,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "fFManager",
       required: true,
       $exps: {
-        _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
+        _hidden: "$self.form.getFieldValue('businessType')?.name === '领料出库' || $self.form.getFieldValue('businessType')?.name === '生产退料入库'",
       },
     },
     {
@@ -53,7 +53,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       label: "保管",
       required: true,
       $exps: {
-        _hidden: "$self.form.getFieldValue('operationType') !== 'in'",
+        _hidden: "$self.form.getFieldValue('businessType')?.name === '领料出库' || $self.form.getFieldValue('businessType')?.name === '生产退料入库'",
       },
     },
     {
@@ -62,7 +62,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "fFManager",
       required: true,
       $exps: {
-        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '领料出库' && $self.form.getFieldValue('businessType')?.name !== '生产退料入库'",
       },
     },
     {
@@ -71,16 +71,15 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       label: "领料",
       required: true,
       $exps: {
-        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '领料出库' && $self.form.getFieldValue('businessType')?.name !== '生产退料入库'",
       },
     },
     {
       type: "auto",
       code: "fUse",
       label: "领料用途",
-      required: true,
       $exps: {
-        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '领料出库' && $self.form.getFieldValue('businessType')?.name !== '生产退料入库'",
       },
     },
     {
@@ -88,7 +87,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       code: "fPlanSn",
       label: "生产计划单编号",
       $exps: {
-        _hidden: "$self.form.getFieldValue('operationType') !== 'out'",
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '领料出库' && $self.form.getFieldValue('businessType')?.name !== '生产退料入库'",
       },
     },
     {

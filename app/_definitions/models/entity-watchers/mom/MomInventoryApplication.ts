@@ -1,5 +1,5 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
-import {MomInventoryApplication,} from "~/_definitions/meta/entity-types";
+import {MomInventoryApplication, MomInventoryOperation,} from "~/_definitions/meta/entity-types";
 import {before} from "lodash";
 
 export default [
@@ -25,7 +25,7 @@ export default [
       const after = payload.after;
 
       try {
-        const inventoryOperation = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
+        const inventoryApplication = await server.getEntityManager<MomInventoryApplication>("mom_inventory_application").findEntity({
           filters: [
             {
               operator: "eq",
@@ -36,13 +36,37 @@ export default [
           properties: ["id", "code", "businessType"],
         });
 
+
+        if (changes.from || changes.to) {
+          const inventoryOperation = await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").findEntity({
+            filters: [
+              {
+                operator: "eq",
+                field: "application_id",
+                value: after.id,
+              },
+            ],
+            properties: ["id", "code", "businessType"],
+          });
+
+          if (inventoryOperation) {
+            await server.getEntityManager<MomInventoryOperation>("mom_inventory_operation").updateEntityById({
+              id: inventoryOperation.id,
+              entityToSave: {
+                warehouse: changes.from || changes.to,
+              }
+            })
+          }
+        }
+
+
         if (changes) {
           if (ctx?.routerContext?.state.userId) {
             await server.getEntityManager("sys_audit_log").createEntity({
               entity: {
                 user: { id: ctx?.routerContext?.state.userId },
                 targetSingularCode: "mom_inventory_application",
-                targetSingularName: `库存申请单 - ${ inventoryOperation?.businessType?.name } - ${ inventoryOperation?.code }`,
+                targetSingularName: `库存申请单 - ${ inventoryApplication?.businessType?.name } - ${ inventoryApplication?.code }`,
                 method: "update",
                 changes: changes,
                 before: before,

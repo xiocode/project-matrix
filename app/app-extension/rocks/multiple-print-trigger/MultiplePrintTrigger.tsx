@@ -41,8 +41,6 @@ export default {
               .map((record) => {
                 const templateCode = record.templateCode || "rawMaterialIdentificationCard";
                 const printTemplate = templateCode && find(printTemplateStoreData, (item) => item.code === templateCode);
-                console.log("multiple print trigger: ", replaceTemplatePlaceholder(printTemplate?.content, record?.taskData));
-
                 return {
                   type: "zpl-label",
                   name: "标签打印",

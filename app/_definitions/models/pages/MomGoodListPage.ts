@@ -221,6 +221,51 @@ const page: RapidPage = {
           },
           {
             type: "auto",
+            code: "material",
+            formControlType: "rapidEntityTableSelect",
+            formControlProps: {
+              entityCode: "BaseMaterial",
+              dropdownMatchSelectWidth: 500,
+              listTextFormat: materialFormatStrTemplate,
+              listFilterFields: ["name", "code", "specification"],
+              requestParams: {
+                properties: ["id", "code", "name", "specification", "defaultUnit", "category"],
+                keepNonPropertyFields: true,
+              },
+              columns: [
+                {
+                  title: "名称",
+                  code: "name",
+                  width: 120,
+                },
+                {
+                  title: "编号",
+                  code: "code",
+                  width: 120,
+                },
+                {
+                  title: "规格",
+                  code: "specification",
+                  width: 120,
+                },
+              ],
+            },
+            filterMode: "in",
+            filterFields: [
+              {
+                field: "material",
+                operator: "exists",
+                filters: [
+                  {
+                    field: "id",
+                    operator: "in",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "auto",
             code: "warehouse",
             filterMode: "in",
             filterFields: ["warehouse_id"],

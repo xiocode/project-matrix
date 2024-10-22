@@ -41,6 +41,7 @@ export interface WarehousePayload {
       FSettleDate?: string
       FDCStockID?: string;
       FSCStockID?: string;
+      FDCSPID?: string;
       FPurposeID?: number;
       FDeptID?: string;
       FManagerID?: string;
