@@ -67,6 +67,9 @@ export default [
       if (changes.hasOwnProperty("actualFinishTime")) {
         changes.executionState = 'completed';
       }
+      if (changes.hasOwnProperty("executionState") && changes.executionState === 'completed') {
+        changes.actualFinishTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      }
     }
   },
   {
