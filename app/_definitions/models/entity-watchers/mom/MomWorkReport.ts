@@ -1,6 +1,8 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
 import type {BaseLot, MomWorkTask, SaveBaseLotInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
+import rapidApi from "~/rapidApi";
+import {replaceTemplatePlaceholder} from "~/app-extension/rocks/print-trigger/PrintTrigger";
 
 export default [
   {
@@ -116,6 +118,18 @@ export default [
           executionState: 'processing',
         },
       });
+
+      //   TODO: 注塑工序自动打印
+      // await rapidApi.post(`/svc/printer/printers/1/tasks`, {
+      //   tasks: (dataSource || []).map((record) => {
+      //     return {
+      //       type: "zpl-label",
+      //       name: "标签打印",
+      //       data: replaceTemplatePlaceholder(formData.content, record),
+      //     };
+      //   }),
+      // });
+
     }
   },
 ] satisfies EntityWatcher<any>[];
