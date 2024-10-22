@@ -104,18 +104,18 @@ const page: RapidPage = {
           code: "sourceType",
           width: "100px",
         },
-        {
-          type: "auto",
-          code: "manufactureDate",
-          width: "100px",
-          fieldType: "date",
-        },
-        {
-          type: "auto",
-          code: "expireTime",
-          width: "150px",
-          fieldType: "date",
-        },
+        // {
+        //   type: "auto",
+        //   code: "manufactureDate",
+        //   width: "100px",
+        //   fieldType: "date",
+        // },
+        // {
+        //   type: "auto",
+        //   code: "expireTime",
+        //   width: "150px",
+        //   fieldType: "date",
+        // },
         {
           type: "auto",
           code: "qualificationState",
