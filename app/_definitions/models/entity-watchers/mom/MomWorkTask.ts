@@ -1,7 +1,6 @@
 import type {EntityWatcher, EntityWatchHandlerContext} from "@ruiapp/rapid-core";
 import type {MomWorkOrder, MomWorkTask, SaveMomWorkOrderInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
-import IotHelper from "~/sdk/iot/helper";
 
 export default [
   {
@@ -37,6 +36,20 @@ export default [
           ],
         });
         if (workOrder) {
+          const runningTasks = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntities({
+            filters: [
+              { operator: "eq", field: "work_order_id", value: workOrder.id },
+              {
+                operator: "eq",
+                field: "process_id",
+                value: before?.process?.id || before?.process || before.process_id
+              },
+              { operator: "eq", field: "executionState", value: 'processing' },
+            ],
+          })
+          if (runningTasks.length > 0) {
+            throw new Error("工单任务正在执行中");
+          }
           before.work_order_id = workOrder.id;
         } else {
           const workOrder = await workOrderManager.createEntity({
