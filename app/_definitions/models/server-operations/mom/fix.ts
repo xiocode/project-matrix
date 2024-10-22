@@ -141,7 +141,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   FDCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   // FSecQty: transfer.quantity,
                   // FSecCoefficient: 1,
                   // FAuxPrice: 1,
@@ -154,7 +154,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Object: {
                     Head: {
                       Fdate: getNowString(),
-                      FDCStockID: warehouseId,
+                      // FDCStockID: warehouseId,
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.biller?.externalUserCode,
@@ -187,7 +187,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   FDCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
                   FPlanMode: 14036
@@ -200,7 +200,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                     Head: {
                       Fdate: getNowString(),
                       FDeptID: "778",
-                      FDCStockID: warehouseId,
+                      // FDCStockID: warehouseId,
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
@@ -274,7 +274,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   FDCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
                   FPlanMode: 14036
@@ -286,7 +286,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Object: {
                     Head: {
                       Fdate: getNowString(),
-                      FDCStockID: warehouseId,
+                      // FDCStockID: warehouseId,
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.biller?.externalUserCode,
@@ -314,13 +314,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Fauxqty: transfer.quantity,
                   FAuxQtyMust: transfer.quantity,
                   FDCSPID: locationCode,
-                  FDCStockID: warehouseId,
+                  FSCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
-                  FPlanMode: 14036
+                  FPlanMode: 14036,
+                  FReProduceType: 1059,
                 });
               }
 
@@ -329,14 +330,16 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Object: {
                     Head: {
                       Fdate: getNowString(),
-                      FDCStockID: warehouseId,
-                      FPurposeID: 1200,
+                      // FSCStockID: warehouseId,
+                      FPurposeID: 12000,
                       FDeptID: "778",
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
                       FTranType: 24,
                       FROB: -1,
+                      Fuse: inventoryApplication.fUse,
+                      FHeadSelfB0436: inventoryApplication.fPlanSn,
                     },
                     Entry: entries,
                   },
@@ -410,7 +413,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   FSCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
                   FPlanMode: 14036
@@ -422,7 +425,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Object: {
                     Head: {
                       Fdate: getNowString(),
-                      FDCStockID: warehouseId,
+                      // FDCStockID: warehouseId,
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
@@ -453,7 +456,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   FSCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
                   FPlanMode: 14036
@@ -465,7 +468,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Object: {
                     Head: {
                       Fdate: getNowString(),
-                      FSCStockID: warehouseId,
+                      // FSCStockID: warehouseId,
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
@@ -496,7 +499,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   FSCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
-                  FMTONo: transfer.lot_num,
+                  // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
                   FPlanMode: 14036,
@@ -509,7 +512,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Object: {
                     Head: {
                       Fdate: getNowString(),
-                      FSCStockID: warehouseId,
+                      // FSCStockID: warehouseId,
                       FPurposeID: 12000,
                       FDeptID: "778",
                       FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
@@ -527,9 +530,6 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
             default:
               break;
           }
-        } else if (inventoryOperation.operationType === "transfer") {
-          //   TODO: 生成KIS调拨单
-
         }
 
 

@@ -14,6 +14,8 @@ export async function handler(
 ) {
   const input: CreatePrintTasksInput = ctx.input;
 
+  ctx.logger.warn("createPrintTasks: " + JSON.stringify(input));
+
   await plugin.printerService.createPrintTasks(input);
 
   ctx.output = {

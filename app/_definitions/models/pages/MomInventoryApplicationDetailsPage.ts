@@ -219,6 +219,9 @@ const editOperationFormConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "binNum",
       label: "托盘号",
+      formControlProps: {
+        disabled: true,
+      },
     },
     {
       type: "auto",
@@ -521,7 +524,7 @@ const page: RapidPage = {
           name: "托盘号",
           columnRenderAdapter: `
             const binNumItems = _.filter(_.get(record, 'binNumItems'),function(item) { return !!_.get(item, "binNum") });
-            return _.map(binNumItems,function(item){  
+            return _.map(binNumItems,function(item){
               const binNum = _.get(item, "binNum") || '-';
               const quantity = _.get(item, "quantity") || 0;
               const location = _.get(item, "good.location.name") || '-';
@@ -756,6 +759,7 @@ const page: RapidPage = {
                 $type: "sonicEntityList",
                 entityCode: "MomGoodTransfer",
                 viewMode: "table",
+                extraProperties: ["from", "to"],
                 fixedFilters: [
                   {
                     field: "operation",
@@ -1047,6 +1051,7 @@ const page: RapidPage = {
                 },
                 $exps: {
                   "fixedFilters[0].value": `_.get(${operationDataExp}, 'id')`,
+                  "requestConfig.url": "$rui.parseQuery().operationType === 'in' ? '/api/app/listGoodInTransfers' : '/api/app/listGoodOutTransfers'",
                 },
                 fixedFilters: [
                   {
@@ -1092,7 +1097,7 @@ const page: RapidPage = {
                     type: "auto",
                     code: "completedAmount",
                     $exps: {
-                      title: "_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in' ? '出库数量' : '入库数量'",
+                      title: "$rui.parseQuery().operationType !== 'in' ? '出库数量' : '入库数量'",
                     },
                   },
                   {
@@ -1100,7 +1105,7 @@ const page: RapidPage = {
                     type: "auto",
                     code: "completedPalletAmount",
                     $exps: {
-                      title: "_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in' ? '出库托数' : '入库托数'",
+                      title: "$rui.parseQuery().operationType !== 'in' ? '出库托数' : '入库托数'",
                     },
                   },
                   {
@@ -1168,7 +1173,7 @@ const page: RapidPage = {
           },
         ],
         // $exps: {
-        //   _hidden: `_.get(_.first(_.get($page.getStore('detail'), 'data.list')), 'operationType') !== 'in'`,
+        //   _hidden: `$rui.parseQuery().operationType !== 'in'`,
         // },
       },
     },

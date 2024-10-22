@@ -94,6 +94,7 @@ export default {
     const [refreshKey, setRefreshKey] = useState<string | number>();
     const [isSalesOut, setIsSalesOut] = useState<boolean>(false);
     const [operationType, setOperationType] = useState<string>();
+    const [businessType, setBusinessType] = useState<string>();
     const [materialItems, setMaterialItems] = useState<any[]>([]);
     const [enabledBinNum, setEnabledBinNum] = useState<boolean>(false);
     const [warehouseId, setWarehouseId] = useState<string>();
@@ -165,6 +166,11 @@ export default {
               params: {
                 properties: ["id", "material", "good", "binNum", "lotNum", "lot", "quantity", "location"],
                 fixedFilters,
+                orderBy: [
+                  {
+                    field: "location.code",
+                  },
+                ],
               },
             },
             value: (r.binNum || []).map((item: any) => item.binNum),
@@ -283,6 +289,7 @@ export default {
 
                       const isSalesOut = record?.operationType === "out" && record?.config?.defaultSourceType === "sales";
 
+                      setBusinessType(record?.name);
                       setOperationType(record?.operationType);
                       setEnabledBinNum(record?.operationType === "out");
                       setIsSalesOut(isSalesOut);
@@ -321,7 +328,7 @@ export default {
               },
             })}
           </Form.Item>
-          {operationType === "in" && (
+          {(businessType !== "领料出库" && businessType !== "生产退料入库")  && (
             <>
               <Form.Item label="验收" name="fFManager" rules={[{ required: true, message: "验收人必填" }]}>
                 {renderRock({
@@ -361,7 +368,7 @@ export default {
               </Form.Item>
             </>
           )}
-          {operationType === "out" && (
+          {(businessType === "领料出库" || businessType === "生产退料入库") && (
             <>
               <Form.Item label="发料" name="fFManager" rules={[{ required: true, message: "发料人必填" }]}>
                 {renderRock({
