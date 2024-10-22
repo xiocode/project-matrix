@@ -33,7 +33,7 @@ export default [
       if (before.hasOwnProperty("workOrder")) {
         const workTask = await server.getEntityManager<MomWorkTask>("mom_work_task").findEntity({
           filters: [
-            { operator: "eq", field: "process_id", value: before.process.id || before.process || before.process_id },
+            { operator: "eq", field: "process_id", value: before?.process?.id || before?.process || before.process_id },
             {
               operator: "eq",
               field: "equipment_id",
