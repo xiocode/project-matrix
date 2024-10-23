@@ -119,6 +119,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
 
         let kisResponse: any;
 
+
         if (inventoryOperation?.businessType?.operationType === "in") {
           // TODO: 生成KIS入库单
           switch (inventoryOperation?.businessType?.name) {
@@ -130,6 +131,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1320'
                 } else if (transfer.material_code.startsWith('03.')) {
                   locationCode = '1321'
+                }
+
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
                 }
 
                 entries.push({
@@ -145,7 +154,8 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   // FSecQty: transfer.quantity,
                   // FSecCoefficient: 1,
                   // FAuxPrice: 1,
-                  FPlanMode: 14036
+                  FPlanMode: 14036,
+                  Fnote: remark,
                 });
               }
 
@@ -178,6 +188,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1321'
                 }
 
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
+                }
+
                 entries.push({
                   FItemID: transfer.material_external_code,
                   FQty: transfer.quantity,
@@ -190,7 +208,8 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
-                  FPlanMode: 14036
+                  FPlanMode: 14036,
+                  Fnote: remark,
                 });
               }
 
@@ -265,6 +284,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1321'
                 }
 
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
+                }
+
                 entries.push({
                   FItemID: transfer.material_external_code,
                   FQty: transfer.quantity,
@@ -277,7 +304,8 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
-                  FPlanMode: 14036
+                  FPlanMode: 14036,
+                  Fnote: remark,
                 });
               }
 
@@ -308,6 +336,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1321'
                 }
 
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
+                }
+
                 entries.push({
                   FItemID: transfer.material_external_code,
                   FQty: transfer.quantity,
@@ -322,6 +358,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Famount: transfer.quantity,
                   FPlanMode: 14036,
                   FReProduceType: 1059,
+                  Fnote: remark,
                 });
               }
 
@@ -350,50 +387,59 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
           }
         } else if (inventoryOperation.operationType === "out") {
           switch (inventoryOperation?.businessType?.name) {
-            // case "销售出库":
-            //   for (const transfer of transfers) {
-            //     let locationCode = '1320'
-            //     // check if transfer.material_code prefix is 01. if so, set locationCode to 1320, if 03. set to 1321
-            //     if (transfer.material_code.startsWith('01.')) {
-            //       locationCode = '1320'
-            //     } else if (transfer.material_code.startsWith('03.')) {
-            //       locationCode = '1321'
-            //     }
-            //
-            //     entries.push({
-            //       FItemID: transfer.material_external_code,
-            //       FQty: transfer.quantity,
-            //       Fauxqty: transfer.quantity,
-            //       FAuxQtyMust: transfer.quantity,
-            //       FDCSPID: locationCode,
-            //       FSCStockID: warehouseId,
-            //       FBatchNo: transfer.lot_num,
-            //       FUnitID: transfer.unit_external_code,
-            //       FMTONo: transfer.lot_num,
-            //       FAuxPrice: 1,
-            //       Famount: transfer.quantity,
-            //       FPlanMode: 14036,
-            //       FMarketingStyle: "12530",
-            //     });
-            //   }
-            //
-            //   kisResponse = await kisOperationApi.createSubcontractReceipt(
-            //     {
-            //       Object: {
-            //         Head: {
-            //           Fdate: getNowString(),
-            //           FSCStockID: warehouseId,
-            //           FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
-            //           FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
-            //           FBillerID: inventoryApplication?.createdBy?.externalUserCode,
-            //           FTranType: 21,
-            //           FDeptID: "781",
-            //           FROB: 1,
-            //         },
-            //         Entry: entries,
-            //       },
-            //     })
-            //   break;
+            case "销售出库":
+              for (const transfer of transfers) {
+                let locationCode = '1320'
+                // check if transfer.material_code prefix is 01. if so, set locationCode to 1320, if 03. set to 1321
+                if (transfer.material_code.startsWith('01.')) {
+                  locationCode = '1320'
+                } else if (transfer.material_code.startsWith('03.')) {
+                  locationCode = '1321'
+                }
+
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
+                }
+
+                entries.push({
+                  FItemID: transfer.material_external_code,
+                  FQty: transfer.quantity,
+                  Fauxqty: transfer.quantity,
+                  FAuxQtyMust: transfer.quantity,
+                  FDCSPID: locationCode,
+                  FSCStockID: warehouseId,
+                  FBatchNo: transfer.lot_num,
+                  FUnitID: transfer.unit_external_code,
+                  FMTONo: transfer.lot_num,
+                  FAuxPrice: 1,
+                  Famount: transfer.quantity,
+                  FPlanMode: 14036,
+                  Fnote: remark,
+                });
+              }
+
+              kisResponse = await kisOperationApi.createSubcontractReceipt(
+                {
+                  Object: {
+                    Head: {
+                      Fdate: getNowString(),
+                      FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
+                      FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
+                      FBillerID: inventoryApplication?.createdBy?.externalUserCode,
+                      FTranType: 21,
+                      FDeptID: "781",
+                      FROB: 1,
+                      FHeadSelfB0163: inventoryApplication.contractNum || "",
+                      FHeadSelfB0165: inventoryApplication.fDeliveryCode || "",
+                    },
+                    Entry: entries,
+                  },
+                })
+              break;
             case "委外加工出库":
               for (const transfer of transfers) {
                 let locationCode = '1320'
@@ -402,6 +448,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1320'
                 } else if (transfer.material_code.startsWith('03.')) {
                   locationCode = '1321'
+                }
+
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
                 }
 
                 entries.push({
@@ -416,7 +470,8 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
-                  FPlanMode: 14036
+                  FPlanMode: 14036,
+                  Fnote: remark,
                 });
               }
 
@@ -500,6 +555,14 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1321'
                 }
 
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
+                }
+
                 entries.push({
                   FItemID: transfer.material_external_code,
                   FQty: transfer.quantity,
@@ -514,6 +577,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   Famount: transfer.quantity,
                   FPlanMode: 14036,
                   FReProduceType: 1059,
+                  Fnote: remark,
                 });
               }
 

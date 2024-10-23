@@ -428,6 +428,30 @@ export default {
               </Form.Item>
             </>
           )}
+          {(businessType === "销售出库") && (
+            <>
+              <Form.Item label="物流公司" name="fWLCompany" rules={[{ message: "物流公司" }]}>
+                {renderRock({
+                  context,
+                  rockConfig: {
+                    $type: "antdInput",
+                    $id: `${props.$id}_f_wl`,
+                    placeholder: "请输入",
+                  },
+                })}
+              </Form.Item>
+              <Form.Item label="销售发货单号" name="fDeliveryCode" rules={[{ message: "销售发货单号" }]}>
+                {renderRock({
+                  context,
+                  rockConfig: {
+                    $type: "antdInput",
+                    $id: `${props.$id}_f_delivery_code`,
+                    placeholder: "请输入",
+                  },
+                })}
+              </Form.Item>
+            </>
+          )}
           <Form.Item label="仓库" name="warehouse" rules={[{ required: true, message: "仓库必填" }]}>
             {renderRock({
               context,

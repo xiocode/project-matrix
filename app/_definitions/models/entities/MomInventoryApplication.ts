@@ -185,6 +185,16 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       name: "KIS供应商",
       type: "text",
     },
+    {
+      code: "fWLCompany",
+      name: "KIS物流公司",
+      type: "text",
+    },
+    {
+      code: "fDeliveryCode",
+      name: "KIS发货单号",
+      type: "text",
+    },
   ],
 };
 

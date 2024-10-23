@@ -40,7 +40,7 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
-      label: "验收",
+      label: "验收/发货",
       code: "fFManager",
       required: true,
       $exps: {
@@ -84,10 +84,34 @@ const formConfig: Partial<RapidEntityFormConfig> = {
     },
     {
       type: "auto",
+      code: "contractNum",
+      label: "合同单号",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '销售出库'",
+      },
+    },
+    {
+      type: "auto",
       code: "fPlanSn",
       label: "生产计划单编号",
       $exps: {
         _hidden: "$self.form.getFieldValue('businessType')?.name !== '领料出库' && $self.form.getFieldValue('businessType')?.name !== '生产退料入库'",
+      },
+    },
+    {
+      type: "auto",
+      code: "fWLCompany",
+      label: "物流公司",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '销售出库'",
+      },
+    },
+    {
+      type: "auto",
+      code: "fDeliveryCode",
+      label: "销售发货单号",
+      $exps: {
+        _hidden: "$self.form.getFieldValue('businessType')?.name !== '销售出库'",
       },
     },
     {

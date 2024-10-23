@@ -4397,6 +4397,14 @@ export interface MomInventoryApplication {
    */
   fSupplyID?: string;
   /**
+   * KIS物流公司
+   */
+  fWLCompany?: string;
+  /**
+   * KIS发货单号
+   */
+  fDeliveryCode?: string;
+  /**
    * 创建时间
    */
   createdAt?: string;
