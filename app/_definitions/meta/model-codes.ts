@@ -309,6 +309,7 @@ const entityFieldCodes = {
     'qualityGuaranteePeriod',
     'externalCode',
     'factory',
+    'safetyStockQuantity',
     'createdAt',
     'createdBy',
     'updatedAt',

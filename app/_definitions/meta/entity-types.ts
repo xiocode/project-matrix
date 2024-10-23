@@ -686,6 +686,10 @@ export interface BaseMaterial {
    */
   factory?: Partial<MomFactory>;
   /**
+   * 安全库存数量
+   */
+  safetyStockQuantity?: number;
+  /**
    * 创建时间
    */
   createdAt?: string;
