@@ -19,6 +19,7 @@ import BusinessTable from "./business-table/BusinessTable";
 import MaterialLotNumSelector from "./material-lotnum-selector/MaterialLotNumSelector";
 import InspectionInputSection from "./inspection-input-section/InspectionInputSection";
 import BatchPrintAction from "./batch-print-action/BatchPrintAction";
+import BatchDeleteAction from "./batch-delete-action/BatchDeleteAction";
 import InventoryDetailViewer from "./inventory-detail-viewer";
 import CheckRecordDetail from "./check-record-detail";
 
@@ -61,6 +62,7 @@ export default [
   MaterialLotNumSelector,
   InspectionInputSection,
   BatchPrintAction,
+  BatchDeleteAction,
   InventoryDetailViewer,
   CheckRecordDetail,
 

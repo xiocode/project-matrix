@@ -815,6 +815,26 @@ const page: RapidPage = {
                       };
                     `,
                   },
+                  {
+                    $type: "batchDeleteAction",
+                    title: "批量删除",
+                    entityCode: "MomGoodTransfer",
+                    $exps: {
+                      _hidden: `$rui.parseQuery().operationType !== 'in'`,
+                    },
+                    onSuccess: [
+                      {
+                        $action: "script",
+                        script: `
+                          event.scope.loadStoreData('list');
+                          event.scope.setVars({
+                            selectedIds: [],
+                            selectedRecords: []
+                          }, true);
+                      `,
+                      },
+                    ],
+                  },
                 ],
                 pageSize: -1,
                 orderBy: [

@@ -206,6 +206,11 @@ const page: RapidPage = {
           },
           {
             type: "auto",
+            code: "acceptQuantity",
+            width: "100px",
+          },
+          {
+            type: "auto",
             code: "unit",
             width: "80px",
             rendererProps: {
@@ -218,6 +223,7 @@ const page: RapidPage = {
           },
         ],
         $exps: {
+          "columns[3].title": "_.get($slot.record, 'operationType') === 'in' ? '入库数量' : _.get($slot.record, 'operationType') === 'out' ? '出库数量' : ''",
           dataSource: "_.get($slot.record, 'items')",
         },
       },
@@ -275,7 +281,7 @@ const page: RapidPage = {
       ],
       relations: {
         items: {
-          properties: ["id", "material", "lotNum", "quantity", "unit", "remark"],
+          properties: ["id", "material", "lotNum", "quantity", "unit", "remark", "good", "lot", "acceptQuantity"],
         },
       },
       extraProperties: ["operationType", "items", "to", "from"],
