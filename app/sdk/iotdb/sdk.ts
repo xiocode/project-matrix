@@ -4,6 +4,7 @@ interface IotSDKConfig {
   baseURL: string;
 }
 
+
 class IotDBSDK {
   private axiosInstance: AxiosInstance;
 

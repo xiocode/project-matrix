@@ -1,8 +1,10 @@
 import type {EntityWatcher, EntityWatchHandlerContext, IRpdServer} from "@ruiapp/rapid-core";
-import type {BaseLot, MomWorkTask, SaveBaseLotInput} from "~/_definitions/meta/entity-types";
+import type {BaseLot, MomWorkReport, MomWorkTask, SaveBaseLotInput} from "~/_definitions/meta/entity-types";
 import dayjs from "dayjs";
 import rapidApi from "~/rapidApi";
 import {replaceTemplatePlaceholder} from "~/app-extension/rocks/print-trigger/PrintTrigger";
+import YidaHelper from "~/sdk/yida/helper";
+import IotDBHelper, {TimeSeriesQueryOutput} from "~/sdk/iotdb/helper";
 
 export default [
   {
@@ -97,6 +99,49 @@ export default [
 
       if (changes.hasOwnProperty("actualFinishTime")) {
         changes.executionState = 'completed';
+      }
+    }
+  },
+  {
+    eventName: "entity.update",
+    modelSingularCode: "mom_work_report",
+    handler: async (ctx: EntityWatchHandlerContext<"entity.update">) => {
+      const { server, payload } = ctx;
+      let after = payload.after;
+      let changes = payload.changes;
+
+
+      if (changes.hasOwnProperty("executionState") && changes.executionState === "completed") {
+        const workReport = await server.getEntityManager<MomWorkReport>("mom_work_report").findEntity({
+          filters: [
+            { operator: "eq", field: "id", value: after.id },
+          ],
+          properties: ["id", "equipment", "actualStartTime", "actualFinishTime", "executionState"],
+        });
+
+        if (!workReport) {
+          return;
+        }
+
+        if (!workReport.equipment?.externalCode) {
+          return;
+        }
+
+
+        const iotDBSDK = await new IotDBHelper(server).NewAPIClient();
+
+        let input = {
+          sql: `select *
+                from root.devices.${workReport.equipment?.externalCode}
+                where time >= ${ dayjs(workReport.actualStartTime).format('YYYY-MM-DD HH:mm:ss') }
+                  and time <= ${ dayjs(workReport.actualFinishTime).format('YYYY-MM-DD HH:mm:ss') }
+                order by time desc
+                limit 10;`,
+        }
+
+        const tsResponse = await iotDBSDK.PostResourceRequest("http://192.168.1.10:6670/rest/v2/query", input)
+        const data = tsResponse.data as TimeSeriesQueryOutput
+        console.log(data)
       }
     }
   },

@@ -30,7 +30,7 @@ export default {
           value: input.from
         },
       ],
-      properties: ["id", "createdAt", "lot"]
+      properties: ["id", "createdAt", "lot", "actualStartTime"]
     });
 
     const toWorkReport = await server.getEntityManager<MomWorkReport>("mom_work_report").findEntity({
@@ -46,19 +46,19 @@ export default {
           value: input.to
         },
       ],
-      properties: ["id", "createdAt", "lot"]
+      properties: ["id", "createdAt", "lot", "actualStartTime"]
     });
 
     if (!fromWorkReport || !toWorkReport) {
       throw new Error("开始批号或结束批号不存在");
     }
 
-    let timeFrom = dayjs(fromWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
-    let timeTo = dayjs(toWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
+    let timeFrom = fromWorkReport.createdAt
+    let timeTo = toWorkReport.createdAt
 
     if (dayjs(fromWorkReport.createdAt).isAfter(dayjs(toWorkReport.createdAt))) {
-      timeFrom = dayjs(toWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
-      timeTo = dayjs(fromWorkReport.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      timeFrom = toWorkReport.createdAt
+      timeTo = fromWorkReport.createdAt
     }
 
     const workReports = await server.getEntityManager<MomWorkReport>("mom_work_report").findEntities({

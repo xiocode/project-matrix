@@ -10,7 +10,7 @@ class IotDBHelper {
 
   public async NewAPIClient() {
     return new IotDBSDK({
-      baseURL: ""
+      baseURL: "http://192.168.1.10:6670"
     });
   }
 }
@@ -20,7 +20,7 @@ export interface IotDBQueryInput {
   sql: string,
 }
 
-export interface IotDBQueryOutput {
+export interface TimeSeriesQueryOutput {
   expressions: string[],
   column_names: string[],
   timestamps: number[],
