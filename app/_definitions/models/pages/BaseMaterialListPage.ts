@@ -63,6 +63,10 @@ const formConfig: Partial<RapidEntityFormConfig> = {
       type: "auto",
       code: "state",
     },
+    {
+      type: "auto",
+      code: "safetyStockQuantity",
+    },
   ],
 };
 
@@ -216,12 +220,11 @@ const page: RapidPage = {
             },
             {
               type: "auto",
-              code: "createdAt",
-              width: "150px",
+              code: "safetyStockQuantity",
             },
             {
               type: "auto",
-              code: "updatedAt",
+              code: "createdAt",
               width: "150px",
             },
           ],

@@ -193,7 +193,7 @@ const page: RapidPage = {
         {
           type: "link",
           code: "code",
-          width: "200px",
+          width: "150px",
           fixed: "left",
           rendererType: "link",
           rendererProps: {
@@ -203,7 +203,7 @@ const page: RapidPage = {
         {
           type: "auto",
           code: "lotNum",
-          width: "100px",
+          width: "200px",
         },
         {
           type: "auto",

@@ -110,6 +110,12 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       targetSingularCode: "mom_factory",
       targetIdColumnName: "factory_id",
     },
+
+    {
+      code: "safetyStockQuantity",
+      name: "安全库存数量",
+      type: "float",
+    },
   ],
 };
 
