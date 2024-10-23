@@ -64,7 +64,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
         value: inventoryOperation?.application?.id,
       },
     ],
-    properties: ["id", "businessType", "from", "to", "operationType", "createdBy", "biller", "fFManager", "fSManager", "fUse", "fPlanSn", "fPOStyle", "fSupplyID"],
+    properties: ["id", "businessType", "from", "to", "operationType", "createdBy", "biller", "fFManager", "fSManager", "fUse", "fPlanSn", "fPOStyle", "fSupplyID", "items"],
   });
 
   if (!inventoryApplication) {
@@ -162,7 +162,7 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                       FDeptID: "769",
                       FPOStyle: inventoryApplication.fPOStyle,
                       FSupplyID: inventoryApplication.fSupplyID,
-                      FHeadSelfA0143: inspectionSheet?.inspector?.externalCode || "3286"
+                      FHeadSelfA0143: inspectionSheet?.inspector?.externalCode
                     },
                     Entry: entries,
                   },
@@ -338,8 +338,8 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
                       FTranType: 24,
                       FROB: -1,
-                      Fuse: inventoryApplication.fUse,
-                      FHeadSelfB0436: inventoryApplication.fPlanSn,
+                      Fuse: inventoryApplication.fUse || "",
+                      FHeadSelfB0436: inventoryApplication.fPlanSn || "无",
                     },
                     Entry: entries,
                   },
@@ -447,19 +447,28 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                   locationCode = '1321'
                 }
 
+                let remark = ""
+                for (let item of inventoryApplication.items) {
+                  if (item?.lotNum === transfer.lot_num) {
+                    remark = item?.remark;
+                    break;
+                  }
+                }
+
                 entries.push({
                   FItemID: transfer.material_external_code,
                   FQty: transfer.quantity,
                   Fauxqty: transfer.quantity,
                   FAuxQtyMust: transfer.quantity,
                   FDCSPID: locationCode,
-                  FSCStockID: warehouseId,
+                  FDCStockID: warehouseId,
                   FBatchNo: transfer.lot_num,
                   FUnitID: transfer.unit_external_code,
                   // FMTONo: transfer.lot_num,
                   FAuxPrice: 1,
                   Famount: transfer.quantity,
-                  FPlanMode: 14036
+                  FPlanMode: 14036,
+                  Fnote: remark,
                 });
               }
 
@@ -469,11 +478,12 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                     Head: {
                       Fdate: getNowString(),
                       // FSCStockID: warehouseId,
-                      FFManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
-                      FSManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
+                      FFManagerID: inventoryApplication?.fSManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
+                      FSManagerID: inventoryApplication?.fFManager?.externalCode || inventoryApplication?.createdBy?.externalCode,
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
                       FTranType: 29,
                       FDeptID: "783",
+                      Fuse: inventoryApplication.fUse || "",
                       FROB: 1,
                     },
                     Entry: entries,
@@ -520,8 +530,8 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
                       FBillerID: inventoryApplication?.createdBy?.externalUserCode,
                       FTranType: 24,
                       FROB: 1,
-                      Fuse: inventoryApplication.fUse,
-                      FHeadSelfB0436: inventoryApplication.fPlanSn
+                      Fuse: inventoryApplication.fUse || "",
+                      FHeadSelfB0436: inventoryApplication.fPlanSn || "无",
                     },
                     Entry: entries,
                   },

@@ -171,6 +171,53 @@ export default [
           }
         }
 
+        if (inventoryOperation?.operationType === "out") {
+          const goodTransfers = await server.getEntityManager<MomGoodTransfer>("mom_good_transfer").findEntities({
+            filters: [{ operator: "eq", field: "operation_id", value: inventoryOperation.id }],
+            properties: ["id", "lotNum", "lot", "material", "quantity"]
+          })
+
+          goodTransfers.forEach((goodTransfer) => {
+            if (goodTransfer.material && goodTransfer.material.id && goodTransfer.lotNum && goodTransfer.quantity) {
+              if (!materialAcceptCountMap[goodTransfer.material.id]) {
+                materialAcceptCountMap[goodTransfer.material.id] = {}
+              }
+
+              if (!materialAcceptCountMap[goodTransfer.material.id][goodTransfer.lotNum]) {
+                materialAcceptCountMap[goodTransfer.material.id][goodTransfer.lotNum] = {
+                  quantity: 0,
+                  palletCount: 0
+                }
+              }
+              materialAcceptCountMap[goodTransfer.material.id][goodTransfer.lotNum].quantity += goodTransfer.quantity
+              materialAcceptCountMap[goodTransfer.material.id][goodTransfer.lotNum].palletCount += 1
+            }
+          })
+
+          for (let materialId in materialAcceptCountMap) {
+            let lotAcceptCountMap = materialAcceptCountMap[materialId]
+            for (let lotNum in lotAcceptCountMap) {
+              const applicationItems = await server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").findEntities({
+                filters: [
+                  { operator: "eq", field: "lotNum", value: lotNum },
+                  { operator: "eq", field: "material_id", value: materialId },
+                  { operator: "eq", field: "operation_id", value: inventoryOperation?.application?.id },
+                ],
+              })
+
+              for (let applicationItem of applicationItems) {
+                await server.getEntityManager<MomInventoryApplicationItem>("mom_inventory_application_item").updateEntityById({
+                  routeContext: ctx.routerContext,
+                  id: applicationItem.id,
+                  entityToSave: {
+                    acceptQuantity: lotAcceptCountMap[lotNum].quantity,
+                    acceptPalletCount: lotAcceptCountMap[lotNum].palletCount
+                  }
+                })
+              }
+            }
+          }
+        }
 
         if (inventoryOperation?.operationType === "organize" && after.good_id) {
           await server.getEntityManager<MomGood>("mom_good").updateEntityById({
