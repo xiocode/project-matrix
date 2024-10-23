@@ -751,6 +751,7 @@ class KisDataSync {
             externalCode: Head.FInterID,
             source: 'kis',
             fSupplyID: Head.FSupplyID,
+            contractNum: Head.FHeadSelfS0193,
           } as SaveMomInventoryApplicationInput;
         },
         payload: {
