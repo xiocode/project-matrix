@@ -18,13 +18,13 @@ export async function rapidApiRequest(config: AxiosRequestConfig<any>) {
       .request(config)
       .then((response) => {
         const data = response.data;
-        if (response.status >= 200 && response.status < 400) {
+        if (response.status >= 200 && response.status < 300) {
           resolve({ result: data });
         } else {
           resolve({
             error: {
-              message: data?.message || response.statusText,
-              code: data?.code || response.status,
+              message: data?.error?.message || data?.message || response.statusText,
+              code: data?.error?.code || data?.code || response.status,
             },
           });
         }
