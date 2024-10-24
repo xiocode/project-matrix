@@ -46,10 +46,12 @@ class YidaSDK {
   }
 
   public async ensureTokensAreValid(): Promise<void> {
-    const now = Math.floor(Date.now() / 1000);
-    if (now >= this.accessTokenExpireIn - 600) {
-      await this.refreshAccessToken();
-    }
+    // const now = Math.floor(Date.now() / 1000);
+    // if (now >= this.accessTokenExpireIn - 600) {
+    //   await this.refreshAccessToken();
+    // }
+
+    await this.refreshAccessToken();
   }
 
   public async refreshAccessToken(): Promise<void> {
@@ -64,6 +66,8 @@ class YidaSDK {
 
     const response = await this.axiosInstance.request<any>(config);
     const data = response.data;
+
+    console.log(data)
 
     this.accessToken = data.accessToken;
     this.accessTokenExpireIn = Date.now() / 1000 + data.expireIn;
