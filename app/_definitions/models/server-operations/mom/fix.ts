@@ -119,7 +119,6 @@ async function fix(server: IRpdServer, input: CreateGoodTransferInput) {
 
         let kisResponse: any;
 
-
         if (inventoryOperation?.businessType?.operationType === "in") {
           // TODO: 生成KIS入库单
           switch (inventoryOperation?.businessType?.name) {
