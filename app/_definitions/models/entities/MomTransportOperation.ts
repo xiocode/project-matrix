@@ -57,7 +57,7 @@ const entity: RapidEntity<TEntitySingularCodes, TDictionaryCodes> = {
       code: "items",
       name: "明细项",
       type: "relation[]",
-      // targetSingularCode: "mom_transport_operation_item",
+      targetSingularCode: "mom_transport_operation_item",
       selfIdColumnName: "item_id",
     },
     {

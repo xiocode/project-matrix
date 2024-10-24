@@ -2,6 +2,7 @@ import type { EntityWatcherType as TEntityWatcherType } from '@ruiapp/rapid-core
 import bpm$BpmInstanceEntityWatchers from '../models/entity-watchers/bpm/BpmInstanceEntityWatchers';
 import cbs$CbsOrderItemWatchers from '../models/entity-watchers/cbs/CbsOrderItemWatchers';
 import cbs$CbsOrderWatchers from '../models/entity-watchers/cbs/CbsOrderWatchers';
+import mom$HuateWarehouseOperation from '../models/entity-watchers/mom/HuateWarehouseOperation';
 import mom$MomGoodTransfer from '../models/entity-watchers/mom/MomGoodTransfer';
 import mom$MomInspectionCharacteristic from '../models/entity-watchers/mom/MomInspectionCharacteristic';
 import mom$MomInspectionMeasurement from '../models/entity-watchers/mom/MomInspectionMeasurement';
@@ -12,6 +13,7 @@ import mom$MomInventoryApplication from '../models/entity-watchers/mom/MomInvent
 import mom$MomInventoryMaterial from '../models/entity-watchers/mom/MomInventoryMaterial';
 import mom$MomInventoryOperation from '../models/entity-watchers/mom/MomInventoryOperation';
 import mom$MomMaterialLot from '../models/entity-watchers/mom/MomMaterialLot';
+import mom$MomTransportOperation from '../models/entity-watchers/mom/MomTransportOperation';
 import mom$MomWorkFeed from '../models/entity-watchers/mom/MomWorkFeed';
 import mom$MomWorkOrder from '../models/entity-watchers/mom/MomWorkOrder';
 import mom$MomWorkReport from '../models/entity-watchers/mom/MomWorkReport';
@@ -22,6 +24,7 @@ export default [
   ...bpm$BpmInstanceEntityWatchers,
   ...cbs$CbsOrderItemWatchers,
   ...cbs$CbsOrderWatchers,
+  ...mom$HuateWarehouseOperation,
   ...mom$MomGoodTransfer,
   ...mom$MomInspectionCharacteristic,
   ...mom$MomInspectionMeasurement,
@@ -32,6 +35,7 @@ export default [
   ...mom$MomInventoryMaterial,
   ...mom$MomInventoryOperation,
   ...mom$MomMaterialLot,
+  ...mom$MomTransportOperation,
   ...mom$MomWorkFeed,
   ...mom$MomWorkOrder,
   ...mom$MomWorkReport,

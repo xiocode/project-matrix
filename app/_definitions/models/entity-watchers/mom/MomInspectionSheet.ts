@@ -282,6 +282,38 @@ export default [
 
       //   TODO: 处理GCMS文件
 
+      if (changes.hasOwnProperty('gcms_report_file')) {
+        const items = await readGCMSFile(server, after.gcms_report_file.key)
+        if (items) {
+          const gcmsItems = await server.getEntityManager<HuateGCMS>("huate_gcms").findEntities({
+            filters: [{
+              operator: "eq",
+              field: "enabled",
+              value: true
+            }]
+          });
+          if (gcmsItems && gcmsItems.length > 0) {
+            //   check if all items in gcmsItems
+
+            for (const item of items) {
+              const gcmsItem = gcmsItems.find((gcmsItem) => {
+                return item === gcmsItem.code
+              })
+
+              await server.getEntityManager<HuateGCMS>("huate_gcms").createEntity({
+                entity: {
+                  material: after?.material?.id || after?.material || after?.material_id,
+                  momInspectionSheetId: after.id,
+                  code: item,
+                  enabled: !!gcmsItem,
+                  needInspect: !gcmsItem,
+                } as SaveHuateGCMSInput
+              })
+            }
+          }
+        }
+      }
+
     }
   },
   {
