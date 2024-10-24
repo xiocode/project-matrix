@@ -21,6 +21,7 @@ import FinExpenseCategoryListPage from '../models/pages/FinExpenseCategoryListPa
 import FinTransactionListPage from '../models/pages/FinTransactionListPage';
 import HomePage from '../models/pages/HomePage';
 import HuateGCMSListPage from '../models/pages/HuateGCMSListPage';
+import HuateWarehouseOperationListPage from '../models/pages/HuateWarehouseOperationListPage';
 import MomEquipmentCategoryDetailPage from '../models/pages/MomEquipmentCategoryDetailPage';
 import MomEquipmentCategoryListPage from '../models/pages/MomEquipmentCategoryListPage';
 import MomEquipmentListPage from '../models/pages/MomEquipmentListPage';
@@ -168,6 +169,7 @@ export default [
   FinTransactionListPage,
   HomePage,
   HuateGCMSListPage,
+  HuateWarehouseOperationListPage,
   MomEquipmentCategoryDetailPage,
   MomEquipmentCategoryListPage,
   MomEquipmentListPage,

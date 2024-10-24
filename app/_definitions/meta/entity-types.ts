@@ -2210,6 +2210,57 @@ export interface HuateGCMS {
 export type SaveHuateGCMSInput = Omit<HuateGCMS, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
 
 /**
+ * 华特出库登记
+ */
+export interface HuateWarehouseOperation {
+  /**
+   * id
+   */
+  id: number;
+  /**
+   * 工厂
+   */
+  factory?: Partial<MomFactory>;
+  /**
+   * 物料
+   */
+  material?: Partial<BaseMaterial>;
+  /**
+   * 出库数量
+   */
+  quantity?: number;
+  /**
+   * 创建时间
+   */
+  createdAt?: string;
+  /**
+   * 创建人
+   */
+  createdBy?: Partial<OcUser>;
+  /**
+   * 更新时间
+   */
+  updatedAt?: string;
+  /**
+   * 更新人
+   */
+  updatedBy?: Partial<OcUser>;
+  /**
+   * 删除时间
+   */
+  deletedAt?: string;
+  /**
+   * 删除人
+   */
+  deletedBy?: Partial<OcUser>;
+}
+
+/**
+ * 华特出库登记
+ */
+export type SaveHuateWarehouseOperationInput = Omit<HuateWarehouseOperation, 'id' | 'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'>;
+
+/**
  * KisConfig
  */
 export interface KisConfig {
