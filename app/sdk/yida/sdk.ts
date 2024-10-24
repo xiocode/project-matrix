@@ -74,6 +74,8 @@ class YidaSDK {
   }
 
   public async PostResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
+    await this.ensureTokensAreValid();
+
     const config: AxiosRequestConfig = {
       url: `${ resourceUrl }`,
       method: 'POST',
@@ -98,6 +100,8 @@ class YidaSDK {
   }
 
   public async GetResourceRequest(resourceUrl: string, payload: object, debug: boolean = false): Promise<AxiosResponse<any>> {
+    await this.ensureTokensAreValid();
+    
     const queryParams = new URLSearchParams(payload as any).toString();
     const separator = resourceUrl.includes('?') ? '&' : '?';
 

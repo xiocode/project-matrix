@@ -138,14 +138,14 @@ class YidaApi {
       textField_m24c9bps: inspectionSheet?.material?.name, // 物料
       tableField_lmoh0yyo: measurements, // 检验记录
       textField_m24g649a: inspectionSheet?.lotNum, // 批次
-      attachmentField_lmoh0yyt: [ // 附件
-        {
-          downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          name: "image.png",
-          url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          ext: "png"
-        }
-      ]
+      // attachmentField_lmoh0yyt: [ // 附件
+      //   {
+      //     downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     name: "image.png",
+      //     url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     ext: "png"
+      //   }
+      // ]
     }
 
     // convert json to string
@@ -190,14 +190,14 @@ class YidaApi {
       // textField_m25kpi4d: workOrder?.process?.name, // 检验记录
       // textField_m25kpi4e: workOrder?.equipment?.name, // 批次
       tableField_lmoh0yyo: measurements, // 记录
-      attachmentField_lmoh0yyt: [ // 附件
-        {
-          downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          name: "image.png",
-          url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
-          ext: "png"
-        }
-      ]
+      // attachmentField_lmoh0yyt: [ // 附件
+      //   {
+      //     downloadUrl: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     name: "image.png",
+      //     url: "https://img.alicdn.com/imgextra/i2/O1CN01wvKGxX1xKF4S3SWrw_!!6000000006424-2-tps-510-93.png",
+      //     ext: "png"
+      //   }
+      // ]
     }
 
     // convert json to string
